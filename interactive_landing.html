@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Адвокат+ | Юридична допомога</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @font-face {
+            font-family: 'e-Ukraine';
+            src: url('./e-Ukraine/e-Ukraine-normal-400-100.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'e-Ukraine';
+            src: url('./e-Ukraine/e-Ukraine-normal-500-100.ttf') format('truetype');
+            font-weight: 500;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'e-Ukraine';
+            src: url('./e-Ukraine/e-Ukraine-normal-700-100.ttf') format('truetype');
+            font-weight: 700;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'e-Ukraine';
+            src: url('./e-Ukraine/e-Ukraine-normal-800-100.ttf') format('truetype');
+            font-weight: 800;
+            font-style: normal;
+        }
+
+        body { 
+            font-family: 'e-Ukraine', sans-serif; 
+            background-color: #E1DECD; 
+            color: #15204E;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 20px 0 rgba(21, 32, 78, 0.05);
+        }
+        
+        .chat-bubble-user { 
+            background-color: #FB880B; 
+            color: #FFFFFF; 
+            border-radius: 16px 16px 0 16px; 
+        }
+        
+        .chat-bubble-lawyer { 
+            background-color: #F8F9FA; 
+            color: #15204E; 
+            border-radius: 16px 16px 16px 0; 
+            border: 1px solid rgba(21, 32, 78, 0.1);
+        }
+        
+        .step-content { transition: opacity 0.3s ease; }
+        .hidden-step { display: none; opacity: 0; }
+        
+        /* Custom Scrollbar for Chat */
+        #chat-messages::-webkit-scrollbar { width: 6px; }
+        #chat-messages::-webkit-scrollbar-track { background: transparent; }
+        #chat-messages::-webkit-scrollbar-thumb { background: rgba(21, 32, 78, 0.2); border-radius: 10px; }
+        
+        /* Typing indicator animation */
+        .typing-dot {
+            animation: typing 1.4s infinite ease-in-out both;
+        }
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bgmain: '#E1DECD',
+                        textmain: '#15204E',
+                        accent: '#FB880B',
+                        cardbg: '#FFFFFF',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased flex flex-col min-h-screen overflow-x-hidden w-full">
+
+
+<!-- Header -->
+<header class="bg-cardbg/80 backdrop-blur-md border-b border-textmain/10 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <div class="font-extrabold text-2xl text-textmain">Адвокат<span class="text-accent">+</span></div>
+        <div class="hidden md:flex gap-8 font-bold text-sm text-textmain/80">
+            <a href="#about" class="hover:text-accent transition">Про сервіс</a>
+            <a href="#topics" class="hover:text-accent transition">База знань</a>
+            <a href="#how" class="hover:text-accent transition">Як це працює</a>
+        </div>
+        <div class="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-textmain/10">
+            <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+            <span class="text-sm font-bold text-textmain">Юристи онлайн</span>
+        </div>
+    </div>
+</header>
+
+<main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full flex flex-col lg:flex-row gap-8 relative">
+    
+    <!-- LEFT COLUMN: Лендінг та маркетинг -->
+    <div class="w-full lg:w-2/3 flex flex-col gap-12">
+        
+        <!-- Секція 1: Hero & Опитування -->
+        <div class="bg-cardbg rounded-3xl p-6 sm:p-8 lg:p-10 shadow-sm border border-textmain/5">
+            <div class="inline-block px-4 py-1.5 rounded-full bg-accent/10 text-accent font-bold text-sm mb-6">
+                Офіційний сервіс правової допомоги
+            </div>
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-textmain mb-6 leading-tight break-words hyphens-auto">
+                Юридичний захист військовослужбовців та їх сімей
+            </h1>
+            <p class="text-textmain/70 mb-10 text-base sm:text-lg leading-relaxed">
+                Отримайте відповіді на питання щодо ВЛК, виплат та служби за 1 хвилину через нашого асистента або живого адвоката. <strong>Працюємо без вихідних — 24/7.</strong>
+            </p>
+            
+            <!-- WIZARD -->
+            <div id="wizard-container" class="bg-bgmain/30 p-5 sm:p-6 md:p-8 rounded-2xl border border-textmain/10">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-8 h-8 rounded-full bg-accent text-white flex items-center justify-center font-bold">1</div>
+                    <h3 class="text-lg sm:text-xl font-bold text-textmain">З ким ми зараз спілкуємось?</h3>
+                </div>
+                
+                <!-- Step 1 -->
+                <div id="step-1" class="step-content block opacity-100">
+                    <div class="grid sm:grid-cols-2 gap-3 sm:gap-4">
+                        <button onclick="nextStep(2, 'Я військовослужбовець')" class="py-4 px-4 sm:py-5 sm:px-6 bg-cardbg border-2 border-transparent hover:border-accent rounded-xl font-bold text-base sm:text-lg text-textmain transition flex flex-col items-center gap-2 sm:gap-3 shadow-sm hover:shadow-md group">
+                            <span class="text-3xl sm:text-4xl group-hover:scale-110 transition-transform">🪖</span> 
+                            <span>Я військовослужбовець</span>
+                        </button>
+                        <button onclick="nextStep(2, 'Я родич військовослужбовця')" class="py-4 px-4 sm:py-5 sm:px-6 bg-cardbg border-2 border-transparent hover:border-accent rounded-xl font-bold text-base sm:text-lg text-textmain transition flex flex-col items-center gap-2 sm:gap-3 shadow-sm hover:shadow-md group">
+                            <span class="text-3xl sm:text-4xl group-hover:scale-110 transition-transform">👨‍👩‍👧</span> 
+                            <span class="text-center">Я родич військового</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div id="step-2" class="step-content hidden-step">
+                    <p class="text-textmain/80 font-medium mb-4">Введіть номер військової частини (наприклад, 79 ОДШБр):</p>
+                    <div class="flex gap-2">
+                        <input type="text" id="unit-input" placeholder="Номер В/Ч..." class="flex-grow p-4 border border-textmain/20 rounded-xl focus:border-accent focus:ring-1 focus:ring-accent outline-none text-lg bg-cardbg text-textmain">
+                        <button onclick="submitUnit()" class="py-4 px-8 bg-accent hover:bg-accent/90 text-white font-bold rounded-xl shadow-md transition">Далі</button>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div id="step-3" class="step-content hidden-step">
+                    <p class="text-textmain/80 font-medium mb-4">Оберіть тему вашого звернення:</p>
+                    <div class="grid sm:grid-cols-2 gap-3">
+                        <button onclick="selectTopic('ВЛК та поранення')" class="p-4 bg-cardbg border border-textmain/10 hover:border-accent rounded-xl text-left shadow-sm transition">
+                            <span class="text-xl mb-1 block font-bold text-textmain">🏥 ВЛК та поранення</span>
+                            <span class="text-sm text-textmain/60">Алгоритми дій, відпустки</span>
+                        </button>
+                        <button onclick="selectTopic('Виплати')" class="p-4 bg-cardbg border border-textmain/10 hover:border-accent rounded-xl text-left shadow-sm transition">
+                            <span class="text-xl mb-1 block font-bold text-textmain">💰 Виплати та гарантії</span>
+                            <span class="text-sm text-textmain/60">Бойові 100 000 грн, житло</span>
+                        </button>
+                        <button onclick="selectTopic('Мобілізація / УБД')" class="p-4 bg-cardbg border border-textmain/10 hover:border-accent rounded-xl text-left shadow-sm transition">
+                            <span class="text-xl mb-1 block font-bold text-textmain">📋 Служба та УБД</span>
+                            <span class="text-sm text-textmain/60">Збір документів, відстрочка</span>
+                        </button>
+                        <button onclick="selectTopic('Бібліотека рапортів')" class="p-4 bg-cardbg border border-textmain/10 hover:border-accent rounded-xl text-left shadow-sm transition">
+                            <span class="text-xl mb-1 block font-bold text-textmain">📚 Рапорти</span>
+                            <span class="text-sm text-textmain/60">Готові шаблони документів</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Секція 1.5: Державна гарантія (в стилі скріншоту) -->
+        <div class="bg-textmain rounded-3xl p-6 md:p-8 flex flex-col md:flex-row items-center gap-6 shadow-lg border border-white/5 relative overflow-hidden">
+            <!-- Decorative light effect -->
+            <div class="absolute -left-12 -top-12 w-40 h-40 bg-blue-500 rounded-full blur-[60px] opacity-20 pointer-events-none"></div>
+            
+            <div class="w-16 h-16 rounded-full bg-[#1E3A8A]/50 flex items-center justify-center flex-shrink-0 border border-blue-400/20 shadow-[0_0_20px_rgba(37,99,235,0.15)] z-10">
+                <span class="text-2xl">🇺🇦</span>
+            </div>
+            
+            <div class="text-center md:text-left z-10">
+                <h3 class="text-xl md:text-2xl font-extrabold text-white mb-2 tracking-wide">Державна гарантія безоплатної допомоги</h3>
+                <p class="text-white/70 text-sm md:text-base leading-relaxed">
+                    Військові та їх сім'ї мають право на безоплатну первинну правову допомогу згідно із законом. Підтримується НААУ.
+                </p>
+            </div>
+        </div>
+
+        <!-- Секція 2: Статистика (Trust Triggers) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+            <div class="bg-cardbg p-6 rounded-2xl shadow-sm border border-textmain/5">
+                <div class="text-4xl font-extrabold text-accent mb-2">22 млн ₴</div>
+                <div class="text-sm font-bold text-textmain/70 uppercase tracking-wide">Повернуто військовим</div>
+            </div>
+            <div class="bg-cardbg p-6 rounded-2xl shadow-sm border border-textmain/5">
+                <div class="text-4xl font-extrabold text-accent mb-2">650 000+</div>
+                <div class="text-sm font-bold text-textmain/70 uppercase tracking-wide">Безкоштовних консультацій</div>
+            </div>
+            <div class="bg-cardbg p-6 rounded-2xl shadow-sm border border-textmain/5">
+                <div class="text-4xl font-extrabold text-accent mb-2">470+</div>
+                <div class="text-sm font-bold text-textmain/70 uppercase tracking-wide">Кваліфікованих адвокатів</div>
+            </div>
+        </div>
+
+        <!-- Секція 3: Інтерактивний лід-магніт -->
+        <div class="bg-textmain text-white rounded-3xl p-10 shadow-lg relative overflow-hidden">
+            <!-- Декоративні елементи -->
+            <div class="absolute -right-10 -top-10 w-40 h-40 bg-accent/20 rounded-full blur-2xl"></div>
+            <div class="absolute -left-10 -bottom-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
+            
+            <div class="relative z-10 text-center md:text-left flex flex-col md:flex-row items-center gap-8">
+                <div class="flex-grow">
+                    <h2 class="text-3xl font-extrabold mb-4">Чи маєте ви право на 100 000 грн виплат?</h2>
+                    <p class="text-white/80 text-lg mb-0">Дайте відповідь на 3 простих запитання в нашому чаті та дізнайтесь точну суму, яка вам належить за законом.</p>
+                </div>
+                <div class="flex-shrink-0">
+                    <button onclick="triggerQuizChat()" class="px-8 py-4 bg-accent hover:bg-white hover:text-accent text-white font-extrabold rounded-xl shadow-lg transition-colors text-lg whitespace-nowrap">
+                        Перевірити зараз
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Секція 4: Як це працює -->
+        <div id="how" class="py-8">
+            <h2 class="text-3xl font-extrabold text-textmain text-center mb-12">Як ми вирішуємо вашу проблему</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+                <!-- Connecting line for desktop -->
+                <div class="hidden md:block absolute top-8 left-[16.6%] right-[16.6%] h-0.5 bg-textmain/10 z-0"></div>
+                
+                <div class="relative z-10 text-center">
+                    <div class="w-16 h-16 rounded-full bg-cardbg border-4 border-bgmain shadow-md flex items-center justify-center text-2xl font-extrabold text-accent mx-auto mb-6">1</div>
+                    <h4 class="font-bold text-xl text-textmain mb-3">Вибір ситуації</h4>
+                    <p class="text-textmain/70">Обираєте вашу роль та тему проблеми прямо на цьому сайті.</p>
+                </div>
+                <div class="relative z-10 text-center">
+                    <div class="w-16 h-16 rounded-full bg-cardbg border-4 border-bgmain shadow-md flex items-center justify-center text-2xl font-extrabold text-accent mx-auto mb-6">2</div>
+                    <h4 class="font-bold text-xl text-textmain mb-3">Миттєва відповідь</h4>
+                    <p class="text-textmain/70">Наш асистент видає інструкції та необхідні шаблони за 1 секунду.</p>
+                </div>
+                <div class="relative z-10 text-center">
+                    <div class="w-16 h-16 rounded-full bg-cardbg border-4 border-bgmain shadow-md flex items-center justify-center text-2xl font-extrabold text-accent mx-auto mb-6">3</div>
+                    <h4 class="font-bold text-xl text-textmain mb-3">Підключення адвоката</h4>
+                    <p class="text-textmain/70">У цей же чат заходить живий юрист з НААУ, якщо справа складна.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Відступ знизу -->
+        <div class="h-8"></div>
+
+    </div>
+
+    <!-- RIGHT COLUMN: Фіксований Чат (Desktop) / Модалка (Mobile) -->
+    <div id="chat-container" class="fixed inset-0 z-50 transform translate-y-full lg:translate-y-0 transition-transform duration-300 lg:relative lg:inset-auto lg:z-auto w-full lg:w-1/3 flex flex-col">
+        <!-- Mobile Chat Header / Close Button -->
+        <div class="lg:hidden absolute top-3 right-3 z-50">
+            <button onclick="toggleMobileChat()" class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-white/40 transition">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+
+        <!-- Робимо його sticky з динамічною висотою для десктопу, та full height для мобайлу -->
+        <div class="bg-cardbg lg:rounded-3xl shadow-2xl lg:shadow-xl border-t lg:border border-textmain/10 flex flex-col h-full lg:h-[calc(100vh-8rem)] lg:min-h-[500px] lg:sticky lg:top-24 overflow-hidden">
+            <!-- Chat Header -->
+            <div class="bg-textmain p-4 flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-cardbg flex items-center justify-center overflow-hidden border-2 border-green-500 shadow-sm relative">
+                    <img src="https://i.pravatar.cc/150?img=11" alt="Lawyer" class="w-full h-full object-cover">
+                </div>
+                <div>
+                    <div class="text-white font-extrabold text-lg leading-tight">Черговий юрист</div>
+                    <div class="text-green-400 text-xs font-bold flex items-center gap-1.5 mt-0.5 tracking-wide">
+                        <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div> ОНЛАЙН
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Chat Messages -->
+            <div id="chat-messages" class="flex-grow p-5 bg-cardbg flex flex-col gap-5 overflow-y-auto scroll-smooth">
+                <div class="text-xs text-center font-bold text-textmain/40 uppercase tracking-widest my-2">Сьогодні</div>
+                
+                <div class="flex gap-3 max-w-[90%]">
+                    <div class="w-8 h-8 rounded-full bg-bgmain flex-shrink-0 overflow-hidden mt-auto border border-textmain/10">
+                        <img src="https://i.pravatar.cc/150?img=11" alt="Lawyer" class="w-full h-full object-cover">
+                    </div>
+                    <div class="chat-bubble-lawyer p-4 shadow-sm leading-relaxed text-[15px] font-medium">
+                        Вітаємо в сервісі «Адвокат+»! 👋<br><br>Щоб я міг надати вам точну правову допомогу, будь ласка, оберіть вашу ситуацію в меню зліва.
+                    </div>
+                </div>
+                
+                <!-- Typing Indicator (Hidden by default) -->
+                <div id="typing-indicator" class="hidden gap-3 max-w-[90%]">
+                    <div class="w-8 h-8 rounded-full bg-bgmain flex-shrink-0 overflow-hidden mt-auto border border-textmain/10">
+                        <img src="https://i.pravatar.cc/150?img=11" alt="Lawyer" class="w-full h-full object-cover">
+                    </div>
+                    <div class="chat-bubble-lawyer px-4 py-3 shadow-sm flex items-center gap-1">
+                        <div class="w-2 h-2 bg-textmain/40 rounded-full typing-dot"></div>
+                        <div class="w-2 h-2 bg-textmain/40 rounded-full typing-dot"></div>
+                        <div class="w-2 h-2 bg-textmain/40 rounded-full typing-dot"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Chat Input -->
+            <div class="p-4 bg-cardbg border-t border-textmain/10">
+                <div class="flex items-center gap-2 bg-bgmain/50 p-1.5 rounded-full border border-textmain/10 focus-within:border-accent focus-within:ring-1 focus-within:ring-accent transition">
+                    <input type="text" id="chat-input" placeholder="Напишіть повідомлення..." class="flex-grow bg-transparent p-2 pl-4 outline-none text-textmain font-medium placeholder:text-textmain/40" disabled>
+                    <button onclick="sendChatMessage()" id="chat-submit-btn" class="w-10 h-10 rounded-full bg-accent hover:opacity-90 text-white flex items-center justify-center transition shadow-md opacity-50 cursor-not-allowed">
+                        <svg class="w-5 h-5 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                    </button>
+                </div>
+                <div id="chat-hint" class="text-center text-[10px] font-bold text-accent mt-2 uppercase tracking-wide">
+                    Дайте відповідь на питання зліва, щоб розблокувати чат
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<!-- Mobile Chat Toggle Button -->
+<button id="mobile-chat-toggle" onclick="toggleMobileChat()" class="lg:hidden fixed bottom-6 left-4 right-4 z-40 bg-textmain text-white p-4 rounded-2xl shadow-[0_10px_30px_rgba(21,32,78,0.4)] flex items-center justify-between border border-white/10 transition-transform duration-300 hover:bg-textmain/90 active:scale-[0.98]">
+    <div class="flex items-center gap-3">
+        <div class="relative">
+            <div class="w-12 h-12 rounded-full bg-cardbg flex items-center justify-center overflow-hidden border-2 border-green-500 shadow-sm">
+                <img src="https://i.pravatar.cc/150?img=11" alt="Lawyer" class="w-full h-full object-cover">
+            </div>
+            <div class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-textmain rounded-full animate-pulse"></div>
+        </div>
+        <div class="text-left">
+            <div class="font-extrabold text-sm text-white">Юрист онлайн</div>
+            <div class="text-green-400 text-[10px] font-bold tracking-wider">НА ЗВ'ЯЗКУ</div>
+        </div>
+    </div>
+    <div class="bg-accent text-white px-4 py-2 rounded-xl text-sm font-extrabold shadow-md">
+        Відкрити чат
+    </div>
+</button>
+
+<footer class="bg-textmain text-white/50 py-8 text-center text-sm border-t border-white/10 mt-12 pb-28 lg:pb-8">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="font-extrabold text-xl text-white">Адвокат<span class="text-accent">+</span></div>
+        <div>
+            © 2026 Адвокат+. Усі права захищені.<br>
+            Сервіс працює згідно з чинним законодавством України.
+        </div>
+        <div class="flex gap-4 font-bold">
+            <a href="#" class="hover:text-white transition">Політика конфіденційності</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    const chatMessages = document.getElementById('chat-messages');
+    const typingIndicator = document.getElementById('typing-indicator');
+    const chatInput = document.getElementById('chat-input');
+    const chatSubmitBtn = document.getElementById('chat-submit-btn');
+    const chatHint = document.getElementById('chat-hint');
+    
+    let isChatUnlocked = false;
+
+    function toggleMobileChat() {
+        const chatContainer = document.getElementById('chat-container');
+        const isClosed = chatContainer.classList.contains('translate-y-full');
+        
+        if (isClosed) {
+            chatContainer.classList.remove('translate-y-full');
+            document.body.style.overflow = 'hidden'; // Блокуємо скрол фону
+        } else {
+            chatContainer.classList.add('translate-y-full');
+            document.body.style.overflow = '';
+        }
+    }
+
+    function autoOpenChatOnMobile() {
+        if(window.innerWidth < 1024) { // lg breakpoint
+            const chatContainer = document.getElementById('chat-container');
+            if (chatContainer.classList.contains('translate-y-full')) {
+                toggleMobileChat();
+            }
+        }
+    }
+
+    function unlockChat() {
+        if (!isChatUnlocked) {
+            isChatUnlocked = true;
+            chatInput.disabled = false;
+            chatSubmitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            chatHint.style.display = 'none';
+        }
+    }
+
+    function scrollToBottom() {
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function showTyping() {
+        typingIndicator.classList.remove('hidden');
+        typingIndicator.classList.add('flex');
+        chatMessages.appendChild(typingIndicator); // Переміщуємо вниз
+        scrollToBottom();
+    }
+
+    function hideTyping() {
+        typingIndicator.classList.add('hidden');
+        typingIndicator.classList.remove('flex');
+    }
+
+    function addMessage(text, isUser = true) {
+        hideTyping();
+        const msgDiv = document.createElement('div');
+        
+        if (isUser) {
+            msgDiv.className = 'flex justify-end gap-3 max-w-[90%] ml-auto mt-2';
+            msgDiv.innerHTML = `<div class="chat-bubble-user p-4 shadow-sm leading-relaxed text-[15px] font-medium">${text}</div>`;
+        } else {
+            msgDiv.className = 'flex gap-3 max-w-[90%] mt-2';
+            msgDiv.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-bgmain flex-shrink-0 overflow-hidden mt-auto border border-textmain/10">
+                    <img src="https://i.pravatar.cc/150?img=11" alt="Lawyer" class="w-full h-full object-cover">
+                </div>
+                <div class="chat-bubble-lawyer p-4 shadow-sm leading-relaxed text-[15px] font-medium">${text}</div>
+            `;
+        }
+        
+        chatMessages.appendChild(msgDiv);
+        scrollToBottom();
+    }
+
+    function sendChatMessage() {
+        if(!isChatUnlocked) return;
+        
+        const text = chatInput.value.trim();
+        if(text) {
+            addMessage(text, true);
+            chatInput.value = '';
+            
+            showTyping();
+            setTimeout(() => {
+                addMessage("Прийнято. Ваш запит обробляється. Зачекайте хвилину, аналізуємо...", false);
+            }, 1500);
+        }
+    }
+
+    function nextStep(stepNum, userReply) {
+        if(userReply) addMessage(userReply, true);
+        
+        // Сховати всі кроки
+        document.querySelectorAll('.step-content').forEach(el => {
+            el.classList.add('hidden-step');
+            el.classList.remove('block');
+        });
+        
+        // Показати потрібний крок
+        const nextEl = document.getElementById('step-' + stepNum);
+        nextEl.classList.remove('hidden-step');
+        nextEl.classList.add('block');
+        
+        showTyping();
+        setTimeout(() => {
+            if(stepNum === 2) {
+                addMessage("Зрозумів. Введіть, будь ласка, номер вашої військової частини.", false);
+            } else if (stepNum === 3) {
+                unlockChat();
+                addMessage("Дякую. Оберіть тему вашого звернення зліва або просто напишіть питання в цей чат.", false);
+            }
+        }, 1000);
+    }
+
+    function submitUnit() {
+        const unit = document.getElementById('unit-input').value;
+        if(unit.trim()) {
+            nextStep(3, "Моя В/Ч: " + unit);
+        }
+    }
+
+    function selectTopic(topic) {
+        addMessage("Мене цікавить: " + topic, true);
+        showTyping();
+        
+        setTimeout(() => {
+            let reply = "Опишіть вашу ситуацію детально або поставте питання. Ми підготуємо відповідь та необхідні документи.";
+            
+            if(topic.includes('ВЛК')) {
+                reply = "Чудово. Для питань по ВЛК нам потрібно знати етап. Ви тільки направлені, чи вже проходите комісію? Опишіть ситуацію коротко нижче. 👇";
+            } else if(topic.includes('Виплати')) {
+                reply = "Зрозумів. Напишіть, про які саме виплати йде мова (бойові, за поранення, при звільненні)?";
+            } else if(topic.includes('Рапорти')) {
+                reply = "У нас є база з 50+ рапортів. Напишіть, який рапорт вам потрібен (наприклад: 'рапорт на відпустку за сімейними обставинами'), і я надішлю шаблон.";
+            }
+            
+            addMessage(reply, false);
+            autoOpenChatOnMobile();
+            chatInput.focus();
+        }, 1200);
+    }
+    
+    function triggerQuizChat() {
+        addMessage("Хочу перевірити право на 100 000 грн", true);
+        showTyping();
+        autoOpenChatOnMobile();
+        setTimeout(() => {
+            addMessage("Добре, давайте перевіримо. Дайте відповідь на 3 коротких питання.\n\n1. Чи брали ви безпосередню участь у бойових діях або забезпеченні здійснення заходів з національної безпеки?", false);
+            unlockChat();
+        }, 1500);
+    }
+    
+    // Відправка повідомлення по Enter
+    chatInput.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') sendChatMessage();
+    });
+</script>
+</body>
+</html>
