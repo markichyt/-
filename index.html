@@ -59,7 +59,112 @@
         
         .step-content { transition: opacity 0.3s ease; }
         .hidden-step { display: none; opacity: 0; }
-        
+
+        /* ── Consultant Slider ── */
+        .c-slider-viewport {
+            overflow: hidden;
+            border-radius: 20px;
+        }
+        .c-slider-track {
+            display: flex;
+            gap: 18px;
+            transition: transform 0.42s cubic-bezier(.4,0,.2,1);
+            will-change: transform;
+        }
+        .c-card {
+            flex: 0 0 210px;
+            min-width: 210px;
+            background: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(21,32,78,0.08);
+            box-shadow: 0 4px 18px rgba(21,32,78,0.07);
+            transition: transform 0.25s, box-shadow 0.25s;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .c-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 32px rgba(21,32,78,0.13);
+        }
+        .c-card-img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            object-position: top center;
+            display: block;
+            background: #E1DECD;
+        }
+        .c-badge-premium {
+            position: absolute; top: 10px; left: 10px;
+            background: #FB880B; color: #fff;
+            font-size: 10px; font-weight: 700;
+            padding: 3px 9px; border-radius: 20px;
+            display: flex; align-items: center; gap: 3px;
+            letter-spacing: .04em;
+        }
+        .c-badge-top {
+            position: absolute; top: 10px; right: 10px;
+            background: #15204E; color: #fff;
+            font-size: 10px; font-weight: 700;
+            padding: 3px 9px; border-radius: 20px;
+        }
+        .c-card-body {
+            padding: 14px 14px 16px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            background: #FFFFFF;
+            border-top: 1px solid rgba(21,32,78,0.07);
+        }
+        .c-card-name {
+            font-size: 14px; font-weight: 800;
+            color: #15204E; line-height: 1.3; margin-bottom: 3px;
+        }
+        .c-card-type {
+            display: block;
+            font-size: 11px; font-weight: 700;
+            color: #FB880B; margin-bottom: 7px; letter-spacing: .03em;
+        }
+        .c-card-geo {
+            font-size: 11px; color: rgba(21,32,78,.5);
+            font-weight: 500; display: flex; align-items: center; gap: 4px;
+            margin-bottom: 12px;
+        }
+        .c-card-btn {
+            display: block;
+            width: 100%;
+            margin-top: auto;
+            padding: 9px 0;
+            background: #FB880B;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            text-align: center;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            letter-spacing: .03em;
+            transition: background .2s, transform .15s;
+        }
+        .c-card-btn:hover {
+            background: #e07a0a;
+            transform: scale(1.02);
+        }
+        .c-nav-btn {
+            width: 42px; height: 42px; border-radius: 50%;
+            background: #fff; border: 2px solid rgba(21,32,78,.12);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; flex-shrink: 0;
+            box-shadow: 0 2px 10px rgba(21,32,78,.08);
+            transition: background .2s, border-color .2s, opacity .2s;
+        }
+        .c-nav-btn:hover { background: #FB880B; border-color: #FB880B; }
+        .c-nav-btn:hover svg { color: #fff; }
+        .c-nav-btn svg { width: 18px; height: 18px; color: #15204E; transition: color .2s; }
+        .c-nav-btn:disabled { opacity: .3; cursor: default; pointer-events: none; }
+
         /* Custom Scrollbar for Chat */
         #chat-messages::-webkit-scrollbar { width: 6px; }
         #chat-messages::-webkit-scrollbar-track { background: transparent; }
@@ -200,20 +305,191 @@
             </div>
         </div>
 
-        <!-- Секція 2: Статистика (Trust Triggers) -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-            <div class="bg-cardbg p-6 rounded-2xl shadow-sm border border-textmain/5">
-                <div class="text-4xl font-extrabold text-accent mb-2">22 млн ₴</div>
-                <div class="text-sm font-bold text-textmain/70 uppercase tracking-wide">Повернуто військовим</div>
+        <!-- Секція 2: Слайдер консультантів -->
+        <div id="consultants" class="py-2">
+            <div class="flex items-center justify-between mb-7">
+                <div>
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-accent font-bold text-xs mb-2 uppercase tracking-wide">
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" fill-rule="evenodd" clip-rule="evenodd"/></svg>
+                        Верифіковані фахівці НААУ
+                    </div>
+                    <h2 class="text-2xl font-extrabold text-textmain">Всі консультанти</h2>
+                </div>
+                <div class="flex gap-2">
+                    <button id="cPrev" class="c-nav-btn" aria-label="Попередній">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+                    </button>
+                    <button id="cNext" class="c-nav-btn" aria-label="Наступний">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
             </div>
-            <div class="bg-cardbg p-6 rounded-2xl shadow-sm border border-textmain/5">
-                <div class="text-4xl font-extrabold text-accent mb-2">650 000+</div>
-                <div class="text-sm font-bold text-textmain/70 uppercase tracking-wide">Безкоштовних консультацій</div>
-            </div>
-            <div class="bg-cardbg p-6 rounded-2xl shadow-sm border border-textmain/5">
-                <div class="text-4xl font-extrabold text-accent mb-2">470+</div>
-                <div class="text-sm font-bold text-textmain/70 uppercase tracking-wide">Кваліфікованих адвокатів</div>
-            </div>
+
+            <div class="c-slider-viewport">
+                <div class="c-slider-track" id="cTrack">
+
+                    <!-- Топ 1 -->
+                    <div class="c-card">
+                        <span class="c-badge-premium">★ 75.97</span>
+                        <span class="c-badge-top">Топ 1</span>
+                        <img class="c-card-img" src="https://consultant.net.ua/storage/media/738/conversions/riazEYSwc2pzgAebgwE9rMIEtjZT834LcFtHBuEt-big_avatar_optimized.png" alt="Студенцов Олександр">
+                        <div class="c-card-body">
+                            <p class="c-card-name">Студенцов<br>Олександр Олександрович</p>
+                            <span class="c-card-type">Юрист</span>
+                            <span class="c-card-geo">
+                                <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                Україна / Київ
+                            </span>
+                            <button class="c-card-btn">Звернутися</button>
+                        </div>
+                    </div>
+
+                    <!-- Топ 2 -->
+                    <div class="c-card">
+                        <span class="c-badge-premium">★ 68.17</span>
+                        <span class="c-badge-top">Топ 2</span>
+                        <img class="c-card-img" src="https://consultant.net.ua/storage/media/758/conversions/Eb4B7CZQP0CydoZqIxD5nWaxtWmJMqRv8FLrbsyg-big_avatar_optimized.png" alt="Грицай Микола">
+                        <div class="c-card-body">
+                            <p class="c-card-name">Грицай<br>Микола Ігорович</p>
+                            <span class="c-card-type">Юрист</span>
+                            <span class="c-card-geo">
+                                <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                Україна / Київ
+                            </span>
+                            <button class="c-card-btn">Звернутися</button>
+                        </div>
+                    </div>
+
+                    <!-- Топ 3 -->
+                    <div class="c-card">
+                        <span class="c-badge-premium">★ 56.41</span>
+                        <span class="c-badge-top">Топ 3</span>
+                        <img class="c-card-img" src="https://consultant.net.ua/storage/media/638/conversions/SAhZsHvmK5WykgRP79QMk7Hg3RGtUC2zX9F3mK50-big_avatar_optimized.png" alt="Одинцова Валерія">
+                        <div class="c-card-body">
+                            <p class="c-card-name">Одинцова<br>Валерія</p>
+                            <span class="c-card-type">Юрист</span>
+                            <span class="c-card-geo">
+                                <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                Україна / Київ
+                            </span>
+                            <button class="c-card-btn">Звернутися</button>
+                        </div>
+                    </div>
+
+                    <!-- Топ 4 -->
+                    <div class="c-card">
+                        <span class="c-badge-premium">★ 56.36</span>
+                        <span class="c-badge-top">Топ 4</span>
+                        <img class="c-card-img" src="https://consultant.net.ua/storage/media/8502/conversions/KNktTdp5Oln7PmQ73lcTOBrhc6olttw4-big_avatar_optimized.png" alt="Боревич Марія">
+                        <div class="c-card-body">
+                            <p class="c-card-name">Боревич<br>Марія</p>
+                            <span class="c-card-type">Юрист</span>
+                            <span class="c-card-geo">
+                                <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                Україна / Київ
+                            </span>
+                            <button class="c-card-btn">Звернутися</button>
+                        </div>
+                    </div>
+
+                    <!-- Топ 5 -->
+                    <div class="c-card">
+                        <span class="c-badge-premium">★ 51.41</span>
+                        <span class="c-badge-top">Топ 5</span>
+                        <img class="c-card-img" src="https://consultant.net.ua/storage/media/572/conversions/E8g5W6SPLfNgTEJjeklFbZT2n7d9w57fu7sImWDP-big_avatar_optimized.png" alt="Баладига Сергій">
+                        <div class="c-card-body">
+                            <p class="c-card-name">Баладига<br>Сергій</p>
+                            <span class="c-card-type">Юрист</span>
+                            <span class="c-card-geo">
+                                <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                Україна / Київ
+                            </span>
+                            <button class="c-card-btn">Звернутися</button>
+                        </div>
+                    </div>
+
+                    <!-- Топ 6 -->
+                    <div class="c-card">
+                        <span class="c-badge-premium">★ 51.03</span>
+                        <span class="c-badge-top">Топ 6</span>
+                        <img class="c-card-img" src="https://consultant.net.ua/storage/media/1937/conversions/oqMzhy6gwkrVxwcPr0Nzpxdat9NwvLNw-big_avatar_optimized.png" alt="Макеєв Дмитро">
+                        <div class="c-card-body">
+                            <p class="c-card-name">Макеєв<br>Дмитро Вячеславович</p>
+                            <span class="c-card-type">Юрист</span>
+                            <span class="c-card-geo">
+                                <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                Україна / Кременчук
+                            </span>
+                            <button class="c-card-btn">Звернутися</button>
+                        </div>
+                    </div>
+
+                    <!-- Топ 7 -->
+                    <div class="c-card">
+                        <span class="c-badge-premium">★ 44.37</span>
+                        <span class="c-badge-top">Топ 7</span>
+                        <img class="c-card-img" src="https://consultant.net.ua/storage/media/908/conversions/hJKsd2GN9boemcOwBtN1XNix3ZXYJnvSQ8eLkyCL-big_avatar_optimized.png" alt="Хижавська Олеся">
+                        <div class="c-card-body">
+                            <p class="c-card-name">Хижавська<br>Олеся Ярославівна</p>
+                            <span class="c-card-type">Юрист</span>
+                            <span class="c-card-geo">
+                                <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                Україна / Хмельницька Обл.
+                            </span>
+                            <button class="c-card-btn">Звернутися</button>
+                        </div>
+                    </div>
+
+                    <!-- Топ 8 -->
+                    <div class="c-card">
+                        <span class="c-badge-premium">★ 41.70</span>
+                        <span class="c-badge-top">Топ 8</span>
+                        <img class="c-card-img" src="https://consultant.net.ua/storage/media/542/conversions/7FA70MCx9jWL8W9mDSHAEuLcfS6uf8UulHewXEXT-big_avatar_optimized.png" alt="Молчанов Олег">
+                        <div class="c-card-body">
+                            <p class="c-card-name">Молчанов<br>Олег Вікторович</p>
+                            <span class="c-card-type">Юрист</span>
+                            <span class="c-card-geo">
+                                <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                Україна / Київ
+                            </span>
+                            <button class="c-card-btn">Звернутися</button>
+                        </div>
+                    </div>
+
+                    <!-- Топ 9 -->
+                    <div class="c-card">
+                        <span class="c-badge-premium">★ 36.97</span>
+                        <span class="c-badge-top">Топ 9</span>
+                        <img class="c-card-img" src="https://consultant.net.ua/storage/media/723/conversions/kT5rjLSQlG1IQFb8lAV1o2w0Uu32gQy6LFbpQt4h-big_avatar_optimized.png" alt="Миколаєнко Олена">
+                        <div class="c-card-body">
+                            <p class="c-card-name">Миколаєнко<br>Олена</p>
+                            <span class="c-card-type">Юрист</span>
+                            <span class="c-card-geo">
+                                <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                Україна / Київ
+                            </span>
+                            <button class="c-card-btn">Звернутися</button>
+                        </div>
+                    </div>
+
+                    <!-- Топ 10 -->
+                    <div class="c-card">
+                        <span class="c-badge-premium">★ 36.49</span>
+                        <span class="c-badge-top">Топ 10</span>
+                        <img class="c-card-img" src="https://consultant.net.ua/storage/media/973/conversions/SGWRolfKUOzBKGu7LADbPnuC9h52CPP2CYrvkIDs-big_avatar_optimized.png" alt="Рожнів Ярослав">
+                        <div class="c-card-body">
+                            <p class="c-card-name">Рожнів<br>Ярослав Ярославович</p>
+                            <span class="c-card-type">Юрист</span>
+                            <span class="c-card-geo">
+                                <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                Україна / Полтавська Обл.
+                            </span>
+                            <button class="c-card-btn">Звернутися</button>
+                        </div>
+                    </div>
+
+                </div><!-- /c-slider-track -->
+            </div><!-- /c-slider-viewport -->
         </div>
 
         <!-- Секція 3: Інтерактивний лід-магніт -->
@@ -236,12 +512,12 @@
         </div>
 
         <!-- Секція 4: Як це працює -->
-        <div id="how" class="py-8">
+        <div id="how" class="py-2">
             <h2 class="text-3xl font-extrabold text-textmain text-center mb-12">Як ми вирішуємо вашу проблему</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
                 <!-- Connecting line for desktop -->
                 <div class="hidden md:block absolute top-8 left-[16.6%] right-[16.6%] h-0.5 bg-textmain/10 z-0"></div>
-                
+
                 <div class="relative z-10 text-center">
                     <div class="w-16 h-16 rounded-full bg-cardbg border-4 border-bgmain shadow-md flex items-center justify-center text-2xl font-extrabold text-accent mx-auto mb-6">1</div>
                     <h4 class="font-bold text-xl text-textmain mb-3">Вибір ситуації</h4>
@@ -523,6 +799,54 @@
     chatInput.addEventListener('keypress', function (e) {
         if (e.key === 'Enter') sendChatMessage();
     });
+
+    // ── Consultant Slider Logic ──
+    (function() {
+        const track   = document.getElementById('cTrack');
+        const btnPrev = document.getElementById('cPrev');
+        const btnNext = document.getElementById('cNext');
+        if (!track || !btnPrev || !btnNext) return;
+
+        const CARD_W  = 210 + 18; // card width + gap
+        let   current = 0;
+
+        function getVisible() {
+            const vw = track.parentElement.offsetWidth;
+            return Math.max(1, Math.floor(vw / CARD_W));
+        }
+
+        function totalCards() {
+            return track.children.length;
+        }
+
+        function clamp(val) {
+            const max = Math.max(0, totalCards() - getVisible());
+            return Math.min(Math.max(0, val), max);
+        }
+
+        function go(delta) {
+            current = clamp(current + delta);
+            track.style.transform = `translateX(-${current * CARD_W}px)`;
+            btnPrev.disabled = current === 0;
+            btnNext.disabled = current >= totalCards() - getVisible();
+        }
+
+        btnPrev.addEventListener('click', () => go(-1));
+        btnNext.addEventListener('click', () => go(1));
+
+        // init state
+        go(0);
+
+        // touch/swipe support
+        let startX = 0;
+        track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+        track.addEventListener('touchend',   e => {
+            const dx = e.changedTouches[0].clientX - startX;
+            if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
+        }, { passive: true });
+
+        window.addEventListener('resize', () => go(0));
+    })();
 </script>
 </body>
 </html>
