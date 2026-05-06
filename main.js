@@ -1193,14 +1193,18 @@
             avatarVideo.pause();
           } else {
             avatarSection.classList.add('visible');
-            avatarVideo.muted = false;
-            avatarVideo.play().catch(function() {
-              // Browser blocked unmuted autoplay — fallback to muted
-              avatarVideo.muted = true;
-              if (avatarSoundBtn) { avatarSoundBtn.innerHTML = '&#9834;&#xFE0E;'; avatarSoundBtn.classList.add('muted'); }
-              avatarVideo.play().catch(function() {});
-            });
-            if (avatarSoundBtn) { avatarSoundBtn.innerHTML = '&#9834;'; avatarSoundBtn.classList.remove('muted'); }
+            // Only play video if this card is actually visible (not pre-rendered in background)
+            var ppCard = avatarVideo.closest('.stack-card');
+            var isVisible = ppCard && ppCard.classList.contains('active');
+            if (isVisible) {
+              avatarVideo.muted = false;
+              avatarVideo.play().catch(function() {
+                avatarVideo.muted = true;
+                if (avatarSoundBtn) { avatarSoundBtn.innerHTML = '&#9834;&#xFE0E;'; avatarSoundBtn.classList.add('muted'); }
+                avatarVideo.play().catch(function() {});
+              });
+              if (avatarSoundBtn) { avatarSoundBtn.innerHTML = '&#9834;'; avatarSoundBtn.classList.remove('muted'); }
+            }
           }
         }
       }
