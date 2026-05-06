@@ -356,57 +356,138 @@ textarea.card-input {
   margin-bottom: 12px;
 }
 
-/* ---- Category tree (services) ---- */
-.category-tree { max-height: 260px; overflow-y: auto; scrollbar-width: none; -ms-overflow-style: none; }
+/* ---- Category tree (services) — redesigned ---- */
+.category-tree { max-height: 340px; overflow-y: auto; scrollbar-width: none; -ms-overflow-style: none; }
 .category-tree::-webkit-scrollbar { display: none; }
-.category-group { margin-bottom: 4px; }
-.category-header {
-  font-size: 14px;
+.category-group { margin-bottom: 0; }
+
+/* Category row — icon card style */
+.svc-category {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 0;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s;
+}
+.svc-category:hover { background: #fafbfc; margin: 0 -24px; padding-left: 24px; padding-right: 24px; }
+.svc-category-name {
+  font-size: 15px;
   font-weight: 600;
   color: var(--text-dark);
-  padding: 8px 0;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
+  flex: 1;
 }
-.category-header::before {
-  content: '+';
-  display: inline-block;
-  width: 18px;
-  font-weight: 300;
-  color: var(--text-light);
-  font-size: 16px;
-}
-.category-group.open .category-header::before { content: '-'; }
-.category-items { display: none; padding-left: 18px; }
-.category-group.open .category-items { display: block; }
-.category-item {
+.svc-category-chevron {
   font-size: 14px;
-  color: var(--text-muted);
-  padding: 6px 0;
+  color: var(--text-light);
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+.svc-category-chevron::after { content: '\25B8'; }
+.category-group.open .svc-category-chevron { transform: rotate(90deg); }
+
+/* Expandable body */
+.svc-category-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  padding-left: 4px;
+}
+.category-group.open .svc-category-body {
+  max-height: 500px;
+}
+
+/* Subcategory label */
+.svc-subcategory-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-dark);
+  padding: 10px 0 6px 10px;
+  border-left: 2px solid var(--accent);
+  margin-top: 6px;
+  margin-bottom: 4px;
+}
+
+/* Chips container */
+.svc-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0 0 6px 12px;
+}
+
+/* Individual chip */
+.svc-chip {
+  background: #f5f7fa;
+  border: 1px solid #e5e7eb;
+  color: #444;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 13px;
   cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+}
+.svc-chip:hover {
+  border-color: #cbd5e1;
+}
+.svc-chip.selected {
+  background: rgba(0,180,216,0.1);
+  border-color: #00b4d8;
+  color: #00b4d8;
+  font-weight: 600;
+  animation: svc-chip-pop 0.2s ease;
+}
+@keyframes svc-chip-pop {
+  0% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+/* Selected counter badge */
+.svc-counter {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-light);
+  margin-top: 10px;
+  padding: 4px 14px;
+  border-radius: 20px;
+  transition: all 0.2s;
+  display: none;
+}
+.svc-counter.visible {
+  display: block;
+  background: rgba(0,180,216,0.1);
+  color: #00b4d8;
+  font-weight: 600;
+}
+
+/* Search input with icon */
+.svc-search-wrap {
+  position: relative;
+  margin-bottom: 12px;
+}
+.svc-search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #aab4c2;
   display: flex;
   align-items: center;
+  pointer-events: none;
 }
-.cat-check {
+.svc-search-icon svg {
   width: 16px;
   height: 16px;
-  border-radius: 4px;
-  border: 1.5px solid #d1d5db;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  margin-right: 8px;
-  flex-shrink: 0;
-  transition: all 0.15s;
 }
-.category-item.selected .cat-check {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #fff;
+.svc-search-input {
+  padding-left: 40px !important;
 }
-.category-item.selected .cat-check::after { content: '\2713'; }
+
+/* Keep subcategory-group for search filtering compatibility */
+.subcategory-group { margin-bottom: 2px; }
 
 /* ---- Slider ---- */
 .range-value {
@@ -950,28 +1031,7 @@ textarea.card-input {
   margin-bottom: 10px;
 }
 
-/* ---------- Subcategory (3-level tree) ---------- */
-.subcategory-group { margin-bottom: 2px; }
-.subcategory-header {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-muted);
-  padding: 6px 0;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-}
-.subcategory-header::before {
-  content: '+';
-  display: inline-block;
-  width: 16px;
-  font-weight: 300;
-  color: var(--text-light);
-  font-size: 14px;
-}
-.subcategory-group.open .subcategory-header::before { content: '-'; }
-.subcategory-items { display: none; padding-left: 16px; }
-.subcategory-group.open .subcategory-items { display: block; }
+/* ---------- Subcategory (3-level tree) — old styles removed, see .svc-* above ---------- */
 
 /* ---------- Profile Carousel ---------- */
 .profile-carousel {

@@ -470,84 +470,114 @@
   function renderServices(s, wrap) {
     var selectedServices = quizData.services || [];
 
+    // Search input with icon
+    var searchWrap = el('div', 'svc-search-wrap');
+    searchWrap.innerHTML = '<span class="svc-search-icon">' + getIconSVG('search') + '</span>';
     var searchInput = document.createElement('input');
     searchInput.type = 'text';
-    searchInput.className = 'card-input search-input';
+    searchInput.className = 'card-input search-input svc-search-input';
     searchInput.placeholder = 'Search services...';
-    wrap.appendChild(searchInput);
+    searchWrap.appendChild(searchInput);
+    wrap.appendChild(searchWrap);
 
     var tree = el('div', 'category-tree');
 
     var categories = [
-      { name:'Family Law', subs:[
+      { name:'Family Law', icon:'scales', color:'#6366f1', subs:[
         { name:'Divorce', items:[{s:'divorce_contested',t:'Contested Divorce'},{s:'divorce_uncontested',t:'Uncontested Divorce'},{s:'divorce_mediation',t:'Divorce Mediation'}]},
         { name:'Property Division', items:[{s:'property_division',t:'Property Division'},{s:'asset_valuation',t:'Asset Valuation'}]},
         { name:'Alimony', items:[{s:'alimony_spousal',t:'Spousal Support'},{s:'alimony_modification',t:'Alimony Modification'}]},
         { name:'Child Custody', items:[{s:'custody_joint',t:'Joint Custody'},{s:'custody_sole',t:'Sole Custody'},{s:'custody_visitation',t:'Visitation Rights'}]},
         { name:'Adoption', items:[{s:'adoption_domestic',t:'Domestic Adoption'},{s:'adoption_international',t:'International Adoption'}]}
       ]},
-      { name:'Criminal Law', subs:[
+      { name:'Criminal Law', icon:'shield', color:'#ef4444', subs:[
         { name:'Criminal Defense', items:[{s:'criminal_defense',t:'General Criminal Defense'},{s:'assault_defense',t:'Assault Defense'}]},
         { name:'DUI Defense', items:[{s:'dui_first',t:'First Offense DUI'},{s:'dui_repeat',t:'Repeat DUI'}]},
         { name:'Drug Offenses', items:[{s:'drug_possession',t:'Drug Possession'},{s:'drug_trafficking',t:'Drug Trafficking'}]},
         { name:'White Collar Crime', items:[{s:'fraud',t:'Fraud'},{s:'embezzlement',t:'Embezzlement'}]}
       ]},
-      { name:'Real Estate', subs:[
+      { name:'Real Estate', icon:'home', color:'#f59e0b', subs:[
         { name:'Transactions', items:[{s:'real_estate_transactions',t:'Real Estate Transactions'},{s:'closings',t:'Closings'}]},
         { name:'Landlord & Tenant', items:[{s:'landlord_tenant',t:'Landlord-Tenant Disputes'},{s:'eviction',t:'Eviction'}]},
         { name:'Zoning & Land Use', items:[{s:'zoning',t:'Zoning'},{s:'land_use',t:'Land Use Permits'}]}
       ]},
-      { name:'Immigration', subs:[
+      { name:'Immigration', icon:'globe', color:'#3b82f6', subs:[
         { name:'Visas', items:[{s:'work_visa',t:'Work Visas'},{s:'family_visa',t:'Family Visas'}]},
         { name:'Green Cards', items:[{s:'green_card_employment',t:'Employment-Based'},{s:'green_card_family',t:'Family-Based'}]},
         { name:'Deportation Defense', items:[{s:'deportation',t:'Deportation Defense'},{s:'asylum',t:'Asylum'}]}
       ]},
-      { name:'Tax & Accounting', subs:[
+      { name:'Tax & Accounting', icon:'dollar', color:'#10b981', subs:[
         { name:'Tax Planning', items:[{s:'tax_planning',t:'Tax Planning'},{s:'tax_compliance',t:'Tax Compliance'}]},
         { name:'Tax Disputes', items:[{s:'tax_disputes',t:'Tax Disputes'},{s:'audit_representation',t:'Audit Representation'}]},
         { name:'Bookkeeping', items:[{s:'bookkeeping',t:'Bookkeeping'},{s:'payroll',t:'Payroll Services'}]}
       ]}
     ];
 
-    categories.forEach(function(cat) {
+    // Counter badge
+    var counterBadge = el('div', 'svc-counter');
+    counterBadge.id = 'svcCounter';
+
+    function updateServiceCount() {
+      var count = selectedServices.length;
+      if (count > 0) {
+        counterBadge.textContent = count + ' service' + (count !== 1 ? 's' : '') + ' selected';
+        counterBadge.classList.add('visible');
+      } else {
+        counterBadge.textContent = '';
+        counterBadge.classList.remove('visible');
+      }
+    }
+
+    categories.forEach(function(cat, catIdx) {
       var grp = el('div', 'category-group');
-      var hdr = el('div', 'category-header', cat.name);
+      // First category open by default
+      if (catIdx === 0) grp.classList.add('open');
+
+      var hdr = el('div', 'svc-category');
+      hdr.innerHTML =
+        '<span class="opt-icon" style="background:' + cat.color + '">' + getIconSVG(cat.icon) + '</span>' +
+        '<span class="svc-category-name">' + cat.name + '</span>' +
+        '<span class="svc-category-chevron"></span>';
       hdr.addEventListener('click', function() { grp.classList.toggle('open'); });
       grp.appendChild(hdr);
 
-      var catItems = el('div', 'category-items');
+      var catBody = el('div', 'svc-category-body');
       cat.subs.forEach(function(sub) {
         var subGrp = el('div', 'subcategory-group');
-        var subHdr = el('div', 'subcategory-header', sub.name);
-        subHdr.addEventListener('click', function(e) { e.stopPropagation(); subGrp.classList.toggle('open'); });
-        subGrp.appendChild(subHdr);
+        var subLabel = el('div', 'svc-subcategory-label');
+        subLabel.style.borderLeftColor = cat.color;
+        subLabel.textContent = sub.name;
+        subGrp.appendChild(subLabel);
 
-        var subItems = el('div', 'subcategory-items');
+        var chips = el('div', 'svc-chips');
         sub.items.forEach(function(it) {
-          var item = el('div', 'category-item');
-          var chk = el('span', 'cat-check');
-          item.appendChild(chk);
-          item.appendChild(document.createTextNode(' ' + it.t));
-          item.dataset.service = it.s;
-          item.dataset.text = it.t.toLowerCase();
-          if (selectedServices.indexOf(it.s) > -1) item.classList.add('selected');
-          item.addEventListener('click', function() {
-            item.classList.toggle('selected');
+          var chip = el('div', 'svc-chip');
+          chip.textContent = it.t;
+          chip.dataset.service = it.s;
+          chip.dataset.text = it.t.toLowerCase();
+          if (selectedServices.indexOf(it.s) > -1) chip.classList.add('selected');
+          chip.addEventListener('click', function() {
+            chip.classList.toggle('selected');
             var idx = selectedServices.indexOf(it.s);
             if (idx > -1) selectedServices.splice(idx, 1);
             else selectedServices.push(it.s);
             quizData.services = selectedServices.slice();
+            updateServiceCount();
           });
-          subItems.appendChild(item);
+          chips.appendChild(chip);
         });
-        subGrp.appendChild(subItems);
-        catItems.appendChild(subGrp);
+        subGrp.appendChild(chips);
+        catBody.appendChild(subGrp);
       });
-      grp.appendChild(catItems);
+      grp.appendChild(catBody);
       tree.appendChild(grp);
     });
 
     wrap.appendChild(tree);
+
+    // Counter badge (before custom input)
+    updateServiceCount();
+    wrap.appendChild(counterBadge);
 
     var customInput = document.createElement('input');
     customInput.type = 'text';
@@ -560,20 +590,20 @@
 
     searchInput.addEventListener('input', function() {
       var q = searchInput.value.toLowerCase();
-      tree.querySelectorAll('.category-item').forEach(function(item) {
-        item.style.display = item.dataset.text.includes(q) ? '' : 'none';
+      tree.querySelectorAll('.svc-chip').forEach(function(chip) {
+        chip.style.display = chip.dataset.text.includes(q) ? '' : 'none';
       });
       tree.querySelectorAll('.subcategory-group').forEach(function(sub) {
         var vis = 0;
-        sub.querySelectorAll('.category-item').forEach(function(it) { if (it.style.display !== 'none') vis++; });
-        if (q) { sub.style.display = vis ? '' : 'none'; if (vis) sub.classList.add('open'); }
-        else { sub.style.display = ''; sub.classList.remove('open'); }
+        sub.querySelectorAll('.svc-chip').forEach(function(c) { if (c.style.display !== 'none') vis++; });
+        if (q) { sub.style.display = vis ? '' : 'none'; }
+        else { sub.style.display = ''; }
       });
       tree.querySelectorAll('.category-group').forEach(function(grp) {
         var vis = 0;
-        grp.querySelectorAll('.category-item').forEach(function(it) { if (it.style.display !== 'none') vis++; });
+        grp.querySelectorAll('.svc-chip').forEach(function(c) { if (c.style.display !== 'none') vis++; });
         if (q) { grp.style.display = vis ? '' : 'none'; if (vis) grp.classList.add('open'); }
-        else { grp.style.display = ''; grp.classList.remove('open'); }
+        else { grp.style.display = ''; }
       });
     });
 
