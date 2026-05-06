@@ -9,11 +9,16 @@
   var quizData = {};
   var history = [];
 
-  var mainCard = document.getElementById('mainCard');
-  var cardContent = document.getElementById('cardContent');
-  var stackCard2 = document.getElementById('stackCard2');
-  var stackCard3 = document.getElementById('stackCard3');
   var backBtn = document.getElementById('backBtn');
+
+  // ---- Card role management ----
+  var cards = [
+    document.getElementById('mainCard'),
+    document.getElementById('stackCard2'),
+    document.getElementById('stackCard3')
+  ];
+  var activeIdx = 0;  // which card in the array is currently active/visible
+  var cardContent = document.getElementById('cardContent'); // points to active card's .card-content
 
   // ---- UTM ----
   (function parseUTM() {
@@ -192,71 +197,15 @@
     if (pctEl) pctEl.textContent = score + '%';
   }
 
-  // ---- Card transition: swipe out right, render new ----
-  function swipeAndRender(dir) {
-    var exitClass = dir === 'right' ? 'exit-right' : 'exit-left';
-
-    // Animate out
-    mainCard.classList.remove('active');
-    mainCard.classList.add(exitClass);
-
-    // Shift back cards forward
-    stackCard2.style.transition = 'all 0.4s cubic-bezier(0.22, 1, 0.36, 1)';
-    stackCard3.style.transition = 'all 0.4s cubic-bezier(0.22, 1, 0.36, 1)';
-    stackCard2.className = 'stack-card active';
-    stackCard3.className = 'stack-card behind-1';
-
-    setTimeout(function() {
-      // Reset: put mainCard back as the active top card with new content
-      mainCard.style.transition = 'none';
-      mainCard.classList.remove(exitClass);
-      mainCard.classList.remove('active');
-      mainCard.classList.add('enter-from-below');
-
-      // Render new content
-      renderSlide(current);
-
-      // Force reflow
-      void mainCard.offsetHeight;
-
-      // Animate in
-      mainCard.style.transition = '';
-      mainCard.className = 'stack-card active';
-      stackCard2.className = 'stack-card behind-1';
-      stackCard3.className = 'stack-card behind-2';
-    }, 420);
-  }
-
-  // ---- Advance ----
-  function advance() {
-    if (current >= TOTAL) return;
-    history.push(current);
-    current++;
-    updateUI();
-
-    if (current === 1) {
-      renderSlide(current);
-      mainCard.className = 'stack-card active';
-    } else {
-      swipeAndRender('right');
-    }
-  }
-
-  // ---- Go back ----
-  function goBack() {
-    if (history.length === 0) return;
-    current = history.pop();
-    if (current === 0) { current = 1; history = []; }
-    updateUI();
-    swipeAndRender('left');
-  }
-
-  backBtn.addEventListener('click', function() { goBack(); });
-
-  // ---- Render slide ----
-  function renderSlide(n) {
-    var s = slides[n - 1];
+  // ---- Render into a specific card element ----
+  function renderSlideInto(cardEl, n) {
+    var contentDiv = cardEl.querySelector('.card-content');
+    // Temporarily point cardContent to this card's content div
+    var prevCardContent = cardContent;
+    cardContent = contentDiv;
     cardContent.innerHTML = '';
+
+    var s = slides[n - 1];
 
     // Question + subtitle
     var qEl = el('div', 'card-question', s.q);
@@ -270,7 +219,6 @@
     if (needsScroll) {
       var scrollWrap = el('div', 'card-scroll');
       cardContent.appendChild(scrollWrap);
-      // Move q and sub into scroll wrap for card types
       if (s.type === 'card' || s.type === 'form' || s.type === 'services' || s.type === 'dualSlider') {
         cardContent.innerHTML = '';
         scrollWrap.appendChild(qEl);
@@ -288,6 +236,116 @@
     else if (s.type === 'dualSlider') renderDualSlider(s, wrap);
     else if (s.type === 'form') renderForm(s, wrap);
     else if (s.type === 'card') renderCard(s, wrap);
+
+    // Restore cardContent reference
+    cardContent = prevCardContent;
+    return cardEl;
+  }
+
+  // ---- Pre-render next slide into behind-1 card ----
+  function preRenderNext() {
+    if (current >= TOTAL) return;
+    // Find the card currently in behind-1 position
+    var behind1Idx = (activeIdx + 1) % 3;
+    var behind1Card = cards[behind1Idx];
+    renderSlideInto(behind1Card, current + 1);
+    // Pause any videos in the pre-rendered card (don't autoplay yet)
+    behind1Card.querySelectorAll('video').forEach(function(v) { v.pause(); });
+  }
+
+  // ---- Card transition: swipe out, promote behind cards ----
+  function swipeAndRender(dir) {
+    var exitClass = dir === 'right' ? 'exit-right' : 'exit-left';
+
+    var activeCard = cards[activeIdx];
+    var behind1Idx = (activeIdx + 1) % 3;
+    var behind2Idx = (activeIdx + 2) % 3;
+    var behind1Card = cards[behind1Idx];
+    var behind2Card = cards[behind2Idx];
+
+    // Animate active card out
+    activeCard.classList.remove('active');
+    activeCard.classList.add(exitClass);
+
+    // Promote behind-1 to active, behind-2 to behind-1
+    behind1Card.style.transition = 'all 0.4s cubic-bezier(0.22, 1, 0.36, 1)';
+    behind2Card.style.transition = 'all 0.4s cubic-bezier(0.22, 1, 0.36, 1)';
+    behind1Card.className = 'stack-card active';
+    behind2Card.className = 'stack-card behind-1';
+
+    setTimeout(function() {
+      // Move exited card to behind-2 position (no animation)
+      activeCard.style.transition = 'none';
+      activeCard.className = 'stack-card behind-2';
+      // Force reflow
+      void activeCard.offsetHeight;
+      activeCard.style.transition = '';
+
+      // Update active index
+      activeIdx = behind1Idx;
+      // Update cardContent to point to new active card's .card-content
+      cardContent = cards[activeIdx].querySelector('.card-content');
+
+      // Activate videos in the now-active card
+      cards[activeIdx].querySelectorAll('video').forEach(function(v) {
+        v.currentTime = 0;
+        v.play().catch(function() {});
+      });
+
+      // Pause and reset videos in the exited card
+      activeCard.querySelectorAll('video').forEach(function(v) {
+        v.pause();
+        v.currentTime = 0;
+      });
+
+      // Pre-render the next-next slide
+      preRenderNext();
+    }, 420);
+  }
+
+  // ---- Advance ----
+  function advance() {
+    if (current >= TOTAL) return;
+    history.push(current);
+    current++;
+    updateUI();
+
+    if (current === 1) {
+      // First slide: render directly into active card
+      renderSlideInto(cards[activeIdx], current);
+      cards[activeIdx].className = 'stack-card active';
+      // Pre-render next
+      preRenderNext();
+    } else {
+      // Content is already pre-rendered in behind-1 card
+      swipeAndRender('right');
+    }
+  }
+
+  // ---- Go back ----
+  function goBack() {
+    if (history.length === 0) return;
+    current = history.pop();
+    if (current === 0) { current = 1; history = []; }
+    updateUI();
+
+    // For going back, we need to render the previous slide into the behind-2 card
+    // (which will become the new behind-1 after we swap directions)
+    // Actually, we render into the card that will become active after the left swipe
+    var behind1Idx = (activeIdx + 1) % 3;
+    var behind1Card = cards[behind1Idx];
+    renderSlideInto(behind1Card, current);
+    // Pause videos until card becomes active
+    behind1Card.querySelectorAll('video').forEach(function(v) { v.pause(); });
+
+    swipeAndRender('left');
+  }
+
+  backBtn.addEventListener('click', function() { goBack(); });
+
+  // ---- Render slide (compatibility wrapper) ----
+  function renderSlide(n) {
+    renderSlideInto(cards[activeIdx], n);
   }
 
   // ---- SVG Icon Map ----
@@ -780,7 +838,7 @@
   // ---- Video ----
   function renderVideoCard(wrap, src) {
     var d = el('div', 'video-wrap');
-    d.innerHTML = '<video src="'+src+'" autoplay muted loop playsinline></video>';
+    d.innerHTML = '<video src="'+src+'" muted loop playsinline preload="metadata"></video>';
     wrap.appendChild(d);
   }
 
