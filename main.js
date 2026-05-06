@@ -125,8 +125,8 @@
     { type:'card', id:'teamReplace', q:'One tool. <span class="accent">Full team output.</span>', sub:'Replace expensive hires with AI' },
     { type:'card', id:'assessment', q:'Your income <span class="accent">potential</span>', sub:'Based on your profession, location, services, and goals' },
     { type:'form', id:'contactForm', q:'Almost done! Let our AI create your <span class="accent">profile</span>', sub:'Provide your details and our AI assistant will automatically build your profile' },
-    { type:'card', id:'profilesPricing', q:'Choose your <span class="accent">plan</span>', sub:'Thank you for completing the survey — 20% discount available!' },
-    { type:'card', id:'payment', q:'Complete your <span class="accent">purchase</span>', sub:'Select payment method' }
+    { type:'card', id:'profilesPricing', q:'Choose your <span class="accent">plan</span>', sub:'' },
+    { type:'card', id:'payment', q:'Complete your <span class="accent">purchase</span>', sub:'' }
   ];
 
   var TOTAL = slides.length;
@@ -669,12 +669,12 @@
   // ---- Card slides ----
   function renderCard(s, wrap) {
     if (s.id === 'aiCalc') renderAICalcCard(wrap);
-    else if (s.id === 'video7') renderVideoCard(wrap, 'videos/video-7.mp4');
+    else if (s.id === 'video7') renderVideoCard(wrap, 'videos/video-77.mp4');
     else if (s.id === 'tenx') renderTenxCard(wrap);
-    else if (s.id === 'video1') renderVideoCard(wrap, 'videos/video-2-google-ranking.mp4');
-    else if (s.id === 'video2') renderVideoCard(wrap, 'videos/video-3-competitor-monitor.mp4');
-    else if (s.id === 'videoAds') renderVideoCard(wrap, 'videos/video-1-ai-ads.mp4');
-    else if (s.id === 'videoSocials') renderVideoCard(wrap, 'videos/video-4-ai-socials.mp4');
+    else if (s.id === 'video1') renderVideoCard(wrap, 'videos/video-22-google-ranking.mp4');
+    else if (s.id === 'video2') renderVideoCard(wrap, 'videos/video-33-competitor-monitor.mp4');
+    else if (s.id === 'videoAds') renderVideoCard(wrap, 'videos/video-11-ai-ads.mp4');
+    else if (s.id === 'videoSocials') renderVideoCard(wrap, 'videos/video-44-ai-socials.mp4');
     else if (s.id === 'teamReplace') renderTeamReplaceCard(wrap);
     else if (s.id === 'assessment') renderAssessmentCard(wrap);
     else if (s.id === 'profilesPricing') renderProfilesPricingCard(wrap);
@@ -742,8 +742,37 @@
   // ---- 10X ----
   function renderTenxCard(wrap) {
     var html =
-      '<div class="before-after"><div class="ba-card before"><div class="ba-label">Without ConsultantLM</div><div class="ba-text">You need a team<br>$5K-$30K/month<br>Months to see results</div></div><div class="ba-card after"><div class="ba-label">With ConsultantLM</div><div class="ba-text">AI does it all<br>From $19/month<br>Results in weeks</div></div></div>' +
-      '<div class="highlight-card"><div class="stat-label-sm">One tool replaces</div><div class="big-number">6 hires</div><div class="stat-savings">You save up to $35,000/month</div></div>';
+      '<div class="tenx-wrap">' +
+        '<div class="tenx-before-after">' +
+          '<div class="tenx-card tenx-before">' +
+            '<div class="tenx-card-icon">&#10005;</div>' +
+            '<div class="tenx-card-label">Without ConsultantLM</div>' +
+            '<div class="tenx-card-items">' +
+              '<div class="tenx-item">You need a full team</div>' +
+              '<div class="tenx-item tenx-price-bad">$5K–$30K/month</div>' +
+              '<div class="tenx-item">Months to see results</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="tenx-vs">VS</div>' +
+          '<div class="tenx-card tenx-after">' +
+            '<div class="tenx-card-icon">&#10003;</div>' +
+            '<div class="tenx-card-label">With ConsultantLM</div>' +
+            '<div class="tenx-card-items">' +
+              '<div class="tenx-item">AI does it all</div>' +
+              '<div class="tenx-item tenx-price-good">From $19/month</div>' +
+              '<div class="tenx-item">Results in weeks</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="tenx-hero">' +
+          '<div class="tenx-hero-label">One tool replaces</div>' +
+          '<div class="tenx-hero-number">6 hires</div>' +
+        '</div>' +
+        '<div class="tenx-savings">' +
+          '<div class="tenx-savings-amount">$35,000</div>' +
+          '<div class="tenx-savings-text">YOU SAVE PER MONTH</div>' +
+        '</div>' +
+      '</div>';
     var d = el('div', '', html);
     wrap.appendChild(d);
   }
@@ -804,180 +833,599 @@
     }, 600);
   }
 
-  // ---- Profiles + Pricing (combined carousel) ----
+  // ---- Profiles + Pricing (D1 variant with carousel) ----
   function renderProfilesPricingCard(wrap) {
-    // Profile carousel
-    var profiles = [
-      { name:'Base Profile', desc:'Basic level — Auto-generated', avatar:'BP', color:'#64748b',
-        details:'Name & City, Specialization, Average market pricing, AI-generated intro, SEO-optimized text' },
-      { name:'Pro Profile', desc:'Professional level — Enhanced', avatar:'PP', color:'#3b82f6',
-        details:'Everything in Base, AI Pro avatar, Custom pricing, 50-star rating, AI video intro, Built-in CRM & messenger' },
-      { name:'Premium Profile', desc:'Maximum level — Full package', avatar:'PM', color:'#8b5cf6',
-        details:'Everything in Pro, AI Premium avatar, Top in Google search, 24/7 personal manager, Exclusive social promotion' }
-    ];
+    var imgPath = 'images/profiles/PHOTO3.png';
+    var starSvg = '<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>';
+    var pinSvg = '<svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>';
+    var arrowLeftSvg = '<svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>';
+    var arrowRightSvg = '<svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>';
 
-    var carouselHtml =
-      '<div class="profile-carousel">' +
-        '<div class="carousel-track" id="carouselTrack">';
-    profiles.forEach(function(p) {
-      carouselHtml +=
-        '<div class="carousel-slide">' +
-          '<div class="profile-preview-card">' +
-            '<div class="profile-avatar-lg" style="background:'+p.color+'">'+p.avatar+'</div>' +
-            '<div class="profile-preview-name">'+p.name+'</div>' +
-            '<div class="profile-preview-desc">'+p.desc+'</div>' +
-            '<div class="profile-preview-details">'+p.details.split(', ').map(function(d){return '<div class="profile-detail-item">&#10003; '+d+'</div>';}).join('')+'</div>' +
-          '</div>' +
-        '</div>';
-    });
-    carouselHtml +=
-        '</div>' +
-        '<div class="carousel-nav">' +
-          '<button class="carousel-btn carousel-prev" id="carPrev">&#8592;</button>' +
-          '<div class="carousel-dots" id="carDots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>' +
-          '<button class="carousel-btn carousel-next" id="carNext">&#8594;</button>' +
-        '</div>' +
-      '</div>';
+    var html = '<div class="profiles-pricing-wrap">';
 
-    // Timer
-    var timerHtml = '<div class="timer-bar"><span class="timer-text">Discount expires in</span><span class="timer-countdown" id="timerCountdown">23:59:59</span></div>';
+    // ── Timer at top ──
+    html += '<div class="pp-timer-bar pp-timer-top">';
+    html += '<div class="pp-timer-label">20% DISCOUNT JUST FOR YOU!</div>';
+    html += '<div class="pp-timer-digits">';
+    html += '<div class="t-block"><span class="num" id="ppTH">23</span><span class="lbl">hrs</span></div>';
+    html += '<span class="t-sep">:</span>';
+    html += '<div class="t-block"><span class="num" id="ppTM">59</span><span class="lbl">min</span></div>';
+    html += '<span class="t-sep">:</span>';
+    html += '<div class="t-block"><span class="num" id="ppTS">59</span><span class="lbl">sec</span></div>';
+    html += '</div></div>';
 
-    // Pricing cards
-    var pricingHtml =
-      '<div class="pricing-grid">' +
-        '<div class="pricing-card" data-plan="base"><div class="pricing-name">BASE</div><div class="pricing-price"><span class="currency">$</span>19<span class="period"> /month</span></div><ul class="pricing-features">' +
-          '<li><span class="check">&#10003;</span> Basic profile level</li>' +
-          '<li><span class="check">&#10003;</span> 19 tokens for AI content</li>' +
-          '<li><span class="check">&#10003;</span> Up to 6 clients/month</li>' +
-          '<li><span class="check">&#10003;</span> AI module for Google & Meta</li>' +
-          '<li><span class="check">&#10003;</span> AI competitor monitoring</li>' +
-          '<li><span class="check">&#10003;</span> AI client assistant</li>' +
-          '<li><span class="check">&#10003;</span> Referral earnings</li>' +
-          '<li><span class="check">&#10003;</span> Private chat for specialists</li>' +
-          '<li><span class="check">&#10003;</span> Built-in CRM system</li>' +
-          '<li><span class="check">&#10003;</span> Secure messenger</li>' +
-          '<li><span class="cross">&#10007;</span> Top in Google by your name</li>' +
-          '<li><span class="cross">&#10007;</span> Reputation checks</li>' +
-          '<li><span class="cross">&#10007;</span> 24/7 personal manager</li>' +
-          '<li><span class="cross">&#10007;</span> Social media promotion</li>' +
-          '<li><span class="cross">&#10007;</span> Boost rating</li>' +
-          '<li><span class="cross">&#10007;</span> Custom service pricing</li>' +
-        '</ul></div>' +
-        '<div class="pricing-card popular" data-plan="pro"><div class="pricing-name">PRO</div><div class="pricing-price"><span class="currency">$</span>99<span class="period"> /month</span></div><ul class="pricing-features">' +
-          '<li><span class="check">&#10003;</span> Professional profile level</li>' +
-          '<li><span class="check">&#10003;</span> AI Pro avatar</li>' +
-          '<li><span class="check">&#10003;</span> 109 tokens (+10% bonus)</li>' +
-          '<li><span class="check">&#10003;</span> Up to 30 clients/month</li>' +
-          '<li><span class="check">&#10003;</span> Up to 10 reputation checks</li>' +
-          '<li><span class="check">&#10003;</span> AI module for Google & Meta</li>' +
-          '<li><span class="check">&#10003;</span> AI competitor monitoring</li>' +
-          '<li><span class="check">&#10003;</span> AI client assistant</li>' +
-          '<li><span class="check">&#10003;</span> Referral earnings</li>' +
-          '<li><span class="check">&#10003;</span> Private chat for specialists</li>' +
-          '<li><span class="check">&#10003;</span> Built-in CRM system</li>' +
-          '<li><span class="check">&#10003;</span> Secure messenger</li>' +
-          '<li><span class="check">&#10003;</span> Boost rating</li>' +
-          '<li><span class="check">&#10003;</span> Custom service pricing</li>' +
-          '<li><span class="cross">&#10007;</span> Top in Google by your name</li>' +
-          '<li><span class="cross">&#10007;</span> 24/7 personal manager</li>' +
-          '<li><span class="cross">&#10007;</span> Exclusive social promotion</li>' +
-        '</ul></div>' +
-        '<div class="pricing-card" data-plan="premium"><div class="pricing-name">PREMIUM</div><div class="pricing-price"><span class="currency">$</span>299<span class="period"> /month</span></div><ul class="pricing-features">' +
-          '<li><span class="check">&#10003;</span> Premium profile level</li>' +
-          '<li><span class="check">&#10003;</span> AI Premium avatar</li>' +
-          '<li><span class="check">&#10003;</span> 389 tokens (+30% bonus)</li>' +
-          '<li><span class="check">&#10003;</span> Unlimited clients</li>' +
-          '<li><span class="check">&#10003;</span> Top in Google by your name</li>' +
-          '<li><span class="check">&#10003;</span> Unlimited reputation checks</li>' +
-          '<li><span class="check">&#10003;</span> 24/7 personal manager</li>' +
-          '<li><span class="check">&#10003;</span> Exclusive social promotion</li>' +
-          '<li><span class="check">&#10003;</span> AI module for Google & Meta</li>' +
-          '<li><span class="check">&#10003;</span> AI competitor monitoring</li>' +
-          '<li><span class="check">&#10003;</span> AI client assistant</li>' +
-          '<li><span class="check">&#10003;</span> Referral earnings</li>' +
-          '<li><span class="check">&#10003;</span> Private chat for specialists</li>' +
-          '<li><span class="check">&#10003;</span> Built-in CRM system</li>' +
-          '<li><span class="check">&#10003;</span> Secure messenger</li>' +
-          '<li><span class="check">&#10003;</span> Boost rating</li>' +
-          '<li><span class="check">&#10003;</span> Custom service pricing</li>' +
-        '</ul></div>' +
-      '</div>';
+    // ── Profile viewport with arrows ──
+    html += '<div class="pp-viewport" id="ppViewport">';
+    html += '<button class="pp-arrow pp-arrow--left" id="ppArrowLeft" aria-label="Previous plan">' + arrowLeftSvg + '</button>';
+    html += '<button class="pp-arrow pp-arrow--right" id="ppArrowRight" aria-label="Next plan">' + arrowRightSvg + '</button>';
+    html += '<div class="pp-track" id="ppProfileTrack">';
 
-    var d = el('div', '', carouselHtml + timerHtml + pricingHtml);
+    // BASE profile slide
+    html += '<div class="pp-slide"><div class="prof-card prof-base">';
+    html += '<div class="prof-topbar"><span class="tier-label">BASE (Basic)</span><span class="separator"></span><span class="rating-area">' + starSvg + '<span class="rating-num">54.42</span></span></div>';
+    html += '<div class="prof-body"><div class="prof-avatar-wrap"><img src="' + imgPath + '" alt="Attorney"></div>';
+    html += '<div class="prof-info"><div class="name">Alexander K\u00f6nig</div><div class="role">Attorney</div><div class="location">' + pinSvg + ' USA, New York</div></div></div>';
+    html += '<div class="prof-info-btn">i</div></div></div>';
+
+    // PRO profile slide
+    html += '<div class="pp-slide"><div class="prof-card prof-pro">';
+    html += '<div class="prof-topbar"><span class="tier-label">PRO</span><span class="separator"></span><span class="rating-area">' + starSvg + '<span class="rating-num">67.59</span></span></div>';
+    html += '<div class="prof-body"><div class="prof-avatar-wrap"><img src="' + imgPath + '" alt="Attorney"></div>';
+    html += '<div class="prof-info"><div class="name">Alexander K\u00f6nig</div><div class="role">Attorney</div><div class="location">' + pinSvg + ' USA, New York</div></div></div>';
+    html += '<div class="prof-info-btn">i</div></div></div>';
+
+    // PREMIUM profile slide
+    html += '<div class="pp-slide"><div class="prof-card prof-premium">';
+    html += '<div class="prof-topbar"><span class="tier-label">PREMIUM</span><span class="separator"></span><span class="rating-area">' + starSvg + '<span class="rating-num">76.02</span></span></div>';
+    html += '<div class="prof-body"><div class="prof-info-area"><div class="prof-info"><div class="name">Alexander K\u00f6nig</div><div class="role">Attorney</div><div class="location">' + pinSvg + ' USA, New York</div></div></div>';
+    html += '<div class="prof-photo-right"><img src="' + imgPath + '" alt="Attorney"></div></div>';
+    html += '<div class="prof-info-btn">i</div></div></div>';
+
+    html += '</div></div>'; // close pp-track, pp-viewport
+
+    // ── Dots ──
+    html += '<div class="pp-dots" id="ppDots">';
+    html += '<button class="pp-dot active" data-idx="0" aria-label="Base plan"></button>';
+    html += '<button class="pp-dot" data-idx="1" aria-label="Pro plan"></button>';
+    html += '<button class="pp-dot" data-idx="2" aria-label="Premium plan"></button>';
+    html += '</div>';
+
+    // ── AI Avatar Video Section (hidden for BASE, visible for PRO/PREMIUM) ──
+    html += '<div class="pp-avatar-section" id="ppAvatarSection">';
+    html += '<div class="pp-avatar-inner">';
+    html += '<span class="pp-avatar-label">AI Avatar Preview</span>';
+    html += '<div class="pp-avatar-video-wrap">';
+    html += '<video id="ppAvatarVideo" loop playsinline preload="metadata">';
+    html += '<source src="videos/i_avatar.mp4" type="video/mp4">';
+    html += '</video>';
+    html += '<button class="pp-avatar-sound-btn" id="ppAvatarSoundBtn" title="Toggle sound">&#128264;</button>';
+    html += '</div>';
+    html += '<div class="pp-avatar-tagline">Your AI avatar speaks for you 24/7</div>';
+    html += '</div>';
+    html += '</div>';
+
+    // ── Billing toggle ──
+    html += '<div class="pp-billing-toggle">';
+    html += '<span class="toggle-label" id="ppLabelMonthly">Monthly</span>';
+    html += '<div class="pp-toggle-track annual" id="ppToggleTrack"><div class="pp-toggle-thumb"></div></div>';
+    html += '<span class="toggle-label active" id="ppLabelAnnual">Annual</span>';
+    html += '<span class="pp-save-badge">Save 20%</span>';
+    html += '</div>';
+
+    // ── Pricing section ──
+    html += '<div class="pp-pricing-section">';
+    html += '<div class="pp-pricing-content" id="ppPricingTrack">';
+
+    // BASE pricing panel
+    html += '<div class="pp-pricing-panel">';
+    html += '<div class="pp-plan-name pp-base-name">Base</div>';
+    html += '<div class="pp-price-row"><span class="pp-old-price" id="ppOldBase">$49</span><span class="pp-new-price" id="ppPriceBase">$19<span class="period">/mo</span></span></div>';
+    html += '<div class="pp-billing-note" id="ppNoteBase">per month, billed annually</div>';
+    html += '<div class="pp-features" id="ppFeatBase"></div>';
+    html += '</div>';
+
+    // PRO pricing panel
+    html += '<div class="pp-pricing-panel">';
+    html += '<div class="pp-plan-name pp-pro-name">Pro</div>';
+    html += '<div class="pp-price-row"><span class="pp-old-price" id="ppOldPro">$249</span><span class="pp-new-price" id="ppPricePro">$99<span class="period">/mo</span></span></div>';
+    html += '<div class="pp-billing-note" id="ppNotePro">per month, billed annually</div>';
+    html += '<div class="pp-features" id="ppFeatPro"></div>';
+    html += '</div>';
+
+    // PREMIUM pricing panel
+    html += '<div class="pp-pricing-panel">';
+    html += '<div class="pp-plan-name pp-premium-name">Premium</div>';
+    html += '<div class="pp-price-row"><span class="pp-old-price" id="ppOldPremium">$599</span><span class="pp-new-price" id="ppPricePremium">$299<span class="period">/mo</span></span></div>';
+    html += '<div class="pp-billing-note" id="ppNotePremium">per month, billed annually</div>';
+    html += '<div class="pp-features" id="ppFeatPremium"></div>';
+    html += '</div>';
+
+    html += '</div></div>'; // close pp-pricing-content, pp-pricing-section
+
+    // ── CTA button ──
+    html += '<div class="pp-cta-area"><button class="pp-cta-btn pp-cta-base" id="ppCtaBtn">Get Base</button></div>';
+
+    html += '</div>'; // close profiles-pricing-wrap
+
+    var d = el('div', '', html);
     wrap.appendChild(d);
 
-    // Carousel logic
-    setTimeout(function() {
-      var track = document.getElementById('carouselTrack');
-      var dots = document.querySelectorAll('#carDots .dot');
-      var prevBtn = document.getElementById('carPrev');
-      var nextBtn = document.getElementById('carNext');
-      var idx = 0;
-      var total = 3;
+    // ── Feature data (from D1) ──
+    var ppFeatures = [
+      { label: 'Basic profile level',       base: true,  pro: true,  premium: true  },
+      { label: 'Professional profile level', base: false, pro: true,  premium: true  },
+      { label: 'Premium profile level',     base: false, pro: false, premium: true  },
+      { label: 'AI avatar',                 base: true,  pro: true,  premium: true  },
+      { label: '19 tokens',                 base: true,  pro: false, premium: false },
+      { label: '109 +10% tokens',           base: false, pro: true,  premium: false },
+      { label: '389 +30% tokens',           base: false, pro: false, premium: true  },
+      { label: '6 clients',                 base: true,  pro: false, premium: false },
+      { label: '30 clients',                base: false, pro: true,  premium: false },
+      { label: 'Unlimited clients',         base: false, pro: false, premium: true  },
+      { label: 'Top in Google',             base: true,  pro: true,  premium: true  },
+      { label: 'Reputation checks',         base: true,  pro: true,  premium: true  },
+      { label: '24/7 manager',              base: false, pro: true,  premium: true  },
+      { label: 'Social promotion',          base: true,  pro: true,  premium: true  },
+      { label: 'AI for Google & Meta',      base: false, pro: true,  premium: true  },
+      { label: 'AI competitor monitoring',   base: false, pro: false, premium: true  },
+      { label: 'AI client assistant',       base: false, pro: true,  premium: true  },
+      { label: 'Referral earnings',         base: true,  pro: true,  premium: true  },
+      { label: 'Private chat',              base: true,  pro: true,  premium: true  },
+      { label: 'CRM system',               base: true,  pro: true,  premium: true  },
+      { label: 'Secure messenger',          base: true,  pro: true,  premium: true  },
+      { label: 'Boost rating',              base: false, pro: true,  premium: true  },
+      { label: 'Custom pricing',            base: false, pro: false, premium: true  }
+    ];
 
-      function goTo(i) {
-        idx = Math.max(0, Math.min(i, total - 1));
-        track.style.transform = 'translateX(-' + (idx * 100) + '%)';
-        dots.forEach(function(d,j) { d.classList.toggle('active', j === idx); });
+    var ppProBadges = {
+      '109 +10% tokens': { text: '5.7x more', type: 'green' },
+      '30 clients': { text: '5x more', type: 'green' },
+      '24/7 manager': { text: 'NEW', type: 'cyan' },
+      'AI for Google & Meta': { text: 'NEW', type: 'cyan' },
+      'AI client assistant': { text: 'NEW', type: 'cyan' },
+      'Boost rating': { text: 'NEW', type: 'cyan' },
+      'Professional profile level': { text: 'UPGRADE', type: 'cyan' }
+    };
+
+    var ppPremiumBadges = {
+      '389 +30% tokens': { text: '3.6x more', type: 'green' },
+      'Unlimited clients': { text: '\u221e', type: 'green' },
+      'AI competitor monitoring': { text: 'NEW', type: 'cyan' },
+      'Custom pricing': { text: 'NEW', type: 'cyan' },
+      'Premium profile level': { text: 'UPGRADE', type: 'cyan' }
+    };
+
+    function ppBuildFeatures(tier) {
+      var relevant = [];
+      var badgeMap = tier === 'pro' ? ppProBadges : tier === 'premium' ? ppPremiumBadges : null;
+
+      ppFeatures.forEach(function(f) {
+        var isTokenRow = f.label.indexOf('tokens') > -1;
+        var isClientRow = f.label.indexOf('clients') > -1 || f.label === 'Unlimited clients';
+
+        if (isTokenRow) {
+          if ((tier === 'base' && f.label === '19 tokens') ||
+              (tier === 'pro' && f.label === '109 +10% tokens') ||
+              (tier === 'premium' && f.label === '389 +30% tokens')) {
+            var item = { label: f.label, on: true };
+            if (badgeMap && badgeMap[f.label]) item.badge = badgeMap[f.label];
+            relevant.push(item);
+          }
+          return;
+        }
+        if (isClientRow) {
+          if ((tier === 'base' && f.label === '6 clients') ||
+              (tier === 'pro' && f.label === '30 clients') ||
+              (tier === 'premium' && f.label === 'Unlimited clients')) {
+            var item2 = { label: f.label, on: true };
+            if (badgeMap && badgeMap[f.label]) item2.badge = badgeMap[f.label];
+            relevant.push(item2);
+          }
+          return;
+        }
+
+        var item3 = { label: f.label, on: f[tier] };
+        if (badgeMap && badgeMap[f.label]) item3.badge = badgeMap[f.label];
+        relevant.push(item3);
+      });
+
+      relevant.sort(function(a, b) { return (b.on ? 1 : 0) - (a.on ? 1 : 0); });
+      return relevant;
+    }
+
+    function ppRenderFeatures(container, tier) {
+      var items = ppBuildFeatures(tier);
+      container.innerHTML = items.map(function(f) {
+        var cls = f.on ? 'yes' : 'no';
+        var icon = f.on ? '&#10003;' : '&#10005;';
+        var badgeHtml = '';
+        if (f.badge) {
+          var badgeCls = f.badge.type === 'green' ? 'comp-badge--green' : 'comp-badge--cyan';
+          badgeHtml = '<span class="comp-badge ' + badgeCls + '">' + f.badge.text + '</span>';
+        }
+        return '<div class="pp-feat ' + cls + '"><span class="feat-left"><span class="icon">' + icon + '</span><span>' + f.label + '</span></span>' + badgeHtml + '</div>';
+      }).join('');
+    }
+
+    // ── Carousel logic (inside setTimeout to ensure DOM is ready) ──
+    setTimeout(function() {
+      var ppCurrent = 0;
+      var ppTotal = 3;
+      var profileTrack = document.getElementById('ppProfileTrack');
+      var pricingTrack = document.getElementById('ppPricingTrack');
+      var dotsContainer = document.getElementById('ppDots');
+      var dots = dotsContainer ? dotsContainer.querySelectorAll('.pp-dot') : [];
+      var ctaBtn = document.getElementById('ppCtaBtn');
+      var arrowLeft = document.getElementById('ppArrowLeft');
+      var arrowRight = document.getElementById('ppArrowRight');
+      var viewport = document.getElementById('ppViewport');
+      var avatarSection = document.getElementById('ppAvatarSection');
+      var avatarVideo = document.getElementById('ppAvatarVideo');
+      var avatarSoundBtn = document.getElementById('ppAvatarSoundBtn');
+
+      // Render features into containers
+      var featBase = document.getElementById('ppFeatBase');
+      var featPro = document.getElementById('ppFeatPro');
+      var featPremium = document.getElementById('ppFeatPremium');
+      if (featBase) ppRenderFeatures(featBase, 'base');
+      if (featPro) ppRenderFeatures(featPro, 'pro');
+      if (featPremium) ppRenderFeatures(featPremium, 'premium');
+
+      var ppCtaConfig = [
+        { text: 'Get Base',    cls: 'pp-cta-btn pp-cta-base',    plan: 'base' },
+        { text: 'Get Pro',     cls: 'pp-cta-btn pp-cta-pro',     plan: 'pro' },
+        { text: 'Get Premium', cls: 'pp-cta-btn pp-cta-premium', plan: 'premium' }
+      ];
+
+      function ppGoTo(idx) {
+        if (idx < 0) idx = ppTotal - 1;
+        if (idx >= ppTotal) idx = 0;
+        ppCurrent = idx;
+
+        var pct = -(idx * 100);
+        if (profileTrack) profileTrack.style.transform = 'translateX(' + pct + '%)';
+        if (pricingTrack) pricingTrack.style.transform = 'translateX(' + pct + '%)';
+
+        for (var i = 0; i < dots.length; i++) {
+          if (i === idx) dots[i].classList.add('active');
+          else dots[i].classList.remove('active');
+        }
+
+        if (ctaBtn) {
+          ctaBtn.textContent = ppCtaConfig[idx].text;
+          ctaBtn.className = ppCtaConfig[idx].cls;
+        }
+
+        quizData.plan = ppCtaConfig[idx].plan;
+
+        // Toggle avatar video section
+        if (avatarSection && avatarVideo) {
+          if (idx === 0) {
+            avatarSection.classList.remove('visible');
+            avatarVideo.pause();
+          } else {
+            avatarSection.classList.add('visible');
+            avatarVideo.muted = false;
+            avatarVideo.play().catch(function() {
+              // Browser blocked unmuted autoplay — fallback to muted
+              avatarVideo.muted = true;
+              if (avatarSoundBtn) { avatarSoundBtn.innerHTML = '&#9834;&#xFE0E;'; avatarSoundBtn.classList.add('muted'); }
+              avatarVideo.play().catch(function() {});
+            });
+            if (avatarSoundBtn) { avatarSoundBtn.innerHTML = '&#9834;'; avatarSoundBtn.classList.remove('muted'); }
+          }
+        }
       }
 
-      prevBtn.addEventListener('click', function(e) { e.stopPropagation(); goTo(idx - 1); });
-      nextBtn.addEventListener('click', function(e) { e.stopPropagation(); goTo(idx + 1); });
-      dots.forEach(function(d,j) { d.addEventListener('click', function(e) { e.stopPropagation(); goTo(j); }); });
+      if (arrowLeft) arrowLeft.addEventListener('click', function(e) { e.stopPropagation(); ppGoTo(ppCurrent - 1); });
+      if (arrowRight) arrowRight.addEventListener('click', function(e) { e.stopPropagation(); ppGoTo(ppCurrent + 1); });
+      for (var di = 0; di < dots.length; di++) {
+        (function(i) {
+          dots[i].addEventListener('click', function(e) { e.stopPropagation(); ppGoTo(i); });
+        })(di);
+      }
 
-      // Touch swipe
-      var startX = 0;
-      track.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; });
-      track.addEventListener('touchend', function(e) {
-        var diff = startX - e.changedTouches[0].clientX;
-        if (Math.abs(diff) > 40) goTo(idx + (diff > 0 ? 1 : -1));
-      });
-
-      // Plan selection
-      wrap.querySelectorAll('.pricing-card[data-plan]').forEach(function(pc) {
-        pc.addEventListener('click', function() {
-          wrap.querySelectorAll('.pricing-card[data-plan]').forEach(function(c){ c.classList.remove('selected-plan'); });
-          pc.classList.add('selected-plan');
-          quizData.plan = pc.dataset.plan;
+      // ── Avatar sound toggle (sound ON by default, fallback to muted if blocked) ──
+      if (avatarSoundBtn && avatarVideo) {
+        avatarVideo.muted = false;
+        avatarSoundBtn.innerHTML = '&#9834;';
+        avatarSoundBtn.title = 'Mute';
+        // If autoplay with sound fails, fallback to muted
+        avatarVideo.addEventListener('play', function() {
+          if (avatarVideo.muted) avatarSoundBtn.innerHTML = '&#9834;&#xFE0E;';
         });
-      });
+        avatarSoundBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          avatarVideo.muted = !avatarVideo.muted;
+          avatarSoundBtn.innerHTML = avatarVideo.muted ? '&#9834;&#xFE0E;' : '&#9834;';
+          avatarSoundBtn.classList.toggle('muted', avatarVideo.muted);
+        });
+      }
+
+      // ── Touch / Swipe ──
+      var ppStartX = 0, ppStartY = 0, ppDragging = false, ppDx = 0;
+
+      if (viewport) {
+        viewport.addEventListener('touchstart', function(e) {
+          ppStartX = e.touches[0].clientX;
+          ppStartY = e.touches[0].clientY;
+          ppDragging = true;
+          ppDx = 0;
+          if (profileTrack) profileTrack.style.transition = 'none';
+          if (pricingTrack) pricingTrack.style.transition = 'none';
+        }, { passive: true });
+
+        viewport.addEventListener('touchmove', function(e) {
+          if (!ppDragging) return;
+          var moveX = e.touches[0].clientX;
+          var moveY = e.touches[0].clientY;
+          ppDx = moveX - ppStartX;
+
+          if (Math.abs(moveY - ppStartY) > Math.abs(ppDx)) {
+            ppDragging = false;
+            return;
+          }
+
+          var basePct = -(ppCurrent * 100);
+          var dragPct = (ppDx / viewport.offsetWidth) * 100;
+          var t = 'translateX(' + (basePct + dragPct) + '%)';
+          if (profileTrack) profileTrack.style.transform = t;
+          if (pricingTrack) pricingTrack.style.transform = t;
+        }, { passive: true });
+
+        viewport.addEventListener('touchend', function() {
+          if (!ppDragging) {
+            if (profileTrack) profileTrack.style.transition = '';
+            if (pricingTrack) pricingTrack.style.transition = '';
+            return;
+          }
+          ppDragging = false;
+          if (profileTrack) profileTrack.style.transition = '';
+          if (pricingTrack) pricingTrack.style.transition = '';
+
+          var threshold = viewport.offsetWidth * 0.2;
+          if (ppDx < -threshold) ppGoTo(ppCurrent + 1);
+          else if (ppDx > threshold) ppGoTo(ppCurrent - 1);
+          else ppGoTo(ppCurrent);
+        });
+      }
+
+      // ── CTA click selects plan ──
+      if (ctaBtn) {
+        ctaBtn.addEventListener('click', function() {
+          quizData.plan = ppCtaConfig[ppCurrent].plan;
+          advance();
+        });
+      }
+
+      // ── Timer using existing localStorage-based quiz timer ──
+      var ppEndTime = localStorage.getItem('clm_timer_end');
+      if (!ppEndTime) {
+        ppEndTime = Date.now() + 24 * 60 * 60 * 1000;
+        localStorage.setItem('clm_timer_end', ppEndTime);
+      }
+      ppEndTime = parseInt(ppEndTime);
+
+      var ppTH = document.getElementById('ppTH');
+      var ppTM = document.getElementById('ppTM');
+      var ppTS = document.getElementById('ppTS');
+
+      function ppPad(n) { return n < 10 ? '0' + n : '' + n; }
+
+      function ppTick() {
+        var diff = Math.max(0, ppEndTime - Date.now());
+        var h = Math.floor(diff / 3600000);
+        var m = Math.floor((diff % 3600000) / 60000);
+        var sec = Math.floor((diff % 60000) / 1000);
+        if (ppTH) ppTH.textContent = ppPad(h);
+        if (ppTM) ppTM.textContent = ppPad(m);
+        if (ppTS) ppTS.textContent = ppPad(sec);
+      }
+
+      ppTick();
+      setInterval(ppTick, 1000);
+
+      // ── Billing toggle (monthly/annual) ──
+      var ppIsAnnual = true;
+      var ppToggleTrack = document.getElementById('ppToggleTrack');
+      var ppLabelMonthly = document.getElementById('ppLabelMonthly');
+      var ppLabelAnnual = document.getElementById('ppLabelAnnual');
+
+      var ppPrices = {
+        annual: { base: {old:'$49', price:'$19', note:'per month, billed annually'},
+                  pro: {old:'$249', price:'$99', note:'per month, billed annually'},
+                  premium: {old:'$599', price:'$299', note:'per month, billed annually'} },
+        monthly: { base: {old:'$29', price:'$24', note:'per month, billed monthly'},
+                   pro: {old:'$149', price:'$124', note:'per month, billed monthly'},
+                   premium: {old:'$399', price:'$349', note:'per month, billed monthly'} }
+      };
+
+      function ppUpdatePrices() {
+        var mode = ppIsAnnual ? 'annual' : 'monthly';
+        var p = ppPrices[mode];
+        var elOldBase = document.getElementById('ppOldBase');
+        var elPriceBase = document.getElementById('ppPriceBase');
+        var elNoteBase = document.getElementById('ppNoteBase');
+        var elOldPro = document.getElementById('ppOldPro');
+        var elPricePro = document.getElementById('ppPricePro');
+        var elNotePro = document.getElementById('ppNotePro');
+        var elOldPremium = document.getElementById('ppOldPremium');
+        var elPricePremium = document.getElementById('ppPricePremium');
+        var elNotePremium = document.getElementById('ppNotePremium');
+
+        if (elOldBase) elOldBase.textContent = p.base.old;
+        if (elPriceBase) elPriceBase.innerHTML = p.base.price + '<span class="period">/mo</span>';
+        if (elNoteBase) elNoteBase.textContent = p.base.note;
+        if (elOldPro) elOldPro.textContent = p.pro.old;
+        if (elPricePro) elPricePro.innerHTML = p.pro.price + '<span class="period">/mo</span>';
+        if (elNotePro) elNotePro.textContent = p.pro.note;
+        if (elOldPremium) elOldPremium.textContent = p.premium.old;
+        if (elPricePremium) elPricePremium.innerHTML = p.premium.price + '<span class="period">/mo</span>';
+        if (elNotePremium) elNotePremium.textContent = p.premium.note;
+
+        if (ppToggleTrack) {
+          if (ppIsAnnual) ppToggleTrack.classList.add('annual');
+          else ppToggleTrack.classList.remove('annual');
+        }
+        if (ppLabelMonthly) ppLabelMonthly.classList.toggle('active', !ppIsAnnual);
+        if (ppLabelAnnual) ppLabelAnnual.classList.toggle('active', ppIsAnnual);
+
+        quizData.billing = ppIsAnnual ? 'annual' : 'monthly';
+      }
+
+      function ppToggleBilling() {
+        ppIsAnnual = !ppIsAnnual;
+        ppUpdatePrices();
+      }
+
+      if (ppToggleTrack) ppToggleTrack.addEventListener('click', function(e) { e.stopPropagation(); ppToggleBilling(); });
+      if (ppLabelMonthly) ppLabelMonthly.addEventListener('click', function(e) { e.stopPropagation(); ppIsAnnual = false; ppUpdatePrices(); });
+      if (ppLabelAnnual) ppLabelAnnual.addEventListener('click', function(e) { e.stopPropagation(); ppIsAnnual = true; ppUpdatePrices(); });
+
+      // Set default plan
+      quizData.plan = 'base';
+      quizData.billing = 'annual';
     }, 100);
 
-    // Continue button
-    var btn = el('button', 'card-btn', 'Continue &rarr;');
-    btn.addEventListener('click', function() { advance(); });
-    wrap.appendChild(btn);
   }
 
   // ---- Payment ----
   function renderPaymentCard(wrap) {
-    var html =
-      '<div class="discount-summary">' +
-        '<div class="discount-row"><span>Pro plan -- 12 months</span><span>$1,188.00</span></div>' +
-        '<div class="discount-row"><span>Urgency discount (20%)</span><span class="saved">-$237.60</span></div>' +
-        '<div class="discount-row"><span>Referral code (10%)</span><span class="saved">-$118.80</span></div>' +
-        '<div class="discount-row"><span>Annual discount (10%)</span><span class="saved">-$118.80</span></div>' +
-        '<div class="discount-row total"><span>Total</span><span>$712.80</span></div>' +
-        '<div style="text-align:center;margin-top:8px"><span class="badge badge-green" style="font-size:13px;padding:6px 14px">You just saved $475.20 (40% off)</span></div>' +
-      '</div>' +
-      '<div class="payment-icons"><svg class="pay-icon" viewBox="0 0 38 24"><rect width="38" height="24" rx="3" fill="#1434CB"/><text x="19" y="15" font-size="9" fill="#fff" text-anchor="middle" font-weight="bold" font-family="Arial">VISA</text></svg><svg class="pay-icon" viewBox="0 0 38 24"><rect width="38" height="24" rx="3" fill="#252525"/><circle cx="15" cy="12" r="7" fill="#EB001B"/><circle cx="23" cy="12" r="7" fill="#F79E1B"/><path d="M19 6.5a7 7 0 010 11 7 7 0 010-11z" fill="#FF5F00"/></svg><svg class="pay-icon" viewBox="0 0 38 24"><rect width="38" height="24" rx="3" fill="#003087"/><text x="19" y="15" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold" font-family="Arial">PayPal</text></svg></div>' +
-      '<div class="payment-buttons"><button class="btn btn-paypal" id="paypalBtn"><span class="btn-icon-paypal">P</span> Pay with PayPal</button><button class="btn btn-primary" id="cardBtn"><span class="btn-icon-card">&#128179;</span> Pay with Card</button></div>' +
-      '<div class="timer-bar"><span class="timer-text">Discount expires in</span><span class="timer-countdown" id="timerCountdown2">23:59:59</span></div>' +
-      '<h3 class="faq-heading">Frequently Asked Questions</h3>' +
-      '<div class="faq-list">' +
-        '<div class="faq-item"><div class="faq-question">How many clients can I expect per month?</div><div class="faq-answer"><div class="faq-answer-inner">Depending on your specialization, city, and profile optimization -- many lawyers receive 5-15 clients already in the first month, scaling to 20-30+ over time thanks to AI-generated content and SEO promotion.</div></div></div>' +
-        '<div class="faq-item"><div class="faq-question">Is this a guaranteed number of clients?</div><div class="faq-answer"><div class="faq-answer-inner">We provide you with leads that you work with yourself. You can also work under exclusive conditions with platform clients, in which case these are already paid clients.</div></div></div>' +
-        '<div class="faq-item"><div class="faq-question">How does the pricing work?</div><div class="faq-answer"><div class="faq-answer-inner">We have a three-tier subscription: Basic, Pro, and Premium. The cost is significantly lower than traditional marketing agencies. Many lawyers cover the subscription cost with just 1-2 clients.</div></div></div>' +
-        '<div class="faq-item"><div class="faq-question">What if there are no clients?</div><div class="faq-answer"><div class="faq-answer-inner">The presence of leads depends on your activity on the platform. We guarantee uninterrupted access to the platform and its resources. Payment is non-refundable once access has been provided.</div></div></div>' +
-        '<div class="faq-item"><div class="faq-question">Is my data safe?</div><div class="faq-answer"><div class="faq-answer-inner">Yes, we use a secure messenger, data encryption, and do not transfer information to third parties. The platform complies with GDPR and data protection regulations.</div></div></div>' +
-      '</div>';
+    var plan = quizData.plan || 'pro';
+    var planNames = {base:'Base', pro:'Pro', premium:'Premium'};
+
+    var prices = {
+      '1_month': {base:24, pro:124, premium:349, label:'1 Month', discount:0},
+      '1_year':  {base:19, pro:99,  premium:299, label:'1 Year',  discount:10},
+      '3_years': {base:15, pro:79,  premium:249, label:'3 Years', discount:20}
+    };
+
+    var html = '';
+
+    // ── Timer at top ──
+    html += '<div class="pay-timer-top">';
+    html += '<div class="pay-timer-label">20% DISCOUNT JUST FOR YOU!</div>';
+    html += '<div class="pay-timer-digits">';
+    html += '<span class="pay-t-block"><span class="pay-t-num" id="payTH">23</span><span class="pay-t-lbl">hrs</span></span>';
+    html += '<span class="pay-t-sep">:</span>';
+    html += '<span class="pay-t-block"><span class="pay-t-num" id="payTM">59</span><span class="pay-t-lbl">min</span></span>';
+    html += '<span class="pay-t-sep">:</span>';
+    html += '<span class="pay-t-block"><span class="pay-t-num" id="payTS">59</span><span class="pay-t-lbl">sec</span></span>';
+    html += '</div></div>';
+
+    // ── Period toggle (1 month / 1 year / 3 years) ──
+    html += '<div class="pay-period-toggle" id="payPeriodToggle">';
+    html += '<button class="pay-period-btn" data-period="1_month">1 Month</button>';
+    html += '<button class="pay-period-btn active" data-period="1_year">1 Year <span class="pay-period-save">-10%</span></button>';
+    html += '<button class="pay-period-btn" data-period="3_years">3 Years <span class="pay-period-save">-20%</span></button>';
+    html += '</div>';
+
+    // ── Savings hero ──
+    html += '<div class="pay-savings-hero" id="paySavingsHero">';
+    html += '<div class="pay-savings-amount" id="paySavingsAmount">$475</div>';
+    html += '<div class="pay-savings-text">YOU JUST SAVED</div>';
+    html += '</div>';
+
+    // ── Discount summary ──
+    html += '<div class="discount-summary" id="payDiscountSummary"></div>';
+
+    // ── Payment icons ──
+    html += '<div class="payment-icons"><svg class="pay-icon" viewBox="0 0 38 24"><rect width="38" height="24" rx="3" fill="#1434CB"/><text x="19" y="15" font-size="9" fill="#fff" text-anchor="middle" font-weight="bold" font-family="Arial">VISA</text></svg><svg class="pay-icon" viewBox="0 0 38 24"><rect width="38" height="24" rx="3" fill="#252525"/><circle cx="15" cy="12" r="7" fill="#EB001B"/><circle cx="23" cy="12" r="7" fill="#F79E1B"/><path d="M19 6.5a7 7 0 010 11 7 7 0 010-11z" fill="#FF5F00"/></svg><svg class="pay-icon" viewBox="0 0 38 24"><rect width="38" height="24" rx="3" fill="#003087"/><text x="19" y="15" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold" font-family="Arial">PayPal</text></svg></div>';
+
+    // ── Payment buttons ──
+    html += '<div class="payment-buttons"><button class="btn btn-paypal" id="paypalBtn"><span class="btn-icon-paypal">P</span> Pay with PayPal</button><button class="btn btn-primary" id="cardBtn"><span class="btn-icon-card">&#128179;</span> Pay with Card</button></div>';
+
+    // ── FAQ ──
+    html += '<h3 class="faq-heading">Frequently Asked Questions</h3>';
+    html += '<div class="faq-list">';
+    html += '<div class="faq-item"><div class="faq-question">How many clients can I expect per month?</div><div class="faq-answer"><div class="faq-answer-inner">Depending on your specialization, city, and profile optimization -- many lawyers receive 5-15 clients already in the first month, scaling to 20-30+ over time thanks to AI-generated content and SEO promotion.</div></div></div>';
+    html += '<div class="faq-item"><div class="faq-question">Is this a guaranteed number of clients?</div><div class="faq-answer"><div class="faq-answer-inner">We provide you with leads that you work with yourself. You can also work under exclusive conditions with platform clients, in which case these are already paid clients.</div></div></div>';
+    html += '<div class="faq-item"><div class="faq-question">How does the pricing work?</div><div class="faq-answer"><div class="faq-answer-inner">We have a three-tier subscription: Basic, Pro, and Premium. The cost is significantly lower than traditional marketing agencies. Many lawyers cover the subscription cost with just 1-2 clients.</div></div></div>';
+    html += '<div class="faq-item"><div class="faq-question">What if there are no clients?</div><div class="faq-answer"><div class="faq-answer-inner">The presence of leads depends on your activity on the platform. We guarantee uninterrupted access to the platform and its resources. Payment is non-refundable once access has been provided.</div></div></div>';
+    html += '<div class="faq-item"><div class="faq-question">Is my data safe?</div><div class="faq-answer"><div class="faq-answer-inner">Yes, we use a secure messenger, data encryption, and do not transfer information to third parties. The platform complies with GDPR and data protection regulations.</div></div></div>';
+    html += '</div>';
+
     var d = el('div', '', html);
     wrap.appendChild(d);
 
     setTimeout(function() {
+      // FAQ accordion
       wrap.querySelectorAll('.faq-question').forEach(function(q) {
         q.addEventListener('click', function() { q.parentElement.classList.toggle('open'); });
       });
+
+      // Period toggle logic
+      var currentPeriod = quizData.period || '1_year';
+      var periodBtns = document.querySelectorAll('#payPeriodToggle .pay-period-btn');
+
+      function payUpdateSummary() {
+        var p = prices[currentPeriod];
+        var planKey = quizData.plan || 'pro';
+        var monthly = p[planKey];
+        var months = currentPeriod === '1_month' ? 1 : currentPeriod === '1_year' ? 12 : 36;
+        var total = monthly * months;
+        var fullPrice = {base:29, pro:149, premium:399}[planKey] * months;
+        var saved = fullPrice - total;
+        var discountPct = Math.round((1 - total / fullPrice) * 100);
+
+        var summaryEl = document.getElementById('payDiscountSummary');
+        if (summaryEl) {
+          summaryEl.innerHTML =
+            '<div class="discount-row"><span>' + planNames[planKey] + ' plan — ' + p.label + '</span><span>$' + total.toLocaleString() + '</span></div>' +
+            '<div class="discount-row"><span>Urgency discount (20%)</span><span class="saved">-$' + Math.round(fullPrice * 0.2).toLocaleString() + '</span></div>' +
+            (quizData.referral_code ? '<div class="discount-row"><span>Referral code (10%)</span><span class="saved">-$' + Math.round(fullPrice * 0.1).toLocaleString() + '</span></div>' : '') +
+            (p.discount > 0 ? '<div class="discount-row"><span>' + p.label + ' discount (' + p.discount + '%)</span><span class="saved">-$' + Math.round(fullPrice * p.discount / 100).toLocaleString() + '</span></div>' : '') +
+            '<div class="discount-row total"><span>Total</span><span>$' + total.toLocaleString() + '</span></div>';
+        }
+
+        var savingsAmount = document.getElementById('paySavingsAmount');
+        var savingsHero = document.getElementById('paySavingsHero');
+        if (savingsAmount && saved > 0) {
+          savingsAmount.textContent = '$' + saved.toLocaleString();
+          if (savingsHero) savingsHero.style.display = '';
+        } else if (savingsHero && saved <= 0) {
+          savingsHero.style.display = 'none';
+        }
+
+        // Update period buttons
+        periodBtns.forEach(function(b) {
+          b.classList.toggle('active', b.dataset.period === currentPeriod);
+        });
+
+        quizData.payment_period = currentPeriod;
+      }
+
+      periodBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          currentPeriod = btn.dataset.period;
+          payUpdateSummary();
+        });
+      });
+
+      payUpdateSummary();
+
+      // Timer
+      var payEndTime = localStorage.getItem('clm_timer_end');
+      if (!payEndTime) {
+        payEndTime = Date.now() + 24 * 60 * 60 * 1000;
+        localStorage.setItem('clm_timer_end', payEndTime);
+      }
+      payEndTime = parseInt(payEndTime);
+      var payTH = document.getElementById('payTH');
+      var payTM = document.getElementById('payTM');
+      var payTS = document.getElementById('payTS');
+      function payPad(n) { return n < 10 ? '0' + n : '' + n; }
+      function payTick() {
+        var diff = Math.max(0, payEndTime - Date.now());
+        var h = Math.floor(diff / 3600000);
+        var m = Math.floor((diff % 3600000) / 60000);
+        var sec = Math.floor((diff % 60000) / 1000);
+        if (payTH) payTH.textContent = payPad(h);
+        if (payTM) payTM.textContent = payPad(m);
+        if (payTS) payTS.textContent = payPad(sec);
+      }
+      payTick();
+      setInterval(payTick, 1000);
     }, 100);
   }
 

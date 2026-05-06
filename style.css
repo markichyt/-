@@ -268,6 +268,7 @@ html, body {
 .card-btn:disabled { opacity: 0.4; cursor: default; }
 .card-btn.accent-btn { background: var(--accent); }
 
+
 /* ---- Text / Form Inputs ---- */
 .card-input {
   width: 100%;
@@ -459,18 +460,116 @@ textarea.card-input {
 }
 .featured-in strong { color: var(--text-muted); }
 
-/* ---- Before/After ---- */
-.before-after { display: flex; gap: 10px; margin-bottom: 14px; }
-.ba-card {
-  flex: 1;
-  border-radius: 12px;
-  padding: 14px 10px;
-  text-align: center;
+/* ---- 10x Slide (Before/After + Savings) ---- */
+.tenx-wrap { }
+.tenx-before-after {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+  align-items: stretch;
 }
-.ba-card.before { background: #fef2f2; }
-.ba-card.after { background: #ecfdf5; }
-.ba-label { font-size: 11px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; }
-.ba-text { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+.tenx-card {
+  flex: 1;
+  border-radius: 14px;
+  padding: 16px 12px;
+  text-align: center;
+  position: relative;
+}
+.tenx-before {
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+  border: 1px solid rgba(239,68,68,0.15);
+}
+.tenx-after {
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  border: 1px solid rgba(16,185,129,0.2);
+}
+.tenx-card-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 8px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.tenx-before .tenx-card-icon { background: #ef4444; color: #fff; }
+.tenx-after .tenx-card-icon { background: #10b981; color: #fff; }
+.tenx-card-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+.tenx-before .tenx-card-label { color: #ef4444; }
+.tenx-after .tenx-card-label { color: #10b981; }
+.tenx-card-items { display: flex; flex-direction: column; gap: 4px; }
+.tenx-item {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+.tenx-price-bad {
+  font-size: 14px;
+  font-weight: 800;
+  color: #ef4444;
+}
+.tenx-price-good {
+  font-size: 14px;
+  font-weight: 800;
+  color: #10b981;
+}
+.tenx-vs {
+  display: flex;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--text-light);
+  padding: 0 2px;
+}
+.tenx-hero {
+  text-align: center;
+  padding: 14px;
+  background: var(--input-bg);
+  border-radius: 14px;
+  margin-bottom: 12px;
+}
+.tenx-hero-label {
+  font-size: 11px;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+.tenx-hero-number {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text-dark);
+}
+.tenx-savings {
+  text-align: center;
+  padding: 20px 16px;
+  background: linear-gradient(135deg, rgba(16,185,129,0.12) 0%, rgba(0,180,216,0.08) 100%);
+  border-radius: 14px;
+  border: 1px solid rgba(16,185,129,0.25);
+  margin-bottom: 8px;
+}
+.tenx-savings-amount {
+  font-size: 38px;
+  font-weight: 800;
+  color: #10b981;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.tenx-savings-text {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #10b981;
+  text-transform: uppercase;
+}
 
 /* ---- Video ---- */
 .video-wrap {
@@ -559,6 +658,116 @@ textarea.card-input {
 }
 .check { color: #10b981; }
 .cross { color: #ef4444; }
+
+/* ---- Payment Page Timer ---- */
+.pay-timer-top {
+  text-align: center;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  background: rgba(0,180,216,0.06);
+  border-radius: 12px;
+}
+.pay-timer-label {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  color: #00b4d8;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.pay-timer-digits {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+.pay-t-block {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--input-bg);
+  border-radius: 8px;
+  padding: 4px 8px;
+  min-width: 36px;
+}
+.pay-t-num {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1;
+}
+.pay-t-lbl {
+  font-size: 8px;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+.pay-t-sep {
+  font-size: 18px;
+  font-weight: 700;
+  color: #cbd5e1;
+}
+
+/* ---- Payment Period Toggle ---- */
+.pay-period-toggle {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+  background: var(--input-bg);
+  border-radius: 12px;
+  padding: 4px;
+}
+.pay-period-btn {
+  flex: 1;
+  padding: 10px 6px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all .2s;
+  text-align: center;
+}
+.pay-period-btn.active {
+  background: var(--text-dark);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,.12);
+}
+.pay-period-save {
+  font-size: 10px;
+  font-weight: 800;
+  color: #10b981;
+}
+.pay-period-btn.active .pay-period-save {
+  color: #6ee7b7;
+}
+
+/* ---- Payment Savings Hero ---- */
+.pay-savings-hero {
+  text-align: center;
+  padding: 20px 16px;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, rgba(16,185,129,0.1) 0%, rgba(0,180,216,0.08) 100%);
+  border-radius: 14px;
+  border: 1px solid rgba(16,185,129,0.2);
+}
+.pay-savings-amount {
+  font-size: 42px;
+  font-weight: 800;
+  color: #10b981;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.pay-savings-text {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #10b981;
+  text-transform: uppercase;
+}
 
 /* ---- Timer ---- */
 .timer-bar {
@@ -835,3 +1044,572 @@ textarea.card-input {
 .team-savings { text-align: center; margin-top: 12px; }
 .team-savings-vs { font-size: 14px; color: #6b7280; }
 .team-savings-vs .accent { color: #00b4d8; font-weight: 700; }
+
+/* ═══════════════════════════════════════════════
+   Profiles + Pricing Card (D1 Variant)
+   Scoped under .profiles-pricing-wrap
+   ═══════════════════════════════════════════════ */
+
+/* ── Profile Viewport ── */
+.profiles-pricing-wrap {
+  overflow: hidden;
+}
+.profiles-pricing-wrap .pp-timer-top {
+  margin: 0 0 12px;
+  padding: 12px 20px;
+  border-top: none;
+  background: rgba(0,180,216,0.06);
+  border-radius: 12px;
+}
+.profiles-pricing-wrap .pp-timer-top .pp-timer-label {
+  color: #00b4d8;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+}
+.profiles-pricing-wrap .pp-viewport {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-y;
+}
+.profiles-pricing-wrap .pp-track {
+  display: flex;
+  transition: transform .45s cubic-bezier(.4,0,.2,1);
+  will-change: transform;
+}
+.profiles-pricing-wrap .pp-slide {
+  min-width: 100%;
+  flex-shrink: 0;
+}
+
+/* ── Arrow Buttons ── */
+.profiles-pricing-wrap .pp-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,.85);
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .2s, transform .2s;
+}
+.profiles-pricing-wrap .pp-arrow:hover { background: #fff; transform: translateY(-50%) scale(1.08); }
+.profiles-pricing-wrap .pp-arrow:active { transform: translateY(-50%) scale(.95); }
+.profiles-pricing-wrap .pp-arrow--left { left: 10px; }
+.profiles-pricing-wrap .pp-arrow--right { right: 10px; }
+.profiles-pricing-wrap .pp-arrow svg { width: 16px; height: 16px; stroke: #1a1a2e; stroke-width: 2.4; fill: none; }
+
+/* ── Dots ── */
+.profiles-pricing-wrap .pp-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 0 6px;
+}
+.profiles-pricing-wrap .pp-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #d1d5db;
+  border: none;
+  cursor: pointer;
+  transition: background .25s, transform .25s;
+  padding: 0;
+}
+.profiles-pricing-wrap .pp-dot.active { background: #00b4d8; transform: scale(1.25); }
+
+/* ═══════════════════════════════
+   Profile Card — shared styles
+   ═══════════════════════════════ */
+.profiles-pricing-wrap .prof-card {
+  position: relative;
+  overflow: hidden;
+}
+.profiles-pricing-wrap .prof-topbar {
+  display: flex;
+  align-items: center;
+  padding: 8px 14px;
+  gap: 8px;
+}
+.profiles-pricing-wrap .prof-topbar .tier-label {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+.profiles-pricing-wrap .prof-topbar .separator {
+  width: 1px;
+  height: 16px;
+  background: rgba(255,255,255,0.4);
+}
+.profiles-pricing-wrap .prof-topbar .rating-area {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.profiles-pricing-wrap .prof-topbar .rating-area svg {
+  width: 18px;
+  height: 18px;
+  fill: #f59e0b;
+}
+.profiles-pricing-wrap .prof-topbar .rating-num {
+  font-size: 16px;
+  font-weight: 800;
+  color: #fff;
+}
+.profiles-pricing-wrap .prof-body {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px 20px;
+}
+.profiles-pricing-wrap .prof-avatar-wrap {
+  width: 90px;
+  min-width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 3px solid #00b4d8;
+  overflow: hidden;
+  margin-right: 16px;
+  flex-shrink: 0;
+}
+.profiles-pricing-wrap .prof-avatar-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.profiles-pricing-wrap .prof-info .name {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.profiles-pricing-wrap .prof-info .role {
+  font-size: 13px;
+  font-style: italic;
+  margin-top: 2px;
+}
+.profiles-pricing-wrap .prof-info .location {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  margin-top: 6px;
+}
+.profiles-pricing-wrap .prof-info .location svg {
+  width: 14px;
+  height: 14px;
+}
+.profiles-pricing-wrap .prof-info-btn {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* ── BASE ── */
+.profiles-pricing-wrap .prof-base { background: #fff; }
+.profiles-pricing-wrap .prof-base .prof-topbar { background: #5bb8d4; color: #fff; }
+.profiles-pricing-wrap .prof-base .prof-topbar .tier-label { color: #fff; }
+.profiles-pricing-wrap .prof-base .prof-info .name { color: #1a1a2e; }
+.profiles-pricing-wrap .prof-base .prof-info .role { color: #666; }
+.profiles-pricing-wrap .prof-base .prof-info .location { color: #94a3b8; }
+.profiles-pricing-wrap .prof-base .prof-info .location svg { fill: #94a3b8; }
+.profiles-pricing-wrap .prof-base .prof-info-btn { background: #00b4d8; }
+
+/* ── PRO ── */
+.profiles-pricing-wrap .prof-pro { background: #fff; }
+.profiles-pricing-wrap .prof-pro .prof-topbar { background: #2ecc71; color: #fff; }
+.profiles-pricing-wrap .prof-pro .prof-topbar .tier-label { color: #fff; }
+.profiles-pricing-wrap .prof-pro .prof-info .name { color: #1a1a2e; }
+.profiles-pricing-wrap .prof-pro .prof-info .role { color: #555; }
+.profiles-pricing-wrap .prof-pro .prof-info .location { color: #94a3b8; }
+.profiles-pricing-wrap .prof-pro .prof-info .location svg { fill: #94a3b8; }
+.profiles-pricing-wrap .prof-pro .prof-info-btn { background: #00b4d8; }
+
+/* ── PREMIUM ── */
+.profiles-pricing-wrap .prof-premium { background: #1a1a2e; }
+.profiles-pricing-wrap .prof-premium .prof-topbar { background: #0a2540; color: #fff; }
+.profiles-pricing-wrap .prof-premium .prof-topbar .tier-label { color: #fff; }
+.profiles-pricing-wrap .prof-premium .prof-body { padding: 0; }
+.profiles-pricing-wrap .prof-premium .prof-info-area {
+  flex: 1;
+  padding: 16px 0 16px 20px;
+}
+.profiles-pricing-wrap .prof-premium .prof-info .name { color: #f1f5f9; }
+.profiles-pricing-wrap .prof-premium .prof-info .role { color: #7eb8d8; }
+.profiles-pricing-wrap .prof-premium .prof-info .location { color: #7c8ba5; }
+.profiles-pricing-wrap .prof-premium .prof-info .location svg { fill: #7c8ba5; }
+.profiles-pricing-wrap .prof-premium .prof-photo-right {
+  width: 140px;
+  min-width: 140px;
+  height: 160px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+}
+.profiles-pricing-wrap .prof-premium .prof-photo-right img {
+  height: 155px;
+  width: auto;
+  object-fit: contain;
+}
+.profiles-pricing-wrap .prof-premium .prof-info-btn { background: #00b4d8; }
+
+/* ── AI Avatar Video Section ── */
+.profiles-pricing-wrap .pp-avatar-section {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(.4,0,.2,1), opacity 0.35s ease;
+  opacity: 0;
+}
+.profiles-pricing-wrap .pp-avatar-section.visible {
+  max-height: 400px;
+  opacity: 1;
+}
+.profiles-pricing-wrap .pp-avatar-inner {
+  margin: 6px 12px 10px;
+  background: rgba(0,180,216,0.04);
+  border: 1px solid rgba(0,180,216,0.15);
+  border-radius: 14px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.profiles-pricing-wrap .pp-avatar-label {
+  display: inline-block;
+  background: #00b4d8;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+.profiles-pricing-wrap .pp-avatar-video-wrap {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: #0b1425;
+  position: relative;
+}
+.profiles-pricing-wrap .pp-avatar-video-wrap video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.profiles-pricing-wrap .pp-avatar-sound-btn {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: none;
+  color: #fff;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  transition: background 0.2s, opacity 0.2s;
+  opacity: 0.7;
+}
+.profiles-pricing-wrap .pp-avatar-sound-btn:hover {
+  opacity: 1;
+  background: rgba(255,255,255,0.25);
+}
+.profiles-pricing-wrap .pp-avatar-sound-btn.muted {
+  opacity: 0.4;
+}
+.profiles-pricing-wrap .pp-avatar-tagline {
+  font-size: 11px;
+  font-style: italic;
+  color: #94a3b8;
+  text-align: center;
+}
+
+/* ── Billing Toggle ── */
+.profiles-pricing-wrap .pp-billing-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 0 4px;
+}
+.profiles-pricing-wrap .pp-billing-toggle .toggle-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: color .2s;
+}
+.profiles-pricing-wrap .pp-billing-toggle .toggle-label.active {
+  color: #1a1a2e;
+  font-weight: 700;
+}
+.profiles-pricing-wrap .pp-toggle-track {
+  width: 44px;
+  height: 24px;
+  background: #e5e7eb;
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+  transition: background .3s;
+}
+.profiles-pricing-wrap .pp-toggle-track.annual {
+  background: #00b4d8;
+}
+.profiles-pricing-wrap .pp-toggle-thumb {
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: left .3s cubic-bezier(.4,0,.2,1);
+  box-shadow: 0 1px 4px rgba(0,0,0,.15);
+}
+.profiles-pricing-wrap .pp-toggle-track.annual .pp-toggle-thumb {
+  left: 22px;
+}
+.profiles-pricing-wrap .pp-save-badge {
+  font-size: 10px;
+  font-weight: 700;
+  color: #10b981;
+  background: rgba(16,185,129,0.1);
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+/* ── Pricing Section ── */
+.profiles-pricing-wrap .pp-pricing-section {
+  padding: 20px 0 0;
+  position: relative;
+  overflow: hidden;
+}
+.profiles-pricing-wrap .pp-pricing-panel {
+  padding: 0 24px;
+}
+.profiles-pricing-wrap .pp-pricing-content {
+  display: flex;
+  transition: transform .45s cubic-bezier(.4,0,.2,1);
+  will-change: transform;
+}
+.profiles-pricing-wrap .pp-pricing-panel {
+  min-width: 100%;
+  flex-shrink: 0;
+}
+
+/* ── Plan Name ── */
+.profiles-pricing-wrap .pp-plan-name {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 800;
+  color: #1a1a2e;
+  margin-bottom: 4px;
+}
+.profiles-pricing-wrap .pp-plan-name.pp-base-name { color: #64748b; }
+.profiles-pricing-wrap .pp-plan-name.pp-pro-name { color: #00b4d8; }
+.profiles-pricing-wrap .pp-plan-name.pp-premium-name { color: #0a2540; }
+
+/* ── Price Row ── */
+.profiles-pricing-wrap .pp-price-row {
+  text-align: center;
+  margin-bottom: 2px;
+}
+.profiles-pricing-wrap .pp-old-price {
+  font-size: 15px;
+  color: #ef4444;
+  text-decoration: line-through;
+  margin-right: 6px;
+  font-weight: 500;
+}
+.profiles-pricing-wrap .pp-new-price {
+  font-size: 32px;
+  font-weight: 800;
+  color: #1a1a2e;
+}
+.profiles-pricing-wrap .pp-new-price .period {
+  font-size: 14px;
+  font-weight: 500;
+  color: #94a3b8;
+}
+.profiles-pricing-wrap .pp-billing-note {
+  text-align: center;
+  font-size: 11px;
+  color: #94a3b8;
+  margin-bottom: 18px;
+}
+
+/* ── Feature List ── */
+.profiles-pricing-wrap .pp-features {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 20px;
+}
+.profiles-pricing-wrap .pp-feat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  line-height: 1.3;
+  padding: 2px 0;
+  justify-content: space-between;
+}
+.profiles-pricing-wrap .pp-feat .feat-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.profiles-pricing-wrap .pp-feat .icon {
+  flex-shrink: 0;
+  width: 18px; height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  border-radius: 50%;
+}
+.profiles-pricing-wrap .pp-feat.yes { color: #1a1a2e; }
+.profiles-pricing-wrap .pp-feat.yes .icon { background: #d1fae5; color: #059669; font-weight: 700; }
+.profiles-pricing-wrap .pp-feat.no { color: #c8ccd4; }
+.profiles-pricing-wrap .pp-feat.no .icon { background: #f1f5f9; color: #c8ccd4; font-weight: 700; }
+
+/* ── Comparison Badges ── */
+.profiles-pricing-wrap .comp-badge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 7px;
+  border-radius: 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.profiles-pricing-wrap .comp-badge--green {
+  color: #10b981;
+  background: rgba(16,185,129,0.12);
+  border-left: 2px solid #10b981;
+}
+.profiles-pricing-wrap .comp-badge--cyan {
+  color: #00b4d8;
+  background: rgba(0,180,216,0.12);
+  border-left: 2px solid #00b4d8;
+}
+
+/* ── CTA Button ── */
+.profiles-pricing-wrap .pp-cta-area {
+  padding: 0 24px;
+}
+.profiles-pricing-wrap .pp-cta-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: transform .2s, box-shadow .2s, opacity .2s;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: .3px;
+}
+.profiles-pricing-wrap .pp-cta-btn:hover { transform: translateY(-1px); }
+.profiles-pricing-wrap .pp-cta-btn:active { transform: translateY(0); }
+
+.profiles-pricing-wrap .pp-cta-base {
+  background: #fff;
+  color: #64748b;
+  border: 2px solid #d1d5db;
+}
+.profiles-pricing-wrap .pp-cta-base:hover { border-color: #94a3b8; box-shadow: 0 4px 12px rgba(0,0,0,.06); }
+
+.profiles-pricing-wrap .pp-cta-pro {
+  background: #00b4d8;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(0,180,216,.3);
+}
+.profiles-pricing-wrap .pp-cta-pro:hover { box-shadow: 0 6px 24px rgba(0,180,216,.4); }
+
+.profiles-pricing-wrap .pp-cta-premium {
+  background: linear-gradient(135deg, #0a2540, #1a5276);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(10,37,64,.4);
+}
+.profiles-pricing-wrap .pp-cta-premium:hover { box-shadow: 0 6px 24px rgba(10,37,64,.5); }
+
+/* ── Timer ── */
+.profiles-pricing-wrap .pp-timer-bar {
+  margin-top: 18px;
+  padding: 14px 24px 18px;
+  text-align: center;
+  border-top: 1px solid #f1f5f9;
+}
+.profiles-pricing-wrap .pp-timer-label {
+  font-size: 11px;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+.profiles-pricing-wrap .pp-timer-digits {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+}
+.profiles-pricing-wrap .pp-timer-digits .t-block {
+  background: #f5f7fa;
+  border-radius: 8px;
+  padding: 5px 8px;
+  min-width: 36px;
+  text-align: center;
+}
+.profiles-pricing-wrap .pp-timer-digits .t-block .num {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a2e;
+  display: block;
+  line-height: 1;
+}
+.profiles-pricing-wrap .pp-timer-digits .t-block .lbl {
+  font-size: 8px;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+.profiles-pricing-wrap .pp-timer-digits .t-sep {
+  font-size: 18px;
+  font-weight: 700;
+  color: #cbd5e1;
+  margin: 0 1px;
+  align-self: flex-start;
+  padding-top: 4px;
+}
