@@ -1370,8 +1370,8 @@
       if (ppLabelMonthly) ppLabelMonthly.addEventListener('click', function(e) { e.stopPropagation(); ppIsAnnual = false; ppUpdatePrices(); });
       if (ppLabelAnnual) ppLabelAnnual.addEventListener('click', function(e) { e.stopPropagation(); ppIsAnnual = true; ppUpdatePrices(); });
 
-      // Set default plan
-      quizData.plan = 'base';
+      // Set default plan to PRO
+      ppGoTo(1);
       quizData.billing = 'annual';
     }, 100);
 
