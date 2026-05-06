@@ -113,7 +113,7 @@ html, body {
   background: var(--card-bg);
   border-radius: var(--card-radius);
   box-shadow: var(--card-shadow);
-  transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
   transform-origin: center top;
 }
 
@@ -121,16 +121,22 @@ html, body {
   transform: translateY(-8px) scale(0.96);
   opacity: 0.6;
   z-index: 1;
+  overflow: hidden;
+  max-height: 260px;
 }
 .stack-card.behind-2 {
   transform: translateY(-16px) scale(0.92);
   opacity: 0.3;
   z-index: 0;
+  overflow: hidden;
+  max-height: 240px;
 }
 .stack-card.active {
   transform: translateY(0) scale(1);
   opacity: 1;
   z-index: 2;
+  overflow: visible;
+  max-height: none;
 }
 .stack-card.exit-right {
   transform: translateX(320px) rotate(8deg);
