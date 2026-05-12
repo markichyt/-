@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=360, initial-scale=1.0">
+<title>ConsultantLM — №1 у Google</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    width: 360px;
+    height: 640px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  .canvas {
+    width: 360px;
+    height: 640px;
+    position: relative;
+    overflow: hidden;
+    background: #ffffff;
+  }
+
+  /* Glow orbs */
+  .glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    pointer-events: none;
+  }
+  .glow-orb-1 {
+    width: 200px; height: 200px;
+    background: rgba(0,180,216,0.06);
+    top: -60px; right: -40px;
+  }
+  .glow-orb-2 {
+    width: 160px; height: 160px;
+    background: rgba(76,201,240,0.04);
+    bottom: 100px; left: -50px;
+  }
+
+  /* ======================== LOGO ======================== */
+  .logo {
+    position: absolute;
+    top: 18px;
+    left: 20px;
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  .logo-main {
+    font-size: 10px;
+    font-weight: 700;
+    color: #1a1a2e;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  .logo-sub {
+    font-size: 7px;
+    font-weight: 300;
+    color: #64748b;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  /* Live badge */
+  .live-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(16,185,129,0.15);
+    border: 1px solid rgba(16,185,129,0.3);
+    border-radius: 20px;
+    padding: 4px 10px;
+    opacity: 0;
+  }
+  .live-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: #10b981;
+    animation: pulse-dot 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.7); }
+  }
+  .live-text {
+    font-size: 9px;
+    font-weight: 600;
+    color: #10b981;
+    letter-spacing: 1px;
+  }
+
+  /* ======================== HEADLINE ======================== */
+  .headline-block {
+    position: absolute;
+    top: 52px;
+    left: 20px;
+    right: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  .headline {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a1a2e;
+    line-height: 1.2;
+    letter-spacing: -0.3px;
+  }
+  .headline .accent { color: #00b4d8; }
+  .sub-headline {
+    font-size: 12px;
+    font-weight: 400;
+    color: #94a3b8;
+    margin-top: 5px;
+    line-height: 1.4;
+  }
+
+  /* ======================== SERP MOCKUP ======================== */
+  .serp-card {
+    position: absolute;
+    top: 130px;
+    left: 20px;
+    right: 20px;
+    background: #f5f7fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+    padding: 14px 14px 12px;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  /* Search bar */
+  .search-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,0,0,0.03);
+    border: 1px solid #e5e7eb;
+    border-radius: 24px;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+  }
+  .search-icon {
+    width: 13px; height: 13px;
+    flex-shrink: 0;
+  }
+  .search-text {
+    font-size: 12px;
+    color: #94a3b8;
+    font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .search-cursor {
+    display: inline-block;
+    width: 1px; height: 12px;
+    background: #00b4d8;
+    margin-left: 1px;
+    vertical-align: middle;
+    animation: blink 0.7s step-end infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  /* SERP result rows */
+  .serp-result {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    padding: 9px 10px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: all 0.4s ease;
+    position: relative;
+  }
+  .serp-result:last-child { margin-bottom: 0; }
+
+  .serp-result.result-1 {
+    background: rgba(0,180,216,0.08);
+    border: 1px solid rgba(0,180,216,0.25);
+  }
+  .serp-result.result-2,
+  .serp-result.result-3 {
+    background: rgba(0,0,0,0.02);
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+
+  .rank-badge {
+    font-size: 9px;
+    font-weight: 800;
+    width: 18px; height: 18px;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .rank-1 { background: rgba(0,180,216,0.2); color: #00b4d8; }
+  .rank-2, .rank-3 { background: rgba(0,0,0,0.04); color: #64748b; }
+
+  .result-content { flex: 1; min-width: 0; }
+  .result-url {
+    font-size: 9px;
+    color: #10b981;
+    font-weight: 500;
+    margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .result-url .favicon {
+    width: 10px; height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+  .result-url.dimmed { color: #64748b; }
+  .result-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #1a1a2e;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .result-title.dimmed { color: #94a3b8; }
+
+  .stars {
+    font-size: 9px;
+    color: #f59e0b;
+    margin-top: 2px;
+    letter-spacing: 1px;
+  }
+  .star-score {
+    font-size: 9px;
+    font-weight: 600;
+    color: #94a3b8;
+    margin-left: 3px;
+  }
+
+  /* dimmed state */
+  .serp-result.dimmed-out {
+    opacity: 0.3 !important;
+    filter: blur(0.5px);
+    transform: scale(0.98) !important;
+    transition: all 0.6s ease;
+  }
+  .serp-result.result-1.featured {
+    box-shadow: 0 0 20px rgba(0,180,216,0.15);
+    transform: scale(1.01) !important;
+    transition: all 0.5s ease;
+  }
+
+  /* ======================== DIVIDER ======================== */
+  .divider {
+    position: absolute;
+    top: 310px;
+    left: 20px;
+    right: 20px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0,0,0,0.04), transparent);
+    opacity: 0;
+  }
+
+  /* ======================== STATS ======================== */
+  .stats-block {
+    position: absolute;
+    top: 322px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    gap: 0;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  .stat-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 12px 4px;
+    background: #f5f7fa;
+    border: 1px solid #e5e7eb;
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  .stat-col:first-child { border-radius: 12px 0 0 12px; }
+  .stat-col:last-child { border-radius: 0 12px 12px 0; }
+  .stat-col + .stat-col { border-left: none; }
+
+  .stat-label {
+    font-size: 10px;
+    font-weight: 500;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .stat-value {
+    font-size: 26px;
+    font-weight: 800;
+    color: #00b4d8;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    min-width: 72px;
+    text-align: center;
+    font-feature-settings: "tnum";
+    letter-spacing: -0.5px;
+  }
+  .stat-sub {
+    font-size: 9px;
+    color: #10b981;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  /* ======================== CHART ======================== */
+  .chart-block {
+    position: absolute;
+    top: 430px;
+    left: 20px;
+    right: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  .chart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .chart-title {
+    font-size: 10px;
+    font-weight: 600;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .chart-badge {
+    padding: 3px 8px;
+    border-radius: 20px;
+    background: rgba(16,185,129,0.15);
+    border: 1px solid rgba(16,185,129,0.2);
+    font-size: 9px;
+    font-weight: 600;
+    color: #10b981;
+  }
+
+  .chart-area {
+    background: #f5f7fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 14px 14px 10px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+    position: relative;
+    height: 84px;
+    overflow: hidden;
+  }
+
+  /* Y-axis labels */
+  .chart-y-labels {
+    position: absolute;
+    left: 0; top: 10px; bottom: 14px;
+    width: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-right: 4px;
+  }
+  .chart-y-label {
+    font-size: 8px;
+    color: #334155;
+    font-weight: 500;
+  }
+
+  /* Grid lines */
+  .chart-grid {
+    position: absolute;
+    left: 28px; right: 0;
+    top: 10px; bottom: 14px;
+  }
+  .grid-line {
+    position: absolute;
+    left: 0; right: 0;
+    height: 1px;
+    background: rgba(0,0,0,0.04);
+  }
+
+  /* SVG chart line */
+  .chart-svg {
+    position: absolute;
+    left: 28px; right: 0;
+    top: 10px; bottom: 14px;
+    width: calc(100% - 28px);
+    height: calc(100% - 24px);
+  }
+
+  .chart-line-path {
+    fill: none;
+    stroke: url(#lineGrad);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 300;
+    stroke-dashoffset: 300;
+  }
+  .chart-area-fill {
+    fill: url(#areaGrad);
+    opacity: 0.4;
+    clip-path: none;
+  }
+
+  /* X-axis months */
+  .chart-x-labels {
+    position: absolute;
+    left: 28px; right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+  }
+  .chart-x-label {
+    font-size: 8px;
+    color: #334155;
+    font-weight: 500;
+  }
+
+  /* ======================== FOOTER BADGE ======================== */
+  .footer-badge {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: #f5f7fa;
+    border: 1px solid rgba(0,180,216,0.2);
+    border-radius: 20px;
+    white-space: nowrap;
+    opacity: 0;
+  }
+  .gsc-icon {
+    width: 14px; height: 14px;
+    flex-shrink: 0;
+  }
+  .footer-badge-text {
+    font-size: 10px;
+    font-weight: 600;
+    color: #94a3b8;
+    letter-spacing: 0.3px;
+  }
+  .footer-badge-arrow {
+    font-size: 10px;
+    color: #10b981;
+  }
+
+</style>
+<style>/* CLM-NOLOOP-FIX */
+*, *::before, *::after {
+  animation-iteration-count: 1 !important;
+  animation-fill-mode: forwards !important;
+}
+</style>
+</head>
+<body>
+<div class="canvas" id="canvas">
+  <!-- Background orbs -->
+  <div class="glow-orb glow-orb-1"></div>
+  <div class="glow-orb glow-orb-2"></div>
+
+  <!-- Headline -->
+  <div class="headline-block" id="headlineBlock">
+    <div class="headline">№1 у <span class="accent">Google Search</span></div>
+    <div class="sub-headline">Вище ніж LinkedIn, Avvo і власний сайт</div>
+  </div>
+
+  <!-- SERP Card -->
+  <div class="serp-card" id="serpCard">
+    <!-- Search bar -->
+    <div class="search-bar">
+      <svg class="search-icon" viewBox="0 0 16 16" fill="none">
+        <circle cx="7" cy="7" r="4.5" stroke="#64748b" stroke-width="1.5"/>
+        <line x1="10.5" y1="10.5" x2="14" y2="14" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <span class="search-text" id="searchText"></span><span class="search-cursor" id="searchCursor"></span>
+    </div>
+
+    <!-- Result #1 -->
+    <div class="serp-result result-1" id="result1">
+      <div class="rank-badge rank-1">1</div>
+      <div class="result-content">
+        <div class="result-url">
+          <svg class="favicon" viewBox="0 0 10 10" fill="none"><rect width="10" height="10" rx="2" fill="#10b981"/><text x="1" y="8" font-size="7" fill="white" font-family="Inter" font-weight="700">c</text></svg>
+          consultantlm.com
+        </div>
+        <div class="result-title">John Davis, Divorce Attorney — NYC</div>
+        <div class="stars">★★★★★ <span class="star-score">4.9 (127)</span></div>
+      </div>
+    </div>
+
+    <!-- Result #2 -->
+    <div class="serp-result result-2" id="result2">
+      <div class="rank-badge rank-2">2</div>
+      <div class="result-content">
+        <div class="result-url dimmed">
+          <svg class="favicon" viewBox="0 0 10 10"><rect width="10" height="10" rx="2" fill="#0a66c2"/><text x="1.5" y="8" font-size="7" fill="white" font-family="Inter" font-weight="700">in</text></svg>
+          linkedin.com/in/johndavis
+        </div>
+        <div class="result-title dimmed">John Davis — LinkedIn Profile</div>
+      </div>
+    </div>
+
+    <!-- Result #3 -->
+    <div class="serp-result result-3" id="result3">
+      <div class="rank-badge rank-3">3</div>
+      <div class="result-content">
+        <div class="result-url dimmed">
+          <svg class="favicon" viewBox="0 0 10 10"><rect width="10" height="10" rx="2" fill="#334155"/></svg>
+          johndavislaw.com
+        </div>
+        <div class="result-title dimmed">John Davis Law — Home</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Divider -->
+  <div class="divider" id="divider"></div>
+
+  <!-- Stats block -->
+  <div class="stats-block" id="statsBlock">
+    <div class="stat-col" id="statПерегляди">
+      <div class="stat-label">Перегляди</div>
+      <div class="stat-value" id="viewsVal">0</div>
+      <div class="stat-sub">↑ +340%</div>
+    </div>
+    <div class="stat-col" id="statЛіди">
+      <div class="stat-label">Ліди</div>
+      <div class="stat-value" id="leadsVal">0</div>
+      <div class="stat-sub">↑ +189%</div>
+    </div>
+    <div class="stat-col" id="statДохід">
+      <div class="stat-label">Дохід</div>
+      <div class="stat-value" id="revenueVal">$0</div>
+      <div class="stat-sub">↑ +267%</div>
+    </div>
+  </div>
+
+  <!-- Chart -->
+  <div class="chart-block" id="chartBlock">
+    <div class="chart-header">
+      <span class="chart-title">Перегляди профілю — останні 6 міс.</span>
+      <span class="chart-badge">↗ All-time high</span>
+    </div>
+    <div class="chart-area">
+      <div class="chart-y-labels">
+        <span class="chart-y-label">250K</span>
+        <span class="chart-y-label">125K</span>
+        <span class="chart-y-label">0</span>
+      </div>
+      <div class="chart-grid">
+        <div class="grid-line" style="top:0%"></div>
+        <div class="grid-line" style="top:50%"></div>
+        <div class="grid-line" style="top:100%"></div>
+      </div>
+      <svg class="chart-svg" viewBox="0 0 240 52" preserveAspectRatio="none" id="chartSvg">
+        <defs>
+          <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#00b4d8"/>
+            <stop offset="100%" stop-color="#10b981"/>
+          </linearGradient>
+          <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#00b4d8" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#00b4d8" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <!-- Area fill -->
+        <path class="chart-area-fill" id="chartAreaFill"
+          d="M0,52 L0,46 C30,44 50,40 80,36 C110,32 130,26 160,18 C180,12 210,6 240,2 L240,52 Z"/>
+        <!-- Line -->
+        <path class="chart-line-path" id="chartLinePath"
+          d="M0,46 C30,44 50,40 80,36 C110,32 130,26 160,18 C180,12 210,6 240,2"/>
+      </svg>
+      <div class="chart-x-labels">
+        <span class="chart-x-label">Лис</span>
+        <span class="chart-x-label">Гру</span>
+        <span class="chart-x-label">Січ</span>
+        <span class="chart-x-label">Лют</span>
+        <span class="chart-x-label">Бер</span>
+        <span class="chart-x-label">Кві</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Badge -->
+  <div class="footer-badge" id="footerBadge">
+    <svg class="gsc-icon" viewBox="0 0 14 14" fill="none">
+      <rect width="14" height="14" rx="3" fill="rgba(0,180,216,0.2)"/>
+      <text x="2" y="11" font-size="9" fill="#00b4d8" font-family="Inter" font-weight="700">G</text>
+    </svg>
+    <span class="footer-badge-text">Google Search Console</span>
+    <span class="footer-badge-arrow">↗</span>
+  </div>
+
+</div>
+
+<script>
+// =========================================================
+// Animation Engine — 12s loop
+// =========================================================
+
+const TOTAL = 12000; // ms
+
+// Easing
+function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+function easeInOut(t) { return t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t+2, 2)/2; }
+
+// Fade + translate helper
+function fadeIn(el, { delay = 0, duration = 600, ty = 20, tx = 0 } = {}) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      const start = performance.now();
+      function frame(now) {
+        const t = Math.min((now - start) / duration, 1);
+        const e = easeOut(t);
+        el.style.opacity = e;
+        el.style.transform = `translateY(${ty * (1 - e)}px) translateX(${tx * (1 - e)}px)`;
+        if (t < 1) requestAnimationFrame(frame);
+        else { el.style.opacity = 1; el.style.transform = `translateY(0) translateX(0)`; resolve(); }
+      }
+      requestAnimationFrame(frame);
+    }, delay);
+  });
+}
+
+// CountUp — smooth, no jitter
+function countUp(el, target, duration = 2200, prefix = '', suffix = '', delay = 0) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      const start = performance.now();
+      function frame(now) {
+        const t = Math.min((now - start) / duration, 1);
+        // Smooth ease: cubic out
+        const e = 1 - Math.pow(1 - t, 3);
+        const raw = e * target;
+
+        let display;
+        if (target >= 10000) {
+          // For large numbers: show 1 decimal K until final, then snap to round K
+          const k = raw / 1000;
+          if (t >= 1) {
+            display = (target / 1000) + 'K';
+          } else {
+            // Keep 1 decimal place while counting — no jumping
+            display = k.toFixed(1) + 'K';
+          }
+        } else {
+          display = Math.round(raw);
+        }
+
+        el.textContent = prefix + display + suffix;
+        if (t < 1) requestAnimationFrame(frame);
+        else {
+          // Final snap to clean value
+          if (target >= 10000) el.textContent = prefix + (target / 1000) + 'K' + suffix;
+          else el.textContent = prefix + target + suffix;
+          resolve();
+        }
+      }
+      requestAnimationFrame(frame);
+    }, delay);
+  });
+}
+
+// Typing effect
+const QUERY = 'Адвокат з розлучень New York';
+function typeText(el, text, speed = 60, delay = 0) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      el.textContent = '';
+      let i = 0;
+      function next() {
+        if (i < text.length) {
+          el.textContent += text[i++];
+          setTimeout(next, speed);
+        } else { resolve(); }
+      }
+      next();
+    }, delay);
+  });
+}
+
+// Draw chart line
+function drawChartLine(duration = 1800, delay = 0) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      const path = document.getElementById('chartLinePath');
+      const pathLen = 300; // approx
+      path.style.strokeDasharray = pathLen;
+      path.style.strokeDashoffset = pathLen;
+      const start = performance.now();
+      function frame(now) {
+        const t = Math.min((now - start) / duration, 1);
+        const e = easeInOut(t);
+        path.style.strokeDashoffset = pathLen * (1 - e);
+        if (t < 1) requestAnimationFrame(frame);
+        else { path.style.strokeDashoffset = 0; resolve(); }
+      }
+      requestAnimationFrame(frame);
+    }, delay);
+  });
+}
+
+// Reset all to initial state
+function resetAll() {
+  const els = ['headlineBlock','serpCard','divider','statsBlock','chartBlock','footerBadge'];
+  els.forEach(id => {
+    const el = document.getElementById(id);
+    el.style.opacity = 0;
+    el.style.transform = 'translateY(20px)';
+  });
+
+  // Stat cols
+  ['statПерегляди','statЛіди','statДохід'].forEach(id => {
+    const el = document.getElementById(id);
+    el.style.opacity = 0;
+    el.style.transform = 'translateY(15px)';
+  });
+
+  // Results
+  ['result1','result2','result3'].forEach(id => {
+    const el = document.getElementById(id);
+    el.style.opacity = 0;
+    el.style.transform = 'translateX(-8px)';
+    el.classList.remove('dimmed-out','featured');
+  });
+
+  // Counters
+  document.getElementById('viewsVal').textContent = '0';
+  document.getElementById('leadsVal').textContent = '0';
+  document.getElementById('revenueVal').textContent = '$0';
+
+  // Search text
+  document.getElementById('searchText').textContent = '';
+
+  // Chart
+  const path = document.getElementById('chartLinePath');
+  path.style.strokeDasharray = 300;
+  path.style.strokeDashoffset = 300;
+
+  const fill = document.getElementById('chartAreaFill');
+  fill.style.opacity = 0;
+}
+
+// =========================================================
+// Main sequence
+// =========================================================
+async function runSequence() {
+  resetAll();
+
+  // 0–1s: headline
+  await fadeIn(document.getElementById('headlineBlock'), { delay: 500, duration: 600, ty: 20 });
+
+  // 1–2s: SERP card appears, typing starts
+  fadeIn(document.getElementById('serpCard'), { delay: 0, duration: 400, ty: 20 });
+  await typeText(document.getElementById('searchText'), QUERY, 55, 200);
+
+  // 2–4s: results appear one by one, cursor hides
+  document.getElementById('searchCursor').style.display = 'none';
+  await fadeIn(document.getElementById('result1'), { delay: 100, duration: 400, ty: 0, tx: -8 });
+  await fadeIn(document.getElementById('result2'), { delay: 0, duration: 350, ty: 0, tx: -8 });
+  await fadeIn(document.getElementById('result3'), { delay: 0, duration: 350, ty: 0, tx: -8 });
+
+  // 4–5s: dim results 2+3, highlight #1
+  await new Promise(r => setTimeout(r, 300));
+  document.getElementById('result2').classList.add('dimmed-out');
+  document.getElementById('result3').classList.add('dimmed-out');
+  await new Promise(r => setTimeout(r, 100));
+  document.getElementById('result1').classList.add('featured');
+
+  // Divider
+  fadeIn(document.getElementById('divider'), { delay: 200, duration: 400, ty: 0 });
+
+  // 5–7.5s: stats appear
+  fadeIn(document.getElementById('statsBlock'), { delay: 400, duration: 400, ty: 20 });
+  await new Promise(r => setTimeout(r, 500));
+
+  const statПерегляди = document.getElementById('statПерегляди');
+  const statЛіди = document.getElementById('statЛіди');
+  const statДохід = document.getElementById('statДохід');
+
+  // Animate each stat col
+  [statПерегляди, statЛіди, statДохід].forEach((el, i) => {
+    setTimeout(() => {
+      el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+      el.style.opacity = 1;
+      el.style.transform = 'translateY(0)';
+    }, i * 150);
+  });
+
+  await new Promise(r => setTimeout(r, 200));
+  countUp(document.getElementById('viewsVal'), 250000, 2200, '', '');
+  countUp(document.getElementById('leadsVal'), 89, 2200, '', '');
+  countUp(document.getElementById('revenueVal'), 267000, 2200, '$', '');
+
+  // Wait for counts to mostly finish
+  await new Promise(r => setTimeout(r, 1800));
+
+  // 7.5–9.5s: chart draws
+  fadeIn(document.getElementById('chartBlock'), { delay: 0, duration: 500, ty: 20 });
+  await new Promise(r => setTimeout(r, 300));
+
+  // Fade in area fill
+  const fill = document.getElementById('chartAreaFill');
+  fill.style.transition = 'opacity 0.8s ease';
+  fill.style.opacity = 0.4;
+
+  drawChartLine(1800, 0);
+  await new Promise(r => setTimeout(r, 1800));
+
+  // Footer badge
+  await fadeIn(document.getElementById('footerBadge'), { delay: 100, duration: 500, ty: 10 });
+
+  // 9.5–12s: hold
+  await new Promise(r => setTimeout(r, 2300));
+
+  // Cursor re-show before reset
+  document.getElementById('searchCursor').style.display = '';
+
+  // Loop
+  runSequence();
+}
+
+// Start after fonts load
+document.fonts.ready.then(() => {
+  setTimeout(runSequence, 300);
+});
+</script>
+</body>
+</html>

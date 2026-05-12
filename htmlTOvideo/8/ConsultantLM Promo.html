@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>ConsultantLM — 2,500+ спеціалістам</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    font-family: 'Inter', system-ui, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .canvas {
+    width: 360px;
+    height: 640px;
+    background: #ffffff;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    gap: 18px;
+  }
+
+  /* subtle ambient glow */
+  .canvas::before {
+    content: "";
+    position: absolute;
+    top: -120px; left: -80px;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(0,180,216,0.06), transparent 70%);
+    pointer-events: none;
+  }
+  .canvas::after {
+    content: "";
+    position: absolute;
+    bottom: -120px; right: -80px;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(76,201,240,0.05), transparent 70%);
+    pointer-events: none;
+  }
+
+  /* ---------- Header card ---------- */
+  .header-card {
+    margin: 0 16px;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 20px 22px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06), 0 2px 6px rgba(0,180,216,0.06);
+    text-align: left;
+    position: relative;
+    z-index: 2;
+    animation: headerIn 0.7s cubic-bezier(.22,.9,.3,1) both;
+  }
+
+  .header-card .line {
+    color: #1a1a2e;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+  }
+
+  .header-card .big {
+    color: #00b4d8;
+    font-weight: 800;
+    font-size: 28px;
+    letter-spacing: -0.02em;
+    display: inline-block;
+    margin-right: 6px;
+  }
+
+  .header-card .sub {
+    margin-top: 6px;
+    color: #64748b;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .header-card .sub .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 0 3px rgba(16,185,129,0.18);
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+
+  @keyframes headerIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 0 0 3px rgba(16,185,129,0.18); }
+    50%     { box-shadow: 0 0 0 6px rgba(16,185,129,0.05); }
+  }
+
+  /* ---------- Carousels ---------- */
+  .carousels {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 28px;
+    position: relative;
+    z-index: 1;
+    /* fade edges */
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+    overflow: hidden;
+    padding: 18px 0;
+  }
+
+  /* tilt wrappers — keep transform free for animation on .row */
+  .tilt {
+    width: 100%;
+  }
+  .tilt.top    { transform: rotate(-3.5deg); }
+  .tilt.bottom { transform: rotate(-3.5deg); }
+
+  .row {
+    display: flex;
+    width: max-content;
+    gap: 16px;
+    padding: 0 8px;
+  }
+
+  .row.top    { animation: scrollLeft  25s linear infinite; }
+  .row.bottom { animation: scrollRight 30s linear infinite; }
+
+  @keyframes scrollLeft {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  @keyframes scrollRight {
+    from { transform: translateX(-50%); }
+    to   { transform: translateX(0); }
+  }
+
+  /* ---------- Avatar ---------- */
+  .avatar {
+    flex: 0 0 auto;
+    width: 80px;
+    height: 80px;
+    border-radius: 18px;
+    position: relative;
+    overflow: visible;
+    background: #f5f7fa;
+    box-shadow:
+      0 2px 8px rgba(0,0,0,0.06),
+      0 0 0 1px #e5e7eb;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 18px;
+    display: block;
+  }
+
+  /* soft inner ring on top of photo */
+  .avatar::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 18px;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06);
+    pointer-events: none;
+  }
+
+  /* soft inner ring (legacy, kept harmless) */
+  .avatar::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 18px;
+    pointer-events: none;
+  }
+
+  .badge {
+    position: absolute;
+    bottom: -4px;
+    right: -4px;
+    background: rgba(16,185,129,0.95);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 3px 7px;
+    border-radius: 8px;
+    border: 2px solid #ffffff;
+    letter-spacing: 0.01em;
+    box-shadow: 0 4px 10px rgba(16,185,129,0.35);
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* ---------- Footer ---------- */
+  .featured {
+    text-align: center;
+    padding: 0 20px;
+    position: relative;
+    z-index: 2;
+    animation: fadeIn 0.9s ease-out 0.5s both;
+  }
+
+  .featured .label {
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .featured .logos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: #1a1a2e;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: -0.01em;
+  }
+
+  .featured .logos .sep {
+    width: 3px; height: 3px;
+    background: #4cc9f0;
+    border-radius: 50%;
+    opacity: 0.7;
+  }
+
+  .featured .logos span.brand {
+    background: linear-gradient(180deg, #1a1a2e 0%, #444 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---------- Stats strip ---------- */
+  .stats {
+    display: flex;
+    justify-content: space-around;
+    padding: 0 20px;
+    position: relative;
+    z-index: 2;
+    animation: fadeIn 0.9s ease-out 0.3s both;
+  }
+  .stats .stat {
+    text-align: center;
+  }
+  .stats .num {
+    color: #00b4d8;
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .stats .cap {
+    color: #94a3b8;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .stats .divider {
+    width: 1px;
+    background: #e5e7eb;
+  }
+</style>
+<style>/* CLM-NOLOOP-FIX */
+*, *::before, *::after {
+  animation-iteration-count: 1 !important;
+  animation-fill-mode: forwards !important;
+}
+</style>
+</head>
+<body>
+  <div class="canvas" id="canvas">
+
+    <!-- 1. Header card -->
+    <div class="header-card">
+      <div class="line">Ми допомогли</div>
+      <div style="margin-top:2px;">
+        <span class="big">2,500+</span><span class="line">спеціалістам</span>
+      </div>
+      <div class="line">зростати</div>
+      <div class="sub"><span class="dot"></span> Перевірені результати · 2024–2026</div>
+    </div>
+
+    <!-- 2. Carousels -->
+    <div class="carousels">
+      <div class="tilt top"><div class="row top" id="rowTop"></div></div>
+      <div class="tilt bottom"><div class="row bottom" id="rowBottom"></div></div>
+    </div>
+
+    <!-- mini stats -->
+    <div class="stats">
+      <div class="stat">
+        <div class="num">+183%</div>
+        <div class="cap">Сер. дохід</div>
+      </div>
+      <div class="divider"></div>
+      <div class="stat">
+        <div class="num">94%</div>
+        <div class="cap">Утримання</div>
+      </div>
+      <div class="divider"></div>
+      <div class="stat">
+        <div class="num">42</div>
+        <div class="cap">Країн</div>
+      </div>
+    </div>
+
+    <!-- 3. Про нас писали -->
+    <div class="featured">
+      <div class="label">Про нас писали</div>
+      <div class="logos">
+        <span class="brand">Forbes</span>
+        <span class="sep"></span>
+        <span class="brand">HiiL Justice</span>
+        <span class="sep"></span>
+        <span class="brand">TechCrunch</span>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+  // ---------- Data ----------
+  // 28 unique photos cycled across 40 slots (top 20 + bottom 20)
+  const PHOTOS = Array.from({length: 28}, (_, i) => `avatars/${String(i+1).padStart(2,'0')}.png`);
+
+  // Top row: photos 1–20
+  const TOP_PHOTOS = PHOTOS.slice(0, 20);
+  const TOP_INCOMES = ["$12K","$28K","$47K","$8K","$35K","$19K","$52K","$15K","$41K","$23K","$31K","$9K","$44K","$17K","$38K","$26K","$50K","$11K","$33K","$21K"];
+
+  // Bottom row: photos 9–28 (starts mid-set so it differs visually from top)
+  const BOT_PHOTOS = [...PHOTOS.slice(20, 28), ...PHOTOS.slice(0, 12)];
+  const BOT_INCOMES = ["$22K","$39K","$16K","$45K","$7K","$29K","$53K","$18K","$36K","$24K","$42K","$13K","$48K","$20K","$34K","$27K","$51K","$10K","$30K","$25K"];
+
+  function makeAvatar(photoSrc, income) {
+    const div = document.createElement("div");
+    div.className = "avatar";
+
+    const img = document.createElement("img");
+    img.src = photoSrc;
+    img.alt = "";
+    img.loading = "eager";
+    img.decoding = "async";
+    div.appendChild(img);
+
+    const badge = document.createElement("div");
+    badge.className = "badge";
+    badge.textContent = income;
+    div.appendChild(badge);
+
+    return div;
+  }
+
+  function fillRow(rowEl, photosArr, incomesArr) {
+    const buildSet = () => {
+      const frag = document.createDocumentFragment();
+      for (let i = 0; i < photosArr.length; i++) {
+        frag.appendChild(makeAvatar(photosArr[i], incomesArr[i]));
+      }
+      return frag;
+    };
+    // Two copies for seamless loop
+    rowEl.appendChild(buildSet());
+    rowEl.appendChild(buildSet());
+  }
+
+  fillRow(document.getElementById("rowTop"),    TOP_PHOTOS, TOP_INCOMES);
+  fillRow(document.getElementById("rowBottom"), BOT_PHOTOS, BOT_INCOMES);
+
+  // ---------- Auto-scale to viewport (keeps 360x640 canvas exact) ----------
+  function fit() {
+    const c = document.getElementById("canvas");
+    const sx = window.innerWidth  / 360;
+    const sy = window.innerHeight / 640;
+    const s  = Math.min(sx, sy, 1);
+    c.style.transform = `scale(${s})`;
+    c.style.transformOrigin = "center center";
+  }
+  window.addEventListener("resize", fit);
+  fit();
+</script>
+</body>
+</html>

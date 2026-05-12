@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>ConsultantLM — AI-соцмережі</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .stage {
+    width: 360px;
+    height: 640px;
+    background: linear-gradient(180deg, #ffffff 0%, #fafbfc 50%, #f5f7fa 100%);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.08);
+    color: #1a1a2e;
+    padding: 18px 18px 16px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Subtle ambient glow */
+  .stage::before {
+    content: "";
+    position: absolute;
+    top: -120px;
+    right: -80px;
+    width: 280px;
+    height: 280px;
+    background: radial-gradient(circle, rgba(0,180,216,0.06), transparent 65%);
+    filter: blur(20px);
+    pointer-events: none;
+  }
+  .stage::after {
+    content: "";
+    position: absolute;
+    bottom: -100px;
+    left: -60px;
+    width: 240px;
+    height: 240px;
+    background: radial-gradient(circle, rgba(76,201,240,0.04), transparent 65%);
+    filter: blur(20px);
+    pointer-events: none;
+  }
+
+  /* ---------- Logo ---------- */
+  .logo {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.05;
+    margin-bottom: 14px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease-out 0.1s forwards;
+  }
+  .logo .brand {
+    color: #1a1a2e;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1.4px;
+  }
+  .logo .sub {
+    color: #94a3b8;
+    font-weight: 400;
+    font-size: 8px;
+    letter-spacing: 1.6px;
+    margin-top: 2px;
+  }
+
+  /* ---------- Headline ---------- */
+  .headline {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.18;
+    color: #1a1a2e;
+    margin-bottom: 6px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease-out 0.25s forwards;
+  }
+  .headline .accent { color: #00b4d8; }
+
+  .subhead {
+    font-size: 13px;
+    font-weight: 400;
+    color: #94a3b8;
+    margin-bottom: 14px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease-out 1.05s forwards;
+  }
+
+  /* ---------- Posts feed ---------- */
+  .feed {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .post {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 11px;
+    background: #f5f7fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  .post.p1 { animation: postIn 0.5s ease-out 2.0s forwards; }
+  .post.p2 { animation: postIn 0.5s ease-out 2.5s forwards; }
+  .post.p3 { animation: postIn 0.5s ease-out 3.0s forwards; }
+
+  .post .icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+  }
+  .icon.linkedin { background: #0a66c2; }
+  .icon.instagram { background: linear-gradient(135deg, #f58529 0%, #dd2a7b 50%, #8134af 100%); }
+  .icon.tiktok {
+    background: #000;
+    position: relative;
+    overflow: hidden;
+  }
+  .icon svg { width: 16px; height: 16px; }
+
+  .post .body {
+    flex: 1;
+    min-width: 0;
+  }
+  .post .title {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #1a1a2e;
+    line-height: 1.25;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .post .meta {
+    font-size: 9.5px;
+    color: #64748b;
+    margin-top: 2px;
+    font-weight: 500;
+  }
+
+  .badge {
+    padding: 4px 9px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+    flex-shrink: 0;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .badge.published {
+    background: rgba(16,185,129,0.15);
+    color: #10b981;
+    opacity: 0;
+    animation: badgePop 0.5s ease-out 2.7s forwards;
+  }
+  .badge.scheduled {
+    background: rgba(148,163,184,0.15);
+    color: #94a3b8;
+    opacity: 0;
+    animation: badgePop 0.5s ease-out 3.2s forwards;
+  }
+  .badge.draft {
+    background: rgba(0,180,216,0.15);
+    color: #00b4d8;
+    opacity: 0;
+    animation: badgePop 0.5s ease-out 3.7s forwards;
+  }
+  .badge .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  /* ---------- Divider ---------- */
+  .divider {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 6px 0 14px;
+    opacity: 0;
+    animation: fadeUp 0.5s ease-out 4.2s forwards;
+  }
+
+  /* ---------- Time saved card ---------- */
+  .time-card {
+    background: #f5f7fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 14px 14px 13px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+    opacity: 0;
+    animation: fadeUp 0.6s ease-out 4.4s forwards;
+  }
+  .time-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .time-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #94a3b8;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .time-pill {
+    font-size: 9.5px;
+    font-weight: 600;
+    color: #10b981;
+    background: rgba(16,185,129,0.15);
+    padding: 2px 8px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .time-pill .arrow {
+    display: inline-block;
+    transform: translateY(-1px);
+  }
+
+  .time-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .time-num {
+    font-size: 42px;
+    font-weight: 800;
+    color: #00b4d8;
+    line-height: 1;
+    letter-spacing: -1px;
+    font-variant-numeric: tabular-nums;
+  }
+  .time-unit {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a2e;
+  }
+  .time-caption {
+    font-size: 11px;
+    color: #64748b;
+    margin-bottom: 12px;
+    line-height: 1.35;
+  }
+
+  .progress {
+    height: 6px;
+    width: 100%;
+    border-radius: 3px;
+    background: #e5e7eb;
+    overflow: hidden;
+    position: relative;
+  }
+  .progress .fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #00b4d8, #4cc9f0);
+    border-radius: 3px;
+    box-shadow: 0 0 12px rgba(0,180,216,0.3);
+    animation: progressFill 1.2s cubic-bezier(0.22, 1, 0.36, 1) 4.7s forwards;
+  }
+
+  .progress-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    font-size: 9.5px;
+    color: #64748b;
+    font-weight: 500;
+  }
+
+  /* ---------- Footer status ---------- */
+  .status {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding-top: 12px;
+    opacity: 0;
+    animation: fadeUp 0.5s ease-out 6.5s forwards;
+  }
+  .status .pulse {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 0 0 rgba(16,185,129,0.6);
+    animation: livePulse 1.5s ease-out infinite;
+  }
+  .status .text {
+    font-size: 11px;
+    color: #94a3b8;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+  }
+  .status .text b { color: #1a1a2e; font-weight: 600; margin: 0 4px 0 0; }
+  .status .dots {
+    display: inline-flex;
+    gap: 3px;
+    margin-left: 4px;
+  }
+  .status .dots span {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #00b4d8;
+    animation: blink 1.4s infinite;
+  }
+  .status .dots span:nth-child(2) { animation-delay: 0.2s; }
+  .status .dots span:nth-child(3) { animation-delay: 0.4s; }
+
+  /* ---------- Keyframes ---------- */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes postIn {
+    0%   { opacity: 0; transform: translateY(-14px) scale(0.98); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes badgePop {
+    0%   { opacity: 0; transform: scale(0.7); }
+    60%  { opacity: 1; transform: scale(1.08); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+  @keyframes progressFill {
+    from { width: 0%; }
+    to   { width: 100%; }
+  }
+  @keyframes livePulse {
+    0%   { box-shadow: 0 0 0 0 rgba(16,185,129,0.55); }
+    70%  { box-shadow: 0 0 0 10px rgba(16,185,129,0); }
+    100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); }
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 0.25; transform: scale(0.8); }
+    50%      { opacity: 1; transform: scale(1.1); }
+  }
+
+  /* ---------- LOOP: restart every 12s ---------- */
+  .stage > .anim {
+    animation-iteration-count: 1;
+  }
+
+  /* The whole stage restarts: we re-run via JS by toggling a class */
+  .stage.replay .headline,
+  .stage.replay .subhead,
+  .stage.replay .post,
+  .stage.replay .badge,
+  .stage.replay .divider,
+  .stage.replay .time-card,
+  .stage.replay .progress .fill,
+  .stage.replay .status,
+  .stage.replay .num-anim {
+    animation: none !important;
+  }
+</style>
+<style>/* CLM-NOLOOP-FIX */
+*, *::before, *::after {
+  animation-iteration-count: 1 !important;
+  animation-fill-mode: forwards !important;
+}
+</style>
+</head>
+<body>
+
+<div class="stage" id="stage">
+
+  <!-- Headline -->
+  <h1 class="headline">
+    Дозволь AI вести соцмережі<br/>
+    економить тобі <span class="accent">40+ год/тиждень</span>
+  </h1>
+  <p class="subhead">Завжди вчасно. Повна оптимізація. Без зусиль.</p>
+
+  <!-- Feed -->
+  <div class="feed">
+    <!-- Post 1: LinkedIn -->
+    <div class="post p1">
+      <div class="icon linkedin" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.61 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+      </div>
+      <div class="body">
+        <div class="title">5 речей про поділ майна в NY</div>
+        <div class="meta">LinkedIn • Article</div>
+      </div>
+      <span class="badge published">
+        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Опубліковано
+      </span>
+    </div>
+
+    <!-- Post 2: Instagram -->
+    <div class="post p2">
+      <div class="icon instagram" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </div>
+      <div class="body">
+        <div class="title">Як обрати адвоката з розлучень</div>
+        <div class="meta">Instagram • Reel</div>
+      </div>
+      <span class="badge scheduled">
+        <span class="dot"></span>
+        Заплановано
+      </span>
+    </div>
+
+    <!-- Post 3: TikTok -->
+    <div class="post p3">
+      <div class="icon tiktok" aria-label="TikTok">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M16.5 2c.3 2.6 2 4.5 4.5 4.7v3c-1.7 0-3.3-.5-4.5-1.4v6.4c0 4-3.2 6.7-7 6.7-3.6 0-6.5-2.7-6.5-6.4 0-3.7 3-6.7 6.7-6.7.4 0 .8 0 1.2.1v3.2c-.4-.1-.8-.2-1.2-.2-1.9 0-3.5 1.5-3.5 3.5s1.5 3.5 3.5 3.5 3.5-1.4 3.5-3.4V2h3.3z" fill="#00f2ea" transform="translate(-1,-1)"/>
+          <path d="M16.5 2c.3 2.6 2 4.5 4.5 4.7v3c-1.7 0-3.3-.5-4.5-1.4v6.4c0 4-3.2 6.7-7 6.7-3.6 0-6.5-2.7-6.5-6.4 0-3.7 3-6.7 6.7-6.7.4 0 .8 0 1.2.1v3.2c-.4-.1-.8-.2-1.2-.2-1.9 0-3.5 1.5-3.5 3.5s1.5 3.5 3.5 3.5 3.5-1.4 3.5-3.4V2h3.3z" fill="#ff004f" transform="translate(1,1)"/>
+          <path d="M16.5 2c.3 2.6 2 4.5 4.5 4.7v3c-1.7 0-3.3-.5-4.5-1.4v6.4c0 4-3.2 6.7-7 6.7-3.6 0-6.5-2.7-6.5-6.4 0-3.7 3-6.7 6.7-6.7.4 0 .8 0 1.2.1v3.2c-.4-.1-.8-.2-1.2-.2-1.9 0-3.5 1.5-3.5 3.5s1.5 3.5 3.5 3.5 3.5-1.4 3.5-3.4V2h3.3z" fill="#fff"/>
+        </svg>
+      </div>
+      <div class="body">
+        <div class="title">Права клієнта у справах про опіку</div>
+        <div class="meta">TikTok • Short video</div>
+      </div>
+      <span class="badge draft">
+        <span class="dot"></span>
+        Чернетка
+      </span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Time saved -->
+  <div class="time-card">
+    <div class="time-head">
+      <span class="time-label">Time Saved · This Week</span>
+      <span class="time-pill"><span class="arrow">▲</span> 38%</span>
+    </div>
+    <div class="time-row">
+      <span class="time-num" id="counter">0</span>
+      <span class="time-unit">год зекономлено</span>
+    </div>
+    <p class="time-caption">vs manual posting &amp; content creation</p>
+    <div class="progress">
+      <div class="fill"></div>
+    </div>
+    <div class="progress-meta">
+      <span>0 hrs</span>
+      <span>40 hrs</span>
+    </div>
+  </div>
+
+  <!-- Status -->
+  <div class="status">
+    <span class="pulse"></span>
+    <span class="text"><b>AI</b> is posting прямо зараз</span>
+    <span class="dots"><span></span><span></span><span></span></span>
+  </div>
+
+</div>
+
+<script>
+  // Count-up animation for the "40 год зекономлено" number
+  const counterEl = document.getElementById('counter');
+
+  function runCounter() {
+    const target = 40;
+    const duration = 1500; // ms
+    const startDelay = 4700; // matches progress fill start
+    const startAt = performance.now() + startDelay;
+
+    function tick(now) {
+      const elapsed = now - startAt;
+      if (elapsed < 0) {
+        counterEl.textContent = '0';
+        requestAnimationFrame(tick);
+        return;
+      }
+      const t = Math.min(elapsed / duration, 1);
+      // ease-out cubic
+      const eased = 1 - Math.pow(1 - t, 3);
+      counterEl.textContent = Math.round(eased * target).toString();
+      if (t < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  // Loop the entire animation every 12s
+  function startLoop() {
+    runCounter();
+    setTimeout(() => {
+      const stage = document.getElementById('stage');
+      // Clone to fully reset CSS animations
+      const clone = stage.cloneNode(true);
+      stage.parentNode.replaceChild(clone, stage);
+      clone.id = 'stage';
+      // Re-bind counter
+      window.requestAnimationFrame(() => {
+        const c = clone.querySelector('#counter');
+        c.textContent = '0';
+        // Restart by re-running script logic
+        runCounter.call({ counterEl: c });
+        // Replace global ref so next loop targets the new node
+        Object.defineProperty(window, '__counterEl', { value: c, configurable: true });
+        // schedule next loop
+        setTimeout(arguments.callee || nextLoop, 12000);
+      });
+    }, 12000);
+  }
+
+  // Simpler robust loop using class swap + node clone
+  function loop() {
+    const old = document.getElementById('stage');
+    const fresh = old.cloneNode(true);
+    old.parentNode.replaceChild(fresh, old);
+    // restart counter targeting the cloned counter node
+    const c = fresh.querySelector('#counter');
+    c.textContent = '0';
+    const target = 40;
+    const duration = 1500;
+    const startDelay = 4700;
+    const startAt = performance.now() + startDelay;
+    function tick(now) {
+      const elapsed = now - startAt;
+      if (elapsed < 0) { c.textContent = '0'; requestAnimationFrame(tick); return; }
+      const t = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - t, 3);
+      c.textContent = Math.round(eased * target).toString();
+      if (t < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+    setTimeout(loop, 12000);
+  }
+
+  // Initial counter run, then start loop scheduler
+  runCounter();
+  setTimeout(loop, 12000);
+</script>
+
+</body>
+</html>

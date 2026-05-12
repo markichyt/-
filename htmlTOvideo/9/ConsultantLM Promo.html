@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>ConsultantLM — AI-фабрика контенту</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-1: #ffffff;
+    --bg-2: #ffffff;
+    --bg-3: #ffffff;
+    --accent: #00b4d8;
+    --accent-2: #4cc9f0;
+    --pos: #10b981;
+    --neg: #ef4444;
+    --text: #1a1a2e;
+    --muted: #94a3b8;
+    --tiny: #64748b;
+    --card-bg: #f5f7fa;
+    --card-border: #e5e7eb;
+    --divider: #e5e7eb;
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: #ffffff;
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ---------- Stage ---------- */
+  .stage {
+    width: 360px;
+    height: 640px;
+    position: relative;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 8px 30px rgba(0,0,0,.08), 0 0 0 1px #e5e7eb;
+    border-radius: 22px;
+    isolation: isolate;
+  }
+
+  /* ambient glow */
+  .stage::before {
+    content: "";
+    position: absolute; inset: -40%;
+    background:
+      radial-gradient(circle at 20% 10%, rgba(0,180,216,0.04), transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(76,201,240,0.03), transparent 45%);
+    pointer-events: none;
+    z-index: 0;
+    animation: ambient 12s ease-in-out infinite;
+  }
+  @keyframes ambient {
+    0%, 100% { transform: translate(0,0); }
+    50% { transform: translate(-2%, 2%); }
+  }
+
+  /* subtle grid — removed for light theme */
+  .stage::after {
+    display: none;
+  }
+
+  .frame { position: relative; z-index: 1; padding: 18px 18px 16px; height: 100%; display: flex; flex-direction: column; }
+
+  /* ---------- Logo ---------- */
+  .logo {
+    display: flex; align-items: center; gap: 8px;
+    opacity: 0; animation: fadeUp 0.6s ease-out 0.1s forwards;
+  }
+  .logo-mark {
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    box-shadow: 0 0 10px rgba(0,180,216,0.3);
+    position: relative;
+  }
+  .logo-mark::after {
+    content: "";
+    position: absolute; inset: 4px;
+    border: 1.5px solid rgba(255,255,255,0.9);
+    border-radius: 2px;
+  }
+  .logo-text { line-height: 1; }
+  .logo-name {
+    font-size: 14px; font-weight: 800; letter-spacing: 1.6px; color: #1a1a2e;
+  }
+
+  /* ---------- Heading ---------- */
+  .heading {
+    margin-top: 4px;
+    opacity: 0; animation: fadeUp 0.6s ease-out 0.35s forwards;
+  }
+  .h-title {
+    font-size: 22px; font-weight: 700; line-height: 1.15; color: #1a1a2e;
+    letter-spacing: -0.3px;
+  }
+  .h-title .accent { color: var(--accent); }
+  .h-sub {
+    font-size: 13px; font-weight: 400; color: var(--muted); margin-top: 6px;
+    line-height: 1.35;
+  }
+
+  /* ---------- Pipeline ---------- */
+  .pipeline {
+    margin-top: 14px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    align-items: stretch;
+    background: #f5f7fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 10px 6px;
+  }
+  .step {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    position: relative;
+    opacity: 0; transform: translateY(8px);
+  }
+  .step-icon {
+    width: 30px; height: 30px;
+    border-radius: 9px;
+    background: linear-gradient(180deg, rgba(0,180,216,0.12), rgba(0,180,216,0.04));
+    border: 1px solid rgba(0,180,216,0.25);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent);
+    box-shadow: 0 2px 8px rgba(0,180,216,0.08);
+  }
+  .step-icon svg { width: 14px; height: 14px; }
+  .step-label {
+    font-size: 9px; font-weight: 600; color: var(--muted); letter-spacing: 0.4px; text-transform: uppercase;
+  }
+  /* arrows between steps */
+  .step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 14px;
+    right: -6px;
+    width: 12px;
+    height: 1.5px;
+    background: linear-gradient(90deg, rgba(0,180,216,0.6), rgba(76,201,240,0.2));
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  .step:not(:last-child)::before {
+    content: "";
+    position: absolute;
+    top: 11px;
+    right: -7px;
+    width: 0; height: 0;
+    border-left: 4px solid var(--accent);
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    opacity: 0;
+  }
+
+  /* staggered animation */
+  .step:nth-child(1) { animation: stepIn 0.35s ease-out 1.0s forwards; }
+  .step:nth-child(2) { animation: stepIn 0.35s ease-out 1.3s forwards; }
+  .step:nth-child(3) { animation: stepIn 0.35s ease-out 1.6s forwards; }
+  .step:nth-child(4) { animation: stepIn 0.35s ease-out 1.9s forwards; }
+  .step:nth-child(5) { animation: stepIn 0.35s ease-out 2.2s forwards; }
+  .step:nth-child(1)::after { animation: arrowDraw 0.25s ease-out 1.3s forwards; }
+  .step:nth-child(2)::after { animation: arrowDraw 0.25s ease-out 1.6s forwards; }
+  .step:nth-child(3)::after { animation: arrowDraw 0.25s ease-out 1.9s forwards; }
+  .step:nth-child(4)::after { animation: arrowDraw 0.25s ease-out 2.2s forwards; }
+  .step:nth-child(1)::before { animation: arrowHead 0.2s ease-out 1.5s forwards; }
+  .step:nth-child(2)::before { animation: arrowHead 0.2s ease-out 1.8s forwards; }
+  .step:nth-child(3)::before { animation: arrowHead 0.2s ease-out 2.1s forwards; }
+  .step:nth-child(4)::before { animation: arrowHead 0.2s ease-out 2.4s forwards; }
+
+  /* ---------- До / Після card ---------- */
+  .ba {
+    margin-top: 14px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 12px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    position: relative;
+    opacity: 0; animation: fadeUp 0.5s ease-out 3.0s forwards;
+  }
+  .ba-side {
+    border-radius: 12px;
+    padding: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+  .ba-before {
+    background: linear-gradient(180deg, rgba(239,68,68,0.10), rgba(239,68,68,0.04));
+    border: 1px solid rgba(239,68,68,0.22);
+    opacity: 0; animation: fadeIn 0.4s ease-out 3.2s forwards;
+  }
+  .ba-after {
+    background: linear-gradient(180deg, rgba(16,185,129,0.12), rgba(16,185,129,0.05));
+    border: 1px solid rgba(16,185,129,0.28);
+    opacity: 0; transform: translateX(20px);
+    animation: slideInRight 0.5s ease-out 3.9s forwards;
+  }
+  .ba-eyebrow {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.6px;
+    text-transform: uppercase;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .ba-before .ba-eyebrow { color: #ef4444; }
+  .ba-after .ba-eyebrow { color: #10b981; }
+  .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: currentColor;
+    box-shadow: 0 0 6px currentColor;
+  }
+  .ba-label { font-size: 11px; color: var(--muted); margin-top: 6px; }
+  .ba-row { display: flex; justify-content: space-between; align-items: baseline; margin-top: 6px; }
+  .ba-row-key { font-size: 10px; color: var(--tiny); text-transform: uppercase; letter-spacing: 0.5px; }
+  .ba-row-val { font-size: 14px; font-weight: 700; color: #1a1a2e; font-variant-numeric: tabular-nums; }
+  .ba-after .ba-row-val { color: #1a1a2e; }
+
+  .ba-badge {
+    position: absolute;
+    top: -10px; right: -8px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px; font-weight: 700;
+    background: rgba(16,185,129,0.15);
+    color: var(--pos);
+    border: 1px solid rgba(16,185,129,0.4);
+    box-shadow: 0 4px 14px rgba(16,185,129,0.2);
+    opacity: 0;
+    animation: badgeIn 0.4s ease-out 4.4s forwards, badgePulse 0.6s ease-in-out 5.0s 1;
+  }
+
+  /* mini sparkline-ish bar inside cards */
+  .ba-bar {
+    height: 6px; border-radius: 3px;
+    background: #e5e7eb;
+    margin-top: 8px;
+    overflow: hidden;
+    position: relative;
+  }
+  .ba-bar > i {
+    display: block;
+    height: 100%;
+    border-radius: 3px;
+    width: 0;
+  }
+  .ba-before .ba-bar > i {
+    background: linear-gradient(90deg, rgba(239,68,68,0.6), rgba(239,68,68,0.3));
+    animation: fillBar 1.0s ease-out 3.5s forwards;
+    --w: 18%;
+  }
+  .ba-after .ba-bar > i {
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    animation: fillBarLong 1.2s ease-out 4.2s forwards;
+    --w: 92%;
+  }
+  @keyframes fillBar { to { width: var(--w); } }
+  @keyframes fillBarLong { to { width: var(--w); } }
+
+  /* ---------- Socials ---------- */
+  .socials {
+    margin-top: 14px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+  .soc {
+    background: #f5f7fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 8px 4px 6px;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    opacity: 0; transform: translateY(8px);
+  }
+  .soc-icon {
+    width: 26px; height: 26px;
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .soc-icon svg { width: 14px; height: 14px; }
+  .soc-ig { background: linear-gradient(135deg, #f58529, #dd2a7b 50%, #8134af 100%); }
+  .soc-fb { background: #1877f2; }
+  .soc-li { background: #0a66c2; }
+  .soc-tt { background: #010101; position: relative; }
+  .soc-tt::after {
+    content: ""; position: absolute; inset: 0; border-radius: 7px;
+    box-shadow: inset 0 0 0 1px rgba(0,242,234,0.4);
+  }
+  .soc-yt { background: #ff0000; }
+  .soc-likes {
+    font-size: 10px; font-weight: 700; color: #444;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.3px;
+  }
+  .soc-likes::before {
+    content: "♥ ";
+    color: var(--accent);
+  }
+  .soc:nth-child(1) { animation: socIn 0.4s ease-out 5.6s forwards; }
+  .soc:nth-child(2) { animation: socIn 0.4s ease-out 5.75s forwards; }
+  .soc:nth-child(3) { animation: socIn 0.4s ease-out 5.9s forwards; }
+  .soc:nth-child(4) { animation: socIn 0.4s ease-out 6.05s forwards; }
+  .soc:nth-child(5) { animation: socIn 0.4s ease-out 6.2s forwards; }
+
+  /* counters */
+  .count { display: inline-block; }
+
+  /* ---------- Загальне охоплення ---------- */
+  .total {
+    margin-top: 18px;
+    text-align: center;
+    opacity: 0; transform: scale(0.85);
+    animation: zoomIn 0.6s cubic-bezier(.2,.9,.3,1.4) 8.0s forwards;
+  }
+  .total-label {
+    font-size: 12px; color: var(--muted); letter-spacing: 1.6px;
+    text-transform: uppercase; font-weight: 600;
+  }
+  .total-num {
+    font-size: 60px; font-weight: 800; line-height: 1.0;
+    background: linear-gradient(180deg, var(--accent-2), var(--accent));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    text-shadow: 0 0 24px rgba(0,180,216,0.15);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -1.5px;
+    margin-top: 6px;
+  }
+  .total-foot {
+    font-size: 11px; color: var(--tiny); margin-top: 8px; letter-spacing: 0.6px;
+  }
+
+  /* ---------- Keyframes ---------- */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+  @keyframes slideInRight {
+    from { opacity: 0; transform: translateX(20px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes stepIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes arrowDraw {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+  @keyframes arrowHead {
+    from { opacity: 0; transform: translateX(-3px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes socIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes badgeIn {
+    from { opacity: 0; transform: scale(0.7) rotate(-6deg); }
+    to   { opacity: 1; transform: scale(1) rotate(0); }
+  }
+  @keyframes badgePulse {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.08); }
+  }
+  @keyframes zoomIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  /* ---------- Master loop: replay everything every 12s ---------- */
+  .frame {
+    animation: loop 12s linear infinite;
+  }
+  @keyframes loop {
+    /* trick: re-trigger all child animations by toggling animation-name on root */
+    0%, 100% {}
+  }
+
+  /* We re-run by toggling a class via JS using key instead — simpler: use animation-iteration-count: infinite via offset.
+     Implementation note: the easiest reliable loop is to wrap everything in a container that gets replaced each cycle. */
+
+</style>
+<style>/* CLM-NOLOOP-FIX */
+*, *::before, *::after {
+  animation-iteration-count: 1 !important;
+  animation-fill-mode: forwards !important;
+}
+</style>
+</head>
+<body>
+  <div class="stage" id="stage">
+    <div class="frame" id="frame">
+
+      <!-- Heading -->
+      <div class="heading">
+        <div class="h-title">Моніторинг конкурентів <span class="accent">24/7</span></div>
+        <div class="h-sub">і створення кращого контенту за хвилини.</div>
+      </div>
+
+      <!-- Pipeline -->
+      <div class="pipeline">
+        <div class="step">
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
+            </svg>
+          </div>
+          <div class="step-label">Скан</div>
+        </div>
+        <div class="step">
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3v3M12 18v3M5 12H2M22 12h-3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/>
+              <circle cx="12" cy="12" r="3.2"/>
+            </svg>
+          </div>
+          <div class="step-label">Контент</div>
+        </div>
+        <div class="step">
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12V5a1 1 0 0 1 1-1h7l6 6v7a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1Z"/>
+              <path d="M12 4v6h6"/>
+              <path d="m9 16 3-3 3 3"/><path d="M12 13v6"/>
+            </svg>
+          </div>
+          <div class="step-label">Постинг</div>
+        </div>
+        <div class="step">
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 17l5-5 4 4 7-8"/><path d="M14 8h5v5"/>
+            </svg>
+          </div>
+          <div class="step-label">Аналіз</div>
+        </div>
+        <div class="step">
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 20V4M4 20h16M8 16V10M13 16V7M18 16v-4"/>
+            </svg>
+          </div>
+          <div class="step-label">Масштаб</div>
+        </div>
+      </div>
+
+      <!-- До / Після -->
+      <div class="ba">
+        <div class="ba-side ba-before">
+          <div class="ba-eyebrow"><span class="dot"></span> До</div>
+          <div class="ba-label">Конкурент</div>
+          <div class="ba-row">
+            <span class="ba-row-key">Перегляди</span>
+            <span class="ba-row-val">12K</span>
+          </div>
+          <div class="ba-row">
+            <span class="ba-row-key">Залучення</span>
+            <span class="ba-row-val">2.1%</span>
+          </div>
+          <div class="ba-bar"><i></i></div>
+        </div>
+        <div class="ba-side ba-after">
+          <div class="ba-eyebrow"><span class="dot"></span> Після</div>
+          <div class="ba-label">Ваш контент</div>
+          <div class="ba-row">
+            <span class="ba-row-key">Перегляди</span>
+            <span class="ba-row-val">187K</span>
+          </div>
+          <div class="ba-row">
+            <span class="ba-row-key">Залучення</span>
+            <span class="ba-row-val">8.7%</span>
+          </div>
+          <div class="ba-bar"><i></i></div>
+        </div>
+        <div class="ba-badge">+1,458%</div>
+      </div>
+
+      <!-- Socials -->
+      <div class="socials">
+        <div class="soc">
+          <div class="soc-icon soc-ig">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/>
+            </svg>
+          </div>
+          <div class="soc-likes"><span class="count" data-count="42" data-suffix="K" data-delay="5800">0K</span></div>
+        </div>
+        <div class="soc">
+          <div class="soc-icon soc-fb">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.7c0-.9.3-1.6 1.6-1.6h1.7V4.2c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.4H7.4V14h2.7v8h3.4Z"/>
+            </svg>
+          </div>
+          <div class="soc-likes"><span class="count" data-count="28" data-suffix="K" data-delay="5950">0K</span></div>
+        </div>
+        <div class="soc">
+          <div class="soc-icon soc-li">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.22 8h4.56v14H.22zM8.34 8h4.37v1.92h.06c.61-1.15 2.1-2.36 4.32-2.36 4.62 0 5.47 3.04 5.47 7v7.44h-4.56v-6.6c0-1.57-.03-3.6-2.19-3.6-2.2 0-2.53 1.72-2.53 3.49V22H8.34z"/>
+            </svg>
+          </div>
+          <div class="soc-likes"><span class="count" data-count="15" data-suffix="K" data-delay="6100">0K</span></div>
+        </div>
+        <div class="soc">
+          <div class="soc-icon soc-tt">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5" stroke="#00f2ea" stroke-width="2" stroke-linecap="round"/>
+              <path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" transform="translate(1.5,-1)"/>
+              <path d="M14 3c.5 2.6 2.4 4.4 5 4.6" stroke="#ff0050" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="soc-likes"><span class="count" data-count="98" data-suffix="K" data-delay="6250">0K</span></div>
+        </div>
+        <div class="soc">
+          <div class="soc-icon soc-yt">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8ZM10 15V9l5.2 3Z"/>
+            </svg>
+          </div>
+          <div class="soc-likes"><span class="count" data-count="34" data-suffix="K" data-delay="6400">0K</span></div>
+        </div>
+      </div>
+
+      <!-- Загальне охоплення -->
+      <div class="total">
+        <div class="total-label">Загальне охоплення</div>
+        <div class="total-num"><span class="count" data-count="100000" data-format="comma" data-delay="8200">0</span><span style="color: var(--accent);">+</span></div>
+        <div class="total-foot">across 5 platforms · per campaign</div>
+      </div>
+
+    </div>
+  </div>
+
+<script>
+  // ----- Count-up engine + master 12s loop -----
+  const stage = document.getElementById('stage');
+
+  function formatNum(n, opts) {
+    if (opts.format === 'comma') {
+      return Math.round(n).toLocaleString('en-US');
+    }
+    if (opts.decimals) {
+      return n.toFixed(opts.decimals);
+    }
+    return Math.round(n).toString();
+  }
+
+  function animateCount(el) {
+    const target = parseFloat(el.dataset.count);
+    const suffix = el.dataset.suffix || '';
+    const delay = parseInt(el.dataset.delay || '0', 10);
+    const decimals = el.dataset.decimals ? parseInt(el.dataset.decimals, 10) : 0;
+    const format = el.dataset.format || '';
+    const duration = 1500;
+    const startVal = 0;
+    el.textContent = formatNum(0, {decimals, format}) + suffix;
+
+    setTimeout(() => {
+      const start = performance.now();
+      function tick(now) {
+        const t = Math.min(1, (now - start) / duration);
+        if (t >= 1) {
+          el.textContent = formatNum(target, {decimals, format}) + suffix;
+          return;
+        }
+        // ease-out cubic
+        const e = 1 - Math.pow(1 - t, 3);
+        const v = startVal + (target - startVal) * e;
+        el.textContent = formatNum(v, {decimals, format}) + suffix;
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }, delay);
+  }
+
+  function runCycle() {
+    document.querySelectorAll('.count').forEach(animateCount);
+  }
+
+  function restart() {
+    // Clone the frame to retrigger all CSS animations
+    const old = document.getElementById('frame');
+    const fresh = old.cloneNode(true);
+    old.parentNode.replaceChild(fresh, old);
+    runCycle();
+  }
+
+  // Initial
+  runCycle();
+
+  // Loop every 12s
+  setInterval(restart, 12000);
+</script>
+</body>
+</html>

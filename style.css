@@ -1031,6 +1031,35 @@ textarea.card-input {
   margin-bottom: 10px;
 }
 
+/* ---------- Preferred Way Disclaimer ---------- */
+.pref-disclaimer {
+  font-size: 11px;
+  color: #94a3b8;
+  font-style: italic;
+  padding: 10px 0;
+  border-top: 1px solid #eee;
+  margin-top: 10px;
+  min-height: 1em;
+}
+
+/* ---------- Select All Button (Services) ---------- */
+.svc-select-all-btn {
+  font-size: 12px;
+  background: rgba(0,180,216,0.1);
+  color: #00b4d8;
+  border: 1px solid rgba(0,180,216,0.3);
+  border-radius: 20px;
+  padding: 6px 16px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  margin-bottom: 10px;
+  transition: background 0.2s;
+}
+.svc-select-all-btn:hover {
+  background: rgba(0,180,216,0.2);
+}
+
 /* ---------- Subcategory (3-level tree) — old styles removed, see .svc-* above ---------- */
 
 /* ---------- Profile Carousel ---------- */
@@ -1133,13 +1162,18 @@ textarea.card-input {
   border-radius: 4px;
 }
 .btn-icon-paypal {
-  font-weight: 800;
-  font-style: italic;
-  color: #003087;
-  margin-right: 4px;
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+  vertical-align: middle;
+  /* SVG stroke is white; brightness(0) → black, visible on yellow PayPal button */
+  filter: brightness(0);
 }
 .btn-icon-card {
-  margin-right: 4px;
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+  vertical-align: middle;
 }
 
 /* ---------- Team Replace Table ---------- */

@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>ConsultantLM — Ми зламали алгоритм</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-1:#ffffff;
+    --bg-2:#fafbfc;
+    --bg-3:#f5f7fa;
+    --cyan:#00b4d8;
+    --cyan-2:#4cc9f0;
+    --green:#10b981;
+    --red:#ef4444;
+    --text:#1a1a2e;
+    --muted:#94a3b8;
+    --tiny:#64748b;
+    --card-bg:#f5f7fa;
+    --card-border:#e5e7eb;
+    --divider:#e5e7eb;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:'Inter', system-ui, sans-serif;
+    background:#ffffff;
+    display:grid;
+    place-items:center;
+    min-height:100vh;
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    overflow:hidden;
+  }
+
+  .stage{
+    position:relative;
+    width:360px;
+    height:640px;
+    border-radius:28px;
+    overflow:hidden;
+    background:#ffffff;
+    box-shadow:0 8px 30px rgba(0,0,0,.08), 0 0 0 1px #e5e7eb;
+    isolation:isolate;
+  }
+
+  /* ambient glow */
+  .stage::before{
+    content:"";
+    position:absolute;inset:0;
+    background:
+      radial-gradient(60% 40% at 50% 30%, rgba(0,180,216,.04), transparent 70%),
+      radial-gradient(40% 30% at 80% 80%, rgba(76,201,240,.03), transparent 70%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  /* ============ HEADER ============ */
+  .header{
+    position:absolute;top:62px;left:18px;right:18px;
+    text-align:left;
+    z-index:2;
+  }
+  .h1{
+    font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1.15;
+    opacity:0;transform:translateY(20px);
+    animation:fadeUp .6s .55s ease-out forwards, loopReset 12s infinite;
+  }
+  .h1 .crack{
+    color:var(--cyan);
+    position:relative;
+    display:inline-block;
+  }
+  .h1 .crack::after{
+    content:"";
+    position:absolute;left:0;right:0;bottom:-3px;height:2px;
+    background:linear-gradient(90deg,var(--cyan),var(--cyan-2));
+    transform-origin:left;
+    transform:scaleX(0);
+    animation:lineIn .9s 1.05s ease-out forwards, loopReset 12s infinite;
+    border-radius:2px;
+  }
+  .sub{
+    margin-top:6px;
+    font-size:12px;font-weight:400;color:var(--muted);
+    opacity:0;transform:translateY(10px);
+    animation:fadeUp .6s .8s ease-out forwards, loopReset 12s infinite;
+  }
+
+  /* ============ ORBIT VISUAL ============ */
+  .orbit{
+    position:absolute;
+    left:50%; top:170px;
+    width:300px; height:210px;
+    transform:translateX(-50%);
+    z-index:1;
+  }
+  .orbit svg.lines{
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    overflow:visible;
+  }
+  .orbit svg.lines path{
+    fill:none;
+    stroke:url(#lineGrad);
+    stroke-width:1.2;
+    stroke-linecap:round;
+    stroke-dasharray:120;
+    stroke-dashoffset:120;
+    filter:drop-shadow(0 0 2px rgba(0,180,216,.25));
+  }
+  .orbit svg.lines path.l1{animation:dash .5s 2.6s ease-out forwards, loopReset 12s infinite}
+  .orbit svg.lines path.l2{animation:dash .5s 2.75s ease-out forwards, loopReset 12s infinite}
+  .orbit svg.lines path.l3{animation:dash .5s 2.9s ease-out forwards, loopReset 12s infinite}
+  .orbit svg.lines path.l4{animation:dash .5s 3.05s ease-out forwards, loopReset 12s infinite}
+  .orbit svg.lines path.l5{animation:dash .5s 3.2s ease-out forwards, loopReset 12s infinite}
+  .orbit svg.lines path.l6{animation:dash .5s 3.35s ease-out forwards, loopReset 12s infinite}
+
+  /* center post */
+  .post{
+    position:absolute;
+    left:50%;top:50%;
+    transform:translate(-50%,-50%) scale(0);
+    width:108px;
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
+    border-radius:14px;
+    padding:7px;
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    box-shadow:0 4px 16px rgba(0,0,0,.06), 0 0 0 1px rgba(0,180,216,.08);
+    animation:popIn .6s 1.55s cubic-bezier(.4,1.4,.5,1) forwards, loopReset 12s infinite;
+    z-index:3;
+  }
+  .post .thumb{
+    height:46px;border-radius:8px;
+    background-image:url('assets/attorney-nyc.png');
+    background-size:cover;
+    background-position:center 30%;
+    position:relative;overflow:hidden;
+  }
+  .post .meta{
+    margin-top:6px;display:flex;align-items:center;gap:6px;
+  }
+  .post .av{width:14px;height:14px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--cyan-2))}
+  .post .lines{flex:1;display:flex;flex-direction:column;gap:3px}
+  .post .lines i{display:block;height:3px;border-radius:2px;background:rgba(0,0,0,.10)}
+  .post .lines i:last-child{width:60%;background:rgba(0,0,0,.06)}
+
+  /* pulsing ring around post */
+  .post::after{
+    content:"";
+    position:absolute;inset:-6px;
+    border-radius:18px;
+    border:1px solid rgba(0,180,216,.4);
+    opacity:0;
+    animation:ring 2s 2.4s ease-out infinite, loopReset 12s infinite;
+  }
+
+  /* social nodes */
+  .node{
+    position:absolute;
+    width:36px;height:36px;
+    border-radius:11px;
+    display:grid;place-items:center;
+    background:#f5f7fa;
+    border:1px solid #e5e7eb;
+    box-shadow:0 2px 8px rgba(0,0,0,.06);
+    opacity:0;transform:scale(.4);
+    z-index:2;
+  }
+  .node svg{width:16px;height:16px;display:block}
+  .node .count{
+    position:absolute;
+    top:40px;left:50%;transform:translateX(-50%);
+    font-size:10px;font-weight:700;color:#1a1a2e;
+    white-space:nowrap;
+    letter-spacing:.02em;
+    opacity:0;
+  }
+  .node .count em{font-style:normal;color:var(--muted);font-weight:500}
+
+  /* layout positions for 6 nodes around the post (orbit is 300x210) */
+  .n1{left:14px;  top:4px}     /* top-left  */
+  .n2{right:14px; top:4px}     /* top-right */
+  .n3{left:0px;   top:88px}    /* mid-left  */
+  .n4{right:0px;  top:88px}    /* mid-right */
+  .n5{left:34px;  bottom:6px}  /* bot-left  */
+  .n6{right:34px; bottom:6px}  /* bot-right */
+
+  .n1{animation:nodeIn .4s 2.6s ease-out forwards, loopReset 12s infinite}
+  .n2{animation:nodeIn .4s 2.75s ease-out forwards, loopReset 12s infinite}
+  .n3{animation:nodeIn .4s 2.9s ease-out forwards, loopReset 12s infinite}
+  .n4{animation:nodeIn .4s 3.05s ease-out forwards, loopReset 12s infinite}
+  .n5{animation:nodeIn .4s 3.2s ease-out forwards, loopReset 12s infinite}
+  .n6{animation:nodeIn .4s 3.35s ease-out forwards, loopReset 12s infinite}
+
+  .n1 .count, .n2 .count, .n3 .count, .n4 .count, .n5 .count, .n6 .count{
+    animation:fadeUp .5s 4.6s ease-out forwards, loopReset 12s infinite;
+  }
+
+  /* Instagram node */
+  .node.gradient{
+    background: linear-gradient(135deg, #f09433, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888);
+    border:none;
+  }
+  .node.gradient svg{color:#fff;stroke:#fff}
+
+  .node.fb svg{color:#1877f2;width:22px;height:22px}
+  .node.li svg{color:#0a66c2}
+  .node.tt{background:#010101;border-color:#010101}
+  .node.tt svg{color:#00f2ea;filter:drop-shadow(2px 1px 0 #ff004f)}
+  .node.yt svg{color:#ff0000}
+  .node.x{background:#010101;border-color:#010101}
+  .node.x svg{color:#ffffff}
+
+  /* ============ DIVIDER ============ */
+  .divider{
+    position:absolute;left:18px;right:18px;top:402px;
+    height:1px;background:var(--divider);
+    transform:scaleX(0);transform-origin:left;
+    animation:lineIn .8s 6.7s ease-out forwards, loopReset 12s infinite;
+  }
+
+  /* ============ TOTAL ============ */
+  .total{
+    position:absolute;left:18px;right:18px;top:414px;
+    z-index:2;
+  }
+  .total .label{
+    font-size:11px;color:var(--muted);font-weight:500;letter-spacing:.06em;text-transform:uppercase;
+    opacity:0;transform:translateY(8px);
+    animation:fadeUp .5s 6.95s ease-out forwards, loopReset 12s infinite;
+  }
+  .total .row{
+    display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin-top:2px;
+  }
+  .total .num{
+    font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1;
+    color:var(--cyan);
+    text-shadow:none;
+    opacity:0;transform:translateY(12px);
+    animation:fadeUp .6s 7.1s ease-out forwards, loopReset 12s infinite;
+    font-variant-numeric:tabular-nums;
+  }
+  .total .num .plus{color:var(--cyan-2);font-weight:700;font-size:24px;margin-left:2px}
+  .total .pct{
+    margin-bottom:6px;
+    padding:4px 10px;border-radius:20px;
+    font-size:11px;font-weight:700;
+    background:rgba(16,185,129,.15);color:var(--green);
+    border:1px solid rgba(16,185,129,.25);
+    white-space:nowrap;
+    opacity:0;transform:scale(.85);
+    animation:badgeIn .5s 8.9s ease-out forwards, pulseScale .9s 9.4s ease-out 1, loopReset 12s infinite;
+  }
+  .total .pct .arrow{color:var(--green);margin-right:2px}
+
+  /* progress bar visualization */
+  .bar{
+    margin-top:10px;
+    height:6px;border-radius:3px;background:#e5e7eb;overflow:hidden;
+    position:relative;
+    opacity:0;
+    animation:fadeIn .4s 7.2s ease-out forwards, loopReset 12s infinite;
+  }
+  .bar::after{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:0%;
+    background:linear-gradient(90deg,var(--cyan),var(--cyan-2));
+    border-radius:3px;
+    box-shadow:0 0 8px rgba(0,180,216,.25);
+    animation:fillBar 1.4s 7.4s cubic-bezier(.2,.8,.2,1) forwards, loopReset 12s infinite;
+  }
+  .bar .ticks{
+    position:absolute;inset:0;display:flex;justify-content:space-between;align-items:center;padding:0 1px;pointer-events:none;
+  }
+  .bar .ticks i{display:block;width:1px;height:6px;background:rgba(0,0,0,.06)}
+
+  .barmeta{
+    display:flex;justify-content:space-between;
+    font-size:10px;color:var(--tiny);font-weight:500;
+    margin-top:4px;letter-spacing:.04em;
+    opacity:0;
+    animation:fadeIn .4s 7.6s ease-out forwards, loopReset 12s infinite;
+  }
+
+  /* ============ CRM CARD ============ */
+  .crm{
+    position:absolute;left:18px;right:18px;bottom:18px;
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
+    border-radius:14px;
+    padding:11px 12px;
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    box-shadow:0 2px 10px rgba(0,0,0,.06);
+    display:flex;align-items:center;gap:10px;
+    opacity:0;transform:translateY(14px);
+    animation:fadeUp .55s 9.9s ease-out forwards, loopReset 12s infinite;
+    z-index:3;
+  }
+  .crm .pulse{
+    position:relative;width:10px;height:10px;border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 10px rgba(16,185,129,.7);
+    flex-shrink:0;
+  }
+  .crm .pulse::after{
+    content:"";position:absolute;inset:-4px;border-radius:50%;
+    border:2px solid var(--green);
+    animation:pulseRing 1.6s 10.1s ease-out infinite, loopReset 12s infinite;
+    opacity:0;
+  }
+  .crm .body{flex:1;min-width:0}
+  .crm .body .t{font-size:12px;font-weight:700;color:#1a1a2e;line-height:1.2}
+  .crm .body .t b{color:var(--cyan)}
+  .crm .body .s{font-size:10px;color:var(--muted);margin-top:2px;letter-spacing:.02em}
+  .crm .chip{
+    padding:3px 8px;border-radius:20px;
+    font-size:10px;font-weight:700;
+    background:rgba(16,185,129,.15);color:var(--green);
+    border:1px solid rgba(16,185,129,.25);
+    white-space:nowrap;
+  }
+
+  /* a faint scanline shimmer on stage */
+  .stage::after{
+    content:"";position:absolute;inset:0;
+    background:none;
+    pointer-events:none;z-index:4;
+  }
+
+  /* ============ KEYFRAMES ============ */
+  @keyframes fadeUp{
+    0%,8%{opacity:0;transform:translateY(20px)}
+    100%{opacity:1;transform:translateY(0)}
+  }
+  @keyframes fadeDown{
+    0%,8%{opacity:0;transform:translateY(-6px)}
+    100%{opacity:1;transform:translateY(0)}
+  }
+  @keyframes fadeIn{
+    0%,8%{opacity:0}
+    100%{opacity:1}
+  }
+  @keyframes popIn{
+    0%,8%{opacity:0;transform:translate(-50%,-50%) scale(0)}
+    70%{opacity:1;transform:translate(-50%,-50%) scale(1.06)}
+    100%{opacity:1;transform:translate(-50%,-50%) scale(1)}
+  }
+  @keyframes nodeIn{
+    0%,8%{opacity:0;transform:scale(.4)}
+    70%{opacity:1;transform:scale(1.1)}
+    100%{opacity:1;transform:scale(1)}
+  }
+  @keyframes dash{
+    to{stroke-dashoffset:0}
+  }
+  @keyframes lineIn{
+    to{transform:scaleX(1)}
+  }
+  @keyframes ring{
+    0%{transform:scale(.92);opacity:.7}
+    100%{transform:scale(1.25);opacity:0}
+  }
+  @keyframes fillBar{
+    0%{width:0%}
+    100%{width:100%}
+  }
+  @keyframes badgeIn{
+    0%,8%{opacity:0;transform:scale(.85)}
+    100%{opacity:1;transform:scale(1)}
+  }
+  @keyframes pulseScale{
+    0%{transform:scale(1)}
+    50%{transform:scale(1.08)}
+    100%{transform:scale(1)}
+  }
+  @keyframes pulseRing{
+    0%{transform:scale(.6);opacity:.8}
+    100%{transform:scale(2.6);opacity:0}
+  }
+  /* every 12s the whole loop restarts via this no-op trigger */
+  @keyframes loopReset{
+    0%,99.99%{}
+    100%{}
+  }
+
+  /* responsive container scale: keeps 360x640 crisp on bigger screens too */
+  @media (max-width:380px){
+    .stage{transform:scale(.95);transform-origin:center}
+  }
+</style>
+<style>/* CLM-NOLOOP-FIX */
+*, *::before, *::after {
+  animation-iteration-count: 1 !important;
+  animation-fill-mode: forwards !important;
+}
+</style>
+</head>
+<body>
+
+<div class="stage" id="stage">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="h1">Ми зламали<br><span class="crack">алгоритм.</span></div>
+    <div class="sub">Один пост. Усі платформи. Максимальне охоплення.</div>
+  </div>
+
+  <!-- ORBIT -->
+  <div class="orbit">
+    <!-- connecting lines -->
+    <svg class="lines" viewBox="0 0 300 210" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="lineGrad" x1="0" x2="1" y1="0" y2="1">
+          <stop offset="0%" stop-color="#00b4d8" stop-opacity=".95"/>
+          <stop offset="100%" stop-color="#4cc9f0" stop-opacity=".4"/>
+        </linearGradient>
+      </defs>
+      <!-- center ~ (150,105). Nodes positioned: top row y~22, mid y~92, bottom y~178 -->
+      <path class="l1" d="M150,105 C 120,82 95,55 50,28"/>
+      <path class="l2" d="M150,105 C 180,82 205,55 250,28"/>
+      <path class="l3" d="M150,105 C 110,105 80,105 22,108"/>
+      <path class="l4" d="M150,105 C 190,105 220,105 278,108"/>
+      <path class="l5" d="M150,105 C 120,135 100,160 70,184"/>
+      <path class="l6" d="M150,105 C 180,135 200,160 230,184"/>
+    </svg>
+
+    <!-- center post -->
+    <div class="post">
+      <div class="thumb"></div>
+      <div class="meta">
+        <div class="av"></div>
+        <div class="lines">
+          <i></i><i></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- nodes (originally drawn glyphs, brand color cues only) -->
+    <!-- 1: Photo / Insta-cued -->
+    <div class="node gradient n1">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Photo">
+        <rect x="3" y="3" width="18" height="18" rx="5"/>
+        <circle cx="12" cy="12" r="4"/>
+        <circle cx="17.5" cy="6.5" r="1.1" fill="#fff" stroke="none"/>
+      </svg>
+      <div class="count" data-target="24500" data-suffix="K">0<em></em></div>
+    </div>
+    <!-- 2: Friends / FB-cued (generic chat-bubble + people) -->
+    <div class="node fb n2">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-label="Friends">
+        <path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.7-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.7l-.4 2.9h-2.3v7A10 10 0 0 0 22 12Z"/>
+      </svg>
+      <div class="count" data-target="18200" data-suffix="K">0<em></em></div>
+    </div>
+    <!-- 3: Network / LinkedIn-cued (briefcase) -->
+    <div class="node li n3">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-label="Network">
+        <rect x="3" y="7" width="18" height="13" rx="2"/>
+        <path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" fill="none" stroke="currentColor" stroke-width="2"/>
+        <rect x="3" y="11" width="18" height="2" fill="rgba(255,255,255,.5)"/>
+      </svg>
+      <div class="count" data-target="31800" data-suffix="K">0<em></em></div>
+    </div>
+    <!-- 4: Music note (tiktok-cued) -->
+    <div class="node tt n4">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-label="Audio">
+        <path d="M11 4v12.5a3 3 0 1 1-3-3"/>
+        <path d="M11 4c.5 2.6 2.6 4.6 5.2 5"/>
+      </svg>
+      <div class="count" data-target="45100" data-suffix="K">0<em></em></div>
+    </div>
+    <!-- 5: Play / YouTube-cued -->
+    <div class="node yt n5">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-label="Play">
+        <rect x="2.5" y="5" width="19" height="14" rx="3.5"/>
+        <path d="M10.5 9 16 12l-5.5 3Z" fill="#fff"/>
+      </svg>
+      <div class="count" data-target="12400" data-suffix="K">0<em></em></div>
+    </div>
+    <!-- 6: X-cued (slash) -->
+    <div class="node x n6">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-label="Post">
+        <path d="M5 4h3.6l4 5.6L17.4 4H21l-6.5 8.4L21.4 20h-3.7l-4.3-6.1L8.1 20H4.5l6.9-9L4 4Z"/>
+      </svg>
+      <div class="count" data-target="8700" data-suffix="K">0<em></em></div>
+    </div>
+  </div>
+
+  <!-- DIVIDER -->
+  <div class="divider"></div>
+
+  <!-- TOTAL -->
+  <div class="total">
+    <div class="label">Загальна залученість</div>
+    <div class="row">
+      <div class="num" id="totalNum">0<span class="plus">+</span></div>
+      <div class="pct"><span class="arrow">▲</span> 2,350% проти ручної роботи</div>
+    </div>
+    <div class="bar"><div class="ticks"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+    <div class="barmeta"><span>0</span><span>reach index</span><span>МАКС</span></div>
+  </div>
+
+  <!-- CRM -->
+  <div class="crm">
+    <div class="pulse"></div>
+    <div class="body">
+      <div class="t"><b>3 нових лідів</b> щойно додано</div>
+      <div class="s">CRM · synced 2s ago</div>
+    </div>
+    <div class="chip">+3</div>
+  </div>
+
+</div>
+
+<script>
+/* CountUp + 12s loop reset.
+   We schedule countups by absolute timeline offsets (ms) and restart on a 12s cadence. */
+(function(){
+  const LOOP = 12000;
+
+  function fmtK(n){
+    if(n >= 1000){
+      const v = (n/1000);
+      // one decimal if not exact thousand
+      return (Math.round(v*10)/10).toFixed(1).replace(/\.0$/,'') + 'K';
+    }
+    return Math.round(n).toString();
+  }
+  function fmtTotal(n){
+    return Math.round(n).toLocaleString('en-US');
+  }
+
+  function animateNum(el, from, to, dur, formatter){
+    const start = performance.now();
+    function frame(now){
+      const t = Math.min(1, (now - start)/dur);
+      // ease-out cubic
+      const e = 1 - Math.pow(1 - t, 3);
+      const v = from + (to - from) * e;
+      // Preserve any existing trailing element (like the +)
+      const plus = el.querySelector('.plus');
+      el.firstChild ? (el.firstChild.nodeValue = formatter(v)) : (el.textContent = formatter(v));
+      if(plus && el.firstChild !== plus){
+        // ensure the plus stays after the text node
+      }
+      if(t < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  const counts = document.querySelectorAll('.node .count');
+  const total  = document.getElementById('totalNum');
+
+  function runCycle(){
+    // reset displayed numbers
+    counts.forEach(el=>{
+      // first text node is the number
+      if(el.firstChild && el.firstChild.nodeType === 3) el.firstChild.nodeValue = '0';
+      else el.textContent = '0';
+    });
+    // total has a .plus span; reset its text node
+    if(total.firstChild && total.firstChild.nodeType === 3) total.firstChild.nodeValue = '0';
+
+    // social counts: start ~4.6s, run 2.0s
+    setTimeout(()=>{
+      counts.forEach(el=>{
+        const target = parseInt(el.dataset.target,10);
+        animateNum(el, 0, target, 2000, fmtK);
+      });
+    }, 4600);
+
+    // total: start at 7.1s, run 1.9s up to 140700
+    setTimeout(()=>{
+      animateNum(total, 0, 140700, 1900, fmtTotal);
+    }, 7100);
+  }
+
+  runCycle();
+  setInterval(runCycle, LOOP);
+})();
+</script>
+
+</body>
+</html>
