@@ -126,10 +126,10 @@
       q:'Let\'s get to <span class="accent">know you</span>',
       sub:'A few quick details before we calculate your potential',
       fields:[
-        {label:'First Name', field:'first_name', type:'text', ph:'John', required:true},
-        {label:'Last Name', field:'last_name', type:'text', ph:'Davis', required:true},
-        {label:'Phone', field:'phone', type:'tel', ph:'+1 (555) 123-4567', required:true},
-        {label:'Your photo', field:'photo_name', type:'file', accept:'image/*', required:true}
+        {label:'First Name', field:'first_name', type:'text', ph:'John'},
+        {label:'Last Name', field:'last_name', type:'text', ph:'Davis'},
+        {label:'Phone', field:'phone', type:'tel', ph:'+1 (555) 123-4567'},
+        {label:'Your photo', field:'photo_name', type:'file', accept:'image/*'}
       ] },
     // 7. aiCalc
     { type:'card', id:'aiCalc', q:'Your <span class="accent">AI-powered</span> potential', sub:'Based on your data, our AI calculated your potential on ConsultantLM' },
@@ -227,7 +227,7 @@
       q:'Complete your <span class="accent">profile</span>',
       sub:'Provide your details so AI can build your professional profile',
       fields:[
-        {label:'Email', field:'email', type:'email', ph:'john@example.com', required:true},
+        {label:'Email', field:'email', type:'email', ph:'john@example.com'},
         {label:'ZIP Code', field:'zip', type:'text', ph:'e.g. 10001'},
         {label:'Referral Code (optional)', field:'referral_code', type:'text', ph:'Enter code'},
         {label:'About yourself', field:'about', type:'textarea', ph:'Tell us about your experience, education, achievements...'},
@@ -605,7 +605,6 @@
     var btn = el('button', 'card-btn', 'Continue &rarr;');
     btn.addEventListener('click', function() {
       var val = inp.value.trim();
-      if (!val) return;
       quizData[s.field] = val;
       advance();
     });
@@ -666,7 +665,6 @@
     var btn = el('button', 'card-btn', 'Continue &rarr;');
     btn.addEventListener('click', function() {
       var val = inp.value.trim();
-      if (!val) return;
       quizData[s.field] = val;
       advance();
     });
@@ -679,19 +677,15 @@
     setTimeout(function() { inp.focus(); }, 500);
   }
 
-  // ---- FormWithFiles (flexible mix of text/email/tel/textarea/file inputs) ----
+  // ---- FormWithFiles (flexible mix of text/email/tel/textarea/file inputs, no blocking validation) ----
   function renderFormWithFiles(s, wrap) {
-    var inputs = []; // collect for validation
-
     s.fields.forEach(function(f) {
       var grp = el('div', 'form-group');
-      var requiredMark = f.required ? ' <span style="color:#ef4444">*</span>' : '';
-      grp.innerHTML = '<label class="form-label">' + f.label + requiredMark + '</label>';
+      grp.innerHTML = '<label class="form-label">' + f.label + '</label>';
 
       if (f.type === 'file') {
-        // File upload area
         var area = el('div', 'upload-area', '');
-        var lbl = el('div', 'upload-text', quizData[f.field] || (f.label + (f.required ? '' : ' (optional)')));
+        var lbl = el('div', 'upload-text', quizData[f.field] || f.label);
         area.appendChild(lbl);
         var fileInp = document.createElement('input');
         fileInp.type = 'file';
@@ -709,7 +703,6 @@
         });
         if (quizData[f.field]) area.classList.add('uploaded');
         grp.appendChild(area);
-        inputs.push({field:f, getValue:function() { return quizData[f.field] || ''; }});
       } else if (f.type === 'textarea') {
         var ta = document.createElement('textarea');
         ta.className = 'card-input';
@@ -718,9 +711,7 @@
         if (quizData[f.field]) ta.value = quizData[f.field];
         ta.addEventListener('input', function() { quizData[f.field] = ta.value; });
         grp.appendChild(ta);
-        inputs.push({field:f, getValue:function() { return ta.value.trim(); }});
       } else {
-        // text, email, tel
         var inp = document.createElement('input');
         inp.type = f.type || 'text';
         inp.className = 'card-input';
@@ -728,33 +719,12 @@
         if (quizData[f.field]) inp.value = quizData[f.field];
         inp.addEventListener('input', function() { quizData[f.field] = inp.value; });
         grp.appendChild(inp);
-        inputs.push({field:f, getValue:function() { return inp.value.trim(); }, input:inp});
       }
       wrap.appendChild(grp);
     });
 
-    var errEl = el('div', '', '');
-    errEl.style.cssText = 'color:#ef4444;font-size:13px;text-align:center;margin-top:8px;display:none';
-    wrap.appendChild(errEl);
-
     var btn = el('button', 'card-btn', 'Continue &rarr;');
-    btn.addEventListener('click', function() {
-      errEl.style.display = 'none';
-      var missing = inputs.filter(function(x) { return x.field.required && !x.getValue(); });
-      if (missing.length) {
-        errEl.textContent = 'Please fill: ' + missing.map(function(x) { return x.field.label; }).join(', ');
-        errEl.style.display = 'block';
-        return;
-      }
-      // Email format check
-      var emailField = inputs.filter(function(x) { return x.field.type === 'email'; })[0];
-      if (emailField && emailField.getValue() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailField.getValue())) {
-        errEl.textContent = 'Invalid email format';
-        errEl.style.display = 'block';
-        return;
-      }
-      advance();
-    });
+    btn.addEventListener('click', function() { advance(); });
     wrap.appendChild(actionBar(btn));
   }
 
