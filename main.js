@@ -184,13 +184,11 @@
     // 15. team_salary
     { type:'radio', field:'team_salary', q:'How much do you spend on your <span class="accent">marketing team?</span>', sub:'Total monthly salary for all marketing staff',
       options:[
-        {v:'under_1000',t:'Under $1,000',icon:'dollar',color:'#10b981'},
-        {v:'1000_5000',t:'$1,000 - $5,000',icon:'dollar',color:'#3b82f6'},
-        {v:'5000_20000',t:'$5,000 - $20,000',icon:'dollar',color:'#8b5cf6'},
-        {v:'20000_plus',t:'$20,000+',icon:'diamond',color:'#f59e0b'}
+        {v:'none',t:"I don't spend",icon:'x-circle',color:'#94a3b8'},
+        {v:'under_1k',t:'Up to $1,000',icon:'dollar',color:'#10b981'},
+        {v:'1k_10k',t:'$1,000 – $10,000',icon:'dollar',color:'#3b82f6'},
+        {v:'over_10k',t:'More than $10,000',icon:'diamond',color:'#f59e0b'}
       ]},
-    // 16. teamReplace (MOVED, new title)
-    { type:'card', id:'teamReplace', q:'Your team <span class="accent">expenses</span>', sub:'See how much you could save with ConsultantLM' },
     // 17. tenx
     { type:'card', id:'tenx', q:'We cracked the code to deliver <span class="accent">10x better results</span>', sub:'Starting from $19/month -- Just 15 minutes a day' },
     // 18. video1
@@ -1036,7 +1034,6 @@
     else if (s.id === 'video2') renderVideoCard(wrap, './htmlTOvideo/9/ConsultantLM Promo.html');
     else if (s.id === 'videoAds') renderVideoCard(wrap, './htmlTOvideo/1/ConsultantLM Promo 1.html');
     else if (s.id === 'videoSocials') renderVideoCard(wrap, './htmlTOvideo/3/ConsultantLM Promo 3.html');
-    else if (s.id === 'teamReplace') renderTeamReplaceCard(wrap);
     else if (s.id === 'assessment') renderAssessmentCard(wrap);
     else if (s.id === 'profilesPricing') renderProfilesPricingCard(wrap);
     else if (s.id === 'payment') renderPaymentCard(wrap);
