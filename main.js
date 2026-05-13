@@ -9,6 +9,32 @@
   var quizData = {};
   var history = [];
 
+  // ===== Pre-warm all animation scenes (loads images & CSS into browser cache) =====
+  // Runs at quiz init while user is on slide 1. By the time they reach an animation
+  // slide, all 6 scenes are fully cached — no visible "loading" of avatar PNGs etc.
+  (function preWarmScenes() {
+    var scenes = [
+      './htmlTOvideo/8/ConsultantLM Promo.html',
+      './htmlTOvideo/2/ConsultantLM Promo 2.html',
+      './htmlTOvideo/9/ConsultantLM Promo.html',
+      './htmlTOvideo/1/ConsultantLM Promo 1.html',
+      './htmlTOvideo/3/ConsultantLM Promo 3.html',
+      './htmlTOvideo/6/ConsultantLM Promo 6.html'
+    ];
+    var container = document.createElement('div');
+    container.style.cssText = 'position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;visibility:hidden;pointer-events:none;overflow:hidden';
+    container.setAttribute('aria-hidden', 'true');
+    scenes.forEach(function (src) {
+      var f = document.createElement('iframe');
+      f.src = encodeURI(src);
+      f.setAttribute('tabindex', '-1');
+      f.setAttribute('aria-hidden', 'true');
+      f.style.cssText = 'width:1px;height:1px;border:0';
+      container.appendChild(f);
+    });
+    document.body.appendChild(container);
+  })();
+
   // ===== CONFIGURATION =====
   // ⚠ Replace with your actual endpoint:
   var SUBMIT_URL = 'https://your-api.example.com/quiz-submit';
