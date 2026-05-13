@@ -1743,6 +1743,23 @@ textarea.card-input {
 }
 .profiles-pricing-wrap .pp-cta-premium:hover { box-shadow: 0 6px 24px rgba(10,37,64,.5); }
 
+.profiles-pricing-wrap .pp-cta-enterprise {
+  background: linear-gradient(135deg, #7c3aed, #4c1d95);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(76,29,149,.4);
+}
+.profiles-pricing-wrap .pp-cta-enterprise:hover { box-shadow: 0 6px 24px rgba(76,29,149,.5); }
+
+.profiles-pricing-wrap .pp-plan-name.pp-enterprise-name { color: #7c3aed; }
+
+.profiles-pricing-wrap .prof-enterprise { background: linear-gradient(135deg, #2e1065, #4c1d95); }
+.profiles-pricing-wrap .prof-enterprise .prof-topbar { background: #1e1b4b; color: #fff; }
+.profiles-pricing-wrap .prof-enterprise .prof-topbar .tier-label { color: #c4b5fd; }
+.profiles-pricing-wrap .prof-enterprise .prof-info .name { color: #f1f5f9; }
+.profiles-pricing-wrap .prof-enterprise .prof-info .role { color: #c4b5fd; }
+.profiles-pricing-wrap .prof-enterprise .prof-info .location { color: #a78bfa; }
+.profiles-pricing-wrap .prof-enterprise .prof-info .location svg { fill: #a78bfa; }
+
 /* ── Timer ── */
 .profiles-pricing-wrap .pp-timer-bar {
   margin-top: 18px;

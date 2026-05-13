@@ -1301,6 +1301,13 @@
     html += '<div class="prof-photo-right"><img src="' + imgPath + '" alt="Attorney"></div></div>';
     html += '<div class="prof-info-btn">i</div></div></div>';
 
+    // ENTERPRISE profile slide (firm-level, custom)
+    html += '<div class="pp-slide"><div class="prof-card prof-enterprise">';
+    html += '<div class="prof-topbar"><span class="tier-label">ENTERPRISE</span><span class="separator"></span><span class="rating-area">' + starSvg + '<span class="rating-num">— —</span></span></div>';
+    html += '<div class="prof-body"><div class="prof-info-area"><div class="prof-info"><div class="name">Your Firm Name</div><div class="role">50+ specialists</div><div class="location">' + pinSvg + ' Custom locations</div></div></div>';
+    html += '<div class="prof-photo-right"><img src="' + imgPath + '" alt="Firm"></div></div>';
+    html += '<div class="prof-info-btn">i</div></div></div>';
+
     html += '</div></div>'; // close pp-track, pp-viewport
 
     // ── Dots ──
@@ -1308,6 +1315,7 @@
     html += '<button class="pp-dot active" data-idx="0" aria-label="Base plan"></button>';
     html += '<button class="pp-dot" data-idx="1" aria-label="Pro plan"></button>';
     html += '<button class="pp-dot" data-idx="2" aria-label="Premium plan"></button>';
+    html += '<button class="pp-dot" data-idx="3" aria-label="Enterprise plan"></button>';
     html += '</div>';
 
     // ── AI Avatar Video Section (hidden for BASE, visible for PRO/PREMIUM) ──
@@ -1360,6 +1368,14 @@
     html += '<div class="pp-features" id="ppFeatPremium"></div>';
     html += '</div>';
 
+    // ENTERPRISE pricing panel
+    html += '<div class="pp-pricing-panel">';
+    html += '<div class="pp-plan-name pp-enterprise-name">Enterprise</div>';
+    html += '<div class="pp-price-row"><span class="pp-new-price" id="ppPriceEnterprise" style="font-size:32px">Custom<span class="period" style="font-size:14px;margin-left:6px">/team</span></span></div>';
+    html += '<div class="pp-billing-note" id="ppNoteEnterprise">For firms with 50+ specialists · contact sales</div>';
+    html += '<div class="pp-features" id="ppFeatEnterprise"></div>';
+    html += '</div>';
+
     html += '</div></div>'; // close pp-pricing-content, pp-pricing-section
 
     // ── CTA button ──
@@ -1372,83 +1388,90 @@
 
     // ── Feature data (from D1) ──
     var ppFeatures = [
-      { label: 'Basic profile level',       base: true,  pro: true,  premium: true  },
-      { label: 'Professional profile level', base: false, pro: true,  premium: true  },
-      { label: 'Premium profile level',     base: false, pro: false, premium: true  },
-      { label: 'AI avatar',                 base: true,  pro: true,  premium: true  },
-      { label: '19 tokens',                 base: true,  pro: false, premium: false },
-      { label: '109 +10% tokens',           base: false, pro: true,  premium: false },
-      { label: '389 +30% tokens',           base: false, pro: false, premium: true  },
-      { label: '6 clients',                 base: true,  pro: false, premium: false },
-      { label: '30 clients',                base: false, pro: true,  premium: false },
-      { label: 'Unlimited clients',         base: false, pro: false, premium: true  },
-      { label: 'Top in Google',             base: true,  pro: true,  premium: true  },
-      { label: 'Reputation checks',         base: true,  pro: true,  premium: true  },
-      { label: '24/7 manager',              base: false, pro: true,  premium: true  },
-      { label: 'Social promotion',          base: true,  pro: true,  premium: true  },
-      { label: 'AI for Google & Meta',      base: false, pro: true,  premium: true  },
-      { label: 'AI competitor monitoring',   base: false, pro: false, premium: true  },
-      { label: 'AI client assistant',       base: false, pro: true,  premium: true  },
-      { label: 'Referral earnings',         base: true,  pro: true,  premium: true  },
-      { label: 'Private chat',              base: true,  pro: true,  premium: true  },
-      { label: 'CRM system',               base: true,  pro: true,  premium: true  },
-      { label: 'Secure messenger',          base: true,  pro: true,  premium: true  },
-      { label: 'Boost rating',              base: false, pro: true,  premium: true  },
-      { label: 'Custom pricing',            base: false, pro: false, premium: true  }
+      // Profile levels
+      { label: 'Basic profile level',        base: true,  pro: true,  premium: true,  enterprise: true  },
+      { label: 'Professional profile level', base: false, pro: true,  premium: true,  enterprise: true  },
+      { label: 'Premium profile level',      base: false, pro: false, premium: true,  enterprise: true  },
+      // AI avatar — separate tiers per TZ
+      { label: 'AI PRO avatar',              base: false, pro: true,  premium: false, enterprise: false },
+      { label: 'AI PREMIUM avatar',          base: false, pro: false, premium: true,  enterprise: true  },
+      // Tokens
+      { label: '19 tokens',                  base: true,  pro: false, premium: false, enterprise: false },
+      { label: '109 +10% tokens',            base: false, pro: true,  premium: false, enterprise: false },
+      { label: '389 +30% tokens',            base: false, pro: false, premium: true,  enterprise: false },
+      { label: 'Unlimited tokens',           base: false, pro: false, premium: false, enterprise: true  },
+      // Clients
+      { label: '6 clients',                  base: true,  pro: false, premium: false, enterprise: false },
+      { label: '30 clients',                 base: false, pro: true,  premium: false, enterprise: false },
+      { label: 'Unlimited clients',          base: false, pro: false, premium: true,  enterprise: true  },
+      // Premium-only privileges (per TZ)
+      { label: 'Top in Google by your name', base: false, pro: false, premium: true,  enterprise: true  },
+      { label: '24/7 personal manager',      base: false, pro: false, premium: true,  enterprise: true  },
+      { label: 'Exclusive social promotion', base: false, pro: false, premium: true,  enterprise: true  },
+      // Reputation checks — 3 levels per TZ
+      { label: 'Up to 10 reputation checks', base: false, pro: true,  premium: false, enterprise: false },
+      { label: 'Unlimited reputation checks',base: false, pro: false, premium: true,  enterprise: true  },
+      // PRO + PREMIUM
+      { label: 'Boost rating from past experience', base: false, pro: true,  premium: true,  enterprise: true  },
+      { label: 'Set custom prices for your services', base: false, pro: true,  premium: true,  enterprise: true  },
+      // All tiers — per TZ
+      { label: 'AI module for Google & Meta',base: true,  pro: true,  premium: true,  enterprise: true  },
+      { label: 'AI competitor monitoring',   base: true,  pro: true,  premium: true,  enterprise: true  },
+      { label: 'AI client assistant',        base: true,  pro: true,  premium: true,  enterprise: true  },
+      { label: 'Referral earnings',          base: true,  pro: true,  premium: true,  enterprise: true  },
+      { label: 'Private specialist chat',    base: true,  pro: true,  premium: true,  enterprise: true  },
+      { label: 'CRM system',                 base: true,  pro: true,  premium: true,  enterprise: true  },
+      { label: 'Secure messenger',           base: true,  pro: true,  premium: true,  enterprise: true  },
+      // Enterprise-only
+      { label: 'Dedicated account manager',  base: false, pro: false, premium: false, enterprise: true  },
+      { label: 'White-label profile',        base: false, pro: false, premium: false, enterprise: true  },
+      { label: 'Custom integrations & API',  base: false, pro: false, premium: false, enterprise: true  },
+      { label: 'SLA & priority support',     base: false, pro: false, premium: false, enterprise: true  }
     ];
 
     var ppProBadges = {
       '109 +10% tokens': { text: '5.7x more', type: 'green' },
       '30 clients': { text: '5x more', type: 'green' },
-      '24/7 manager': { text: 'NEW', type: 'cyan' },
-      'AI for Google & Meta': { text: 'NEW', type: 'cyan' },
-      'AI client assistant': { text: 'NEW', type: 'cyan' },
-      'Boost rating': { text: 'NEW', type: 'cyan' },
+      'Up to 10 reputation checks': { text: 'NEW', type: 'cyan' },
+      'Boost rating from past experience': { text: 'NEW', type: 'cyan' },
+      'Set custom prices for your services': { text: 'NEW', type: 'cyan' },
+      'AI PRO avatar': { text: 'NEW', type: 'cyan' },
       'Professional profile level': { text: 'UPGRADE', type: 'cyan' }
     };
 
     var ppPremiumBadges = {
       '389 +30% tokens': { text: '3.6x more', type: 'green' },
       'Unlimited clients': { text: '\u221e', type: 'green' },
-      'AI competitor monitoring': { text: 'NEW', type: 'cyan' },
-      'Custom pricing': { text: 'NEW', type: 'cyan' },
+      'Top in Google by your name': { text: 'NEW', type: 'cyan' },
+      '24/7 personal manager': { text: 'NEW', type: 'cyan' },
+      'Exclusive social promotion': { text: 'NEW', type: 'cyan' },
+      'Unlimited reputation checks': { text: '\u221e', type: 'green' },
+      'AI PREMIUM avatar': { text: 'UPGRADE', type: 'cyan' },
       'Premium profile level': { text: 'UPGRADE', type: 'cyan' }
+    };
+
+    var ppEnterpriseBadges = {
+      'Unlimited tokens': { text: '\u221e', type: 'green' },
+      'Dedicated account manager': { text: 'NEW', type: 'cyan' },
+      'White-label profile': { text: 'NEW', type: 'cyan' },
+      'Custom integrations & API': { text: 'NEW', type: 'cyan' },
+      'SLA & priority support': { text: 'NEW', type: 'cyan' }
     };
 
     function ppBuildFeatures(tier) {
       var relevant = [];
-      var badgeMap = tier === 'pro' ? ppProBadges : tier === 'premium' ? ppPremiumBadges : null;
+      var badgeMap = null;
+      if (tier === 'pro') badgeMap = ppProBadges;
+      else if (tier === 'premium') badgeMap = ppPremiumBadges;
+      else if (tier === 'enterprise') badgeMap = ppEnterpriseBadges;
 
       ppFeatures.forEach(function(f) {
-        var isTokenRow = f.label.indexOf('tokens') > -1;
-        var isClientRow = f.label.indexOf('clients') > -1 || f.label === 'Unlimited clients';
-
-        if (isTokenRow) {
-          if ((tier === 'base' && f.label === '19 tokens') ||
-              (tier === 'pro' && f.label === '109 +10% tokens') ||
-              (tier === 'premium' && f.label === '389 +30% tokens')) {
-            var item = { label: f.label, on: true };
-            if (badgeMap && badgeMap[f.label]) item.badge = badgeMap[f.label];
-            relevant.push(item);
-          }
-          return;
-        }
-        if (isClientRow) {
-          if ((tier === 'base' && f.label === '6 clients') ||
-              (tier === 'pro' && f.label === '30 clients') ||
-              (tier === 'premium' && f.label === 'Unlimited clients')) {
-            var item2 = { label: f.label, on: true };
-            if (badgeMap && badgeMap[f.label]) item2.badge = badgeMap[f.label];
-            relevant.push(item2);
-          }
-          return;
-        }
-
-        var item3 = { label: f.label, on: f[tier] };
-        if (badgeMap && badgeMap[f.label]) item3.badge = badgeMap[f.label];
-        relevant.push(item3);
+        var item = { label: f.label, on: !!f[tier] };
+        if (badgeMap && badgeMap[f.label]) item.badge = badgeMap[f.label];
+        relevant.push(item);
       });
 
+      // Show enabled features first, disabled at bottom
       relevant.sort(function(a, b) { return (b.on ? 1 : 0) - (a.on ? 1 : 0); });
       return relevant;
     }
@@ -1470,7 +1493,7 @@
     // ── Carousel logic (inside setTimeout to ensure DOM is ready) ──
     setTimeout(function() {
       var ppCurrent = 0;
-      var ppTotal = 3;
+      var ppTotal = 4;
       var profileTrack = document.getElementById('ppProfileTrack');
       var pricingTrack = document.getElementById('ppPricingTrack');
       var dotsContainer = document.getElementById('ppDots');
@@ -1487,14 +1510,17 @@
       var featBase = document.getElementById('ppFeatBase');
       var featPro = document.getElementById('ppFeatPro');
       var featPremium = document.getElementById('ppFeatPremium');
+      var featEnterprise = document.getElementById('ppFeatEnterprise');
       if (featBase) ppRenderFeatures(featBase, 'base');
       if (featPro) ppRenderFeatures(featPro, 'pro');
       if (featPremium) ppRenderFeatures(featPremium, 'premium');
+      if (featEnterprise) ppRenderFeatures(featEnterprise, 'enterprise');
 
       var ppCtaConfig = [
         { text: 'Get Base',    cls: 'pp-cta-btn pp-cta-base',    plan: 'base' },
         { text: 'Get Pro',     cls: 'pp-cta-btn pp-cta-pro',     plan: 'pro' },
-        { text: 'Get Premium', cls: 'pp-cta-btn pp-cta-premium', plan: 'premium' }
+        { text: 'Get Premium', cls: 'pp-cta-btn pp-cta-premium', plan: 'premium' },
+        { text: 'Contact Sales', cls: 'pp-cta-btn pp-cta-enterprise', plan: 'enterprise' }
       ];
 
       function ppGoTo(idx) {
