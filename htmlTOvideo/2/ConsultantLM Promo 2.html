@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=360, initial-scale=1.0">
-<title>ConsultantLM — №1 у Google</title>
+<title>ConsultantLM — #1 in Google Search</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -491,8 +491,8 @@
 
   <!-- Headline -->
   <div class="headline-block" id="headlineBlock">
-    <div class="headline">№1 у <span class="accent">Google Search</span></div>
-    <div class="sub-headline">Вище ніж LinkedIn, Avvo і власний сайт</div>
+    <div class="headline">#1 in <span class="accent">Google Search</span></div>
+    <div class="sub-headline">Higher than LinkedIn, Avvo, and own website</div>
   </div>
 
   <!-- SERP Card -->
@@ -549,18 +549,18 @@
 
   <!-- Stats block -->
   <div class="stats-block" id="statsBlock">
-    <div class="stat-col" id="statПерегляди">
-      <div class="stat-label">Перегляди</div>
+    <div class="stat-col" id="statViews">
+      <div class="stat-label">Views</div>
       <div class="stat-value" id="viewsVal">0</div>
       <div class="stat-sub">↑ +340%</div>
     </div>
-    <div class="stat-col" id="statЛіди">
-      <div class="stat-label">Ліди</div>
+    <div class="stat-col" id="statLeads">
+      <div class="stat-label">Leads</div>
       <div class="stat-value" id="leadsVal">0</div>
       <div class="stat-sub">↑ +189%</div>
     </div>
-    <div class="stat-col" id="statДохід">
-      <div class="stat-label">Дохід</div>
+    <div class="stat-col" id="statRevenue">
+      <div class="stat-label">Revenue</div>
       <div class="stat-value" id="revenueVal">$0</div>
       <div class="stat-sub">↑ +267%</div>
     </div>
@@ -569,7 +569,7 @@
   <!-- Chart -->
   <div class="chart-block" id="chartBlock">
     <div class="chart-header">
-      <span class="chart-title">Перегляди профілю — останні 6 міс.</span>
+      <span class="chart-title">Profile Views — Last 6 Months</span>
       <span class="chart-badge">↗ All-time high</span>
     </div>
     <div class="chart-area">
@@ -602,12 +602,12 @@
           d="M0,46 C30,44 50,40 80,36 C110,32 130,26 160,18 C180,12 210,6 240,2"/>
       </svg>
       <div class="chart-x-labels">
-        <span class="chart-x-label">Лис</span>
-        <span class="chart-x-label">Гру</span>
-        <span class="chart-x-label">Січ</span>
-        <span class="chart-x-label">Лют</span>
-        <span class="chart-x-label">Бер</span>
-        <span class="chart-x-label">Кві</span>
+        <span class="chart-x-label">Nov</span>
+        <span class="chart-x-label">Dec</span>
+        <span class="chart-x-label">Jan</span>
+        <span class="chart-x-label">Feb</span>
+        <span class="chart-x-label">Mar</span>
+        <span class="chart-x-label">Apr</span>
       </div>
     </div>
   </div>
@@ -693,7 +693,7 @@ function countUp(el, target, duration = 2200, prefix = '', suffix = '', delay = 
 }
 
 // Typing effect
-const QUERY = 'Адвокат з розлучень New York';
+const QUERY = 'Divorce Attorney New York';
 function typeText(el, text, speed = 60, delay = 0) {
   return new Promise(resolve => {
     setTimeout(() => {
@@ -741,7 +741,7 @@ function resetAll() {
   });
 
   // Stat cols
-  ['statПерегляди','statЛіди','statДохід'].forEach(id => {
+  ['statViews','statLeads','statRevenue'].forEach(id => {
     const el = document.getElementById(id);
     el.style.opacity = 0;
     el.style.transform = 'translateY(15px)';
@@ -805,12 +805,12 @@ async function runSequence() {
   fadeIn(document.getElementById('statsBlock'), { delay: 400, duration: 400, ty: 20 });
   await new Promise(r => setTimeout(r, 500));
 
-  const statПерегляди = document.getElementById('statПерегляди');
-  const statЛіди = document.getElementById('statЛіди');
-  const statДохід = document.getElementById('statДохід');
+  const statViews = document.getElementById('statViews');
+  const statLeads = document.getElementById('statLeads');
+  const statRevenue = document.getElementById('statRevenue');
 
   // Animate each stat col
-  [statПерегляди, statЛіди, statДохід].forEach((el, i) => {
+  [statViews, statLeads, statRevenue].forEach((el, i) => {
     setTimeout(() => {
       el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
       el.style.opacity = 1;

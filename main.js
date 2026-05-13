@@ -10,7 +10,7 @@
   var history = [];
 
   // ===== CONFIGURATION =====
-  // ⚠ Замінити на реальний endpoint:
+  // ⚠ Replace with your actual endpoint:
   var SUBMIT_URL = 'https://your-api.example.com/quiz-submit';
   var STORAGE_KEY = 'clm_quiz_data';
 
@@ -59,98 +59,97 @@
   var slides = [
     // 1. profession
     { type:'radio', field:'profession',
-      q:'Яка ваша <span class="accent">професія?</span>',
-      sub:'Оберіть вашу сферу',
+      q:'Which best describes your <span class="accent">profession?</span>',
+      sub:'Select your area of expertise',
       options:[
-        {v:'attorney',t:'Адвокат / Юрист',icon:'scales',color:'#6366f1'},
-        {v:'notary',t:'Нотаріус',icon:'stamp',color:'#8b5cf6'},
-        {v:'patent_attorney',t:'Патентний повірений',icon:'file-text',color:'#3b82f6'},
-        {v:'agent',t:'Агент',icon:'home',color:'#f59e0b'},
-        {v:'cpa',t:'CPA (Бухгалтер)',icon:'bar-chart',color:'#10b981'},
-        {v:'tax_specialist',t:'Податковий спеціаліст',icon:'dollar',color:'#14b8a6'},
-        {v:'insurance_adjuster',t:'Страховий експерт',icon:'shield',color:'#ef4444'},
-        {v:'private_investigator',t:'Приватний детектив',icon:'search',color:'#f97316'},
-        {v:'other',t:'Інше',icon:'briefcase',color:'#64748b'}
+        {v:'attorney',t:'Attorney',icon:'scales',color:'#6366f1'},
+        {v:'lawyer',t:'Lawyer',icon:'briefcase',color:'#3b82f6'},
+        {v:'notary',t:'Notary',icon:'stamp',color:'#8b5cf6'},
+        {v:'patent_attorney',t:'Patent Attorney',icon:'file-text',color:'#0ea5e9'},
+        {v:'agent',t:'Agent',icon:'home',color:'#f59e0b'},
+        {v:'cpa',t:'CPA',icon:'bar-chart',color:'#10b981'},
+        {v:'tax_specialist',t:'Tax Specialist',icon:'dollar',color:'#14b8a6'},
+        {v:'other',t:'Other',icon:'briefcase',color:'#64748b'}
       ]},
     // 2. socialProof video
     { type:'card', id:'videoProof', q:'', sub:'' },
     // 3. zip
-    { type:'text', field:'zip', q:'Ваше <span class="accent">місто</span> роботи?', sub:'Вкажіть ZIP-код', placeholder:'наприклад 10001', inputmode:'numeric' },
+    { type:'text', field:'zip', q:'Your <span class="accent">work city?</span>', sub:'Enter your ZIP code', placeholder:'e.g. 10001', inputmode:'numeric' },
     // 4. role
-    { type:'radio', field:'role', q:'Яка ваша <span class="accent">роль?</span>', sub:'Допоможіть нам персоналізувати ваш досвід',
+    { type:'radio', field:'role', q:'Which best describes your <span class="accent">role?</span>', sub:'Help us personalize your experience',
       options:[
-        {v:'self_employed',t:'Самозайнятий / Працюю самостійно',icon:'user',color:'#3b82f6'},
-        {v:'employee',t:'Найманий працівник (в компанії)',icon:'building',color:'#8b5cf6'},
-        {v:'executive',t:'Керівник компанії / Менеджер',icon:'crown',color:'#f59e0b'},
-        {v:'founder',t:'Засновник / Власник бізнесу',icon:'rocket',color:'#10b981'}
+        {v:'self_employed',t:'Self-employed / Working independently',icon:'user',color:'#3b82f6'},
+        {v:'employee',t:'Employee (in a company)',icon:'building',color:'#8b5cf6'},
+        {v:'executive',t:'Company executive / Manager',icon:'crown',color:'#f59e0b'},
+        {v:'founder',t:'Founder / Business owner',icon:'rocket',color:'#10b981'}
       ]},
     // 5. services (filtered + select all)
-    { type:'services', field:'services', q:'Які послуги ви <span class="accent">надаєте?</span>', sub:'Оберіть усе, що підходить' },
+    { type:'services', field:'services', q:'What services do you <span class="accent">provide?</span>', sub:'Select all that apply' },
     // 6. aiCalc
-    { type:'card', id:'aiCalc', q:'Ваш <span class="accent">AI-потенціал</span>', sub:'На основі ваших даних наш AI розрахував ваш потенціал на ConsultantLM' },
+    { type:'card', id:'aiCalc', q:'Your <span class="accent">AI-powered</span> potential', sub:'Based on your data, our AI calculated your potential on ConsultantLM' },
     // 7. contactForm (MOVED, simplified - no uploads)
-    { type:'form', id:'contactForm', q:'Майже готово! Наш AI створить ваш <span class="accent">профіль</span>', sub:'Вкажіть свої дані — AI-асистент автоматично побудує ваш профіль' },
+    { type:'form', id:'contactForm', q:'Almost done! Let our AI create your <span class="accent">profile</span>', sub:'Provide your details and our AI assistant will automatically build your profile' },
     // 8. transitionMarketing (NEW)
-    { type:'card', id:'transitionMarketing', q:'Поговоримо про ваш <span class="accent">маркетинг</span>', sub:'Обговоримо вашу маркетингову активність і створимо персональну пропозицію' },
+    { type:'card', id:'transitionMarketing', q:'Let\'s talk about your <span class="accent">marketing</span>', sub:'We will discuss your marketing activities and create a personalized offer for you' },
     // 10. channels
-    { type:'checkbox', field:'channels', q:'Де представлений ваш <span class="accent">бізнес?</span>', sub:'Оберіть усе, що підходить', skip:'Поки що пропустити',
+    { type:'checkbox', field:'channels', q:'Where is your business <span class="accent">listed?</span>', sub:'Choose all that apply', skip:'Skip for now',
       options:[
-        {v:'instagram',t:'Instagram або Facebook',icon:'instagram',color:'#e1306c'},
-        {v:'website',t:'Власний сайт',icon:'globe',color:'#64748b'},
+        {v:'instagram',t:'Instagram or Facebook',icon:'instagram',color:'#e1306c'},
+        {v:'website',t:'My own website',icon:'globe',color:'#64748b'},
         {v:'tiktok',t:'TikTok',icon:'tiktok',color:'#000000'},
         {v:'youtube',t:'YouTube',icon:'play',color:'#ff0000'},
         {v:'linkedin',t:'LinkedIn',icon:'linkedin',color:'#0a66c2'},
         {v:'twitter',t:'X (Twitter)',icon:'x-twitter',color:'#000000'},
         {v:'telegram',t:'Telegram',icon:'send',color:'#0088cc'},
-        {v:'other_channel',t:'Інше',icon:'plus',color:'#94a3b8'}
+        {v:'other_channel',t:'Other',icon:'plus',color:'#94a3b8'}
       ]},
     // 11. preferred_way (+ disclaimer)
-    { type:'radio', field:'preferred_way', q:'Який ваш бажаний спосіб <span class="accent">залучати клієнтів?</span>', sub:'Як ви хочете розвиватись',
+    { type:'radio', field:'preferred_way', q:'What\'s your preferred way to get <span class="accent">more customers?</span>', sub:'How would you like to grow',
       options:[
-        {v:'social_media',t:'Соцмережі',icon:'share',color:'#8b5cf6'},
-        {v:'paid_ads',t:'Платна реклама',icon:'megaphone',color:'#f59e0b'},
-        {v:'both',t:'Обидва',icon:'layers',color:'#3b82f6'},
-        {v:'ai_decide',t:'Поки немає плану — AI вирішить',icon:'sparkle',color:'#10b981'}
+        {v:'social_media',t:'Social media',icon:'share',color:'#8b5cf6'},
+        {v:'paid_ads',t:'Paid ads',icon:'megaphone',color:'#f59e0b'},
+        {v:'both',t:'Both',icon:'layers',color:'#3b82f6'},
+        {v:'ai_decide',t:'No plan yet — AI can decide',icon:'sparkle',color:'#10b981'}
       ]},
     // 12. marketing_time
-    { type:'radio', field:'marketing_time', q:'Скільки годин на день ви витрачаєте на <span class="accent">маркетинг?</span>', sub:'Включаючи соцмережі, створення контенту, ведення блогу',
+    { type:'radio', field:'marketing_time', q:'How many hours a day do you spend on <span class="accent">marketing?</span>', sub:'Including social media, content creation, and blogging',
       options:[
-        {v:'none',t:"Не витрачаю час на маркетинг",icon:'x-circle',color:'#94a3b8'},
-        {v:'less_1',t:'Менше 1 години',icon:'clock',color:'#3b82f6'},
-        {v:'1_5',t:'1-5 годин',icon:'clock',color:'#f59e0b'},
-        {v:'5_plus',t:'5+ годин',icon:'clock',color:'#ef4444'}
+        {v:'none',t:"I don't spend time on marketing",icon:'x-circle',color:'#94a3b8'},
+        {v:'less_1',t:'Less than 1 hour',icon:'clock',color:'#3b82f6'},
+        {v:'1_5',t:'1-5 hours',icon:'clock',color:'#f59e0b'},
+        {v:'5_plus',t:'5+ hours',icon:'clock',color:'#ef4444'}
       ]},
     // 13. ad_budget
-    { type:'radio', field:'ad_budget', q:'Який ваш місячний <span class="accent">бюджет на рекламу?</span>', sub:'Скільки витрачаєте на рекламу',
+    { type:'radio', field:'ad_budget', q:'What\'s your monthly <span class="accent">ad budget?</span>', sub:'How much do you spend on advertising',
       options:[
-        {v:'not_ready',t:'Не готовий інвестувати',icon:'x-circle',color:'#94a3b8'},
+        {v:'not_ready',t:'Not ready to invest',icon:'x-circle',color:'#94a3b8'},
         {v:'500_2000',t:'$500 - $2,000',icon:'dollar',color:'#10b981'},
         {v:'2000_5000',t:'$2,000 - $5,000',icon:'dollar',color:'#3b82f6'},
         {v:'5000_10000',t:'$5,000 - $10,000',icon:'dollar',color:'#8b5cf6'},
         {v:'10000_plus',t:'$10,000+',icon:'diamond',color:'#f59e0b'}
       ]},
     // 14. team
-    { type:'checkbox', field:'team', q:'Хто у вашій <span class="accent">маркетинг-команді?</span>', sub:'Оберіть усі ролі, яких ви наразі наймаєте', skip:"У мене немає команди",
+    { type:'checkbox', field:'team', q:'Who\'s on your <span class="accent">marketing team?</span>', sub:'Select all roles you currently hire', skip:"I don't have a team",
       options:[
-        {v:'seo',t:'Контент-дослідник / SEO-спеціаліст',icon:'search',color:'#3b82f6'},
-        {v:'scriptwriter',t:'Сценарист',icon:'pen',color:'#8b5cf6'},
-        {v:'videographer',t:'Відеограф',icon:'camera',color:'#ef4444'},
-        {v:'video_editor',t:'Відеомонтажер',icon:'film',color:'#f97316'},
-        {v:'smm',t:'Таргетолог / SMM',icon:'megaphone',color:'#10b981'},
-        {v:'crm_manager',t:'CRM / Лід-менеджер',icon:'users',color:'#0ea5e9'}
+        {v:'seo',t:'Content Researcher / SEO Specialist',icon:'search',color:'#3b82f6'},
+        {v:'scriptwriter',t:'Scriptwriter',icon:'pen',color:'#8b5cf6'},
+        {v:'videographer',t:'Videographer',icon:'camera',color:'#ef4444'},
+        {v:'video_editor',t:'Video Editor',icon:'film',color:'#f97316'},
+        {v:'smm',t:'Digital Advertiser / SMM',icon:'megaphone',color:'#10b981'},
+        {v:'crm_manager',t:'CRM / Lead Manager',icon:'users',color:'#0ea5e9'}
       ]},
     // 15. team_salary
-    { type:'radio', field:'team_salary', q:'Скільки ви витрачаєте на <span class="accent">маркетинг-команду?</span>', sub:'Сумарна місячна зарплата всієї маркетинг-команди',
+    { type:'radio', field:'team_salary', q:'How much do you spend on your <span class="accent">marketing team?</span>', sub:'Total monthly salary for all marketing staff',
       options:[
-        {v:'under_1000',t:'До $1,000',icon:'dollar',color:'#10b981'},
+        {v:'under_1000',t:'Under $1,000',icon:'dollar',color:'#10b981'},
         {v:'1000_5000',t:'$1,000 - $5,000',icon:'dollar',color:'#3b82f6'},
         {v:'5000_20000',t:'$5,000 - $20,000',icon:'dollar',color:'#8b5cf6'},
         {v:'20000_plus',t:'$20,000+',icon:'diamond',color:'#f59e0b'}
       ]},
     // 16. teamReplace (MOVED, new title)
-    { type:'card', id:'teamReplace', q:'Ваші <span class="accent">витрати на команду</span>', sub:'Подивіться, скільки ви могли б заощадити з ConsultantLM' },
+    { type:'card', id:'teamReplace', q:'Your team <span class="accent">expenses</span>', sub:'See how much you could save with ConsultantLM' },
     // 17. tenx
-    { type:'card', id:'tenx', q:'Ми зламали код, щоб надати <span class="accent">в 10 разів кращі результати</span>', sub:'Від $19/міс — Всього 15 хвилин на день' },
+    { type:'card', id:'tenx', q:'We cracked the code to deliver <span class="accent">10x better results</span>', sub:'Starting from $19/month -- Just 15 minutes a day' },
     // 18. video1
     { type:'card', id:'video1', q:'', sub:'' },
     // 19. video2
@@ -160,34 +159,34 @@
     // 21. videoSocials
     { type:'card', id:'videoSocials', q:'', sub:'' },
     // 22. dualSlider
-    { type:'dualSlider', q:'Встановіть ваші <span class="accent">цілі</span> на перший місяць', sub:'Це допоможе AI побудувати план росту для вас',
+    { type:'dualSlider', q:'Set your <span class="accent">goals</span> for the first month', sub:'This will help AI build a growth plan for you',
       sliders:[
-        { field:'desired_clients', label:'Бажані клієнти', min:0, max:100, val:25, step:1, fmt:function(v){return v>=100?'100+':v;}, labels:'<span>0</span><span>25</span><span>50</span><span>75</span><span>100+</span>' },
-        { field:'desired_revenue', label:'Бажаний дохід', min:0, max:100000, val:25000, step:1000, fmt:function(v){return v>=100000?'$100K+':'$'+Number(v).toLocaleString('en-US');}, labels:'<span>$0</span><span>$25K</span><span>$50K</span><span>$75K</span><span>$100K+</span>' }
+        { field:'desired_clients', label:'Desired clients', min:0, max:100, val:25, step:1, fmt:function(v){return v>=100?'100+':v;}, labels:'<span>0</span><span>25</span><span>50</span><span>75</span><span>100+</span>' },
+        { field:'desired_revenue', label:'Desired revenue', min:0, max:100000, val:25000, step:1000, fmt:function(v){return v>=100000?'$100K+':'$'+Number(v).toLocaleString('en-US');}, labels:'<span>$0</span><span>$25K</span><span>$50K</span><span>$75K</span><span>$100K+</span>' }
       ]},
     // 23. period
-    { type:'radio', field:'period', q:'Як довго ви хочете <span class="accent">співпрацювати?</span>', sub:'Довші періоди — кращі ціни',
+    { type:'radio', field:'period', q:'How long do you want to <span class="accent">collaborate?</span>', sub:'Longer periods get better pricing',
       options:[
-        {v:'1_month',t:'1 місяць',icon:'calendar',color:'#64748b'},
-        {v:'1_year',t:'1 рік (Економія 10%)',icon:'calendar',color:'#3b82f6'},
-        {v:'3_years',t:'3 роки (Економія 20%)',icon:'calendar',color:'#10b981'}
+        {v:'1_month',t:'1 month',icon:'calendar',color:'#64748b'},
+        {v:'1_year',t:'1 year (Save 10%)',icon:'calendar',color:'#3b82f6'},
+        {v:'3_years',t:'3 years (Save 20%)',icon:'calendar',color:'#10b981'}
       ]},
     // 24. time_on_platform
-    { type:'radio', field:'time_on_platform', q:'Скільки часу на тиждень можете приділити <span class="accent">ConsultantLM</span>?', sub:'Це допоможе нам підлаштувати ваш план',
+    { type:'radio', field:'time_on_platform', q:'How much time can you spend on <span class="accent">ConsultantLM</span> each week?', sub:'This helps us tailor your plan',
       options:[
-        {v:'15min',t:'15 хвилин на день',icon:'clock',color:'#10b981'},
-        {v:'30min',t:'30 хвилин на день',icon:'clock',color:'#3b82f6'},
-        {v:'1hr',t:'1 година на день',icon:'clock',color:'#8b5cf6'},
-        {v:'more',t:'Більше 1 години',icon:'clock',color:'#f59e0b'}
+        {v:'15min',t:'15 minutes a day',icon:'clock',color:'#10b981'},
+        {v:'30min',t:'30 minutes a day',icon:'clock',color:'#3b82f6'},
+        {v:'1hr',t:'1 hour a day',icon:'clock',color:'#8b5cf6'},
+        {v:'more',t:'More than 1 hour',icon:'clock',color:'#f59e0b'}
       ]},
     // 25. uploadFiles (NEW)
-    { type:'card', id:'uploadFiles', q:'Завантажте ваші <span class="accent">файли</span>', sub:'Додайте фото і CV — ми створимо професійний профіль' },
+    { type:'card', id:'uploadFiles', q:'Upload your <span class="accent">files</span>', sub:'Add your photo and CV, and we will create a professional profile for you' },
     // 26. assessment
-    { type:'card', id:'assessment', q:'Ваш <span class="accent">потенціал доходу</span>', sub:'На основі професії, локації, послуг і цілей' },
+    { type:'card', id:'assessment', q:'Your income <span class="accent">potential</span>', sub:'Based on your profession, location, services, and goals' },
     // 27. profilesPricing
-    { type:'card', id:'profilesPricing', q:'Оберіть ваш <span class="accent">тариф</span>', sub:'' },
+    { type:'card', id:'profilesPricing', q:'Choose your <span class="accent">plan</span>', sub:'' },
     // 28. payment
-    { type:'card', id:'payment', q:'Завершіть <span class="accent">оплату</span>', sub:'' }
+    { type:'card', id:'payment', q:'Complete your <span class="accent">purchase</span>', sub:'' }
   ];
 
   var TOTAL = slides.length;
@@ -465,10 +464,10 @@
         // Update preferred_way disclaimer
         if (s.field === 'preferred_way' && disclaimerDiv) {
           var disclaimerTexts = {
-            social_media: 'Автоматизація: ми допомагаємо створювати і вести соцмережі автоматично, контент будує довіру і залучає клієнтів.',
-            paid_ads: 'Наша AI-реклама — це підсилювач. Ми покращуємо те, що ви робите.',
-            both: 'Чудовий вибір! Ми поєднаємо платний і органічний підходи для максимального результату.',
-            ai_decide: 'Сказали "довіра"? Чудово. AI підбере найкращу стратегію під ваш бізнес і принесе результат.'
+            social_media: 'Automation: We help you create/manage social media automatically, content that builds trust and attracts customers.',
+            paid_ads: 'Our AI ads should be an enhancer \u2014 we improve what you do.',
+            both: 'Great choice! We\u2019ll combine both paid and organic approaches for maximum results.',
+            ai_decide: 'You said trust? Great. AI will pick the best strategy for your business context and bring results.'
           };
           disclaimerDiv.textContent = disclaimerTexts[opt.v] || '';
         }
@@ -512,7 +511,7 @@
       wrap.appendChild(skip);
     }
 
-    var btn = el('button', 'card-btn', 'Продовжити &rarr;');
+    var btn = el('button', 'card-btn', 'Continue &rarr;');
     btn.addEventListener('click', function() { advance(); });
     wrap.appendChild(btn);
   }
@@ -527,7 +526,7 @@
     if (quizData[s.field]) inp.value = quizData[s.field];
     wrap.appendChild(inp);
 
-    var btn = el('button', 'card-btn', 'Продовжити &rarr;');
+    var btn = el('button', 'card-btn', 'Continue &rarr;');
     btn.addEventListener('click', function() {
       var val = inp.value.trim();
       if (!val) return;
@@ -553,53 +552,52 @@
     var searchInput = document.createElement('input');
     searchInput.type = 'text';
     searchInput.className = 'card-input search-input svc-search-input';
-    searchInput.placeholder = 'Пошук послуг...';
+    searchInput.placeholder = 'Search services...';
     searchWrap.appendChild(searchInput);
     wrap.appendChild(searchWrap);
 
     var tree = el('div', 'category-tree');
 
     var allCategories = [
-      { name:'Сімейне право', icon:'scales', color:'#6366f1', subs:[
-        { name:'Розлучення', items:[{s:'divorce_contested',t:'Спірне розлучення'},{s:'divorce_uncontested',t:'Безспірне розлучення'},{s:'divorce_mediation',t:'Медіація розлучення'}]},
-        { name:'Поділ майна', items:[{s:'property_division',t:'Поділ майна'},{s:'asset_valuation',t:'Оцінка активів'}]},
-        { name:'Аліменти', items:[{s:'alimony_spousal',t:'Підтримка дружини/чоловіка'},{s:'alimony_modification',t:'Зміна аліментів'}]},
-        { name:'Опіка над дітьми', items:[{s:'custody_joint',t:'Спільна опіка'},{s:'custody_sole',t:'Одноосібна опіка'},{s:'custody_visitation',t:'Права на побачення'}]},
-        { name:'Усиновлення', items:[{s:'adoption_domestic',t:'Усиновлення в країні'},{s:'adoption_international',t:'Міжнародне усиновлення'}]}
+      { name:'Family Law', icon:'scales', color:'#6366f1', subs:[
+        { name:'Divorce', items:[{s:'divorce_contested',t:'Contested Divorce'},{s:'divorce_uncontested',t:'Uncontested Divorce'},{s:'divorce_mediation',t:'Divorce Mediation'}]},
+        { name:'Property Division', items:[{s:'property_division',t:'Property Division'},{s:'asset_valuation',t:'Asset Valuation'}]},
+        { name:'Alimony', items:[{s:'alimony_spousal',t:'Spousal Support'},{s:'alimony_modification',t:'Alimony Modification'}]},
+        { name:'Child Custody', items:[{s:'custody_joint',t:'Joint Custody'},{s:'custody_sole',t:'Sole Custody'},{s:'custody_visitation',t:'Visitation Rights'}]},
+        { name:'Adoption', items:[{s:'adoption_domestic',t:'Domestic Adoption'},{s:'adoption_international',t:'International Adoption'}]}
       ]},
-      { name:'Кримінальне право', icon:'shield', color:'#ef4444', subs:[
-        { name:'Кримінальний захист', items:[{s:'criminal_defense',t:'Загальний кримінальний захист'},{s:'assault_defense',t:'Захист у справах нападу'}]},
-        { name:'Захист у справах DUI', items:[{s:'dui_first',t:'Перше DUI'},{s:'dui_repeat',t:'Повторне DUI'}]},
-        { name:'Наркотичні справи', items:[{s:'drug_possession',t:'Зберігання наркотиків'},{s:'drug_trafficking',t:'Розповсюдження наркотиків'}]},
-        { name:'Білокомірцеві злочини', items:[{s:'fraud',t:'Шахрайство'},{s:'embezzlement',t:'Розтрата'}]}
+      { name:'Criminal Law', icon:'shield', color:'#ef4444', subs:[
+        { name:'Criminal Defense', items:[{s:'criminal_defense',t:'General Criminal Defense'},{s:'assault_defense',t:'Assault Defense'}]},
+        { name:'DUI Defense', items:[{s:'dui_first',t:'First Offense DUI'},{s:'dui_repeat',t:'Repeat DUI'}]},
+        { name:'Drug Offenses', items:[{s:'drug_possession',t:'Drug Possession'},{s:'drug_trafficking',t:'Drug Trafficking'}]},
+        { name:'White Collar Crime', items:[{s:'fraud',t:'Fraud'},{s:'embezzlement',t:'Embezzlement'}]}
       ]},
-      { name:'Нерухомість', icon:'home', color:'#f59e0b', subs:[
-        { name:'Угоди', items:[{s:'real_estate_transactions',t:'Угоди з нерухомістю'},{s:'closings',t:'Закриття угод'}]},
-        { name:'Орендодавець і орендар', items:[{s:'landlord_tenant',t:'Спори орендодавця-орендаря'},{s:'eviction',t:'Виселення'}]},
-        { name:'Зонування та землекористування', items:[{s:'zoning',t:'Зонування'},{s:'land_use',t:'Дозволи на землекористування'}]}
+      { name:'Real Estate', icon:'home', color:'#f59e0b', subs:[
+        { name:'Transactions', items:[{s:'real_estate_transactions',t:'Real Estate Transactions'},{s:'closings',t:'Closings'}]},
+        { name:'Landlord & Tenant', items:[{s:'landlord_tenant',t:'Landlord-Tenant Disputes'},{s:'eviction',t:'Eviction'}]},
+        { name:'Zoning & Land Use', items:[{s:'zoning',t:'Zoning'},{s:'land_use',t:'Land Use Permits'}]}
       ]},
-      { name:'Імміграція', icon:'globe', color:'#3b82f6', subs:[
-        { name:'Візи', items:[{s:'work_visa',t:'Робочі візи'},{s:'family_visa',t:'Сімейні візи'}]},
-        { name:'Грін-карти', items:[{s:'green_card_employment',t:'На основі працевлаштування'},{s:'green_card_family',t:'На основі сімейних зв\'язків'}]},
-        { name:'Захист від депортації', items:[{s:'deportation',t:'Захист від депортації'},{s:'asylum',t:'Притулок'}]}
+      { name:'Immigration', icon:'globe', color:'#3b82f6', subs:[
+        { name:'Visas', items:[{s:'work_visa',t:'Work Visas'},{s:'family_visa',t:'Family Visas'}]},
+        { name:'Green Cards', items:[{s:'green_card_employment',t:'Employment-Based'},{s:'green_card_family',t:'Family-Based'}]},
+        { name:'Deportation Defense', items:[{s:'deportation',t:'Deportation Defense'},{s:'asylum',t:'Asylum'}]}
       ]},
-      { name:'Податки та бухгалтерія', icon:'dollar', color:'#10b981', subs:[
-        { name:'Податкове планування', items:[{s:'tax_planning',t:'Податкове планування'},{s:'tax_compliance',t:'Податкова відповідність'}]},
-        { name:'Податкові спори', items:[{s:'tax_disputes',t:'Податкові спори'},{s:'audit_representation',t:'Представництво на аудиті'}]},
-        { name:'Бухгалтерія', items:[{s:'bookkeeping',t:'Бухгалтерський облік'},{s:'payroll',t:'Розрахунок зарплат'}]}
+      { name:'Tax & Accounting', icon:'dollar', color:'#10b981', subs:[
+        { name:'Tax Planning', items:[{s:'tax_planning',t:'Tax Planning'},{s:'tax_compliance',t:'Tax Compliance'}]},
+        { name:'Tax Disputes', items:[{s:'tax_disputes',t:'Tax Disputes'},{s:'audit_representation',t:'Audit Representation'}]},
+        { name:'Bookkeeping', items:[{s:'bookkeeping',t:'Bookkeeping'},{s:'payroll',t:'Payroll Services'}]}
       ]}
     ];
 
     // Filter categories based on profession
     var profCategoryMap = {
-      attorney: ['Сімейне право', 'Кримінальне право', 'Нерухомість', 'Імміграція'],
+      attorney: ['Family Law', 'Criminal Law', 'Real Estate', 'Immigration'],
+      lawyer: ['Family Law', 'Criminal Law', 'Real Estate', 'Immigration'],
       patent_attorney: null, // null = show all
-      notary: ['Нерухомість', 'Сімейне право'],
-      cpa: ['Податки та бухгалтерія', 'Нерухомість'],
-      tax_specialist: ['Податки та бухгалтерія', 'Нерухомість'],
-      agent: ['Нерухомість', 'Імміграція'],
-      insurance_adjuster: null,
-      private_investigator: ['Кримінальне право', 'Сімейне право'],
+      notary: ['Real Estate', 'Family Law'],
+      cpa: ['Tax & Accounting', 'Real Estate'],
+      tax_specialist: ['Tax & Accounting', 'Real Estate'],
+      agent: ['Real Estate', 'Immigration'],
       other: null
     };
 
@@ -615,7 +613,7 @@
     function updateServiceCount() {
       var count = selectedServices.length;
       if (count > 0) {
-        counterBadge.textContent = count + ' послуг обрано';
+        counterBadge.textContent = count + ' service' + (count !== 1 ? 's' : '') + ' selected';
         counterBadge.classList.add('visible');
       } else {
         counterBadge.textContent = '';
@@ -624,7 +622,7 @@
     }
 
     // "Select All" button
-    var selectAllBtn = el('button', 'svc-select-all-btn', 'Обрати все');
+    var selectAllBtn = el('button', 'svc-select-all-btn', 'Select All');
     selectAllBtn.addEventListener('click', function() {
       // Select all visible chips
       tree.querySelectorAll('.svc-chip').forEach(function(chip) {
@@ -695,7 +693,7 @@
     var customInput = document.createElement('input');
     customInput.type = 'text';
     customInput.className = 'card-input';
-    customInput.placeholder = 'Або введіть свою послугу...';
+    customInput.placeholder = 'Or type your own services...';
     customInput.style.marginTop = '10px';
     if (quizData.custom_services) customInput.value = quizData.custom_services;
     customInput.addEventListener('input', function() { quizData.custom_services = customInput.value; });
@@ -720,7 +718,7 @@
       });
     });
 
-    var btn = el('button', 'card-btn', 'Продовжити &rarr;');
+    var btn = el('button', 'card-btn', 'Continue &rarr;');
     btn.addEventListener('click', function() { advance(); });
     wrap.appendChild(btn);
   }
@@ -752,7 +750,7 @@
     else labels.innerHTML = '<span>$0</span><span>$25K</span><span>$50K</span><span>$75K</span><span>$100K+</span>';
     wrap.appendChild(labels);
 
-    var btn = el('button', 'card-btn', 'Продовжити &rarr;');
+    var btn = el('button', 'card-btn', 'Continue &rarr;');
     btn.addEventListener('click', function() { advance(); });
     wrap.appendChild(btn);
   }
@@ -793,7 +791,7 @@
       wrap.appendChild(group);
     });
 
-    var btn = el('button', 'card-btn', 'Продовжити &rarr;');
+    var btn = el('button', 'card-btn', 'Continue &rarr;');
     btn.addEventListener('click', function() { advance(); });
     wrap.appendChild(btn);
   }
@@ -801,12 +799,12 @@
   // ---- Form ----
   function renderForm(s, wrap) {
     var fields = [
-      {label:'Імʼя', field:'first_name', type:'text', ph:'Іван'},
-      {label:'Прізвище', field:'last_name', type:'text', ph:'Іваненко'},
-      {label:'Email', field:'email', type:'email', ph:'ivan@example.com'},
-      {label:'Телефон', field:'phone', type:'tel', ph:'+380 50 123 4567'},
-      {label:'Поштовий індекс', field:'zip', type:'text', ph:'напр. 10001'},
-      {label:'Реферальний код (необов\'язково)', field:'referral_code', type:'text', ph:'Введіть код'}
+      {label:'First Name', field:'first_name', type:'text', ph:'John'},
+      {label:'Last Name', field:'last_name', type:'text', ph:'Davis'},
+      {label:'Email', field:'email', type:'email', ph:'john@example.com'},
+      {label:'Phone', field:'phone', type:'tel', ph:'+1 (555) 123-4567'},
+      {label:'ZIP Code', field:'zip', type:'text', ph:'e.g. 10001'},
+      {label:'Referral Code (optional)', field:'referral_code', type:'text', ph:'Enter code'}
     ];
 
     fields.forEach(function(f) {
@@ -823,11 +821,11 @@
     });
 
     var aboutGrp = el('div', 'form-group');
-    aboutGrp.innerHTML = '<label class="form-label">Про себе (необовʼязково, мін. 3000 символів)</label>';
+    aboutGrp.innerHTML = '<label class="form-label">About yourself (optional, min 3000 characters)</label>';
     var ta = document.createElement('textarea');
     ta.className = 'card-input';
     ta.rows = 4;
-    ta.placeholder = 'Розкажіть про досвід, освіту, досягнення...';
+    ta.placeholder = 'Tell us about your experience, education, achievements...';
     if (quizData.about) ta.value = quizData.about;
     ta.addEventListener('input', function() { quizData.about = ta.value; });
     aboutGrp.appendChild(ta);
@@ -837,7 +835,7 @@
     errEl.style.cssText = 'color:#ef4444;font-size:13px;text-align:center;margin-top:8px;display:none';
     wrap.appendChild(errEl);
 
-    var btn = el('button', 'card-btn', 'Продовжити &rarr;');
+    var btn = el('button', 'card-btn', 'Continue &rarr;');
     btn.addEventListener('click', function() {
       advance();
     });
@@ -862,7 +860,7 @@
     else if (s.id === 'uploadFiles') renderUploadFilesCard(wrap);
 
     if (s.id !== 'payment' && s.id !== 'profilesPricing') {
-      var btn = el('button', 'card-btn', 'Продовжити &rarr;');
+      var btn = el('button', 'card-btn', 'Continue &rarr;');
       btn.addEventListener('click', function() { advance(); });
       wrap.appendChild(btn);
     }
@@ -875,10 +873,10 @@
     var prof = quizData.profession || 'attorney';
     var roleVal = quizData.role || 'self_employed';
     var zip = quizData.zip || '';
-    var mult = {attorney:1,patent_attorney:1.2,cpa:0.8,notary:0.6,agent:0.7,tax_specialist:0.75,insurance_adjuster:0.65,private_investigator:0.5,other:0.6};
+    var mult = {attorney:1,lawyer:0.95,patent_attorney:1.2,cpa:0.8,notary:0.6,agent:0.7,tax_specialist:0.75,other:0.6};
     var roleMult = {founder:1.2,executive:1.15,self_employed:1.0,employee:0.85};
-    var profLabels = {attorney:'Адвокат / Юрист',patent_attorney:'Патентний повірений',cpa:'CPA (Бухгалтер)',notary:'Нотаріус',agent:'Агент',tax_specialist:'Податковий спеціаліст',insurance_adjuster:'Страховий експерт',private_investigator:'Приватний детектив',other:'Спеціаліст'};
-    var roleLabels = {self_employed:'Самозайнятий',employee:'Найманий працівник',executive:'Керівник',founder:'Засновник'};
+    var profLabels = {attorney:'Attorney',lawyer:'Lawyer',patent_attorney:'Patent Attorney',cpa:'CPA',notary:'Notary',agent:'Agent',tax_specialist:'Tax Specialist',other:'Specialist'};
+    var roleLabels = {self_employed:'Self-employed',employee:'Employee',executive:'Executive',founder:'Founder'};
 
     var m = (mult[prof] || 0.7) * (roleMult[roleVal] || 1.0);
 
@@ -895,17 +893,17 @@
     var svcNames = [];
     wrap.parentElement && document.querySelectorAll('.category-item.selected'); // won't work cross-slide, use quizData
     (quizData.services || []).forEach(function(s) { svcNames.push(s.replace(/_/g,' ')); });
-    var svcText = svcNames.length > 0 ? svcNames.slice(0,3).join(', ') + (svcNames.length > 3 ? '...' : '') : 'Загальна';
+    var svcText = svcNames.length > 0 ? svcNames.slice(0,3).join(', ') + (svcNames.length > 3 ? '...' : '') : 'General';
 
     var html =
       '<div class="stats-row">' +
-        '<div class="stat-card"><div class="stat-label">SEO (Google)</div><div class="stat-value">'+seoMin+'–'+seoMax+'</div><div class="stat-trend">лідів/міс</div></div>' +
-        '<div class="stat-card"><div class="stat-label">Платна реклама</div><div class="stat-value">'+adsMin+'–'+adsMax+'</div><div class="stat-trend">лідів/міс</div></div>' +
-        '<div class="stat-card"><div class="stat-label">Соцмережі</div><div class="stat-value">'+socMin+'–'+socMax+'</div><div class="stat-trend">лідів/міс</div></div>' +
+        '<div class="stat-card"><div class="stat-label">SEO (Google)</div><div class="stat-value">'+seoMin+'–'+seoMax+'</div><div class="stat-trend">leads/mo</div></div>' +
+        '<div class="stat-card"><div class="stat-label">Paid Ads</div><div class="stat-value">'+adsMin+'–'+adsMax+'</div><div class="stat-trend">leads/mo</div></div>' +
+        '<div class="stat-card"><div class="stat-label">Social</div><div class="stat-value">'+socMin+'–'+socMax+'</div><div class="stat-trend">leads/mo</div></div>' +
       '</div>' +
-      '<div class="highlight-card"><div class="stat-label">Загальний потенціал клієнтів</div><div class="big-number">'+tMin+'–'+tMax+'</div><div class="stat-label">на місяць</div></div>' +
-      '<div class="highlight-card" style="margin-top:10px"><div class="stat-label">Очікуваний дохід</div><div class="big-number green">$'+rMin.toLocaleString('en-US')+' – $'+rMax.toLocaleString('en-US')+'</div><div class="stat-label">на місяць</div></div>' +
-      '<p class="fine-print"><strong>Розраховано для:</strong> ' + (profLabels[prof]||prof) + (zip ? ', індекс ' + zip : '') + ', ' + (roleLabels[roleVal]||roleVal) + ', ' + svcText + '.<br>Включає: Google SEO + Meta/Google Ads + органічний трафік + соцмережі.</p>';
+      '<div class="highlight-card"><div class="stat-label">Total Potential Clients</div><div class="big-number">'+tMin+'–'+tMax+'</div><div class="stat-label">per month</div></div>' +
+      '<div class="highlight-card" style="margin-top:10px"><div class="stat-label">Estimated Revenue</div><div class="big-number green">$'+rMin.toLocaleString('en-US')+' – $'+rMax.toLocaleString('en-US')+'</div><div class="stat-label">per month</div></div>' +
+      '<p class="fine-print"><strong>Calculated for:</strong> ' + (profLabels[prof]||prof) + (zip ? ', ZIP ' + zip : '') + ', ' + (roleLabels[roleVal]||roleVal) + ', ' + svcText + '.<br>Includes: Google SEO + Meta/Google Ads + organic traffic + social media.</p>';
     var d = el('div', '', html);
     wrap.appendChild(d);
   }
@@ -913,9 +911,9 @@
   // ---- Proof ----
   function renderProofCard(wrap) {
     var html =
-      '<div class="proof-card"><div class="proof-header"><div class="proof-avatar">JD</div><div class="proof-meta"><div class="proof-name">John Davis</div><div class="proof-role">Адвокат — New York</div><div class="proof-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div></div><span class="badge badge-green">+$47K/міс</span></div><p class="proof-quote">"ConsultantLM змінив мою практику. 47 нових клієнтів за перший місяць."</p></div>' +
-      '<div class="proof-card"><div class="proof-header"><div class="proof-avatar orange">SM</div><div class="proof-meta"><div class="proof-name">Sarah Mitchell</div><div class="proof-role">CPA — California</div><div class="proof-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div></div><span class="badge badge-green">+$32K/міс</span></div><p class="proof-quote">"21 лід за першу годину! AI-контент — це неймовірно."</p></div>' +
-      '<div class="featured-in">Про нас: <strong>Forbes</strong> — <strong>HiiL Justice</strong></div>';
+      '<div class="proof-card"><div class="proof-header"><div class="proof-avatar">JD</div><div class="proof-meta"><div class="proof-name">John Davis</div><div class="proof-role">Attorney -- New York</div><div class="proof-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div></div><span class="badge badge-green">+$47K/mo</span></div><p class="proof-quote">"ConsultantLM transformed my practice. 47 new clients in the first month."</p></div>' +
+      '<div class="proof-card"><div class="proof-header"><div class="proof-avatar orange">SM</div><div class="proof-meta"><div class="proof-name">Sarah Mitchell</div><div class="proof-role">CPA -- California</div><div class="proof-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div></div><span class="badge badge-green">+$32K/mo</span></div><p class="proof-quote">"21 leads in the first hour! The AI content engine is incredible."</p></div>' +
+      '<div class="featured-in">Featured in: <strong>Forbes</strong> -- <strong>HiiL Justice</strong></div>';
     var d = el('div', '', html);
     wrap.appendChild(d);
   }
@@ -927,31 +925,31 @@
         '<div class="tenx-before-after">' +
           '<div class="tenx-card tenx-before">' +
             '<div class="tenx-card-icon">&#10005;</div>' +
-            '<div class="tenx-card-label">Без ConsultantLM</div>' +
+            '<div class="tenx-card-label">Without ConsultantLM</div>' +
             '<div class="tenx-card-items">' +
-              '<div class="tenx-item">Потрібна повна команда</div>' +
-              '<div class="tenx-item tenx-price-bad">$5K–$30K/міс</div>' +
-              '<div class="tenx-item">Місяці до результатів</div>' +
+              '<div class="tenx-item">You need a full team</div>' +
+              '<div class="tenx-item tenx-price-bad">$5K–$30K/month</div>' +
+              '<div class="tenx-item">Months to see results</div>' +
             '</div>' +
           '</div>' +
           '<div class="tenx-vs">VS</div>' +
           '<div class="tenx-card tenx-after">' +
             '<div class="tenx-card-icon">&#10003;</div>' +
-            '<div class="tenx-card-label">З ConsultantLM</div>' +
+            '<div class="tenx-card-label">With ConsultantLM</div>' +
             '<div class="tenx-card-items">' +
-              '<div class="tenx-item">AI робить усе</div>' +
-              '<div class="tenx-item tenx-price-good">Від $19/міс</div>' +
-              '<div class="tenx-item">Результати за тижні</div>' +
+              '<div class="tenx-item">AI does it all</div>' +
+              '<div class="tenx-item tenx-price-good">From $19/month</div>' +
+              '<div class="tenx-item">Results in weeks</div>' +
             '</div>' +
           '</div>' +
         '</div>' +
         '<div class="tenx-hero">' +
-          '<div class="tenx-hero-label">Один інструмент замінює</div>' +
-          '<div class="tenx-hero-number">6 співробітників</div>' +
+          '<div class="tenx-hero-label">One tool replaces</div>' +
+          '<div class="tenx-hero-number">6 hires</div>' +
         '</div>' +
         '<div class="tenx-savings">' +
           '<div class="tenx-savings-amount">$35,000</div>' +
-          '<div class="tenx-savings-text">ВИ ЕКОНОМИТЕ ЩОМІСЯЦЯ</div>' +
+          '<div class="tenx-savings-text">YOU SAVE PER MONTH</div>' +
         '</div>' +
       '</div>';
     var d = el('div', '', html);
@@ -982,7 +980,6 @@
     card.querySelectorAll('iframe[data-src]').forEach(function(f) {
       var src = f.getAttribute('data-src');
       if (!src) return;
-      // Force reload by clearing then setting — restarts the animation from frame 0
       f.setAttribute('src', 'about:blank');
       requestAnimationFrame(function() { f.setAttribute('src', src); });
     });
@@ -1003,21 +1000,21 @@
   function renderTeamReplaceCard(wrap) {
     wrap.innerHTML =
       '<div class="team-replace-card">' +
-        '<table class="team-table"><thead><tr><th>Роль</th><th>США (на місяць)</th></tr></thead><tbody>' +
-        '<tr><td>Контент-дослідник / SEO</td><td>$9,425</td></tr>' +
-        '<tr><td>Сценарист</td><td>$5,115</td></tr>' +
-        '<tr><td>Відеограф</td><td>$5,327</td></tr>' +
-        '<tr><td>Відеомонтажер</td><td>$5,477</td></tr>' +
-        '<tr><td>Таргетолог / SMM</td><td>$5,404</td></tr>' +
-        '<tr><td>CRM / Лід-менеджер</td><td>$5,598</td></tr>' +
+        '<table class="team-table"><thead><tr><th>Role</th><th>USA (Monthly)</th></tr></thead><tbody>' +
+        '<tr><td>Content Researcher / SEO</td><td>$9,425</td></tr>' +
+        '<tr><td>Scriptwriter</td><td>$5,115</td></tr>' +
+        '<tr><td>Videographer</td><td>$5,327</td></tr>' +
+        '<tr><td>Video Editor</td><td>$5,477</td></tr>' +
+        '<tr><td>Digital Advertiser / SMM</td><td>$5,404</td></tr>' +
+        '<tr><td>CRM / Lead Manager</td><td>$5,598</td></tr>' +
         '</tbody></table>' +
         '<div class="team-total">' +
-          '<div class="team-total-label">Сумарна вартість команди на місяць</div>' +
+          '<div class="team-total-label">Total Monthly Team Cost</div>' +
           '<div class="team-total-value">~$35,346</div>' +
         '</div>' +
         '<div class="team-savings">' +
-          '<div class="team-savings-vs">проти ConsultantLM від <span class="accent">$19/міс</span></div>' +
-          '<div class="badge badge-green" style="font-size:14px;padding:8px 16px;margin-top:8px">Ви економите до $35,000/міс</div>' +
+          '<div class="team-savings-vs">vs ConsultantLM from <span class="accent">$19/mo</span></div>' +
+          '<div class="badge badge-green" style="font-size:14px;padding:8px 16px;margin-top:8px">You save up to $35,000/month</div>' +
         '</div>' +
       '</div>';
   }
@@ -1025,20 +1022,20 @@
   // ---- Assessment ----
   function renderAssessmentCard(wrap) {
     var score = calcProfileScore();
-    var level = score >= 75 ? 'Високий' : score >= 50 ? 'Помірний' : score >= 30 ? 'Звичайний' : 'Низький';
+    var level = score >= 75 ? 'High' : score >= 50 ? 'Moderate' : score >= 30 ? 'Normal' : 'Low';
     var levelColor = score >= 75 ? '#10b981' : score >= 50 ? '#3b82f6' : score >= 30 ? '#f59e0b' : '#ef4444';
 
-    var profLabels = {attorney:'Адвокат / Юрист',patent_attorney:'Патентний повірений',cpa:'CPA (Бухгалтер)',notary:'Нотаріус',agent:'Агент',tax_specialist:'Податковий спеціаліст',insurance_adjuster:'Страховий експерт',private_investigator:'Приватний детектив',other:'Спеціаліст'};
+    var profLabels = {attorney:'Attorney',lawyer:'Lawyer',patent_attorney:'Patent Attorney',cpa:'CPA',notary:'Notary',agent:'Agent',tax_specialist:'Tax Specialist',other:'Specialist'};
     var prof = quizData.profession || 'other';
     var zip = quizData.zip || '';
     var svcNames = (quizData.services || []).slice(0,3).map(function(s){return s.replace(/_/g,' ');});
-    var svcText = svcNames.length > 0 ? svcNames.join(', ') : 'Загальна';
+    var svcText = svcNames.length > 0 ? svcNames.join(', ') : 'General';
 
     var html =
-      '<div class="potential-scale"><div class="scale-bar"><div class="scale-marker" id="scaleMarker" style="left:10%"></div></div><div class="scale-labels"><span>Низький</span><span>Звичайний</span><span>Помірний</span><span>Високий</span></div></div>' +
-      '<div class="highlight-card" style="margin-top:16px"><span class="badge" style="font-size:14px;padding:6px 16px;background:' + levelColor + '22;color:' + levelColor + '">Ваш рівень: <strong>' + level + '</strong> (' + score + '%)</span></div>' +
-      '<div class="fine-print" style="margin-top:12px"><strong>Розраховано для:</strong> ' + (profLabels[prof]||prof) + (zip ? ', індекс ' + zip : '') + ', ' + svcText + '.' +
-      '<br>Фактори: бюджет реклами' + (quizData.ad_budget ? ' (' + quizData.ad_budget.replace(/_/g,' ') + ')' : '') + ', термін співпраці' + (quizData.period ? ' (' + quizData.period.replace(/_/g,' ') + ')' : '') + ', бажані цілі.</div>';
+      '<div class="potential-scale"><div class="scale-bar"><div class="scale-marker" id="scaleMarker" style="left:10%"></div></div><div class="scale-labels"><span>Low</span><span>Normal</span><span>Moderate</span><span>High</span></div></div>' +
+      '<div class="highlight-card" style="margin-top:16px"><span class="badge" style="font-size:14px;padding:6px 16px;background:' + levelColor + '22;color:' + levelColor + '">Your level: <strong>' + level + '</strong> (' + score + '%)</span></div>' +
+      '<div class="fine-print" style="margin-top:12px"><strong>Calculated for:</strong> ' + (profLabels[prof]||prof) + (zip ? ', ZIP ' + zip : '') + ', ' + svcText + '.' +
+      '<br>Factors: ad budget' + (quizData.ad_budget ? ' (' + quizData.ad_budget.replace(/_/g,' ') + ')' : '') + ', cooperation period' + (quizData.period ? ' (' + quizData.period.replace(/_/g,' ') + ')' : '') + ', desired goals.</div>';
     var d = el('div', '', html);
     wrap.appendChild(d);
 
@@ -1060,71 +1057,71 @@
 
     // ── Timer at top ──
     html += '<div class="pp-timer-bar pp-timer-top">';
-    html += '<div class="pp-timer-label">ЗНИЖКА 20% ДЛЯ ВАС!</div>';
+    html += '<div class="pp-timer-label">20% DISCOUNT JUST FOR YOU!</div>';
     html += '<div class="pp-timer-digits">';
-    html += '<div class="t-block"><span class="num" id="ppTH">23</span><span class="lbl">год</span></div>';
+    html += '<div class="t-block"><span class="num" id="ppTH">23</span><span class="lbl">hrs</span></div>';
     html += '<span class="t-sep">:</span>';
-    html += '<div class="t-block"><span class="num" id="ppTM">59</span><span class="lbl">хв</span></div>';
+    html += '<div class="t-block"><span class="num" id="ppTM">59</span><span class="lbl">min</span></div>';
     html += '<span class="t-sep">:</span>';
-    html += '<div class="t-block"><span class="num" id="ppTS">59</span><span class="lbl">сек</span></div>';
+    html += '<div class="t-block"><span class="num" id="ppTS">59</span><span class="lbl">sec</span></div>';
     html += '</div></div>';
 
     // ── Profile viewport with arrows ──
     html += '<div class="pp-viewport" id="ppViewport">';
-    html += '<button class="pp-arrow pp-arrow--left" id="ppArrowLeft" aria-label="Попередній тариф">' + arrowLeftSvg + '</button>';
-    html += '<button class="pp-arrow pp-arrow--right" id="ppArrowRight" aria-label="Наступний тариф">' + arrowRightSvg + '</button>';
+    html += '<button class="pp-arrow pp-arrow--left" id="ppArrowLeft" aria-label="Previous plan">' + arrowLeftSvg + '</button>';
+    html += '<button class="pp-arrow pp-arrow--right" id="ppArrowRight" aria-label="Next plan">' + arrowRightSvg + '</button>';
     html += '<div class="pp-track" id="ppProfileTrack">';
 
     // BASE profile slide
     html += '<div class="pp-slide"><div class="prof-card prof-base">';
-    html += '<div class="prof-topbar"><span class="tier-label">BASE (Базовий)</span><span class="separator"></span><span class="rating-area">' + starSvg + '<span class="rating-num">54.42</span></span></div>';
-    html += '<div class="prof-body"><div class="prof-avatar-wrap"><img src="' + imgPath + '" alt="Адвокат"></div>';
-    html += '<div class="prof-info"><div class="name">Alexander K\u00f6nig</div><div class="role">Адвокат</div><div class="location">' + pinSvg + ' США, New York</div></div></div>';
+    html += '<div class="prof-topbar"><span class="tier-label">BASE (Basic)</span><span class="separator"></span><span class="rating-area">' + starSvg + '<span class="rating-num">54.42</span></span></div>';
+    html += '<div class="prof-body"><div class="prof-avatar-wrap"><img src="' + imgPath + '" alt="Attorney"></div>';
+    html += '<div class="prof-info"><div class="name">Alexander K\u00f6nig</div><div class="role">Attorney</div><div class="location">' + pinSvg + ' USA, New York</div></div></div>';
     html += '<div class="prof-info-btn">i</div></div></div>';
 
     // PRO profile slide
     html += '<div class="pp-slide"><div class="prof-card prof-pro">';
     html += '<div class="prof-topbar"><span class="tier-label">PRO</span><span class="separator"></span><span class="rating-area">' + starSvg + '<span class="rating-num">67.59</span></span></div>';
-    html += '<div class="prof-body"><div class="prof-avatar-wrap"><img src="' + imgPath + '" alt="Адвокат"></div>';
-    html += '<div class="prof-info"><div class="name">Alexander K\u00f6nig</div><div class="role">Адвокат</div><div class="location">' + pinSvg + ' США, New York</div></div></div>';
+    html += '<div class="prof-body"><div class="prof-avatar-wrap"><img src="' + imgPath + '" alt="Attorney"></div>';
+    html += '<div class="prof-info"><div class="name">Alexander K\u00f6nig</div><div class="role">Attorney</div><div class="location">' + pinSvg + ' USA, New York</div></div></div>';
     html += '<div class="prof-info-btn">i</div></div></div>';
 
     // PREMIUM profile slide
     html += '<div class="pp-slide"><div class="prof-card prof-premium">';
     html += '<div class="prof-topbar"><span class="tier-label">PREMIUM</span><span class="separator"></span><span class="rating-area">' + starSvg + '<span class="rating-num">76.02</span></span></div>';
-    html += '<div class="prof-body"><div class="prof-info-area"><div class="prof-info"><div class="name">Alexander K\u00f6nig</div><div class="role">Адвокат</div><div class="location">' + pinSvg + ' США, New York</div></div></div>';
-    html += '<div class="prof-photo-right"><img src="' + imgPath + '" alt="Адвокат"></div></div>';
+    html += '<div class="prof-body"><div class="prof-info-area"><div class="prof-info"><div class="name">Alexander K\u00f6nig</div><div class="role">Attorney</div><div class="location">' + pinSvg + ' USA, New York</div></div></div>';
+    html += '<div class="prof-photo-right"><img src="' + imgPath + '" alt="Attorney"></div></div>';
     html += '<div class="prof-info-btn">i</div></div></div>';
 
     html += '</div></div>'; // close pp-track, pp-viewport
 
     // ── Dots ──
     html += '<div class="pp-dots" id="ppDots">';
-    html += '<button class="pp-dot active" data-idx="0" aria-label="Тариф Base"></button>';
-    html += '<button class="pp-dot" data-idx="1" aria-label="Тариф Pro"></button>';
-    html += '<button class="pp-dot" data-idx="2" aria-label="Тариф Premium"></button>';
+    html += '<button class="pp-dot active" data-idx="0" aria-label="Base plan"></button>';
+    html += '<button class="pp-dot" data-idx="1" aria-label="Pro plan"></button>';
+    html += '<button class="pp-dot" data-idx="2" aria-label="Premium plan"></button>';
     html += '</div>';
 
     // ── AI Avatar Video Section (hidden for BASE, visible for PRO/PREMIUM) ──
     html += '<div class="pp-avatar-section" id="ppAvatarSection">';
     html += '<div class="pp-avatar-inner">';
-    html += '<span class="pp-avatar-label">AI-аватар попередній перегляд</span>';
+    html += '<span class="pp-avatar-label">AI Avatar Preview</span>';
     html += '<div class="pp-avatar-video-wrap">';
     html += '<video id="ppAvatarVideo" loop playsinline preload="metadata">';
     html += '<source src="./videos/i_avatar.mp4" type="video/mp4">';
     html += '</video>';
-    html += '<button class="pp-avatar-sound-btn" id="ppAvatarSoundBtn" title="Звук вкл/викл">&#128264;</button>';
+    html += '<button class="pp-avatar-sound-btn" id="ppAvatarSoundBtn" title="Toggle sound">&#128264;</button>';
     html += '</div>';
-    html += '<div class="pp-avatar-tagline">Ваш AI-аватар говорить за вас 24/7</div>';
+    html += '<div class="pp-avatar-tagline">Your AI avatar speaks for you 24/7</div>';
     html += '</div>';
     html += '</div>';
 
     // ── Billing toggle ──
     html += '<div class="pp-billing-toggle">';
-    html += '<span class="toggle-label" id="ppLabelMonthly">Щомісяця</span>';
+    html += '<span class="toggle-label" id="ppLabelMonthly">Monthly</span>';
     html += '<div class="pp-toggle-track annual" id="ppToggleTrack"><div class="pp-toggle-thumb"></div></div>';
-    html += '<span class="toggle-label active" id="ppLabelAnnual">Щороку</span>';
-    html += '<span class="pp-save-badge">Економія 20%</span>';
+    html += '<span class="toggle-label active" id="ppLabelAnnual">Annual</span>';
+    html += '<span class="pp-save-badge">Save 20%</span>';
     html += '</div>';
 
     // ── Pricing section ──
@@ -1134,31 +1131,31 @@
     // BASE pricing panel
     html += '<div class="pp-pricing-panel">';
     html += '<div class="pp-plan-name pp-base-name">Base</div>';
-    html += '<div class="pp-price-row"><span class="pp-old-price" id="ppOldBase">$49</span><span class="pp-new-price" id="ppPriceBase">$19<span class="period">/міс</span></span></div>';
-    html += '<div class="pp-billing-note" id="ppNoteBase">на місяць, оплата раз на рік</div>';
+    html += '<div class="pp-price-row"><span class="pp-old-price" id="ppOldBase">$49</span><span class="pp-new-price" id="ppPriceBase">$19<span class="period">/mo</span></span></div>';
+    html += '<div class="pp-billing-note" id="ppNoteBase">per month, billed annually</div>';
     html += '<div class="pp-features" id="ppFeatBase"></div>';
     html += '</div>';
 
     // PRO pricing panel
     html += '<div class="pp-pricing-panel">';
     html += '<div class="pp-plan-name pp-pro-name">Pro</div>';
-    html += '<div class="pp-price-row"><span class="pp-old-price" id="ppOldPro">$249</span><span class="pp-new-price" id="ppPricePro">$99<span class="period">/міс</span></span></div>';
-    html += '<div class="pp-billing-note" id="ppNotePro">на місяць, оплата раз на рік</div>';
+    html += '<div class="pp-price-row"><span class="pp-old-price" id="ppOldPro">$249</span><span class="pp-new-price" id="ppPricePro">$99<span class="period">/mo</span></span></div>';
+    html += '<div class="pp-billing-note" id="ppNotePro">per month, billed annually</div>';
     html += '<div class="pp-features" id="ppFeatPro"></div>';
     html += '</div>';
 
     // PREMIUM pricing panel
     html += '<div class="pp-pricing-panel">';
     html += '<div class="pp-plan-name pp-premium-name">Premium</div>';
-    html += '<div class="pp-price-row"><span class="pp-old-price" id="ppOldPremium">$599</span><span class="pp-new-price" id="ppPricePremium">$299<span class="period">/міс</span></span></div>';
-    html += '<div class="pp-billing-note" id="ppNotePremium">на місяць, оплата раз на рік</div>';
+    html += '<div class="pp-price-row"><span class="pp-old-price" id="ppOldPremium">$599</span><span class="pp-new-price" id="ppPricePremium">$299<span class="period">/mo</span></span></div>';
+    html += '<div class="pp-billing-note" id="ppNotePremium">per month, billed annually</div>';
     html += '<div class="pp-features" id="ppFeatPremium"></div>';
     html += '</div>';
 
     html += '</div></div>'; // close pp-pricing-content, pp-pricing-section
 
     // ── CTA button ──
-    html += '<div class="pp-cta-area"><button class="pp-cta-btn pp-cta-base" id="ppCtaBtn">Обрати Base</button></div>';
+    html += '<div class="pp-cta-area"><button class="pp-cta-btn pp-cta-base" id="ppCtaBtn">Get Base</button></div>';
 
     html += '</div>'; // close profiles-pricing-wrap
 
@@ -1167,47 +1164,47 @@
 
     // ── Feature data (from D1) ──
     var ppFeatures = [
-      { label: 'Базовий рівень профілю',       base: true,  pro: true,  premium: true  },
-      { label: 'Професійний рівень профілю', base: false, pro: true,  premium: true  },
-      { label: 'Преміум рівень профілю',     base: false, pro: false, premium: true  },
-      { label: 'AI-аватар',                 base: true,  pro: true,  premium: true  },
-      { label: '19 токенів',                 base: true,  pro: false, premium: false },
-      { label: '109 +10% токенів',           base: false, pro: true,  premium: false },
-      { label: '389 +30% токенів',           base: false, pro: false, premium: true  },
-      { label: '6 клієнтів',                 base: true,  pro: false, premium: false },
-      { label: '30 клієнтів',                base: false, pro: true,  premium: false },
-      { label: 'Необмежено клієнтів',         base: false, pro: false, premium: true  },
-      { label: 'Топ у Google',             base: true,  pro: true,  premium: true  },
-      { label: 'Перевірки репутації',         base: true,  pro: true,  premium: true  },
-      { label: 'Менеджер 24/7',              base: false, pro: true,  premium: true  },
-      { label: 'Просування у соцмережах',          base: true,  pro: true,  premium: true  },
-      { label: 'AI для Google і Meta',      base: false, pro: true,  premium: true  },
-      { label: 'AI-моніторинг конкурентів',   base: false, pro: false, premium: true  },
-      { label: 'AI-асистент клієнтів',       base: false, pro: true,  premium: true  },
-      { label: 'Реферальний дохід',         base: true,  pro: true,  premium: true  },
-      { label: 'Приватний чат',              base: true,  pro: true,  premium: true  },
-      { label: 'CRM-система',               base: true,  pro: true,  premium: true  },
-      { label: 'Безпечний месенджер',          base: true,  pro: true,  premium: true  },
-      { label: 'Підвищення рейтингу',              base: false, pro: true,  premium: true  },
-      { label: 'Кастомні ціни',            base: false, pro: false, premium: true  }
+      { label: 'Basic profile level',       base: true,  pro: true,  premium: true  },
+      { label: 'Professional profile level', base: false, pro: true,  premium: true  },
+      { label: 'Premium profile level',     base: false, pro: false, premium: true  },
+      { label: 'AI avatar',                 base: true,  pro: true,  premium: true  },
+      { label: '19 tokens',                 base: true,  pro: false, premium: false },
+      { label: '109 +10% tokens',           base: false, pro: true,  premium: false },
+      { label: '389 +30% tokens',           base: false, pro: false, premium: true  },
+      { label: '6 clients',                 base: true,  pro: false, premium: false },
+      { label: '30 clients',                base: false, pro: true,  premium: false },
+      { label: 'Unlimited clients',         base: false, pro: false, premium: true  },
+      { label: 'Top in Google',             base: true,  pro: true,  premium: true  },
+      { label: 'Reputation checks',         base: true,  pro: true,  premium: true  },
+      { label: '24/7 manager',              base: false, pro: true,  premium: true  },
+      { label: 'Social promotion',          base: true,  pro: true,  premium: true  },
+      { label: 'AI for Google & Meta',      base: false, pro: true,  premium: true  },
+      { label: 'AI competitor monitoring',   base: false, pro: false, premium: true  },
+      { label: 'AI client assistant',       base: false, pro: true,  premium: true  },
+      { label: 'Referral earnings',         base: true,  pro: true,  premium: true  },
+      { label: 'Private chat',              base: true,  pro: true,  premium: true  },
+      { label: 'CRM system',               base: true,  pro: true,  premium: true  },
+      { label: 'Secure messenger',          base: true,  pro: true,  premium: true  },
+      { label: 'Boost rating',              base: false, pro: true,  premium: true  },
+      { label: 'Custom pricing',            base: false, pro: false, premium: true  }
     ];
 
     var ppProBadges = {
-      '109 +10% токенів': { text: '×5.7 більше', type: 'green' },
-      '30 клієнтів': { text: '×5 більше', type: 'green' },
-      'Менеджер 24/7': { text: 'НОВЕ', type: 'cyan' },
-      'AI для Google і Meta': { text: 'НОВЕ', type: 'cyan' },
-      'AI-асистент клієнтів': { text: 'НОВЕ', type: 'cyan' },
-      'Підвищення рейтингу': { text: 'НОВЕ', type: 'cyan' },
-      'Професійний рівень профілю': { text: 'АПГРЕЙД', type: 'cyan' }
+      '109 +10% tokens': { text: '5.7x more', type: 'green' },
+      '30 clients': { text: '5x more', type: 'green' },
+      '24/7 manager': { text: 'NEW', type: 'cyan' },
+      'AI for Google & Meta': { text: 'NEW', type: 'cyan' },
+      'AI client assistant': { text: 'NEW', type: 'cyan' },
+      'Boost rating': { text: 'NEW', type: 'cyan' },
+      'Professional profile level': { text: 'UPGRADE', type: 'cyan' }
     };
 
     var ppPremiumBadges = {
-      '389 +30% токенів': { text: '×3.6 більше', type: 'green' },
-      'Необмежено клієнтів': { text: '\u221e', type: 'green' },
-      'AI-моніторинг конкурентів': { text: 'НОВЕ', type: 'cyan' },
-      'Кастомні ціни': { text: 'НОВЕ', type: 'cyan' },
-      'Преміум рівень профілю': { text: 'АПГРЕЙД', type: 'cyan' }
+      '389 +30% tokens': { text: '3.6x more', type: 'green' },
+      'Unlimited clients': { text: '\u221e', type: 'green' },
+      'AI competitor monitoring': { text: 'NEW', type: 'cyan' },
+      'Custom pricing': { text: 'NEW', type: 'cyan' },
+      'Premium profile level': { text: 'UPGRADE', type: 'cyan' }
     };
 
     function ppBuildFeatures(tier) {
@@ -1216,12 +1213,12 @@
 
       ppFeatures.forEach(function(f) {
         var isTokenRow = f.label.indexOf('tokens') > -1;
-        var isClientRow = f.label.indexOf('clients') > -1 || f.label === 'Необмежено клієнтів';
+        var isClientRow = f.label.indexOf('clients') > -1 || f.label === 'Unlimited clients';
 
         if (isTokenRow) {
-          if ((tier === 'base' && f.label === '19 токенів') ||
-              (tier === 'pro' && f.label === '109 +10% токенів') ||
-              (tier === 'premium' && f.label === '389 +30% токенів')) {
+          if ((tier === 'base' && f.label === '19 tokens') ||
+              (tier === 'pro' && f.label === '109 +10% tokens') ||
+              (tier === 'premium' && f.label === '389 +30% tokens')) {
             var item = { label: f.label, on: true };
             if (badgeMap && badgeMap[f.label]) item.badge = badgeMap[f.label];
             relevant.push(item);
@@ -1229,9 +1226,9 @@
           return;
         }
         if (isClientRow) {
-          if ((tier === 'base' && f.label === '6 клієнтів') ||
-              (tier === 'pro' && f.label === '30 клієнтів') ||
-              (tier === 'premium' && f.label === 'Необмежено клієнтів')) {
+          if ((tier === 'base' && f.label === '6 clients') ||
+              (tier === 'pro' && f.label === '30 clients') ||
+              (tier === 'premium' && f.label === 'Unlimited clients')) {
             var item2 = { label: f.label, on: true };
             if (badgeMap && badgeMap[f.label]) item2.badge = badgeMap[f.label];
             relevant.push(item2);
@@ -1287,9 +1284,9 @@
       if (featPremium) ppRenderFeatures(featPremium, 'premium');
 
       var ppCtaConfig = [
-        { text: 'Обрати Base',    cls: 'pp-cta-btn pp-cta-base',    plan: 'base' },
-        { text: 'Обрати Pro',     cls: 'pp-cta-btn pp-cta-pro',     plan: 'pro' },
-        { text: 'Обрати Premium', cls: 'pp-cta-btn pp-cta-premium', plan: 'premium' }
+        { text: 'Get Base',    cls: 'pp-cta-btn pp-cta-base',    plan: 'base' },
+        { text: 'Get Pro',     cls: 'pp-cta-btn pp-cta-pro',     plan: 'pro' },
+        { text: 'Get Premium', cls: 'pp-cta-btn pp-cta-premium', plan: 'premium' }
       ];
 
       function ppGoTo(idx) {
@@ -1451,12 +1448,12 @@
       var ppLabelAnnual = document.getElementById('ppLabelAnnual');
 
       var ppPrices = {
-        annual: { base: {old:'$49', price:'$19', note:'на місяць, оплата раз на рік'},
-                  pro: {old:'$249', price:'$99', note:'на місяць, оплата раз на рік'},
-                  premium: {old:'$599', price:'$299', note:'на місяць, оплата раз на рік'} },
-        monthly: { base: {old:'$29', price:'$24', note:'на місяць, помісячна оплата'},
-                   pro: {old:'$149', price:'$124', note:'на місяць, помісячна оплата'},
-                   premium: {old:'$399', price:'$349', note:'на місяць, помісячна оплата'} }
+        annual: { base: {old:'$49', price:'$19', note:'per month, billed annually'},
+                  pro: {old:'$249', price:'$99', note:'per month, billed annually'},
+                  premium: {old:'$599', price:'$299', note:'per month, billed annually'} },
+        monthly: { base: {old:'$29', price:'$24', note:'per month, billed monthly'},
+                   pro: {old:'$149', price:'$124', note:'per month, billed monthly'},
+                   premium: {old:'$399', price:'$349', note:'per month, billed monthly'} }
       };
 
       function ppUpdatePrices() {
@@ -1473,13 +1470,13 @@
         var elNotePremium = document.getElementById('ppNotePremium');
 
         if (elOldBase) elOldBase.textContent = p.base.old;
-        if (elPriceBase) elPriceBase.innerHTML = p.base.price + '<span class="period">/міс</span>';
+        if (elPriceBase) elPriceBase.innerHTML = p.base.price + '<span class="period">/mo</span>';
         if (elNoteBase) elNoteBase.textContent = p.base.note;
         if (elOldPro) elOldPro.textContent = p.pro.old;
-        if (elPricePro) elPricePro.innerHTML = p.pro.price + '<span class="period">/міс</span>';
+        if (elPricePro) elPricePro.innerHTML = p.pro.price + '<span class="period">/mo</span>';
         if (elNotePro) elNotePro.textContent = p.pro.note;
         if (elOldPremium) elOldPremium.textContent = p.premium.old;
-        if (elPricePremium) elPricePremium.innerHTML = p.premium.price + '<span class="period">/міс</span>';
+        if (elPricePremium) elPricePremium.innerHTML = p.premium.price + '<span class="period">/mo</span>';
         if (elNotePremium) elNotePremium.textContent = p.premium.note;
 
         if (ppToggleTrack) {
@@ -1513,7 +1510,7 @@
     var html =
       '<div style="text-align:center;padding:20px 0">' +
         '<div style="width:48px;height:48px;border-radius:14px;background:#f59e0b;display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-5v12L3 13v-2z"/><path d="M11.6 16.8a3 3 0 11-5.8-1.6"/></svg></div>' +
-        '<p style="font-size:14px;color:#64748b;line-height:1.5">Дайте відповідь на кілька питань про ваш поточний маркетинг — і ми побудуємо найкращий план для вас.</p>' +
+        '<p style="font-size:14px;color:#64748b;line-height:1.5">Answer a few quick questions about your current marketing so we can build the best plan for you.</p>' +
       '</div>';
     var d = el('div', '', html);
     wrap.appendChild(d);
@@ -1524,15 +1521,15 @@
     var html =
       '<div style="text-align:center;padding:10px 0 16px">' +
         '<div style="width:48px;height:48px;border-radius:14px;background:#00b4d8;display:flex;align-items:center;justify-content:center;margin:0 auto 12px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>' +
-        '<p style="font-size:13px;color:#94a3b8;margin-bottom:16px">Завантажте файли — AI створить професійний профіль. Цей крок можна пропустити.</p>' +
+        '<p style="font-size:13px;color:#94a3b8;margin-bottom:16px">Upload your files so our AI can create a professional profile for you. You can skip this step.</p>' +
       '</div>';
     var d = el('div', '', html);
     wrap.appendChild(d);
 
     var uploads = [
-      {text:'Завантажити фото (необовʼязково)', accept:'image/*', field:'photo'},
-      {text:'Завантажити CV (необовʼязково)', accept:'.pdf,.doc,.docx', field:'cv'},
-      {text:'Завантажити лого компанії (необовʼязково)', accept:'image/*', field:'company_logo'}
+      {text:'Upload your photo (optional)', accept:'image/*', field:'photo'},
+      {text:'Upload CV (optional)', accept:'.pdf,.doc,.docx', field:'cv'},
+      {text:'Upload company logo (optional)', accept:'image/*', field:'company_logo'}
     ];
 
     uploads.forEach(function(u) {
@@ -1560,35 +1557,35 @@
     var planNames = {base:'Base', pro:'Pro', premium:'Premium'};
 
     var prices = {
-      '1_month': {base:24, pro:124, premium:349, label:'1 місяць', discount:0},
-      '1_year':  {base:19, pro:99,  premium:299, label:'1 рік',  discount:10},
-      '3_years': {base:15, pro:79,  premium:249, label:'3 роки', discount:20}
+      '1_month': {base:24, pro:124, premium:349, label:'1 Month', discount:0},
+      '1_year':  {base:19, pro:99,  premium:299, label:'1 Year',  discount:10},
+      '3_years': {base:15, pro:79,  premium:249, label:'3 Years', discount:20}
     };
 
     var html = '';
 
     // ── Timer at top ──
     html += '<div class="pay-timer-top">';
-    html += '<div class="pay-timer-label">ЗНИЖКА 20% ДЛЯ ВАС!</div>';
+    html += '<div class="pay-timer-label">20% DISCOUNT JUST FOR YOU!</div>';
     html += '<div class="pay-timer-digits">';
-    html += '<span class="pay-t-block"><span class="pay-t-num" id="payTH">23</span><span class="pay-t-lbl">год</span></span>';
+    html += '<span class="pay-t-block"><span class="pay-t-num" id="payTH">23</span><span class="pay-t-lbl">hrs</span></span>';
     html += '<span class="pay-t-sep">:</span>';
-    html += '<span class="pay-t-block"><span class="pay-t-num" id="payTM">59</span><span class="pay-t-lbl">хв</span></span>';
+    html += '<span class="pay-t-block"><span class="pay-t-num" id="payTM">59</span><span class="pay-t-lbl">min</span></span>';
     html += '<span class="pay-t-sep">:</span>';
-    html += '<span class="pay-t-block"><span class="pay-t-num" id="payTS">59</span><span class="pay-t-lbl">сек</span></span>';
+    html += '<span class="pay-t-block"><span class="pay-t-num" id="payTS">59</span><span class="pay-t-lbl">sec</span></span>';
     html += '</div></div>';
 
     // ── Period toggle (1 month / 1 year / 3 years) ──
     html += '<div class="pay-period-toggle" id="payPeriodToggle">';
-    html += '<button class="pay-period-btn" data-period="1_month">1 місяць</button>';
-    html += '<button class="pay-period-btn active" data-period="1_year">1 рік <span class="pay-period-save">-10%</span></button>';
-    html += '<button class="pay-period-btn" data-period="3_years">3 роки <span class="pay-period-save">-20%</span></button>';
+    html += '<button class="pay-period-btn" data-period="1_month">1 Month</button>';
+    html += '<button class="pay-period-btn active" data-period="1_year">1 Year <span class="pay-period-save">-10%</span></button>';
+    html += '<button class="pay-period-btn" data-period="3_years">3 Years <span class="pay-period-save">-20%</span></button>';
     html += '</div>';
 
     // ── Savings hero ──
     html += '<div class="pay-savings-hero" id="paySavingsHero">';
     html += '<div class="pay-savings-amount" id="paySavingsAmount">$475</div>';
-    html += '<div class="pay-savings-text">ВИ ЩОЙНО ЗАОЩАДИЛИ</div>';
+    html += '<div class="pay-savings-text">YOU JUST SAVED</div>';
     html += '</div>';
 
     // ── Discount summary ──
@@ -1598,16 +1595,16 @@
     html += '<div class="payment-icons"><svg class="pay-icon" viewBox="0 0 38 24"><rect width="38" height="24" rx="3" fill="#1434CB"/><text x="19" y="15" font-size="9" fill="#fff" text-anchor="middle" font-weight="bold" font-family="Arial">VISA</text></svg><svg class="pay-icon" viewBox="0 0 38 24"><rect width="38" height="24" rx="3" fill="#252525"/><circle cx="15" cy="12" r="7" fill="#EB001B"/><circle cx="23" cy="12" r="7" fill="#F79E1B"/><path d="M19 6.5a7 7 0 010 11 7 7 0 010-11z" fill="#FF5F00"/></svg><svg class="pay-icon" viewBox="0 0 38 24"><rect width="38" height="24" rx="3" fill="#003087"/><text x="19" y="15" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold" font-family="Arial">PayPal</text></svg></div>';
 
     // ── Payment buttons ──
-    html += '<div class="payment-buttons"><button class="btn btn-paypal" id="paypalBtn"><img class="btn-icon-paypal" src="icon/paypal.svg" alt="" width="24" height="24"> Сплатити PayPal</button><button class="btn btn-primary" id="cardBtn"><img class="btn-icon-card" src="icon/card-credit.svg" alt="" width="24" height="24"> Сплатити карткою</button></div>';
+    html += '<div class="payment-buttons"><button class="btn btn-paypal" id="paypalBtn"><img class="btn-icon-paypal" src="icon/paypal.svg" alt="" width="24" height="24"> Pay with PayPal</button><button class="btn btn-primary" id="cardBtn"><img class="btn-icon-card" src="icon/card-credit.svg" alt="" width="24" height="24"> Pay with Card</button></div>';
 
     // ── FAQ ──
-    html += '<h3 class="faq-heading">Часті питання</h3>';
+    html += '<h3 class="faq-heading">Frequently Asked Questions</h3>';
     html += '<div class="faq-list">';
-    html += '<div class="faq-item"><div class="faq-question">Скільки клієнтів очікувати на місяць?</div><div class="faq-answer"><div class="faq-answer-inner">Залежно від вашої спеціалізації, міста і оптимізації профілю — багато юристів отримують 5-15 клієнтів вже у перший місяць, з ростом до 20-30+ з часом завдяки AI-контенту і SEO-просуванню.</div></div></div>';
-    html += '<div class="faq-item"><div class="faq-question">Це гарантована кількість клієнтів?</div><div class="faq-answer"><div class="faq-answer-inner">Ми надаємо ліди, з якими ви працюєте самостійно. Також можна працювати на ексклюзивних умовах з клієнтами платформи — це вже оплачені клієнти.</div></div></div>';
-    html += '<div class="faq-item"><div class="faq-question">Як працює прайс?</div><div class="faq-answer"><div class="faq-answer-inner">У нас тришарова підписка: Base, Pro і Premium. Ціна значно нижча за традиційні маркетингові агенції. Багато юристів окупають підписку всього з 1-2 клієнтів.</div></div></div>';
-    html += '<div class="faq-item"><div class="faq-question">Що якщо клієнтів немає?</div><div class="faq-answer"><div class="faq-answer-inner">Наявність лідів залежить від вашої активності на платформі. Ми гарантуємо безперервний доступ до платформи і її ресурсів. Оплата не повертається після надання доступу.</div></div></div>';
-    html += '<div class="faq-item"><div class="faq-question">Чи мої дані в безпеці?</div><div class="faq-answer"><div class="faq-answer-inner">Так, ми використовуємо безпечний месенджер, шифрування даних, і не передаємо інформацію третім особам. Платформа відповідає GDPR і правилам захисту даних.</div></div></div>';
+    html += '<div class="faq-item"><div class="faq-question">How many clients can I expect per month?</div><div class="faq-answer"><div class="faq-answer-inner">Depending on your specialization, city, and profile optimization -- many lawyers receive 5-15 clients already in the first month, scaling to 20-30+ over time thanks to AI-generated content and SEO promotion.</div></div></div>';
+    html += '<div class="faq-item"><div class="faq-question">Is this a guaranteed number of clients?</div><div class="faq-answer"><div class="faq-answer-inner">We provide you with leads that you work with yourself. You can also work under exclusive conditions with platform clients, in which case these are already paid clients.</div></div></div>';
+    html += '<div class="faq-item"><div class="faq-question">How does the pricing work?</div><div class="faq-answer"><div class="faq-answer-inner">We have a three-tier subscription: Basic, Pro, and Premium. The cost is significantly lower than traditional marketing agencies. Many lawyers cover the subscription cost with just 1-2 clients.</div></div></div>';
+    html += '<div class="faq-item"><div class="faq-question">What if there are no clients?</div><div class="faq-answer"><div class="faq-answer-inner">The presence of leads depends on your activity on the platform. We guarantee uninterrupted access to the platform and its resources. Payment is non-refundable once access has been provided.</div></div></div>';
+    html += '<div class="faq-item"><div class="faq-question">Is my data safe?</div><div class="faq-answer"><div class="faq-answer-inner">Yes, we use a secure messenger, data encryption, and do not transfer information to third parties. The platform complies with GDPR and data protection regulations.</div></div></div>';
     html += '</div>';
 
     var d = el('div', '', html);
@@ -1640,11 +1637,11 @@
         var summaryEl = document.getElementById('payDiscountSummary');
         if (summaryEl) {
           summaryEl.innerHTML =
-            '<div class="discount-row"><span>' + planNames[planKey] + ' тариф — ' + p.label + '</span><span>$' + fullPrice.toLocaleString() + '</span></div>' +
-            '<div class="discount-row"><span>Знижка за терміновість (20%)</span><span class="saved">-$' + urgencyAmt.toLocaleString() + '</span></div>' +
-            (referralAmt > 0 ? '<div class="discount-row"><span>Реферальний код (10%)</span><span class="saved">-$' + referralAmt.toLocaleString() + '</span></div>' : '') +
-            (periodAmt > 0 ? '<div class="discount-row"><span>' + p.label + ' знижка (' + p.discount + '%)</span><span class="saved">-$' + periodAmt.toLocaleString() + '</span></div>' : '') +
-            '<div class="discount-row total"><span>Разом</span><span>$' + total.toLocaleString() + '</span></div>';
+            '<div class="discount-row"><span>' + planNames[planKey] + ' plan — ' + p.label + '</span><span>$' + fullPrice.toLocaleString() + '</span></div>' +
+            '<div class="discount-row"><span>Urgency discount (20%)</span><span class="saved">-$' + urgencyAmt.toLocaleString() + '</span></div>' +
+            (referralAmt > 0 ? '<div class="discount-row"><span>Referral code (10%)</span><span class="saved">-$' + referralAmt.toLocaleString() + '</span></div>' : '') +
+            (periodAmt > 0 ? '<div class="discount-row"><span>' + p.label + ' discount (' + p.discount + '%)</span><span class="saved">-$' + periodAmt.toLocaleString() + '</span></div>' : '') +
+            '<div class="discount-row total"><span>Total</span><span>$' + total.toLocaleString() + '</span></div>';
         }
 
         var savingsAmount = document.getElementById('paySavingsAmount');
@@ -1703,14 +1700,14 @@
           quizData.payment_method = method;
           quizData.submitted_at = new Date().toISOString();
           var btn = e && e.currentTarget;
-          if (btn) { btn.disabled = true; btn.dataset._origText = btn.innerHTML; btn.innerHTML = 'Надсилання…'; }
+          if (btn) { btn.disabled = true; btn.dataset._origText = btn.innerHTML; btn.innerHTML = 'Submitting…'; }
           submitQuizData(function (ok, status, body) {
             if (btn) { btn.disabled = false; if (btn.dataset._origText) btn.innerHTML = btn.dataset._origText; }
             if (ok) {
               try { localStorage.removeItem(STORAGE_KEY); } catch (er) {}
-              alert('Дякуємо! Ваша заявка прийнята.');
+              alert('Thank you! Your submission has been received.');
             } else {
-              alert('Не вдалося надіслати (status ' + status + '). Спробуйте ще раз.');
+              alert('Submission failed (status ' + status + '). Please try again.');
             }
           });
         };
