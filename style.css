@@ -297,6 +297,8 @@ body {
   cursor: pointer;
 }
 .skip-link:hover { color: var(--accent); }
+/* Skip inside action bar — pull to top, smaller margin */
+.card-action-bar .skip-link { margin-top: 0; margin-bottom: 8px; text-decoration: underline; }
 
 /* ---- Button ---- */
 .card-btn {
@@ -317,6 +319,34 @@ body {
 .card-btn:active { transform: scale(0.97); }
 .card-btn:disabled { opacity: 0.4; cursor: default; }
 .card-btn.accent-btn { background: var(--accent); }
+
+/* ---------- Sticky bottom action bar ---------- */
+.card-action-bar {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 20px -24px 0;
+  padding: 12px 24px 14px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, var(--card-bg) 18%, var(--card-bg) 100%);
+  border-top: 1px solid rgba(0,0,0,0.04);
+  z-index: 5;
+}
+.card-action-bar .card-btn {
+  margin-top: 0;
+}
+.card-action-info {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-light);
+  font-weight: 500;
+  margin-bottom: 10px;
+  min-height: 16px;
+}
+.card-action-info .count {
+  color: var(--accent);
+  font-weight: 700;
+}
 
 
 /* ---- Text / Form Inputs ---- */

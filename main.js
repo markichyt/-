@@ -66,7 +66,6 @@
         {v:'lawyer',t:'Lawyer',icon:'briefcase',color:'#3b82f6'},
         {v:'notary',t:'Notary',icon:'stamp',color:'#8b5cf6'},
         {v:'patent_attorney',t:'Patent Attorney',icon:'file-text',color:'#0ea5e9'},
-        {v:'agent',t:'Agent',icon:'home',color:'#f59e0b'},
         {v:'cpa',t:'CPA',icon:'bar-chart',color:'#10b981'},
         {v:'tax_specialist',t:'Tax Specialist',icon:'dollar',color:'#14b8a6'},
         {v:'other',t:'Other',icon:'briefcase',color:'#64748b'}
@@ -84,7 +83,20 @@
         {v:'founder',t:'Founder / Business owner',icon:'rocket',color:'#10b981'}
       ]},
     // 5. services (filtered + select all)
-    { type:'services', field:'services', q:'What services do you <span class="accent">provide?</span>', sub:'Select all that apply' },
+    { type:'checkbox', field:'services', q:'What services do you <span class="accent">provide?</span>', sub:'Select all that apply',
+      options:[
+        {v:'banking_finance',     t:'Banking and Finance',  icon:'dollar',    color:'#3b82f6'},
+        {v:'real_estate',         t:'Real Estate',          icon:'home',      color:'#f59e0b'},
+        {v:'labour_law',          t:'Labour Law',           icon:'briefcase', color:'#8b5cf6'},
+        {v:'intellectual_property',t:'Intellectual Property',icon:'file-text', color:'#7c3aed'},
+        {v:'general',             t:'General',              icon:'scales',    color:'#6366f1'},
+        {v:'family_law',          t:'Family Law',           icon:'users',     color:'#ef4444'},
+        {v:'business',            t:'Business',             icon:'bar-chart', color:'#0ea5e9'},
+        {v:'taxes',               t:'Taxes',                icon:'dollar',    color:'#10b981'},
+        {v:'cars',                t:'Cars',                 icon:'car',       color:'#ec4899'},
+        {v:'employment',          t:'Employment',           icon:'user',      color:'#14b8a6'},
+        {v:'immigration_law',     t:'Immigration Law',      icon:'globe',     color:'#0284c7'}
+      ]},
     // 6. aiCalc
     { type:'card', id:'aiCalc', q:'Your <span class="accent">AI-powered</span> potential', sub:'Based on your data, our AI calculated your potential on ConsultantLM' },
     // 7. contactForm (MOVED, simplified - no uploads)
@@ -197,6 +209,18 @@
     if (cls) e.className = cls;
     if (html !== undefined) e.innerHTML = html;
     return e;
+  }
+
+  // ---- Sticky action bar at bottom of card (variant C) ----
+  // Usage: wrap.appendChild(actionBar(btn));
+  //        wrap.appendChild(actionBar(infoEl, btn));
+  //        wrap.appendChild(actionBar(skipEl, infoEl, btn));
+  function actionBar() {
+    var bar = el('div', 'card-action-bar');
+    for (var i = 0; i < arguments.length; i++) {
+      if (arguments[i]) bar.appendChild(arguments[i]);
+    }
+    return bar;
   }
 
   function updateUI() {
@@ -433,7 +457,8 @@
     camera:'<path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/>',
     film:'<rect x="2" y="2" width="20" height="20" rx="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/>',
     users:'<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>',
-    calendar:'<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>'
+    calendar:'<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
+    car:'<path d="M5 17h14M3 17v-4l2-5h14l2 5v4M7 13h10"/><circle cx="7.5" cy="17.5" r="1.5"/><circle cx="16.5" cy="17.5" r="1.5"/>'
   };
 
   function getIconSVG(name) {
@@ -489,6 +514,12 @@
     var selected = quizData[s.field] || [];
     var list = el('div', 'option-list');
 
+    var info = el('div', 'card-action-info', '');
+    function updateInfo() {
+      var n = selected.length;
+      info.innerHTML = n > 0 ? '<span class="count">' + n + '</span> selected' : 'Select one or more';
+    }
+
     s.options.forEach(function(opt) {
       var item = el('div', 'option-item');
       var iconHtml = opt.icon ? '<span class="opt-icon" style="background:' + (opt.color || '#64748b') + '">' + getIconSVG(opt.icon) + '</span>' : '';
@@ -500,20 +531,22 @@
         if (idx > -1) selected.splice(idx, 1);
         else selected.push(opt.v);
         quizData[s.field] = selected.slice();
+        updateInfo();
       });
       list.appendChild(item);
     });
     wrap.appendChild(list);
+    updateInfo();
 
+    var skip = null;
     if (s.skip) {
-      var skip = el('div', 'skip-link', s.skip);
+      skip = el('div', 'skip-link', s.skip);
       skip.addEventListener('click', function() { advance(); });
-      wrap.appendChild(skip);
     }
 
     var btn = el('button', 'card-btn', 'Continue &rarr;');
     btn.addEventListener('click', function() { advance(); });
-    wrap.appendChild(btn);
+    wrap.appendChild(actionBar(skip, info, btn));
   }
 
   // ---- Text ----
@@ -533,7 +566,7 @@
       quizData[s.field] = val;
       advance();
     });
-    wrap.appendChild(btn);
+    wrap.appendChild(actionBar(btn));
 
     inp.addEventListener('keydown', function(e) {
       if (e.key === 'Enter') btn.click();
@@ -597,7 +630,6 @@
       notary: ['Real Estate', 'Family Law'],
       cpa: ['Tax & Accounting', 'Real Estate'],
       tax_specialist: ['Tax & Accounting', 'Real Estate'],
-      agent: ['Real Estate', 'Immigration'],
       other: null
     };
 
@@ -720,7 +752,7 @@
 
     var btn = el('button', 'card-btn', 'Continue &rarr;');
     btn.addEventListener('click', function() { advance(); });
-    wrap.appendChild(btn);
+    wrap.appendChild(actionBar(btn));
   }
 
   // ---- Slider ----
@@ -752,7 +784,7 @@
 
     var btn = el('button', 'card-btn', 'Continue &rarr;');
     btn.addEventListener('click', function() { advance(); });
-    wrap.appendChild(btn);
+    wrap.appendChild(actionBar(btn));
   }
 
   // ---- Dual Slider ----
@@ -793,7 +825,7 @@
 
     var btn = el('button', 'card-btn', 'Continue &rarr;');
     btn.addEventListener('click', function() { advance(); });
-    wrap.appendChild(btn);
+    wrap.appendChild(actionBar(btn));
   }
 
   // ---- Form ----
@@ -839,7 +871,7 @@
     btn.addEventListener('click', function() {
       advance();
     });
-    wrap.appendChild(btn);
+    wrap.appendChild(actionBar(btn));
   }
 
   // ---- Card slides ----
@@ -862,7 +894,7 @@
     if (s.id !== 'payment' && s.id !== 'profilesPricing') {
       var btn = el('button', 'card-btn', 'Continue &rarr;');
       btn.addEventListener('click', function() { advance(); });
-      wrap.appendChild(btn);
+      wrap.appendChild(actionBar(btn));
     }
 
     if (s.id === 'profilesPricing' || s.id === 'payment') startTimer();
@@ -873,9 +905,9 @@
     var prof = quizData.profession || 'attorney';
     var roleVal = quizData.role || 'self_employed';
     var zip = quizData.zip || '';
-    var mult = {attorney:1,lawyer:0.95,patent_attorney:1.2,cpa:0.8,notary:0.6,agent:0.7,tax_specialist:0.75,other:0.6};
+    var mult = {attorney:1,lawyer:0.95,patent_attorney:1.2,cpa:0.8,notary:0.6,tax_specialist:0.75,other:0.6};
     var roleMult = {founder:1.2,executive:1.15,self_employed:1.0,employee:0.85};
-    var profLabels = {attorney:'Attorney',lawyer:'Lawyer',patent_attorney:'Patent Attorney',cpa:'CPA',notary:'Notary',agent:'Agent',tax_specialist:'Tax Specialist',other:'Specialist'};
+    var profLabels = {attorney:'Attorney',lawyer:'Lawyer',patent_attorney:'Patent Attorney',cpa:'CPA',notary:'Notary',tax_specialist:'Tax Specialist',other:'Specialist'};
     var roleLabels = {self_employed:'Self-employed',employee:'Employee',executive:'Executive',founder:'Founder'};
 
     var m = (mult[prof] || 0.7) * (roleMult[roleVal] || 1.0);
@@ -1025,7 +1057,7 @@
     var level = score >= 75 ? 'High' : score >= 50 ? 'Moderate' : score >= 30 ? 'Normal' : 'Low';
     var levelColor = score >= 75 ? '#10b981' : score >= 50 ? '#3b82f6' : score >= 30 ? '#f59e0b' : '#ef4444';
 
-    var profLabels = {attorney:'Attorney',lawyer:'Lawyer',patent_attorney:'Patent Attorney',cpa:'CPA',notary:'Notary',agent:'Agent',tax_specialist:'Tax Specialist',other:'Specialist'};
+    var profLabels = {attorney:'Attorney',lawyer:'Lawyer',patent_attorney:'Patent Attorney',cpa:'CPA',notary:'Notary',tax_specialist:'Tax Specialist',other:'Specialist'};
     var prof = quizData.profession || 'other';
     var zip = quizData.zip || '';
     var svcNames = (quizData.services || []).slice(0,3).map(function(s){return s.replace(/_/g,' ');});
