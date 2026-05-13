@@ -383,6 +383,15 @@
     var behind1Card = cards[behind1Idx];
     var behind2Card = cards[behind2Idx];
 
+    // ── Eager-load iframes in the INCOMING card NOW (before 400ms swipe) ──
+    // By the time the card finishes sliding into view, its animation is already running.
+    behind1Card.querySelectorAll('iframe[data-src]').forEach(function (f) {
+      var realSrc = f.getAttribute('data-src');
+      if (realSrc && f.getAttribute('src') !== realSrc) {
+        f.setAttribute('src', realSrc);
+      }
+    });
+
     // Animate active card out
     activeCard.classList.remove('active');
     activeCard.classList.add(exitClass);
@@ -1158,10 +1167,13 @@
       v.play().catch(function() {});
     });
     card.querySelectorAll('iframe[data-src]').forEach(function(f) {
-      var src = f.getAttribute('data-src');
-      if (!src) return;
-      f.setAttribute('src', 'about:blank');
-      requestAnimationFrame(function() { f.setAttribute('src', src); });
+      var realSrc = f.getAttribute('data-src');
+      if (!realSrc) return;
+      // If swipeAndRender already kicked off the load, just leave the animation alone.
+      // Only force-load here as a safety net (e.g. first slide, programmatic jumps).
+      if (f.getAttribute('src') !== realSrc) {
+        f.setAttribute('src', realSrc);
+      }
     });
   }
 
