@@ -73,7 +73,7 @@
   /* ---------- Logo ---------- */
   .logo {
     display: flex; align-items: center; gap: 8px;
-    opacity: 0; animation: fadeUp 0.6s ease-out 0.1s forwards;
+    opacity: 0; animation: fadeUp 0.6s ease-out 0s forwards;
   }
   .logo-mark {
     width: 22px; height: 22px;
@@ -96,7 +96,7 @@
   /* ---------- Heading ---------- */
   .heading {
     margin-top: 4px;
-    opacity: 0; animation: fadeUp 0.6s ease-out 0.35s forwards;
+    opacity: 0; animation: fadeUp 0.6s ease-out 0s forwards;
   }
   .h-title {
     font-size: 22px; font-weight: 700; line-height: 1.15; color: #1a1a2e;
@@ -163,19 +163,19 @@
   }
 
   /* staggered animation */
-  .step:nth-child(1) { animation: stepIn 0.35s ease-out 1.0s forwards; }
-  .step:nth-child(2) { animation: stepIn 0.35s ease-out 1.3s forwards; }
-  .step:nth-child(3) { animation: stepIn 0.35s ease-out 1.6s forwards; }
-  .step:nth-child(4) { animation: stepIn 0.35s ease-out 1.9s forwards; }
-  .step:nth-child(5) { animation: stepIn 0.35s ease-out 2.2s forwards; }
-  .step:nth-child(1)::after { animation: arrowDraw 0.25s ease-out 1.3s forwards; }
-  .step:nth-child(2)::after { animation: arrowDraw 0.25s ease-out 1.6s forwards; }
-  .step:nth-child(3)::after { animation: arrowDraw 0.25s ease-out 1.9s forwards; }
-  .step:nth-child(4)::after { animation: arrowDraw 0.25s ease-out 2.2s forwards; }
-  .step:nth-child(1)::before { animation: arrowHead 0.2s ease-out 1.5s forwards; }
-  .step:nth-child(2)::before { animation: arrowHead 0.2s ease-out 1.8s forwards; }
-  .step:nth-child(3)::before { animation: arrowHead 0.2s ease-out 2.1s forwards; }
-  .step:nth-child(4)::before { animation: arrowHead 0.2s ease-out 2.4s forwards; }
+  .step:nth-child(1) { animation: stepIn 0.35s ease-out 0s forwards; }
+  .step:nth-child(2) { animation: stepIn 0.35s ease-out 0s forwards; }
+  .step:nth-child(3) { animation: stepIn 0.35s ease-out 0s forwards; }
+  .step:nth-child(4) { animation: stepIn 0.35s ease-out 0s forwards; }
+  .step:nth-child(5) { animation: stepIn 0.35s ease-out 0s forwards; }
+  .step:nth-child(1)::after { animation: arrowDraw 0.25s ease-out 0s forwards; }
+  .step:nth-child(2)::after { animation: arrowDraw 0.25s ease-out 0s forwards; }
+  .step:nth-child(3)::after { animation: arrowDraw 0.25s ease-out 0s forwards; }
+  .step:nth-child(4)::after { animation: arrowDraw 0.25s ease-out 0s forwards; }
+  .step:nth-child(1)::before { animation: arrowHead 0.2s ease-out 0s forwards; }
+  .step:nth-child(2)::before { animation: arrowHead 0.2s ease-out 0s forwards; }
+  .step:nth-child(3)::before { animation: arrowHead 0.2s ease-out 0s forwards; }
+  .step:nth-child(4)::before { animation: arrowHead 0.2s ease-out 0s forwards; }
 
   /* ---------- Before / After card ---------- */
   .ba {
@@ -191,7 +191,7 @@
     -webkit-backdrop-filter: blur(10px);
     box-shadow: 0 4px 16px rgba(0,0,0,0.06);
     position: relative;
-    opacity: 0; animation: fadeUp 0.5s ease-out 3.0s forwards;
+    opacity: 0; animation: fadeUp 0.5s ease-out 0s forwards;
   }
   .ba-side {
     border-radius: 12px;
@@ -202,13 +202,13 @@
   .ba-before {
     background: linear-gradient(180deg, rgba(239,68,68,0.10), rgba(239,68,68,0.04));
     border: 1px solid rgba(239,68,68,0.22);
-    opacity: 0; animation: fadeIn 0.4s ease-out 3.2s forwards;
+    opacity: 0; animation: fadeIn 0.4s ease-out 0s forwards;
   }
   .ba-after {
     background: linear-gradient(180deg, rgba(16,185,129,0.12), rgba(16,185,129,0.05));
     border: 1px solid rgba(16,185,129,0.28);
     opacity: 0; transform: translateX(20px);
-    animation: slideInRight 0.5s ease-out 3.9s forwards;
+    animation: slideInRight 0.5s ease-out 0s forwards;
   }
   .ba-eyebrow {
     font-size: 10px; font-weight: 600; letter-spacing: 0.6px;
@@ -239,7 +239,7 @@
     border: 1px solid rgba(16,185,129,0.4);
     box-shadow: 0 4px 14px rgba(16,185,129,0.2);
     opacity: 0;
-    animation: badgeIn 0.4s ease-out 4.4s forwards, badgePulse 0.6s ease-in-out 5.0s 1;
+    animation: badgeIn 0.4s ease-out 0s forwards, badgePulse 0.6s ease-in-out 0s 1;
   }
 
   /* mini sparkline-ish bar inside cards */
@@ -258,12 +258,12 @@
   }
   .ba-before .ba-bar > i {
     background: linear-gradient(90deg, rgba(239,68,68,0.6), rgba(239,68,68,0.3));
-    animation: fillBar 1.0s ease-out 3.5s forwards;
+    animation: fillBar 1.0s ease-out 0s forwards;
     --w: 18%;
   }
   .ba-after .ba-bar > i {
     background: linear-gradient(90deg, var(--accent), var(--accent-2));
-    animation: fillBarLong 1.2s ease-out 4.2s forwards;
+    animation: fillBarLong 1.2s ease-out 0s forwards;
     --w: 92%;
   }
   @keyframes fillBar { to { width: var(--w); } }
@@ -310,11 +310,11 @@
     content: "♥ ";
     color: var(--accent);
   }
-  .soc:nth-child(1) { animation: socIn 0.4s ease-out 5.6s forwards; }
-  .soc:nth-child(2) { animation: socIn 0.4s ease-out 5.75s forwards; }
-  .soc:nth-child(3) { animation: socIn 0.4s ease-out 5.9s forwards; }
-  .soc:nth-child(4) { animation: socIn 0.4s ease-out 6.05s forwards; }
-  .soc:nth-child(5) { animation: socIn 0.4s ease-out 6.2s forwards; }
+  .soc:nth-child(1) { animation: socIn 0.4s ease-out 0s forwards; }
+  .soc:nth-child(2) { animation: socIn 0.4s ease-out 0s forwards; }
+  .soc:nth-child(3) { animation: socIn 0.4s ease-out 0s forwards; }
+  .soc:nth-child(4) { animation: socIn 0.4s ease-out 0s forwards; }
+  .soc:nth-child(5) { animation: socIn 0.4s ease-out 0s forwards; }
 
   /* counters */
   .count { display: inline-block; }
