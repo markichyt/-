@@ -94,12 +94,8 @@
         {v:'tax_specialist',t:'Tax Specialist',icon:'dollar',color:'#14b8a6'},
         {v:'other',t:'Other',icon:'briefcase',color:'#64748b'}
       ]},
-    // 2. carousel-1 — social proof: 2,500+ attorneys ↔ #1 in Google
-    { type:'animCarousel', id:'carousel1',
-      anims:[
-        './htmlTOvideo/8/ConsultantLM Promo.html',
-        './htmlTOvideo/2/ConsultantLM Promo 2.html'
-      ]},
+    // 2. socialProof video
+    { type:'card', id:'videoProof', q:'', sub:'' },
     // 3. zip
     { type:'city', field:'city', q:'Your <span class="accent">work city?</span>', sub:'Pick from the list or type any US city' },
     // 4. role
@@ -195,18 +191,14 @@
       ]},
     // 17. tenx
     { type:'card', id:'tenx', q:'We cracked the code to deliver <span class="accent">10x better results</span>', sub:'Starting from $19/month -- Just 15 minutes a day' },
-    // 18. carousel-2 — how we attract: AI Ads ↔ AI Socials
-    { type:'animCarousel', id:'carousel2',
-      anims:[
-        './htmlTOvideo/1/ConsultantLM Promo 1.html',
-        './htmlTOvideo/3/ConsultantLM Promo 3.html'
-      ]},
-    // 19. carousel-3 — tech edge: Monitor Competitors ↔ Cracked Algorithm
-    { type:'animCarousel', id:'carousel3',
-      anims:[
-        './htmlTOvideo/9/ConsultantLM Promo.html',
-        './htmlTOvideo/6/ConsultantLM Promo 6.html'
-      ]},
+    // 18. video1
+    { type:'card', id:'video1', q:'', sub:'' },
+    // 19. video2
+    { type:'card', id:'video2', q:'', sub:'' },
+    // 20. videoAds
+    { type:'card', id:'videoAds', q:'', sub:'' },
+    // 21. videoSocials
+    { type:'card', id:'videoSocials', q:'', sub:'' },
     // 22. dualSlider
     { type:'dualSlider', q:'Set your <span class="accent">goals</span> for the first month', sub:'This will help AI build a growth plan for you',
       sliders:[
@@ -345,7 +337,7 @@
     if (needsScroll) {
       var scrollWrap = el('div', 'card-scroll');
       cardContent.appendChild(scrollWrap);
-      if (s.type === 'card' || s.type === 'form' || s.type === 'formWithFiles' || s.type === 'services' || s.type === 'dualSlider' || s.type === 'animCarousel') {
+      if (s.type === 'card' || s.type === 'form' || s.type === 'formWithFiles' || s.type === 'services' || s.type === 'dualSlider') {
         cardContent.innerHTML = '';
         scrollWrap.appendChild(qEl);
         scrollWrap.appendChild(subEl);
@@ -364,7 +356,6 @@
     else if (s.type === 'dualSlider') renderDualSlider(s, wrap);
     else if (s.type === 'form') renderForm(s, wrap);
     else if (s.type === 'card') renderCard(s, wrap);
-    else if (s.type === 'animCarousel') renderAnimCarousel(s, wrap);
 
     // Restore cardContent reference
     cardContent = prevCardContent;
@@ -1195,102 +1186,7 @@
     card.querySelectorAll('iframe[data-src]').forEach(function(f) {
       f.setAttribute('src', 'about:blank');
     });
-    // Stop carousel timers and unload their iframes
-    card.querySelectorAll('.anim-carousel').forEach(function(c) {
-      if (typeof c._stopCarousel === 'function') c._stopCarousel();
-    });
   }
-
-  // ---- Animation Carousel (2 iframes alternating every 15s) ----
-  function renderAnimCarousel(s, wrap) {
-    var DURATION = 15000; // 15 sec per anim
-
-    var container = el('div', 'anim-carousel');
-    container.style.cssText = 'position:relative;overflow:hidden;width:100%;border-radius:12px;background:#fff';
-    var track = el('div', 'anim-track');
-    track.style.cssText = 'display:flex;width:200%;transition:transform 0.5s cubic-bezier(0.22, 1, 0.36, 1)';
-
-    var iframes = s.anims.map(function (src) {
-      var slot = el('div', 'anim-slot');
-      slot.style.cssText = 'width:50%;flex-shrink:0;aspect-ratio:360/640;background:#fff';
-      var f = document.createElement('iframe');
-      f.dataset.carouselSrc = encodeURI(src);
-      f.src = 'about:blank';
-      f.setAttribute('scrolling', 'no');
-      f.setAttribute('frameborder', '0');
-      f.setAttribute('allow', 'autoplay');
-      f.style.cssText = 'width:100%;height:100%;border:0;display:block;background:#fff';
-      slot.appendChild(f);
-      track.appendChild(slot);
-      return f;
-    });
-
-    container.appendChild(track);
-    wrap.appendChild(container);
-
-    // Dots
-    var dotsWrap = el('div', 'anim-dots');
-    dotsWrap.style.cssText = 'display:flex;gap:8px;justify-content:center;margin-top:12px';
-    var dots = iframes.map(function (_, idx) {
-      var d = el('div', '');
-      d.style.cssText = 'width:8px;height:8px;border-radius:50%;background:' + (idx === 0 ? 'var(--accent)' : '#cbd5e1') + ';transition:background 0.3s';
-      dotsWrap.appendChild(d);
-      return d;
-    });
-    wrap.appendChild(dotsWrap);
-
-    var activeIdx = 0;
-    var timer = null;
-
-    function loadIframe(i) {
-      var f = iframes[i];
-      var realSrc = f.dataset.carouselSrc;
-      // Force a fresh load — animation restarts from frame 0
-      f.src = 'about:blank';
-      requestAnimationFrame(function () { f.src = realSrc; });
-    }
-    function unloadIframe(i) { iframes[i].src = 'about:blank'; }
-
-    function swap() {
-      activeIdx = (activeIdx + 1) % iframes.length;
-      track.style.transform = activeIdx === 0 ? 'translateX(0)' : 'translateX(-50%)';
-      dots.forEach(function (d, i) {
-        d.style.background = i === activeIdx ? 'var(--accent)' : '#cbd5e1';
-      });
-      loadIframe(activeIdx);
-      // Unload the other after the swipe completes (so user doesn't see it disappear during transition)
-      var prev = (activeIdx + 1) % iframes.length;
-      setTimeout(function () { unloadIframe(prev); }, 550);
-    }
-
-    container._startCarousel = function () {
-      if (timer) return; // already running
-      activeIdx = 0;
-      track.style.transition = 'none';
-      track.style.transform = 'translateX(0)';
-      void track.offsetHeight; // reflow
-      track.style.transition = 'transform 0.5s cubic-bezier(0.22, 1, 0.36, 1)';
-      dots.forEach(function (d, i) {
-        d.style.background = i === 0 ? 'var(--accent)' : '#cbd5e1';
-      });
-      loadIframe(0);
-      timer = setInterval(swap, DURATION);
-    };
-    container._stopCarousel = function () {
-      if (timer) { clearInterval(timer); timer = null; }
-      iframes.forEach(function (f) { f.src = 'about:blank'; });
-    };
-  }
-
-  // Wire carousel start into activateMedia (after existing video/iframe logic)
-  var _origActivate = activateMedia;
-  activateMedia = function (card) {
-    _origActivate(card);
-    if (!card) return;
-    card.querySelectorAll('.anim-carousel').forEach(function (c) {
-      if (typeof c._startCarousel === 'function') c._startCarousel();
-    });
-  };
 
   // ---- Team Replace ("One tool. Full team output.") ----
   function renderTeamReplaceCard(wrap) {

@@ -98,7 +98,7 @@
     flex-direction: column;
     line-height: 1.1;
     opacity: 0;
-    animation: fadeUp 0.6s ease-out 0s forwards;
+    animation: fadeUp 0.6s ease-out 0.05s forwards;
     animation-iteration-count: infinite;
     animation-duration: 12s;
   }
@@ -145,7 +145,7 @@
     letter-spacing: 0.1em;
     color: #94a3b8;
     opacity: 0;
-    animation: fadeUp 0.6s ease-out 0s forwards;
+    animation: fadeUp 0.6s ease-out 0.1s forwards;
     animation-iteration-count: infinite;
     animation-duration: 12s;
   }
@@ -167,7 +167,7 @@
     text-align: center;
     z-index: 4;
     opacity: 0;
-    animation: fadeUp 0.9s ease-out 0s forwards;
+    animation: fadeUp 0.9s ease-out 0.5s forwards;
     animation-iteration-count: infinite;
     animation-duration: 12s;
   }
@@ -208,7 +208,7 @@
     border: 1px dashed rgba(0,0,0,0.08);
     border-radius: 50%;
     opacity: 0;
-    animation: fadeIn 0.6s ease-out 0s forwards;
+    animation: fadeIn 0.6s ease-out 1.4s forwards;
     animation-iteration-count: infinite;
     animation-duration: 12s;
   }
@@ -225,7 +225,7 @@
     background: conic-gradient(from 0deg, rgba(0,180,216,0) 0deg, rgba(0,180,216,0.5) 60deg, rgba(0,180,216,0) 120deg, rgba(76,201,240,0.4) 200deg, rgba(0,180,216,0) 260deg, rgba(0,180,216,0.5) 340deg);
     filter: blur(8px);
     opacity: 0;
-    animation: auraSpin 6s linear infinite, auraAppear 1s ease-out 0s forwards;
+    animation: auraSpin 6s linear infinite, auraAppear 1s ease-out 1.6s forwards;
     animation-duration: 12s, 12s;
   }
   @keyframes auraSpin {
@@ -409,7 +409,7 @@
     border: 1.5px solid #ffffff;
     letter-spacing: 0.04em;
     opacity: 0;
-    animation: tagIn 0.4s ease-out 0s forwards;
+    animation: tagIn 0.4s ease-out 4.6s forwards;
     animation-iteration-count: infinite;
     animation-duration: 12s;
   }
@@ -463,12 +463,12 @@
     opacity: 0;
     z-index: 3;
   }
-  .pulse-dot.p1 { animation: pulseTo 1.6s ease-in-out 0s infinite; --tx:    0px; --ty: -128px; }
-  .pulse-dot.p2 { animation: pulseTo 1.6s ease-in-out 0s infinite; --tx:  118px; --ty:  -68px; }
-  .pulse-dot.p3 { animation: pulseTo 1.6s ease-in-out 0s infinite; --tx:  118px; --ty:   68px; }
-  .pulse-dot.p4 { animation: pulseTo 1.6s ease-in-out 0s infinite; --tx:    0px; --ty:  128px; }
-  .pulse-dot.p5 { animation: pulseTo 1.6s ease-in-out 0s infinite; --tx: -118px; --ty:   68px; }
-  .pulse-dot.p6 { animation: pulseTo 1.6s ease-in-out 0s infinite; --tx: -118px; --ty:  -68px; }
+  .pulse-dot.p1 { animation: pulseTo 1.6s ease-in-out 5.0s infinite; --tx:    0px; --ty: -128px; }
+  .pulse-dot.p2 { animation: pulseTo 1.6s ease-in-out 5.2s infinite; --tx:  118px; --ty:  -68px; }
+  .pulse-dot.p3 { animation: pulseTo 1.6s ease-in-out 5.4s infinite; --tx:  118px; --ty:   68px; }
+  .pulse-dot.p4 { animation: pulseTo 1.6s ease-in-out 5.6s infinite; --tx:    0px; --ty:  128px; }
+  .pulse-dot.p5 { animation: pulseTo 1.6s ease-in-out 5.8s infinite; --tx: -118px; --ty:   68px; }
+  .pulse-dot.p6 { animation: pulseTo 1.6s ease-in-out 6.0s infinite; --tx: -118px; --ty:  -68px; }
   @keyframes pulseTo {
     0%   { transform: translate(var(--tx), var(--ty)) scale(0.6); opacity: 0; }
     20%  { opacity: 1; }
@@ -491,7 +491,7 @@
     opacity: 0;
     transform: translateY(20px);
     z-index: 4;
-    animation: fadeUp 0.7s ease-out 0s forwards;
+    animation: fadeUp 0.7s ease-out 5.0s forwards;
     animation-iteration-count: infinite;
     animation-duration: 12s;
   }
@@ -521,7 +521,7 @@
     gap: 4px;
     opacity: 0;
     transform: scale(0.6);
-    animation: badgePulse 1s ease-out 0s forwards;
+    animation: badgePulse 1s ease-out 7.5s forwards;
     animation-iteration-count: infinite;
     animation-duration: 12s;
   }
@@ -584,7 +584,7 @@
     width: 0;
     background: linear-gradient(90deg, #00b4d8, #4cc9f0);
     border-radius: 3px;
-    animation: barFill 1.2s ease-out 0s forwards;
+    animation: barFill 1.2s ease-out 5.4s forwards;
     animation-iteration-count: infinite;
     animation-duration: 12s;
   }
@@ -613,7 +613,7 @@
     z-index: 4;
     opacity: 0;
     transform: translateY(20px);
-    animation: fadeUp 0.6s ease-out 0s forwards;
+    animation: fadeUp 0.6s ease-out 8.5s forwards;
     animation-iteration-count: infinite;
     animation-duration: 12s;
   }
@@ -623,7 +623,7 @@
     inset: 0;
     background: linear-gradient(90deg, transparent, rgba(16,185,129,0.18), transparent);
     transform: translateX(-100%);
-    animation: shimmer 2.4s ease-in-out 0s infinite;
+    animation: shimmer 2.4s ease-in-out 9s infinite;
     animation-duration: 12s;
   }
   @keyframes shimmer {
