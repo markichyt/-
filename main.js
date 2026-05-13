@@ -162,14 +162,13 @@
         {v:'1_5',t:'1-5 hours',icon:'clock',color:'#f59e0b'},
         {v:'5_plus',t:'5+ hours',icon:'clock',color:'#ef4444'}
       ]},
-    // 13. ad_budget
-    { type:'radio', field:'ad_budget', q:'What\'s your monthly <span class="accent">ad budget?</span>', sub:'How much do you spend on advertising',
+    // 13. ad_budget (simplified)
+    { type:'radio', field:'ad_budget', q:'What\'s your monthly <span class="accent">ad budget?</span>', sub:'Approximate',
       options:[
-        {v:'not_ready',t:'Not ready to invest',icon:'x-circle',color:'#94a3b8'},
-        {v:'500_2000',t:'$500 - $2,000',icon:'dollar',color:'#10b981'},
-        {v:'2000_5000',t:'$2,000 - $5,000',icon:'dollar',color:'#3b82f6'},
-        {v:'5000_10000',t:'$5,000 - $10,000',icon:'dollar',color:'#8b5cf6'},
-        {v:'10000_plus',t:'$10,000+',icon:'diamond',color:'#f59e0b'}
+        {v:'none',t:"I don't spend",icon:'x-circle',color:'#94a3b8'},
+        {v:'under_1k',t:'Up to $1,000',icon:'dollar',color:'#10b981'},
+        {v:'1k_10k',t:'$1,000 – $10,000',icon:'dollar',color:'#3b82f6'},
+        {v:'over_10k',t:'More than $10,000',icon:'diamond',color:'#f59e0b'}
       ]},
     // 14. team
     { type:'checkbox', field:'team', q:'Who\'s on your <span class="accent">marketing team?</span>', sub:'Select all roles you currently hire', skip:"I don't have a team",
@@ -180,14 +179,6 @@
         {v:'video_editor',t:'Video Editor',icon:'film',color:'#f97316'},
         {v:'smm',t:'Digital Advertiser / SMM',icon:'megaphone',color:'#10b981'},
         {v:'crm_manager',t:'CRM / Inquiry Manager',icon:'users',color:'#0ea5e9'}
-      ]},
-    // 15. team_salary
-    { type:'radio', field:'team_salary', q:'How much do you spend on your <span class="accent">marketing team?</span>', sub:'Total monthly salary for all marketing staff',
-      options:[
-        {v:'none',t:"I don't spend",icon:'x-circle',color:'#94a3b8'},
-        {v:'under_1k',t:'Up to $1,000',icon:'dollar',color:'#10b981'},
-        {v:'1k_10k',t:'$1,000 – $10,000',icon:'dollar',color:'#3b82f6'},
-        {v:'over_10k',t:'More than $10,000',icon:'diamond',color:'#f59e0b'}
       ]},
     // 17. tenx
     { type:'card', id:'tenx', q:'We cracked the code to deliver <span class="accent">10x better results</span>', sub:'Starting from $19/month -- Just 15 minutes a day' },
@@ -291,7 +282,6 @@
     // Q11: team (weight 3)
     if (quizData.team && quizData.team.length > 0) score += 3;
     // Q12: team salary (weight 3)
-    if (quizData.team_salary) score += 3;
     // Q18: desired clients + revenue (weight 4)
     if (quizData.desired_clients !== undefined) score += 2;
     if (quizData.desired_revenue !== undefined) score += 2;
