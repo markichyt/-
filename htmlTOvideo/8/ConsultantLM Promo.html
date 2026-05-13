@@ -258,14 +258,17 @@
   /* ---------- Stats strip ---------- */
   .stats {
     display: flex;
-    justify-content: space-around;
-    padding: 0 20px;
+    align-items: stretch;
+    padding: 0 16px;
+    gap: 4px;
     position: relative;
     z-index: 2;
     animation: fadeIn 0.9s ease-out 0.3s both;
   }
   .stats .stat {
+    flex: 1;
     text-align: center;
+    min-width: 0;
   }
   .stats .num {
     color: #00b4d8;
@@ -276,15 +279,17 @@
   }
   .stats .cap {
     color: #94a3b8;
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 500;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
     margin-top: 4px;
+    line-height: 1.2;
   }
   .stats .divider {
     width: 1px;
     background: #e5e7eb;
+    flex-shrink: 0;
   }
 </style>
 <style>/* CLM-NOLOOP-FIX */
@@ -299,12 +304,11 @@
 
     <!-- 1. Header card -->
     <div class="header-card">
-      <div class="line">We've helped</div>
       <div style="margin-top:2px;">
-        <span class="big">2,500+</span><span class="line">specialists</span>
+        <span class="big">2,500+</span><span class="line">attorneys</span>
       </div>
-      <div class="line">grow sales</div>
-      <div class="sub"><span class="dot"></span> Verified results · 2024–2026</div>
+      <div class="line">grew their income with us</div>
+      <div class="sub"><span class="dot"></span> Verified monthly earnings · 2024–2026</div>
     </div>
 
     <!-- 2. Carousels -->
@@ -317,16 +321,16 @@
     <div class="stats">
       <div class="stat">
         <div class="num">+183%</div>
-        <div class="cap">Avg revenue</div>
+        <div class="cap">Avg. income growth</div>
       </div>
       <div class="divider"></div>
       <div class="stat">
         <div class="num">94%</div>
-        <div class="cap">Retention</div>
+        <div class="cap">Renew subscription</div>
       </div>
       <div class="divider"></div>
       <div class="stat">
-        <div class="num">42</div>
+        <div class="num">5</div>
         <div class="cap">Countries</div>
       </div>
     </div>
@@ -338,8 +342,6 @@
         <span class="brand">Forbes</span>
         <span class="sep"></span>
         <span class="brand">HiiL Justice</span>
-        <span class="sep"></span>
-        <span class="brand">TechCrunch</span>
       </div>
     </div>
 
