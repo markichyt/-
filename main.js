@@ -36,6 +36,30 @@
     }
   }
 
+  // ===== US Cities for city dropdown (~50 largest) =====
+  var US_CITIES = [
+    'New York, NY','Los Angeles, CA','Chicago, IL','Houston, TX','Phoenix, AZ',
+    'Philadelphia, PA','San Antonio, TX','San Diego, CA','Dallas, TX','San Jose, CA',
+    'Austin, TX','Jacksonville, FL','Fort Worth, TX','Columbus, OH','Charlotte, NC',
+    'San Francisco, CA','Indianapolis, IN','Seattle, WA','Denver, CO','Washington, DC',
+    'Boston, MA','El Paso, TX','Nashville, TN','Detroit, MI','Oklahoma City, OK',
+    'Portland, OR','Las Vegas, NV','Memphis, TN','Louisville, KY','Baltimore, MD',
+    'Milwaukee, WI','Albuquerque, NM','Tucson, AZ','Fresno, CA','Sacramento, CA',
+    'Kansas City, MO','Mesa, AZ','Atlanta, GA','Omaha, NE','Colorado Springs, CO',
+    'Raleigh, NC','Miami, FL','Long Beach, CA','Virginia Beach, VA','Oakland, CA',
+    'Minneapolis, MN','Tulsa, OK','Arlington, TX','Tampa, FL','New Orleans, LA',
+    'Wichita, KS','Cleveland, OH','Bakersfield, CA','Aurora, CO','Anaheim, CA',
+    'Honolulu, HI','Santa Ana, CA','Riverside, CA','Corpus Christi, TX','Lexington, KY',
+    'Stockton, CA','Henderson, NV','Saint Paul, MN','St. Louis, MO','Cincinnati, OH',
+    'Pittsburgh, PA','Greensboro, NC','Anchorage, AK','Plano, TX','Lincoln, NE',
+    'Orlando, FL','Irvine, CA','Newark, NJ','Toledo, OH','Durham, NC',
+    'Chula Vista, CA','Fort Wayne, IN','Jersey City, NJ','St. Petersburg, FL','Laredo, TX',
+    'Madison, WI','Chandler, AZ','Buffalo, NY','Lubbock, TX','Scottsdale, AZ',
+    'Reno, NV','Glendale, AZ','Gilbert, AZ','Winston-Salem, NC','North Las Vegas, NV',
+    'Norfolk, VA','Chesapeake, VA','Garland, TX','Irving, TX','Hialeah, FL',
+    'Fremont, CA','Boise, ID','Richmond, VA','Baton Rouge, LA','Spokane, WA'
+  ];
+
   var backBtn = document.getElementById('backBtn');
 
   // ---- Card role management ----
@@ -73,7 +97,7 @@
     // 2. socialProof video
     { type:'card', id:'videoProof', q:'', sub:'' },
     // 3. zip
-    { type:'text', field:'zip', q:'Your <span class="accent">work city?</span>', sub:'Enter your ZIP code', placeholder:'e.g. 10001', inputmode:'numeric' },
+    { type:'city', field:'city', q:'Your <span class="accent">work city?</span>', sub:'Pick from the list or type any US city' },
     // 4. role
     { type:'radio', field:'role', q:'Which best describes your <span class="accent">role?</span>', sub:'Help us personalize your experience',
       options:[
@@ -236,7 +260,7 @@
     // Q1: profession (weight 15)
     if (quizData.profession) score += 15;
     // Q2: location (weight 10)
-    if (quizData.zip) score += 10;
+    if (quizData.city || quizData.zip) score += 10;
     // Q3: role (weight 10)
     if (quizData.role) score += 10;
     // Q4: services (weight 10)
@@ -308,6 +332,7 @@
     }
 
     if (s.type === 'radio') renderRadio(s, wrap);
+    else if (s.type === 'city') renderCity(s, wrap);
     else if (s.type === 'checkbox') renderCheckbox(s, wrap);
     else if (s.type === 'text') renderText(s, wrap);
     else if (s.type === 'services') renderServices(s, wrap);
@@ -558,6 +583,67 @@
     if (s.inputmode) inp.inputMode = s.inputmode;
     if (quizData[s.field]) inp.value = quizData[s.field];
     wrap.appendChild(inp);
+
+    var btn = el('button', 'card-btn', 'Continue &rarr;');
+    btn.addEventListener('click', function() {
+      var val = inp.value.trim();
+      if (!val) return;
+      quizData[s.field] = val;
+      advance();
+    });
+    wrap.appendChild(actionBar(btn));
+
+    inp.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') btn.click();
+    });
+
+    setTimeout(function() { inp.focus(); }, 500);
+  }
+
+  // ---- City (search + dropdown of US cities) ----
+  function renderCity(s, wrap) {
+    var searchWrap = el('div', 'svc-search-wrap');
+    searchWrap.innerHTML = '<span class="svc-search-icon">' + getIconSVG('search') + '</span>';
+    var inp = document.createElement('input');
+    inp.type = 'text';
+    inp.className = 'card-input search-input svc-search-input';
+    inp.placeholder = 'Start typing city name';
+    inp.autocomplete = 'off';
+    if (quizData[s.field]) inp.value = quizData[s.field];
+    searchWrap.appendChild(inp);
+    wrap.appendChild(searchWrap);
+
+    var dropdown = el('div', 'city-dropdown');
+    dropdown.style.cssText = 'max-height:280px;overflow-y:auto;border:1px solid var(--border);border-radius:12px;margin-top:8px';
+    wrap.appendChild(dropdown);
+
+    function renderList(filter) {
+      dropdown.innerHTML = '';
+      var q = (filter || '').toLowerCase().trim();
+      var matched = US_CITIES.filter(function(c) { return !q || c.toLowerCase().indexOf(q) > -1; });
+      if (matched.length === 0) {
+        var noRes = el('div', '', 'No match — press Continue to use your input.');
+        noRes.style.cssText = 'padding:14px;color:var(--text-light);text-align:center;font-size:14px';
+        dropdown.appendChild(noRes);
+        return;
+      }
+      matched.forEach(function(c) {
+        var item = el('div', '', '');
+        item.style.cssText = 'padding:12px 16px;cursor:pointer;border-bottom:1px solid var(--border);font-size:15px;transition:background 0.15s';
+        item.textContent = c;
+        item.addEventListener('mouseenter', function() { item.style.background = 'var(--input-bg)'; });
+        item.addEventListener('mouseleave', function() { item.style.background = ''; });
+        item.addEventListener('click', function() {
+          inp.value = c;
+          quizData[s.field] = c;
+          setTimeout(function() { advance(); }, 200);
+        });
+        dropdown.appendChild(item);
+      });
+    }
+
+    renderList('');
+    inp.addEventListener('input', function() { renderList(inp.value); });
 
     var btn = el('button', 'card-btn', 'Continue &rarr;');
     btn.addEventListener('click', function() {
@@ -904,7 +990,7 @@
   function renderAICalcCard(wrap) {
     var prof = quizData.profession || 'attorney';
     var roleVal = quizData.role || 'self_employed';
-    var zip = quizData.zip || '';
+    var loc = quizData.city || quizData.zip || '';
     var mult = {attorney:1,lawyer:0.95,patent_attorney:1.2,cpa:0.8,notary:0.6,tax_specialist:0.75,other:0.6};
     var roleMult = {founder:1.2,executive:1.15,self_employed:1.0,employee:0.85};
     var profLabels = {attorney:'Attorney',lawyer:'Lawyer',patent_attorney:'Patent Attorney',cpa:'CPA',notary:'Notary',tax_specialist:'Tax Specialist',other:'Specialist'};
@@ -935,7 +1021,7 @@
       '</div>' +
       '<div class="highlight-card"><div class="stat-label">Total Potential Clients</div><div class="big-number">'+tMin+'–'+tMax+'</div><div class="stat-label">per month</div></div>' +
       '<div class="highlight-card" style="margin-top:10px"><div class="stat-label">Estimated Revenue</div><div class="big-number green">$'+rMin.toLocaleString('en-US')+' – $'+rMax.toLocaleString('en-US')+'</div><div class="stat-label">per month</div></div>' +
-      '<p class="fine-print"><strong>Calculated for:</strong> ' + (profLabels[prof]||prof) + (zip ? ', ZIP ' + zip : '') + ', ' + (roleLabels[roleVal]||roleVal) + ', ' + svcText + '.<br>Includes: Google SEO + Meta/Google Ads + organic traffic + social media.</p>';
+      '<p class="fine-print"><strong>Calculated for:</strong> ' + (profLabels[prof]||prof) + (loc ? ', ' + loc : '') + ', ' + (roleLabels[roleVal]||roleVal) + ', ' + svcText + '.<br>Includes: Google SEO + Meta/Google Ads + organic traffic + social media.</p>';
     var d = el('div', '', html);
     wrap.appendChild(d);
   }
@@ -1059,14 +1145,14 @@
 
     var profLabels = {attorney:'Attorney',lawyer:'Lawyer',patent_attorney:'Patent Attorney',cpa:'CPA',notary:'Notary',tax_specialist:'Tax Specialist',other:'Specialist'};
     var prof = quizData.profession || 'other';
-    var zip = quizData.zip || '';
+    var loc = quizData.city || quizData.zip || '';
     var svcNames = (quizData.services || []).slice(0,3).map(function(s){return s.replace(/_/g,' ');});
     var svcText = svcNames.length > 0 ? svcNames.join(', ') : 'General';
 
     var html =
       '<div class="potential-scale"><div class="scale-bar"><div class="scale-marker" id="scaleMarker" style="left:10%"></div></div><div class="scale-labels"><span>Low</span><span>Normal</span><span>Moderate</span><span>High</span></div></div>' +
       '<div class="highlight-card" style="margin-top:16px"><span class="badge" style="font-size:14px;padding:6px 16px;background:' + levelColor + '22;color:' + levelColor + '">Your level: <strong>' + level + '</strong> (' + score + '%)</span></div>' +
-      '<div class="fine-print" style="margin-top:12px"><strong>Calculated for:</strong> ' + (profLabels[prof]||prof) + (zip ? ', ZIP ' + zip : '') + ', ' + svcText + '.' +
+      '<div class="fine-print" style="margin-top:12px"><strong>Calculated for:</strong> ' + (profLabels[prof]||prof) + (loc ? ', ' + loc : '') + ', ' + svcText + '.' +
       '<br>Factors: ad budget' + (quizData.ad_budget ? ' (' + quizData.ad_budget.replace(/_/g,' ') + ')' : '') + ', cooperation period' + (quizData.period ? ' (' + quizData.period.replace(/_/g,' ') + ')' : '') + ', desired goals.</div>';
     var d = el('div', '', html);
     wrap.appendChild(d);
