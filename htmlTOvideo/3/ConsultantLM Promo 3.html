@@ -65,7 +65,7 @@
     line-height: 1.05;
     margin-bottom: 14px;
     opacity: 0;
-    animation: fadeUp 0.6s ease-out 0s forwards;
+    animation: fadeUp 0.6s ease-out 0.1s forwards;
   }
   .logo .brand {
     color: #1a1a2e;
@@ -89,7 +89,7 @@
     color: #1a1a2e;
     margin-bottom: 6px;
     opacity: 0;
-    animation: fadeUp 0.6s ease-out 0s forwards;
+    animation: fadeUp 0.6s ease-out 0.25s forwards;
   }
   .headline .accent { color: #00b4d8; }
 
@@ -99,7 +99,7 @@
     color: #94a3b8;
     margin-bottom: 14px;
     opacity: 0;
-    animation: fadeUp 0.6s ease-out 0s forwards;
+    animation: fadeUp 0.6s ease-out 1.05s forwards;
   }
 
   /* ---------- Posts feed ---------- */
@@ -124,9 +124,9 @@
     opacity: 0;
     transform: translateY(-12px);
   }
-  .post.p1 { animation: postIn 0.5s ease-out 0s forwards; }
-  .post.p2 { animation: postIn 0.5s ease-out 0s forwards; }
-  .post.p3 { animation: postIn 0.5s ease-out 0s forwards; }
+  .post.p1 { animation: postIn 0.5s ease-out 2.0s forwards; }
+  .post.p2 { animation: postIn 0.5s ease-out 2.5s forwards; }
+  .post.p3 { animation: postIn 0.5s ease-out 3.0s forwards; }
 
   .post .icon {
     width: 30px;
@@ -183,19 +183,19 @@
     background: rgba(16,185,129,0.15);
     color: #10b981;
     opacity: 0;
-    animation: badgePop 0.5s ease-out 0s forwards;
+    animation: badgePop 0.5s ease-out 2.7s forwards;
   }
   .badge.scheduled {
     background: rgba(148,163,184,0.15);
     color: #94a3b8;
     opacity: 0;
-    animation: badgePop 0.5s ease-out 0s forwards;
+    animation: badgePop 0.5s ease-out 3.2s forwards;
   }
   .badge.draft {
     background: rgba(0,180,216,0.15);
     color: #00b4d8;
     opacity: 0;
-    animation: badgePop 0.5s ease-out 0s forwards;
+    animation: badgePop 0.5s ease-out 3.7s forwards;
   }
   .badge .dot {
     width: 5px;
@@ -210,7 +210,7 @@
     background: #e5e7eb;
     margin: 6px 0 14px;
     opacity: 0;
-    animation: fadeUp 0.5s ease-out 0s forwards;
+    animation: fadeUp 0.5s ease-out 4.2s forwards;
   }
 
   /* ---------- Time saved card ---------- */
@@ -223,7 +223,7 @@
     -webkit-backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px rgba(0,0,0,0.06);
     opacity: 0;
-    animation: fadeUp 0.6s ease-out 0s forwards;
+    animation: fadeUp 0.6s ease-out 4.4s forwards;
   }
   .time-head {
     display: flex;
@@ -315,7 +315,7 @@
     gap: 8px;
     padding-top: 12px;
     opacity: 0;
-    animation: fadeUp 0.5s ease-out 0s forwards;
+    animation: fadeUp 0.5s ease-out 6.5s forwards;
   }
   .status .pulse {
     width: 7px;
@@ -392,13 +392,6 @@
   .stage.replay .status,
   .stage.replay .num-anim {
     animation: none !important;
-  }
-
-  /* USER FIX: static title — always visible, no fade-in */
-  .headline {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: none !important;
   }
 </style>
 <style>/* CLM-NOLOOP-FIX */
