@@ -125,8 +125,6 @@
     { type:'card', id:'aiCalc', q:'Your <span class="accent">AI-powered</span> potential', sub:'Based on your data, our AI calculated your potential on ConsultantLM' },
     // 7. contactForm (MOVED, simplified - no uploads)
     { type:'form', id:'contactForm', q:'Almost done! Let our AI create your <span class="accent">profile</span>', sub:'Provide your details and our AI assistant will automatically build your profile' },
-    // 8. transitionMarketing (NEW)
-    { type:'card', id:'transitionMarketing', q:'Let\'s talk about your <span class="accent">marketing</span>', sub:'We will discuss your marketing activities and create a personalized offer for you' },
     // 10. channels
     { type:'checkbox', field:'channels', q:'Where is your business <span class="accent">listed?</span>', sub:'Choose all that apply', skip:'Skip for now',
       options:[
@@ -137,6 +135,7 @@
         {v:'linkedin',t:'LinkedIn',icon:'linkedin',color:'#0a66c2'},
         {v:'twitter',t:'X (Twitter)',icon:'x-twitter',color:'#000000'},
         {v:'telegram',t:'Telegram',icon:'send',color:'#0088cc'},
+        {v:'reddit',t:'Reddit',icon:'share',color:'#ff4500'},
         {v:'other_channel',t:'Other',icon:'plus',color:'#94a3b8'}
       ]},
     // 11. preferred_way (+ disclaimer)
@@ -939,7 +938,7 @@
     });
 
     var aboutGrp = el('div', 'form-group');
-    aboutGrp.innerHTML = '<label class="form-label">About yourself (optional, min 3000 characters)</label>';
+    aboutGrp.innerHTML = '<label class="form-label">About yourself</label>';
     var ta = document.createElement('textarea');
     ta.className = 'card-input';
     ta.rows = 4;
@@ -974,7 +973,6 @@
     else if (s.id === 'profilesPricing') renderProfilesPricingCard(wrap);
     else if (s.id === 'payment') renderPaymentCard(wrap);
     else if (s.id === 'videoProof') renderVideoCard(wrap, './htmlTOvideo/8/ConsultantLM Promo.html');
-    else if (s.id === 'transitionMarketing') renderTransitionMarketingCard(wrap);
     else if (s.id === 'uploadFiles') renderUploadFilesCard(wrap);
 
     if (s.id !== 'payment' && s.id !== 'profilesPricing') {

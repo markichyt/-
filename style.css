@@ -501,14 +501,19 @@ textarea.card-input {
   left: 14px;
   top: 50%;
   transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
   color: #aab4c2;
   display: flex;
   align-items: center;
+  justify-content: center;
   pointer-events: none;
+  z-index: 2;
 }
 .svc-search-icon svg {
   width: 16px;
   height: 16px;
+  display: block;
 }
 .svc-search-input {
   padding-left: 40px !important;
