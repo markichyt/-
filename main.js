@@ -121,10 +121,18 @@
         {v:'employment',          t:'Employment',           icon:'user',      color:'#14b8a6'},
         {v:'immigration_law',     t:'Immigration Law',      icon:'globe',     color:'#0284c7'}
       ]},
-    // 6. aiCalc
+    // 6. quickContact (NEW) — name + phone + photo before AI calc
+    { type:'formWithFiles', id:'quickContact',
+      q:'Let\'s get to <span class="accent">know you</span>',
+      sub:'A few quick details before we calculate your potential',
+      fields:[
+        {label:'First Name', field:'first_name', type:'text', ph:'John', required:true},
+        {label:'Last Name', field:'last_name', type:'text', ph:'Davis', required:true},
+        {label:'Phone', field:'phone', type:'tel', ph:'+1 (555) 123-4567', required:true},
+        {label:'Your photo', field:'photo_name', type:'file', accept:'image/*', required:true}
+      ] },
+    // 7. aiCalc
     { type:'card', id:'aiCalc', q:'Your <span class="accent">AI-powered</span> potential', sub:'Based on your data, our AI calculated your potential on ConsultantLM' },
-    // 7. contactForm (MOVED, simplified - no uploads)
-    { type:'form', id:'contactForm', q:'Almost done! Let our AI create your <span class="accent">profile</span>', sub:'Provide your details and our AI assistant will automatically build your profile' },
     // 10. channels
     { type:'checkbox', field:'channels', q:'Where is your business <span class="accent">listed?</span>', sub:'Choose all that apply', skip:'Skip for now',
       options:[
@@ -215,7 +223,17 @@
         {v:'more',t:'More than 1 hour',icon:'clock',color:'#f59e0b'}
       ]},
     // 25. uploadFiles (NEW)
-    { type:'card', id:'uploadFiles', q:'Upload your <span class="accent">files</span>', sub:'Add your photo and CV, and we will create a professional profile for you' },
+    { type:'formWithFiles', id:'fullProfile',
+      q:'Complete your <span class="accent">profile</span>',
+      sub:'Provide your details so AI can build your professional profile',
+      fields:[
+        {label:'Email', field:'email', type:'email', ph:'john@example.com', required:true},
+        {label:'ZIP Code', field:'zip', type:'text', ph:'e.g. 10001'},
+        {label:'Referral Code (optional)', field:'referral_code', type:'text', ph:'Enter code'},
+        {label:'About yourself', field:'about', type:'textarea', ph:'Tell us about your experience, education, achievements...'},
+        {label:'CV', field:'cv_name', type:'file', accept:'.pdf,.doc,.docx'},
+        {label:'Company logo', field:'company_logo_name', type:'file', accept:'image/*'}
+      ] },
     // 26. assessment
     { type:'card', id:'assessment', q:'Your income <span class="accent">potential</span>', sub:'Based on your profession, location, services, and goals' },
     // 27. profilesPricing
@@ -321,7 +339,7 @@
     if (needsScroll) {
       var scrollWrap = el('div', 'card-scroll');
       cardContent.appendChild(scrollWrap);
-      if (s.type === 'card' || s.type === 'form' || s.type === 'services' || s.type === 'dualSlider') {
+      if (s.type === 'card' || s.type === 'form' || s.type === 'formWithFiles' || s.type === 'services' || s.type === 'dualSlider') {
         cardContent.innerHTML = '';
         scrollWrap.appendChild(qEl);
         scrollWrap.appendChild(subEl);
@@ -332,6 +350,7 @@
 
     if (s.type === 'radio') renderRadio(s, wrap);
     else if (s.type === 'city') renderCity(s, wrap);
+    else if (s.type === 'formWithFiles') renderFormWithFiles(s, wrap);
     else if (s.type === 'checkbox') renderCheckbox(s, wrap);
     else if (s.type === 'text') renderText(s, wrap);
     else if (s.type === 'services') renderServices(s, wrap);
@@ -660,6 +679,85 @@
     setTimeout(function() { inp.focus(); }, 500);
   }
 
+  // ---- FormWithFiles (flexible mix of text/email/tel/textarea/file inputs) ----
+  function renderFormWithFiles(s, wrap) {
+    var inputs = []; // collect for validation
+
+    s.fields.forEach(function(f) {
+      var grp = el('div', 'form-group');
+      var requiredMark = f.required ? ' <span style="color:#ef4444">*</span>' : '';
+      grp.innerHTML = '<label class="form-label">' + f.label + requiredMark + '</label>';
+
+      if (f.type === 'file') {
+        // File upload area
+        var area = el('div', 'upload-area', '');
+        var lbl = el('div', 'upload-text', quizData[f.field] || (f.label + (f.required ? '' : ' (optional)')));
+        area.appendChild(lbl);
+        var fileInp = document.createElement('input');
+        fileInp.type = 'file';
+        if (f.accept) fileInp.accept = f.accept;
+        fileInp.style.display = 'none';
+        area.appendChild(fileInp);
+        area.addEventListener('click', function() { fileInp.click(); });
+        fileInp.addEventListener('change', function() {
+          if (fileInp.files.length) {
+            var name = fileInp.files[0].name;
+            quizData[f.field] = name;
+            lbl.textContent = name;
+            area.classList.add('uploaded');
+          }
+        });
+        if (quizData[f.field]) area.classList.add('uploaded');
+        grp.appendChild(area);
+        inputs.push({field:f, getValue:function() { return quizData[f.field] || ''; }});
+      } else if (f.type === 'textarea') {
+        var ta = document.createElement('textarea');
+        ta.className = 'card-input';
+        ta.rows = 4;
+        ta.placeholder = f.ph || '';
+        if (quizData[f.field]) ta.value = quizData[f.field];
+        ta.addEventListener('input', function() { quizData[f.field] = ta.value; });
+        grp.appendChild(ta);
+        inputs.push({field:f, getValue:function() { return ta.value.trim(); }});
+      } else {
+        // text, email, tel
+        var inp = document.createElement('input');
+        inp.type = f.type || 'text';
+        inp.className = 'card-input';
+        inp.placeholder = f.ph || '';
+        if (quizData[f.field]) inp.value = quizData[f.field];
+        inp.addEventListener('input', function() { quizData[f.field] = inp.value; });
+        grp.appendChild(inp);
+        inputs.push({field:f, getValue:function() { return inp.value.trim(); }, input:inp});
+      }
+      wrap.appendChild(grp);
+    });
+
+    var errEl = el('div', '', '');
+    errEl.style.cssText = 'color:#ef4444;font-size:13px;text-align:center;margin-top:8px;display:none';
+    wrap.appendChild(errEl);
+
+    var btn = el('button', 'card-btn', 'Continue &rarr;');
+    btn.addEventListener('click', function() {
+      errEl.style.display = 'none';
+      var missing = inputs.filter(function(x) { return x.field.required && !x.getValue(); });
+      if (missing.length) {
+        errEl.textContent = 'Please fill: ' + missing.map(function(x) { return x.field.label; }).join(', ');
+        errEl.style.display = 'block';
+        return;
+      }
+      // Email format check
+      var emailField = inputs.filter(function(x) { return x.field.type === 'email'; })[0];
+      if (emailField && emailField.getValue() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailField.getValue())) {
+        errEl.textContent = 'Invalid email format';
+        errEl.style.display = 'block';
+        return;
+      }
+      advance();
+    });
+    wrap.appendChild(actionBar(btn));
+  }
+
   // ---- Services ----
   function renderServices(s, wrap) {
     var selectedServices = quizData.services || [];
@@ -973,7 +1071,6 @@
     else if (s.id === 'profilesPricing') renderProfilesPricingCard(wrap);
     else if (s.id === 'payment') renderPaymentCard(wrap);
     else if (s.id === 'videoProof') renderVideoCard(wrap, './htmlTOvideo/8/ConsultantLM Promo.html');
-    else if (s.id === 'uploadFiles') renderUploadFilesCard(wrap);
 
     if (s.id !== 'payment' && s.id !== 'profilesPricing') {
       var btn = el('button', 'card-btn', 'Continue &rarr;');
