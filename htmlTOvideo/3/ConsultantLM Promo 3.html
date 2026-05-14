@@ -65,7 +65,7 @@
     line-height: 1.05;
     margin-bottom: 14px;
     opacity: 0;
-    animation: fadeUp 0.6s ease-out 0.1s forwards;
+    animation: fadeUp 0.462s ease-out 0.077s forwards;
   }
   .logo .brand {
     color: #1a1a2e;
@@ -89,7 +89,7 @@
     color: #1a1a2e;
     margin-bottom: 6px;
     opacity: 0;
-    animation: fadeUp 0.6s ease-out 0.25s forwards;
+    animation: fadeUp 0.462s ease-out 0.192s forwards;
   }
   .headline .accent { color: #00b4d8; }
 
@@ -99,7 +99,7 @@
     color: #94a3b8;
     margin-bottom: 14px;
     opacity: 0;
-    animation: fadeUp 0.6s ease-out 1.05s forwards;
+    animation: fadeUp 0.462s ease-out 0.808s forwards;
   }
 
   /* ---------- Posts feed ---------- */
@@ -124,9 +124,9 @@
     opacity: 0;
     transform: translateY(-12px);
   }
-  .post.p1 { animation: postIn 0.5s ease-out 2.0s forwards; }
-  .post.p2 { animation: postIn 0.5s ease-out 2.5s forwards; }
-  .post.p3 { animation: postIn 0.5s ease-out 3.0s forwards; }
+  .post.p1 { animation: postIn 0.385s ease-out 1.538s forwards; }
+  .post.p2 { animation: postIn 0.385s ease-out 1.923s forwards; }
+  .post.p3 { animation: postIn 0.385s ease-out 2.308s forwards; }
 
   .post .icon {
     width: 30px;
@@ -183,19 +183,19 @@
     background: rgba(16,185,129,0.15);
     color: #10b981;
     opacity: 0;
-    animation: badgePop 0.5s ease-out 2.7s forwards;
+    animation: badgePop 0.385s ease-out 2.077s forwards;
   }
   .badge.scheduled {
     background: rgba(148,163,184,0.15);
     color: #94a3b8;
     opacity: 0;
-    animation: badgePop 0.5s ease-out 3.2s forwards;
+    animation: badgePop 0.385s ease-out 2.462s forwards;
   }
   .badge.draft {
     background: rgba(0,180,216,0.15);
     color: #00b4d8;
     opacity: 0;
-    animation: badgePop 0.5s ease-out 3.7s forwards;
+    animation: badgePop 0.385s ease-out 2.846s forwards;
   }
   .badge .dot {
     width: 5px;
@@ -210,7 +210,7 @@
     background: #e5e7eb;
     margin: 6px 0 14px;
     opacity: 0;
-    animation: fadeUp 0.5s ease-out 4.2s forwards;
+    animation: fadeUp 0.385s ease-out 3.231s forwards;
   }
 
   /* ---------- Time saved card ---------- */
@@ -223,7 +223,7 @@
     -webkit-backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px rgba(0,0,0,0.06);
     opacity: 0;
-    animation: fadeUp 0.6s ease-out 4.4s forwards;
+    animation: fadeUp 0.462s ease-out 3.385s forwards;
   }
   .time-head {
     display: flex;
@@ -294,7 +294,7 @@
     background: linear-gradient(90deg, #00b4d8, #4cc9f0);
     border-radius: 3px;
     box-shadow: 0 0 12px rgba(0,180,216,0.3);
-    animation: progressFill 1.2s cubic-bezier(0.22, 1, 0.36, 1) 4.7s forwards;
+    animation: progressFill 0.923s cubic-bezier(0.22, 1, 0.36, 1) 3.615s forwards;
   }
 
   .progress-meta {
@@ -315,7 +315,7 @@
     gap: 8px;
     padding-top: 12px;
     opacity: 0;
-    animation: fadeUp 0.5s ease-out 6.5s forwards;
+    animation: fadeUp 0.385s ease-out 5.0s forwards;
   }
   .status .pulse {
     width: 7px;
@@ -501,8 +501,8 @@
 
   function runCounter() {
     const target = 40;
-    const duration = 1500; // ms
-    const startDelay = 4700; // matches progress fill start
+    const duration = 1154; // ms (1500/1.3)
+    const startDelay = 3615; // 4700/1.3
     const startAt = performance.now() + startDelay;
 
     function tick(now) {
@@ -539,7 +539,7 @@
         // Replace global ref so next loop targets the new node
         Object.defineProperty(window, '__counterEl', { value: c, configurable: true });
         // schedule next loop
-        setTimeout(arguments.callee || nextLoop, 12000);
+        setTimeout(arguments.callee || nextLoop, 9231);
       });
     }, 12000);
   }
@@ -553,8 +553,8 @@
     const c = fresh.querySelector('#counter');
     c.textContent = '0';
     const target = 40;
-    const duration = 1500;
-    const startDelay = 4700;
+    const duration = 1154;
+    const startDelay = 3615;
     const startAt = performance.now() + startDelay;
     function tick(now) {
       const elapsed = now - startAt;
@@ -565,12 +565,12 @@
       if (t < 1) requestAnimationFrame(tick);
     }
     requestAnimationFrame(tick);
-    setTimeout(loop, 12000);
+    setTimeout(loop, 9231);
   }
 
   // Initial counter run, then start loop scheduler
   runCounter();
-  setTimeout(loop, 12000);
+  setTimeout(loop, 9231);
 </script>
 
 </body>

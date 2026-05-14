@@ -638,12 +638,16 @@
 
 const TOTAL = 12000; // ms
 
+// Global timing multiplier — all delays/durations divided by SPEED
+const SPEED = 2;
+
 // Easing
 function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
 function easeInOut(t) { return t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t+2, 2)/2; }
 
 // Fade + translate helper
 function fadeIn(el, { delay = 0, duration = 600, ty = 20, tx = 0 } = {}) {
+  delay /= SPEED; duration /= SPEED;
   return new Promise(resolve => {
     setTimeout(() => {
       const start = performance.now();
@@ -662,6 +666,7 @@ function fadeIn(el, { delay = 0, duration = 600, ty = 20, tx = 0 } = {}) {
 
 // CountUp — smooth, no jitter
 function countUp(el, target, duration = 2200, prefix = '', suffix = '', delay = 0) {
+  delay /= SPEED; duration /= SPEED;
   return new Promise(resolve => {
     setTimeout(() => {
       const start = performance.now();
@@ -702,14 +707,16 @@ function countUp(el, target, duration = 2200, prefix = '', suffix = '', delay = 
 // Typing effect
 const QUERY = 'Divorce Attorney New York';
 function typeText(el, text, speed = 60, delay = 0) {
+  speed /= SPEED; delay /= SPEED;
   return new Promise(resolve => {
     setTimeout(() => {
       el.textContent = '';
       let i = 0;
+      const stepSpeed = speed;
       function next() {
         if (i < text.length) {
           el.textContent += text[i++];
-          setTimeout(next, speed);
+          setTimeout(next, stepSpeed);
         } else { resolve(); }
       }
       next();
@@ -719,6 +726,7 @@ function typeText(el, text, speed = 60, delay = 0) {
 
 // Draw chart line
 function drawChartLine(duration = 1800, delay = 0) {
+  delay /= SPEED; duration /= SPEED;
   return new Promise(resolve => {
     setTimeout(() => {
       const path = document.getElementById('chartLinePath');
@@ -799,10 +807,10 @@ async function runSequence() {
   await fadeIn(document.getElementById('result3'), { delay: 0, duration: 350, ty: 0, tx: -8 });
 
   // 4–5s: dim results 2+3, highlight #1
-  await new Promise(r => setTimeout(r, 300));
+  await new Promise(r => setTimeout(r, 300 / SPEED));
   document.getElementById('result2').classList.add('dimmed-out');
   document.getElementById('result3').classList.add('dimmed-out');
-  await new Promise(r => setTimeout(r, 100));
+  await new Promise(r => setTimeout(r, 100 / SPEED));
   document.getElementById('result1').classList.add('featured');
 
   // Divider
@@ -810,46 +818,47 @@ async function runSequence() {
 
   // 5–7.5s: stats appear
   fadeIn(document.getElementById('statsBlock'), { delay: 400, duration: 400, ty: 20 });
-  await new Promise(r => setTimeout(r, 500));
+  await new Promise(r => setTimeout(r, 500 / SPEED));
 
   const statViews = document.getElementById('statViews');
   const statLeads = document.getElementById('statLeads');
   const statRevenue = document.getElementById('statRevenue');
 
   // Animate each stat col
+  const statTransitionMs = Math.round(400 / SPEED);
   [statViews, statLeads, statRevenue].forEach((el, i) => {
     setTimeout(() => {
-      el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+      el.style.transition = 'opacity ' + statTransitionMs + 'ms ease, transform ' + statTransitionMs + 'ms ease';
       el.style.opacity = 1;
       el.style.transform = 'translateY(0)';
-    }, i * 150);
+    }, (i * 150) / SPEED);
   });
 
-  await new Promise(r => setTimeout(r, 200));
+  await new Promise(r => setTimeout(r, 200 / SPEED));
   countUp(document.getElementById('viewsVal'), 250000, 2200, '', '');
   countUp(document.getElementById('leadsVal'), 89, 2200, '', '');
   countUp(document.getElementById('revenueVal'), 267000, 2200, '$', '');
 
   // Wait for counts to mostly finish
-  await new Promise(r => setTimeout(r, 1800));
+  await new Promise(r => setTimeout(r, 1800 / SPEED));
 
   // 7.5–9.5s: chart draws
   fadeIn(document.getElementById('chartBlock'), { delay: 0, duration: 500, ty: 20 });
-  await new Promise(r => setTimeout(r, 300));
+  await new Promise(r => setTimeout(r, 300 / SPEED));
 
   // Fade in area fill
   const fill = document.getElementById('chartAreaFill');
-  fill.style.transition = 'opacity 0.8s ease';
+  fill.style.transition = 'opacity ' + Math.round(800 / SPEED) + 'ms ease';
   fill.style.opacity = 0.4;
 
   drawChartLine(1800, 0);
-  await new Promise(r => setTimeout(r, 1800));
+  await new Promise(r => setTimeout(r, 1800 / SPEED));
 
   // Footer badge
   await fadeIn(document.getElementById('footerBadge'), { delay: 100, duration: 500, ty: 10 });
 
   // 9.5–12s: hold
-  await new Promise(r => setTimeout(r, 2300));
+  await new Promise(r => setTimeout(r, 2300 / SPEED));
 
   // Cursor re-show before reset
   document.getElementById('searchCursor').style.display = '';
@@ -860,7 +869,7 @@ async function runSequence() {
 
 // Start after fonts load
 document.fonts.ready.then(() => {
-  setTimeout(runSequence, 300);
+  setTimeout(runSequence, 300 / SPEED);
 });
 </script>
 </body>

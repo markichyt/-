@@ -244,7 +244,7 @@
       fields:[
         {label:'Email', field:'email', type:'email', ph:'john@example.com'},
         {label:'ZIP Code', field:'zip', type:'text', ph:'e.g. 10001'},
-        {label:'Referral Code (optional)', field:'referral_code', type:'text', ph:'Enter code'},
+        {label:'Referral Code (optional)', field:'referral_code', type:'text', ph:'Enter code', optional:true},
         {label:'About yourself', field:'about', type:'textarea', ph:'Tell us about your experience, education, achievements...'},
         {label:'CV', field:'cv_name', type:'file', accept:'.pdf,.doc,.docx'},
         {label:'Company logo', field:'company_logo_name', type:'file', accept:'image/*'}
@@ -702,9 +702,24 @@
 
   // ---- FormWithFiles (flexible mix of text/email/tel/textarea/file inputs, no blocking validation) ----
   function renderFormWithFiles(s, wrap) {
+    var groups = [];
+
     s.fields.forEach(function(f) {
+      var required = !f.optional;
       var grp = el('div', 'form-group');
-      grp.innerHTML = '<label class="form-label">' + f.label + '</label>';
+      var labelHtml = '<label class="form-label">' + f.label + (required ? ' <em class="form-req">*</em>' : '') + '</label>';
+      grp.innerHTML = labelHtml;
+
+      var controlEl;
+      var isValid = function() {
+        if (!required) return true;
+        if (f.type === 'file') return !!quizData[f.field];
+        if (f.type === 'email') {
+          var v = (quizData[f.field] || '').trim();
+          return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+        }
+        return !!(quizData[f.field] && String(quizData[f.field]).trim());
+      };
 
       if (f.type === 'file') {
         var area = el('div', 'upload-area', '');
@@ -722,32 +737,58 @@
             quizData[f.field] = name;
             lbl.textContent = name;
             area.classList.add('uploaded');
+            grp.classList.remove('form-group--invalid');
           }
         });
         if (quizData[f.field]) area.classList.add('uploaded');
         grp.appendChild(area);
+        controlEl = area;
       } else if (f.type === 'textarea') {
         var ta = document.createElement('textarea');
         ta.className = 'card-input';
         ta.rows = 4;
         ta.placeholder = f.ph || '';
         if (quizData[f.field]) ta.value = quizData[f.field];
-        ta.addEventListener('input', function() { quizData[f.field] = ta.value; });
+        ta.addEventListener('input', function() {
+          quizData[f.field] = ta.value;
+          if (isValid()) grp.classList.remove('form-group--invalid');
+        });
         grp.appendChild(ta);
+        controlEl = ta;
       } else {
         var inp = document.createElement('input');
         inp.type = f.type || 'text';
         inp.className = 'card-input';
         inp.placeholder = f.ph || '';
         if (quizData[f.field]) inp.value = quizData[f.field];
-        inp.addEventListener('input', function() { quizData[f.field] = inp.value; });
+        inp.addEventListener('input', function() {
+          quizData[f.field] = inp.value;
+          if (isValid()) grp.classList.remove('form-group--invalid');
+        });
         grp.appendChild(inp);
+        controlEl = inp;
       }
       wrap.appendChild(grp);
+      groups.push({ field: f, grp: grp, isValid: isValid });
     });
 
     var btn = el('button', 'card-btn', 'Continue &rarr;');
-    btn.addEventListener('click', function() { advance(); });
+    btn.addEventListener('click', function() {
+      var firstInvalid = null;
+      groups.forEach(function(g) {
+        if (g.isValid()) {
+          g.grp.classList.remove('form-group--invalid');
+        } else {
+          g.grp.classList.add('form-group--invalid');
+          if (!firstInvalid) firstInvalid = g.grp;
+        }
+      });
+      if (firstInvalid) {
+        firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+      advance();
+    });
     wrap.appendChild(actionBar(btn));
   }
 
@@ -1301,13 +1342,6 @@
     html += '<div class="prof-photo-right"><img src="' + imgPath + '" alt="Attorney"></div></div>';
     html += '<div class="prof-info-btn">i</div></div></div>';
 
-    // ENTERPRISE profile slide (firm-level, custom)
-    html += '<div class="pp-slide"><div class="prof-card prof-enterprise">';
-    html += '<div class="prof-topbar"><span class="tier-label">ENTERPRISE</span><span class="separator"></span><span class="rating-area">' + starSvg + '<span class="rating-num">— —</span></span></div>';
-    html += '<div class="prof-body"><div class="prof-info-area"><div class="prof-info"><div class="name">Your Firm Name</div><div class="role">50+ specialists</div><div class="location">' + pinSvg + ' Custom locations</div></div></div>';
-    html += '<div class="prof-photo-right"><img src="' + imgPath + '" alt="Firm"></div></div>';
-    html += '<div class="prof-info-btn">i</div></div></div>';
-
     html += '</div></div>'; // close pp-track, pp-viewport
 
     // ── Dots ──
@@ -1315,7 +1349,6 @@
     html += '<button class="pp-dot active" data-idx="0" aria-label="Base plan"></button>';
     html += '<button class="pp-dot" data-idx="1" aria-label="Pro plan"></button>';
     html += '<button class="pp-dot" data-idx="2" aria-label="Premium plan"></button>';
-    html += '<button class="pp-dot" data-idx="3" aria-label="Enterprise plan"></button>';
     html += '</div>';
 
     // ── AI Avatar Video Section (hidden for BASE, visible for PRO/PREMIUM) ──
@@ -1368,18 +1401,42 @@
     html += '<div class="pp-features" id="ppFeatPremium"></div>';
     html += '</div>';
 
-    // ENTERPRISE pricing panel
-    html += '<div class="pp-pricing-panel">';
-    html += '<div class="pp-plan-name pp-enterprise-name">Enterprise</div>';
-    html += '<div class="pp-price-row"><span class="pp-new-price" id="ppPriceEnterprise" style="font-size:32px">Custom<span class="period" style="font-size:14px;margin-left:6px">/team</span></span></div>';
-    html += '<div class="pp-billing-note" id="ppNoteEnterprise">For firms with 50+ specialists · contact sales</div>';
-    html += '<div class="pp-features" id="ppFeatEnterprise"></div>';
-    html += '</div>';
-
     html += '</div></div>'; // close pp-pricing-content, pp-pricing-section
+
+    // ── Custom-quote link (for large firms — opens lead modal) ──
+    html += '<div class="pp-custom-quote-link"><a href="#" id="ppCustomQuoteLink" role="button">Large firm? Get a custom quote <span class="arrow">&rarr;</span></a></div>';
 
     // ── CTA button ──
     html += '<div class="pp-cta-area"><button class="pp-cta-btn pp-cta-base" id="ppCtaBtn">Get Base</button></div>';
+
+    // ── Enterprise lead form (hidden overlay) ──
+    html += '<div class="pp-lead-overlay" id="ppLeadOverlay" aria-hidden="true">';
+    html += '<div class="pp-lead-modal" role="dialog" aria-labelledby="ppLeadTitle">';
+    html += '<button class="pp-lead-close" id="ppLeadClose" aria-label="Close">&times;</button>';
+    html += '<div class="pp-lead-header">';
+    html += '<div class="pp-lead-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>';
+    html += '<div class="pp-lead-title" id="ppLeadTitle">Team registration</div>';
+    html += '<div class="pp-lead-sub">Tell us about your firm — your manager will reach out within 24h with a tailored plan.</div>';
+    html += '</div>';
+    html += '<form class="pp-lead-form" id="ppLeadForm" novalidate>';
+    html += '<div class="pp-lead-note">This plan is for teams of 10+ specialists. For smaller teams, please choose Base, Pro or Premium.</div>';
+    html += '<label class="pp-lead-field"><span class="pp-lead-label">Firm name <em>*</em></span><input type="text" name="firm_name" id="ppLeadFirm" autocomplete="organization" required></label>';
+    html += '<label class="pp-lead-field"><span class="pp-lead-label">Company name <em>*</em></span><input type="text" name="company_name" id="ppLeadCompany" autocomplete="organization" required></label>';
+    html += '<label class="pp-lead-field"><span class="pp-lead-label">Team size <em>*</em> <span class="pp-lead-hint">(minimum 10)</span></span><input type="number" name="team_size" id="ppLeadSize" min="10" placeholder="e.g. 12" required></label>';
+    html += '<label class="pp-lead-field"><span class="pp-lead-label">Country / city</span><input type="text" name="firm_location" id="ppLeadLocation" autocomplete="address-level2"></label>';
+    html += '<label class="pp-lead-field"><span class="pp-lead-label">Contact email <em>*</em></span><input type="email" name="contact_email" id="ppLeadEmail" autocomplete="email" required></label>';
+    html += '<label class="pp-lead-field"><span class="pp-lead-label">Phone</span><input type="tel" name="contact_phone" id="ppLeadPhone" autocomplete="tel"></label>';
+    html += '<label class="pp-lead-field"><span class="pp-lead-label">What do you need?</span><textarea name="message" id="ppLeadMsg" rows="3" placeholder="Volume, integrations, white-label, deadlines…"></textarea></label>';
+    html += '<button type="submit" class="pp-lead-submit" id="ppLeadSubmit">Request a call</button>';
+    html += '<div class="pp-lead-foot">By submitting you agree to be contacted by our team.</div>';
+    html += '</form>';
+    html += '<div class="pp-lead-thanks" id="ppLeadThanks" hidden>';
+    html += '<div class="pp-lead-thanks-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>';
+    html += '<div class="pp-lead-thanks-title">Got it — thanks!</div>';
+    html += '<div class="pp-lead-thanks-sub">Your manager will reach out within 24 hours with a tailored plan for your team.</div>';
+    html += '<button type="button" class="pp-lead-thanks-close" id="ppLeadThanksClose">Close</button>';
+    html += '</div>';
+    html += '</div></div>';
 
     html += '</div>'; // close profiles-pricing-wrap
 
@@ -1387,75 +1444,64 @@
     wrap.appendChild(d);
 
     // ── Feature data (from D1) ──
+    // graduated: true → category has tier-specific value; only the matching row shows per tier
+    // (others in same category are hidden, not rendered as ✗)
     var ppFeatures = [
-      // Profile levels
-      { label: 'Basic profile level',        base: true,  pro: true,  premium: true,  enterprise: true  },
-      { label: 'Professional profile level', base: false, pro: true,  premium: true,  enterprise: true  },
-      { label: 'Premium profile level',      base: false, pro: false, premium: true,  enterprise: true  },
-      // AI avatar — separate tiers per TZ
-      { label: 'AI PRO avatar',              base: false, pro: true,  premium: false, enterprise: false },
-      { label: 'AI PREMIUM avatar',          base: false, pro: false, premium: true,  enterprise: true  },
-      // Tokens
-      { label: '19 tokens',                  base: true,  pro: false, premium: false, enterprise: false },
-      { label: '109 +10% tokens',            base: false, pro: true,  premium: false, enterprise: false },
-      { label: '389 +30% tokens',            base: false, pro: false, premium: true,  enterprise: false },
-      { label: 'Unlimited tokens',           base: false, pro: false, premium: false, enterprise: true  },
-      // Clients
-      { label: '6 clients',                  base: true,  pro: false, premium: false, enterprise: false },
-      { label: '30 clients',                 base: false, pro: true,  premium: false, enterprise: false },
-      { label: 'Unlimited clients',          base: false, pro: false, premium: true,  enterprise: true  },
-      // Premium-only privileges (per TZ)
-      { label: 'Top in Google by your name', base: false, pro: false, premium: true,  enterprise: true  },
-      { label: '24/7 personal manager',      base: false, pro: false, premium: true,  enterprise: true  },
-      { label: 'Exclusive social promotion', base: false, pro: false, premium: true,  enterprise: true  },
-      // Reputation checks — 3 levels per TZ
-      { label: 'Up to 10 reputation checks', base: false, pro: true,  premium: false, enterprise: false },
-      { label: 'Unlimited reputation checks',base: false, pro: false, premium: true,  enterprise: true  },
-      // PRO + PREMIUM
-      { label: 'Boost rating from past experience', base: false, pro: true,  premium: true,  enterprise: true  },
-      { label: 'Set custom prices for your services', base: false, pro: true,  premium: true,  enterprise: true  },
-      // All tiers — per TZ
-      { label: 'AI module for Google & Meta',base: true,  pro: true,  premium: true,  enterprise: true  },
-      { label: 'AI competitor monitoring',   base: true,  pro: true,  premium: true,  enterprise: true  },
-      { label: 'AI client assistant',        base: true,  pro: true,  premium: true,  enterprise: true  },
-      { label: 'Referral earnings',          base: true,  pro: true,  premium: true,  enterprise: true  },
-      { label: 'Private specialist chat',    base: true,  pro: true,  premium: true,  enterprise: true  },
-      { label: 'CRM system',                 base: true,  pro: true,  premium: true,  enterprise: true  },
-      { label: 'Secure messenger',           base: true,  pro: true,  premium: true,  enterprise: true  },
-      // Enterprise-only
-      { label: 'Dedicated account manager',  base: false, pro: false, premium: false, enterprise: true  },
-      { label: 'White-label profile',        base: false, pro: false, premium: false, enterprise: true  },
-      { label: 'Custom integrations & API',  base: false, pro: false, premium: false, enterprise: true  },
-      { label: 'SLA & priority support',     base: false, pro: false, premium: false, enterprise: true  }
+      // AI avatar — graduated
+      { label: 'AI PRO avatar',              graduated: true, base: false, pro: true,  premium: false },
+      { label: 'AI PREMIUM avatar',          graduated: true, base: false, pro: false, premium: true  },
+      // Generation budget — graduated
+      { label: '$19 for generation',         graduated: true, base: true,  pro: false, premium: false },
+      { label: '$109 for generation',        graduated: true, base: false, pro: true,  premium: false },
+      { label: '$389 for generation',        graduated: true, base: false, pro: false, premium: true  },
+      // Inquiries — graduated
+      { label: '6 inquiries',                graduated: true, base: true,  pro: false, premium: false },
+      { label: '30 inquiries',               graduated: true, base: false, pro: true,  premium: false },
+      { label: 'Unlimited inquiries',        graduated: true, base: false, pro: false, premium: true  },
+      // Reputation checks — graduated
+      { label: 'Up to 10 reputation checks', graduated: true, base: false, pro: true,  premium: false },
+      { label: 'Unlimited reputation checks',graduated: true, base: false, pro: false, premium: true  },
+      // Premium-only binary
+      { label: 'Top in Google by your name', base: false, pro: false, premium: true },
+      { label: '24/7 personal manager',      base: false, pro: false, premium: true },
+      { label: 'Exclusive social promotion', base: false, pro: false, premium: true },
+      // Pro + Premium binary
+      { label: 'Boost rating from past experience',   base: false, pro: true, premium: true },
+      { label: 'Set custom prices for your services', base: false, pro: true, premium: true },
+      // Universal binary
+      { label: 'AI module for Google & Meta', base: true, pro: true, premium: true },
+      { label: 'AI competitor monitoring',    base: true, pro: true, premium: true },
+      { label: 'AI client assistant',         base: true, pro: true, premium: true },
+      { label: 'Referral earnings',           base: true, pro: true, premium: true },
+      { label: 'Private specialist chat',     base: true, pro: true, premium: true },
+      { label: 'CRM system',                  base: true, pro: true, premium: true },
+      { label: 'Secure messenger',            base: true, pro: true, premium: true }
+    ];
+
+    // Generic placeholders for graduated categories where the tier has no own entry.
+    // E.g. Base has no avatar row → show generic 'AI avatar' as ✗ on Base panel only.
+    var ppGenericPlaceholders = [
+      { categoryRows: ['AI PRO avatar', 'AI PREMIUM avatar'],                  label: 'AI avatar'         },
+      { categoryRows: ['Up to 10 reputation checks', 'Unlimited reputation checks'], label: 'Reputation checks' }
     ];
 
     var ppProBadges = {
-      '109 +10% tokens': { text: '5.7x more', type: 'green' },
-      '30 clients': { text: '5x more', type: 'green' },
+      '$109 for generation': { text: '5.7x more', type: 'green' },
+      '30 inquiries': { text: '5x more', type: 'green' },
       'Up to 10 reputation checks': { text: 'NEW', type: 'cyan' },
       'Boost rating from past experience': { text: 'NEW', type: 'cyan' },
       'Set custom prices for your services': { text: 'NEW', type: 'cyan' },
-      'AI PRO avatar': { text: 'NEW', type: 'cyan' },
-      'Professional profile level': { text: 'UPGRADE', type: 'cyan' }
+      'AI PRO avatar': { text: 'NEW', type: 'cyan' }
     };
 
     var ppPremiumBadges = {
-      '389 +30% tokens': { text: '3.6x more', type: 'green' },
-      'Unlimited clients': { text: '\u221e', type: 'green' },
+      '$389 for generation': { text: '3.6x more', type: 'green' },
+      'Unlimited inquiries': { text: '\u221e', type: 'green' },
       'Top in Google by your name': { text: 'NEW', type: 'cyan' },
       '24/7 personal manager': { text: 'NEW', type: 'cyan' },
       'Exclusive social promotion': { text: 'NEW', type: 'cyan' },
       'Unlimited reputation checks': { text: '\u221e', type: 'green' },
-      'AI PREMIUM avatar': { text: 'UPGRADE', type: 'cyan' },
-      'Premium profile level': { text: 'UPGRADE', type: 'cyan' }
-    };
-
-    var ppEnterpriseBadges = {
-      'Unlimited tokens': { text: '\u221e', type: 'green' },
-      'Dedicated account manager': { text: 'NEW', type: 'cyan' },
-      'White-label profile': { text: 'NEW', type: 'cyan' },
-      'Custom integrations & API': { text: 'NEW', type: 'cyan' },
-      'SLA & priority support': { text: 'NEW', type: 'cyan' }
+      'AI PREMIUM avatar': { text: 'UPGRADE', type: 'cyan' }
     };
 
     function ppBuildFeatures(tier) {
@@ -1463,12 +1509,23 @@
       var badgeMap = null;
       if (tier === 'pro') badgeMap = ppProBadges;
       else if (tier === 'premium') badgeMap = ppPremiumBadges;
-      else if (tier === 'enterprise') badgeMap = ppEnterpriseBadges;
 
       ppFeatures.forEach(function(f) {
+        // Graduated categories: only the row whose flag matches the tier is shown;
+        // other rows in the same category are hidden (not rendered as ✗).
+        if (f.graduated && !f[tier]) return;
         var item = { label: f.label, on: !!f[tier] };
         if (badgeMap && badgeMap[f.label]) item.badge = badgeMap[f.label];
         relevant.push(item);
+      });
+
+      // Generic ✗ placeholder for graduated categories where the tier has no entry
+      // (e.g. Base lacks any avatar / reputation row).
+      ppGenericPlaceholders.forEach(function(p) {
+        var hasOwnEntry = ppFeatures.some(function(f) {
+          return p.categoryRows.indexOf(f.label) >= 0 && f[tier];
+        });
+        if (!hasOwnEntry) relevant.push({ label: p.label, on: false });
       });
 
       // Show enabled features first, disabled at bottom
@@ -1493,7 +1550,7 @@
     // ── Carousel logic (inside setTimeout to ensure DOM is ready) ──
     setTimeout(function() {
       var ppCurrent = 0;
-      var ppTotal = 4;
+      var ppTotal = 3;
       var profileTrack = document.getElementById('ppProfileTrack');
       var pricingTrack = document.getElementById('ppPricingTrack');
       var dotsContainer = document.getElementById('ppDots');
@@ -1510,17 +1567,14 @@
       var featBase = document.getElementById('ppFeatBase');
       var featPro = document.getElementById('ppFeatPro');
       var featPremium = document.getElementById('ppFeatPremium');
-      var featEnterprise = document.getElementById('ppFeatEnterprise');
       if (featBase) ppRenderFeatures(featBase, 'base');
       if (featPro) ppRenderFeatures(featPro, 'pro');
       if (featPremium) ppRenderFeatures(featPremium, 'premium');
-      if (featEnterprise) ppRenderFeatures(featEnterprise, 'enterprise');
 
       var ppCtaConfig = [
         { text: 'Get Base',    cls: 'pp-cta-btn pp-cta-base',    plan: 'base' },
         { text: 'Get Pro',     cls: 'pp-cta-btn pp-cta-pro',     plan: 'pro' },
-        { text: 'Get Premium', cls: 'pp-cta-btn pp-cta-premium', plan: 'premium' },
-        { text: 'Contact Sales', cls: 'pp-cta-btn pp-cta-enterprise', plan: 'enterprise' }
+        { text: 'Get Premium', cls: 'pp-cta-btn pp-cta-premium', plan: 'premium' }
       ];
 
       function ppGoTo(idx) {
@@ -1544,7 +1598,7 @@
 
         quizData.plan = ppCtaConfig[idx].plan;
 
-        // Toggle avatar video section
+        // Toggle avatar video section (hidden for Base)
         if (avatarSection && avatarVideo) {
           if (idx === 0) {
             avatarSection.classList.remove('visible');
@@ -1640,11 +1694,83 @@
         });
       }
 
-      // ── CTA click selects plan ──
+      // ── CTA click selects plan and advances ──
       if (ctaBtn) {
         ctaBtn.addEventListener('click', function() {
           quizData.plan = ppCtaConfig[ppCurrent].plan;
           advance();
+        });
+      }
+
+      // ── Custom-quote link + lead form wiring (for large firms) ──
+      var customQuoteLink = document.getElementById('ppCustomQuoteLink');
+      var leadOverlay = document.getElementById('ppLeadOverlay');
+      var leadClose = document.getElementById('ppLeadClose');
+      var leadForm = document.getElementById('ppLeadForm');
+      var leadThanks = document.getElementById('ppLeadThanks');
+      var leadThanksClose = document.getElementById('ppLeadThanksClose');
+      var leadSubmit = document.getElementById('ppLeadSubmit');
+      var leadEmail = document.getElementById('ppLeadEmail');
+      var leadPhone = document.getElementById('ppLeadPhone');
+
+      function ppOpenLead() {
+        if (!leadOverlay) return;
+        if (leadEmail && !leadEmail.value && quizData.email) leadEmail.value = quizData.email;
+        if (leadPhone && !leadPhone.value && quizData.phone) leadPhone.value = quizData.phone;
+        leadOverlay.classList.add('open');
+        leadOverlay.setAttribute('aria-hidden', 'false');
+      }
+      function ppCloseLead() {
+        if (!leadOverlay) return;
+        leadOverlay.classList.remove('open');
+        leadOverlay.setAttribute('aria-hidden', 'true');
+      }
+      if (customQuoteLink) customQuoteLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        ppOpenLead();
+      });
+      if (leadClose) leadClose.addEventListener('click', function(e) { e.stopPropagation(); ppCloseLead(); });
+      if (leadOverlay) leadOverlay.addEventListener('click', function(e) {
+        if (e.target === leadOverlay) ppCloseLead();
+      });
+      if (leadThanksClose) leadThanksClose.addEventListener('click', function(e) {
+        e.stopPropagation();
+        ppCloseLead();
+      });
+
+      if (leadForm) {
+        leadForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          var firm = (document.getElementById('ppLeadFirm') || {}).value || '';
+          var company = (document.getElementById('ppLeadCompany') || {}).value || '';
+          var size = parseInt((document.getElementById('ppLeadSize') || {}).value, 10) || 0;
+          var loc = (document.getElementById('ppLeadLocation') || {}).value || '';
+          var em = (leadEmail || {}).value || '';
+          var ph = (leadPhone || {}).value || '';
+          var msg = (document.getElementById('ppLeadMsg') || {}).value || '';
+
+          if (!firm.trim() || !company.trim() || size < 10 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) {
+            leadForm.classList.add('pp-lead-invalid');
+            return;
+          }
+          leadForm.classList.remove('pp-lead-invalid');
+
+          quizData.plan = 'enterprise';
+          quizData.tier = 'enterprise';
+          quizData.lead_type = 'team_registration';
+          quizData.firm = { name: firm.trim(), company: company.trim(), team_size: size, location: loc.trim(), message: msg.trim() };
+          if (em) quizData.email = em.trim();
+          if (ph) quizData.phone = ph.trim();
+          try { localStorage.setItem('clm_enterprise_intent', '1'); } catch (e) {}
+
+          if (leadSubmit) { leadSubmit.disabled = true; leadSubmit.textContent = 'Sending…'; }
+
+          submitQuizData(function(ok) {
+            if (leadSubmit) { leadSubmit.disabled = false; leadSubmit.textContent = 'Request a call'; }
+            leadForm.hidden = true;
+            if (leadThanks) leadThanks.hidden = false;
+          });
         });
       }
 
