@@ -247,7 +247,7 @@
         {label:'Referral Code (optional)', field:'referral_code', type:'text', ph:'Enter code', optional:true},
         {label:'About yourself', field:'about', type:'textarea', ph:'Tell us about your experience, education, achievements...'},
         {label:'CV', field:'cv_name', type:'file', accept:'.pdf,.doc,.docx'},
-        {label:'Company logo', field:'company_logo_name', type:'file', accept:'image/*'}
+        {label:'Company logo (optional)', field:'company_logo_name', type:'file', accept:'image/*', optional:true}
       ] },
     // 26. assessment
     { type:'card', id:'assessment', q:'Your income <span class="accent">potential</span>', sub:'Based on your profession, location, services, and goals' },
