@@ -16,7 +16,7 @@
     font-family: 'Inter', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     overflow: hidden;
   }
@@ -24,39 +24,16 @@
   .stage {
     width: 360px;
     height: 640px;
-    background: linear-gradient(180deg, #ffffff 0%, #fafbfc 50%, #f5f7fa 100%);
+    background: #ffffff;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 30px 80px rgba(0,0,0,0.08);
     color: #1a1a2e;
-    padding: 18px 18px 16px;
+    padding: 0 18px 16px;
     display: flex;
     flex-direction: column;
   }
 
-  /* Subtle ambient glow */
-  .stage::before {
-    content: "";
-    position: absolute;
-    top: -120px;
-    right: -80px;
-    width: 280px;
-    height: 280px;
-    background: radial-gradient(circle, rgba(0,180,216,0.06), transparent 65%);
-    filter: blur(20px);
-    pointer-events: none;
-  }
-  .stage::after {
-    content: "";
-    position: absolute;
-    bottom: -100px;
-    left: -60px;
-    width: 240px;
-    height: 240px;
-    background: radial-gradient(circle, rgba(76,201,240,0.04), transparent 65%);
-    filter: blur(20px);
-    pointer-events: none;
-  }
+  .stage::before, .stage::after { display: none; }
 
   /* ---------- Logo ---------- */
   .logo {

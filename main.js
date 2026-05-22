@@ -147,13 +147,14 @@
         {v:'employment',          t:'Employment',           icon:'user',      color:'#14b8a6'},
         {v:'immigration_law',     t:'Immigration Law',      icon:'globe',     color:'#0284c7'}
       ]},
-    // 6. quickContact (NEW) — name + phone + photo before AI calc
+    // 6. quickContact — name + email + phone + photo before AI calc (early capture)
     { type:'formWithFiles', id:'quickContact',
       q:'Let\'s get to <span class="accent">know you</span>',
       sub:'A few quick details before we calculate your potential',
       fields:[
         {label:'First Name', field:'first_name', type:'text', ph:'John'},
         {label:'Last Name', field:'last_name', type:'text', ph:'Davis'},
+        {label:'Email', field:'email', type:'email', ph:'john@example.com'},
         {label:'Phone', field:'phone', type:'tel', ph:'+1 (555) 123-4567'},
         {label:'Your photo', field:'photo_name', type:'file', accept:'image/*'}
       ] },
@@ -207,7 +208,7 @@
         {v:'crm_manager',t:'CRM / Inquiry Manager',icon:'users',color:'#0ea5e9'}
       ]},
     // 17. tenx
-    { type:'card', id:'tenx', q:'We cracked the code to deliver <span class="accent">10x better results</span>', sub:'Starting from $19/month -- Just 15 minutes a day' },
+    { type:'card', id:'tenx', q:'We cracked the code to deliver <span class="accent">10x better results</span>', sub:'Replace a $5K–$30K marketing team — just 15 minutes a day' },
     // 18. video1
     { type:'card', id:'video1', q:'', sub:'' },
     // 19. video2
@@ -216,12 +217,10 @@
     { type:'card', id:'videoAds', q:'', sub:'' },
     // 21. videoSocials
     { type:'card', id:'videoSocials', q:'', sub:'' },
-    // 22. dualSlider
-    { type:'dualSlider', q:'Set your <span class="accent">goals</span> for the first month', sub:'This will help AI build a growth plan for you',
-      sliders:[
-        { field:'desired_clients', label:'Desired clients', min:0, max:100, val:25, step:1, fmt:function(v){return v>=100?'100+':v;}, labels:'<span>0</span><span>25</span><span>50</span><span>75</span><span>100+</span>' },
-        { field:'desired_revenue', label:'Desired revenue', min:0, max:100000, val:25000, step:1000, fmt:function(v){return v>=100000?'$100K+':'$'+Number(v).toLocaleString('en-US');}, labels:'<span>$0</span><span>$25K</span><span>$50K</span><span>$75K</span><span>$100K+</span>' }
-      ]},
+    // 22. wowRoi — interactive ROI calculator with plan tabs
+    { type:'card', id:'wowRoi',
+      q:'Meet your <span class="accent">future</span> on ConsultantLM',
+      sub:"Here's your personalized profile + Estimated Pipeline Value" },
     // 23. period
     { type:'radio', field:'period', q:'How long do you want to <span class="accent">collaborate?</span>', sub:'Longer periods get better pricing',
       options:[
@@ -237,24 +236,18 @@
         {v:'1hr',t:'1 hour a day',icon:'clock',color:'#8b5cf6'},
         {v:'more',t:'More than 1 hour',icon:'clock',color:'#f59e0b'}
       ]},
-    // 25. uploadFiles (NEW)
-    { type:'formWithFiles', id:'fullProfile',
-      q:'Complete your <span class="accent">profile</span>',
-      sub:'Provide your details so AI can build your professional profile',
-      fields:[
-        {label:'Email', field:'email', type:'email', ph:'john@example.com'},
-        {label:'ZIP Code', field:'zip', type:'text', ph:'e.g. 10001'},
-        {label:'Referral Code (optional)', field:'referral_code', type:'text', ph:'Enter code', optional:true},
-        {label:'About yourself', field:'about', type:'textarea', ph:'Tell us about your experience, education, achievements...'},
-        {label:'CV', field:'cv_name', type:'file', accept:'.pdf,.doc,.docx'},
-        {label:'Company logo (optional)', field:'company_logo_name', type:'file', accept:'image/*', optional:true}
-      ] },
-    // 26. assessment
-    { type:'card', id:'assessment', q:'Your income <span class="accent">potential</span>', sub:'Based on your profession, location, services, and goals' },
-    // 27. profilesPricing
+    // 25. fullProfile — email already captured in quickContact (step 6); ZIP not required here
+    // (fullProfile moved to AFTER payment)
+    // 25. assessment
+    { type:'card', id:'assessment', q:'Your estimated <span class="accent">pipeline value</span>', sub:'Based on your profession, location, services, and goals. Estimates only — not a guarantee.' },
+    // 26. profilesPricing
     { type:'card', id:'profilesPricing', q:'Choose your <span class="accent">plan</span>', sub:'' },
-    // 28. payment
-    { type:'card', id:'payment', q:'Complete your <span class="accent">purchase</span>', sub:'' }
+    // 27. payment
+    { type:'card', id:'payment', q:'Complete your <span class="accent">purchase</span>', sub:'' },
+    // 28. fullProfile — after payment, user chooses between long About OR CV upload
+    { type:'card', id:'fullProfile',
+      q:'Complete your <span class="accent">profile</span>',
+      sub:'Choose one — write a detailed bio (3 000+ characters) or upload your CV. Our AI will generate the rest.' }
   ];
 
   var TOTAL = slides.length;
@@ -648,7 +641,8 @@
     inp.type = 'text';
     inp.className = 'card-input search-input svc-search-input';
     inp.placeholder = 'Start typing city name';
-    inp.autocomplete = 'off';
+    inp.autocomplete = 'address-level2';
+    inp.name = 'city';
     if (quizData[s.field]) inp.value = quizData[s.field];
     searchWrap.appendChild(inp);
     wrap.appendChild(searchWrap);
@@ -701,6 +695,21 @@
   }
 
   // ---- FormWithFiles (flexible mix of text/email/tel/textarea/file inputs, no blocking validation) ----
+  // Autocomplete map — drives browser/OS suggestion behavior on inputs
+  var AUTOCOMPLETE_MAP = {
+    first_name:    'given-name',
+    last_name:     'family-name',
+    email:         'email',
+    phone:         'tel',
+    zip:           'postal-code',
+    city:          'address-level2',
+    address:       'street-address',
+    firm_name:     'organization',
+    company_name:  'organization',
+    referral_code: 'off',
+    about:         'off'
+  };
+
   function renderFormWithFiles(s, wrap) {
     var groups = [];
 
@@ -748,6 +757,8 @@
         ta.className = 'card-input';
         ta.rows = 4;
         ta.placeholder = f.ph || '';
+        ta.name = f.field;
+        ta.autocomplete = f.autocomplete || AUTOCOMPLETE_MAP[f.field] || 'off';
         if (quizData[f.field]) ta.value = quizData[f.field];
         ta.addEventListener('input', function() {
           quizData[f.field] = ta.value;
@@ -760,6 +771,10 @@
         inp.type = f.type || 'text';
         inp.className = 'card-input';
         inp.placeholder = f.ph || '';
+        inp.name = f.field;
+        inp.autocomplete = f.autocomplete || AUTOCOMPLETE_MAP[f.field] || 'on';
+        if (f.field === 'email') inp.inputMode = 'email';
+        if (f.type === 'tel') inp.inputMode = 'tel';
         if (quizData[f.field]) inp.value = quizData[f.field];
         inp.addEventListener('input', function() {
           quizData[f.field] = inp.value;
@@ -1104,8 +1119,10 @@
     else if (s.id === 'profilesPricing') renderProfilesPricingCard(wrap);
     else if (s.id === 'payment') renderPaymentCard(wrap);
     else if (s.id === 'videoProof') renderVideoCard(wrap, './htmlTOvideo/8/ConsultantLM Promo.html');
+    else if (s.id === 'wowRoi') renderWowRoiCard(wrap);
+    else if (s.id === 'fullProfile') renderFullProfileCard(wrap);
 
-    if (s.id !== 'payment' && s.id !== 'profilesPricing') {
+    if (s.id !== 'payment' && s.id !== 'profilesPricing' && s.id !== 'wowRoi' && s.id !== 'fullProfile') {
       var btn = el('button', 'card-btn', 'Continue &rarr;');
       btn.addEventListener('click', function() { advance(); });
       wrap.appendChild(actionBar(btn));
@@ -1141,15 +1158,38 @@
     (quizData.services || []).forEach(function(s) { svcNames.push(s.replace(/_/g,' ')); });
     var svcText = svcNames.length > 0 ? svcNames.slice(0,3).join(', ') + (svcNames.length > 3 ? '...' : '') : 'General';
 
+    // ROI math: in-house marketing team in US legal sector — industry estimate
+    var teamCostLow  = 5000;
+    var teamCostHigh = 30000;
+    var ourPlan = 199; // Pro tier — the rational recommendation
+    var saveLow  = teamCostLow  - ourPlan;
+    var saveHigh = teamCostHigh - ourPlan;
+
     var html =
       '<div class="stats-row">' +
-        '<div class="stat-card"><div class="stat-label">SEO (Google)</div><div class="stat-value">'+seoMin+'–'+seoMax+'</div><div class="stat-trend">inquiries/mo</div></div>' +
-        '<div class="stat-card"><div class="stat-label">Paid Ads</div><div class="stat-value">'+adsMin+'–'+adsMax+'</div><div class="stat-trend">inquiries/mo</div></div>' +
-        '<div class="stat-card"><div class="stat-label">Social</div><div class="stat-value">'+socMin+'–'+socMax+'</div><div class="stat-trend">inquiries/mo</div></div>' +
+        '<div class="stat-card"><div class="stat-label">SEO (Google)</div><div class="stat-value">'+seoMin+'–'+seoMax+'</div><div class="stat-trend">Leads/mo</div></div>' +
+        '<div class="stat-card"><div class="stat-label">Paid Ads</div><div class="stat-value">'+adsMin+'–'+adsMax+'</div><div class="stat-trend">Leads/mo</div></div>' +
+        '<div class="stat-card"><div class="stat-label">Social</div><div class="stat-value">'+socMin+'–'+socMax+'</div><div class="stat-trend">Leads/mo</div></div>' +
       '</div>' +
-      '<div class="highlight-card"><div class="stat-label">Total Potential Clients</div><div class="big-number">'+tMin+'–'+tMax+'</div><div class="stat-label">per month</div></div>' +
-      '<div class="highlight-card" style="margin-top:10px"><div class="stat-label">Estimated Revenue</div><div class="big-number green">$'+rMin.toLocaleString('en-US')+' – $'+rMax.toLocaleString('en-US')+'</div><div class="stat-label">per month</div></div>' +
-      '<p class="fine-print"><strong>Calculated for:</strong> ' + (profLabels[prof]||prof) + (loc ? ', ' + loc : '') + ', ' + (roleLabels[roleVal]||roleVal) + ', ' + svcText + '.<br>Includes: Google SEO + Meta/Google Ads + organic traffic + social media.</p>';
+      '<div class="highlight-card"><div class="stat-label">Total Potential Leads</div><div class="big-number">'+tMin+'–'+tMax+'</div><div class="stat-label">per month</div></div>' +
+      '<div class="highlight-card" style="margin-top:10px"><div class="stat-label">Estimated Pipeline Value</div><div class="big-number green">$'+rMin.toLocaleString('en-US')+' – $'+rMax.toLocaleString('en-US')+'</div><div class="stat-label">per month</div></div>' +
+      // Dynamic ROI block — vs hiring an in-house team
+      '<div class="roi-card" style="margin-top:14px;background:linear-gradient(135deg,#0a2540,#1a5276);color:#fff;padding:16px 18px;border-radius:14px">' +
+        '<div style="font-size:11px;letter-spacing:1px;color:#7eb8d8;text-transform:uppercase;margin-bottom:8px">vs Hiring a Marketing Team</div>' +
+        '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">' +
+          '<span style="font-size:13px;color:#cbd5e1">In-house team</span>' +
+          '<span style="font-size:18px;font-weight:700;color:#fca5a5">$'+teamCostLow.toLocaleString()+'–$'+teamCostHigh.toLocaleString()+'/mo</span>' +
+        '</div>' +
+        '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px">' +
+          '<span style="font-size:13px;color:#cbd5e1">Pro plan on ConsultantLM</span>' +
+          '<span style="font-size:18px;font-weight:700;color:#86efac">$'+ourPlan+'/mo</span>' +
+        '</div>' +
+        '<div style="border-top:1px solid rgba(255,255,255,0.12);padding-top:10px;display:flex;justify-content:space-between;align-items:baseline">' +
+          '<span style="font-size:14px;font-weight:600">You save up to</span>' +
+          '<span style="font-size:22px;font-weight:800;color:#86efac">$'+saveHigh.toLocaleString()+'/mo</span>' +
+        '</div>' +
+      '</div>' +
+      '<p class="fine-print"><strong>Calculated for:</strong> ' + (profLabels[prof]||prof) + (loc ? ', ' + loc : '') + ', ' + (roleLabels[roleVal]||roleVal) + ', ' + svcText + '.<br>Includes: Google SEO + Meta/Google Ads + organic traffic + social media. <em>Estimates only — actual results may vary based on market conditions, profile optimization and individual effort. Not a guarantee of income.</em></p>';
     var d = el('div', '', html);
     wrap.appendChild(d);
   }
@@ -1158,7 +1198,7 @@
   function renderProofCard(wrap) {
     var html =
       '<div class="proof-card"><div class="proof-header"><div class="proof-avatar">JD</div><div class="proof-meta"><div class="proof-name">John Davis</div><div class="proof-role">Attorney -- New York</div><div class="proof-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div></div><span class="badge badge-green">+$47K/mo</span></div><p class="proof-quote">"ConsultantLM transformed my practice. 47 new clients in the first month."</p></div>' +
-      '<div class="proof-card"><div class="proof-header"><div class="proof-avatar orange">SM</div><div class="proof-meta"><div class="proof-name">Sarah Mitchell</div><div class="proof-role">CPA -- California</div><div class="proof-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div></div><span class="badge badge-green">+$32K/mo</span></div><p class="proof-quote">"21 inquiries in the first hour! The AI content engine is incredible."</p></div>' +
+      '<div class="proof-card"><div class="proof-header"><div class="proof-avatar orange">SM</div><div class="proof-meta"><div class="proof-name">Sarah Mitchell</div><div class="proof-role">CPA -- California</div><div class="proof-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div></div><span class="badge badge-green">+$32K/mo</span></div><p class="proof-quote">"21 Leads in the first hour! The AI content engine is incredible."</p></div>' +
       '<div class="featured-in">Featured in: <strong>Forbes</strong> -- <strong>HiiL Justice</strong></div>';
     var d = el('div', '', html);
     wrap.appendChild(d);
@@ -1184,7 +1224,7 @@
             '<div class="tenx-card-label">With ConsultantLM</div>' +
             '<div class="tenx-card-items">' +
               '<div class="tenx-item">AI does it all</div>' +
-              '<div class="tenx-item tenx-price-good">From $19/month</div>' +
+              '<div class="tenx-item tenx-price-good">From $199/month</div>' +
               '<div class="tenx-item">Results in weeks</div>' +
             '</div>' +
           '</div>' +
@@ -1209,7 +1249,7 @@
     var d = el('div', 'video-wrap');
     var isHtml = /\.html(\?|$)/i.test(src);
     if (isHtml) {
-      d.innerHTML = '<iframe data-src="' + encodeURI(src) + '" src="about:blank" scrolling="no" frameborder="0" allow="autoplay" style="width:100%;aspect-ratio:360/640;border:0;display:block;background:#fff"></iframe>';
+      d.innerHTML = '<iframe data-src="' + encodeURI(src) + '" src="about:blank" scrolling="no" frameborder="0" allow="autoplay" style="width:100%;aspect-ratio:360/576;border:0;display:block;background:#fff"></iframe>';
     } else {
       d.innerHTML = '<video src="' + src + '" muted loop playsinline preload="metadata"></video>';
     }
@@ -1262,10 +1302,275 @@
           '<div class="team-total-value">~$35,346</div>' +
         '</div>' +
         '<div class="team-savings">' +
-          '<div class="team-savings-vs">vs ConsultantLM from <span class="accent">$19/mo</span></div>' +
+          '<div class="team-savings-vs">vs ConsultantLM from <span class="accent">$199/mo</span></div>' +
           '<div class="badge badge-green" style="font-size:14px;padding:8px 16px;margin-top:8px">You save up to $35,000/month</div>' +
         '</div>' +
       '</div>';
+  }
+
+  // ---- WOW ROI — interactive ROI calculator (ported from marcetingQUIZ) ----
+  function renderWowRoiCard(wrap) {
+    // Inquiry economics — realistic for US legal market
+    var INQUIRY_COST_AVG = 95;        // realistic per-inquiry cost ($80-$110 typical)
+    var CONVERSION = 1 / 6;            // ~17% — 1 paying client per 6 Leads
+
+    // Per-tier client revenue ranges:
+    //  - Base: fewer but higher-value cases (high-touch consults / litigation)
+    //  - Pro/Premium: more volume of smaller cases (consults, doc reviews)
+    var PLANS = {
+      base:    { name: 'Base',    sub: 49,  maxInq: 6,   defaultInq: 3,  unlimited: false,
+                 clientLow: 10000, clientHigh: 20000 },
+      pro:     { name: 'Pro',     sub: 199, maxInq: 30,  defaultInq: 15, unlimited: false,
+                 clientLow: 2000,  clientHigh: 6000  },
+      premium: { name: 'Premium', sub: 499, maxInq: 100, defaultInq: 50, unlimited: true,
+                 clientLow: 2000,  clientHigh: 5000  }
+    };
+
+    var profLabels = { attorney:'Attorney', lawyer:'Lawyer', notary:'Notary', patent_attorney:'Patent Attorney', cpa:'CPA', tax_specialist:'Tax Specialist' };
+    var displayName = (quizData.first_name || 'You') + (quizData.last_name ? ' ' + quizData.last_name : '');
+    var displayProf = profLabels[quizData.profession] || 'Attorney';
+    var displayCity = quizData.city || 'United States';
+
+    var currentPlan = quizData.plan || 'pro';
+    quizData.plan = currentPlan;
+
+    var html = ''
+      + '<div class="wow-card-v2">'
+      // Plan tabs
+      + '<div class="plan-tabs">'
+      + '<button class="plan-tab" data-plan="base">Base</button>'
+      + '<button class="plan-tab" data-plan="pro">Pro</button>'
+      + '<button class="plan-tab" data-plan="premium">Premium</button>'
+      + '</div>'
+      // Profile card
+      + '<div class="wow-profile" id="wowProfile">'
+      + '<div class="wow-profile-header">'
+      + '<span class="wow-profile-plan-badge" id="wowPlanBadge">PRO</span>'
+      + '<span class="wow-profile-rating">&#9733; <span id="wowRating">67.59</span></span>'
+      + '</div>'
+      + '<div class="wow-profile-body">'
+      + '<div class="wow-profile-photo" id="wowProfilePhoto">'
+      + '<div class="wow-profile-photo-placeholder">&#128247;</div>'
+      + '</div>'
+      + '<div class="wow-profile-info">'
+      + '<div class="wow-profile-name">' + displayName + '</div>'
+      + '<div class="wow-profile-role">' + displayProf + '</div>'
+      + '<div class="wow-profile-city"><span class="loc-pin">&#128205;</span> ' + displayCity + '</div>'
+      + '</div></div></div>'
+      // ROI calculator — realistic conversion math
+      + '<div class="roi-calc">'
+      + '<div class="roi-calc-label">&#128200;  Your Estimated Pipeline Value</div>'
+      + '<div class="roi-slider-row">'
+      + '<span class="roi-slider-label">Leads / month: <strong id="roiInqLabel">15</strong> <span id="roiInqMaxHint" class="roi-max-hint">(of 30 included)</span></span>'
+      + '<input type="range" id="roiInqSlider" min="0" max="30" step="1" value="15" class="roi-slider"/>'
+      + '</div>'
+      + '<div class="roi-table">'
+      + '<div class="roi-row roi-highlight"><span>Paying clients (1 in 6):</span><span id="roiClients">~2&nbsp;–&nbsp;3</span></div>'
+      + '<div class="roi-row"><span>Expected revenue:</span><span id="roiRevenue">$5,000 – $15,000</span></div>'
+      + '<div class="roi-row roi-minus"><span>Lead cost (<span id="roiInqLabel3">15</span> &times; $' + INQUIRY_COST_AVG + '):</span><span id="roiInqCost">&minus;$1,425</span></div>'
+      + '<div class="roi-row roi-minus"><span>ConsultantLM subscription:</span><span id="roiSub">&minus;$199 /mo</span></div>'
+      + '<div class="roi-row roi-total"><span>Net potential:</span><span id="roiNet">$3,376 – $13,376 /mo</span></div>'
+      + '</div>'
+      + '<div class="roi-payback" id="roiPaybackRow">Payback period: <strong id="roiPayback">~ 2&ndash;3 weeks</strong></div>'
+      + '<div class="roi-disclaimer"><strong>Leads are not yet clients, not paid clients.</strong> Realistic conversion: ~1 in 6 Leads becomes a paying case. Actual results depend on your response speed, follow-up workflow, pricing and specialty match. Estimates only — past performance does not guarantee future results.</div>'
+      + '</div>'
+      + '</div>';
+
+    var container = el('div', '', html);
+    wrap.appendChild(container);
+
+    var slider = container.querySelector('#roiInqSlider');
+
+    function recalc() {
+      var plan = PLANS[currentPlan];
+      var n = parseInt(slider.value, 10);
+      var inqLabel = plan.unlimited && n >= plan.maxInq ? (n + '+') : String(n);
+      container.querySelector('#roiInqLabel').textContent = inqLabel;
+      container.querySelector('#roiInqLabel3').textContent = inqLabel;
+
+      // ── Conversion: 1 client per 6 Leads (~17%) ──
+      // Show as a range to keep credibility (clients vary in practice)
+      var clientsAvg = n * CONVERSION;
+      var clientsLow = Math.max(0, Math.floor(clientsAvg));
+      var clientsHigh = Math.max(0, Math.ceil(clientsAvg + 0.5)); // small spread for "good month"
+      // Single integer when low==high
+      var clientsLabel;
+      if (clientsAvg === 0) clientsLabel = '0';
+      else if (clientsLow === clientsHigh) clientsLabel = '~' + clientsLow;
+      else clientsLabel = '~' + clientsLow + '–' + clientsHigh;
+
+      // ── Revenue range = clients × per-client min/max ──
+      var revLow  = clientsLow  * plan.clientLow;
+      var revHigh = clientsHigh * plan.clientHigh;
+
+      var inqCost = n * INQUIRY_COST_AVG;
+      var subCost = plan.sub;
+      var netLow  = Math.max(0, revLow  - inqCost - subCost);
+      var netHigh = Math.max(0, revHigh - inqCost - subCost);
+
+      // Display strings
+      var revStr = clientsAvg === 0
+        ? '$0'
+        : '$' + revLow.toLocaleString('en-US') + ' – $' + revHigh.toLocaleString('en-US');
+      var netStr = clientsAvg === 0
+        ? '−$' + (inqCost + subCost).toLocaleString('en-US') + ' /mo'
+        : '$' + netLow.toLocaleString('en-US') + ' – $' + netHigh.toLocaleString('en-US') + ' /mo';
+
+      container.querySelector('#roiClients').textContent = clientsLabel;
+      container.querySelector('#roiRevenue').textContent = revStr;
+      container.querySelector('#roiInqCost').textContent = '−$' + inqCost.toLocaleString('en-US');
+      container.querySelector('#roiSub').textContent = '−$' + subCost + ' /mo';
+      container.querySelector('#roiNet').textContent = netStr;
+
+      // ── Payback period: hardcoded to "1 day" per product decision ──
+      var paybackRow = container.querySelector('#roiPaybackRow');
+      if (revLow > 0) {
+        container.querySelector('#roiPayback').textContent = '~ 1 day';
+        paybackRow.style.display = '';
+      } else {
+        paybackRow.style.display = 'none';
+      }
+
+      // Sync into quizData for backend (realistic numbers, not "theoretical max")
+      quizData.desired_clients = clientsLow;
+      quizData.desired_revenue = revLow;
+    }
+
+    function switchPlan(planId) {
+      currentPlan = planId;
+      quizData.plan = planId;
+      saveQuizData();
+      var plan = PLANS[planId];
+
+      container.querySelectorAll('.plan-tab').forEach(function(t) {
+        t.classList.toggle('active', t.getAttribute('data-plan') === planId);
+      });
+      var badge = container.querySelector('#wowPlanBadge');
+      badge.textContent = plan.name.toUpperCase();
+      badge.className = 'wow-profile-plan-badge wow-profile-plan-badge--' + planId;
+      var ratings = { base: '52.18', pro: '67.59', premium: '88.42' };
+      container.querySelector('#wowRating').textContent = ratings[planId];
+
+      slider.max = plan.maxInq;
+      slider.value = plan.defaultInq;
+      var maxHint = plan.unlimited ? '(unlimited)' : '(of ' + plan.maxInq + ' included)';
+      container.querySelector('#roiInqMaxHint').textContent = maxHint;
+
+      recalc();
+    }
+
+    slider.addEventListener('input', recalc);
+    container.querySelectorAll('.plan-tab').forEach(function(tab) {
+      tab.addEventListener('click', function() { switchPlan(tab.getAttribute('data-plan')); });
+    });
+
+    switchPlan(currentPlan);
+
+    // Continue button (wowRoi has its own; default dispatch skips it)
+    var btn = el('button', 'card-btn', 'Continue &rarr;');
+    btn.addEventListener('click', function() { advance(); });
+    wrap.appendChild(actionBar(btn));
+  }
+
+  // ---- Full Profile (post-payment) — choose: About 3000+ chars OR upload CV ----
+  function renderFullProfileCard(wrap) {
+    var MIN_CHARS = 3000;
+
+    var html = ''
+      + '<div class="fp-card">'
+      + '<div class="fp-tabs">'
+      + '<button type="button" class="fp-tab active" data-fp="about">Write about yourself</button>'
+      + '<button type="button" class="fp-tab" data-fp="cv">Upload CV</button>'
+      + '</div>'
+      + '<div class="fp-pane fp-pane-about" data-fp="about">'
+      + '<label class="form-label">About yourself <span class="fp-min-hint">minimum ' + MIN_CHARS + ' characters</span></label>'
+      + '<textarea id="fpAbout" class="card-input" rows="10" placeholder="Tell us about your experience, education, achievements, notable cases, certifications, awards…"></textarea>'
+      + '<div class="fp-counter"><span id="fpCount">0</span> / ' + MIN_CHARS + '</div>'
+      + '</div>'
+      + '<div class="fp-pane fp-pane-cv" data-fp="cv" hidden>'
+      + '<label class="form-label">Upload your CV <em class="form-req">*</em></label>'
+      + '<div class="upload-area" id="fpCvArea">'
+      + '<div class="upload-text" id="fpCvLabel">Click to choose .pdf / .doc / .docx</div>'
+      + '<input type="file" id="fpCvInput" accept=".pdf,.doc,.docx" style="display:none">'
+      + '</div>'
+      + '<div class="fp-note">CV will be processed by AI to extract your experience, education and achievements.</div>'
+      + '</div>'
+      + '</div>';
+
+    var box = el('div', '', html);
+    wrap.appendChild(box);
+
+    var aboutPane = box.querySelector('.fp-pane-about');
+    var cvPane = box.querySelector('.fp-pane-cv');
+    var aboutTa = box.querySelector('#fpAbout');
+    var aboutCount = box.querySelector('#fpCount');
+    var cvArea = box.querySelector('#fpCvArea');
+    var cvInput = box.querySelector('#fpCvInput');
+    var cvLabel = box.querySelector('#fpCvLabel');
+    var tabs = box.querySelectorAll('.fp-tab');
+
+    if (quizData.about) { aboutTa.value = quizData.about; aboutCount.textContent = quizData.about.length; }
+    if (quizData.cv_name) { cvLabel.textContent = quizData.cv_name; cvArea.classList.add('uploaded'); }
+
+    var currentChoice = quizData.profile_method || 'about';
+
+    function activate(method) {
+      currentChoice = method;
+      quizData.profile_method = method;
+      tabs.forEach(function(t) { t.classList.toggle('active', t.getAttribute('data-fp') === method); });
+      aboutPane.hidden = (method !== 'about');
+      cvPane.hidden = (method !== 'cv');
+    }
+    activate(currentChoice);
+
+    tabs.forEach(function(t) {
+      t.addEventListener('click', function() { activate(t.getAttribute('data-fp')); });
+    });
+
+    aboutTa.addEventListener('input', function() {
+      quizData.about = aboutTa.value;
+      aboutCount.textContent = aboutTa.value.length;
+    });
+
+    cvArea.addEventListener('click', function() { cvInput.click(); });
+    cvInput.addEventListener('change', function() {
+      if (cvInput.files.length) {
+        var name = cvInput.files[0].name;
+        quizData.cv_name = name;
+        cvLabel.textContent = name;
+        cvArea.classList.add('uploaded');
+      }
+    });
+
+    var errEl = el('div', '', '');
+    errEl.style.cssText = 'color:#ef4444;font-size:12px;text-align:center;margin-top:8px;display:none';
+    wrap.appendChild(errEl);
+
+    var btn = el('button', 'card-btn', 'Finish &rarr;');
+    btn.addEventListener('click', function() {
+      var valid = false;
+      var msg = '';
+      if (currentChoice === 'about') {
+        var len = (aboutTa.value || '').trim().length;
+        if (len >= MIN_CHARS) valid = true;
+        else msg = 'About yourself must be at least ' + MIN_CHARS + ' characters (you have ' + len + ').';
+      } else {
+        if (quizData.cv_name) valid = true;
+        else msg = 'Please upload your CV (.pdf, .doc or .docx).';
+      }
+      if (!valid) {
+        errEl.textContent = msg;
+        errEl.style.display = 'block';
+        return;
+      }
+      errEl.style.display = 'none';
+      // Submit final profile completion to backend
+      submitQuizData(function(ok) {
+        if (ok) { try { localStorage.removeItem(STORAGE_KEY); } catch (e) {} }
+        advance();
+      });
+    });
+    wrap.appendChild(actionBar(btn));
   }
 
   // ---- Assessment ----
@@ -1284,7 +1589,7 @@
       '<div class="potential-scale"><div class="scale-bar"><div class="scale-marker" id="scaleMarker" style="left:10%"></div></div><div class="scale-labels"><span>Low</span><span>Normal</span><span>Moderate</span><span>High</span></div></div>' +
       '<div class="highlight-card" style="margin-top:16px"><span class="badge" style="font-size:14px;padding:6px 16px;background:' + levelColor + '22;color:' + levelColor + '">Your level: <strong>' + level + '</strong> (' + score + '%)</span></div>' +
       '<div class="fine-print" style="margin-top:12px"><strong>Calculated for:</strong> ' + (profLabels[prof]||prof) + (loc ? ', ' + loc : '') + ', ' + svcText + '.' +
-      '<br>Factors: ad budget' + (quizData.ad_budget ? ' (' + quizData.ad_budget.replace(/_/g,' ') + ')' : '') + ', cooperation period' + (quizData.period ? ' (' + quizData.period.replace(/_/g,' ') + ')' : '') + ', desired goals.</div>';
+      '<br>Factors: ad budget' + (quizData.ad_budget ? ' (' + quizData.ad_budget.replace(/_/g,' ') + ')' : '') + ', cooperation period' + (quizData.period ? ' (' + quizData.period.replace(/_/g,' ') + ')' : '') + ', desired goals.<br><em>Estimates only — actual results may vary. Not a guarantee of income.</em></div>';
     var d = el('div', '', html);
     wrap.appendChild(d);
 
@@ -1316,9 +1621,13 @@
     html += '</div></div>';
 
     // ── Profile viewport with arrows ──
-    html += '<div class="pp-viewport" id="ppViewport">';
+    // Sticky nav rail — arrows stay visible while user scrolls the slide
+    html += '<div class="pp-arrow-rail" aria-hidden="true">';
     html += '<button class="pp-arrow pp-arrow--left" id="ppArrowLeft" aria-label="Previous plan">' + arrowLeftSvg + '</button>';
     html += '<button class="pp-arrow pp-arrow--right" id="ppArrowRight" aria-label="Next plan">' + arrowRightSvg + '</button>';
+    html += '</div>';
+
+    html += '<div class="pp-viewport" id="ppViewport">';
     html += '<div class="pp-track" id="ppProfileTrack">';
 
     // BASE profile slide
@@ -1367,10 +1676,10 @@
 
     // ── Billing toggle ──
     html += '<div class="pp-billing-toggle">';
-    html += '<span class="toggle-label" id="ppLabelMonthly">Monthly</span>';
-    html += '<div class="pp-toggle-track annual" id="ppToggleTrack"><div class="pp-toggle-thumb"></div></div>';
-    html += '<span class="toggle-label active" id="ppLabelAnnual">Annual</span>';
-    html += '<span class="pp-save-badge">Save 20%</span>';
+    html += '<span class="toggle-label active" id="ppLabelMonthly">Monthly</span>';
+    html += '<div class="pp-toggle-track" id="ppToggleTrack"><div class="pp-toggle-thumb"></div></div>';
+    html += '<span class="toggle-label" id="ppLabelAnnual">Annual</span>';
+    html += '<span class="pp-save-badge">Save 10%</span>';
     html += '</div>';
 
     // ── Pricing section ──
@@ -1380,28 +1689,41 @@
     // BASE pricing panel
     html += '<div class="pp-pricing-panel">';
     html += '<div class="pp-plan-name pp-base-name">Base</div>';
-    html += '<div class="pp-price-row"><span class="pp-old-price" id="ppOldBase">$49</span><span class="pp-new-price" id="ppPriceBase">$19<span class="period">/mo</span></span></div>';
-    html += '<div class="pp-billing-note" id="ppNoteBase">per month, billed annually</div>';
+    html += '<div class="pp-price-row"><span class="pp-new-price" id="ppPriceBase">$49<span class="period">/mo</span></span></div>';
+    html += '<div class="pp-billing-note" id="ppNoteBase">per month, billed monthly</div>';
     html += '<div class="pp-features" id="ppFeatBase"></div>';
     html += '</div>';
 
     // PRO pricing panel
     html += '<div class="pp-pricing-panel">';
     html += '<div class="pp-plan-name pp-pro-name">Pro</div>';
-    html += '<div class="pp-price-row"><span class="pp-old-price" id="ppOldPro">$249</span><span class="pp-new-price" id="ppPricePro">$99<span class="period">/mo</span></span></div>';
-    html += '<div class="pp-billing-note" id="ppNotePro">per month, billed annually</div>';
+    html += '<div class="pp-price-row"><span class="pp-new-price" id="ppPricePro">$199<span class="period">/mo</span></span></div>';
+    html += '<div class="pp-billing-note" id="ppNotePro">per month, billed monthly</div>';
     html += '<div class="pp-features" id="ppFeatPro"></div>';
     html += '</div>';
 
     // PREMIUM pricing panel
     html += '<div class="pp-pricing-panel">';
     html += '<div class="pp-plan-name pp-premium-name">Premium</div>';
-    html += '<div class="pp-price-row"><span class="pp-old-price" id="ppOldPremium">$599</span><span class="pp-new-price" id="ppPricePremium">$299<span class="period">/mo</span></span></div>';
-    html += '<div class="pp-billing-note" id="ppNotePremium">per month, billed annually</div>';
+    html += '<div class="pp-price-row"><span class="pp-new-price" id="ppPricePremium">$499<span class="period">/mo</span></span></div>';
+    html += '<div class="pp-billing-note" id="ppNotePremium">per month, billed monthly</div>';
     html += '<div class="pp-features" id="ppFeatPremium"></div>';
     html += '</div>';
 
     html += '</div></div>'; // close pp-pricing-content, pp-pricing-section
+
+    // ── Trust & compliance block (US legal market) ──
+    var trustScalesSvg  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M5 7h14"/><path d="M8 7l-3 7a4 4 0 0 0 6 0z"/><path d="M16 7l-3 7a4 4 0 0 0 6 0z"/><path d="M8 21h8"/></svg>';
+    var trustLockSvg    = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+    var trustShieldSvg  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V7l8-4z"/><path d="M9 12l2 2 4-4"/></svg>';
+    var trustBotSvg     = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="11" rx="3"/><path d="M12 4v4"/><circle cx="9" cy="13" r="1"/><circle cx="15" cy="13" r="1"/><path d="M9 17h6"/><path d="M3 13h1"/><path d="M20 13h1"/></svg>';
+
+    html += '<div class="pp-trust-block">';
+    html += '<div class="pp-trust-title">Built for US attorneys</div>';
+    html += '<div class="pp-trust-grid">';
+    html += '<div class="pp-trust-item"><span class="pp-trust-icon">' + trustScalesSvg + '</span><span class="pp-trust-text"><strong>ABA Model Rules</strong> compliant</span></div>';
+    html += '<div class="pp-trust-item"><span class="pp-trust-icon">' + trustLockSvg + '</span><span class="pp-trust-text"><strong>SOC 2 ready</strong></span></div>';
+    html += '</div></div>';
 
     // ── Custom-quote link (for large firms — opens lead modal) ──
     html += '<div class="pp-custom-quote-link"><a href="#" id="ppCustomQuoteLink" role="button">Large firm? Get a custom quote <span class="arrow">&rarr;</span></a></div>';
@@ -1450,14 +1772,14 @@
       // AI avatar — graduated
       { label: 'AI PRO avatar',              graduated: true, base: false, pro: true,  premium: false },
       { label: 'AI PREMIUM avatar',          graduated: true, base: false, pro: false, premium: true  },
-      // Generation budget — graduated
-      { label: '$19 for generation',         graduated: true, base: true,  pro: false, premium: false },
-      { label: '$109 for generation',        graduated: true, base: false, pro: true,  premium: false },
-      { label: '$389 for generation',        graduated: true, base: false, pro: false, premium: true  },
-      // Inquiries — graduated
-      { label: '6 inquiries',                graduated: true, base: true,  pro: false, premium: false },
-      { label: '30 inquiries',               graduated: true, base: false, pro: true,  premium: false },
-      { label: 'Unlimited inquiries',        graduated: true, base: false, pro: false, premium: true  },
+      // Included AI Production — graduated
+      { label: '10 AI posts/videos',   graduated: true, base: true,  pro: false, premium: false },
+      { label: '40 AI posts/videos',   graduated: true, base: false, pro: true,  premium: false },
+      { label: '100 AI posts/videos',  graduated: true, base: false, pro: false, premium: true  },
+      // Lead buying — graduated
+      { label: '6 lead buying',        graduated: true, base: true,  pro: false, premium: false },
+      { label: '30 lead buying',       graduated: true, base: false, pro: true,  premium: false },
+      { label: 'Unlimited lead buying',graduated: true, base: false, pro: false, premium: true  },
       // Reputation checks — graduated
       { label: 'Up to 10 reputation checks', graduated: true, base: false, pro: true,  premium: false },
       { label: 'Unlimited reputation checks',graduated: true, base: false, pro: false, premium: true  },
@@ -1486,8 +1808,8 @@
     ];
 
     var ppProBadges = {
-      '$109 for generation': { text: '5.7x more', type: 'green' },
-      '30 inquiries': { text: '5x more', type: 'green' },
+      '40 AI posts/videos': { text: '4x more', type: 'green' },
+      '30 lead buying': { text: '5x more', type: 'green' },
       'Up to 10 reputation checks': { text: 'NEW', type: 'cyan' },
       'Boost rating from past experience': { text: 'NEW', type: 'cyan' },
       'Set custom prices for your services': { text: 'NEW', type: 'cyan' },
@@ -1495,8 +1817,8 @@
     };
 
     var ppPremiumBadges = {
-      '$389 for generation': { text: '3.6x more', type: 'green' },
-      'Unlimited inquiries': { text: '\u221e', type: 'green' },
+      '100 AI posts/videos': { text: '2.5x more', type: 'green' },
+      'Unlimited lead buying': { text: '\u221e', type: 'green' },
       'Top in Google by your name': { text: 'NEW', type: 'cyan' },
       '24/7 personal manager': { text: 'NEW', type: 'cyan' },
       'Exclusive social promotion': { text: 'NEW', type: 'cyan' },
@@ -1647,52 +1969,8 @@
       }
 
       // ── Touch / Swipe ──
-      var ppStartX = 0, ppStartY = 0, ppDragging = false, ppDx = 0;
-
-      if (viewport) {
-        viewport.addEventListener('touchstart', function(e) {
-          ppStartX = e.touches[0].clientX;
-          ppStartY = e.touches[0].clientY;
-          ppDragging = true;
-          ppDx = 0;
-          if (profileTrack) profileTrack.style.transition = 'none';
-          if (pricingTrack) pricingTrack.style.transition = 'none';
-        }, { passive: true });
-
-        viewport.addEventListener('touchmove', function(e) {
-          if (!ppDragging) return;
-          var moveX = e.touches[0].clientX;
-          var moveY = e.touches[0].clientY;
-          ppDx = moveX - ppStartX;
-
-          if (Math.abs(moveY - ppStartY) > Math.abs(ppDx)) {
-            ppDragging = false;
-            return;
-          }
-
-          var basePct = -(ppCurrent * 100);
-          var dragPct = (ppDx / viewport.offsetWidth) * 100;
-          var t = 'translateX(' + (basePct + dragPct) + '%)';
-          if (profileTrack) profileTrack.style.transform = t;
-          if (pricingTrack) pricingTrack.style.transform = t;
-        }, { passive: true });
-
-        viewport.addEventListener('touchend', function() {
-          if (!ppDragging) {
-            if (profileTrack) profileTrack.style.transition = '';
-            if (pricingTrack) pricingTrack.style.transition = '';
-            return;
-          }
-          ppDragging = false;
-          if (profileTrack) profileTrack.style.transition = '';
-          if (pricingTrack) pricingTrack.style.transition = '';
-
-          var threshold = viewport.offsetWidth * 0.2;
-          if (ppDx < -threshold) ppGoTo(ppCurrent + 1);
-          else if (ppDx > threshold) ppGoTo(ppCurrent - 1);
-          else ppGoTo(ppCurrent);
-        });
-      }
+      // Horizontal swipe DISABLED — switching only via dots/arrows.
+      // Vertical scroll remains as normal page scroll.
 
       // ── CTA click selects plan and advances ──
       if (ctaBtn) {
@@ -1802,40 +2080,35 @@
       setInterval(ppTick, 1000);
 
       // ── Billing toggle (monthly/annual) ──
-      var ppIsAnnual = true;
+      var ppIsAnnual = false;  // start without annual discount; user toggles to enable
       var ppToggleTrack = document.getElementById('ppToggleTrack');
       var ppLabelMonthly = document.getElementById('ppLabelMonthly');
       var ppLabelAnnual = document.getElementById('ppLabelAnnual');
 
+      // Base monthly prices — annual mode applies -10% discount on top
       var ppPrices = {
-        annual: { base: {old:'$49', price:'$19', note:'per month, billed annually'},
-                  pro: {old:'$249', price:'$99', note:'per month, billed annually'},
-                  premium: {old:'$599', price:'$299', note:'per month, billed annually'} },
-        monthly: { base: {old:'$29', price:'$24', note:'per month, billed monthly'},
-                   pro: {old:'$149', price:'$124', note:'per month, billed monthly'},
-                   premium: {old:'$399', price:'$349', note:'per month, billed monthly'} }
+        monthly: { base: {price:'$49',  note:'per month, billed monthly'},
+                   pro:  {price:'$199', note:'per month, billed monthly'},
+                   premium: {price:'$499', note:'per month, billed monthly'} },
+        annual:  { base: {price:'$44',  note:'per month, billed annually (–10%)'},
+                   pro:  {price:'$179', note:'per month, billed annually (–10%)'},
+                   premium: {price:'$449', note:'per month, billed annually (–10%)'} }
       };
 
       function ppUpdatePrices() {
         var mode = ppIsAnnual ? 'annual' : 'monthly';
         var p = ppPrices[mode];
-        var elOldBase = document.getElementById('ppOldBase');
         var elPriceBase = document.getElementById('ppPriceBase');
         var elNoteBase = document.getElementById('ppNoteBase');
-        var elOldPro = document.getElementById('ppOldPro');
         var elPricePro = document.getElementById('ppPricePro');
         var elNotePro = document.getElementById('ppNotePro');
-        var elOldPremium = document.getElementById('ppOldPremium');
         var elPricePremium = document.getElementById('ppPricePremium');
         var elNotePremium = document.getElementById('ppNotePremium');
 
-        if (elOldBase) elOldBase.textContent = p.base.old;
         if (elPriceBase) elPriceBase.innerHTML = p.base.price + '<span class="period">/mo</span>';
         if (elNoteBase) elNoteBase.textContent = p.base.note;
-        if (elOldPro) elOldPro.textContent = p.pro.old;
         if (elPricePro) elPricePro.innerHTML = p.pro.price + '<span class="period">/mo</span>';
         if (elNotePro) elNotePro.textContent = p.pro.note;
-        if (elOldPremium) elOldPremium.textContent = p.premium.old;
         if (elPricePremium) elPricePremium.innerHTML = p.premium.price + '<span class="period">/mo</span>';
         if (elNotePremium) elNotePremium.textContent = p.premium.note;
 
@@ -1858,9 +2131,10 @@
       if (ppLabelMonthly) ppLabelMonthly.addEventListener('click', function(e) { e.stopPropagation(); ppIsAnnual = false; ppUpdatePrices(); });
       if (ppLabelAnnual) ppLabelAnnual.addEventListener('click', function(e) { e.stopPropagation(); ppIsAnnual = true; ppUpdatePrices(); });
 
-      // Set default plan to PRO
+      // Set default plan to PRO; billing starts as MONTHLY (no annual discount)
       ppGoTo(1);
-      quizData.billing = 'annual';
+      ppUpdatePrices();
+      quizData.billing = 'monthly';
     }, 100);
 
   }
@@ -1917,9 +2191,9 @@
     var planNames = {base:'Base', pro:'Pro', premium:'Premium'};
 
     var prices = {
-      '1_month': {base:24, pro:124, premium:349, label:'1 Month', discount:0},
-      '1_year':  {base:19, pro:99,  premium:299, label:'1 Year',  discount:10},
-      '3_years': {base:15, pro:79,  premium:249, label:'3 Years', discount:20}
+      '1_month': {base:59, pro:239, premium:599, label:'1 Month', discount:0},
+      '1_year':  {base:49, pro:199, premium:499, label:'1 Year',  discount:10},
+      '3_years': {base:39, pro:159, premium:399, label:'3 Years', discount:20}
     };
 
     var html = '';
@@ -1961,9 +2235,9 @@
     html += '<h3 class="faq-heading">Frequently Asked Questions</h3>';
     html += '<div class="faq-list">';
     html += '<div class="faq-item"><div class="faq-question">How many clients can I expect per month?</div><div class="faq-answer"><div class="faq-answer-inner">Depending on your specialization, city, and profile optimization -- many lawyers receive 5-15 clients already in the first month, scaling to 20-30+ over time thanks to AI-generated content and SEO promotion.</div></div></div>';
-    html += '<div class="faq-item"><div class="faq-question">Is this a guaranteed number of clients?</div><div class="faq-answer"><div class="faq-answer-inner">We provide you with inquiries that you work with yourself. You can also work under exclusive conditions with platform clients, in which case these are already paid clients.</div></div></div>';
+    html += '<div class="faq-item"><div class="faq-question">Is this a guaranteed number of clients?</div><div class="faq-answer"><div class="faq-answer-inner">We provide you with Leads that you work with yourself. You can also work under exclusive conditions with platform clients, in which case these are already paid clients.</div></div></div>';
     html += '<div class="faq-item"><div class="faq-question">How does the pricing work?</div><div class="faq-answer"><div class="faq-answer-inner">We have a three-tier subscription: Basic, Pro, and Premium. The cost is significantly lower than traditional marketing agencies. Many lawyers cover the subscription cost with just 1-2 clients.</div></div></div>';
-    html += '<div class="faq-item"><div class="faq-question">What if there are no clients?</div><div class="faq-answer"><div class="faq-answer-inner">The presence of inquiries depends on your activity on the platform. We guarantee uninterrupted access to the platform and its resources. Payment is non-refundable once access has been provided.</div></div></div>';
+    html += '<div class="faq-item"><div class="faq-question">What if there are no clients?</div><div class="faq-answer"><div class="faq-answer-inner">The presence of Leads depends on your activity on the platform. We guarantee uninterrupted access to the platform and its resources. Payment is non-refundable once access has been provided.</div></div></div>';
     html += '<div class="faq-item"><div class="faq-question">Is my data safe?</div><div class="faq-answer"><div class="faq-answer-inner">Yes, we use a secure messenger, data encryption, and do not transfer information to third parties. The platform complies with GDPR and data protection regulations.</div></div></div>';
     html += '</div>';
 
@@ -1984,7 +2258,7 @@
         var p = prices[currentPeriod];
         var planKey = quizData.plan || 'pro';
         var months = currentPeriod === '1_month' ? 1 : currentPeriod === '1_year' ? 12 : 36;
-        var fullPrice = {base:29, pro:149, premium:399}[planKey] * months;
+        var fullPrice = {base:79, pro:329, premium:799}[planKey] * months;
 
         // Compute actual discount amounts (each applied to fullPrice)
         var urgencyAmt = Math.round(fullPrice * 0.2);

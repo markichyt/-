@@ -24,7 +24,7 @@ html {
 }
 body {
   font-family: 'Inter', -apple-system, sans-serif;
-  background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-dark2) 100%);
+  background: var(--bg-dark);
   min-height: 100vh;
   min-height: 100dvh;
   color: var(--text-dark);
@@ -68,16 +68,9 @@ body {
     border-top: 1px solid rgba(255,255,255,0.06);
   }
   .logo-area {
-    position: fixed;
-    bottom: calc(44px + env(safe-area-inset-bottom));
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 101;
-    margin: 0;
-    pointer-events: none;
-    opacity: 0.5;
+    /* hidden on mobile — was overlapping form content as a watermark */
+    display: none;
   }
-  .logo { height: 18px; }
 }
 
 /* ---- Top bar ---- */
@@ -1233,7 +1226,7 @@ textarea.card-input {
 
 /* ── Profile Viewport ── */
 .profiles-pricing-wrap {
-  overflow: hidden;
+  position: relative;
 }
 .profiles-pricing-wrap .pp-timer-top {
   margin: 0 0 12px;
@@ -1266,28 +1259,36 @@ textarea.card-input {
   flex-shrink: 0;
 }
 
-/* ── Arrow Buttons ── */
-.profiles-pricing-wrap .pp-arrow {
-  position: absolute;
+/* ── Arrow buttons — position:fixed, escape all parent overflow ── */
+.profiles-pricing-wrap .pp-arrow-rail { display: contents; }
+.profiles-pricing-wrap .pp-arrow { display: none; }
+.stack-card.active .profiles-pricing-wrap .pp-arrow {
+  display: flex;
+  position: fixed;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 10;
-  width: 36px; height: 36px;
+  z-index: 1000;
+  width: 40px; height: 40px;
   border-radius: 50%;
   border: none;
-  background: rgba(255,255,255,.85);
-  box-shadow: 0 2px 8px rgba(0,0,0,.15);
+  background: #00b4d8;
+  box-shadow: 0 6px 20px rgba(0,180,216,.5), 0 3px 8px rgba(0,0,0,.18);
   cursor: pointer;
-  display: flex;
   align-items: center;
   justify-content: center;
-  transition: background .2s, transform .2s;
+  color: #fff;
+  transition: background .2s, transform .2s, box-shadow .2s;
 }
-.profiles-pricing-wrap .pp-arrow:hover { background: #fff; transform: translateY(-50%) scale(1.08); }
-.profiles-pricing-wrap .pp-arrow:active { transform: translateY(-50%) scale(.95); }
-.profiles-pricing-wrap .pp-arrow--left { left: 10px; }
-.profiles-pricing-wrap .pp-arrow--right { right: 10px; }
-.profiles-pricing-wrap .pp-arrow svg { width: 16px; height: 16px; stroke: #1a1a2e; stroke-width: 2.4; fill: none; }
+.stack-card.active .profiles-pricing-wrap .pp-arrow:hover {
+  background: #0fb6da;
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 0 8px 24px rgba(0,180,216,.6), 0 4px 10px rgba(0,0,0,.22);
+}
+.stack-card.active .profiles-pricing-wrap .pp-arrow:active { transform: translateY(-50%) scale(.95); }
+/* Desktop: arrow sits just outside the 420px-wide card; mobile: 4px from viewport edge */
+.profiles-pricing-wrap .pp-arrow--left  { left:  max(4px, calc(50% - 222px)); }
+.profiles-pricing-wrap .pp-arrow--right { right: max(4px, calc(50% - 222px)); }
+.profiles-pricing-wrap .pp-arrow svg { width: 18px; height: 18px; stroke: #fff; stroke-width: 2.6; fill: none; }
 
 /* ── Dots ── */
 .profiles-pricing-wrap .pp-dots {
@@ -1580,7 +1581,9 @@ textarea.card-input {
   overflow: hidden;
 }
 .profiles-pricing-wrap .pp-pricing-panel {
-  padding: 0 24px;
+  padding: 0 16px;
+  min-width: 0;
+  box-sizing: border-box;
 }
 .profiles-pricing-wrap .pp-pricing-content {
   display: flex;
@@ -1654,6 +1657,14 @@ textarea.card-input {
   align-items: center;
   gap: 8px;
   min-width: 0;
+  flex: 1 1 0;
+  overflow: hidden;
+}
+.profiles-pricing-wrap .pp-feat .feat-left > span:last-child {
+  min-width: 0;
+  flex: 1 1 0;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 .profiles-pricing-wrap .pp-feat .icon {
   flex-shrink: 0;
@@ -1732,6 +1743,47 @@ textarea.card-input {
   box-shadow: 0 4px 16px rgba(10,37,64,.4);
 }
 .profiles-pricing-wrap .pp-cta-premium:hover { box-shadow: 0 6px 24px rgba(10,37,64,.5); }
+
+/* ── Trust & compliance block — borderless, brand SVG icons ── */
+.profiles-pricing-wrap .pp-trust-block {
+  margin: 18px 16px 8px;
+  padding: 6px 0 0;
+}
+.profiles-pricing-wrap .pp-trust-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+.profiles-pricing-wrap .pp-trust-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 14px;
+}
+.profiles-pricing-wrap .pp-trust-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: #334155;
+  line-height: 1.3;
+}
+.profiles-pricing-wrap .pp-trust-icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: rgba(0,180,216,0.10);
+  color: #00b4d8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.profiles-pricing-wrap .pp-trust-icon svg { width: 18px; height: 18px; }
+.profiles-pricing-wrap .pp-trust-text strong { color: #0a2540; font-weight: 700; }
 
 /* ── Custom-quote link (grey text, above CTA) ── */
 .profiles-pricing-wrap .pp-custom-quote-link {
@@ -1982,4 +2034,216 @@ textarea.card-input {
   margin: 0 1px;
   align-self: flex-start;
   padding-top: 4px;
+}
+
+/* ── WOW ROI slide — plan tabs + profile preview + ROI calculator ── */
+.wow-card-v2 {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 4px 0;
+}
+.plan-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  background: #f1f5f9;
+  border-radius: 10px;
+  padding: 4px;
+}
+.plan-tab {
+  padding: 10px 8px;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all .15s;
+  font-family: inherit;
+  letter-spacing: .3px;
+}
+.plan-tab:hover { color: #0a2540; }
+.plan-tab.active {
+  background: #fff;
+  color: #00b4d8;
+  box-shadow: 0 1px 4px rgba(0,0,0,.08);
+}
+.wow-profile {
+  background: #fff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.wow-profile-header { display: flex; justify-content: space-between; align-items: center; }
+.wow-profile-plan-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  color: #fff;
+  background: #00b4d8;
+}
+.wow-profile-plan-badge--base    { background: #64748b; }
+.wow-profile-plan-badge--pro     { background: #10b981; }
+.wow-profile-plan-badge--premium { background: linear-gradient(135deg, #f59e0b, #ef4444); }
+.wow-profile-rating { font-size: 13px; font-weight: 600; color: #f59e0b; }
+.wow-profile-body { display: flex; align-items: center; gap: 14px; }
+.wow-profile-photo {
+  width: 68px; height: 68px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 3px solid #00b4d8;
+  box-shadow: 0 0 12px rgba(0,180,216,.25);
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wow-profile-photo img { width: 100%; height: 100%; object-fit: cover; }
+.wow-profile-photo-placeholder { font-size: 24px; opacity: .5; }
+.wow-profile-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.wow-profile-name { font-size: 15px; font-weight: 700; color: #0a2540; text-transform: capitalize; }
+.wow-profile-role { font-size: 13px; font-style: italic; color: #64748b; }
+.wow-profile-city { font-size: 12px; color: #00b4d8; font-weight: 500; margin-top: 2px; }
+.loc-pin { font-size: 11px; }
+
+.roi-calc {
+  background: linear-gradient(135deg, rgba(0,180,216,.06), rgba(16,185,129,.04));
+  border: 1px solid rgba(0,180,216,.25);
+  border-radius: 14px;
+  padding: 16px;
+}
+.roi-calc-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #00b4d8;
+  margin-bottom: 12px;
+}
+.roi-slider-row { margin-bottom: 12px; }
+.roi-slider-label { display: block; font-size: 12.5px; color: #64748b; margin-bottom: 6px; }
+.roi-slider-label strong { color: #00b4d8; font-weight: 600; }
+.roi-max-hint { font-size: 11px; font-weight: 400; color: #94a3b8; }
+.roi-slider {
+  width: 100%;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: #e2e8f0;
+  border-radius: 4px;
+  outline: none;
+}
+.roi-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: #00b4d8;
+  cursor: pointer;
+  box-shadow: 0 0 0 4px rgba(0,180,216,.15);
+}
+.roi-slider::-moz-range-thumb {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: #00b4d8;
+  cursor: pointer;
+  border: 0;
+}
+.roi-table { margin: 16px 0 12px; display: flex; flex-direction: column; gap: 8px; }
+.roi-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #0a2540;
+  flex-wrap: nowrap;
+  min-width: 0;
+}
+/* Label: shrink first, wraps to multi-line internally if needed */
+.roi-row > span:first-child {
+  flex: 1 1 0;
+  min-width: 0;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+/* Value: stays on the same baseline as the label, never wraps to its own line */
+.roi-row > span:last-child {
+  flex: 0 0 auto;
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.roi-row.roi-minus span:last-child { color: #94a3b8; }
+.roi-row.roi-highlight {
+  background: rgba(0,180,216,.06);
+  padding: 6px 8px;
+  border-radius: 6px;
+  border-left: 3px solid #00b4d8;
+  margin: 0 -4px 4px;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+.roi-row.roi-highlight > span { white-space: nowrap; }
+.roi-row.roi-highlight span:last-child { color: #00b4d8; font-weight: 700; }
+.roi-row.roi-total { padding-top: 8px; border-top: 1px solid rgba(0,180,216,.2); font-weight: 600; font-size: 15px; }
+.roi-row.roi-total span:last-child { color: #10b981; font-size: 16px; font-weight: 700; }
+.roi-payback { text-align: center; font-size: 12px; color: #64748b; margin-top: 8px; }
+.roi-payback strong { color: #00b4d8; font-size: 14px; font-weight: 700; }
+.roi-disclaimer {
+  font-size: 10.5px;
+  font-style: italic;
+  color: #94a3b8;
+  text-align: center;
+  margin-top: 12px;
+  line-height: 1.4;
+}
+
+/* ── Full Profile (post-payment) — choose About 3000+ OR CV ── */
+.fp-card { display: flex; flex-direction: column; gap: 14px; padding: 4px 0 8px; }
+.fp-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  background: #f1f5f9;
+  border-radius: 10px;
+  padding: 4px;
+}
+.fp-tab {
+  padding: 11px 8px;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all .15s;
+  font-family: inherit;
+  letter-spacing: .3px;
+}
+.fp-tab:hover { color: #0a2540; }
+.fp-tab.active { background: #fff; color: #00b4d8; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+.fp-pane { display: flex; flex-direction: column; gap: 8px; }
+.fp-min-hint { font-size: 11px; font-weight: 500; color: #94a3b8; margin-left: 4px; }
+.fp-counter {
+  font-size: 12px;
+  color: #94a3b8;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.fp-counter span { color: #00b4d8; font-weight: 600; }
+.fp-note {
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.4;
+  padding: 0 4px;
 }

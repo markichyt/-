@@ -43,7 +43,7 @@
     background: #ffffff;
     font-family: 'Inter', system-ui, sans-serif;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     color: #1a1a2e;
     -webkit-font-smoothing: antialiased;
@@ -55,38 +55,12 @@
     width: 360px;
     height: 640px;
     overflow: hidden;
-    border-radius: 22px;
-    background: linear-gradient(180deg, #ffffff 0%, #fafbfc 50%, #f5f7fa 100%);
-    box-shadow: 0 30px 80px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.06);
+    background: #ffffff;
     isolation: isolate;
   }
 
-  /* Soft ambient glow */
-  .canvas::before {
-    content: "";
-    position: absolute;
-    top: 38%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 320px;
-    height: 320px;
-    background: radial-gradient(circle, rgba(0,180,216,0.08) 0%, rgba(0,180,216,0) 65%);
-    pointer-events: none;
-    z-index: 0;
-  }
-  .canvas::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(1px 1px at 20% 18%, rgba(0,180,216,0.15) 50%, transparent 100%),
-      radial-gradient(1px 1px at 80% 12%, rgba(0,180,216,0.1) 50%, transparent 100%),
-      radial-gradient(1px 1px at 70% 88%, rgba(0,180,216,0.12) 50%, transparent 100%),
-      radial-gradient(1px 1px at 12% 78%, rgba(0,180,216,0.1) 50%, transparent 100%),
-      radial-gradient(1px 1px at 50% 6%, rgba(0,180,216,0.08) 50%, transparent 100%);
-    pointer-events: none;
-    z-index: 0;
-  }
+  /* Decorative glows removed for plain-white background */
+  .canvas::before, .canvas::after { display: none; }
 
   /* ----- Logo ----- */
   .logo {
@@ -160,7 +134,7 @@
   /* ----- Heading ----- */
   .headline {
     position: absolute;
-    top: 60px;
+    top: 20px;
     left: 0;
     right: 0;
     padding: 0 24px;
@@ -539,12 +513,13 @@
   .stats {
     display: grid;
     grid-template-columns: 1fr 1px 1fr;
-    gap: 8px;
+    gap: 16px;
     align-items: center;
   }
+  .stats > div { min-width: 0; }
   .divider {
     width: 1px;
-    height: 42px;
+    height: 48px;
     background: #e5e7eb;
     justify-self: center;
   }
@@ -557,19 +532,20 @@
     margin-bottom: 2px;
   }
   .stat-value {
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 800;
     color: #00b4d8;
-    line-height: 1;
+    line-height: 1.1;
     letter-spacing: -0.02em;
     font-variant-numeric: tabular-nums;
+    white-space: nowrap;
   }
   .stat-value .currency {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
     margin-right: 1px;
     vertical-align: top;
-    line-height: 1.5;
+    line-height: 1.6;
   }
   .stat-trend {
     margin-top: 6px;
