@@ -107,7 +107,18 @@
 
   // ---- Slide definitions ----
   var slides = [
-    // 1. profession
+    // 1. quickContact — name + email + phone + photo (now FIRST — early lead capture)
+    { type:'formWithFiles', id:'quickContact',
+      q:'Let\'s get to <span class="accent">know you</span>',
+      sub:'Quick intro before we build your personalized plan',
+      fields:[
+        {label:'First Name', field:'first_name', type:'text', ph:'John'},
+        {label:'Last Name', field:'last_name', type:'text', ph:'Davis'},
+        {label:'Email', field:'email', type:'email', ph:'john@example.com'},
+        {label:'Phone', field:'phone', type:'tel', ph:'+380 67 123 45 67'},
+        {label:'Your photo', field:'photo_name', type:'file', accept:'image/*'}
+      ] },
+    // 2. profession
     { type:'radio', field:'profession',
       q:'Which best describes your <span class="accent">profession?</span>',
       sub:'Select your area of expertise',
@@ -120,11 +131,11 @@
         {v:'tax_specialist',t:'Tax Specialist',icon:'dollar',color:'#14b8a6'},
         {v:'other',t:'Other',icon:'briefcase',color:'#64748b'}
       ]},
-    // 2. socialProof video
+    // 3. socialProof video
     { type:'card', id:'videoProof', q:'', sub:'' },
-    // 3. zip
+    // 4. city
     { type:'city', field:'city', q:'Your <span class="accent">work city?</span>', sub:'Pick from the list or type any US city' },
-    // 4. role
+    // 5. role
     { type:'radio', field:'role', q:'Which best describes your <span class="accent">role?</span>', sub:'Help us personalize your experience',
       options:[
         {v:'self_employed',t:'Self-employed / Working independently',icon:'user',color:'#3b82f6'},
@@ -132,7 +143,7 @@
         {v:'executive',t:'Company executive / Manager',icon:'crown',color:'#f59e0b'},
         {v:'founder',t:'Founder / Business owner',icon:'rocket',color:'#10b981'}
       ]},
-    // 5. services (filtered + select all)
+    // 6. services (filtered + select all)
     { type:'checkbox', field:'services', q:'What services do you <span class="accent">provide?</span>', sub:'Select all that apply',
       options:[
         {v:'banking_finance',     t:'Banking and Finance',  icon:'dollar',    color:'#3b82f6'},
@@ -147,17 +158,6 @@
         {v:'employment',          t:'Employment',           icon:'user',      color:'#14b8a6'},
         {v:'immigration_law',     t:'Immigration Law',      icon:'globe',     color:'#0284c7'}
       ]},
-    // 6. quickContact — name + email + phone + photo before AI calc (early capture)
-    { type:'formWithFiles', id:'quickContact',
-      q:'Let\'s get to <span class="accent">know you</span>',
-      sub:'A few quick details before we calculate your potential',
-      fields:[
-        {label:'First Name', field:'first_name', type:'text', ph:'John'},
-        {label:'Last Name', field:'last_name', type:'text', ph:'Davis'},
-        {label:'Email', field:'email', type:'email', ph:'john@example.com'},
-        {label:'Phone', field:'phone', type:'tel', ph:'+1 (555) 123-4567'},
-        {label:'Your photo', field:'photo_name', type:'file', accept:'image/*'}
-      ] },
     // 7. aiCalc
     { type:'card', id:'aiCalc', q:'Your <span class="accent">AI-powered</span> potential', sub:'Based on your data, our AI calculated your potential on ConsultantLM' },
     // 10. channels
@@ -273,8 +273,13 @@
   }
 
   function updateUI() {
-    if (current > 1) backBtn.classList.add('visible');
-    else backBtn.classList.remove('visible');
+    // Step counter replaces Back link — show current step / total
+    if (backBtn) {
+      backBtn.textContent = 'ШАГ ' + Math.max(1, current) + ' / ' + TOTAL;
+      backBtn.classList.add('visible');
+      backBtn.style.cursor = 'default';
+      backBtn.style.pointerEvents = 'none';
+    }
     updateGlobalScale();
   }
 
@@ -475,7 +480,8 @@
     swipeAndRender('left');
   }
 
-  backBtn.addEventListener('click', function() { goBack(); });
+  // backBtn click disabled — it's now a step counter, not a back link
+  // backBtn.addEventListener('click', function() { goBack(); });
 
   // ---- Render slide (compatibility wrapper) ----
   function renderSlide(n) {
@@ -695,6 +701,37 @@
   }
 
   // ---- FormWithFiles (flexible mix of text/email/tel/textarea/file inputs, no blocking validation) ----
+  // Country codes + phone format masks
+  // mask: literal '#' becomes a digit slot; everything else is literal
+  var COUNTRY_CODES = {
+    UA: { name: 'Україна',         flag: '🇺🇦', code: '+380', mask: '## ### ## ##',   digits: 9,  ph: '67 123 45 67',     max: 14 },
+    US: { name: 'United States',   flag: '🇺🇸', code: '+1',   mask: '(###) ###-####', digits: 10, ph: '(555) 123-4567',   max: 14 },
+    GB: { name: 'United Kingdom',  flag: '🇬🇧', code: '+44',  mask: '## #### ####',   digits: 10, ph: '20 7946 0958',     max: 13 },
+    PL: { name: 'Polska',          flag: '🇵🇱', code: '+48',  mask: '### ### ###',    digits: 9,  ph: '512 345 678',      max: 11 },
+    DE: { name: 'Deutschland',     flag: '🇩🇪', code: '+49',  mask: '### #######',    digits: 10, ph: '152 1234567',      max: 11 },
+    FR: { name: 'France',          flag: '🇫🇷', code: '+33',  mask: '# ## ## ## ##',  digits: 9,  ph: '6 12 34 56 78',    max: 13 },
+    IT: { name: 'Italia',          flag: '🇮🇹', code: '+39',  mask: '### ### ####',   digits: 10, ph: '312 345 6789',     max: 12 },
+    ES: { name: 'España',          flag: '🇪🇸', code: '+34',  mask: '### ### ###',    digits: 9,  ph: '612 345 678',      max: 11 },
+    CZ: { name: 'Česko',           flag: '🇨🇿', code: '+420', mask: '### ### ###',    digits: 9,  ph: '601 234 567',      max: 11 },
+    AE: { name: 'United Arab Em.', flag: '🇦🇪', code: '+971', mask: '## ### ####',    digits: 9,  ph: '50 123 4567',      max: 11 },
+    IL: { name: 'Israel',          flag: '🇮🇱', code: '+972', mask: '## ### ####',    digits: 9,  ph: '50 123 4567',      max: 11 },
+    CA: { name: 'Canada',          flag: '🇨🇦', code: '+1',   mask: '(###) ###-####', digits: 10, ph: '(416) 555-1234',   max: 14 },
+    AU: { name: 'Australia',       flag: '🇦🇺', code: '+61',  mask: '### ### ###',    digits: 9,  ph: '412 345 678',      max: 11 }
+  };
+
+  function formatPhone(digits, mask) {
+    var out = '';
+    var di = 0;
+    for (var i = 0; i < mask.length && di < digits.length; i++) {
+      if (mask[i] === '#') {
+        out += digits[di++];
+      } else {
+        out += mask[i];
+      }
+    }
+    return out;
+  }
+
   // Autocomplete map — drives browser/OS suggestion behavior on inputs
   var AUTOCOMPLETE_MAP = {
     first_name:    'given-name',
@@ -727,6 +764,13 @@
           var v = (quizData[f.field] || '').trim();
           return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
         }
+        if (f.type === 'tel') {
+          // Phone field: require full number of digits per selected country
+          var stored = (quizData[f.field] || '').replace(/\D/g, '');
+          var countryCode = (COUNTRY_CODES[quizData.phone_country || 'UA'].code || '').replace(/\D/g, '');
+          var local = stored.indexOf(countryCode) === 0 ? stored.slice(countryCode.length) : stored;
+          return local.length >= (COUNTRY_CODES[quizData.phone_country || 'UA'].digits || 9);
+        }
         return !!(quizData[f.field] && String(quizData[f.field]).trim());
       };
 
@@ -747,6 +791,7 @@
             lbl.textContent = name;
             area.classList.add('uploaded');
             grp.classList.remove('form-group--invalid');
+            updateBtnState();
           }
         });
         if (quizData[f.field]) area.classList.add('uploaded');
@@ -763,9 +808,83 @@
         ta.addEventListener('input', function() {
           quizData[f.field] = ta.value;
           if (isValid()) grp.classList.remove('form-group--invalid');
+          updateBtnState();
         });
         grp.appendChild(ta);
         controlEl = ta;
+      } else if (f.type === 'tel') {
+        // Phone field — country code picker + format mask
+        var phoneWrap = el('div', 'phone-wrap');
+        var ccBtn = el('button', 'phone-cc', '');
+        ccBtn.type = 'button';
+        var ccFlag = el('span', 'phone-cc-flag', '');
+        var ccCode = el('span', 'phone-cc-code', '');
+        var ccChev = el('span', 'phone-cc-chev', '&#9662;');
+        ccBtn.appendChild(ccFlag); ccBtn.appendChild(ccCode); ccBtn.appendChild(ccChev);
+
+        var phoneInp = document.createElement('input');
+        phoneInp.type = 'tel';
+        phoneInp.className = 'card-input phone-input';
+        phoneInp.name = f.field;
+        phoneInp.autocomplete = 'tel-national';
+        phoneInp.inputMode = 'tel';
+
+        // Detect current country from quizData (or default Ukraine)
+        var currentCC = quizData.phone_country || 'UA';
+        function applyCountry(cc) {
+          var c = COUNTRY_CODES[cc] || COUNTRY_CODES.UA;
+          currentCC = cc;
+          quizData.phone_country = cc;
+          ccFlag.textContent = c.flag;
+          ccCode.textContent = c.code;
+          phoneInp.placeholder = c.ph;
+          phoneInp.maxLength = c.max;
+          // Re-apply mask to existing value
+          var raw = (phoneInp.value || '').replace(/\D/g, '');
+          phoneInp.value = formatPhone(raw, c.mask);
+          quizData[f.field] = c.code + ' ' + phoneInp.value;
+          updateBtnState();
+        }
+        applyCountry(currentCC);
+        if (quizData[f.field]) {
+          // strip country code prefix if present
+          var stored = quizData[f.field].replace(COUNTRY_CODES[currentCC].code, '').trim();
+          phoneInp.value = formatPhone(stored.replace(/\D/g, ''), COUNTRY_CODES[currentCC].mask);
+        }
+
+        phoneInp.addEventListener('input', function() {
+          var c = COUNTRY_CODES[currentCC];
+          var raw = phoneInp.value.replace(/\D/g, '').slice(0, c.digits);
+          phoneInp.value = formatPhone(raw, c.mask);
+          quizData[f.field] = c.code + ' ' + phoneInp.value;
+          if (isValid()) grp.classList.remove('form-group--invalid');
+          updateBtnState();
+        });
+
+        // Dropdown for country picker
+        var ccList = el('div', 'phone-cc-list', '');
+        ccList.style.display = 'none';
+        Object.keys(COUNTRY_CODES).forEach(function(cc) {
+          var c = COUNTRY_CODES[cc];
+          var item = el('div', 'phone-cc-item', '<span class="phone-cc-flag">' + c.flag + '</span><span class="phone-cc-name">' + c.name + '</span><span class="phone-cc-code">' + c.code + '</span>');
+          item.addEventListener('click', function(e) {
+            e.stopPropagation();
+            applyCountry(cc);
+            ccList.style.display = 'none';
+          });
+          ccList.appendChild(item);
+        });
+        ccBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          ccList.style.display = ccList.style.display === 'none' ? 'block' : 'none';
+        });
+        document.addEventListener('click', function() { ccList.style.display = 'none'; });
+
+        phoneWrap.appendChild(ccBtn);
+        phoneWrap.appendChild(phoneInp);
+        phoneWrap.appendChild(ccList);
+        grp.appendChild(phoneWrap);
+        controlEl = phoneInp;
       } else {
         var inp = document.createElement('input');
         inp.type = f.type || 'text';
@@ -774,11 +893,11 @@
         inp.name = f.field;
         inp.autocomplete = f.autocomplete || AUTOCOMPLETE_MAP[f.field] || 'on';
         if (f.field === 'email') inp.inputMode = 'email';
-        if (f.type === 'tel') inp.inputMode = 'tel';
         if (quizData[f.field]) inp.value = quizData[f.field];
         inp.addEventListener('input', function() {
           quizData[f.field] = inp.value;
           if (isValid()) grp.classList.remove('form-group--invalid');
+          updateBtnState();
         });
         grp.appendChild(inp);
         controlEl = inp;
@@ -788,7 +907,13 @@
     });
 
     var btn = el('button', 'card-btn', 'Continue &rarr;');
+    function updateBtnState() {
+      var allValid = groups.every(function(g) { return g.isValid(); });
+      btn.disabled = !allValid;
+    }
+    updateBtnState();
     btn.addEventListener('click', function() {
+      if (btn.disabled) return;
       var firstInvalid = null;
       groups.forEach(function(g) {
         if (g.isValid()) {
@@ -2380,10 +2505,10 @@
     timerInterval = setInterval(tick, 1000);
   }
 
-  // ---- Keyboard nav ----
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && current > 1) goBack();
-  });
+  // ---- Keyboard nav (back navigation disabled per UX decision) ----
+  // document.addEventListener('keydown', function(e) {
+  //   if (e.key === 'Escape' && current > 1) goBack();
+  // });
 
   // ---- Start ----
   advance();

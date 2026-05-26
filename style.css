@@ -90,7 +90,14 @@ body {
   transition: opacity 0.3s;
 }
 .back-link.visible { opacity: 1; }
-.back-link:hover { color: #cbd5e1; }
+/* Step-counter mode — no hover interaction */
+.back-link {
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: #94A3B8;
+}
 
 /* ---- Logo ---- */
 .logo-area {
@@ -2246,4 +2253,68 @@ textarea.card-input {
   color: #64748b;
   line-height: 1.4;
   padding: 0 4px;
+}
+
+/* ── Phone field with country picker ── */
+.phone-wrap {
+  position: relative;
+  display: flex;
+  gap: 6px;
+  width: 100%;
+}
+.phone-cc {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 10px;
+  height: 44px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #0a2540;
+  font-family: inherit;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.phone-cc:hover { border-color: #00b4d8; background: #fff; }
+.phone-cc-flag { font-size: 18px; line-height: 1; }
+.phone-cc-code { font-weight: 600; }
+.phone-cc-chev { color: #64748b; font-size: 10px; margin-left: 2px; }
+.phone-input { flex: 1 1 auto; min-width: 0; }
+.phone-cc-list {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 280px;
+  max-height: 260px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.10);
+  z-index: 100;
+}
+.phone-cc-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 13px;
+  border-bottom: 1px solid #f1f5f9;
+}
+.phone-cc-item:hover { background: #f1f5f9; }
+.phone-cc-item:last-child { border-bottom: none; }
+.phone-cc-item .phone-cc-flag { font-size: 18px; }
+.phone-cc-item .phone-cc-name { flex: 1 1 auto; color: #0a2540; }
+.phone-cc-item .phone-cc-code { color: #64748b; font-weight: 500; }
+
+/* Disabled card-btn state */
+.card-btn:disabled,
+.card-btn[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
 }
