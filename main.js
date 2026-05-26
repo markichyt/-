@@ -275,7 +275,7 @@
   function updateUI() {
     // Step counter replaces Back link — show current step / total
     if (backBtn) {
-      backBtn.textContent = 'ШАГ ' + Math.max(1, current) + ' / ' + TOTAL;
+      backBtn.textContent = 'STEP ' + Math.max(1, current) + ' / ' + TOTAL;
       backBtn.classList.add('visible');
       backBtn.style.cursor = 'default';
       backBtn.style.pointerEvents = 'none';
@@ -908,6 +908,7 @@
 
     var btn = el('button', 'card-btn', 'Continue &rarr;');
     function updateBtnState() {
+      if (!btn) return;  // guard for calls during initial render
       var allValid = groups.every(function(g) { return g.isValid(); });
       btn.disabled = !allValid;
     }
