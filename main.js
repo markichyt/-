@@ -237,17 +237,16 @@
         {v:'more',t:'More than 1 hour',icon:'clock',color:'#f59e0b'}
       ]},
     // 25. fullProfile — email already captured in quickContact (step 6); ZIP not required here
-    // (fullProfile moved to AFTER payment)
-    // 25. assessment
+    // 21. assessment
     { type:'card', id:'assessment', q:'Your estimated <span class="accent">pipeline value</span>', sub:'Based on your profession, location, services, and goals. Estimates only — not a guarantee.' },
-    // 26. profilesPricing
-    { type:'card', id:'profilesPricing', q:'Choose your <span class="accent">plan</span>', sub:'' },
-    // 27. payment
-    { type:'card', id:'payment', q:'Complete your <span class="accent">purchase</span>', sub:'' },
-    // 28. fullProfile — after payment, user chooses between long About OR CV upload
+    // 22. fullProfile — moved BEFORE pricing: choose between long About OR CV upload
     { type:'card', id:'fullProfile',
       q:'Complete your <span class="accent">profile</span>',
-      sub:'Choose one — write a detailed bio (3 000+ characters) or upload your CV. Our AI will generate the rest.' }
+      sub:'Choose one — write a detailed bio (3 000+ characters) or upload your CV. Our AI will generate the rest.' },
+    // 23. profilesPricing
+    { type:'card', id:'profilesPricing', q:'Choose your <span class="accent">plan</span>', sub:'' },
+    // 24. payment — single final submit happens here
+    { type:'card', id:'payment', q:'Complete your <span class="accent">purchase</span>', sub:'' }
   ];
 
   var TOTAL = slides.length;
@@ -1672,7 +1671,7 @@
     errEl.style.cssText = 'color:#ef4444;font-size:12px;text-align:center;margin-top:8px;display:none';
     wrap.appendChild(errEl);
 
-    var btn = el('button', 'card-btn', 'Finish &rarr;');
+    var btn = el('button', 'card-btn', 'Continue &rarr;');
     btn.addEventListener('click', function() {
       var valid = false;
       var msg = '';
@@ -1690,11 +1689,8 @@
         return;
       }
       errEl.style.display = 'none';
-      // Submit final profile completion to backend
-      submitQuizData(function(ok) {
-        if (ok) { try { localStorage.removeItem(STORAGE_KEY); } catch (e) {} }
-        advance();
-      });
+      // No submit here — fullProfile is now BEFORE payment; final POST happens on Pay click.
+      advance();
     });
     wrap.appendChild(actionBar(btn));
   }
