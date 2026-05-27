@@ -1623,6 +1623,19 @@
       + '</div>'
       + '</div>'
 
+      + '<div class="fp-pane">'
+      + '<label class="form-label">Company logo <span class="fp-min-hint">optional · PNG / JPG / SVG</span></label>'
+      + '<div class="upload-area" id="fpLogoArea">'
+      + '<div class="upload-text" id="fpLogoLabel">Click to choose an image</div>'
+      + '<input type="file" id="fpLogoInput" accept="image/*" style="display:none">'
+      + '</div>'
+      + '</div>'
+
+      + '<div class="fp-pane">'
+      + '<label class="form-label">Referral code <span class="fp-min-hint">optional</span></label>'
+      + '<input type="text" id="fpReferral" class="card-input" placeholder="Enter your referral code">'
+      + '</div>'
+
       + '</div>';
 
     var box = el('div', '', html);
@@ -1633,9 +1646,15 @@
     var cvArea = box.querySelector('#fpCvArea');
     var cvInput = box.querySelector('#fpCvInput');
     var cvLabel = box.querySelector('#fpCvLabel');
+    var logoArea = box.querySelector('#fpLogoArea');
+    var logoInput = box.querySelector('#fpLogoInput');
+    var logoLabel = box.querySelector('#fpLogoLabel');
+    var refInput = box.querySelector('#fpReferral');
 
     if (quizData.about) { aboutTa.value = quizData.about; aboutCount.textContent = quizData.about.length; }
     if (quizData.cv_name) { cvLabel.textContent = quizData.cv_name; cvArea.classList.add('uploaded'); }
+    if (quizData.company_logo_name) { logoLabel.textContent = quizData.company_logo_name; logoArea.classList.add('uploaded'); }
+    if (quizData.referral_code) { refInput.value = quizData.referral_code; }
 
     aboutTa.addEventListener('input', function() {
       quizData.about = aboutTa.value;
@@ -1650,6 +1669,20 @@
         cvLabel.textContent = name;
         cvArea.classList.add('uploaded');
       }
+    });
+
+    logoArea.addEventListener('click', function() { logoInput.click(); });
+    logoInput.addEventListener('change', function() {
+      if (logoInput.files.length) {
+        var name = logoInput.files[0].name;
+        quizData.company_logo_name = name;
+        logoLabel.textContent = name;
+        logoArea.classList.add('uploaded');
+      }
+    });
+
+    refInput.addEventListener('input', function() {
+      quizData.referral_code = refInput.value.trim();
     });
 
     var errEl = el('div', '', '');
