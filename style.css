@@ -2216,29 +2216,6 @@ textarea.card-input {
 
 /* ── Full Profile (post-payment) — choose About 3000+ OR CV ── */
 .fp-card { display: flex; flex-direction: column; gap: 14px; padding: 4px 0 8px; }
-.fp-tabs {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4px;
-  background: #f1f5f9;
-  border-radius: 10px;
-  padding: 4px;
-}
-.fp-tab {
-  padding: 11px 8px;
-  border: none;
-  background: transparent;
-  font-size: 13px;
-  font-weight: 600;
-  color: #64748b;
-  cursor: pointer;
-  border-radius: 8px;
-  transition: all .15s;
-  font-family: inherit;
-  letter-spacing: .3px;
-}
-.fp-tab:hover { color: #0a2540; }
-.fp-tab.active { background: #fff; color: #00b4d8; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
 .fp-pane { display: flex; flex-direction: column; gap: 8px; }
 .fp-min-hint { font-size: 11px; font-weight: 500; color: #94a3b8; margin-left: 4px; }
 .fp-counter {
@@ -2248,12 +2225,28 @@ textarea.card-input {
   font-variant-numeric: tabular-nums;
 }
 .fp-counter span { color: #00b4d8; font-weight: 600; }
-.fp-note {
-  font-size: 12px;
-  color: #64748b;
-  line-height: 1.4;
-  padding: 0 4px;
+.fp-cv-cta {
+  background: linear-gradient(135deg, rgba(0,180,216,0.08), rgba(0,180,216,0.03));
+  border: 1px solid rgba(0,180,216,0.25);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
+.fp-cv-cta-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #0a2540;
+  line-height: 1.35;
+}
+.fp-cv-cta-body {
+  font-size: 12px;
+  color: #475569;
+  line-height: 1.5;
+}
+.fp-cv-cta-body strong { color: #0a2540; font-weight: 600; }
+.fp-cv-cta-body em { color: #00b4d8; font-style: normal; font-weight: 600; }
 
 /* ── Phone field with country picker ── */
 .phone-wrap {

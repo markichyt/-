@@ -1603,54 +1603,39 @@
 
     var html = ''
       + '<div class="fp-card">'
-      + '<div class="fp-tabs">'
-      + '<button type="button" class="fp-tab active" data-fp="about">Write about yourself</button>'
-      + '<button type="button" class="fp-tab" data-fp="cv">Upload CV</button>'
-      + '</div>'
-      + '<div class="fp-pane fp-pane-about" data-fp="about">'
-      + '<label class="form-label">About yourself <span class="fp-min-hint">minimum ' + MIN_CHARS + ' characters</span></label>'
+
+      + '<div class="fp-pane">'
+      + '<label class="form-label">About yourself <em class="form-req">*</em> <span class="fp-min-hint">minimum ' + MIN_CHARS + ' characters</span></label>'
       + '<textarea id="fpAbout" class="card-input" rows="10" placeholder="Tell us about your experience, education, achievements, notable cases, certifications, awards…"></textarea>'
       + '<div class="fp-counter"><span id="fpCount">0</span> / ' + MIN_CHARS + '</div>'
       + '</div>'
-      + '<div class="fp-pane fp-pane-cv" data-fp="cv" hidden>'
-      + '<label class="form-label">Upload your CV <em class="form-req">*</em></label>'
+
+      + '<div class="fp-cv-cta">'
+      + '<div class="fp-cv-cta-title">📄 Have a CV? Upload it — your AI profile will be far more accurate</div>'
+      + '<div class="fp-cv-cta-body">Our AI generates your public profile <strong>directly from your CV in English</strong>. The richer your CV, the stronger your profile: full experience, education, certifications, notable cases and achievements are extracted automatically. <em>Optional, but strongly recommended.</em></div>'
+      + '</div>'
+
+      + '<div class="fp-pane">'
+      + '<label class="form-label">Upload your CV <span class="fp-min-hint">optional · .pdf / .doc / .docx</span></label>'
       + '<div class="upload-area" id="fpCvArea">'
       + '<div class="upload-text" id="fpCvLabel">Click to choose .pdf / .doc / .docx</div>'
       + '<input type="file" id="fpCvInput" accept=".pdf,.doc,.docx" style="display:none">'
       + '</div>'
-      + '<div class="fp-note">CV will be processed by AI to extract your experience, education and achievements.</div>'
       + '</div>'
+
       + '</div>';
 
     var box = el('div', '', html);
     wrap.appendChild(box);
 
-    var aboutPane = box.querySelector('.fp-pane-about');
-    var cvPane = box.querySelector('.fp-pane-cv');
     var aboutTa = box.querySelector('#fpAbout');
     var aboutCount = box.querySelector('#fpCount');
     var cvArea = box.querySelector('#fpCvArea');
     var cvInput = box.querySelector('#fpCvInput');
     var cvLabel = box.querySelector('#fpCvLabel');
-    var tabs = box.querySelectorAll('.fp-tab');
 
     if (quizData.about) { aboutTa.value = quizData.about; aboutCount.textContent = quizData.about.length; }
     if (quizData.cv_name) { cvLabel.textContent = quizData.cv_name; cvArea.classList.add('uploaded'); }
-
-    var currentChoice = quizData.profile_method || 'about';
-
-    function activate(method) {
-      currentChoice = method;
-      quizData.profile_method = method;
-      tabs.forEach(function(t) { t.classList.toggle('active', t.getAttribute('data-fp') === method); });
-      aboutPane.hidden = (method !== 'about');
-      cvPane.hidden = (method !== 'cv');
-    }
-    activate(currentChoice);
-
-    tabs.forEach(function(t) {
-      t.addEventListener('click', function() { activate(t.getAttribute('data-fp')); });
-    });
 
     aboutTa.addEventListener('input', function() {
       quizData.about = aboutTa.value;
@@ -1673,22 +1658,14 @@
 
     var btn = el('button', 'card-btn', 'Continue &rarr;');
     btn.addEventListener('click', function() {
-      var valid = false;
-      var msg = '';
-      if (currentChoice === 'about') {
-        var len = (aboutTa.value || '').trim().length;
-        if (len >= MIN_CHARS) valid = true;
-        else msg = 'About yourself must be at least ' + MIN_CHARS + ' characters (you have ' + len + ').';
-      } else {
-        if (quizData.cv_name) valid = true;
-        else msg = 'Please upload your CV (.pdf, .doc or .docx).';
-      }
-      if (!valid) {
-        errEl.textContent = msg;
+      var len = (aboutTa.value || '').trim().length;
+      if (len < MIN_CHARS) {
+        errEl.textContent = 'About yourself must be at least ' + MIN_CHARS + ' characters (you have ' + len + ').';
         errEl.style.display = 'block';
         return;
       }
       errEl.style.display = 'none';
+      quizData.profile_method = quizData.cv_name ? 'about_and_cv' : 'about';
       // No submit here — fullProfile is now BEFORE payment; final POST happens on Pay click.
       advance();
     });
