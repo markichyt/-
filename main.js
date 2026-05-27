@@ -1604,15 +1604,21 @@
     var html = ''
       + '<div class="fp-card">'
 
+      + '<div class="fp-progress">'
+      + '<div class="fp-progress-row"><span class="fp-progress-label">Profile strength</span><span class="fp-progress-pct" id="fpPct">0%</span></div>'
+      + '<div class="fp-progress-bar"><div class="fp-progress-fill" id="fpFill"></div></div>'
+      + '<div class="fp-progress-hint" id="fpHint">Add details below — the more you share, the stronger your AI profile</div>'
+      + '</div>'
+
       + '<div class="fp-pane">'
-      + '<label class="form-label">About yourself <em class="form-req">*</em> <span class="fp-min-hint">minimum ' + MIN_CHARS + ' characters</span></label>'
+      + '<label class="form-label">About yourself <span class="fp-min-hint">3000+ characters recommended</span></label>'
       + '<textarea id="fpAbout" class="card-input" rows="10" placeholder="Tell us about your experience, education, achievements, notable cases, certifications, awards…"></textarea>'
       + '<div class="fp-counter"><span id="fpCount">0</span> / ' + MIN_CHARS + '</div>'
       + '</div>'
 
       + '<div class="fp-cv-cta">'
-      + '<div class="fp-cv-cta-title">📄 Have a CV? Upload it — your AI profile will be far more accurate</div>'
-      + '<div class="fp-cv-cta-body">Our AI generates your public profile <strong>directly from your CV in English</strong>. The richer your CV, the stronger your profile: full experience, education, certifications, notable cases and achievements are extracted automatically. <em>Optional, but strongly recommended.</em></div>'
+      + '<div class="fp-cv-cta-title">📄 Got a CV? Upload it — boosts your profile strength by 30%</div>'
+      + '<div class="fp-cv-cta-body">Our AI generates your public profile <strong>directly from your CV in English</strong>. Full experience, education, certifications, notable cases and achievements are extracted automatically. <em>Optional, but strongly recommended.</em></div>'
       + '</div>'
 
       + '<div class="fp-pane">'
@@ -1636,6 +1642,19 @@
       + '<input type="text" id="fpReferral" class="card-input" placeholder="Enter your referral code">'
       + '</div>'
 
+      + '</div>'
+
+      + '<div class="fp-skip-modal" id="fpSkipModal" hidden>'
+      + '<div class="fp-skip-modal-overlay"></div>'
+      + '<div class="fp-skip-modal-card">'
+      + '<div class="fp-skip-modal-icon">⚠️</div>'
+      + '<div class="fp-skip-modal-title">Hold on — your profile will be too weak</div>'
+      + '<div class="fp-skip-modal-body">Without a <strong>bio</strong> or a <strong>CV</strong>, our AI cannot build a competitive profile for you. Lawyers who skip this step receive <strong>significantly fewer client inquiries</strong> on ConsultantLM.<br><br>This takes 2 minutes and dramatically improves your results.</div>'
+      + '<div class="fp-skip-modal-actions">'
+      + '<button type="button" class="fp-skip-back" id="fpSkipBack">← Go back and fill it in</button>'
+      + '<button type="button" class="fp-skip-confirm" id="fpSkipConfirm">Skip anyway</button>'
+      + '</div>'
+      + '</div>'
       + '</div>';
 
     var box = el('div', '', html);
@@ -1650,15 +1669,53 @@
     var logoInput = box.querySelector('#fpLogoInput');
     var logoLabel = box.querySelector('#fpLogoLabel');
     var refInput = box.querySelector('#fpReferral');
+    var pctEl = box.querySelector('#fpPct');
+    var fillEl = box.querySelector('#fpFill');
+    var hintEl = box.querySelector('#fpHint');
+    var modalEl = box.querySelector('#fpSkipModal');
+    var modalBack = box.querySelector('#fpSkipBack');
+    var modalConfirm = box.querySelector('#fpSkipConfirm');
 
     if (quizData.about) { aboutTa.value = quizData.about; aboutCount.textContent = quizData.about.length; }
     if (quizData.cv_name) { cvLabel.textContent = quizData.cv_name; cvArea.classList.add('uploaded'); }
     if (quizData.company_logo_name) { logoLabel.textContent = quizData.company_logo_name; logoArea.classList.add('uploaded'); }
     if (quizData.referral_code) { refInput.value = quizData.referral_code; }
 
+    // ── Profile strength: CV=30, About=up to 50 (gradual), Logo=10, Referral=10 ──
+    function calcStrength() {
+      var aboutChars = (aboutTa.value || '').trim().length;
+      var aboutScore = Math.min(aboutChars / MIN_CHARS, 1) * 50;
+      var cvScore = quizData.cv_name ? 30 : 0;
+      var logoScore = quizData.company_logo_name ? 10 : 0;
+      var refScore = (quizData.referral_code && quizData.referral_code.length > 0) ? 10 : 0;
+      return Math.round(aboutScore + cvScore + logoScore + refScore);
+    }
+
+    function updateProgress() {
+      var pct = calcStrength();
+      pctEl.textContent = pct + '%';
+      fillEl.style.width = pct + '%';
+      fillEl.classList.remove('low', 'mid', 'high');
+      hintEl.classList.remove('low', 'mid', 'high');
+      if (pct >= 70) {
+        fillEl.classList.add('high');
+        hintEl.classList.add('high');
+        hintEl.textContent = '✓ Strong profile — AI will produce excellent results';
+      } else if (pct >= 40) {
+        fillEl.classList.add('mid');
+        hintEl.classList.add('mid');
+        hintEl.textContent = 'Good start — add more details to maximize AI quality';
+      } else {
+        fillEl.classList.add('low');
+        hintEl.classList.add('low');
+        hintEl.textContent = 'Add details below — the more you share, the stronger your AI profile';
+      }
+    }
+
     aboutTa.addEventListener('input', function() {
       quizData.about = aboutTa.value;
       aboutCount.textContent = aboutTa.value.length;
+      updateProgress();
     });
 
     cvArea.addEventListener('click', function() { cvInput.click(); });
@@ -1668,6 +1725,7 @@
         quizData.cv_name = name;
         cvLabel.textContent = name;
         cvArea.classList.add('uploaded');
+        updateProgress();
       }
     });
 
@@ -1678,31 +1736,53 @@
         quizData.company_logo_name = name;
         logoLabel.textContent = name;
         logoArea.classList.add('uploaded');
+        updateProgress();
       }
     });
 
     refInput.addEventListener('input', function() {
       quizData.referral_code = refInput.value.trim();
+      updateProgress();
     });
 
-    var errEl = el('div', '', '');
-    errEl.style.cssText = 'color:#ef4444;font-size:12px;text-align:center;margin-top:8px;display:none';
-    wrap.appendChild(errEl);
+    function proceed() {
+      var hasAbout = (aboutTa.value || '').trim().length >= MIN_CHARS;
+      var hasCV = !!quizData.cv_name;
+      quizData.profile_method = hasAbout && hasCV ? 'about_and_cv'
+                              : hasAbout ? 'about'
+                              : hasCV ? 'cv_only'
+                              : 'skipped';
+      // No submit here — fullProfile is now BEFORE payment; final POST happens on Pay click.
+      advance();
+    }
+
+    modalBack.addEventListener('click', function() {
+      modalEl.hidden = true;
+      modalEl.classList.remove('open');
+      aboutTa.focus();
+    });
+    modalConfirm.addEventListener('click', function() {
+      modalEl.hidden = true;
+      modalEl.classList.remove('open');
+      proceed();
+    });
 
     var btn = el('button', 'card-btn', 'Continue &rarr;');
     btn.addEventListener('click', function() {
-      var len = (aboutTa.value || '').trim().length;
-      if (len < MIN_CHARS) {
-        errEl.textContent = 'About yourself must be at least ' + MIN_CHARS + ' characters (you have ' + len + ').';
-        errEl.style.display = 'block';
+      var hasAbout = (aboutTa.value || '').trim().length >= MIN_CHARS;
+      var hasCV = !!quizData.cv_name;
+      if (!hasAbout && !hasCV) {
+        modalEl.hidden = false;
+        // Force reflow so the open class animation runs
+        void modalEl.offsetWidth;
+        modalEl.classList.add('open');
         return;
       }
-      errEl.style.display = 'none';
-      quizData.profile_method = quizData.cv_name ? 'about_and_cv' : 'about';
-      // No submit here — fullProfile is now BEFORE payment; final POST happens on Pay click.
-      advance();
+      proceed();
     });
     wrap.appendChild(actionBar(btn));
+
+    updateProgress();
   }
 
   // ---- Assessment ----
