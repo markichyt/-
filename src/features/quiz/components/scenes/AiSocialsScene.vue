@@ -1,0 +1,483 @@
+<script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
+import SceneCanvas from './SceneCanvas.vue'
+
+// Native Vue rebuild of htmlTOvideo/3 — the "AI Socials Promo" scene.
+// Content is authored at 360px width and wrapped by SceneCanvas, which scales
+// it to fill the card and wraps its height tightly. All animations run once and
+// hold their end state, matching the CLM-NOLOOP-FIX.
+
+// Count-up animation for the "40 hrs saved" number (ported from the source
+// script). Runs once: target 40, duration 1154ms, start delay 3615ms,
+// ease-out cubic.
+const counter = ref(0)
+let rafId = null
+
+function runCounter() {
+  const target = 40
+  const duration = 1154
+  const startDelay = 3615
+  const startAt = performance.now() + startDelay
+
+  function tick(now) {
+    const elapsed = now - startAt
+    if (elapsed < 0) {
+      counter.value = 0
+      rafId = requestAnimationFrame(tick)
+      return
+    }
+    const t = Math.min(elapsed / duration, 1)
+    const eased = 1 - Math.pow(1 - t, 3)
+    counter.value = Math.round(eased * target)
+    if (t < 1) rafId = requestAnimationFrame(tick)
+  }
+  rafId = requestAnimationFrame(tick)
+}
+
+onMounted(() => {
+  runCounter()
+})
+onUnmounted(() => {
+  if (rafId) cancelAnimationFrame(rafId)
+})
+</script>
+
+<template>
+  <SceneCanvas>
+    <div class="stage">
+
+      <!-- Headline -->
+      <h1 class="headline">
+        Let AI run your socials<br/>
+        save you <span class="accent">40+ hours/week</span>
+      </h1>
+      <p class="subhead">Always on time. Fully optimized. Zero effort.</p>
+
+      <!-- Feed -->
+      <div class="feed">
+        <!-- Post 1: LinkedIn -->
+        <div class="post p1">
+          <div class="icon linkedin" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.61 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+          </div>
+          <div class="body">
+            <div class="title">5 Things to Know About Property Division in NY</div>
+            <div class="meta">LinkedIn • Article</div>
+          </div>
+          <span class="badge published">
+            <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Published
+          </span>
+        </div>
+
+        <!-- Post 2: Instagram -->
+        <div class="post p2">
+          <div class="icon instagram" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </div>
+          <div class="body">
+            <div class="title">How to Choose the Right Divorce Attorney</div>
+            <div class="meta">Instagram • Reel</div>
+          </div>
+          <span class="badge scheduled">
+            <span class="dot"></span>
+            Scheduled
+          </span>
+        </div>
+
+        <!-- Post 3: TikTok -->
+        <div class="post p3">
+          <div class="icon tiktok" aria-label="TikTok">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M16.5 2c.3 2.6 2 4.5 4.5 4.7v3c-1.7 0-3.3-.5-4.5-1.4v6.4c0 4-3.2 6.7-7 6.7-3.6 0-6.5-2.7-6.5-6.4 0-3.7 3-6.7 6.7-6.7.4 0 .8 0 1.2.1v3.2c-.4-.1-.8-.2-1.2-.2-1.9 0-3.5 1.5-3.5 3.5s1.5 3.5 3.5 3.5 3.5-1.4 3.5-3.4V2h3.3z" fill="#00f2ea" transform="translate(-1,-1)"/>
+              <path d="M16.5 2c.3 2.6 2 4.5 4.5 4.7v3c-1.7 0-3.3-.5-4.5-1.4v6.4c0 4-3.2 6.7-7 6.7-3.6 0-6.5-2.7-6.5-6.4 0-3.7 3-6.7 6.7-6.7.4 0 .8 0 1.2.1v3.2c-.4-.1-.8-.2-1.2-.2-1.9 0-3.5 1.5-3.5 3.5s1.5 3.5 3.5 3.5 3.5-1.4 3.5-3.4V2h3.3z" fill="#ff004f" transform="translate(1,1)"/>
+              <path d="M16.5 2c.3 2.6 2 4.5 4.5 4.7v3c-1.7 0-3.3-.5-4.5-1.4v6.4c0 4-3.2 6.7-7 6.7-3.6 0-6.5-2.7-6.5-6.4 0-3.7 3-6.7 6.7-6.7.4 0 .8 0 1.2.1v3.2c-.4-.1-.8-.2-1.2-.2-1.9 0-3.5 1.5-3.5 3.5s1.5 3.5 3.5 3.5 3.5-1.4 3.5-3.4V2h3.3z" fill="#fff"/>
+            </svg>
+          </div>
+          <div class="body">
+            <div class="title">Client Rights During Custody Battles</div>
+            <div class="meta">TikTok • Short video</div>
+          </div>
+          <span class="badge draft">
+            <span class="dot"></span>
+            Draft
+          </span>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Time saved -->
+      <div class="time-card">
+        <div class="time-head">
+          <span class="time-label">Time Saved · This Week</span>
+          <span class="time-pill"><span class="arrow">▲</span> 38%</span>
+        </div>
+        <div class="time-row">
+          <span class="time-num" id="counter">{{ counter }}</span>
+          <span class="time-unit">hrs saved</span>
+        </div>
+        <p class="time-caption">vs manual posting &amp; content creation</p>
+        <div class="progress">
+          <div class="fill"></div>
+        </div>
+        <div class="progress-meta">
+          <span>0 hrs</span>
+          <span>40 hrs</span>
+        </div>
+      </div>
+
+      <!-- Status -->
+      <div class="status">
+        <span class="pulse"></span>
+        <span class="text"><b>AI</b> is posting right now</span>
+        <span class="dots"><span></span><span></span><span></span></span>
+      </div>
+
+    </div>
+  </SceneCanvas>
+</template>
+
+<style scoped>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+.stage {
+  width: 360px;
+  background: #ffffff;
+  position: relative;
+  overflow: hidden;
+  color: #1a1a2e;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.stage::before, .stage::after { display: none; }
+
+/* ---------- Logo ---------- */
+.logo {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+  margin-bottom: 14px;
+  opacity: 0;
+  animation: fadeUp 0.462s ease-out 0.077s forwards;
+}
+.logo .brand {
+  color: #1a1a2e;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1.4px;
+}
+.logo .sub {
+  color: #94a3b8;
+  font-weight: 400;
+  font-size: 8px;
+  letter-spacing: 1.6px;
+  margin-top: 2px;
+}
+
+/* ---------- Headline ---------- */
+.headline {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.18;
+  color: #1a1a2e;
+  margin-bottom: 6px;
+  opacity: 0;
+  animation: fadeUp 0.462s ease-out 0.192s forwards;
+}
+.headline .accent { color: #00b4d8; }
+
+.subhead {
+  font-size: 13px;
+  font-weight: 400;
+  color: #94a3b8;
+  margin-bottom: 14px;
+  opacity: 0;
+  animation: fadeUp 0.462s ease-out 0.808s forwards;
+}
+
+/* ---------- Posts feed ---------- */
+.feed {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.post {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 11px;
+  background: #f5f7fa;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+  opacity: 0;
+  transform: translateY(-12px);
+}
+.post.p1 { animation: postIn 0.385s ease-out 1.538s forwards; }
+.post.p2 { animation: postIn 0.385s ease-out 1.923s forwards; }
+.post.p3 { animation: postIn 0.385s ease-out 2.308s forwards; }
+
+.post .icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+.icon.linkedin { background: #0a66c2; }
+.icon.instagram { background: linear-gradient(135deg, #f58529 0%, #dd2a7b 50%, #8134af 100%); }
+.icon.tiktok {
+  background: #000;
+  position: relative;
+  overflow: hidden;
+}
+.icon svg { width: 16px; height: 16px; }
+
+.post .body {
+  flex: 1;
+  min-width: 0;
+}
+.post .title {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #1a1a2e;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.post .meta {
+  font-size: 9.5px;
+  color: #64748b;
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+.badge {
+  padding: 4px 9px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 600;
+  flex-shrink: 0;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.badge.published {
+  background: rgba(16,185,129,0.15);
+  color: #10b981;
+  opacity: 0;
+  animation: badgePop 0.385s ease-out 2.077s forwards;
+}
+.badge.scheduled {
+  background: rgba(148,163,184,0.15);
+  color: #94a3b8;
+  opacity: 0;
+  animation: badgePop 0.385s ease-out 2.462s forwards;
+}
+.badge.draft {
+  background: rgba(0,180,216,0.15);
+  color: #00b4d8;
+  opacity: 0;
+  animation: badgePop 0.385s ease-out 2.846s forwards;
+}
+.badge .dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* ---------- Divider ---------- */
+.divider {
+  height: 1px;
+  background: #e5e7eb;
+  margin: 6px 0 14px;
+  opacity: 0;
+  animation: fadeUp 0.385s ease-out 3.231s forwards;
+}
+
+/* ---------- Time saved card ---------- */
+.time-card {
+  background: #f5f7fa;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 14px 14px 13px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+  opacity: 0;
+  animation: fadeUp 0.462s ease-out 3.385s forwards;
+}
+.time-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.time-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #94a3b8;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.time-pill {
+  font-size: 9.5px;
+  font-weight: 600;
+  color: #10b981;
+  background: rgba(16,185,129,0.15);
+  padding: 2px 8px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.time-pill .arrow {
+  display: inline-block;
+  transform: translateY(-1px);
+}
+
+.time-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.time-num {
+  font-size: 42px;
+  font-weight: 800;
+  color: #00b4d8;
+  line-height: 1;
+  letter-spacing: -1px;
+  font-variant-numeric: tabular-nums;
+}
+.time-unit {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+.time-caption {
+  font-size: 11px;
+  color: #64748b;
+  margin-bottom: 12px;
+  line-height: 1.35;
+}
+
+.progress {
+  height: 6px;
+  width: 100%;
+  border-radius: 3px;
+  background: #e5e7eb;
+  overflow: hidden;
+  position: relative;
+}
+.progress .fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #00b4d8, #4cc9f0);
+  border-radius: 3px;
+  box-shadow: 0 0 12px rgba(0,180,216,0.3);
+  animation: progressFill 0.923s cubic-bezier(0.22, 1, 0.36, 1) 3.615s forwards;
+}
+
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-size: 9.5px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* ---------- Footer status ---------- */
+.status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding-top: 12px;
+  opacity: 0;
+  animation: fadeUp 0.385s ease-out 5.0s forwards;
+}
+.status .pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 0 0 rgba(16,185,129,0.6);
+  animation: livePulse 1.5s ease-out infinite;
+}
+.status .text {
+  font-size: 11px;
+  color: #94a3b8;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+}
+.status .text b { color: #1a1a2e; font-weight: 600; margin: 0 4px 0 0; }
+.status .dots {
+  display: inline-flex;
+  gap: 3px;
+  margin-left: 4px;
+}
+.status .dots span {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #00b4d8;
+  animation: blink 1.4s infinite;
+}
+.status .dots span:nth-child(2) { animation-delay: 0.2s; }
+.status .dots span:nth-child(3) { animation-delay: 0.4s; }
+
+/* ---------- Keyframes ---------- */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes postIn {
+  0%   { opacity: 0; transform: translateY(-14px) scale(0.98); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes badgePop {
+  0%   { opacity: 0; transform: scale(0.7); }
+  60%  { opacity: 1; transform: scale(1.08); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes progressFill {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+@keyframes livePulse {
+  0%   { box-shadow: 0 0 0 0 rgba(16,185,129,0.55); }
+  70%  { box-shadow: 0 0 0 10px rgba(16,185,129,0); }
+  100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); }
+}
+@keyframes blink {
+  0%, 100% { opacity: 0.25; transform: scale(0.8); }
+  50%      { opacity: 1; transform: scale(1.1); }
+}
+
+/* ---------- CLM-NOLOOP-FIX ---------- */
+:deep(*),
+:deep(*::before),
+:deep(*::after) {
+  animation-iteration-count: 1 !important;
+  animation-fill-mode: forwards !important;
+}
+</style>

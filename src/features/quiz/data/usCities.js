@@ -1,0 +1,23 @@
+// ~100 largest US cities, used to populate the work-city autocomplete.
+export const usCities = [
+  'New York, NY', 'Los Angeles, CA', 'Chicago, IL', 'Houston, TX', 'Phoenix, AZ',
+  'Philadelphia, PA', 'San Antonio, TX', 'San Diego, CA', 'Dallas, TX', 'San Jose, CA',
+  'Austin, TX', 'Jacksonville, FL', 'Fort Worth, TX', 'Columbus, OH', 'Charlotte, NC',
+  'San Francisco, CA', 'Indianapolis, IN', 'Seattle, WA', 'Denver, CO', 'Washington, DC',
+  'Boston, MA', 'El Paso, TX', 'Nashville, TN', 'Detroit, MI', 'Oklahoma City, OK',
+  'Portland, OR', 'Las Vegas, NV', 'Memphis, TN', 'Louisville, KY', 'Baltimore, MD',
+  'Milwaukee, WI', 'Albuquerque, NM', 'Tucson, AZ', 'Fresno, CA', 'Sacramento, CA',
+  'Kansas City, MO', 'Mesa, AZ', 'Atlanta, GA', 'Omaha, NE', 'Colorado Springs, CO',
+  'Raleigh, NC', 'Miami, FL', 'Long Beach, CA', 'Virginia Beach, VA', 'Oakland, CA',
+  'Minneapolis, MN', 'Tulsa, OK', 'Arlington, TX', 'Tampa, FL', 'New Orleans, LA',
+  'Wichita, KS', 'Cleveland, OH', 'Bakersfield, CA', 'Aurora, CO', 'Anaheim, CA',
+  'Honolulu, HI', 'Santa Ana, CA', 'Riverside, CA', 'Corpus Christi, TX', 'Lexington, KY',
+  'Stockton, CA', 'Henderson, NV', 'Saint Paul, MN', 'St. Louis, MO', 'Cincinnati, OH',
+  'Pittsburgh, PA', 'Greensboro, NC', 'Anchorage, AK', 'Plano, TX', 'Lincoln, NE',
+  'Orlando, FL', 'Irvine, CA', 'Newark, NJ', 'Toledo, OH', 'Durham, NC',
+  'Chula Vista, CA', 'Fort Wayne, IN', 'Jersey City, NJ', 'St. Petersburg, FL', 'Laredo, TX',
+  'Madison, WI', 'Chandler, AZ', 'Buffalo, NY', 'Lubbock, TX', 'Scottsdale, AZ',
+  'Reno, NV', 'Glendale, AZ', 'Gilbert, AZ', 'Winston-Salem, NC', 'North Las Vegas, NV',
+  'Norfolk, VA', 'Chesapeake, VA', 'Garland, TX', 'Irving, TX', 'Hialeah, FL',
+  'Fremont, CA', 'Boise, ID', 'Richmond, VA', 'Baton Rouge, LA', 'Spokane, WA'
+]
