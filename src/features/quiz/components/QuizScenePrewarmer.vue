@@ -1,9 +1,14 @@
-<script setup>
+<script>
 import { allSceneSources } from '../data/videoScenes.js'
 
 // Loads every animation scene into a hidden, off-screen iframe at quiz start so
 // the heavy avatar/scene assets are cached before the user reaches those steps.
-const prewarmSources = allSceneSources.map((src) => encodeURI(src))
+export default {
+  name: 'QuizScenePrewarmer',
+  data() {
+    return { prewarmSources: allSceneSources.map((src) => encodeURI(src)) }
+  }
+}
 </script>
 
 <template>

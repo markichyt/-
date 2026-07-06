@@ -1,19 +1,20 @@
 {
-  "name": "consultantlm-vue-quiz",
+  "name": "consultantlm-vue2-ua-quiz",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "ConsultantLM lead-funnel quiz, ported from the static build to Vue 3.",
+  "description": "ConsultantLM lead-funnel quiz, Vue 2 (Options API), Ukrainian market.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.5.13"
+    "vue": "^2.7.16"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.2.1",
-    "vite": "^6.0.7"
+    "@vitejs/plugin-vue2": "^2.3.3",
+    "vite": "^5.4.11",
+    "vue-template-compiler": "^2.7.16"
   }
 }

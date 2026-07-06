@@ -1,5 +1,9 @@
-import { createApp } from 'vue'
+import Vue from 'vue'
 import './styles/quiz.css'
 import App from './App.vue'
 
-createApp(App).mount('#app')
+Vue.config.productionTip = false
+
+new Vue({
+  render: (h) => h(App)
+}).$mount('#app')

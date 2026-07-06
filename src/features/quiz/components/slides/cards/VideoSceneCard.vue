@@ -1,5 +1,4 @@
-<script setup>
-import { computed } from 'vue'
+<script>
 import { videoSceneSources } from '../../../data/videoScenes.js'
 import { nativeScenes } from '../../scenes/nativeScenes.js'
 
@@ -7,13 +6,21 @@ import { nativeScenes } from '../../scenes/nativeScenes.js'
 // mounted only while the card is active so their one-shot animation replays on
 // entry. Scenes not yet rebuilt fall back to the Phase 1 iframe, whose real
 // source is likewise only loaded while active.
-const props = defineProps({
-  sceneId: { type: String, required: true },
-  active: { type: Boolean, default: false }
-})
-
-const nativeScene = computed(() => nativeScenes[props.sceneId])
-const sceneSrc = computed(() => encodeURI(videoSceneSources[props.sceneId] || ''))
+export default {
+  name: 'VideoSceneCard',
+  props: {
+    sceneId: { type: String, required: true },
+    active: { type: Boolean, default: false }
+  },
+  computed: {
+    nativeScene() {
+      return nativeScenes[this.sceneId]
+    },
+    sceneSrc() {
+      return encodeURI(videoSceneSources[this.sceneId] || '')
+    }
+  }
+}
 </script>
 
 <template>

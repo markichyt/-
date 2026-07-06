@@ -1,5 +1,4 @@
-<script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+<script>
 import { publicAsset } from '../../data/publicAsset.js'
 import SceneCanvas from './SceneCanvas.vue'
 
@@ -35,42 +34,55 @@ const lines = [
   { x1: 140, y1: 140, x2: 22, y2: 72 },
 ]
 
-// ----- Count-up animation (runs once, 5s into the timeline, then holds) -----
-const c1 = ref('0')
-const c2 = ref('0')
-let timer = null
-const rafIds = []
-
 function easeOutCubic(t) {
   return 1 - Math.pow(1 - t, 3)
 }
 
-function runCount(setter, target, duration, isMoney) {
-  const start = performance.now()
-  function frame(now) {
-    const t = Math.min(1, (now - start) / duration)
-    const v = Math.round(target * easeOutCubic(t))
-    setter(isMoney ? v.toLocaleString('en-US') : v.toString())
-    if (t < 1) rafIds.push(requestAnimationFrame(frame))
-  }
-  rafIds.push(requestAnimationFrame(frame))
+export default {
+  name: 'AiAdsScene',
+  components: { SceneCanvas },
+  data() {
+    return {
+      avatarSrc,
+      socials,
+      pulseDots,
+      lines,
+      // ----- Count-up display values (run once, 5s in, then hold) -----
+      c1: '0',
+      c2: '0',
+    }
+  },
+  created() {
+    this._timer = null
+    this._rafIds = []
+  },
+  mounted() {
+    // Original starts counters 5s into the loop; play-once, then hold final state.
+    this._timer = setTimeout(this.startCounters, 5000)
+  },
+  beforeDestroy() {
+    if (this._timer) clearTimeout(this._timer)
+    this._rafIds.forEach((id) => cancelAnimationFrame(id))
+  },
+  methods: {
+    runCount(setter, target, duration, isMoney) {
+      const start = performance.now()
+      const frame = (now) => {
+        const t = Math.min(1, (now - start) / duration)
+        const v = Math.round(target * easeOutCubic(t))
+        setter(isMoney ? v.toLocaleString('uk-UA') : v.toString())
+        if (t < 1) this._rafIds.push(requestAnimationFrame(frame))
+      }
+      this._rafIds.push(requestAnimationFrame(frame))
+    },
+    startCounters() {
+      this.c1 = '0'
+      this.c2 = '0'
+      this.runCount((v) => (this.c1 = v), 47, 1500, false)
+      this.runCount((v) => (this.c2 = v), 5800000, 1700, true)
+    },
+  },
 }
-
-function startCounters() {
-  c1.value = '0'
-  c2.value = '0'
-  runCount((v) => (c1.value = v), 47, 1500, false)
-  runCount((v) => (c2.value = v), 142000, 1700, true)
-}
-
-onMounted(() => {
-  // Original starts counters 5s into the loop; play-once, then hold final state.
-  timer = setTimeout(startCounters, 5000)
-})
-onUnmounted(() => {
-  if (timer) clearTimeout(timer)
-  rafIds.forEach((id) => cancelAnimationFrame(id))
-})
 </script>
 
 <template>
@@ -78,8 +90,8 @@ onUnmounted(() => {
     <div class="canvas" data-screen-label="01 Promo">
       <!-- Headline -->
       <div class="headline">
-        <h1>Turn your practice into <span class="accent">cash flow</span> with AI ads</h1>
-        <p>Autonomous campaigns. Verified inquiries. Zero ad agencies.</p>
+        <h1>Перетворіть свою практику на <span class="accent">потік клієнтів</span> з AI-рекламою</h1>
+        <p>Генеруйте відео та публікуйте — воно саме приводить вам нових клієнтів.</p>
       </div>
 
       <!-- Orbit (fixed-height stage preserving the absolutely-positioned graphic) -->
@@ -108,8 +120,8 @@ onUnmounted(() => {
         <div class="avatar">
           <video :src="avatarSrc" autoplay muted loop playsinline preload="auto"></video>
           <div class="avatar-meta">
-            <div class="name">John Davis</div>
-            <div class="role">ATTORNEY · NY</div>
+            <div class="name">Олександр Коваленко</div>
+            <div class="role">АДВОКАТ · КИЇВ</div>
           </div>
         </div>
 
@@ -141,19 +153,19 @@ onUnmounted(() => {
       <!-- Results card -->
       <div class="results">
         <div class="results-head">
-          <span class="results-title">Last 30 days</span>
+          <span class="results-title">Останні 30 днів</span>
           <span class="badge"><span id="b1">+340%</span> ROI</span>
         </div>
         <div class="stats">
           <div>
-            <div class="stat-label">New Clients</div>
+            <div class="stat-label">Нові клієнти</div>
             <div class="stat-value" id="c1">{{ c1 }}</div>
             <div class="stat-trend"><span style="--w: 78%"></span></div>
           </div>
           <div class="divider"></div>
           <div>
-            <div class="stat-label">Revenue</div>
-            <div class="stat-value"><span class="currency">$</span><span id="c2">{{ c2 }}</span></div>
+            <div class="stat-label">Дохід</div>
+            <div class="stat-value"><span id="c2">{{ c2 }}</span><span class="currency"> ₴</span></div>
             <div class="stat-trend b2"><span style="--w: 92%"></span></div>
           </div>
         </div>
@@ -161,8 +173,8 @@ onUnmounted(() => {
 
       <!-- Live bar -->
       <div class="live-bar">
-        <span class="left"><span class="pulse"></span> Live AI Campaign</span>
-        <span class="right">14 ads · 6 channels</span>
+        <span class="left"><span class="pulse"></span> AI-кампанія наживо</span>
+        <span class="right">14 оголошень · 6 каналів</span>
       </div>
     </div>
   </SceneCanvas>

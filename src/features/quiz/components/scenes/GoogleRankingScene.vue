@@ -1,5 +1,4 @@
-<script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+<script>
 import { publicAsset } from '../../data/publicAsset.js'
 import SceneCanvas from './SceneCanvas.vue'
 
@@ -19,104 +18,116 @@ void publicAsset
 
 const SPEED = 2
 
-// ---- Reactive state driven by the one-shot sequence ----
-const searchText = ref('')
-const showCursor = ref(true)
+const QUERY = 'Адвокат з розлучень Київ'
 
-const viewsVal = ref('0')
-const leadsVal = ref('0')
-const revenueVal = ref('$0')
-
-const result2Dimmed = ref(false)
-const result3Dimmed = ref(false)
-const result1Featured = ref(false)
-
-const QUERY = 'Divorce Attorney New York'
-
-// All delays/durations below are in ORIGINAL ms (pre-SPEED); later() divides by
-// SPEED, exactly like the original engine. The whole timeline is anchored at
-// runSequence start, which CSS animation delays mirror (see <style>: each CSS
-// delay = original-ms ÷ SPEED ÷ 1000, plus the 150ms runSequence offset).
-const timers = []
-const rafs = []
-function later(fn, ms) { timers.push(setTimeout(fn, ms / SPEED)) }
-
-// CountUp — smooth cubic-out, matching the original formatting rules.
-function countUp(setVal, target, duration = 2200, prefix = '', suffix = '', delay = 0) {
-  const dur = duration / SPEED
-  later(() => {
-    const start = performance.now()
-    function frame(now) {
-      const t = Math.min((now - start) / dur, 1)
-      const e = 1 - Math.pow(1 - t, 3)
-      const raw = e * target
-      let display
-      if (target >= 10000) {
-        if (t >= 1) display = (target / 1000) + 'K'
-        else display = (raw / 1000).toFixed(1) + 'K'
-      } else {
-        display = Math.round(raw)
-      }
-      setVal(prefix + display + suffix)
-      if (t < 1) rafs.push(requestAnimationFrame(frame))
-      else {
-        if (target >= 10000) setVal(prefix + (target / 1000) + 'K' + suffix)
-        else setVal(prefix + target + suffix)
-      }
+export default {
+  name: 'GoogleRankingScene',
+  components: { SceneCanvas },
+  data() {
+    return {
+      // ---- Reactive state driven by the one-shot sequence ----
+      searchText: '',
+      showCursor: true,
+      viewsVal: '0',
+      leadsVal: '0',
+      revenueVal: '0 ₴',
+      result2Dimmed: false,
+      result3Dimmed: false,
+      result1Featured: false,
     }
-    rafs.push(requestAnimationFrame(frame))
-  }, delay)
+  },
+  created() {
+    // All delays/durations are in ORIGINAL ms (pre-SPEED); later() divides by
+    // SPEED, exactly like the original engine. The whole timeline is anchored at
+    // runSequence start, which CSS animation delays mirror (see <style>: each CSS
+    // delay = original-ms ÷ SPEED ÷ 1000, plus the 150ms runSequence offset).
+    this._timers = []
+    this._rafs = []
+  },
+  mounted() {
+    // Original starts after fonts load + 300/SPEED ms.
+    this.later(this.runSequence, 300)
+  },
+  beforeDestroy() {
+    this._timers.forEach(clearTimeout)
+    this._rafs.forEach(cancelAnimationFrame)
+  },
+  methods: {
+    later(fn, ms) { this._timers.push(setTimeout(fn, ms / SPEED)) },
+
+    // CountUp — smooth cubic-out, matching the original formatting rules.
+    countUp(setVal, target, duration = 2200, prefix = '', suffix = '', delay = 0) {
+      const dur = duration / SPEED
+      this.later(() => {
+        const start = performance.now()
+        const frame = (now) => {
+          const t = Math.min((now - start) / dur, 1)
+          const e = 1 - Math.pow(1 - t, 3)
+          const raw = e * target
+          let display
+          if (target >= 1000000) {
+            // Мільйони — компактно «10.9M», інакше 5-значне «10900K» не влазить.
+            display = (raw / 1000000).toFixed(1) + 'M'
+          } else if (target >= 10000) {
+            if (t >= 1) display = (target / 1000) + 'K'
+            else display = (raw / 1000).toFixed(1) + 'K'
+          } else {
+            display = Math.round(raw)
+          }
+          setVal(prefix + display + suffix)
+          if (t < 1) this._rafs.push(requestAnimationFrame(frame))
+          else {
+            if (target >= 1000000) setVal(prefix + (target / 1000000).toFixed(1) + 'M' + suffix)
+            else if (target >= 10000) setVal(prefix + (target / 1000) + 'K' + suffix)
+            else setVal(prefix + target + suffix)
+          }
+        }
+        this._rafs.push(requestAnimationFrame(frame))
+      }, delay)
+    },
+
+    // Typing effect — one character every `speed` ms (÷ SPEED).
+    typeText(text, speed = 60, delay = 0) {
+      const stepSpeed = speed / SPEED
+      this.later(() => {
+        this.searchText = ''
+        let i = 0
+        const next = () => {
+          if (i < text.length) {
+            this.searchText += text[i++]
+            this._timers.push(setTimeout(next, stepSpeed))
+          }
+        }
+        next()
+      }, delay)
+    },
+
+    // ---- One-shot sequence (timings mirror the original runSequence, in
+    // original/pre-SPEED ms measured from runSequence start) ----
+    runSequence() {
+      // Headline is static (USER FIX) so the headline beat collapses; the SERP card
+      // CSS-fades at 1100ms and typing follows (original typeText delay 200).
+      // Typing therefore begins at 1300ms; 25 chars × 55ms ≈ 1375ms of typing.
+      this.typeText(QUERY, 55, 1300)
+
+      // Hide the cursor once typing has finished (original: searchCursor hidden
+      // right after typeText resolves).
+      this.later(() => { this.showCursor = false }, 1300 + QUERY.length * 55)
+
+      // Dim results 2 & 3, then feature #1 (original: after results reveal, +300/+100).
+      this.later(() => { this.result2Dimmed = true; this.result3Dimmed = true }, 4175)
+      this.later(() => { this.result1Featured = true }, 4275)
+
+      // Stats count up (original: counts start ~5575ms, duration 2200ms).
+      this.countUp(v => (this.viewsVal = v), 250000, 2200, '', '', 5575)
+      this.countUp(v => (this.leadsVal = v), 89, 2200, '', '', 5575)
+      this.countUp(v => (this.revenueVal = v), 200000, 2200, '', ' ₴', 5575)
+
+      // Re-show the cursor near the end (original re-shows before its loop reset).
+      this.later(() => { this.showCursor = true }, 11875)
+    },
+  },
 }
-
-// Typing effect — one character every `speed` ms (÷ SPEED).
-function typeText(text, speed = 60, delay = 0) {
-  const stepSpeed = speed / SPEED
-  later(() => {
-    searchText.value = ''
-    let i = 0
-    function next() {
-      if (i < text.length) {
-        searchText.value += text[i++]
-        timers.push(setTimeout(next, stepSpeed))
-      }
-    }
-    next()
-  }, delay)
-}
-
-// ---- One-shot sequence (timings mirror the original runSequence, in
-// original/pre-SPEED ms measured from runSequence start) ----
-function runSequence() {
-  // Headline is static (USER FIX) so the headline beat collapses; the SERP card
-  // CSS-fades at 1100ms and typing follows (original typeText delay 200).
-  // Typing therefore begins at 1300ms; 25 chars × 55ms ≈ 1375ms of typing.
-  typeText(QUERY, 55, 1300)
-
-  // Hide the cursor once typing has finished (original: searchCursor hidden
-  // right after typeText resolves).
-  later(() => { showCursor.value = false }, 1300 + QUERY.length * 55)
-
-  // Dim results 2 & 3, then feature #1 (original: after results reveal, +300/+100).
-  later(() => { result2Dimmed.value = true; result3Dimmed.value = true }, 4175)
-  later(() => { result1Featured.value = true }, 4275)
-
-  // Stats count up (original: counts start ~5575ms, duration 2200ms).
-  countUp(v => (viewsVal.value = v), 250000, 2200, '', '', 5575)
-  countUp(v => (leadsVal.value = v), 89, 2200, '', '', 5575)
-  countUp(v => (revenueVal.value = v), 267000, 2200, '$', '', 5575)
-
-  // Re-show the cursor near the end (original re-shows before its loop reset).
-  later(() => { showCursor.value = true }, 11875)
-}
-
-onMounted(() => {
-  // Original starts after fonts load + 300/SPEED ms.
-  later(runSequence, 300)
-})
-onUnmounted(() => {
-  timers.forEach(clearTimeout)
-  rafs.forEach(cancelAnimationFrame)
-})
 </script>
 
 <template>
@@ -128,8 +139,8 @@ onUnmounted(() => {
 
       <!-- Headline -->
       <div class="headline-block">
-        <div class="headline">#1 in <span class="accent">Google Search</span></div>
-        <div class="sub-headline">Higher than LinkedIn, Avvo, and own website</div>
+        <div class="headline">№1 у <span class="accent">пошуку Google</span></div>
+        <div class="sub-headline">Вище за LinkedIn, Liga.net і власний сайт</div>
       </div>
 
       <!-- SERP Card -->
@@ -151,7 +162,7 @@ onUnmounted(() => {
               <svg class="favicon" viewBox="0 0 10 10" fill="none"><rect width="10" height="10" rx="2" fill="#10b981"/><text x="1" y="8" font-size="7" fill="white" font-family="Inter" font-weight="700">c</text></svg>
               consultantlm.com
             </div>
-            <div class="result-title">John Davis, Divorce Attorney — NYC</div>
+            <div class="result-title">Олександр Коваленко, Адвокат — Київ</div>
             <div class="stars">★★★★★ <span class="star-score">4.9 (127)</span></div>
           </div>
         </div>
@@ -162,9 +173,9 @@ onUnmounted(() => {
           <div class="result-content">
             <div class="result-url dimmed">
               <svg class="favicon" viewBox="0 0 10 10"><rect width="10" height="10" rx="2" fill="#0a66c2"/><text x="1.5" y="8" font-size="7" fill="white" font-family="Inter" font-weight="700">in</text></svg>
-              linkedin.com/in/johndavis
+              linkedin.com/in/kovalenko
             </div>
-            <div class="result-title dimmed">John Davis — LinkedIn Profile</div>
+            <div class="result-title dimmed">Олександр Коваленко — Профіль LinkedIn</div>
           </div>
         </div>
 
@@ -174,9 +185,9 @@ onUnmounted(() => {
           <div class="result-content">
             <div class="result-url dimmed">
               <svg class="favicon" viewBox="0 0 10 10"><rect width="10" height="10" rx="2" fill="#334155"/></svg>
-              johndavislaw.com
+              kovalenko-law.com.ua
             </div>
-            <div class="result-title dimmed">John Davis Law — Home</div>
+            <div class="result-title dimmed">Адвокат Коваленко — Головна</div>
           </div>
         </div>
       </div>
@@ -187,17 +198,17 @@ onUnmounted(() => {
       <!-- Stats block -->
       <div class="stats-block">
         <div class="stat-col stat-views">
-          <div class="stat-label">Views</div>
+          <div class="stat-label">Перегляди</div>
           <div class="stat-value">{{ viewsVal }}</div>
           <div class="stat-sub">↑ +340%</div>
         </div>
         <div class="stat-col stat-leads">
-          <div class="stat-label">Inquiries</div>
+          <div class="stat-label">Запити</div>
           <div class="stat-value">{{ leadsVal }}</div>
           <div class="stat-sub">↑ +189%</div>
         </div>
         <div class="stat-col stat-revenue">
-          <div class="stat-label">Revenue</div>
+          <div class="stat-label">Дохід</div>
           <div class="stat-value">{{ revenueVal }}</div>
           <div class="stat-sub">↑ +267%</div>
         </div>
@@ -206,8 +217,8 @@ onUnmounted(() => {
       <!-- Chart -->
       <div class="chart-block">
         <div class="chart-header">
-          <span class="chart-title">Profile Views — Last 6 Months</span>
-          <span class="chart-badge">↗ All-time high</span>
+          <span class="chart-title">Перегляди профілю — останні 6 місяців</span>
+          <span class="chart-badge">↗ Рекорд</span>
         </div>
         <div class="chart-area">
           <div class="chart-y-labels">
@@ -239,12 +250,12 @@ onUnmounted(() => {
               d="M0,46 C30,44 50,40 80,36 C110,32 130,26 160,18 C180,12 210,6 240,2"/>
           </svg>
           <div class="chart-x-labels">
-            <span class="chart-x-label">Nov</span>
-            <span class="chart-x-label">Dec</span>
-            <span class="chart-x-label">Jan</span>
-            <span class="chart-x-label">Feb</span>
-            <span class="chart-x-label">Mar</span>
-            <span class="chart-x-label">Apr</span>
+            <span class="chart-x-label">Лис</span>
+            <span class="chart-x-label">Гру</span>
+            <span class="chart-x-label">Січ</span>
+            <span class="chart-x-label">Лют</span>
+            <span class="chart-x-label">Бер</span>
+            <span class="chart-x-label">Кві</span>
           </div>
         </div>
       </div>
@@ -580,6 +591,7 @@ onUnmounted(() => {
   text-align: center;
   font-feature-settings: "tnum";
   letter-spacing: -0.5px;
+  white-space: nowrap;
 }
 .stat-sub {
   font-size: 9px;

@@ -1,9 +1,11 @@
-<script setup>
-defineProps({
-  label: { type: String, default: 'Continue →' },
-  disabled: { type: Boolean, default: false }
-})
-defineEmits(['continue'])
+<script>
+export default {
+  name: 'QuizContinueButton',
+  props: {
+    label: { type: String, default: 'Далі →' },
+    disabled: { type: Boolean, default: false }
+  }
+}
 </script>
 
 <template>

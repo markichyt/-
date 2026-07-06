@@ -1,75 +1,73 @@
-// Plan/feature data for the ProfilesPricing card.
+// Дані планів/функцій для картки тарифів (українська версія, ціни у ₴).
 
-// Feature comparison rows.
-//   graduated: true → the category has one tier-specific row per tier; only the
-//   row whose flag matches the current tier is shown (others are hidden, not ✗).
+// Рядки порівняння функцій.
+//   graduated: true → у категорії свій рядок під кожен тариф; показується лише той,
+//   чий прапорець збігається з тарифом (інші приховані, а не ✗).
 export const pricingFeatures = [
-  { label: 'AI PRO avatar', graduated: true, base: false, pro: true, premium: false },
-  { label: 'AI PREMIUM avatar', graduated: true, base: false, pro: false, premium: true },
-  { label: '10 AI posts/videos', graduated: true, base: true, pro: false, premium: false },
-  { label: '40 AI posts/videos', graduated: true, base: false, pro: true, premium: false },
-  { label: '100 AI posts/videos', graduated: true, base: false, pro: false, premium: true },
-  { label: '6 lead buying', graduated: true, base: true, pro: false, premium: false },
-  { label: '30 lead buying', graduated: true, base: false, pro: true, premium: false },
-  { label: 'Unlimited lead buying', graduated: true, base: false, pro: false, premium: true },
-  { label: 'Up to 10 reputation checks', graduated: true, base: false, pro: true, premium: false },
-  { label: 'Unlimited reputation checks', graduated: true, base: false, pro: false, premium: true },
-  { label: 'Top in Google by your name', base: false, pro: false, premium: true },
-  { label: '24/7 personal manager', base: false, pro: false, premium: true },
-  { label: 'Exclusive social promotion', base: false, pro: false, premium: true },
-  { label: 'Boost rating from past experience', base: false, pro: true, premium: true },
-  { label: 'Set custom prices for your services', base: false, pro: true, premium: true },
-  { label: 'AI module for Google & Meta', base: true, pro: true, premium: true },
-  { label: 'AI competitor monitoring', base: true, pro: true, premium: true },
-  { label: 'AI client assistant', base: true, pro: true, premium: true },
-  { label: 'Referral earnings', base: true, pro: true, premium: true },
-  { label: 'Private specialist chat', base: true, pro: true, premium: true },
-  { label: 'CRM system', base: true, pro: true, premium: true },
-  { label: 'Secure messenger', base: true, pro: true, premium: true }
+  { label: 'AI PRO аватар', graduated: true, base: false, pro: true, premium: false },
+  { label: 'AI PREMIUM аватар', graduated: true, base: false, pro: false, premium: true },
+  { label: '10 AI-постів/відео', graduated: true, base: true, pro: false, premium: false },
+  { label: '40 AI-постів/відео', graduated: true, base: false, pro: true, premium: false },
+  { label: '100 AI-постів/відео', graduated: true, base: false, pro: false, premium: true },
+  { label: '6 купівель лідів', graduated: true, base: true, pro: false, premium: false },
+  { label: '30 купівель лідів', graduated: true, base: false, pro: true, premium: false },
+  { label: 'Безлімітна купівля лідів', graduated: true, base: false, pro: false, premium: true },
+  { label: 'До 10 перевірок репутації', graduated: true, base: false, pro: true, premium: false },
+  { label: 'Безлімітні перевірки репутації', graduated: true, base: false, pro: false, premium: true },
+  { label: 'Топ у Google за вашим іменем', base: false, pro: false, premium: true },
+  { label: 'Персональний менеджер 24/7', base: false, pro: false, premium: true },
+  { label: 'Ексклюзивне просування в соцмережах', base: false, pro: false, premium: true },
+  { label: 'Підвищення рейтингу за минулим досвідом', base: false, pro: true, premium: true },
+  { label: 'Власні ціни на ваші послуги', base: false, pro: true, premium: true },
+  { label: 'AI-модуль для Google і Meta', base: true, pro: true, premium: true },
+  { label: 'AI-моніторинг конкурентів', base: true, pro: true, premium: true },
+  { label: 'AI-асистент для клієнтів', base: true, pro: true, premium: true },
+  { label: 'Реферальний заробіток', base: true, pro: true, premium: true },
+  { label: 'Приватний чат для спеціалістів', base: true, pro: true, premium: true },
+  { label: 'CRM-система', base: true, pro: true, premium: true },
+  { label: 'Захищений месенджер', base: true, pro: true, premium: true }
 ]
 
-// Generic ✗ placeholders for graduated categories where a tier has no own row
-// (e.g. Base lacks any avatar / reputation row).
+// Узагальнені ✗-заглушки для градуйованих категорій, де в тарифу немає свого рядка.
 export const pricingGenericPlaceholders = [
-  { categoryRows: ['AI PRO avatar', 'AI PREMIUM avatar'], label: 'AI avatar' },
-  { categoryRows: ['Up to 10 reputation checks', 'Unlimited reputation checks'], label: 'Reputation checks' }
+  { categoryRows: ['AI PRO аватар', 'AI PREMIUM аватар'], label: 'AI-аватар' },
+  { categoryRows: ['До 10 перевірок репутації', 'Безлімітні перевірки репутації'], label: 'Перевірки репутації' }
 ]
 
 export const pricingProBadges = {
-  '40 AI posts/videos': { text: '4x more', type: 'green' },
-  '30 lead buying': { text: '5x more', type: 'green' },
-  'Up to 10 reputation checks': { text: 'NEW', type: 'cyan' },
-  'Boost rating from past experience': { text: 'NEW', type: 'cyan' },
-  'Set custom prices for your services': { text: 'NEW', type: 'cyan' },
-  'AI PRO avatar': { text: 'NEW', type: 'cyan' }
+  '40 AI-постів/відео': { text: '4x більше', type: 'green' },
+  '30 купівель лідів': { text: '5x більше', type: 'green' },
+  'До 10 перевірок репутації': { text: 'НОВЕ', type: 'cyan' },
+  'Підвищення рейтингу за минулим досвідом': { text: 'НОВЕ', type: 'cyan' },
+  'Власні ціни на ваші послуги': { text: 'НОВЕ', type: 'cyan' },
+  'AI PRO аватар': { text: 'НОВЕ', type: 'cyan' }
 }
 
 export const pricingPremiumBadges = {
-  '100 AI posts/videos': { text: '2.5x more', type: 'green' },
-  'Unlimited lead buying': { text: '∞', type: 'green' },
-  'Top in Google by your name': { text: 'NEW', type: 'cyan' },
-  '24/7 personal manager': { text: 'NEW', type: 'cyan' },
-  'Exclusive social promotion': { text: 'NEW', type: 'cyan' },
-  'Unlimited reputation checks': { text: '∞', type: 'green' },
-  'AI PREMIUM avatar': { text: 'UPGRADE', type: 'cyan' }
+  '100 AI-постів/відео': { text: '2.5x більше', type: 'green' },
+  'Безлімітна купівля лідів': { text: '∞', type: 'green' },
+  'Топ у Google за вашим іменем': { text: 'НОВЕ', type: 'cyan' },
+  'Персональний менеджер 24/7': { text: 'НОВЕ', type: 'cyan' },
+  'Ексклюзивне просування в соцмережах': { text: 'НОВЕ', type: 'cyan' },
+  'Безлімітні перевірки репутації': { text: '∞', type: 'green' },
+  'AI PREMIUM аватар': { text: 'АПГРЕЙД', type: 'cyan' }
 }
 
-// Monthly base prices; annual mode applies -10% (precomputed strings).
+// Місячні ціни (₴); річний режим застосовує −10% (заздалегідь пораховані рядки).
 export const pricingByBilling = {
   monthly: {
-    base: { price: '$49', note: 'per month, billed monthly' },
-    pro: { price: '$199', note: 'per month, billed monthly' },
-    premium: { price: '$499', note: 'per month, billed monthly' }
+    base: { price: '399 ₴', note: 'на місяць, щомісячна оплата' },
+    pro: { price: '1 599 ₴', note: 'на місяць, щомісячна оплата' },
+    premium: { price: '3 999 ₴', note: 'на місяць, щомісячна оплата' }
   },
   annual: {
-    base: { price: '$44', note: 'per month, billed annually (–10%)' },
-    pro: { price: '$179', note: 'per month, billed annually (–10%)' },
-    premium: { price: '$449', note: 'per month, billed annually (–10%)' }
+    base: { price: '359 ₴', note: 'на місяць, річна оплата (−10%)' },
+    pro: { price: '1 439 ₴', note: 'на місяць, річна оплата (−10%)' },
+    premium: { price: '3 599 ₴', note: 'на місяць, річна оплата (−10%)' }
   }
 }
 
-// Resolve the visible feature list for one tier, applying graduated-row and
-// generic-placeholder rules, then sorting enabled features to the top.
+// Формує видимий список функцій для тарифу.
 export function buildTierFeatures(tier) {
   const badgeMap = tier === 'pro' ? pricingProBadges : tier === 'premium' ? pricingPremiumBadges : null
   const relevant = []

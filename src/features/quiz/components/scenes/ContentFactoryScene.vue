@@ -1,7 +1,8 @@
-<script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+<script>
 import { publicAsset } from '../../data/publicAsset.js'
 import SceneCanvas from './SceneCanvas.vue'
+
+void publicAsset
 
 // Native Vue rebuild of htmlTOvideo/9 — the "AI Content Factory" scene.
 // Play-once (CLM-NOLOOP-FIX): every animation runs once and holds its end
@@ -13,39 +14,39 @@ import SceneCanvas from './SceneCanvas.vue'
 // Pipeline steps (top: scan/generate/publish/track/scale)
 const steps = [
   {
-    label: 'Scan',
+    label: 'Скан',
     paths: ['<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>'],
   },
   {
-    label: 'Generate',
+    label: 'Генерація',
     paths: [
       '<path d="M12 3v3M12 18v3M5 12H2M22 12h-3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="3.2"/>',
     ],
   },
   {
-    label: 'Publish',
+    label: 'Публікація',
     paths: [
       '<path d="M5 12V5a1 1 0 0 1 1-1h7l6 6v7a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1Z"/><path d="M12 4v6h6"/><path d="m9 16 3-3 3 3"/><path d="M12 13v6"/>',
     ],
   },
   {
-    label: 'Track',
+    label: 'Аналіз',
     paths: ['<path d="M3 17l5-5 4 4 7-8"/><path d="M14 8h5v5"/>'],
   },
   {
-    label: 'Scale',
+    label: 'Масштаб',
     paths: ['<path d="M4 20V4M4 20h16M8 16V10M13 16V7M18 16v-4"/>'],
   },
 ]
 
 // Before / After rows
 const beforeRows = [
-  { key: 'Views', val: '12K' },
-  { key: 'Engage', val: '2.1%' },
+  { key: 'Перегляди', val: '12K' },
+  { key: 'Залученість', val: '2.1%' },
 ]
 const afterRows = [
-  { key: 'Views', val: '187K' },
-  { key: 'Engage', val: '8.7%' },
+  { key: 'Перегляди', val: '187K' },
+  { key: 'Залученість', val: '8.7%' },
 ]
 
 // Socials: brand class + inline SVG markup + count-up config
@@ -82,56 +83,69 @@ const socials = [
   },
 ]
 
-// Reactive display values for the count-up engine.
-const socCounts = ref(socials.map((s) => '0' + (s.suffix || '')))
-const totalCount = ref('0')
-
-let timers = []
-let rafs = []
-
 function formatNum(n, opts) {
   if (opts.format === 'comma') return Math.round(n).toLocaleString('en-US')
   if (opts.decimals) return n.toFixed(opts.decimals)
   return Math.round(n).toString()
 }
 
-function animateCount(setter, target, opts) {
-  const suffix = opts.suffix || ''
-  const delay = opts.delay || 0
-  const duration = 1500
-  setter(formatNum(0, opts) + suffix)
-  const t = setTimeout(() => {
-    const start = performance.now()
-    const tick = (now) => {
-      const p = Math.min(1, (now - start) / duration)
-      if (p >= 1) {
-        setter(formatNum(target, opts) + suffix)
-        return
-      }
-      const e = 1 - Math.pow(1 - p, 3)
-      const v = target * e
-      setter(formatNum(v, opts) + suffix)
-      rafs.push(requestAnimationFrame(tick))
+export default {
+  name: 'ContentFactoryScene',
+  components: { SceneCanvas },
+  data() {
+    return {
+      steps,
+      beforeRows,
+      afterRows,
+      socials,
+      // Reactive display values for the count-up engine.
+      socCounts: socials.map((s) => '0' + (s.suffix || '')),
+      totalCount: '0',
     }
-    rafs.push(requestAnimationFrame(tick))
-  }, delay)
-  timers.push(t)
+  },
+  created() {
+    this._timers = []
+    this._rafs = []
+  },
+  mounted() {
+    this.runCycle()
+  },
+  beforeDestroy() {
+    this._timers.forEach(clearTimeout)
+    this._rafs.forEach(cancelAnimationFrame)
+  },
+  methods: {
+    animateCount(setter, target, opts) {
+      const suffix = opts.suffix || ''
+      const delay = opts.delay || 0
+      const duration = 1500
+      setter(formatNum(0, opts) + suffix)
+      const t = setTimeout(() => {
+        const start = performance.now()
+        const tick = (now) => {
+          const p = Math.min(1, (now - start) / duration)
+          if (p >= 1) {
+            setter(formatNum(target, opts) + suffix)
+            return
+          }
+          const e = 1 - Math.pow(1 - p, 3)
+          const v = target * e
+          setter(formatNum(v, opts) + suffix)
+          this._rafs.push(requestAnimationFrame(tick))
+        }
+        this._rafs.push(requestAnimationFrame(tick))
+      }, delay)
+      this._timers.push(t)
+    },
+    runCycle() {
+      this.socials.forEach((s, i) => {
+        // Vue 2: array element writes by index aren't reactive — use $set.
+        this.animateCount((txt) => { this.$set(this.socCounts, i, txt) }, s.count, { suffix: s.suffix, delay: s.delay })
+      })
+      this.animateCount((txt) => { this.totalCount = txt }, 100000, { format: 'comma', delay: 2000 })
+    },
+  },
 }
-
-function runCycle() {
-  socials.forEach((s, i) => {
-    animateCount((txt) => { socCounts.value[i] = txt }, s.count, { suffix: s.suffix, delay: s.delay })
-  })
-  animateCount((txt) => { totalCount.value = txt }, 100000, { format: 'comma', delay: 2000 })
-}
-
-onMounted(() => {
-  runCycle()
-})
-onUnmounted(() => {
-  timers.forEach(clearTimeout)
-  rafs.forEach(cancelAnimationFrame)
-})
 </script>
 
 <template>
@@ -141,8 +155,8 @@ onUnmounted(() => {
 
         <!-- Heading -->
         <div class="heading">
-          <div class="h-title">Monitor competitors <span class="accent">24/7</span></div>
-          <div class="h-sub">and create better content in minutes.</div>
+          <div class="h-title">Стежте за конкурентами <span class="accent">24/7</span></div>
+          <div class="h-sub">і створюйте кращий контент за хвилини з Consultant.</div>
         </div>
 
         <!-- Pipeline -->
@@ -159,8 +173,8 @@ onUnmounted(() => {
         <!-- Before / After -->
         <div class="ba">
           <div class="ba-side ba-before">
-            <div class="ba-eyebrow"><span class="dot"></span> Before</div>
-            <div class="ba-label">Competitor</div>
+            <div class="ba-eyebrow"><span class="dot"></span> До</div>
+            <div class="ba-label">Конкурент</div>
             <div v-for="(r, i) in beforeRows" :key="i" class="ba-row">
               <span class="ba-row-key">{{ r.key }}</span>
               <span class="ba-row-val">{{ r.val }}</span>
@@ -168,8 +182,8 @@ onUnmounted(() => {
             <div class="ba-bar"><i></i></div>
           </div>
           <div class="ba-side ba-after">
-            <div class="ba-eyebrow"><span class="dot"></span> After</div>
-            <div class="ba-label">Your content</div>
+            <div class="ba-eyebrow"><span class="dot"></span> Після</div>
+            <div class="ba-label">Ваш контент</div>
             <div v-for="(r, i) in afterRows" :key="i" class="ba-row">
               <span class="ba-row-key">{{ r.key }}</span>
               <span class="ba-row-val">{{ r.val }}</span>
@@ -193,9 +207,9 @@ onUnmounted(() => {
 
         <!-- Total reach -->
         <div class="total">
-          <div class="total-label">Total reach</div>
+          <div class="total-label">Загальне охоплення</div>
           <div class="total-num"><span class="count">{{ totalCount }}</span><span style="color: var(--accent);">+</span></div>
-          <div class="total-foot">across 5 platforms · per campaign</div>
+          <div class="total-foot">на 5 платформах · за кампанію</div>
         </div>
 
       </div>
@@ -303,7 +317,8 @@ onUnmounted(() => {
 }
 .step-icon svg { width: 14px; height: 14px; }
 .step-label {
-  font-size: 9px; font-weight: 600; color: var(--muted); letter-spacing: 0.4px; text-transform: uppercase;
+  font-size: 8px; font-weight: 600; color: var(--muted); letter-spacing: 0.2px; text-transform: uppercase;
+  white-space: nowrap;
 }
 /* arrows between steps */
 .step:not(:last-child)::after {

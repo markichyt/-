@@ -1,12 +1,26 @@
-<script setup>
+<script>
 import QuizTopBar from '../components/QuizTopBar.vue'
 import QuizCardStack from '../components/QuizCardStack.vue'
 import QuizScenePrewarmer from '../components/QuizScenePrewarmer.vue'
 import { publicAsset } from '../data/publicAsset.js'
+import { quizData, saveQuizData } from '../store/quizDataStore.js'
 
-// Top-level container for the ConsultantLM quiz funnel. Composes the top bar,
-// brand logo, the animated card deck and the hidden scene pre-warmer.
-const LOGO_SRC = publicAsset('images/logo/logo_en.svg')
+// Top-level container for the Консультант quiz funnel. Composes the top bar,
+// brand logo, the animated card deck and the hidden scene pre-warmer, and
+// persists answers to localStorage whenever they change.
+export default {
+  name: 'QuizPage',
+  components: { QuizTopBar, QuizCardStack, QuizScenePrewarmer },
+  data() {
+    return { logoSrc: publicAsset('images/logo/logo_en.svg') }
+  },
+  mounted() {
+    this._unwatchAnswers = this.$watch(() => quizData, saveQuizData, { deep: true })
+  },
+  beforeDestroy() {
+    if (this._unwatchAnswers) this._unwatchAnswers()
+  }
+}
 </script>
 
 <template>
@@ -14,7 +28,7 @@ const LOGO_SRC = publicAsset('images/logo/logo_en.svg')
     <QuizTopBar />
 
     <div class="logo-area">
-      <img :src="LOGO_SRC" alt="ConsultantLM" class="logo">
+      <img :src="logoSrc" alt="Консультант" class="logo">
     </div>
 
     <QuizCardStack />

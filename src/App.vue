@@ -1,5 +1,10 @@
-<script setup>
+<script>
 import QuizPage from './features/quiz/pages/QuizPage.vue'
+
+export default {
+  name: 'App',
+  components: { QuizPage }
+}
 </script>
 
 <template>

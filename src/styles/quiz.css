@@ -46,11 +46,20 @@ body {
 }
 @media (max-width: 430px) {
   .quiz-wrapper {
-    padding: 4px 0 0;
+    padding: 0;
     padding-bottom: calc(56px + env(safe-area-inset-bottom));
   }
-  .stack-card { border-radius: 20px; top: 4px; }
-  .card-stack { padding-top: 4px; }
+  /* Edge-to-edge, app-like screens on phones: no rounded corners, no peek. */
+  .stack-card { border-radius: 0; top: 0; }
+  .card-stack { padding-top: 0; max-width: none; }
+  .stack-card.behind-1,
+  .stack-card.behind-2 {
+    transform: none;
+    opacity: 1;
+    max-height: none;
+    top: 0;
+    bottom: 0;
+  }
 
   /* Bottom bar: logo + back + scale */
   .top-bar {
@@ -70,6 +79,66 @@ body {
   .logo-area {
     /* hidden on mobile — was overlapping form content as a watermark */
     display: none;
+  }
+
+  /* ---- Full-screen step card on phones ----
+     The active card fills the whole viewport (no dark gap, no rounded card
+     floating). Input steps sit at the top with the action bar pinned to the
+     bottom; animation scenes scale to fit. */
+  .stack-card.active {
+    top: 0;
+    bottom: 0;
+    max-height: none;
+    display: flex;
+    flex-direction: column;
+  }
+  .stack-card.active .card-content {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  /* The slide frame is the scroll area; long steps scroll inside it and the
+     scrollbar is hidden. */
+  .stack-card.active .slide-frame {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .stack-card.active .slide-frame::-webkit-scrollbar {
+    display: none;
+  }
+  /* Card steps cap their height on desktop; on the full-screen phone card they
+     should fill it instead (otherwise the action bar floats with a gap below). */
+  .stack-card.active .card-scroll {
+    max-height: none;
+  }
+  /* Input steps stretch so their action bar pins to the bottom of the screen. */
+  .stack-card.active .radio-slide,
+  .stack-card.active .checkbox-slide,
+  .stack-card.active .city-slide,
+  .stack-card.active .form-with-files-slide {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .stack-card.active .card-action-bar {
+    margin-top: auto;
+  }
+  /* Animation scenes fill the space above the button and scale to fit
+     (handled in SceneCanvas), so nothing is clipped by the Continue bar. */
+  .stack-card.active .card-scroll .video-wrap {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
@@ -242,49 +311,36 @@ body {
   color: var(--text-muted);
   flex: 1;
 }
-.option-radio {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 2px solid #d1d5db;
-  flex-shrink: 0;
-  margin-left: auto;
-  transition: all 0.2s;
-  position: relative;
-}
-.option-item.selected .option-radio {
-  border-color: var(--accent);
-  background: var(--accent);
-}
-.option-item.selected .option-radio::after {
-  content: '';
-  position: absolute;
-  top: 4px; left: 4px;
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: #fff;
-}
-
-/* ---- Checkbox Options ---- */
+/* ---- Checkbox Options (закруглений квадратик + галочка з ліній) ---- */
 .option-check {
   width: 20px;
   height: 20px;
   border-radius: 6px;
   border: 2px solid #d1d5db;
   flex-shrink: 0;
-  margin-left: auto;
   margin-left: 12px;
   transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  color: transparent;
+  position: relative;
+}
+.option-check::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 5px;
+  width: 5.5px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  opacity: 0;
+  transition: opacity 0.15s;
 }
 .option-item.selected .option-check {
   border-color: var(--accent);
   background: var(--accent);
-  color: #fff;
+}
+.option-item.selected .option-check::after {
+  opacity: 1;
 }
 
 /* ---- Skip link ---- */
@@ -510,6 +566,13 @@ textarea.card-input {
 .svc-search-wrap {
   position: relative;
   margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+}
+/* The wrap already provides the spacing below; the input's own margin would
+   make the wrap taller than the field and push the absolute icon off-centre. */
+.svc-search-wrap .search-input {
+  margin-bottom: 0;
 }
 .svc-search-icon {
   position: absolute;
@@ -800,7 +863,23 @@ textarea.card-input {
 }
 .upload-area:hover { border-color: var(--accent); }
 .upload-area.uploaded { border-color: var(--accent); background: rgba(0,180,216,0.04); }
-.upload-text { font-size: 13px; color: var(--text-light); }
+.upload-text { font-size: 13px; color: var(--text-light); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Помилка валідації під полем форми */
+.form-error { color: #ef4444; font-size: 12px; margin-top: 4px; }
+
+/* Спінер на кнопці оплати */
+.btn-spinner {
+  display: inline-block;
+  width: 18px; height: 18px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: btn-spin 0.7s linear infinite;
+  vertical-align: middle;
+}
+.btn-paypal .btn-spinner { border-color: rgba(0,0,0,0.25); border-top-color: #0b1425; }
+@keyframes btn-spin { to { transform: rotate(360deg); } }
 
 /* ---- Profiles / Pricing grid ---- */
 .pricing-grid {
@@ -1490,12 +1569,14 @@ textarea.card-input {
   border-radius: 20px;
 }
 .profiles-pricing-wrap .pp-avatar-video-wrap {
-  width: 100%;
-  border-radius: 12px;
+  width: 180px;
+  max-width: 100%;
+  border-radius: 14px;
   overflow: hidden;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 9 / 16;
   background: #0b1425;
   position: relative;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
 .profiles-pricing-wrap .pp-avatar-video-wrap video {
   width: 100%;
@@ -2175,6 +2256,7 @@ textarea.card-input {
   border: 0;
 }
 .roi-table { margin: 16px 0 12px; display: flex; flex-direction: column; gap: 8px; }
+.roi-expenses-label { font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: .5px; margin-top: 6px; }
 .roi-row {
   display: flex;
   justify-content: space-between;
@@ -2212,8 +2294,9 @@ textarea.card-input {
 }
 .roi-row.roi-highlight > span { white-space: nowrap; }
 .roi-row.roi-highlight span:last-child { color: #00b4d8; font-weight: 700; }
-.roi-row.roi-total { padding-top: 8px; border-top: 1px solid rgba(0,180,216,.2); font-weight: 600; font-size: 15px; }
-.roi-row.roi-total span:last-child { color: #10b981; font-size: 16px; font-weight: 700; }
+.roi-row.roi-total { padding-top: 8px; border-top: 1px solid rgba(0,180,216,.2); font-weight: 600; font-size: 15px; flex-direction: column; align-items: stretch; gap: 3px; }
+.roi-row.roi-total > span:first-child { flex: none; }
+.roi-row.roi-total > span:last-child { flex: none; text-align: right; color: #10b981; font-size: 16px; font-weight: 700; }
 .roi-payback { text-align: center; font-size: 12px; color: #64748b; margin-top: 8px; }
 .roi-payback strong { color: #00b4d8; font-size: 14px; font-weight: 700; }
 .roi-disclaimer {

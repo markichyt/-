@@ -1,119 +1,127 @@
-<script setup>
-import { ref, computed } from 'vue'
-import { useQuizData } from '../../../composables/useQuizData.js'
-import { useCountdownTimer } from '../../../composables/useCountdownTimer.js'
+<script>
+import { quizData, submitQuizData, clearStoredAnswers } from '../../../store/quizDataStore.js'
+import { countdownTimerMixin } from '../../../mixins/countdownTimerMixin.js'
 import { publicAsset } from '../../../data/publicAsset.js'
 
-const paypalIcon = publicAsset('icon/paypal.svg')
-const cardIcon = publicAsset('icon/card-credit.svg')
-
-// "Complete your purchase" — period selector, live discount breakdown, payment
-// buttons (which fire the single final submit) and an FAQ accordion.
-const { quizData, submitQuizData, clearStoredAnswers } = useQuizData()
-const { hours, minutes, seconds } = useCountdownTimer()
-
 const PLAN_NAMES = { base: 'Base', pro: 'Pro', premium: 'Premium' }
-const FULL_MONTHLY = { base: 79, pro: 329, premium: 799 }
+// Якірні (до знижки) місячні ціни, ₴.
+const FULL_MONTHLY = { base: 599, pro: 2299, premium: 5999 }
 const PERIODS = {
-  '1_month': { label: '1 Month', discount: 0, months: 1 },
-  '1_year': { label: '1 Year', discount: 10, months: 12 },
-  '3_years': { label: '3 Years', discount: 20, months: 36 }
+  '1_month': { label: '1 місяць', discount: 0, months: 1 },
+  '1_year': { label: '1 рік', discount: 10, months: 12 }
 }
 const FAQ_ITEMS = [
-  { q: 'How many clients can I expect per month?', a: 'Depending on your specialization, city, and profile optimization -- many lawyers receive 5-15 clients already in the first month, scaling to 20-30+ over time thanks to AI-generated content and SEO promotion.' },
-  { q: 'Is this a guaranteed number of clients?', a: 'We provide you with Leads that you work with yourself. You can also work under exclusive conditions with platform clients, in which case these are already paid clients.' },
-  { q: 'How does the pricing work?', a: 'We have a three-tier subscription: Basic, Pro, and Premium. The cost is significantly lower than traditional marketing agencies. Many lawyers cover the subscription cost with just 1-2 clients.' },
-  { q: 'What if there are no clients?', a: 'The presence of Leads depends on your activity on the platform. We guarantee uninterrupted access to the platform and its resources. Payment is non-refundable once access has been provided.' },
-  { q: 'Is my data safe?', a: 'Yes, we use a secure messenger, data encryption, and do not transfer information to third parties. The platform complies with GDPR and data protection regulations.' }
+  { q: 'Скільки клієнтів я можу отримувати на місяць?', a: 'Залежно від спеціалізації, міста й оптимізації профілю — багато юристів отримують 5–15 клієнтів вже в перший місяць, з часом масштабуючись до 20–30+ завдяки AI-контенту та SEO-просуванню.' },
+  { q: 'Це гарантована кількість клієнтів?', a: 'Ми надаємо вам ліди, з якими ви працюєте самостійно. Також можна працювати на ексклюзивних умовах із клієнтами платформи — у такому разі це вже оплачені клієнти.' },
+  { q: 'Як працює оплата?', a: 'У нас три тарифи: Base, Pro і Premium. Вартість значно нижча за традиційні маркетингові агенції. Багато юристів окуповують підписку вже 1–2 клієнтами.' },
+  { q: 'А якщо клієнтів не буде?', a: 'Наявність лідів залежить від вашої активності на платформі. Ми гарантуємо безперебійний доступ до платформи та її ресурсів. Оплата не повертається після надання доступу.' },
+  { q: 'Чи безпечні мої дані?', a: 'Так, ми використовуємо захищений месенджер, шифрування даних і не передаємо інформацію третім сторонам. Платформа відповідає вимогам захисту персональних даних (GDPR і законодавство України).' }
 ]
+const fmt = (n) => n.toLocaleString('uk-UA')
 
-const currentPeriod = ref(quizData.period || '1_year')
-const openFaq = ref(new Set())
-
-const summary = computed(() => {
-  const period = PERIODS[currentPeriod.value]
-  const planKey = quizData.plan || 'pro'
-  const fullPrice = FULL_MONTHLY[planKey] * period.months
-
-  const urgencyAmount = Math.round(fullPrice * 0.2)
-  const referralAmount = quizData.referral_code ? Math.round(fullPrice * 0.1) : 0
-  const periodAmount = period.discount > 0 ? Math.round((fullPrice * period.discount) / 100) : 0
-  const totalDiscount = urgencyAmount + referralAmount + periodAmount
-  const total = Math.max(0, fullPrice - totalDiscount)
-  const saved = fullPrice - total
-
-  return {
-    planName: PLAN_NAMES[planKey],
-    periodLabel: period.label,
-    periodDiscount: period.discount,
-    fullPrice,
-    urgencyAmount,
-    referralAmount,
-    periodAmount,
-    total,
-    saved
-  }
-})
-
-function selectPeriod(periodKey) {
-  currentPeriod.value = periodKey
-  quizData.payment_period = periodKey
-}
-
-function toggleFaq(index) {
-  if (openFaq.value.has(index)) openFaq.value.delete(index)
-  else openFaq.value.add(index)
-  openFaq.value = new Set(openFaq.value)
-}
-
-const isSubmitting = ref(false)
-function pay(method) {
-  quizData.payment_method = method
-  quizData.submitted_at = new Date().toISOString()
-  quizData.payment_period = currentPeriod.value
-  isSubmitting.value = true
-  submitQuizData((ok, status) => {
-    isSubmitting.value = false
-    if (ok) {
-      clearStoredAnswers()
-      window.alert('Thank you! Your submission has been received.')
-    } else {
-      window.alert('Submission failed (status ' + status + '). Please try again.')
+// «Завершіть покупку» — вибір періоду, живий розрахунок знижок, кнопки оплати
+// (фінальне надсилання) та FAQ-акордеон.
+export default {
+  name: 'PaymentCard',
+  mixins: [countdownTimerMixin],
+  data() {
+    return {
+      quizData,
+      FAQ_ITEMS,
+      paypalIcon: publicAsset('icon/paypal.svg'),
+      cardIcon: publicAsset('icon/card-credit.svg'),
+      currentPeriod: quizData.period || '1_year',
+      openFaq: new Set(),
+      isSubmitting: false
     }
-  })
+  },
+  computed: {
+    summary() {
+      const period = PERIODS[this.currentPeriod]
+      const planKey = this.quizData.plan || 'pro'
+      const fullPrice = FULL_MONTHLY[planKey] * period.months
+
+      const urgencyAmount = Math.round(fullPrice * 0.2)
+      const referralAmount = this.quizData.referral_code ? Math.round(fullPrice * 0.1) : 0
+      const periodAmount = period.discount > 0 ? Math.round((fullPrice * period.discount) / 100) : 0
+      const totalDiscount = urgencyAmount + referralAmount + periodAmount
+      const total = Math.max(0, fullPrice - totalDiscount)
+      const saved = fullPrice - total
+
+      return {
+        planName: PLAN_NAMES[planKey],
+        periodLabel: period.label,
+        periodDiscount: period.discount,
+        fullPrice: fmt(fullPrice),
+        urgencyAmount: fmt(urgencyAmount),
+        referralAmount,
+        referralAmountText: fmt(referralAmount),
+        periodAmount,
+        periodAmountText: fmt(periodAmount),
+        total: fmt(total),
+        saved,
+        savedText: fmt(saved)
+      }
+    }
+  },
+  methods: {
+    selectPeriod(periodKey) {
+      this.currentPeriod = periodKey
+      this.quizData.payment_period = periodKey
+    },
+    toggleFaq(index) {
+      if (this.openFaq.has(index)) this.openFaq.delete(index)
+      else this.openFaq.add(index)
+      this.openFaq = new Set(this.openFaq)
+    },
+    pay(method) {
+      this.quizData.payment_method = method
+      this.quizData.submitted_at = new Date().toISOString()
+      this.quizData.payment_period = this.currentPeriod
+      this.isSubmitting = true
+      submitQuizData((ok, status) => {
+        this.isSubmitting = false
+        if (ok) {
+          clearStoredAnswers()
+          window.alert('Дякуємо! Вашу заявку отримано.')
+        } else {
+          window.alert('Помилка надсилання (статус ' + status + '). Спробуйте ще раз.')
+        }
+      })
+    }
+  }
 }
 </script>
 
 <template>
   <div>
     <div class="pay-timer-top">
-      <div class="pay-timer-label">20% DISCOUNT JUST FOR YOU!</div>
+      <div class="pay-timer-label">ЗНИЖКА 20% ТІЛЬКИ ДЛЯ ВАС!</div>
       <div class="pay-timer-digits">
-        <span class="pay-t-block"><span class="pay-t-num">{{ hours }}</span><span class="pay-t-lbl">hrs</span></span>
+        <span class="pay-t-block"><span class="pay-t-num">{{ countdownHours }}</span><span class="pay-t-lbl">год</span></span>
         <span class="pay-t-sep">:</span>
-        <span class="pay-t-block"><span class="pay-t-num">{{ minutes }}</span><span class="pay-t-lbl">min</span></span>
+        <span class="pay-t-block"><span class="pay-t-num">{{ countdownMinutes }}</span><span class="pay-t-lbl">хв</span></span>
         <span class="pay-t-sep">:</span>
-        <span class="pay-t-block"><span class="pay-t-num">{{ seconds }}</span><span class="pay-t-lbl">sec</span></span>
+        <span class="pay-t-block"><span class="pay-t-num">{{ countdownSeconds }}</span><span class="pay-t-lbl">сек</span></span>
       </div>
     </div>
 
     <div class="pay-period-toggle">
-      <button class="pay-period-btn" :class="{ active: currentPeriod === '1_month' }" @click="selectPeriod('1_month')">1 Month</button>
-      <button class="pay-period-btn" :class="{ active: currentPeriod === '1_year' }" @click="selectPeriod('1_year')">1 Year <span class="pay-period-save">-10%</span></button>
-      <button class="pay-period-btn" :class="{ active: currentPeriod === '3_years' }" @click="selectPeriod('3_years')">3 Years <span class="pay-period-save">-20%</span></button>
+      <button class="pay-period-btn" :class="{ active: currentPeriod === '1_month' }" @click="selectPeriod('1_month')">1 місяць</button>
+      <button class="pay-period-btn" :class="{ active: currentPeriod === '1_year' }" @click="selectPeriod('1_year')">1 рік <span class="pay-period-save">-10%</span></button>
     </div>
 
     <div v-show="summary.saved > 0" class="pay-savings-hero">
-      <div class="pay-savings-amount">${{ summary.saved.toLocaleString() }}</div>
-      <div class="pay-savings-text">YOU JUST SAVED</div>
+      <div class="pay-savings-amount">{{ summary.savedText }} ₴</div>
+      <div class="pay-savings-text">ВИ ЩОЙНО ЗЕКОНОМИЛИ</div>
     </div>
 
     <div class="discount-summary">
-      <div class="discount-row"><span>{{ summary.planName }} plan — {{ summary.periodLabel }}</span><span>${{ summary.fullPrice.toLocaleString() }}</span></div>
-      <div class="discount-row"><span>Urgency discount (20%)</span><span class="saved">-${{ summary.urgencyAmount.toLocaleString() }}</span></div>
-      <div v-if="summary.referralAmount > 0" class="discount-row"><span>Referral code (10%)</span><span class="saved">-${{ summary.referralAmount.toLocaleString() }}</span></div>
-      <div v-if="summary.periodAmount > 0" class="discount-row"><span>{{ summary.periodLabel }} discount ({{ summary.periodDiscount }}%)</span><span class="saved">-${{ summary.periodAmount.toLocaleString() }}</span></div>
-      <div class="discount-row total"><span>Total</span><span>${{ summary.total.toLocaleString() }}</span></div>
+      <div class="discount-row"><span>Тариф {{ summary.planName }} — {{ summary.periodLabel }}</span><span>{{ summary.fullPrice }} ₴</span></div>
+      <div class="discount-row"><span>Знижка за терміновість (20%)</span><span class="saved">-{{ summary.urgencyAmount }} ₴</span></div>
+      <div v-if="summary.referralAmount > 0" class="discount-row"><span>Реферальний код (10%)</span><span class="saved">-{{ summary.referralAmountText }} ₴</span></div>
+      <div v-if="summary.periodAmount > 0" class="discount-row"><span>Знижка {{ summary.periodLabel }} ({{ summary.periodDiscount }}%)</span><span class="saved">-{{ summary.periodAmountText }} ₴</span></div>
+      <div class="discount-row total"><span>Разом</span><span>{{ summary.total }} ₴</span></div>
     </div>
 
     <div class="payment-icons">
@@ -124,14 +132,16 @@ function pay(method) {
 
     <div class="payment-buttons">
       <button class="btn btn-paypal" :disabled="isSubmitting" @click="pay('paypal')">
-        <img class="btn-icon-paypal" :src="paypalIcon" alt="" width="24" height="24"> {{ isSubmitting ? 'Submitting…' : 'Pay with PayPal' }}
+        <span v-if="isSubmitting" class="btn-spinner" />
+        <img v-else class="btn-icon-paypal" :src="paypalIcon" alt="" width="24" height="24"> {{ isSubmitting ? 'Надсилання…' : 'Оплатити через PayPal' }}
       </button>
       <button class="btn btn-primary" :disabled="isSubmitting" @click="pay('card')">
-        <img class="btn-icon-card" :src="cardIcon" alt="" width="24" height="24"> {{ isSubmitting ? 'Submitting…' : 'Pay with Card' }}
+        <span v-if="isSubmitting" class="btn-spinner" />
+        <img v-else class="btn-icon-card" :src="cardIcon" alt="" width="24" height="24"> {{ isSubmitting ? 'Надсилання…' : 'Оплатити карткою' }}
       </button>
     </div>
 
-    <h3 class="faq-heading">Frequently Asked Questions</h3>
+    <h3 class="faq-heading">Часті запитання</h3>
     <div class="faq-list">
       <div v-for="(item, index) in FAQ_ITEMS" :key="index" class="faq-item" :class="{ open: openFaq.has(index) }">
         <div class="faq-question" @click="toggleFaq(index)">{{ item.q }}</div>

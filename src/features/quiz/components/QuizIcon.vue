@@ -1,13 +1,18 @@
-<script setup>
-import { computed } from 'vue'
+<script>
 import { getQuizIconPath } from '../data/quizIcons.js'
 
-const props = defineProps({
-  name: { type: String, required: true },
-  size: { type: Number, default: 16 }
-})
-
-const innerSvg = computed(() => getQuizIconPath(props.name))
+export default {
+  name: 'QuizIcon',
+  props: {
+    name: { type: String, required: true },
+    size: { type: Number, default: 16 }
+  },
+  computed: {
+    innerSvg() {
+      return getQuizIconPath(this.name)
+    }
+  }
+}
 </script>
 
 <template>

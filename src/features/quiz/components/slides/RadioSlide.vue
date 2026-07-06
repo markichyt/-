@@ -1,62 +1,73 @@
-<script setup>
-import { ref } from 'vue'
+<script>
 import QuizIcon from '../QuizIcon.vue'
-import { useQuizData } from '../../composables/useQuizData.js'
-import { useQuizProgress } from '../../composables/useQuizProgress.js'
-
-const props = defineProps({
-  slide: { type: Object, required: true }
-})
-
-const { quizData } = useQuizData()
-const { goToNextStep } = useQuizProgress()
-
-const selectedValue = ref(quizData[props.slide.field])
+import QuizActionBar from '../QuizActionBar.vue'
+import QuizContinueButton from '../QuizContinueButton.vue'
+import { quizData } from '../../store/quizDataStore.js'
+import { goToNextStep } from '../../store/quizProgressStore.js'
 
 // Short explanatory note shown under the "preferred way" question.
 const PREFERRED_WAY_DISCLAIMERS = {
-  social_media: 'Automation: We help you create/manage social media automatically, content that builds trust and attracts customers.',
-  paid_ads: 'Our AI ads should be an enhancer — we improve what you do.',
-  both: 'Great choice! We’ll combine both paid and organic approaches for maximum results.',
-  ai_decide: 'You said trust? Great. AI will pick the best strategy for your business context and bring results.'
+  social_media: 'Автоматизація: ми допомагаємо створювати й вести соцмережі автоматично — контент, що формує довіру й залучає клієнтів.',
+  paid_ads: 'Наша AI-реклама — це підсилювач: ми покращуємо те, що ви вже робите.',
+  both: 'Чудовий вибір! Поєднаємо платний та органічний підходи для максимального результату.',
+  ai_decide: 'Довіряєте? Чудово. AI обере найкращу стратегію під ваш бізнес і принесе результат.'
 }
 
-const disclaimer = ref(
-  props.slide.field === 'preferred_way' ? (PREFERRED_WAY_DISCLAIMERS[selectedValue.value] || '') : ''
-)
-
-function selectOption(option) {
-  selectedValue.value = option.v
-  quizData[props.slide.field] = option.v
-  if (props.slide.field === 'preferred_way') {
-    disclaimer.value = PREFERRED_WAY_DISCLAIMERS[option.v] || ''
+export default {
+  name: 'RadioSlide',
+  components: { QuizIcon, QuizActionBar, QuizContinueButton },
+  props: {
+    slide: { type: Object, required: true }
+  },
+  data() {
+    const selectedValue = quizData[this.slide.field]
+    return {
+      quizData,
+      selectedValue,
+      disclaimer: this.slide.field === 'preferred_way' ? (PREFERRED_WAY_DISCLAIMERS[selectedValue] || '') : ''
+    }
+  },
+  methods: {
+    goToNextStep,
+    selectOption(option) {
+      this.selectedValue = option.v
+      quizData[this.slide.field] = option.v
+      if (this.slide.field === 'preferred_way') {
+        this.disclaimer = PREFERRED_WAY_DISCLAIMERS[option.v] || ''
+      }
+      // Перехід відбувається лише після натискання «Далі» (без авто-переходу).
+    }
   }
-  // Brief pause lets the selection animation play before swiping forward.
-  setTimeout(goToNextStep, 500)
 }
 </script>
 
 <template>
-  <div class="option-list">
-    <div
-      v-for="option in slide.options"
-      :key="option.v"
-      class="option-item"
-      :class="{ selected: selectedValue === option.v }"
-      role="button"
-      tabindex="0"
-      :aria-pressed="selectedValue === option.v"
-      @click="selectOption(option)"
-      @keydown.enter.prevent="selectOption(option)"
-      @keydown.space.prevent="selectOption(option)"
-    >
-      <span v-if="option.icon" class="opt-icon" :style="{ background: option.color || '#64748b' }">
-        <QuizIcon :name="option.icon" />
-      </span>
-      <span class="option-text">{{ option.t }}</span>
-      <span class="option-radio" />
+  <div class="radio-slide">
+    <div class="option-list">
+      <div
+        v-for="option in slide.options"
+        :key="option.v"
+        class="option-item"
+        :class="{ selected: selectedValue === option.v }"
+        role="button"
+        tabindex="0"
+        :aria-pressed="selectedValue === option.v"
+        @click="selectOption(option)"
+        @keydown.enter.prevent="selectOption(option)"
+        @keydown.space.prevent="selectOption(option)"
+      >
+        <span v-if="option.icon" class="opt-icon" :style="{ background: option.color || '#64748b' }">
+          <QuizIcon :name="option.icon" />
+        </span>
+        <span class="option-text">{{ option.t }}</span>
+        <span class="option-check" />
+      </div>
     </div>
-  </div>
 
-  <div v-if="slide.field === 'preferred_way'" class="pref-disclaimer">{{ disclaimer }}</div>
+    <div v-if="slide.field === 'preferred_way'" class="pref-disclaimer">{{ disclaimer }}</div>
+
+    <QuizActionBar>
+      <QuizContinueButton :disabled="!selectedValue" @continue="goToNextStep" />
+    </QuizActionBar>
+  </div>
 </template>

@@ -1,4 +1,4 @@
-<script setup>
+<script>
 import { publicAsset } from '../../data/publicAsset.js'
 import SceneCanvas from './SceneCanvas.vue'
 
@@ -11,16 +11,27 @@ import SceneCanvas from './SceneCanvas.vue'
 const PHOTOS = Array.from({ length: 28 }, (_, i) => publicAsset(`htmlTOvideo/8/avatars/${String(i + 1).padStart(2, '0')}.png`))
 
 const TOP_PHOTOS = PHOTOS.slice(0, 20)
-const TOP_INCOMES = ['$12K', '$28K', '$47K', '$8K', '$35K', '$19K', '$52K', '$15K', '$41K', '$23K', '$31K', '$9K', '$44K', '$17K', '$38K', '$26K', '$50K', '$11K', '$33K', '$21K']
+const TOP_INCOMES = ['490К ₴', '1.15М ₴', '1.9М ₴', '330К ₴', '1.4М ₴', '780К ₴', '2.1М ₴', '610К ₴', '1.68М ₴', '940К ₴', '1.27М ₴', '370К ₴', '1.8М ₴', '700К ₴', '1.55М ₴', '1.1М ₴', '2.05М ₴', '450К ₴', '1.35М ₴', '860К ₴']
 
 const BOT_PHOTOS = [...PHOTOS.slice(20, 28), ...PHOTOS.slice(0, 12)]
-const BOT_INCOMES = ['$22K', '$39K', '$16K', '$45K', '$7K', '$29K', '$53K', '$18K', '$36K', '$24K', '$42K', '$13K', '$48K', '$20K', '$34K', '$27K', '$51K', '$10K', '$30K', '$25K']
+const BOT_INCOMES = ['900К ₴', '1.6М ₴', '660К ₴', '1.85М ₴', '290К ₴', '1.19М ₴', '2.2М ₴', '740К ₴', '1.48М ₴', '980К ₴', '1.72М ₴', '530К ₴', '1.97М ₴', '820К ₴', '1.4М ₴', '1.1М ₴', '2.1М ₴', '410К ₴', '1.23М ₴', '1.03М ₴']
 
 const topAvatars = TOP_PHOTOS.map((src, i) => ({ src, income: TOP_INCOMES[i] }))
 const botAvatars = BOT_PHOTOS.map((src, i) => ({ src, income: BOT_INCOMES[i] }))
 // Two copies per row for a seamless scroll.
 const topRow = [...topAvatars, ...topAvatars]
 const botRow = [...botAvatars, ...botAvatars]
+
+export default {
+  name: 'SocialProofScene',
+  components: { SceneCanvas },
+  data() {
+    return {
+      topRow,
+      botRow,
+    }
+  },
+}
 </script>
 
 <template>
@@ -28,10 +39,10 @@ const botRow = [...botAvatars, ...botAvatars]
     <div class="canvas">
       <div class="header-card">
         <div style="margin-top:2px">
-          <span class="big">2,500+</span><span class="line">attorneys</span>
+          <span class="big">2 500+</span><span class="line">юристів</span>
         </div>
-        <div class="line">grew their income with us</div>
-        <div class="sub"><span class="dot" /> Verified monthly earnings · 2024–2026</div>
+        <div class="line">збільшили свій дохід з нами</div>
+        <div class="sub"><span class="dot" /> Підтверджений місячний дохід · 2024–2026</div>
       </div>
 
       <div class="carousels">
@@ -54,20 +65,11 @@ const botRow = [...botAvatars, ...botAvatars]
       </div>
 
       <div class="stats">
-        <div class="stat"><div class="num">+183%</div><div class="cap">Avg. income growth</div></div>
+        <div class="stat"><div class="num">+183%</div><div class="cap">сер. зростання доходу</div></div>
         <div class="divider" />
-        <div class="stat"><div class="num">94%</div><div class="cap">Renew subscription</div></div>
+        <div class="stat"><div class="num">94%</div><div class="cap">продовжують підписку</div></div>
         <div class="divider" />
-        <div class="stat"><div class="num">5</div><div class="cap">Countries</div></div>
-      </div>
-
-      <div class="featured">
-        <div class="label">Featured in</div>
-        <div class="logos">
-          <span class="brand">Forbes</span>
-          <span class="sep" />
-          <span class="brand">HiiL Justice</span>
-        </div>
+        <div class="stat"><div class="num">5</div><div class="cap">країн</div></div>
       </div>
     </div>
   </SceneCanvas>

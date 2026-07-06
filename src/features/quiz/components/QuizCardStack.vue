@@ -1,54 +1,74 @@
-<script setup>
-import { reactive, ref, watch, onMounted } from 'vue'
+<script>
 import SlideRenderer from './slides/SlideRenderer.vue'
-import { useQuizProgress } from '../composables/useQuizProgress.js'
+import { quizProgress, totalSteps, lockNavigation, unlockNavigation } from '../store/quizProgressStore.js'
 
 // Recreates the original stacked-card deck: three physical cards are recycled
 // between the active / behind-1 / behind-2 positions. The next step is rendered
 // into the behind-1 card ahead of time so the forward swipe reveals it instantly.
-const { currentStep, totalSteps } = useQuizProgress()
-
+//
+// Vue 2 cannot detect writes to an array by index, so slotStep/slotClass are
+// always updated through this.$set.
 const SWIPE_SETTLE_MS = 420
 
-// Which step (1-based) each of the three card slots currently holds.
-const slotStep = reactive([currentStep.value, null, null])
-// The stack class driving each slot's transform/opacity.
-const slotClass = reactive(['active', 'behind-1', 'behind-2'])
-const activeSlot = ref(0)
+export default {
+  name: 'QuizCardStack',
+  components: { SlideRenderer },
+  data() {
+    return {
+      // Which step (1-based) each of the three card slots currently holds.
+      slotStep: [quizProgress.currentStep, null, null],
+      // The stack class driving each slot's transform/opacity.
+      slotClass: ['active', 'behind-1', 'behind-2'],
+      activeSlot: 0
+    }
+  },
+  computed: {
+    currentStep() {
+      return quizProgress.currentStep
+    }
+  },
+  watch: {
+    currentStep(newStep, oldStep) {
+      const direction = newStep > oldStep ? 'right' : 'left'
+      // Going back is not pre-rendered, so place the target into the incoming card first.
+      if (direction === 'left') {
+        const behind1 = (this.activeSlot + 1) % 3
+        this.$set(this.slotStep, behind1, newStep)
+      }
+      this.swipeAndRender(direction)
+    }
+  },
+  mounted() {
+    this.preRenderNextStep()
+  },
+  methods: {
+    preRenderNextStep() {
+      const behind1 = (this.activeSlot + 1) % 3
+      this.$set(this.slotStep, behind1, this.currentStep < totalSteps ? this.currentStep + 1 : null)
+    },
+    swipeAndRender(direction) {
+      const exitClass = direction === 'right' ? 'exit-right' : 'exit-left'
+      const exitingSlot = this.activeSlot
+      const behind1 = (this.activeSlot + 1) % 3
+      const behind2 = (this.activeSlot + 2) % 3
 
-function preRenderNextStep() {
-  const behind1 = (activeSlot.value + 1) % 3
-  slotStep[behind1] = currentStep.value < totalSteps ? currentStep.value + 1 : null
-}
+      // Заблокувати навігацію, поки картка не доїде — інакше швидкі кліки
+      // накладають свайпи й деку «заклинює».
+      lockNavigation()
 
-function swipeAndRender(direction) {
-  const exitClass = direction === 'right' ? 'exit-right' : 'exit-left'
-  const exitingSlot = activeSlot.value
-  const behind1 = (activeSlot.value + 1) % 3
-  const behind2 = (activeSlot.value + 2) % 3
+      this.$set(this.slotClass, exitingSlot, exitClass)
+      this.$set(this.slotClass, behind1, 'active')
+      this.$set(this.slotClass, behind2, 'behind-1')
 
-  slotClass[exitingSlot] = exitClass
-  slotClass[behind1] = 'active'
-  slotClass[behind2] = 'behind-1'
-
-  setTimeout(() => {
-    slotClass[exitingSlot] = 'behind-2'
-    activeSlot.value = behind1
-    preRenderNextStep()
-  }, SWIPE_SETTLE_MS)
-}
-
-watch(currentStep, (newStep, oldStep) => {
-  const direction = newStep > oldStep ? 'right' : 'left'
-  // Going back is not pre-rendered, so place the target into the incoming card first.
-  if (direction === 'left') {
-    const behind1 = (activeSlot.value + 1) % 3
-    slotStep[behind1] = newStep
+      setTimeout(() => {
+        this.$set(this.slotClass, exitingSlot, 'behind-2')
+        this.activeSlot = behind1
+        this.preRenderNextStep()
+        unlockNavigation()
+      }, SWIPE_SETTLE_MS)
+    }
   }
-  swipeAndRender(direction)
-})
-
-onMounted(preRenderNextStep)
+}
 </script>
 
 <template>

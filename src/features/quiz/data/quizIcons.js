@@ -1,6 +1,17 @@
 // Inline SVG path data for the small option/category icons used throughout the quiz.
-// Ported verbatim from the original svgIcons map so icons render identically.
+// Base set ported from the original; the UA category icons below are new.
 export const quizIconPaths = {
+  // ---- Ukraine practice-area icons (new) ----
+  medical: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
+  leaf: '<path d="M11 20A7 7 0 019.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/>',
+  military: '<path d="M4 16a8 8 0 0116 0"/><path d="M2.5 16h19"/>',
+  gavel: '<path d="M13 11l5.5-5.5a2.1 2.1 0 113 3L16 14"/><path d="M9 7l4 4"/><path d="M5 21l7-7"/><path d="M3 21h6"/>',
+  family: '<circle cx="6.5" cy="6" r="2.4"/><path d="M2 19.5V18a4.5 4.5 0 016-4.24"/><circle cx="17.5" cy="6" r="2.4"/><path d="M22 19.5V18a4.5 4.5 0 00-6-4.24"/><circle cx="12" cy="12.5" r="1.9"/><path d="M8.9 20v-.8a3.1 3.1 0 016.2 0v.8"/>',
+  banknote: '<rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 9v6M18 9v6"/>',
+  'shield-check': '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/>',
+  scroll: '<rect x="5" y="3" width="14" height="18" rx="1.5"/><line x1="8" y1="7.5" x2="16" y2="7.5"/><line x1="8" y1="11" x2="16" y2="11"/><line x1="8" y1="14.5" x2="12.5" y2="14.5"/><circle cx="15" cy="17" r="2.2"/>',
+  'heart-crack': '<path d="M20.8 5.6a5.5 5.5 0 00-7.8 0L12 6.7l-1-1.1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.5 1-1a5.5 5.5 0 000-7.8z"/><path d="M12 6.7l-1.8 4 2.6 1.6-1.8 3.5"/>',
+  // ---- Base icons ----
   scales: '<path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>',
   stamp: '<rect x="5" y="14" width="14" height="6" rx="1"/><path d="M12 14V6"/><circle cx="12" cy="4" r="2"/>',
   'file-text': '<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
@@ -31,6 +42,7 @@ export const quizIconPaths = {
   diamond: '<path d="M6 3h12l4 6-10 13L2 9z"/>',
   pen: '<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>',
   camera: '<path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/>',
+  upload: '<path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>',
   film: '<rect x="2" y="2" width="20" height="20" rx="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/>',
   users: '<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>',
   calendar: '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',

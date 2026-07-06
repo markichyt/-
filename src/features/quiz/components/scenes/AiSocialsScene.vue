@@ -1,5 +1,4 @@
-<script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+<script>
 import SceneCanvas from './SceneCanvas.vue'
 
 // Native Vue rebuild of htmlTOvideo/3 — the "AI Socials Promo" scene.
@@ -7,39 +6,50 @@ import SceneCanvas from './SceneCanvas.vue'
 // it to fill the card and wraps its height tightly. All animations run once and
 // hold their end state, matching the CLM-NOLOOP-FIX.
 
-// Count-up animation for the "40 hrs saved" number (ported from the source
-// script). Runs once: target 40, duration 1154ms, start delay 3615ms,
-// ease-out cubic.
-const counter = ref(0)
-let rafId = null
-
-function runCounter() {
-  const target = 40
-  const duration = 1154
-  const startDelay = 3615
-  const startAt = performance.now() + startDelay
-
-  function tick(now) {
-    const elapsed = now - startAt
-    if (elapsed < 0) {
-      counter.value = 0
-      rafId = requestAnimationFrame(tick)
-      return
+export default {
+  name: 'AiSocialsScene',
+  components: { SceneCanvas },
+  data() {
+    return {
+      // Count-up display value for the "40 hrs saved" number.
+      counter: 0,
     }
-    const t = Math.min(elapsed / duration, 1)
-    const eased = 1 - Math.pow(1 - t, 3)
-    counter.value = Math.round(eased * target)
-    if (t < 1) rafId = requestAnimationFrame(tick)
-  }
-  rafId = requestAnimationFrame(tick)
-}
+  },
+  created() {
+    this._rafId = null
+  },
+  mounted() {
+    this.runCounter()
+  },
+  beforeDestroy() {
+    if (this._rafId) cancelAnimationFrame(this._rafId)
+  },
+  methods: {
+    // Count-up animation for the "40 hrs saved" number (ported from the source
+    // script). Runs once: target 40, duration 1154ms, start delay 3615ms,
+    // ease-out cubic.
+    runCounter() {
+      const target = 40
+      const duration = 1154
+      const startDelay = 3615
+      const startAt = performance.now() + startDelay
 
-onMounted(() => {
-  runCounter()
-})
-onUnmounted(() => {
-  if (rafId) cancelAnimationFrame(rafId)
-})
+      const tick = (now) => {
+        const elapsed = now - startAt
+        if (elapsed < 0) {
+          this.counter = 0
+          this._rafId = requestAnimationFrame(tick)
+          return
+        }
+        const t = Math.min(elapsed / duration, 1)
+        const eased = 1 - Math.pow(1 - t, 3)
+        this.counter = Math.round(eased * target)
+        if (t < 1) this._rafId = requestAnimationFrame(tick)
+      }
+      this._rafId = requestAnimationFrame(tick)
+    },
+  },
+}
 </script>
 
 <template>
@@ -48,10 +58,10 @@ onUnmounted(() => {
 
       <!-- Headline -->
       <h1 class="headline">
-        Let AI run your socials<br/>
-        save you <span class="accent">40+ hours/week</span>
+        Доручіть соцмережі AI<br/>
+        економте <span class="accent">40+ годин/тиждень</span>
       </h1>
-      <p class="subhead">Always on time. Fully optimized. Zero effort.</p>
+      <p class="subhead">Публікації виходять вчасно. Контент оптимізований. Ви нічого не робите вручну.</p>
 
       <!-- Feed -->
       <div class="feed">
@@ -61,12 +71,12 @@ onUnmounted(() => {
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.61 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
           </div>
           <div class="body">
-            <div class="title">5 Things to Know About Property Division in NY</div>
-            <div class="meta">LinkedIn • Article</div>
+            <div class="title">5 фактів про поділ майна в Україні</div>
+            <div class="meta">LinkedIn • Стаття</div>
           </div>
           <span class="badge published">
             <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Published
+            Опубліковано
           </span>
         </div>
 
@@ -76,12 +86,12 @@ onUnmounted(() => {
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
           </div>
           <div class="body">
-            <div class="title">How to Choose the Right Divorce Attorney</div>
-            <div class="meta">Instagram • Reel</div>
+            <div class="title">Як обрати адвоката з розлучень</div>
+            <div class="meta">Instagram • Reels</div>
           </div>
           <span class="badge scheduled">
             <span class="dot"></span>
-            Scheduled
+            Заплановано
           </span>
         </div>
 
@@ -95,12 +105,12 @@ onUnmounted(() => {
             </svg>
           </div>
           <div class="body">
-            <div class="title">Client Rights During Custody Battles</div>
-            <div class="meta">TikTok • Short video</div>
+            <div class="title">Права клієнта в спорах про опіку</div>
+            <div class="meta">TikTok • Коротке відео</div>
           </div>
           <span class="badge draft">
             <span class="dot"></span>
-            Draft
+            Чернетка
           </span>
         </div>
       </div>
@@ -110,27 +120,27 @@ onUnmounted(() => {
       <!-- Time saved -->
       <div class="time-card">
         <div class="time-head">
-          <span class="time-label">Time Saved · This Week</span>
+          <span class="time-label">Вивільнено часу · Цей тиждень</span>
           <span class="time-pill"><span class="arrow">▲</span> 38%</span>
         </div>
         <div class="time-row">
           <span class="time-num" id="counter">{{ counter }}</span>
-          <span class="time-unit">hrs saved</span>
+          <span class="time-unit">годин</span>
         </div>
-        <p class="time-caption">vs manual posting &amp; content creation</p>
+        <p class="time-caption">порівняно з ручним веденням соцмереж</p>
         <div class="progress">
           <div class="fill"></div>
         </div>
         <div class="progress-meta">
-          <span>0 hrs</span>
-          <span>40 hrs</span>
+          <span>0 год</span>
+          <span>40 год</span>
         </div>
       </div>
 
       <!-- Status -->
       <div class="status">
         <span class="pulse"></span>
-        <span class="text"><b>AI</b> is posting right now</span>
+        <span class="text"><b>AI</b> публікує прямо зараз</span>
         <span class="dots"><span></span><span></span><span></span></span>
       </div>
 

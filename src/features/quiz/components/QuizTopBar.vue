@@ -1,24 +1,32 @@
-<script setup>
-import { computed } from 'vue'
-import { useQuizProgress } from '../composables/useQuizProgress.js'
-import { useProfileScore } from '../composables/useProfileScore.js'
+<script>
+import { quizProgress, totalSteps } from '../store/quizProgressStore.js'
 
-// Top bar: a "STEP n / N" counter (intentionally not a back button) plus the
-// live profile-completeness scale.
-const { currentStep, totalSteps } = useQuizProgress()
-const { profileScore } = useProfileScore()
-
-const displayStep = computed(() => Math.max(1, currentStep.value))
+// Верхня панель: лічильник «КРОК n / N» + смуга прогресу за номером кроку
+// (рівномірно на кожному слайді, збігається з лічильником).
+export default {
+  name: 'QuizTopBar',
+  data() {
+    return { totalSteps }
+  },
+  computed: {
+    displayStep() {
+      return Math.max(1, quizProgress.currentStep)
+    },
+    progressPercent() {
+      return Math.round((this.displayStep / totalSteps) * 100)
+    }
+  }
+}
 </script>
 
 <template>
   <div class="top-bar">
-    <span class="back-link visible" style="cursor:default;pointer-events:none">STEP {{ displayStep }} / {{ totalSteps }}</span>
+    <span class="back-link visible" style="cursor:default;pointer-events:none">КРОК {{ displayStep }} / {{ totalSteps }}</span>
     <div class="global-scale">
       <div class="global-scale-bar">
-        <div class="global-scale-fill" :style="{ width: profileScore + '%' }" />
+        <div class="global-scale-fill" :style="{ width: progressPercent + '%' }" />
       </div>
     </div>
-    <span class="global-scale-pct">{{ profileScore }}%</span>
+    <span class="global-scale-pct">{{ progressPercent }}%</span>
   </div>
 </template>
