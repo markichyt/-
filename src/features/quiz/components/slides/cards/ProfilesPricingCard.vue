@@ -268,6 +268,7 @@ export default {
           <div class="pp-features">
             <div v-for="feature in featuresByTier[slide.tier]" :key="feature.label" class="pp-feat" :class="feature.on ? 'yes' : 'no'">
               <span class="feat-left">
+                <span class="icon">{{ feature.on ? '✓' : '✗' }}</span>
                 <span>{{ feature.label }}</span>
               </span>
               <span v-if="feature.badge" class="comp-badge" :class="feature.badge.type === 'green' ? 'comp-badge--green' : 'comp-badge--cyan'">{{ feature.badge.text }}</span>
