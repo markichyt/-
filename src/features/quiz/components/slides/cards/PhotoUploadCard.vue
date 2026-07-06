@@ -7,14 +7,14 @@ import { goToNextStep } from '../../../store/quizProgressStore.js'
 import { publicAsset } from '../../../data/publicAsset.js'
 
 // Крок завантаження фото для генерації відео-аватара.
-// Приймає лише JPEG/PNG до 5 МБ. Перевіряє співвідношення 9:16 (вертикальне);
-// якщо фото не вертикальне — попереджає, а на сабміті показує модалку-застереження.
+// Приймає лише JPEG/PNG до 5 МБ. Перевіряє співвідношення 16:9 (горизонтальне);
+// якщо фото не горизонтальне — попереджає, а на сабміті показує модалку-застереження.
 const ACCEPTED_TYPES = ['image/jpeg', 'image/png']
 const MAX_BYTES = 5 * 1024 * 1024
-const TARGET_RATIO = 9 / 16 // 0.5625
+const TARGET_RATIO = 16 / 9 // 1.7778
 const RATIO_TOLERANCE = 0.05 // ±5 %
 
-// Готові приклади вдалих фото (вертикальні 9:16). Слугують і зразком того, яке
+// Готові приклади вдалих фото (горизонтальні 16:9). Слугують і зразком того, яке
 // фото потрібне, і запасним варіантом, якщо у користувача немає власного.
 const SAMPLE_PHOTOS = [
   { id: 'woman', label: 'Зразок', file: 'lawyer-woman.jpg', src: publicAsset('images/samples/lawyer-woman.jpg') },
@@ -27,7 +27,7 @@ const SAMPLE_PHOTOS = [
 const PHOTO_ERRORS = {
   WRONG_RATIO: {
     title: 'Фото неправильного формату',
-    bodyHtml: 'Ви прикріпили фото неправильного розширення (не 9:16). Через це <strong class="pu-modal-danger">аватар буде згенеровано некоректно</strong> — у відео зʼявляться сірі поля.',
+    bodyHtml: 'Ви прикріпили фото неправильного розширення (не 16:9). Через це <strong class="pu-modal-danger">аватар буде згенеровано некоректно</strong> — у відео зʼявляться сірі поля.',
     canContinue: true
   },
   NO_PERSON: {
@@ -78,7 +78,7 @@ export default {
       if (sample) {
         this.selectedSampleId = sample.id
         this.photoIsValid = true
-        this.dimText = '9:16'
+        this.dimText = '16:9'
       } else {
         this.measureImage(quizData.photo_data)
       }
@@ -137,7 +137,7 @@ export default {
       this.hasPhoto = true
       this.selectedSampleId = sample.id
       this.photoIsValid = true
-      this.dimText = '9:16'
+      this.dimText = '16:9'
       quizData.photo_name = sample.file
       quizData.photo_data = sample.src
     },
@@ -206,7 +206,7 @@ export default {
     >
       <div class="pu-drop-icon"><QuizIcon name="camera" :size="38" /></div>
       <div class="pu-drop-title">{{ dropHint }}</div>
-      <div class="pu-drop-sub">JPEG або PNG · до 5 МБ · вертикальне 9:16</div>
+      <div class="pu-drop-sub">JPEG або PNG · до 5 МБ · горизонтальне 16:9</div>
     </label>
 
     <!-- Превʼю 9:16 -->
@@ -217,7 +217,7 @@ export default {
       </div>
 
       <div v-if="!photoIsValid" class="pu-warn-text">
-        ⚠ Фото не є вертикальним 9:16 — у відео будуть сірі поля
+        ⚠ Фото не є горизонтальним 16:9 — у відео будуть сірі поля
       </div>
       <button type="button" class="pu-upload-own" @click="triggerFilePicker">
         <QuizIcon name="upload" :size="16" /> Завантажити своє фото
@@ -295,8 +295,9 @@ export default {
 /* ---- Превʼю 9:16 ---- */
 .pu-preview {
   position: relative;
-  width: 180px;
-  aspect-ratio: 9 / 16;
+  width: 260px;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
   margin: 4px auto 0;
   border-radius: 16px;
   overflow: hidden;
@@ -370,8 +371,8 @@ export default {
 }
 .pu-sample {
   position: relative;
-  width: 96px;
-  aspect-ratio: 9 / 16;
+  width: 140px;
+  aspect-ratio: 16 / 9;
   border: 2px solid var(--border);
   border-radius: 12px;
   overflow: hidden;
