@@ -43,11 +43,8 @@ export const quizSlides = [
       { v: 'accountant', t: 'Бухгалтер/Аудитор', icon: 'bar-chart', color: '#10b981' },
       { v: 'notary', t: 'Нотаріус', icon: 'stamp', color: '#8b5cf6' },
       { v: 'enforcement', t: 'Приватний виконавець', icon: 'shield-check', color: '#0891b2' },
-      { v: 'liquidator', t: 'Ліквідатор', icon: 'x-circle', color: '#ef4444' },
       { v: 'patent', t: 'Патентні повірені', icon: 'file-text', color: '#0ea5e9' },
       { v: 'customs', t: 'Митний брокер', icon: 'globe', color: '#14b8a6' },
-      { v: 'engineer', t: 'Інженер', icon: 'building', color: '#f59e0b' },
-      { v: 'collector', t: 'Колектор', icon: 'banknote', color: '#ec4899' },
       { v: 'other', t: 'Інше', icon: 'plus', color: '#94a3b8' }
     ]
   },
@@ -62,9 +59,9 @@ export const quizSlides = [
     q: 'Що найкраще описує вашу <span class="accent">роль?</span>',
     sub: 'Допоможіть персоналізувати ваш досвід',
     options: [
-      { v: 'self_employed', t: 'Самозайнятий / Працюю самостійно', icon: 'user', color: '#3b82f6' },
+      { v: 'self_employed', t: 'Самозайнятий / здійснюю незалежну професійну діяльність', icon: 'user', color: '#3b82f6' },
       { v: 'employee', t: 'Найманий працівник (у компанії)', icon: 'building', color: '#8b5cf6' },
-      { v: 'executive', t: 'Керівник / Менеджер компанії', icon: 'crown', color: '#f59e0b' },
+      { v: 'executive', t: 'Керівник / головний спеціаліст', icon: 'crown', color: '#f59e0b' },
       { v: 'founder', t: 'Засновник / Власник бізнесу', icon: 'rocket', color: '#10b981' }
     ]
   },
@@ -83,7 +80,6 @@ export const quizSlides = [
       { v: 'labour', t: 'Трудове право', icon: 'briefcase', color: '#6366f1' },
       { v: 'family', t: 'Сімейне право', icon: 'family', color: '#db2777' },
       { v: 'inheritance', t: 'Спадкове право', icon: 'scroll', color: '#10b981' },
-      { v: 'divorce', t: 'Розірвання шлюбу', icon: 'heart-crack', color: '#ef4444' },
       { v: 'social', t: 'Соціальні виплати та спори', icon: 'users', color: '#8b5cf6' },
       { v: 'debtor_protection', t: 'Захист боржника', icon: 'shield-check', color: '#0891b2' },
       { v: 'military', t: 'Військове право', icon: 'military', color: '#64748b' },

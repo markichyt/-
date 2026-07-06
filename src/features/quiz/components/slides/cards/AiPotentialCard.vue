@@ -37,8 +37,8 @@ const TEAM_ROLES = [
   { t: 'SMM-менеджер', low: 10000, high: 25000 }
 ]
 const OUR_PLAN = 1599
-const CASE_VALUE_LOW = 8000 // ₴ за клієнта (нижня межа)
-const CASE_VALUE_HIGH = 30000 // ₴ за клієнта (верхня межа)
+const CASE_VALUE_LOW = 1800 // ₴ за клієнта (нижня межа)
+const CASE_VALUE_HIGH = 5500 // ₴ за клієнта (верхня межа)
 
 const HOW_ITEMS = [
   { icon: 'megaphone', t: 'Маркетинг «під ключ»', d: 'Просуваємо вас у Google, рекламі та соцмережах' },
