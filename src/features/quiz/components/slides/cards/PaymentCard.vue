@@ -2,10 +2,24 @@
 import { quizData, submitQuizData, clearStoredAnswers } from '../../../store/quizDataStore.js'
 import { countdownTimerMixin } from '../../../mixins/countdownTimerMixin.js'
 import { publicAsset } from '../../../data/publicAsset.js'
+import { pricingByBilling } from '../../../data/pricingPlans.js'
 
 const PLAN_NAMES = { base: 'Base', pro: 'Pro', premium: 'Premium' }
-// Якірні (до знижки) місячні ціни, ₴.
-const FULL_MONTHLY = { base: 599, pro: 2299, premium: 5999 }
+// Реальні ціни беремо з того ж джерела, що й картка тарифів (pricingByBilling),
+// щоб суми на оплаті збігалися з обраним планом.
+const priceNum = (s) => parseInt(String(s).replace(/\D/g, ''), 10) || 0
+const ACTUAL_MONTHLY = {
+  monthly: {
+    base: priceNum(pricingByBilling.monthly.base.price),
+    pro: priceNum(pricingByBilling.monthly.pro.price),
+    premium: priceNum(pricingByBilling.monthly.premium.price)
+  },
+  annual: {
+    base: priceNum(pricingByBilling.annual.base.price),
+    pro: priceNum(pricingByBilling.annual.pro.price),
+    premium: priceNum(pricingByBilling.annual.premium.price)
+  }
+}
 const PERIODS = {
   '1_month': { label: '1 місяць', discount: 0, months: 1 },
   '1_year': { label: '1 рік', discount: 10, months: 12 }
@@ -30,34 +44,37 @@ export default {
       FAQ_ITEMS,
       paypalIcon: publicAsset('icon/paypal.svg'),
       cardIcon: publicAsset('icon/card-credit.svg'),
-      currentPeriod: quizData.period || '1_year',
+      currentPeriod: PERIODS[quizData.period] ? quizData.period : '1_year',
       openFaq: new Set(),
       isSubmitting: false
     }
   },
   computed: {
     summary() {
-      const period = PERIODS[this.currentPeriod]
-      const planKey = this.quizData.plan || 'pro'
-      const fullPrice = FULL_MONTHLY[planKey] * period.months
+      const periodDef = PERIODS[this.currentPeriod] || PERIODS['1_year']
+      const isAnnual = this.currentPeriod === '1_year'
+      const table = ACTUAL_MONTHLY[isAnnual ? 'annual' : 'monthly']
+      const planKey = table[this.quizData.plan] ? this.quizData.plan : 'pro'
 
-      const urgencyAmount = Math.round(fullPrice * 0.2)
-      const referralAmount = this.quizData.referral_code ? Math.round(fullPrice * 0.1) : 0
-      const periodAmount = period.discount > 0 ? Math.round((fullPrice * period.discount) / 100) : 0
-      const totalDiscount = urgencyAmount + referralAmount + periodAmount
-      const total = Math.max(0, fullPrice - totalDiscount)
+      // Реальна сума = ціна обраного плану (як на картці тарифів) × кількість місяців.
+      const realTotal = table[planKey] * periodDef.months
+      // «Якірна» ціна: −20% терміновості повертає рівно до реальної суми плану.
+      const fullPrice = Math.round(realTotal / 0.8)
+      const urgencyAmount = fullPrice - realTotal
+      const referralAmount = this.quizData.referral_code ? Math.round(realTotal * 0.1) : 0
+      const total = Math.max(0, realTotal - referralAmount)
       const saved = fullPrice - total
 
       return {
         planName: PLAN_NAMES[planKey],
-        periodLabel: period.label,
-        periodDiscount: period.discount,
+        periodLabel: periodDef.label,
+        periodDiscount: 0,
         fullPrice: fmt(fullPrice),
         urgencyAmount: fmt(urgencyAmount),
         referralAmount,
         referralAmountText: fmt(referralAmount),
-        periodAmount,
-        periodAmountText: fmt(periodAmount),
+        periodAmount: 0,
+        periodAmountText: fmt(0),
         total: fmt(total),
         saved,
         savedText: fmt(saved)
