@@ -79,7 +79,7 @@ export default {
       this.c1 = '0'
       this.c2 = '0'
       this.runCount((v) => (this.c1 = v), 47, 1500, false)
-      this.runCount((v) => (this.c2 = v), 5800000, 1700, true)
+      this.runCount((v) => (this.c2 = v), 200000, 1700, true)
     },
   },
 }
