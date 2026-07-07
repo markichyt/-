@@ -27,7 +27,7 @@ const SAMPLE_PHOTOS = [
 const PHOTO_ERRORS = {
   WRONG_RATIO: {
     title: 'Фото неправильного формату',
-    bodyHtml: 'Ви прикріпили фото неправильного розширення (не 16:9). Через це <strong class="pu-modal-danger">аватар буде згенеровано некоректно</strong> — у відео зʼявляться сірі поля.',
+    bodyHtml: 'Ви прикріпили фото не горизонтального формату (не 16:9). Через це <strong class="pu-modal-danger">відео може відображатися некоректно</strong>.',
     canContinue: true
   },
   NO_PERSON: {
@@ -217,7 +217,7 @@ export default {
       </div>
 
       <div v-if="!photoIsValid" class="pu-warn-text">
-        ⚠ Фото не є горизонтальним 16:9 — у відео будуть сірі поля
+        ⚠ Фото не є горизонтальним 16:9 — відео може відображатися некоректно
       </div>
       <button type="button" class="pu-upload-own" @click="triggerFilePicker">
         <QuizIcon name="upload" :size="16" /> Завантажити своє фото
