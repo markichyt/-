@@ -55,14 +55,20 @@ export default {
     errorFor(field) {
       if (!this.touched[field.field] || this.isFieldValid(field)) return ''
       const value = quizData[field.field]
-      if (field.type === 'file') return 'Додайте файл'
-      if (field.type === 'email') return (value || '').trim() ? 'Невірний формат email' : 'Заповніть це поле'
-      if (field.type === 'tel') return 'Невірний номер телефону'
+      if (field.type === 'file') return this.$t('validation.file')
+      if (field.type === 'email') return (value || '').trim() ? this.$t('validation.emailInvalid') : this.$t('validation.required')
+      if (field.type === 'tel') return this.$t('validation.phoneInvalid')
       if (field.type === 'password') {
-        if (field.match) return (value || '') ? 'Паролі не збігаються' : 'Повторіть пароль'
-        return (value || '') ? 'Мін 5 символів, велика літера і цифра' : 'Заповніть це поле'
+        if (field.match) return (value || '') ? this.$t('validation.passwordMismatch') : this.$t('validation.passwordRepeat')
+        return (value || '') ? this.$t('validation.passwordWeak') : this.$t('validation.required')
       }
-      return 'Заповніть це поле'
+      return this.$t('validation.required')
+    },
+    fieldLabel(field) {
+      return this.$t('slides.' + this.slide.id + '.fields.' + field.field + '.label')
+    },
+    fieldPh(field) {
+      return this.$t('slides.' + this.slide.id + '.fields.' + field.field + '.ph')
     },
     markTouched(field) {
       this.$set(this.touched, field, true)
@@ -100,7 +106,7 @@ export default {
       :class="{ 'form-group--invalid': errorFor(field) }"
     >
       <label class="form-label">
-        {{ field.label }}<em v-if="!field.optional" class="form-req"> *</em>
+        {{ fieldLabel(field) }}<em v-if="!field.optional" class="form-req"> *</em>
       </label>
 
       <!-- File upload -->
@@ -110,7 +116,7 @@ export default {
           :class="{ uploaded: !!quizData[field.field] }"
           @click="openFilePicker"
         >
-          <div class="upload-text">{{ quizData[field.field] || field.label }}</div>
+          <div class="upload-text">{{ quizData[field.field] || fieldLabel(field) }}</div>
           <input
             type="file"
             :accept="field.accept"
@@ -134,7 +140,7 @@ export default {
         v-model="quizData[field.field]"
         :type="field.type || 'text'"
         class="card-input"
-        :placeholder="field.ph || ''"
+        :placeholder="fieldPh(field)"
         :name="field.field"
         :inputmode="field.type === 'email' ? 'email' : undefined"
         :autocomplete="autocompleteFor(field.field)"

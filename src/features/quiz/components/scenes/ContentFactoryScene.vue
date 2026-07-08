@@ -1,6 +1,8 @@
 <script>
 import { publicAsset } from '../../data/publicAsset.js'
 import SceneCanvas from './SceneCanvas.vue'
+import { market } from '../../../../i18n/marketConfig.js'
+import { formatNumber } from '../../../../i18n/format.js'
 
 void publicAsset
 
@@ -13,40 +15,21 @@ void publicAsset
 
 // Pipeline steps (top: scan/generate/publish/track/scale)
 const steps = [
-  {
-    label: 'Скан',
-    paths: ['<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>'],
-  },
-  {
-    label: 'Генерація',
-    paths: [
-      '<path d="M12 3v3M12 18v3M5 12H2M22 12h-3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="3.2"/>',
-    ],
-  },
-  {
-    label: 'Публікація',
-    paths: [
-      '<path d="M5 12V5a1 1 0 0 1 1-1h7l6 6v7a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1Z"/><path d="M12 4v6h6"/><path d="m9 16 3-3 3 3"/><path d="M12 13v6"/>',
-    ],
-  },
-  {
-    label: 'Аналіз',
-    paths: ['<path d="M3 17l5-5 4 4 7-8"/><path d="M14 8h5v5"/>'],
-  },
-  {
-    label: 'Масштаб',
-    paths: ['<path d="M4 20V4M4 20h16M8 16V10M13 16V7M18 16v-4"/>'],
-  },
+  { key: 'scan', paths: ['<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>'] },
+  { key: 'generate', paths: ['<path d="M12 3v3M12 18v3M5 12H2M22 12h-3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="3.2"/>'] },
+  { key: 'publish', paths: ['<path d="M5 12V5a1 1 0 0 1 1-1h7l6 6v7a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1Z"/><path d="M12 4v6h6"/><path d="m9 16 3-3 3 3"/><path d="M12 13v6"/>'] },
+  { key: 'analyze', paths: ['<path d="M3 17l5-5 4 4 7-8"/><path d="M14 8h5v5"/>'] },
+  { key: 'scale', paths: ['<path d="M4 20V4M4 20h16M8 16V10M13 16V7M18 16v-4"/>'] },
 ]
 
-// Before / After rows
+// Before / After rows (key — i18n; val — універсальне число)
 const beforeRows = [
-  { key: 'Перегляди', val: '12K' },
-  { key: 'Залученість', val: '2.1%' },
+  { key: 'views', val: '12K' },
+  { key: 'engagement', val: '2.1%' },
 ]
 const afterRows = [
-  { key: 'Перегляди', val: '187K' },
-  { key: 'Залученість', val: '8.7%' },
+  { key: 'views', val: '187K' },
+  { key: 'engagement', val: '8.7%' },
 ]
 
 // Socials: brand class + inline SVG markup + count-up config
@@ -84,7 +67,7 @@ const socials = [
 ]
 
 function formatNum(n, opts) {
-  if (opts.format === 'comma') return Math.round(n).toLocaleString('en-US')
+  if (opts.format === 'comma') return formatNumber(Math.round(n))
   if (opts.decimals) return n.toFixed(opts.decimals)
   return Math.round(n).toString()
 }
@@ -142,7 +125,7 @@ export default {
         // Vue 2: array element writes by index aren't reactive — use $set.
         this.animateCount((txt) => { this.$set(this.socCounts, i, txt) }, s.count, { suffix: s.suffix, delay: s.delay })
       })
-      this.animateCount((txt) => { this.totalCount = txt }, 100000, { format: 'comma', delay: 2000 })
+      this.animateCount((txt) => { this.totalCount = txt }, market(this.$i18n.locale).scenes.contentTotalReach, { format: 'comma', delay: 2000 })
     },
   },
 }
@@ -155,8 +138,8 @@ export default {
 
         <!-- Heading -->
         <div class="heading">
-          <div class="h-title">Стежте за конкурентами <span class="accent">24/7</span></div>
-          <div class="h-sub">і створюйте кращий контент за хвилини з Consultant.</div>
+          <div class="h-title" v-html="$t('scenes.content.headlineHtml')"></div>
+          <div class="h-sub">{{ $t('scenes.content.sub') }}</div>
         </div>
 
         <!-- Pipeline -->
@@ -166,31 +149,31 @@ export default {
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
                    stroke-linecap="round" stroke-linejoin="round" v-html="s.paths.join('')"></svg>
             </div>
-            <div class="step-label">{{ s.label }}</div>
+            <div class="step-label">{{ $t('scenes.content.steps.' + s.key) }}</div>
           </div>
         </div>
 
         <!-- Before / After -->
         <div class="ba">
           <div class="ba-side ba-before">
-            <div class="ba-eyebrow"><span class="dot"></span> До</div>
-            <div class="ba-label">Конкурент</div>
+            <div class="ba-eyebrow"><span class="dot"></span> {{ $t('scenes.content.before') }}</div>
+            <div class="ba-label">{{ $t('scenes.content.competitor') }}</div>
             <div v-for="(r, i) in beforeRows" :key="i" class="ba-row">
-              <span class="ba-row-key">{{ r.key }}</span>
+              <span class="ba-row-key">{{ $t('scenes.content.' + r.key) }}</span>
               <span class="ba-row-val">{{ r.val }}</span>
             </div>
             <div class="ba-bar"><i></i></div>
           </div>
           <div class="ba-side ba-after">
-            <div class="ba-eyebrow"><span class="dot"></span> Після</div>
-            <div class="ba-label">Ваш контент</div>
+            <div class="ba-eyebrow"><span class="dot"></span> {{ $t('scenes.content.after') }}</div>
+            <div class="ba-label">{{ $t('scenes.content.yours') }}</div>
             <div v-for="(r, i) in afterRows" :key="i" class="ba-row">
-              <span class="ba-row-key">{{ r.key }}</span>
+              <span class="ba-row-key">{{ $t('scenes.content.' + r.key) }}</span>
               <span class="ba-row-val">{{ r.val }}</span>
             </div>
             <div class="ba-bar"><i></i></div>
           </div>
-          <div class="ba-badge">+1,458%</div>
+          <div class="ba-badge">{{ $t('scenes.content.badge') }}</div>
         </div>
 
         <!-- Socials -->
@@ -207,9 +190,9 @@ export default {
 
         <!-- Total reach -->
         <div class="total">
-          <div class="total-label">Загальне охоплення</div>
+          <div class="total-label">{{ $t('scenes.content.totalLabel') }}</div>
           <div class="total-num"><span class="count">{{ totalCount }}</span><span style="color: var(--accent);">+</span></div>
-          <div class="total-foot">на 5 платформах · за кампанію</div>
+          <div class="total-foot">{{ $t('scenes.content.totalFoot') }}</div>
         </div>
 
       </div>

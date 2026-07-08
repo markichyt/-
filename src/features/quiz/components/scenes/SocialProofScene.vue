@@ -1,6 +1,8 @@
 <script>
 import { publicAsset } from '../../data/publicAsset.js'
 import SceneCanvas from './SceneCanvas.vue'
+import { market } from '../../../../i18n/marketConfig.js'
+import { formatMoneyCompact } from '../../../../i18n/format.js'
 
 // Native Vue rebuild of htmlTOvideo/8 — the "2,500+ attorneys" social-proof
 // scene (step 3). Two tilted avatar carousels scroll once on entry (the
@@ -11,26 +13,25 @@ import SceneCanvas from './SceneCanvas.vue'
 const PHOTOS = Array.from({ length: 28 }, (_, i) => publicAsset(`htmlTOvideo/8/avatars/${String(i + 1).padStart(2, '0')}.png`))
 
 const TOP_PHOTOS = PHOTOS.slice(0, 20)
-const TOP_INCOMES = ['490К ₴', '1.15М ₴', '1.9М ₴', '330К ₴', '1.4М ₴', '780К ₴', '2.1М ₴', '610К ₴', '1.68М ₴', '940К ₴', '1.27М ₴', '370К ₴', '1.8М ₴', '700К ₴', '1.55М ₴', '1.1М ₴', '2.05М ₴', '450К ₴', '1.35М ₴', '860К ₴']
-
 const BOT_PHOTOS = [...PHOTOS.slice(20, 28), ...PHOTOS.slice(0, 12)]
-const BOT_INCOMES = ['900К ₴', '1.6М ₴', '660К ₴', '1.85М ₴', '290К ₴', '1.19М ₴', '2.2М ₴', '740К ₴', '1.48М ₴', '980К ₴', '1.72М ₴', '530К ₴', '1.97М ₴', '820К ₴', '1.4М ₴', '1.1М ₴', '2.1М ₴', '410К ₴', '1.23М ₴', '1.03М ₴']
-
-const topAvatars = TOP_PHOTOS.map((src, i) => ({ src, income: TOP_INCOMES[i] }))
-const botAvatars = BOT_PHOTOS.map((src, i) => ({ src, income: BOT_INCOMES[i] }))
-// Two copies per row for a seamless scroll.
-const topRow = [...topAvatars, ...topAvatars]
-const botRow = [...botAvatars, ...botAvatars]
 
 export default {
   name: 'SocialProofScene',
   components: { SceneCanvas },
-  data() {
-    return {
-      topRow,
-      botRow,
+  computed: {
+    // Доходи на плашках — з marketConfig, форматуються під валюту локалі.
+    // Дві копії ряду — для безшовного прокручування.
+    topRow() {
+      const inc = market(this.$i18n.locale).incomes.top
+      const a = TOP_PHOTOS.map((src, i) => ({ src, income: formatMoneyCompact(inc[i]) }))
+      return [...a, ...a]
+    },
+    botRow() {
+      const inc = market(this.$i18n.locale).incomes.bot
+      const a = BOT_PHOTOS.map((src, i) => ({ src, income: formatMoneyCompact(inc[i]) }))
+      return [...a, ...a]
     }
-  },
+  }
 }
 </script>
 
@@ -39,10 +40,10 @@ export default {
     <div class="canvas">
       <div class="header-card">
         <div style="margin-top:2px">
-          <span class="big">2 500+</span><span class="line">юристів</span>
+          <span class="big">{{ $t('scenes.social.count') }}</span><span class="line">{{ $t('scenes.social.countLabel') }}</span>
         </div>
-        <div class="line">збільшили свій дохід з нами</div>
-        <div class="sub"><span class="dot" /> Підтверджений місячний дохід · 2024–2026</div>
+        <div class="line">{{ $t('scenes.social.headline') }}</div>
+        <div class="sub"><span class="dot" /> {{ $t('scenes.social.sub') }}</div>
       </div>
 
       <div class="carousels">
@@ -65,11 +66,11 @@ export default {
       </div>
 
       <div class="stats">
-        <div class="stat"><div class="num">+183%</div><div class="cap">сер. зростання доходу</div></div>
+        <div class="stat"><div class="num">{{ $t('scenes.social.stats.growthNum') }}</div><div class="cap">{{ $t('scenes.social.stats.growthCap') }}</div></div>
         <div class="divider" />
-        <div class="stat"><div class="num">94%</div><div class="cap">продовжують підписку</div></div>
+        <div class="stat"><div class="num">{{ $t('scenes.social.stats.renewNum') }}</div><div class="cap">{{ $t('scenes.social.stats.renewCap') }}</div></div>
         <div class="divider" />
-        <div class="stat"><div class="num">5</div><div class="cap">країн</div></div>
+        <div class="stat"><div class="num">{{ $t('scenes.social.stats.countriesNum') }}</div><div class="cap">{{ $t('scenes.social.stats.countriesCap') }}</div></div>
       </div>
     </div>
   </SceneCanvas>

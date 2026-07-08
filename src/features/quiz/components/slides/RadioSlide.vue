@@ -4,27 +4,26 @@ import QuizActionBar from '../QuizActionBar.vue'
 import QuizContinueButton from '../QuizContinueButton.vue'
 import { quizData } from '../../store/quizDataStore.js'
 import { goToNextStep } from '../../store/quizProgressStore.js'
-
-// Short explanatory note shown under the "preferred way" question.
-const PREFERRED_WAY_DISCLAIMERS = {
-  social_media: 'Автоматизація: ми допомагаємо створювати й вести соцмережі автоматично — контент, що формує довіру й залучає клієнтів.',
-  paid_ads: 'Наша AI-реклама — це підсилювач: ми покращуємо те, що ви вже робите.',
-  both: 'Чудовий вибір! Поєднаємо платний та органічний підходи для максимального результату.',
-  ai_decide: 'Довіряєте? Чудово. AI обере найкращу стратегію під ваш бізнес і принесе результат.'
-}
+import { slideOptionsMixin } from './slideOptionsMixin.js'
 
 export default {
   name: 'RadioSlide',
+  mixins: [slideOptionsMixin],
   components: { QuizIcon, QuizActionBar, QuizContinueButton },
   props: {
     slide: { type: Object, required: true }
   },
   data() {
-    const selectedValue = quizData[this.slide.field]
     return {
       quizData,
-      selectedValue,
-      disclaimer: this.slide.field === 'preferred_way' ? (PREFERRED_WAY_DISCLAIMERS[selectedValue] || '') : ''
+      selectedValue: quizData[this.slide.field]
+    }
+  },
+  computed: {
+    // Пояснення під питанням «бажаний спосіб» — залежить від обраного варіанта.
+    disclaimer() {
+      if (this.slide.field !== 'preferred_way' || !this.selectedValue) return ''
+      return this.$t('slides.preferred_way.disclaimer.' + this.selectedValue)
     }
   },
   methods: {
@@ -32,9 +31,6 @@ export default {
     selectOption(option) {
       this.selectedValue = option.v
       quizData[this.slide.field] = option.v
-      if (this.slide.field === 'preferred_way') {
-        this.disclaimer = PREFERRED_WAY_DISCLAIMERS[option.v] || ''
-      }
       // Перехід відбувається лише після натискання «Далі» (без авто-переходу).
     }
   }
@@ -45,7 +41,7 @@ export default {
   <div class="radio-slide">
     <div class="option-list">
       <div
-        v-for="option in slide.options"
+        v-for="option in resolvedOptions"
         :key="option.v"
         class="option-item"
         :class="{ selected: selectedValue === option.v }"
@@ -59,7 +55,7 @@ export default {
         <span v-if="option.icon" class="opt-icon" :style="{ background: option.color || '#64748b' }">
           <QuizIcon :name="option.icon" />
         </span>
-        <span class="option-text">{{ option.t }}</span>
+        <span class="option-text">{{ optLabel(option) }}</span>
         <span class="option-check" />
       </div>
     </div>

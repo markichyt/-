@@ -17,34 +17,18 @@ const RATIO_TOLERANCE = 0.05 // ±5 %
 // Готові приклади вдалих фото (горизонтальні 16:9). Слугують і зразком того, яке
 // фото потрібне, і запасним варіантом, якщо у користувача немає власного.
 const SAMPLE_PHOTOS = [
-  { id: 'woman', label: 'Зразок', file: 'lawyer-woman.jpg', src: publicAsset('images/samples/lawyer-woman.jpg') },
-  { id: 'man', label: 'Зразок', file: 'lawyer-man.jpg', src: publicAsset('images/samples/lawyer-man.jpg') }
+  { id: 'woman', file: 'lawyer-woman.jpg', src: publicAsset('images/samples/lawyer-woman.jpg') },
+  { id: 'man', file: 'lawyer-man.jpg', src: publicAsset('images/samples/lawyer-man.jpg') }
 ]
 
-// Помилки перевірки фото. WRONG_RATIO перевіряється на клієнті (співвідношення
-// сторін), решта — коди від бекенду (перевірка вмісту фото). canContinue=true
-// лише для «мʼякого» попередження, коли аватар усе одно можна згенерувати.
+// Коди помилок фото. WRONG_RATIO перевіряється на клієнті (співвідношення сторін),
+// решта — коди від бекенду (перевірка вмісту). Тексти — в i18n (cards.photo.errors.<code>).
+// canContinue=true лише для «мʼякого» попередження, коли аватар усе одно можна згенерувати.
 const PHOTO_ERRORS = {
-  WRONG_RATIO: {
-    title: 'Фото неправильного формату',
-    bodyHtml: 'Ви прикріпили фото не горизонтального формату (не 16:9). Через це <strong class="pu-modal-danger">відео може виглядати некоректно</strong>.',
-    canContinue: true
-  },
-  NO_PERSON: {
-    title: 'Людину не знайдено',
-    bodyHtml: 'На фото не знайдено людину. Завантажте своє <strong class="pu-modal-danger">портретне фото</strong>.',
-    canContinue: false
-  },
-  MULTIPLE_PEOPLE: {
-    title: 'Більше однієї людини',
-    bodyHtml: 'На фото більше однієї людини. Потрібне фото <strong class="pu-modal-danger">тільки з вами</strong>.',
-    canContinue: false
-  },
-  FACE_NOT_VISIBLE: {
-    title: 'Обличчя не видно',
-    bodyHtml: 'Обличчя не видно на фото. Потрібне фото, де <strong class="pu-modal-danger">добре видно ваше обличчя</strong>.',
-    canContinue: false
-  }
+  WRONG_RATIO: { canContinue: true },
+  NO_PERSON: { canContinue: false },
+  MULTIPLE_PEOPLE: { canContinue: false },
+  FACE_NOT_VISIBLE: { canContinue: false }
 }
 
 export default {
@@ -59,14 +43,15 @@ export default {
       dimText: '',
       photoIsValid: true,
       hasPhoto: false,
-      dropHint: 'Натисніть, щоб завантажити своє фото',
+      dropHint: 'default',
       isDragOver: false,
       photoErrorCode: ''
     }
   },
   computed: {
     photoError() {
-      return PHOTO_ERRORS[this.photoErrorCode] || null
+      const e = PHOTO_ERRORS[this.photoErrorCode]
+      return e ? { code: this.photoErrorCode, canContinue: e.canContinue } : null
     }
   },
   mounted() {
@@ -112,14 +97,14 @@ export default {
     handleFile(file) {
       if (!file) return
       if (ACCEPTED_TYPES.indexOf(file.type) === -1) {
-        this.dropHint = 'Невірний формат — лише JPEG / PNG'
+        this.dropHint = 'badType'
         return
       }
       if (file.size > MAX_BYTES) {
-        this.dropHint = 'Файл завеликий — максимум 5 МБ'
+        this.dropHint = 'tooBig'
         return
       }
-      this.dropHint = 'Натисніть, щоб завантажити своє фото'
+      this.dropHint = 'default'
       const reader = new FileReader()
       reader.onload = () => {
         this.previewSrc = reader.result
@@ -205,28 +190,28 @@ export default {
       @drop.prevent="onDrop"
     >
       <div class="pu-drop-icon"><QuizIcon name="camera" :size="38" /></div>
-      <div class="pu-drop-title">{{ dropHint }}</div>
-      <div class="pu-drop-sub">JPEG або PNG · до 5 МБ · горизонтальне 16:9</div>
+      <div class="pu-drop-title">{{ $t('cards.photo.dropHint.' + dropHint) }}</div>
+      <div class="pu-drop-sub">{{ $t('cards.photo.dropSub') }}</div>
     </label>
 
     <!-- Превʼю 9:16 -->
     <template v-if="hasPhoto">
       <div class="pu-preview" @click="triggerFilePicker">
-        <img :src="previewSrc" class="pu-preview-img" alt="Прев'ю фото">
+        <img :src="previewSrc" class="pu-preview-img" :alt="$t('cards.photo.previewAlt')">
         <div class="pu-dim-badge" :class="{ warn: !photoIsValid }">{{ dimText }}</div>
       </div>
 
       <div v-if="!photoIsValid" class="pu-warn-text">
-        ⚠ Фото не є горизонтальним 16:9 — відео може виглядати некоректно
+        {{ $t('cards.photo.warnRatio') }}
       </div>
       <button type="button" class="pu-upload-own" @click="triggerFilePicker">
-        <QuizIcon name="upload" :size="16" /> Завантажити своє фото
+        <QuizIcon name="upload" :size="16" /> {{ $t('cards.photo.uploadOwn') }}
       </button>
     </template>
 
     <!-- Галерея прикладів (завжди доступна: і зразок, і запасний варіант) -->
     <div class="pu-samples">
-      <div class="pu-samples-title">Немає власного фото під рукою? Оберіть зразок 👇</div>
+      <div class="pu-samples-title">{{ $t('cards.photo.samplesTitle') }}</div>
       <div class="pu-samples-row">
         <button
           v-for="s in samples"
@@ -236,8 +221,8 @@ export default {
           :class="{ selected: selectedSampleId === s.id }"
           @click="selectSample(s)"
         >
-          <img :src="s.src" class="pu-sample-img" :alt="s.label">
-          <span class="pu-sample-cap">{{ s.label }}</span>
+          <img :src="s.src" class="pu-sample-img" :alt="$t('cards.photo.sampleLabel')">
+          <span class="pu-sample-cap">{{ $t('cards.photo.sampleLabel') }}</span>
         </button>
       </div>
     </div>
@@ -247,14 +232,14 @@ export default {
       <div class="pu-modal-overlay" @click="closeModal" />
       <div v-if="photoError" class="pu-modal-card">
         <div class="pu-modal-icon">⚠️</div>
-        <div class="pu-modal-title">{{ photoError.title }}</div>
-        <div class="pu-modal-body" v-html="photoError.bodyHtml" />
+        <div class="pu-modal-title">{{ $t('cards.photo.errors.' + photoError.code + '.title') }}</div>
+        <div class="pu-modal-body" v-html="$t('cards.photo.errors.' + photoError.code + '.body')" />
         <div class="pu-modal-actions">
           <button type="button" class="pu-modal-primary" @click="modalUploadOther">
-            Завантажити інше фото
+            {{ $t('cards.photo.modalUploadOther') }}
           </button>
           <button v-if="photoError.canContinue" type="button" class="pu-modal-quiet" @click="modalProceed">
-            Продовжити
+            {{ $t('cards.photo.modalProceed') }}
           </button>
         </div>
       </div>

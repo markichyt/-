@@ -2,6 +2,7 @@
 import QuizTopBar from '../components/QuizTopBar.vue'
 import QuizCardStack from '../components/QuizCardStack.vue'
 import QuizScenePrewarmer from '../components/QuizScenePrewarmer.vue'
+import LanguageSwitcher from '../components/LanguageSwitcher.vue'
 import { publicAsset } from '../data/publicAsset.js'
 import { quizData, saveQuizData } from '../store/quizDataStore.js'
 
@@ -10,7 +11,7 @@ import { quizData, saveQuizData } from '../store/quizDataStore.js'
 // persists answers to localStorage whenever they change.
 export default {
   name: 'QuizPage',
-  components: { QuizTopBar, QuizCardStack, QuizScenePrewarmer },
+  components: { QuizTopBar, QuizCardStack, QuizScenePrewarmer, LanguageSwitcher },
   data() {
     return { logoSrc: publicAsset('images/logo/logo_en.svg') }
   },
@@ -30,6 +31,8 @@ export default {
     <div class="logo-area">
       <img :src="logoSrc" alt="Консультант" class="logo">
     </div>
+
+    <LanguageSwitcher />
 
     <QuizCardStack />
     <QuizScenePrewarmer />

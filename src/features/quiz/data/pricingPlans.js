@@ -1,89 +1,76 @@
-// Дані планів/функцій для картки тарифів (українська версія, ціни у ₴).
-
-// Рядки порівняння функцій.
+// Дані планів/функцій для картки тарифів.
+//   key      — стабільний ключ функції; підпис береться з i18n (pricing.features.<key>).
 //   graduated: true → у категорії свій рядок під кожен тариф; показується лише той,
-//   чий прапорець збігається з тарифом (інші приховані, а не ✗).
+//     чий прапорець збігається з тарифом (інші приховані, а не ✗).
+// Ціни — з marketConfig (pricing), форматуються через formatMoney у компонентах.
 export const pricingFeatures = [
-  { label: 'AI PRO аватар', graduated: true, base: false, pro: true, premium: false },
-  { label: 'AI PREMIUM аватар', graduated: true, base: false, pro: false, premium: true },
-  { label: '10 AI-постів/відео', graduated: true, base: true, pro: false, premium: false },
-  { label: '40 AI-постів/відео', graduated: true, base: false, pro: true, premium: false },
-  { label: '100 AI-постів/відео', graduated: true, base: false, pro: false, premium: true },
-  { label: '6 купівель лідів', graduated: true, base: true, pro: false, premium: false },
-  { label: '30 купівель лідів', graduated: true, base: false, pro: true, premium: false },
-  { label: 'Безлімітна купівля лідів', graduated: true, base: false, pro: false, premium: true },
-  { label: 'До 10 перевірок репутації', graduated: true, base: false, pro: true, premium: false },
-  { label: 'Безлімітні перевірки репутації', graduated: true, base: false, pro: false, premium: true },
-  { label: 'Топ у Google за вашим іменем', base: false, pro: false, premium: true },
-  { label: 'Персональний менеджер 24/7', base: false, pro: false, premium: true },
-  { label: 'Ексклюзивне просування в соцмережах', base: false, pro: false, premium: true },
-  { label: 'Підвищення рейтингу за минулим досвідом', base: false, pro: true, premium: true },
-  { label: 'Власні ціни на ваші послуги', base: false, pro: true, premium: true },
-  { label: 'AI-модуль для Google і Meta', base: true, pro: true, premium: true },
-  { label: 'AI-моніторинг конкурентів', base: true, pro: true, premium: true },
-  { label: 'AI-асистент для клієнтів', base: true, pro: true, premium: true },
-  { label: 'Реферальний заробіток', base: true, pro: true, premium: true },
-  { label: 'Приватний чат для спеціалістів', base: true, pro: true, premium: true },
-  { label: 'CRM-система', base: true, pro: true, premium: true },
-  { label: 'Захищений месенджер', base: true, pro: true, premium: true }
+  { key: 'ai_pro_avatar', graduated: true, base: false, pro: true, premium: false },
+  { key: 'ai_premium_avatar', graduated: true, base: false, pro: false, premium: true },
+  { key: 'posts_10', graduated: true, base: true, pro: false, premium: false },
+  { key: 'posts_40', graduated: true, base: false, pro: true, premium: false },
+  { key: 'posts_100', graduated: true, base: false, pro: false, premium: true },
+  { key: 'leads_6', graduated: true, base: true, pro: false, premium: false },
+  { key: 'leads_30', graduated: true, base: false, pro: true, premium: false },
+  { key: 'leads_unlim', graduated: true, base: false, pro: false, premium: true },
+  { key: 'reputation_10', graduated: true, base: false, pro: true, premium: false },
+  { key: 'reputation_unlim', graduated: true, base: false, pro: false, premium: true },
+  { key: 'google_top', base: false, pro: false, premium: true },
+  { key: 'manager_24_7', base: false, pro: false, premium: true },
+  { key: 'exclusive_smm', base: false, pro: false, premium: true },
+  { key: 'rating_boost', base: false, pro: true, premium: true },
+  { key: 'own_prices', base: false, pro: true, premium: true },
+  { key: 'ai_module', base: true, pro: true, premium: true },
+  { key: 'ai_monitoring', base: true, pro: true, premium: true },
+  { key: 'ai_assistant', base: true, pro: true, premium: true },
+  { key: 'referral', base: true, pro: true, premium: true },
+  { key: 'private_chat', base: true, pro: true, premium: true },
+  { key: 'crm', base: true, pro: true, premium: true },
+  { key: 'messenger', base: true, pro: true, premium: true }
 ]
 
 // Узагальнені ✗-заглушки для градуйованих категорій, де в тарифу немає свого рядка.
 export const pricingGenericPlaceholders = [
-  { categoryRows: ['AI PRO аватар', 'AI PREMIUM аватар'], label: 'AI-аватар' },
-  { categoryRows: ['До 10 перевірок репутації', 'Безлімітні перевірки репутації'], label: 'Перевірки репутації' }
+  { categoryRows: ['ai_pro_avatar', 'ai_premium_avatar'], key: 'ai_avatar' },
+  { categoryRows: ['reputation_10', 'reputation_unlim'], key: 'reputation' }
 ]
 
+// badge.text — i18n-ключ (pricing.badges.<...>).
 export const pricingProBadges = {
-  '40 AI-постів/відео': { text: '4x більше', type: 'green' },
-  '30 купівель лідів': { text: '5x більше', type: 'green' },
-  'До 10 перевірок репутації': { text: 'НОВЕ', type: 'cyan' },
-  'Підвищення рейтингу за минулим досвідом': { text: 'НОВЕ', type: 'cyan' },
-  'Власні ціни на ваші послуги': { text: 'НОВЕ', type: 'cyan' },
-  'AI PRO аватар': { text: 'НОВЕ', type: 'cyan' }
+  posts_40: { text: 'pricing.badges.more_4x', type: 'green' },
+  leads_30: { text: 'pricing.badges.more_5x', type: 'green' },
+  reputation_10: { text: 'pricing.badges.new', type: 'cyan' },
+  rating_boost: { text: 'pricing.badges.new', type: 'cyan' },
+  own_prices: { text: 'pricing.badges.new', type: 'cyan' },
+  ai_pro_avatar: { text: 'pricing.badges.new', type: 'cyan' }
 }
 
 export const pricingPremiumBadges = {
-  '100 AI-постів/відео': { text: '2.5x більше', type: 'green' },
-  'Безлімітна купівля лідів': { text: '∞', type: 'green' },
-  'Топ у Google за вашим іменем': { text: 'НОВЕ', type: 'cyan' },
-  'Персональний менеджер 24/7': { text: 'НОВЕ', type: 'cyan' },
-  'Ексклюзивне просування в соцмережах': { text: 'НОВЕ', type: 'cyan' },
-  'Безлімітні перевірки репутації': { text: '∞', type: 'green' },
-  'AI PREMIUM аватар': { text: 'АПГРЕЙД', type: 'cyan' }
+  posts_100: { text: 'pricing.badges.more_2_5x', type: 'green' },
+  leads_unlim: { text: 'pricing.badges.infinity', type: 'green' },
+  google_top: { text: 'pricing.badges.new', type: 'cyan' },
+  manager_24_7: { text: 'pricing.badges.new', type: 'cyan' },
+  exclusive_smm: { text: 'pricing.badges.new', type: 'cyan' },
+  reputation_unlim: { text: 'pricing.badges.infinity', type: 'green' },
+  ai_premium_avatar: { text: 'pricing.badges.upgrade', type: 'cyan' }
 }
 
-// Місячні ціни (₴); річний режим застосовує −10% (заздалегідь пораховані рядки).
-export const pricingByBilling = {
-  monthly: {
-    base: { price: '399 ₴', note: 'на місяць, щомісячна оплата' },
-    pro: { price: '1 599 ₴', note: 'на місяць, щомісячна оплата' },
-    premium: { price: '3 999 ₴', note: 'на місяць, щомісячна оплата' }
-  },
-  annual: {
-    base: { price: '359 ₴', note: 'на місяць, річна оплата (−10%)' },
-    pro: { price: '1 439 ₴', note: 'на місяць, річна оплата (−10%)' },
-    premium: { price: '3 599 ₴', note: 'на місяць, річна оплата (−10%)' }
-  }
-}
-
-// Формує видимий список функцій для тарифу.
+// Формує видимий список функцій для тарифу (ключі + прапорці + бейджі).
 export function buildTierFeatures(tier) {
   const badgeMap = tier === 'pro' ? pricingProBadges : tier === 'premium' ? pricingPremiumBadges : null
   const relevant = []
 
   pricingFeatures.forEach((feature) => {
     if (feature.graduated && !feature[tier]) return
-    const item = { label: feature.label, on: !!feature[tier] }
-    if (badgeMap && badgeMap[feature.label]) item.badge = badgeMap[feature.label]
+    const item = { key: feature.key, on: !!feature[tier] }
+    if (badgeMap && badgeMap[feature.key]) item.badge = badgeMap[feature.key]
     relevant.push(item)
   })
 
   pricingGenericPlaceholders.forEach((placeholder) => {
     const hasOwnEntry = pricingFeatures.some(
-      (feature) => placeholder.categoryRows.indexOf(feature.label) >= 0 && feature[tier]
+      (feature) => placeholder.categoryRows.indexOf(feature.key) >= 0 && feature[tier]
     )
-    if (!hasOwnEntry) relevant.push({ label: placeholder.label, on: false })
+    if (!hasOwnEntry) relevant.push({ key: placeholder.key, on: false })
   })
 
   relevant.sort((a, b) => (b.on ? 1 : 0) - (a.on ? 1 : 0))

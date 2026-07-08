@@ -13,7 +13,6 @@ import VideoSceneCard from './cards/VideoSceneCard.vue'
 import PhotoUploadCard from './cards/PhotoUploadCard.vue'
 import AiPotentialCard from './cards/AiPotentialCard.vue'
 import AssessmentCard from './cards/AssessmentCard.vue'
-import WowRoiCard from './cards/WowRoiCard.vue'
 import FullProfileCard from './cards/FullProfileCard.vue'
 import ProfilesPricingCard from './cards/ProfilesPricingCard.vue'
 import PaymentCard from './cards/PaymentCard.vue'
@@ -28,7 +27,6 @@ const CARD_COMPONENTS = {
   photoUpload: PhotoUploadCard,
   aiCalc: AiPotentialCard,
   assessment: AssessmentCard,
-  wowRoi: WowRoiCard,
   fullProfile: FullProfileCard
 }
 // Card steps that show only static/computed content + a generic Continue button.
@@ -80,8 +78,8 @@ export default {
   <!-- Card steps scroll inside a .card-scroll wrapper; input steps use a plain
        wrapper so every component still has a single Vue 2 root. -->
   <div class="slide-frame" :class="{ 'card-scroll': isCard }">
-    <div class="card-question" v-html="slide.q" />
-    <div class="card-sub" v-html="slide.sub" />
+    <div class="card-question" v-html="slide.q ? $t(slide.q) : ''" />
+    <div class="card-sub" v-html="slide.sub ? $t(slide.sub) : ''" />
 
     <template v-if="isCard">
       <VideoSceneCard v-if="isVideoScene" :scene-id="slide.id" :active="active" />

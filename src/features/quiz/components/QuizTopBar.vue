@@ -21,7 +21,7 @@ export default {
 
 <template>
   <div class="top-bar">
-    <span class="back-link visible" style="cursor:default;pointer-events:none">КРОК {{ displayStep }} / {{ totalSteps }}</span>
+    <span class="back-link visible" style="cursor:default;pointer-events:none">{{ $t('topbar.step', { n: displayStep, total: totalSteps }) }}</span>
     <div class="global-scale">
       <div class="global-scale-bar">
         <div class="global-scale-fill" :style="{ width: progressPercent + '%' }" />

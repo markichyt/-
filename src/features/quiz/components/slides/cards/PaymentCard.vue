@@ -2,46 +2,26 @@
 import { quizData, submitQuizData, clearStoredAnswers } from '../../../store/quizDataStore.js'
 import { countdownTimerMixin } from '../../../mixins/countdownTimerMixin.js'
 import { publicAsset } from '../../../data/publicAsset.js'
-import { pricingByBilling } from '../../../data/pricingPlans.js'
+import { market } from '../../../../../i18n/marketConfig.js'
+import { formatMoney } from '../../../../../i18n/format.js'
 
 const PLAN_NAMES = { base: 'Base', pro: 'Pro', premium: 'Premium' }
-// Реальні ціни беремо з того ж джерела, що й картка тарифів (pricingByBilling),
-// щоб суми на оплаті збігалися з обраним планом.
-const priceNum = (s) => parseInt(String(s).replace(/\D/g, ''), 10) || 0
-const ACTUAL_MONTHLY = {
-  monthly: {
-    base: priceNum(pricingByBilling.monthly.base.price),
-    pro: priceNum(pricingByBilling.monthly.pro.price),
-    premium: priceNum(pricingByBilling.monthly.premium.price)
-  },
-  annual: {
-    base: priceNum(pricingByBilling.annual.base.price),
-    pro: priceNum(pricingByBilling.annual.pro.price),
-    premium: priceNum(pricingByBilling.annual.premium.price)
-  }
-}
 const PERIODS = {
-  '1_month': { label: '1 місяць', discount: 0, months: 1 },
-  '1_year': { label: '1 рік', discount: 10, months: 12 }
+  '1_month': { months: 1 },
+  '1_year': { months: 12 }
 }
-const FAQ_ITEMS = [
-  { q: 'Скільки клієнтів я можу отримувати на місяць?', a: 'Залежно від спеціалізації, міста й оптимізації профілю — багато юристів отримують 5–15 клієнтів вже в перший місяць, з часом масштабуючись до 20–30+ завдяки AI-контенту та SEO-просуванню.' },
-  { q: 'Це гарантована кількість клієнтів?', a: 'Ми надаємо вам ліди, з якими ви працюєте самостійно. Також можна працювати на ексклюзивних умовах із клієнтами платформи — у такому разі це вже оплачені клієнти.' },
-  { q: 'Як працює оплата?', a: 'У нас три тарифи: Base, Pro і Premium. Вартість значно нижча за традиційні маркетингові агенції. Багато юристів окуповують підписку вже 1–2 клієнтами.' },
-  { q: 'А якщо клієнтів не буде?', a: 'Наявність лідів залежить від вашої активності на платформі. Ми гарантуємо безперебійний доступ до платформи та її ресурсів. Оплата не повертається після надання доступу.' },
-  { q: 'Чи безпечні мої дані?', a: 'Так, ми використовуємо захищений месенджер, шифрування даних і не передаємо інформацію третім сторонам. Платформа відповідає вимогам захисту персональних даних (GDPR і законодавство України).' }
-]
-const fmt = (n) => n.toLocaleString('uk-UA')
+// Семантичні ключі FAQ (тексти — в i18n cards.payment.faq.<key>).
+const FAQ_KEYS = ['clients', 'guarantee', 'payment', 'noClients', 'data']
 
 // «Завершіть покупку» — вибір періоду, живий розрахунок знижок, кнопки оплати
-// (фінальне надсилання) та FAQ-акордеон.
+// (фінальне надсилання) та FAQ-акордеон. Ціни — з marketConfig (як на картці тарифів).
 export default {
   name: 'PaymentCard',
   mixins: [countdownTimerMixin],
   data() {
     return {
       quizData,
-      FAQ_ITEMS,
+      FAQ_KEYS,
       paypalIcon: publicAsset('icon/paypal.svg'),
       cardIcon: publicAsset('icon/card-credit.svg'),
       currentPeriod: PERIODS[quizData.period] ? quizData.period : '1_year',
@@ -53,11 +33,11 @@ export default {
     summary() {
       const periodDef = PERIODS[this.currentPeriod] || PERIODS['1_year']
       const isAnnual = this.currentPeriod === '1_year'
-      const table = ACTUAL_MONTHLY[isAnnual ? 'annual' : 'monthly']
-      const planKey = table[this.quizData.plan] ? this.quizData.plan : 'pro'
+      const prices = market(this.$i18n.locale).pricing[isAnnual ? 'annual' : 'monthly']
+      const planKey = prices[this.quizData.plan] != null ? this.quizData.plan : 'pro'
 
       // Реальна сума = ціна обраного плану (як на картці тарифів) × кількість місяців.
-      const realTotal = table[planKey] * periodDef.months
+      const realTotal = prices[planKey] * periodDef.months
       // «Якірна» ціна: −20% терміновості повертає рівно до реальної суми плану.
       const fullPrice = Math.round(realTotal / 0.8)
       const urgencyAmount = fullPrice - realTotal
@@ -67,17 +47,14 @@ export default {
 
       return {
         planName: PLAN_NAMES[planKey],
-        periodLabel: periodDef.label,
-        periodDiscount: 0,
-        fullPrice: fmt(fullPrice),
-        urgencyAmount: fmt(urgencyAmount),
+        periodLabel: this.$t('cards.payment.periods.' + this.currentPeriod),
+        fullPrice: formatMoney(fullPrice),
+        urgencyAmount: formatMoney(urgencyAmount),
         referralAmount,
-        referralAmountText: fmt(referralAmount),
-        periodAmount: 0,
-        periodAmountText: fmt(0),
-        total: fmt(total),
+        referralAmountText: formatMoney(referralAmount),
+        total: formatMoney(total),
         saved,
-        savedText: fmt(saved)
+        savedText: formatMoney(saved)
       }
     }
   },
@@ -100,9 +77,9 @@ export default {
         this.isSubmitting = false
         if (ok) {
           clearStoredAnswers()
-          window.alert('Дякуємо! Вашу заявку отримано.')
+          window.alert(this.$t('cards.payment.alertSuccess'))
         } else {
-          window.alert('Помилка надсилання (статус ' + status + '). Спробуйте ще раз.')
+          window.alert(this.$t('cards.payment.alertError', { status }))
         }
       })
     }
@@ -113,32 +90,31 @@ export default {
 <template>
   <div>
     <div class="pay-timer-top">
-      <div class="pay-timer-label">ЗНИЖКА 20% ТІЛЬКИ ДЛЯ ВАС!</div>
+      <div class="pay-timer-label">{{ $t('common.discountBanner') }}</div>
       <div class="pay-timer-digits">
-        <span class="pay-t-block"><span class="pay-t-num">{{ countdownHours }}</span><span class="pay-t-lbl">год</span></span>
+        <span class="pay-t-block"><span class="pay-t-num">{{ countdownHours }}</span><span class="pay-t-lbl">{{ $t('common.timer.hours') }}</span></span>
         <span class="pay-t-sep">:</span>
-        <span class="pay-t-block"><span class="pay-t-num">{{ countdownMinutes }}</span><span class="pay-t-lbl">хв</span></span>
+        <span class="pay-t-block"><span class="pay-t-num">{{ countdownMinutes }}</span><span class="pay-t-lbl">{{ $t('common.timer.minutes') }}</span></span>
         <span class="pay-t-sep">:</span>
-        <span class="pay-t-block"><span class="pay-t-num">{{ countdownSeconds }}</span><span class="pay-t-lbl">сек</span></span>
+        <span class="pay-t-block"><span class="pay-t-num">{{ countdownSeconds }}</span><span class="pay-t-lbl">{{ $t('common.timer.seconds') }}</span></span>
       </div>
     </div>
 
     <div class="pay-period-toggle">
-      <button class="pay-period-btn" :class="{ active: currentPeriod === '1_month' }" @click="selectPeriod('1_month')">1 місяць</button>
-      <button class="pay-period-btn" :class="{ active: currentPeriod === '1_year' }" @click="selectPeriod('1_year')">1 рік <span class="pay-period-save">-10%</span></button>
+      <button class="pay-period-btn" :class="{ active: currentPeriod === '1_month' }" @click="selectPeriod('1_month')">{{ $t('cards.payment.periods.1_month') }}</button>
+      <button class="pay-period-btn" :class="{ active: currentPeriod === '1_year' }" @click="selectPeriod('1_year')">{{ $t('cards.payment.periods.1_year') }} <span class="pay-period-save">{{ $t('cards.payment.saveBadge') }}</span></button>
     </div>
 
     <div v-show="summary.saved > 0" class="pay-savings-hero">
-      <div class="pay-savings-amount">{{ summary.savedText }} ₴</div>
-      <div class="pay-savings-text">ВИ ЩОЙНО ЗЕКОНОМИЛИ</div>
+      <div class="pay-savings-amount">{{ summary.savedText }}</div>
+      <div class="pay-savings-text">{{ $t('cards.payment.savedHero') }}</div>
     </div>
 
     <div class="discount-summary">
-      <div class="discount-row"><span>Тариф {{ summary.planName }} — {{ summary.periodLabel }}</span><span>{{ summary.fullPrice }} ₴</span></div>
-      <div class="discount-row"><span>Знижка за терміновість (20%)</span><span class="saved">-{{ summary.urgencyAmount }} ₴</span></div>
-      <div v-if="summary.referralAmount > 0" class="discount-row"><span>Реферальний код (10%)</span><span class="saved">-{{ summary.referralAmountText }} ₴</span></div>
-      <div v-if="summary.periodAmount > 0" class="discount-row"><span>Знижка {{ summary.periodLabel }} ({{ summary.periodDiscount }}%)</span><span class="saved">-{{ summary.periodAmountText }} ₴</span></div>
-      <div class="discount-row total"><span>Разом</span><span>{{ summary.total }} ₴</span></div>
+      <div class="discount-row"><span>{{ $t('cards.payment.rows.plan', { plan: summary.planName, period: summary.periodLabel }) }}</span><span>{{ summary.fullPrice }}</span></div>
+      <div class="discount-row"><span>{{ $t('cards.payment.rows.urgency') }}</span><span class="saved">-{{ summary.urgencyAmount }}</span></div>
+      <div v-if="summary.referralAmount > 0" class="discount-row"><span>{{ $t('cards.payment.rows.referral') }}</span><span class="saved">-{{ summary.referralAmountText }}</span></div>
+      <div class="discount-row total"><span>{{ $t('cards.payment.rows.total') }}</span><span>{{ summary.total }}</span></div>
     </div>
 
     <div class="payment-icons">
@@ -150,19 +126,19 @@ export default {
     <div class="payment-buttons">
       <button class="btn btn-paypal" :disabled="isSubmitting" @click="pay('paypal')">
         <span v-if="isSubmitting" class="btn-spinner" />
-        <img v-else class="btn-icon-paypal" :src="paypalIcon" alt="" width="24" height="24"> {{ isSubmitting ? 'Надсилання…' : 'Оплатити через PayPal' }}
+        <img v-else class="btn-icon-paypal" :src="paypalIcon" alt="" width="24" height="24"> {{ isSubmitting ? $t('cards.payment.sending') : $t('cards.payment.paypal') }}
       </button>
       <button class="btn btn-primary" :disabled="isSubmitting" @click="pay('card')">
         <span v-if="isSubmitting" class="btn-spinner" />
-        <img v-else class="btn-icon-card" :src="cardIcon" alt="" width="24" height="24"> {{ isSubmitting ? 'Надсилання…' : 'Оплатити карткою' }}
+        <img v-else class="btn-icon-card" :src="cardIcon" alt="" width="24" height="24"> {{ isSubmitting ? $t('cards.payment.sending') : $t('cards.payment.card') }}
       </button>
     </div>
 
-    <h3 class="faq-heading">Часті запитання</h3>
+    <h3 class="faq-heading">{{ $t('cards.payment.faqHeading') }}</h3>
     <div class="faq-list">
-      <div v-for="(item, index) in FAQ_ITEMS" :key="index" class="faq-item" :class="{ open: openFaq.has(index) }">
-        <div class="faq-question" @click="toggleFaq(index)">{{ item.q }}</div>
-        <div class="faq-answer"><div class="faq-answer-inner">{{ item.a }}</div></div>
+      <div v-for="(key, index) in FAQ_KEYS" :key="key" class="faq-item" :class="{ open: openFaq.has(index) }">
+        <div class="faq-question" @click="toggleFaq(index)">{{ $t('cards.payment.faq.' + key + '.q') }}</div>
+        <div class="faq-answer"><div class="faq-answer-inner">{{ $t('cards.payment.faq.' + key + '.a') }}</div></div>
       </div>
     </div>
   </div>

@@ -4,9 +4,11 @@ import QuizActionBar from '../QuizActionBar.vue'
 import QuizContinueButton from '../QuizContinueButton.vue'
 import { quizData } from '../../store/quizDataStore.js'
 import { goToNextStep } from '../../store/quizProgressStore.js'
+import { slideOptionsMixin } from './slideOptionsMixin.js'
 
 export default {
   name: 'CheckboxSlide',
+  mixins: [slideOptionsMixin],
   components: { QuizIcon, QuizActionBar, QuizContinueButton },
   props: {
     slide: { type: Object, required: true }
@@ -49,7 +51,7 @@ export default {
   <div class="checkbox-slide">
     <div class="option-list">
       <div
-        v-for="option in slide.options"
+        v-for="option in resolvedOptions"
         :key="option.v"
         class="option-item"
         :class="{ selected: selectedValues.includes(option.v) }"
@@ -63,18 +65,18 @@ export default {
         <span v-if="option.icon" class="opt-icon" :style="{ background: option.color || '#64748b' }">
           <QuizIcon :name="option.icon" />
         </span>
-        <span class="option-text">{{ option.t }}</span>
+        <span class="option-text">{{ optLabel(option) }}</span>
         <span class="option-check" />
       </div>
     </div>
 
     <QuizActionBar>
       <div v-if="slide.skip" class="skip-link" role="button" tabindex="0" @click="goToNextStep" @keydown.enter="goToNextStep">
-        {{ slide.skip }}
+        {{ $t('common.skip') }}
       </div>
       <div class="card-action-info">
-        <template v-if="selectedCount > 0"><span class="count">{{ selectedCount }}</span> обрано</template>
-        <template v-else>Оберіть один або більше</template>
+        <template v-if="selectedCount > 0"><span class="count">{{ selectedCount }}</span> {{ $t('common.chosen') }}</template>
+        <template v-else>{{ $t('common.selectOneOrMore') }}</template>
       </div>
       <QuizContinueButton :disabled="(slide.skip || slide.requireSelection) && selectedCount === 0" @continue="goToNextStep" />
     </QuizActionBar>

@@ -1,6 +1,8 @@
 <script>
 import { publicAsset } from '../../data/publicAsset.js'
 import SceneCanvas from './SceneCanvas.vue'
+import { market } from '../../../../i18n/marketConfig.js'
+import { currencyAffix } from '../../../../i18n/format.js'
 
 // Native Vue rebuild of htmlTOvideo/2 — the "#1 in Google Search" scene.
 // A fixed 360×640 canvas (scaled to fit the frame) shows a headline, a SERP
@@ -18,8 +20,6 @@ void publicAsset
 
 const SPEED = 2
 
-const QUERY = 'Адвокат з розлучень Київ'
-
 export default {
   name: 'GoogleRankingScene',
   components: { SceneCanvas },
@@ -30,7 +30,7 @@ export default {
       showCursor: true,
       viewsVal: '0',
       leadsVal: '0',
-      revenueVal: '0 ₴',
+      revenueVal: '0',
       result2Dimmed: false,
       result3Dimmed: false,
       result1Featured: false,
@@ -43,6 +43,9 @@ export default {
     // delay = original-ms ÷ SPEED ÷ 1000, plus the 150ms runSequence offset).
     this._timers = []
     this._rafs = []
+    // Афікс валюти під локаль (символ до/після числа).
+    this._cur = currencyAffix(this.$i18n.locale)
+    this.revenueVal = this._cur.prefix + '0' + this._cur.suffix
   },
   mounted() {
     // Original starts after fonts load + 300/SPEED ms.
@@ -105,23 +108,22 @@ export default {
     // ---- One-shot sequence (timings mirror the original runSequence, in
     // original/pre-SPEED ms measured from runSequence start) ----
     runSequence() {
+      const query = this.$t('scenes.google.query')
       // Headline is static (USER FIX) so the headline beat collapses; the SERP card
-      // CSS-fades at 1100ms and typing follows (original typeText delay 200).
-      // Typing therefore begins at 1300ms; 25 chars × 55ms ≈ 1375ms of typing.
-      this.typeText(QUERY, 55, 1300)
+      // CSS-fades at 1100ms and typing follows. Typing begins at 1300ms.
+      this.typeText(query, 55, 1300)
 
-      // Hide the cursor once typing has finished (original: searchCursor hidden
-      // right after typeText resolves).
-      this.later(() => { this.showCursor = false }, 1300 + QUERY.length * 55)
+      // Hide the cursor once typing has finished.
+      this.later(() => { this.showCursor = false }, 1300 + query.length * 55)
 
       // Dim results 2 & 3, then feature #1 (original: after results reveal, +300/+100).
       this.later(() => { this.result2Dimmed = true; this.result3Dimmed = true }, 4175)
       this.later(() => { this.result1Featured = true }, 4275)
 
-      // Stats count up (original: counts start ~5575ms, duration 2200ms).
+      // Stats count up (перегляди/запити — універсальні; дохід — з marketConfig, у валюті локалі).
       this.countUp(v => (this.viewsVal = v), 250000, 2200, '', '', 5575)
       this.countUp(v => (this.leadsVal = v), 89, 2200, '', '', 5575)
-      this.countUp(v => (this.revenueVal = v), 200000, 2200, '', ' ₴', 5575)
+      this.countUp(v => (this.revenueVal = v), market(this.$i18n.locale).scenes.googleRevenue, 2200, this._cur.prefix, this._cur.suffix, 5575)
 
       // Re-show the cursor near the end (original re-shows before its loop reset).
       this.later(() => { this.showCursor = true }, 11875)
@@ -139,8 +141,8 @@ export default {
 
       <!-- Headline -->
       <div class="headline-block">
-        <div class="headline">№1 у <span class="accent">пошуку Google</span></div>
-        <div class="sub-headline">Вище за LinkedIn, Liga.net і власний сайт</div>
+        <div class="headline" v-html="$t('scenes.google.headlineHtml')"></div>
+        <div class="sub-headline">{{ $t('scenes.google.sub') }}</div>
       </div>
 
       <!-- SERP Card -->
@@ -162,7 +164,7 @@ export default {
               <svg class="favicon" viewBox="0 0 10 10" fill="none"><rect width="10" height="10" rx="2" fill="#10b981"/><text x="1" y="8" font-size="7" fill="white" font-family="Inter" font-weight="700">c</text></svg>
               consultantlm.com
             </div>
-            <div class="result-title">Олександр Коваленко, Адвокат — Київ</div>
+            <div class="result-title">{{ $t('scenes.google.result1Title') }}</div>
             <div class="stars">★★★★★ <span class="star-score">4.9 (127)</span></div>
           </div>
         </div>
@@ -175,7 +177,7 @@ export default {
               <svg class="favicon" viewBox="0 0 10 10"><rect width="10" height="10" rx="2" fill="#0a66c2"/><text x="1.5" y="8" font-size="7" fill="white" font-family="Inter" font-weight="700">in</text></svg>
               linkedin.com/in/kovalenko
             </div>
-            <div class="result-title dimmed">Олександр Коваленко — Профіль LinkedIn</div>
+            <div class="result-title dimmed">{{ $t('scenes.google.result2Title') }}</div>
           </div>
         </div>
 
@@ -187,7 +189,7 @@ export default {
               <svg class="favicon" viewBox="0 0 10 10"><rect width="10" height="10" rx="2" fill="#334155"/></svg>
               kovalenko-law.com.ua
             </div>
-            <div class="result-title dimmed">Адвокат Коваленко — Головна</div>
+            <div class="result-title dimmed">{{ $t('scenes.google.result3Title') }}</div>
           </div>
         </div>
       </div>
@@ -198,17 +200,17 @@ export default {
       <!-- Stats block -->
       <div class="stats-block">
         <div class="stat-col stat-views">
-          <div class="stat-label">Перегляди</div>
+          <div class="stat-label">{{ $t('scenes.google.views') }}</div>
           <div class="stat-value">{{ viewsVal }}</div>
           <div class="stat-sub">↑ +340%</div>
         </div>
         <div class="stat-col stat-leads">
-          <div class="stat-label">Запити</div>
+          <div class="stat-label">{{ $t('scenes.google.leads') }}</div>
           <div class="stat-value">{{ leadsVal }}</div>
           <div class="stat-sub">↑ +189%</div>
         </div>
         <div class="stat-col stat-revenue">
-          <div class="stat-label">Дохід</div>
+          <div class="stat-label">{{ $t('scenes.google.revenue') }}</div>
           <div class="stat-value">{{ revenueVal }}</div>
           <div class="stat-sub">↑ +267%</div>
         </div>
@@ -217,8 +219,8 @@ export default {
       <!-- Chart -->
       <div class="chart-block">
         <div class="chart-header">
-          <span class="chart-title">Перегляди профілю — останні 6 місяців</span>
-          <span class="chart-badge">↗ Рекорд</span>
+          <span class="chart-title">{{ $t('scenes.google.chartTitle') }}</span>
+          <span class="chart-badge">{{ $t('scenes.google.chartBadge') }}</span>
         </div>
         <div class="chart-area">
           <div class="chart-y-labels">
@@ -250,12 +252,12 @@ export default {
               d="M0,46 C30,44 50,40 80,36 C110,32 130,26 160,18 C180,12 210,6 240,2"/>
           </svg>
           <div class="chart-x-labels">
-            <span class="chart-x-label">Лис</span>
-            <span class="chart-x-label">Гру</span>
-            <span class="chart-x-label">Січ</span>
-            <span class="chart-x-label">Лют</span>
-            <span class="chart-x-label">Бер</span>
-            <span class="chart-x-label">Кві</span>
+            <span class="chart-x-label">{{ $t('scenes.google.months.m0') }}</span>
+            <span class="chart-x-label">{{ $t('scenes.google.months.m1') }}</span>
+            <span class="chart-x-label">{{ $t('scenes.google.months.m2') }}</span>
+            <span class="chart-x-label">{{ $t('scenes.google.months.m3') }}</span>
+            <span class="chart-x-label">{{ $t('scenes.google.months.m4') }}</span>
+            <span class="chart-x-label">{{ $t('scenes.google.months.m5') }}</span>
           </div>
         </div>
       </div>

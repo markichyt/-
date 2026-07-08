@@ -1,50 +1,24 @@
 <script>
 import QuizIcon from '../../QuizIcon.vue'
 import { quizData } from '../../../store/quizDataStore.js'
+import { market } from '../../../../../i18n/marketConfig.js'
+import { formatNumber } from '../../../../../i18n/format.js'
 
 // «Ваш потенціал з Консультант» — прогноз нових клієнтів/доходу за напрямами
-// користувача, поданий як зрозуміла історія: що ви отримуєте → скільки це
-// коштувало б власною командою → скільки коштує з нами.
+// користувача. Числа-константи — з marketConfig (aiPotential); підписи та валюта — з i18n.
 const PROFESSION_MULTIPLIER = {
   medicine: 1.1, ecology: 0.9, scanner: 0.7, auto: 0.8, business: 1.2, war: 1.0,
   documents: 0.7, debt_collect: 1.1, criminal: 1.15, migration: 1.0, real_estate: 1.2,
   work: 0.85, social: 0.7, family: 0.9, debtor_protection: 1.0, general: 0.8
 }
 const ROLE_MULTIPLIER = { founder: 1.2, executive: 1.15, self_employed: 1.0, employee: 0.85 }
-const PROFESSION_LABELS = {
-  lawyer: 'Юрист', attorney: 'Адвокат', accountant: 'Бухгалтер/Аудитор', notary: 'Нотаріус',
-  enforcement: 'Приватний виконавець', liquidator: 'Ліквідатор', patent: 'Патентні повірені',
-  customs: 'Митний брокер', engineer: 'Інженер', collector: 'Колектор', other: 'Інше'
-}
-const ROLE_LABELS = { self_employed: 'Самозайнятий', employee: 'Працівник', executive: 'Керівник', founder: 'Засновник' }
-const SERVICE_LABELS = {
-  auto: 'Автомобільні спори', corporate: 'Господарське та корпоративне право',
-  debt_collection: 'Стягнення заборгованості', migration: 'Міграційне право',
-  real_estate: 'Нерухомість та земельне право', labour: 'Трудове право',
-  family: 'Сімейне право', inheritance: 'Спадкове право', divorce: 'Розірвання шлюбу',
-  social: 'Соціальні виплати та спори', debtor_protection: 'Захист боржника',
-  military: 'Військове право', criminal: 'Кримінальне право',
-  documents: 'Підготовка та правовий аналіз документів', other: 'Інші юридичні послуги'
-}
 
-// Що робить власна маркетингова команда (ринок України, ₴/міс) — той самий
-// результат, який Консультант дає в одній підписці.
-const TEAM_ROLES = [
-  { t: 'SEO-фахівець', low: 15000, high: 35000 },
-  { t: 'Таргетолог (реклама)', low: 12000, high: 30000 },
-  { t: 'Контент-мейкер', low: 12000, high: 25000 },
-  { t: 'Відеомонтажер', low: 12000, high: 25000 },
-  { t: 'SMM-менеджер', low: 10000, high: 25000 }
-]
-const OUR_PLAN = 1599
-const CASE_VALUE_LOW = 1800 // ₴ за клієнта (нижня межа)
-const CASE_VALUE_HIGH = 5500 // ₴ за клієнта (верхня межа)
-
+// Іконки блоку «що входить у підписку» (підписи — в i18n cards.aiPotential.how).
 const HOW_ITEMS = [
-  { icon: 'megaphone', t: 'Маркетинг «під ключ»', d: 'Просуваємо вас у Google, рекламі та соцмережах' },
-  { icon: 'film', t: 'Контент-завод', d: 'Регулярний контент для сайту, реклами й бренду' },
-  { icon: 'search', t: 'Готові ліди', d: 'Якісні заявки від клієнтів у ваших напрямах' },
-  { icon: 'users', t: 'Клієнти сервісу', d: 'Люди, що вже шукають юриста на Консультант' }
+  { key: 'marketing', icon: 'megaphone' },
+  { key: 'content', icon: 'film' },
+  { key: 'leads', icon: 'search' },
+  { key: 'clients', icon: 'users' }
 ]
 
 export default {
@@ -55,6 +29,7 @@ export default {
   },
   computed: {
     model() {
+      const ap = market(this.$i18n.locale).aiPotential
       const professions = Array.isArray(quizData.profession)
         ? quizData.profession
         : (quizData.profession ? [quizData.profession] : [])
@@ -76,33 +51,37 @@ export default {
       const totalMin = seoMin + adsMin + socMin
       const totalMax = seoMax + adsMax + socMax
 
-      const serviceNames = services.map((service) => SERVICE_LABELS[service] || service.replace(/_/g, ' '))
+      // Підпис із i18n з фолбеком на сирий ключ, якщо перекладу немає.
+      const label = (key, fallback) => (this.$te(key) ? this.$t(key) : fallback)
+      const serviceNames = services.map((s) => label('slides.services.opt.' + s, s.replace(/_/g, ' ')))
       const serviceText = serviceNames.length > 0
         ? serviceNames.slice(0, 3).join(', ') + (serviceNames.length > 3 ? '…' : '')
-        : 'Загальне'
+        : this.$t('cards.aiPotential.serviceFallback')
       const location = quizData.city || quizData.zip || ''
 
-      // Власна команда: підсумок «вилки» зарплат по ролях.
-      const teamLow = TEAM_ROLES.reduce((s, r) => s + r.low, 0)
-      const teamHigh = TEAM_ROLES.reduce((s, r) => s + r.high, 0)
-      const fmt = (n) => n.toLocaleString('uk-UA')
+      // Власна команда: підсумок «вилки» зарплат по ролях (значення — з marketConfig).
+      const teamLow = ap.teamRoles.reduce((s, r) => s + r.low, 0)
+      const teamHigh = ap.teamRoles.reduce((s, r) => s + r.high, 0)
 
       return {
         seoMin, seoMax, adsMin, adsMax, socMin, socMax, totalMin, totalMax,
-        revenueMin: (totalMin * CASE_VALUE_LOW).toLocaleString('uk-UA'),
-        revenueMax: (totalMax * CASE_VALUE_HIGH).toLocaleString('uk-UA'),
+        revenueMin: formatNumber(totalMin * ap.caseValueLow),
+        revenueMax: formatNumber(totalMax * ap.caseValueHigh),
         professionLabel: professions.length
-          ? professions.map((p) => PROFESSION_LABELS[p] || p).join(', ')
-          : 'Спеціаліст',
-        roleLabel: ROLE_LABELS[role] || role,
+          ? professions.map((p) => label('slides.profession.opt.' + p, p)).join(', ')
+          : this.$t('cards.aiPotential.professionFallback'),
+        roleLabel: label('cards.aiPotential.roleShort.' + role, role),
         location,
         serviceText,
-        teamRoles: TEAM_ROLES.map((r) => ({ t: r.t, range: (r.low / 1000) + '–' + (r.high / 1000) + ' тис' })),
-        teamTotalLow: fmt(teamLow),
-        teamTotalHigh: fmt(teamHigh),
-        ourPlan: fmt(OUR_PLAN),
-        saveHigh: fmt(teamHigh - OUR_PLAN),
-        cheaperHigh: Math.round(teamHigh / OUR_PLAN)
+        teamRoles: ap.teamRoles.map((r) => ({
+          key: r.key,
+          cost: this.$t('cards.aiPotential.teamRoleCost', { low: r.low / 1000, high: r.high / 1000 })
+        })),
+        teamTotalLow: formatNumber(teamLow),
+        teamTotalHigh: formatNumber(teamHigh),
+        ourPlan: formatNumber(ap.ourPlan),
+        saveHigh: formatNumber(teamHigh - ap.ourPlan),
+        cheaperHigh: Math.round(teamHigh / ap.ourPlan)
       }
     }
   }
@@ -113,52 +92,50 @@ export default {
   <div class="ai-potential">
     <!-- УДАР 1: що ви отримуєте -->
     <div class="ap-hero">
-      <div class="ap-hero-eyebrow">З нами ви отримуєте</div>
+      <div class="ap-hero-eyebrow">{{ $t('cards.aiPotential.heroEyebrow') }}</div>
       <div class="ap-hero-main">
         <span class="ap-hero-num">{{ model.totalMin }}–{{ model.totalMax }}</span>
-        <span class="ap-hero-cap">потенційних клієнтів<br>щомісяця</span>
+        <span class="ap-hero-cap" v-html="$t('cards.aiPotential.heroCapHtml')" />
       </div>
-      <div class="ap-hero-money">≈ {{ model.revenueMin }} – {{ model.revenueMax }} ₴ <span>доходу / міс</span></div>
+      <div class="ap-hero-money">{{ $t('cards.aiPotential.revenue', { low: model.revenueMin, high: model.revenueMax }) }} <span>{{ $t('cards.aiPotential.revenueCaption') }}</span></div>
       <div class="ap-channels">
-        <span>SEO {{ model.seoMin }}–{{ model.seoMax }}</span>
-        <span>Реклама {{ model.adsMin }}–{{ model.adsMax }}</span>
-        <span>Соцмережі {{ model.socMin }}–{{ model.socMax }}</span>
+        <span>{{ $t('cards.aiPotential.channels.seo', { min: model.seoMin, max: model.seoMax }) }}</span>
+        <span>{{ $t('cards.aiPotential.channels.ads', { min: model.adsMin, max: model.adsMax }) }}</span>
+        <span>{{ $t('cards.aiPotential.channels.social', { min: model.socMin, max: model.socMax }) }}</span>
       </div>
     </div>
 
     <!-- УДАР 2+3: скільки це коштувало б самому vs з нами -->
     <div class="ap-compare">
-      <div class="ap-compare-q">Щоб отримати такий потік самостійно — потрібна <b>ціла команда:</b></div>
+      <div class="ap-compare-q" v-html="$t('cards.aiPotential.compareQ')" />
       <ul class="ap-team">
-        <li v-for="r in model.teamRoles" :key="r.t">
-          <span>{{ r.t }}</span><span class="ap-team-cost">{{ r.range }} ₴</span>
+        <li v-for="r in model.teamRoles" :key="r.key">
+          <span>{{ $t('cards.aiPotential.teamRoles.' + r.key) }}</span><span class="ap-team-cost">{{ r.cost }}</span>
         </li>
       </ul>
       <div class="ap-team-total">
-        <span>Разом власна команда</span>
-        <span class="ap-red">{{ model.teamTotalLow }}–{{ model.teamTotalHigh }} ₴/міс</span>
+        <span>{{ $t('cards.aiPotential.teamTotalLabel') }}</span>
+        <span class="ap-red">{{ $t('cards.aiPotential.teamTotal', { low: model.teamTotalLow, high: model.teamTotalHigh }) }}</span>
       </div>
       <div class="ap-us">
-        <span>Консультант — усе в одному</span>
-        <span class="ap-green">{{ model.ourPlan }} ₴/міс</span>
+        <span>{{ $t('cards.aiPotential.usLabel') }}</span>
+        <span class="ap-green">{{ $t('cards.aiPotential.ourPlan', { amount: model.ourPlan }) }}</span>
       </div>
-      <div class="ap-punch">
-        У <b>{{ model.cheaperHigh }}×</b> дешевше — економія до <b>{{ model.saveHigh }} ₴/міс</b>
-      </div>
+      <div class="ap-punch" v-html="$t('cards.aiPotential.punchHtml', { times: model.cheaperHigh, save: model.saveHigh })" />
     </div>
 
-    <!-- УДАР 4: як це працює (щоб абстракція стала конкретною) -->
+    <!-- УДАР 4: як це працює -->
     <div class="ap-how">
-      <div class="ap-how-title">Що входить у підписку</div>
-      <div class="ap-how-item" v-for="item in howItems" :key="item.t">
+      <div class="ap-how-title">{{ $t('cards.aiPotential.howTitle') }}</div>
+      <div class="ap-how-item" v-for="item in howItems" :key="item.key">
         <span class="ap-how-ic"><QuizIcon :name="item.icon" /></span>
-        <span class="ap-how-txt"><b>{{ item.t }}</b> — {{ item.d }}</span>
+        <span class="ap-how-txt"><b>{{ $t('cards.aiPotential.how.' + item.key + '.t') }}</b> — {{ $t('cards.aiPotential.how.' + item.key + '.d') }}</span>
       </div>
     </div>
 
     <p class="fine-print">
-      <strong>Розраховано для:</strong> {{ model.professionLabel }}<template v-if="model.location">, {{ model.location }}</template>, {{ model.roleLabel }}, {{ model.serviceText }}.<br>
-      <em>Лише оцінка — фактичний результат залежить від ринку, оптимізації профілю та власних зусиль. Не є гарантією доходу.</em>
+      <strong>{{ $t('cards.aiPotential.finePrintLabel') }}</strong> {{ model.professionLabel }}<template v-if="model.location">, {{ model.location }}</template>, {{ model.roleLabel }}, {{ model.serviceText }}.<br>
+      <em>{{ $t('cards.aiPotential.finePrintDisclaimer') }}</em>
     </p>
   </div>
 </template>

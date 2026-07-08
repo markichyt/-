@@ -52,7 +52,7 @@ export default {
         v-model="cityQuery"
         type="text"
         class="card-input search-input svc-search-input"
-        placeholder="Почніть вводити назву міста"
+        :placeholder="$t('slides.city.placeholder')"
         autocomplete="off"
         autocapitalize="off"
         autocorrect="off"
@@ -67,7 +67,7 @@ export default {
         v-if="matchedCities.length === 0"
         style="padding:14px;color:var(--text-light);text-align:center;font-size:14px"
       >
-        Немає збігів — натисніть «Далі», щоб використати введене.
+        {{ $t('slides.city.noMatch') }}
       </div>
       <div
         v-for="city in matchedCities"

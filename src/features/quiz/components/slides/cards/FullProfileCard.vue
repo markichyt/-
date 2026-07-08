@@ -4,21 +4,15 @@ import QuizContinueButton from '../../QuizContinueButton.vue'
 import { quizData } from '../../../store/quizDataStore.js'
 import { goToNextStep } from '../../../store/quizProgressStore.js'
 
-// "Complete your profile" — the user writes a long bio and/or uploads a CV so
-// the AI can build their public profile. A strength meter rewards detail, and a
-// warning modal intercepts attempts to skip with neither bio nor CV.
+// «Заповніть свій профіль» — довге біо та/або резюме для AI. Лічильник сили
+// винагороджує деталізацію, а модалка попереджає про спробу пропустити крок.
 const MIN_CHARS = 3000
 
 export default {
   name: 'FullProfileCard',
   components: { QuizActionBar, QuizContinueButton },
   data() {
-    return {
-      quizData,
-      MIN_CHARS,
-      aboutText: quizData.about || '',
-      showSkipModal: false
-    }
+    return { quizData, MIN_CHARS, aboutText: quizData.about || '', showSkipModal: false }
   },
   computed: {
     aboutCount() {
@@ -35,9 +29,7 @@ export default {
       return this.strength >= 70 ? 'high' : this.strength >= 40 ? 'mid' : 'low'
     },
     strengthHint() {
-      if (this.strengthLevel === 'high') return '✓ Сильний профіль — AI дасть чудовий результат'
-      if (this.strengthLevel === 'mid') return 'Гарний початок — додайте більше деталей для кращої якості AI'
-      return 'Додайте деталі нижче — що більше інформації, то сильніший ваш AI-профіль'
+      return this.$t('cards.fullProfile.strengthHint.' + this.strengthLevel)
     }
   },
   methods: {
@@ -83,7 +75,7 @@ export default {
   <div class="fp-card">
     <div class="fp-progress">
       <div class="fp-progress-row">
-        <span class="fp-progress-label">Сила профілю</span>
+        <span class="fp-progress-label">{{ $t('cards.fullProfile.strengthLabel') }}</span>
         <span class="fp-progress-pct">{{ strength }}%</span>
       </div>
       <div class="fp-progress-bar">
@@ -93,41 +85,41 @@ export default {
     </div>
 
     <div class="fp-pane">
-      <label class="form-label">Про себе <span class="fp-min-hint">рекомендовано 3000+ символів</span></label>
+      <label class="form-label">{{ $t('cards.fullProfile.aboutLabel') }} <span class="fp-min-hint">{{ $t('cards.fullProfile.aboutHint') }}</span></label>
       <textarea
         v-model="aboutText"
         class="card-input"
         rows="10"
-        placeholder="Розкажіть про свій досвід, освіту, досягнення, відомі справи, сертифікати, нагороди…"
+        :placeholder="$t('cards.fullProfile.aboutPh')"
         @input="onAboutInput"
       />
       <div class="fp-counter"><span>{{ aboutCount }}</span> / {{ MIN_CHARS }}</div>
     </div>
 
     <div class="fp-cv-cta">
-      <div class="fp-cv-cta-title">📄 Маєте резюме? Завантажте — це підвищує силу профілю на 30%</div>
-      <div class="fp-cv-cta-body">Наш AI згенерує ваш публічний профіль <strong>прямо з вашого резюме</strong>. Досвід, освіта, сертифікати, відомі справи й досягнення витягуються автоматично. <em>Необов'язково, але дуже рекомендовано.</em></div>
+      <div class="fp-cv-cta-title">{{ $t('cards.fullProfile.cvCtaTitle') }}</div>
+      <div class="fp-cv-cta-body" v-html="$t('cards.fullProfile.cvCtaBody')" />
     </div>
 
     <div class="fp-pane">
-      <label class="form-label">Завантажте резюме <span class="fp-min-hint">необов'язково · .pdf / .doc / .docx</span></label>
+      <label class="form-label">{{ $t('cards.fullProfile.cvLabel') }} <span class="fp-min-hint">{{ $t('cards.fullProfile.cvHint') }}</span></label>
       <div class="upload-area" :class="{ uploaded: !!quizData.cv_name }" @click="$event.currentTarget.querySelector('input').click()">
-        <div class="upload-text">{{ quizData.cv_name || 'Натисніть, щоб обрати .pdf / .doc / .docx' }}</div>
+        <div class="upload-text">{{ quizData.cv_name || $t('cards.fullProfile.cvPlaceholder') }}</div>
         <input type="file" accept=".pdf,.doc,.docx" style="display:none" @click.stop @change="onCvPicked">
       </div>
     </div>
 
     <div class="fp-pane">
-      <label class="form-label">Логотип компанії <span class="fp-min-hint">необов'язково · PNG / JPG / SVG</span></label>
+      <label class="form-label">{{ $t('cards.fullProfile.logoLabel') }} <span class="fp-min-hint">{{ $t('cards.fullProfile.logoHint') }}</span></label>
       <div class="upload-area" :class="{ uploaded: !!quizData.company_logo_name }" @click="$event.currentTarget.querySelector('input').click()">
-        <div class="upload-text">{{ quizData.company_logo_name || 'Натисніть, щоб обрати зображення' }}</div>
+        <div class="upload-text">{{ quizData.company_logo_name || $t('cards.fullProfile.logoPlaceholder') }}</div>
         <input type="file" accept="image/*" style="display:none" @click.stop @change="onLogoPicked">
       </div>
     </div>
 
     <div class="fp-pane">
-      <label class="form-label">Реферальний код <span class="fp-min-hint">необов'язково</span></label>
-      <input v-model="quizData.referral_code" type="text" class="card-input" placeholder="Введіть реферальний код">
+      <label class="form-label">{{ $t('cards.fullProfile.referralLabel') }} <span class="fp-min-hint">{{ $t('cards.fullProfile.optional') }}</span></label>
+      <input v-model="quizData.referral_code" type="text" class="card-input" :placeholder="$t('cards.fullProfile.referralPh')">
     </div>
   </div>
 
@@ -135,11 +127,11 @@ export default {
     <div class="fp-skip-modal-overlay" @click="showSkipModal = false" />
     <div class="fp-skip-modal-card">
       <div class="fp-skip-modal-icon">⚠️</div>
-      <div class="fp-skip-modal-title">Зачекайте — ваш профіль буде надто слабким</div>
-      <div class="fp-skip-modal-body">Без <strong>біо</strong> чи <strong>резюме</strong> наш AI не зможе скласти конкурентний профіль. Юристи, які пропускають цей крок, отримують <strong>значно менше запитів від клієнтів</strong> на Консультант.<br><br>Це займе 2 хвилини й суттєво покращить ваш результат.</div>
+      <div class="fp-skip-modal-title">{{ $t('cards.fullProfile.skipModal.title') }}</div>
+      <div class="fp-skip-modal-body" v-html="$t('cards.fullProfile.skipModal.body')" />
       <div class="fp-skip-modal-actions">
-        <button type="button" class="fp-skip-back" @click="showSkipModal = false">← Повернутися і заповнити</button>
-        <button type="button" class="fp-skip-confirm" @click="confirmSkip">Все одно пропустити</button>
+        <button type="button" class="fp-skip-back" @click="showSkipModal = false">{{ $t('cards.fullProfile.skipModal.back') }}</button>
+        <button type="button" class="fp-skip-confirm" @click="confirmSkip">{{ $t('cards.fullProfile.skipModal.confirm') }}</button>
       </div>
     </div>
   </div>

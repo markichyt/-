@@ -1,6 +1,8 @@
 <script>
 import { publicAsset } from '../../data/publicAsset.js'
 import SceneCanvas from './SceneCanvas.vue'
+import { market } from '../../../../i18n/marketConfig.js'
+import { formatNumber, currencyMeta } from '../../../../i18n/format.js'
 
 // Native Vue rebuild of htmlTOvideo/1 — the "AI Ads Promo" scene.
 // A fixed 360×640 canvas (scaled to fit the card) shows an orbital ring of
@@ -52,6 +54,10 @@ export default {
       c2: '0',
     }
   },
+  computed: {
+    // Символ валюти й позиція (до/після числа) під поточну локаль.
+    cur() { return currencyMeta(this.$i18n.locale) }
+  },
   created() {
     this._timer = null
     this._rafIds = []
@@ -70,16 +76,16 @@ export default {
       const frame = (now) => {
         const t = Math.min(1, (now - start) / duration)
         const v = Math.round(target * easeOutCubic(t))
-        setter(isMoney ? v.toLocaleString('uk-UA') : v.toString())
+        setter(isMoney ? formatNumber(v) : v.toString())
         if (t < 1) this._rafIds.push(requestAnimationFrame(frame))
       }
       this._rafIds.push(requestAnimationFrame(frame))
     },
     startCounters() {
       this.c1 = '0'
-      this.c2 = '0'
+      this.c2 = formatNumber(0)
       this.runCount((v) => (this.c1 = v), 47, 1500, false)
-      this.runCount((v) => (this.c2 = v), 350000, 1700, true)
+      this.runCount((v) => (this.c2 = v), market(this.$i18n.locale).scenes.aiAdsRevenue, 1700, true)
     },
   },
 }
@@ -90,8 +96,8 @@ export default {
     <div class="canvas" data-screen-label="01 Promo">
       <!-- Headline -->
       <div class="headline">
-        <h1>Перетворіть свою практику на <span class="accent">потік клієнтів</span> з AI-рекламою</h1>
-        <p>Генеруйте відео та публікуйте — воно саме приводить вам нових клієнтів.</p>
+        <h1 v-html="$t('scenes.ads.headlineHtml')"></h1>
+        <p>{{ $t('scenes.ads.sub') }}</p>
       </div>
 
       <!-- Orbit (fixed-height stage preserving the absolutely-positioned graphic) -->
@@ -120,8 +126,8 @@ export default {
         <div class="avatar">
           <video :src="avatarSrc" autoplay muted loop playsinline preload="auto"></video>
           <div class="avatar-meta">
-            <div class="name">Олександр Коваленко</div>
-            <div class="role">АДВОКАТ · КИЇВ</div>
+            <div class="name">{{ $t('scenes.ads.demoName') }}</div>
+            <div class="role">{{ $t('scenes.ads.demoRole') }}</div>
           </div>
         </div>
 
@@ -153,19 +159,19 @@ export default {
       <!-- Results card -->
       <div class="results">
         <div class="results-head">
-          <span class="results-title">Останні 30 днів</span>
-          <span class="badge"><span id="b1">+340%</span> ROI</span>
+          <span class="results-title">{{ $t('scenes.ads.resultsTitle') }}</span>
+          <span class="badge">{{ $t('scenes.ads.roi') }}</span>
         </div>
         <div class="stats">
           <div>
-            <div class="stat-label">Нові клієнти</div>
+            <div class="stat-label">{{ $t('scenes.ads.newClients') }}</div>
             <div class="stat-value" id="c1">{{ c1 }}</div>
             <div class="stat-trend"><span style="--w: 78%"></span></div>
           </div>
           <div class="divider"></div>
           <div>
-            <div class="stat-label">Дохід</div>
-            <div class="stat-value"><span id="c2">{{ c2 }}</span><span class="currency"> ₴</span></div>
+            <div class="stat-label">{{ $t('scenes.ads.revenue') }}</div>
+            <div class="stat-value"><span v-if="cur.before" class="currency">{{ cur.symbol }}</span><span id="c2">{{ c2 }}</span><span v-if="!cur.before" class="currency"> {{ cur.symbol }}</span></div>
             <div class="stat-trend b2"><span style="--w: 92%"></span></div>
           </div>
         </div>
@@ -173,8 +179,8 @@ export default {
 
       <!-- Live bar -->
       <div class="live-bar">
-        <span class="left"><span class="pulse"></span> AI-кампанія наживо</span>
-        <span class="right">14 оголошень · 6 каналів</span>
+        <span class="left"><span class="pulse"></span> {{ $t('scenes.ads.liveNow') }}</span>
+        <span class="right">{{ $t('scenes.ads.volume') }}</span>
       </div>
     </div>
   </SceneCanvas>
