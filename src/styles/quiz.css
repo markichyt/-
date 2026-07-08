@@ -343,6 +343,21 @@ body {
   opacity: 1;
 }
 
+/* ---- Radio Options (одиночний вибір — круглий індикатор із крапкою, на відміну від квадратного checkbox) ---- */
+.radio-slide .option-check {
+  border-radius: 50%;
+}
+.radio-slide .option-check::after {
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  transform: translate(-50%, -50%);
+}
+
 /* ---- Skip link ---- */
 .skip-link {
   display: block;
