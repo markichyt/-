@@ -1,8 +1,7 @@
 <script>
 import QuizActionBar from '../../QuizActionBar.vue'
 import QuizContinueButton from '../../QuizContinueButton.vue'
-import { quizData } from '../../../store/quizDataStore.js'
-import { goToNextStep } from '../../../store/quizProgressStore.js'
+import { quizData, submitQuizData, clearStoredAnswers } from '../../../store/quizDataStore.js'
 
 // «Заповніть свій профіль» — довге біо та/або резюме для AI. Лічильник сили
 // винагороджує деталізацію, а модалка попереджає про спробу пропустити крок.
@@ -12,7 +11,7 @@ export default {
   name: 'FullProfileCard',
   components: { QuizActionBar, QuizContinueButton },
   data() {
-    return { quizData, MIN_CHARS, aboutText: quizData.about || '', showSkipModal: false }
+    return { quizData, MIN_CHARS, aboutText: quizData.about || '', showSkipModal: false, isSubmitting: false }
   },
   computed: {
     aboutCount() {
@@ -51,7 +50,18 @@ export default {
         : hasAbout ? 'about'
           : hasCV ? 'cv_only'
             : 'skipped'
-      goToNextStep()
+      // Фінальний крок воронки (після оплати) — надсилаємо все й показуємо подяку.
+      quizData.submitted_at = new Date().toISOString()
+      this.isSubmitting = true
+      submitQuizData((ok, status) => {
+        this.isSubmitting = false
+        if (ok) {
+          clearStoredAnswers()
+          window.alert(this.$t('cards.payment.alertSuccess'))
+        } else {
+          window.alert(this.$t('cards.payment.alertError', { status }))
+        }
+      })
     },
     onContinue() {
       const hasAbout = this.aboutText.trim().length >= MIN_CHARS
@@ -137,7 +147,7 @@ export default {
   </div>
 
   <QuizActionBar>
-    <QuizContinueButton @continue="onContinue" />
+    <QuizContinueButton :label="$t('cards.fullProfile.finish')" :disabled="isSubmitting" @continue="onContinue" />
   </QuizActionBar>
   </div>
 </template>

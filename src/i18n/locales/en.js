@@ -299,6 +299,7 @@ export default {
       period: { '1_month': '1 month', '1_year': '1 year', '3_years': '3 years' }
     },
     fullProfile: {
+      finish: 'Finish →',
       strengthLabel: 'Profile strength',
       strengthHint: {
         high: '✓ Strong profile — AI will deliver great results',

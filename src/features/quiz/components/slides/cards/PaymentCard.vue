@@ -1,5 +1,6 @@
 <script>
-import { quizData, submitQuizData, clearStoredAnswers } from '../../../store/quizDataStore.js'
+import { quizData } from '../../../store/quizDataStore.js'
+import { goToNextStep } from '../../../store/quizProgressStore.js'
 import { countdownTimerMixin } from '../../../mixins/countdownTimerMixin.js'
 import { publicAsset } from '../../../data/publicAsset.js'
 import { market } from '../../../../../i18n/marketConfig.js'
@@ -70,18 +71,9 @@ export default {
     },
     pay(method) {
       this.quizData.payment_method = method
-      this.quizData.submitted_at = new Date().toISOString()
       this.quizData.payment_period = this.currentPeriod
-      this.isSubmitting = true
-      submitQuizData((ok, status) => {
-        this.isSubmitting = false
-        if (ok) {
-          clearStoredAnswers()
-          window.alert(this.$t('cards.payment.alertSuccess'))
-        } else {
-          window.alert(this.$t('cards.payment.alertError', { status }))
-        }
-      })
+      // Оплата пройшла → фінальний крок воронки: заповнення профілю (там надсилання).
+      goToNextStep()
     }
   }
 }

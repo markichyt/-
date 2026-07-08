@@ -146,12 +146,12 @@ export const quizSlides = [
   { type: 'card', id: 'videoAds', q: '', sub: '' },
   // Оцінка готовності профілю
   { type: 'card', id: 'assessment', q: 'slides.assessment.q', sub: 'slides.assessment.sub' },
-  // Повний профіль (біо АБО резюме)
-  { type: 'card', id: 'fullProfile', q: 'slides.fullProfile.q', sub: 'slides.fullProfile.sub' },
   // Плани і ціни
   { type: 'card', id: 'profilesPricing', q: 'slides.profilesPricing.q', sub: 'slides.profilesPricing.sub' },
-  // Оплата (фінальне надсилання)
-  { type: 'card', id: 'payment', q: 'slides.payment.q', sub: 'slides.payment.sub' }
+  // Оплата
+  { type: 'card', id: 'payment', q: 'slides.payment.q', sub: 'slides.payment.sub' },
+  // Повний профіль (біо АБО резюме) — фінальний крок ПІСЛЯ оплати (тут фінальне надсилання)
+  { type: 'card', id: 'fullProfile', q: 'slides.fullProfile.q', sub: 'slides.fullProfile.sub' }
 ]
 
 export const TOTAL_STEPS = quizSlides.length

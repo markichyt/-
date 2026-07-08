@@ -302,6 +302,7 @@ export default {
       period: { '1_month': '1 місяць', '1_year': '1 рік', '3_years': '3 роки' }
     },
     fullProfile: {
+      finish: 'Завершити →',
       strengthLabel: 'Сила профілю',
       strengthHint: {
         high: '✓ Сильний профіль — AI дасть чудовий результат',

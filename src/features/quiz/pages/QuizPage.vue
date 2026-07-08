@@ -12,8 +12,12 @@ import { quizData, saveQuizData } from '../store/quizDataStore.js'
 export default {
   name: 'QuizPage',
   components: { QuizTopBar, QuizCardStack, QuizScenePrewarmer, LanguageSwitcher },
-  data() {
-    return { logoSrc: publicAsset('images/logo/logo_en.svg') }
+  computed: {
+    // Українська версія — свій логотип; решта локалей — англійський бренд.
+    logoSrc() {
+      const file = this.$i18n.locale === 'uk' ? 'logo_uk.svg' : 'logo_en.svg'
+      return publicAsset('images/logo/' + file)
+    }
   },
   mounted() {
     this._unwatchAnswers = this.$watch(() => quizData, saveQuizData, { deep: true })
