@@ -43,7 +43,7 @@ export default {
       dimText: '',
       photoIsValid: true,
       hasPhoto: false,
-      dropHint: 'default',
+      fileError: '',
       isDragOver: false,
       photoErrorCode: ''
     }
@@ -97,14 +97,14 @@ export default {
     handleFile(file) {
       if (!file) return
       if (ACCEPTED_TYPES.indexOf(file.type) === -1) {
-        this.dropHint = 'badType'
+        this.fileError = 'badType'
         return
       }
       if (file.size > MAX_BYTES) {
-        this.dropHint = 'tooBig'
+        this.fileError = 'tooBig'
         return
       }
-      this.dropHint = 'default'
+      this.fileError = ''
       const reader = new FileReader()
       reader.onload = () => {
         this.previewSrc = reader.result
@@ -137,14 +137,10 @@ export default {
     },
     onSubmit() {
       if (!this.hasPhoto) return
-      // Клієнтська перевірка — лише співвідношення сторін. Перевірку вмісту фото
-      // (людина / обличчя / к-сть людей) робить бекенд і повертає код помилки,
-      // який фронт показує через showPhotoError(code).
-      if (this.photoIsValid) {
-        goToNextStep()
-      } else {
-        this.photoErrorCode = 'WRONG_RATIO'
-      }
+      // Співвідношення 16:9 — мʼяке попередження (показане інлайн), не блокує.
+      // Перевірку вмісту фото (людина / обличчя / к-сть людей) робить бекенд
+      // і повертає код помилки, який фронт показує модалкою через showPhotoError(code).
+      goToNextStep()
     },
     // Показати модалку помилки за кодом з бекенду:
     // NO_PERSON / MULTIPLE_PEOPLE / FACE_NOT_VISIBLE (або WRONG_RATIO).
@@ -190,7 +186,7 @@ export default {
       @drop.prevent="onDrop"
     >
       <div class="pu-drop-icon"><QuizIcon name="camera" :size="38" /></div>
-      <div class="pu-drop-title">{{ $t('cards.photo.dropHint.' + dropHint) }}</div>
+      <div class="pu-drop-title">{{ $t('cards.photo.dropHint') }}</div>
       <div class="pu-drop-sub">{{ $t('cards.photo.dropSub') }}</div>
     </label>
 
@@ -201,13 +197,15 @@ export default {
         <div class="pu-dim-badge" :class="{ warn: !photoIsValid }">{{ dimText }}</div>
       </div>
 
-      <div v-if="!photoIsValid" class="pu-warn-text">
-        {{ $t('cards.photo.warnRatio') }}
-      </div>
       <button type="button" class="pu-upload-own" @click="triggerFilePicker">
         <QuizIcon name="upload" :size="16" /> {{ $t('cards.photo.uploadOwn') }}
       </button>
     </template>
+
+    <!-- Єдиний рядок повідомлення: помилка формату/розміру (червоний) або
+         мʼяке попередження про співвідношення 16:9 (жовтий). -->
+    <div v-if="fileError" class="pu-msg pu-msg--error">{{ $t('cards.photo.error.' + fileError) }}</div>
+    <div v-else-if="hasPhoto && !photoIsValid" class="pu-msg pu-msg--warn">{{ $t('cards.photo.warnRatio') }}</div>
 
     <!-- Галерея прикладів (завжди доступна: і зразок, і запасний варіант) -->
     <div class="pu-samples">
@@ -311,12 +309,24 @@ export default {
 }
 .pu-dim-badge.warn { background: #f59e0b; color: #1a1a2e; }
 
-.pu-warn-text {
+/* Єдиний рядок повідомлення під зоною фото (помилка — червоний, попередження — жовтий). */
+.pu-msg {
   margin-top: 12px;
   text-align: center;
   font-size: 13px;
   font-weight: 600;
+  padding: 9px 12px;
+  border-radius: 10px;
+}
+.pu-msg--error {
+  color: #b91c1c;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.28);
+}
+.pu-msg--warn {
   color: #b45309;
+  background: rgba(245, 158, 11, 0.10);
+  border: 1px solid rgba(245, 158, 11, 0.28);
 }
 .pu-upload-own {
   display: flex;

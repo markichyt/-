@@ -220,8 +220,8 @@ export default {
   },
   cards: {
     photo: {
-      dropHint: {
-        default: 'Kliknij, aby przesłać zdjęcie',
+      dropHint: 'Kliknij, aby przesłać zdjęcie',
+      error: {
         badType: 'Nieprawidłowy format — tylko JPEG / PNG',
         tooBig: 'Plik za duży — maksymalnie 5 MB'
       },

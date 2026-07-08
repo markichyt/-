@@ -208,8 +208,8 @@ export default {
   },
   cards: {
     photo: {
-      dropHint: {
-        default: 'Click to upload your photo',
+      dropHint: 'Click to upload your photo',
+      error: {
         badType: 'Invalid format — JPEG / PNG only',
         tooBig: 'File too large — 5 MB max'
       },

@@ -211,8 +211,8 @@ export default {
   },
   cards: {
     photo: {
-      dropHint: {
-        default: 'Натисніть, щоб завантажити своє фото',
+      dropHint: 'Натисніть, щоб завантажити своє фото',
+      error: {
         badType: 'Невірний формат — лише JPEG / PNG',
         tooBig: 'Файл завеликий — максимум 5 МБ'
       },
