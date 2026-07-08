@@ -13,6 +13,11 @@ export default {
   computed: {
     current() {
       return this.$i18n.locale
+    },
+    // На бою локаль задає бекенд через window.QUIZ_LANG — тоді перемикач ховаємо.
+    // Показуємо лише в демо/прототипі (GitHub Pages), де QUIZ_LANG не заданий.
+    isDemo() {
+      return typeof window === 'undefined' || !window.QUIZ_LANG
     }
   },
   methods: {
@@ -24,7 +29,7 @@ export default {
 </script>
 
 <template>
-  <div class="lang-switcher">
+  <div v-if="isDemo" class="lang-switcher">
     <button
       v-for="loc in locales"
       :key="loc"
