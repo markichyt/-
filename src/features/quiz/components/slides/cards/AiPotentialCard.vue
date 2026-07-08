@@ -153,7 +153,7 @@ export default {
 }
 .ap-hero-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--accent); }
 .ap-hero-main { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 6px 0 4px; }
-.ap-hero-num { font-size: 46px; font-weight: 800; line-height: 1; color: var(--text-dark); }
+.ap-hero-num { font-size: 46px; font-weight: 800; line-height: 1; color: var(--text-dark); white-space: nowrap; }
 .ap-hero-cap { font-size: 13px; font-weight: 600; color: var(--text-muted); text-align: left; line-height: 1.15; }
 .ap-hero-money { font-size: 18px; font-weight: 800; color: #16a34a; }
 .ap-hero-money span { font-size: 12px; font-weight: 600; color: var(--text-light); }
