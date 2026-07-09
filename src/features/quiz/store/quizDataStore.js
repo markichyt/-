@@ -8,8 +8,9 @@ import Vue from 'vue'
 // keys are never introduced at runtime.
 const STORAGE_KEY = 'clm_quiz_data'
 
-// ⚠ Replace with the real endpoint when wiring the backend.
-const SUBMIT_URL = 'https://your-api.example.com/quiz-submit'
+// Endpoint приёма ответов квиза. Бэкенд задаёт свой URL через window.QUIZ_SUBMIT_URL
+// (иначе — заглушка ниже; ⚠ замените на реальный endpoint).
+const SUBMIT_URL = (typeof window !== 'undefined' && window.QUIZ_SUBMIT_URL) || 'https://your-api.example.com/quiz-submit'
 
 function createDefaultAnswers() {
   return {
