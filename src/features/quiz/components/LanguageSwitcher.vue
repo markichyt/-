@@ -3,7 +3,7 @@ import { SUPPORTED_LOCALES, setLocale } from '../../../i18n/index.js'
 
 // Демо-перемикач локалі. На бою локаль приходить із window.QUIZ_LANG,
 // тож перемикач потрібен лише для прототипу/демо на GitHub Pages.
-const LABELS = { uk: '🇺🇦 UA', en: '🇺🇸 US', 'en-GB': '🇬🇧 UK', 'en-AE': '🇦🇪 AE', pl: '🇵🇱 PL' }
+const LABELS = { uk: '🇺🇦 UA', 'ru-UA': '🇺🇦 RU', en: '🇺🇸 US', 'en-GB': '🇬🇧 UK', 'en-AE': '🇦🇪 AE', pl: '🇵🇱 PL' }
 
 export default {
   name: 'LanguageSwitcher',

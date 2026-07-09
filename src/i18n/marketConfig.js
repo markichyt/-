@@ -229,6 +229,9 @@ MARKETS['en-AE'] = {
   ]
 }
 
+// 🇺🇦 Російська мова для українського ринку — ті самі числа й набори, що й uk (валюта ₴).
+MARKETS['ru-UA'] = MARKETS.uk
+
 export function market(locale = i18n.locale) {
   return MARKETS[locale] || MARKETS.uk
 }

@@ -5,15 +5,17 @@ import en from './locales/en.js'
 import enGB from './locales/en-GB.js'
 import enAE from './locales/en-AE.js'
 import pl from './locales/pl.js'
+import ru from './locales/ru.js'
 
 Vue.use(VueI18n)
 
-// Локали, які підтримуємо. uk — еталон і дефолт.
-export const SUPPORTED_LOCALES = ['uk', 'en', 'en-GB', 'en-AE', 'pl']
+// Локали, які підтримуємо. uk — еталон і дефолт. ru-UA — російський переклад
+// для українського ринку (та сама валюта ₴ і ті самі ринкові дані, що й uk).
+export const SUPPORTED_LOCALES = ['uk', 'ru-UA', 'en', 'en-GB', 'en-AE', 'pl']
 export const DEFAULT_LOCALE = 'uk'
 
 // BCP-47 теги для атрибута <html lang> та форматування.
-export const BCP47 = { uk: 'uk-UA', en: 'en-US', 'en-GB': 'en-GB', 'en-AE': 'en-AE', pl: 'pl-PL' }
+export const BCP47 = { uk: 'uk-UA', 'ru-UA': 'ru-UA', en: 'en-US', 'en-GB': 'en-GB', 'en-AE': 'en-AE', pl: 'pl-PL' }
 
 // Зводить довільний код мови ('en_US', 'uk-UA', 'PL', …) до нашої локалі.
 export function normalizeLocale(raw) {
@@ -49,8 +51,8 @@ export function resolveLocale() {
 
 export const i18n = new VueI18n({
   locale: resolveLocale(),
-  fallbackLocale: { 'en-GB': ['en'], 'en-AE': ['en'], default: ['uk'] },
-  messages: { uk, en, 'en-GB': enGB, 'en-AE': enAE, pl },
+  fallbackLocale: { 'en-GB': ['en'], 'en-AE': ['en'], 'ru-UA': ['uk'], default: ['uk'] },
+  messages: { uk, 'ru-UA': ru, en, 'en-GB': enGB, 'en-AE': enAE, pl },
   silentFallbackWarn: true
 })
 
