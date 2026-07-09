@@ -3,7 +3,7 @@ import { i18n } from './index.js'
 // Валютні правила по локалі: символ, позиція, роздільники, суфікси тисяч/млн.
 const CURRENCY = {
   uk: { symbol: '₴', pos: 'after', group: ' ', decimal: '.', k: 'К', m: 'М' },
-  'ru-UA': { symbol: '₴', pos: 'after', group: ' ', decimal: '.', k: 'К', m: 'М' },
+  ru: { symbol: '₴', pos: 'after', group: ' ', decimal: '.', k: 'К', m: 'М' },
   en: { symbol: '$', pos: 'before', group: ',', decimal: '.', k: 'K', m: 'M' },
   'en-GB': { symbol: '£', pos: 'before', group: ',', decimal: '.', k: 'K', m: 'M' },
   'en-AE': { symbol: 'AED', pos: 'before', space: ' ', group: ',', decimal: '.', k: 'K', m: 'M' },
