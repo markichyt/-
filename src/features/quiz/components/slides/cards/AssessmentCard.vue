@@ -34,7 +34,7 @@ export default {
       return quizData.city || quizData.zip || ''
     },
     serviceText() {
-      const names = (quizData.services || []).slice(0, 3).map((s) => this.label('slides.services.opt.' + s, s.replace(/_/g, ' ')))
+      const names = (quizData.services || []).slice(0, 3).map((s) => this.label('slides.services.opt.' + s, String(s).replace(/_/g, ' ')))
       return names.length > 0 ? names.join(', ') : this.$t('cards.assessment.serviceFallback')
     },
     adBudgetText() {

@@ -53,7 +53,7 @@ export default {
 
       // Підпис із i18n з фолбеком на сирий ключ, якщо перекладу немає.
       const label = (key, fallback) => (this.$te(key) ? this.$t(key) : fallback)
-      const serviceNames = services.map((s) => label('slides.services.opt.' + s, s.replace(/_/g, ' ')))
+      const serviceNames = services.map((s) => label('slides.services.opt.' + s, String(s).replace(/_/g, ' ')))
       const serviceText = serviceNames.length > 0
         ? serviceNames.slice(0, 3).join(', ') + (serviceNames.length > 3 ? '…' : '')
         : this.$t('cards.aiPotential.serviceFallback')
