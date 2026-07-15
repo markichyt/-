@@ -53,7 +53,7 @@ export default {
     social: { countLabel: 'lawyers' },
     google: {
       query: 'Divorce lawyer Dubai',
-      sub: 'Above LinkedIn, legal directories and your own site',
+      sub: '#1 in Google — above LinkedIn and your own site',
       result1Title: 'Omar Haddad, Advocate — Dubai',
       result2Title: 'Omar Haddad — LinkedIn Profile',
       result3Title: 'Haddad Legal — Home'

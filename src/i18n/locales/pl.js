@@ -433,8 +433,8 @@ export default {
     },
     google: {
       query: 'Adwokat rozwodowy Warszawa',
-      headlineHtml: '#1 w <span class="accent">wyszukiwarce Google</span>',
-      sub: 'Wyżej niż LinkedIn i własna strona',
+      headlineHtml: 'Tak będzie wyglądać <span class="accent">Twój profil</span>',
+      sub: '#1 w Google — wyżej niż LinkedIn i własna strona',
       result1Title: 'Jan Kowalski, Adwokat — Warszawa',
       result2Title: 'Jan Kowalski — Profil LinkedIn',
       result3Title: 'Kancelaria Kowalski — Strona główna',

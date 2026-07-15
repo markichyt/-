@@ -424,8 +424,8 @@ export default {
     },
     google: {
       query: 'Адвокат з розлучень Київ',
-      headlineHtml: '№1 у <span class="accent">пошуку Google</span>',
-      sub: 'Вище за LinkedIn, Liga.net і власний сайт',
+      headlineHtml: 'Так виглядатиме <span class="accent">ваш профіль</span>',
+      sub: '№1 у Google — вище за LinkedIn і власний сайт',
       result1Title: 'Олександр Коваленко, Адвокат — Київ',
       result2Title: 'Олександр Коваленко — Профіль LinkedIn',
       result3Title: 'Адвокат Коваленко — Головна',

@@ -421,8 +421,8 @@ export default {
     },
     google: {
       query: 'Divorce attorney New York',
-      headlineHtml: '#1 in <span class="accent">Google Search</span>',
-      sub: 'Above LinkedIn, Avvo and your own site',
+      headlineHtml: 'This is how <span class="accent">your profile</span> will look',
+      sub: '#1 in Google — above LinkedIn and your own site',
       result1Title: 'John Davis, Attorney — New York',
       result2Title: 'John Davis — LinkedIn Profile',
       result3Title: 'Davis Law — Home',

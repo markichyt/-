@@ -63,7 +63,7 @@ export default {
     social: { countLabel: 'solicitors' },
     google: {
       query: 'Divorce solicitor London',
-      sub: 'Above LinkedIn, ReviewSolicitors and your own site',
+      sub: '#1 in Google — above LinkedIn and your own site',
       result1Title: 'James Wilson, Solicitor — London',
       result2Title: 'James Wilson — LinkedIn Profile',
       result3Title: 'Wilson Law — Home'
