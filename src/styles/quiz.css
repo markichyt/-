@@ -1371,12 +1371,16 @@ textarea.card-input {
   flex-shrink: 0;
 }
 
-/* ── Arrow buttons — position:fixed, escape all parent overflow ── */
+/* ── Arrow buttons — absolute within .pp-carousel (relative): центрируются по карусели
+   и не обрезаются. position:fixed НЕ используем — у .stack-card есть transform (анимация
+   свайпа), из-за чего на iOS Safari fixed позиционируется от трансформированной карточки,
+   а не от вьюпорта, и стрелки съезжают/обрезаются. ── */
+.profiles-pricing-wrap .pp-carousel { position: relative; }
 .profiles-pricing-wrap .pp-arrow-rail { display: contents; }
 .profiles-pricing-wrap .pp-arrow { display: none; }
 .stack-card.active .profiles-pricing-wrap .pp-arrow {
   display: flex;
-  position: fixed;
+  position: absolute;
   top: 50%;
   transform: translateY(-50%);
   z-index: 1000;
@@ -1397,9 +1401,9 @@ textarea.card-input {
   box-shadow: 0 8px 24px rgba(0,180,216,.6), 0 4px 10px rgba(0,0,0,.22);
 }
 .stack-card.active .profiles-pricing-wrap .pp-arrow:active { transform: translateY(-50%) scale(.95); }
-/* Desktop: arrow sits just outside the 420px-wide card; mobile: 4px from viewport edge */
-.profiles-pricing-wrap .pp-arrow--left  { left:  max(4px, calc(50% - 222px)); }
-.profiles-pricing-wrap .pp-arrow--right { right: max(4px, calc(50% - 222px)); }
+/* Стрелки у краёв карусели (по вертикали — по центру карточки), не обрезаются. */
+.profiles-pricing-wrap .pp-arrow--left  { left: 4px; }
+.profiles-pricing-wrap .pp-arrow--right { right: 4px; }
 .profiles-pricing-wrap .pp-arrow svg { width: 18px; height: 18px; stroke: #fff; stroke-width: 2.6; fill: none; }
 
 /* ── Dots ── */

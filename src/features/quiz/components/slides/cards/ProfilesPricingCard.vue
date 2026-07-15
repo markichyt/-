@@ -175,6 +175,7 @@ export default {
       </div>
     </div>
 
+    <div class="pp-carousel">
     <div class="pp-arrow-rail" aria-hidden="true">
       <button class="pp-arrow pp-arrow--left" :aria-label="$t('cards.profilesPricing.prevPlan')" @click.stop="goTo(currentIndex - 1)">
         <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6" /></svg>
@@ -226,6 +227,7 @@ export default {
           </div>
         </div>
       </div>
+    </div>
     </div>
 
     <div class="pp-dots">
