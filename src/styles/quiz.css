@@ -1927,7 +1927,7 @@ textarea.card-input {
 .profiles-pricing-wrap .pp-custom-quote-link a:hover .arrow { transform: translateX(2px); }
 
 /* ── Enterprise lead form (overlay) ── */
-.profiles-pricing-wrap .pp-lead-overlay {
+.pp-lead-overlay {
   position: fixed;
   inset: 0;
   background: rgba(15, 15, 26, .55);
@@ -1939,8 +1939,8 @@ textarea.card-input {
   z-index: 9999;
   padding: 16px;
 }
-.profiles-pricing-wrap .pp-lead-overlay.open { display: flex; }
-.profiles-pricing-wrap .pp-lead-modal {
+.pp-lead-overlay.open { display: flex; }
+.pp-lead-modal {
   width: 100%;
   max-width: 460px;
   max-height: 92vh;
@@ -1957,10 +1957,10 @@ textarea.card-input {
   to   { transform: translateY(0); opacity: 1; }
 }
 @media (min-height: 640px) {
-  .profiles-pricing-wrap .pp-lead-overlay { align-items: center; }
-  .profiles-pricing-wrap .pp-lead-modal { border-radius: 20px; }
+  .pp-lead-overlay { align-items: center; }
+  .pp-lead-modal { border-radius: 20px; }
 }
-.profiles-pricing-wrap .pp-lead-close {
+.pp-lead-close {
   position: absolute;
   top: 12px;
   right: 12px;
@@ -1977,8 +1977,8 @@ textarea.card-input {
   align-items: center;
   justify-content: center;
 }
-.profiles-pricing-wrap .pp-lead-header { text-align: center; margin-bottom: 16px; }
-.profiles-pricing-wrap .pp-lead-icon {
+.pp-lead-header { text-align: center; margin-bottom: 16px; }
+.pp-lead-icon {
   width: 56px;
   height: 56px;
   border-radius: 16px;
@@ -1989,7 +1989,7 @@ textarea.card-input {
   align-items: center;
   justify-content: center;
 }
-.profiles-pricing-wrap .pp-lead-note {
+.pp-lead-note {
   margin-bottom: 6px;
   padding: 10px 12px;
   background: #ecfeff;
@@ -2000,25 +2000,25 @@ textarea.card-input {
   color: #134e4a;
   line-height: 1.45;
 }
-.profiles-pricing-wrap .pp-lead-hint { color: #94a3b8; font-weight: 400; margin-left: 4px; }
-.profiles-pricing-wrap .pp-lead-icon svg { width: 28px; height: 28px; }
-.profiles-pricing-wrap .pp-lead-title {
+.pp-lead-hint { color: #94a3b8; font-weight: 400; margin-left: 4px; }
+.pp-lead-icon svg { width: 28px; height: 28px; }
+.pp-lead-title {
   font-size: 20px;
   font-weight: 700;
   color: #0a2540;
   margin-bottom: 4px;
 }
-.profiles-pricing-wrap .pp-lead-sub {
+.pp-lead-sub {
   font-size: 13px;
   color: #64748b;
   line-height: 1.45;
 }
-.profiles-pricing-wrap .pp-lead-form { display: flex; flex-direction: column; gap: 10px; }
-.profiles-pricing-wrap .pp-lead-field { display: flex; flex-direction: column; gap: 4px; }
-.profiles-pricing-wrap .pp-lead-label { font-size: 12px; color: #475569; font-weight: 600; }
-.profiles-pricing-wrap .pp-lead-label em { color: #ef4444; font-style: normal; font-weight: 700; margin-left: 2px; }
-.profiles-pricing-wrap .pp-lead-form input,
-.profiles-pricing-wrap .pp-lead-form textarea {
+.pp-lead-form { display: flex; flex-direction: column; gap: 10px; }
+.pp-lead-field { display: flex; flex-direction: column; gap: 4px; }
+.pp-lead-label { font-size: 12px; color: #475569; font-weight: 600; }
+.pp-lead-label em { color: #ef4444; font-style: normal; font-weight: 700; margin-left: 2px; }
+.pp-lead-form input,
+.pp-lead-form textarea {
   width: 100%;
   padding: 11px 12px;
   border: 1px solid #e2e8f0;
@@ -2030,20 +2030,20 @@ textarea.card-input {
   transition: border-color .15s, background .15s;
   box-sizing: border-box;
 }
-.profiles-pricing-wrap .pp-lead-form input:focus,
-.profiles-pricing-wrap .pp-lead-form textarea:focus {
+.pp-lead-form input:focus,
+.pp-lead-form textarea:focus {
   outline: none;
   border-color: #00b4d8;
   background: #fff;
 }
-.profiles-pricing-wrap .pp-lead-form textarea { resize: vertical; min-height: 64px; }
-.profiles-pricing-wrap .pp-lead-form.pp-lead-invalid input:invalid,
-.profiles-pricing-wrap .pp-lead-form.pp-lead-invalid input[required]:placeholder-shown,
-.profiles-pricing-wrap .pp-lead-form.pp-lead-invalid input[required]:not(:focus):not([value]):not(:placeholder-shown) {
+.pp-lead-form textarea { resize: vertical; min-height: 64px; }
+.pp-lead-form.pp-lead-invalid input:invalid,
+.pp-lead-form.pp-lead-invalid input[required]:placeholder-shown,
+.pp-lead-form.pp-lead-invalid input[required]:not(:focus):not([value]):not(:placeholder-shown) {
   border-color: #ef4444;
   background: #fef2f2;
 }
-.profiles-pricing-wrap .pp-lead-submit {
+.pp-lead-submit {
   margin-top: 6px;
   padding: 14px 16px;
   border: 0;
@@ -2056,10 +2056,10 @@ textarea.card-input {
   box-shadow: 0 4px 16px rgba(14,116,144,.4);
   transition: box-shadow .15s, transform .05s;
 }
-.profiles-pricing-wrap .pp-lead-submit:hover { box-shadow: 0 6px 24px rgba(14,116,144,.5); }
-.profiles-pricing-wrap .pp-lead-submit:active { transform: translateY(1px); }
-.profiles-pricing-wrap .pp-lead-submit:disabled { opacity: .7; cursor: progress; }
-.profiles-pricing-wrap .pp-lead-foot {
+.pp-lead-submit:hover { box-shadow: 0 6px 24px rgba(14,116,144,.5); }
+.pp-lead-submit:active { transform: translateY(1px); }
+.pp-lead-submit:disabled { opacity: .7; cursor: progress; }
+.pp-lead-foot {
   font-size: 11px;
   color: #94a3b8;
   text-align: center;
@@ -2067,11 +2067,11 @@ textarea.card-input {
   line-height: 1.4;
 }
 
-.profiles-pricing-wrap .pp-lead-thanks {
+.pp-lead-thanks {
   text-align: center;
   padding: 20px 8px 8px;
 }
-.profiles-pricing-wrap .pp-lead-thanks-icon {
+.pp-lead-thanks-icon {
   width: 64px;
   height: 64px;
   border-radius: 50%;
@@ -2082,20 +2082,20 @@ textarea.card-input {
   align-items: center;
   justify-content: center;
 }
-.profiles-pricing-wrap .pp-lead-thanks-icon svg { width: 34px; height: 34px; }
-.profiles-pricing-wrap .pp-lead-thanks-title {
+.pp-lead-thanks-icon svg { width: 34px; height: 34px; }
+.pp-lead-thanks-title {
   font-size: 20px;
   font-weight: 700;
   color: #0a2540;
   margin-bottom: 6px;
 }
-.profiles-pricing-wrap .pp-lead-thanks-sub {
+.pp-lead-thanks-sub {
   font-size: 14px;
   color: #475569;
   line-height: 1.5;
   margin-bottom: 18px;
 }
-.profiles-pricing-wrap .pp-lead-thanks-close {
+.pp-lead-thanks-close {
   padding: 12px 28px;
   border: 0;
   border-radius: 10px;

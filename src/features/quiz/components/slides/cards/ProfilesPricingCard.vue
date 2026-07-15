@@ -85,11 +85,24 @@ export default {
   mounted() {
     this.isAvatarMuted = false
     this.updateAvatarPlayback()
+    // Переносимо лід-модалку в <body>, щоб position:fixed рахувався від реального
+    // вьюпорта. У .card-stack є perspective (+ transform у активної картки) — це
+    // containing block для fixed, через який на iOS Safari оверлей прив'язувався до
+    // колоди й обрізався (× у формі команди був недоступний). У <body> — на весь екран.
+    const ov = this.$refs.leadOverlay
+    if (ov && ov.parentNode !== document.body) {
+      document.body.appendChild(ov)
+      this._leadMoved = true
+    }
   },
   // Stop the avatar audio when this card goes away (navigation or hot-reload), so
   // a replaced instance can never keep playing in the background.
   beforeDestroy() {
     if (this.$refs.avatarVideo) this.$refs.avatarVideo.pause()
+    // Прибираємо перенесену в <body> модалку разом із карткою.
+    if (this._leadMoved && this.$refs.leadOverlay && this.$refs.leadOverlay.parentNode) {
+      this.$refs.leadOverlay.parentNode.removeChild(this.$refs.leadOverlay)
+    }
   },
   methods: {
     goTo(idx) {
@@ -306,7 +319,7 @@ export default {
       <button :class="CTA_CONFIG[currentIndex].cls" @click="selectPlanAndContinue">{{ $t('cards.profilesPricing.cta.' + CTA_CONFIG[currentIndex].plan) }}</button>
     </div>
 
-    <div class="pp-lead-overlay" :class="{ open: showLeadOverlay }" :aria-hidden="!showLeadOverlay" @click.self="closeLead">
+    <div ref="leadOverlay" class="pp-lead-overlay" :class="{ open: showLeadOverlay }" :aria-hidden="!showLeadOverlay" @click.self="closeLead">
       <div class="pp-lead-modal" role="dialog" aria-labelledby="ppLeadTitle">
         <button class="pp-lead-close" :aria-label="$t('cards.profilesPricing.close')" @click.stop="closeLead">×</button>
         <div class="pp-lead-header">
