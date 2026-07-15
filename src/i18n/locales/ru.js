@@ -425,7 +425,7 @@ export default {
     },
     google: {
       query: 'Адвокат по разводам Киев',
-      headlineHtml: 'Так будет выглядеть <span class="accent">ваш профиль</span>',
+      headlineHtml: 'Так будет выглядеть <span class="accent">Ваш профиль</span>',
       sub: '№1 в Google — выше LinkedIn и собственного сайта',
       result1Title: 'Александр Коваленко, Адвокат — Киев',
       result2Title: 'Александр Коваленко — Профиль LinkedIn',
