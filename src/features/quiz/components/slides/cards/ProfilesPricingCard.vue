@@ -94,6 +94,13 @@ export default {
       document.body.appendChild(ov)
       this._leadMoved = true
     }
+    // Стрілки каруселі — теж у <body>, щоб position:fixed рахувався від екрана
+    // (зафіксовані до вікна, видимі попри скрол, не обрізаються на iOS).
+    const rail = this.$refs.arrowRail
+    if (rail && rail.parentNode !== document.body) {
+      document.body.appendChild(rail)
+      this._railMoved = true
+    }
   },
   // Stop the avatar audio when this card goes away (navigation or hot-reload), so
   // a replaced instance can never keep playing in the background.
@@ -102,6 +109,9 @@ export default {
     // Прибираємо перенесену в <body> модалку разом із карткою.
     if (this._leadMoved && this.$refs.leadOverlay && this.$refs.leadOverlay.parentNode) {
       this.$refs.leadOverlay.parentNode.removeChild(this.$refs.leadOverlay)
+    }
+    if (this._railMoved && this.$refs.arrowRail && this.$refs.arrowRail.parentNode) {
+      this.$refs.arrowRail.parentNode.removeChild(this.$refs.arrowRail)
     }
   },
   methods: {
@@ -188,8 +198,7 @@ export default {
       </div>
     </div>
 
-    <div class="pp-carousel">
-    <div class="pp-arrow-rail" aria-hidden="true">
+    <div ref="arrowRail" class="pp-arrow-rail" :class="{ 'pp-arrows-on': active }" aria-hidden="true">
       <button class="pp-arrow pp-arrow--left" :aria-label="$t('cards.profilesPricing.prevPlan')" @click.stop="goTo(currentIndex - 1)">
         <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6" /></svg>
       </button>
@@ -240,7 +249,6 @@ export default {
           </div>
         </div>
       </div>
-    </div>
     </div>
 
     <div class="pp-dots">

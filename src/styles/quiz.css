@@ -1371,16 +1371,16 @@ textarea.card-input {
   flex-shrink: 0;
 }
 
-/* ── Arrow buttons — absolute within .pp-carousel (relative): центрируются по карусели
-   и не обрезаются. position:fixed НЕ используем — у .stack-card есть transform (анимация
-   свайпа), из-за чего на iOS Safari fixed позиционируется от трансформированной карточки,
-   а не от вьюпорта, и стрелки съезжают/обрезаются. ── */
-.profiles-pricing-wrap .pp-carousel { position: relative; }
-.profiles-pricing-wrap .pp-arrow-rail { display: contents; }
-.profiles-pricing-wrap .pp-arrow { display: none; }
-.stack-card.active .profiles-pricing-wrap .pp-arrow {
+/* ── Arrow buttons — телепортуються в <body> (див. ProfilesPricingCard.vue::mounted),
+   щоб position:fixed рахувався від реального вьюпорта: стрілки зафіксовані до вікна
+   (видимі попри скрол), стоять по краях екрана, не обрізаються на iOS. У .card-stack є
+   perspective/transform — containing block для fixed, тому саме телепорт у body.
+   Показуються лише коли картка активна — клас .pp-arrows-on (bind :class на rail). ── */
+.pp-arrow-rail { display: contents; }
+.pp-arrow { display: none; }
+.pp-arrow-rail.pp-arrows-on .pp-arrow {
   display: flex;
-  position: absolute;
+  position: fixed;
   top: 50%;
   transform: translateY(-50%);
   z-index: 1000;
@@ -1395,16 +1395,16 @@ textarea.card-input {
   color: #fff;
   transition: background .2s, transform .2s, box-shadow .2s;
 }
-.stack-card.active .profiles-pricing-wrap .pp-arrow:hover {
+.pp-arrow-rail.pp-arrows-on .pp-arrow:hover {
   background: #0fb6da;
   transform: translateY(-50%) scale(1.08);
   box-shadow: 0 8px 24px rgba(0,180,216,.6), 0 4px 10px rgba(0,0,0,.22);
 }
-.stack-card.active .profiles-pricing-wrap .pp-arrow:active { transform: translateY(-50%) scale(.95); }
-/* Стрелки у краёв карусели (по вертикали — по центру карточки), не обрезаются. */
-.profiles-pricing-wrap .pp-arrow--left  { left: 4px; }
-.profiles-pricing-wrap .pp-arrow--right { right: 4px; }
-.profiles-pricing-wrap .pp-arrow svg { width: 18px; height: 18px; stroke: #fff; stroke-width: 2.6; fill: none; }
+.pp-arrow-rail.pp-arrows-on .pp-arrow:active { transform: translateY(-50%) scale(.95); }
+/* Desktop: стрілка ззовні картки ~444px; mobile: 4px від краю екрана. */
+.pp-arrow--left  { left:  max(4px, calc(50% - 222px)); }
+.pp-arrow--right { right: max(4px, calc(50% - 222px)); }
+.pp-arrow svg { width: 18px; height: 18px; stroke: #fff; stroke-width: 2.6; fill: none; }
 
 /* ── Dots ── */
 .profiles-pricing-wrap .pp-dots {
