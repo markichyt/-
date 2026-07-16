@@ -348,7 +348,7 @@ export default {
       demoPremium: { name: 'Alexander König', role: 'Adwokat', location: 'Polska, Warszawa' },
       avatarAlt: 'Adwokat',
       avatarLabel: 'Podgląd awatara AI',
-      avatarTagline: 'Awatar AI prowadzi Twój profil i social media za Ciebie',
+      avatarTagline: 'Twój awatar AI tworzy profesjonalne wideo w Twoim imieniu na stronę i social media',
       monthly: 'Miesięcznie',
       annual: 'Rocznie',
       saveBadge: '−10%',

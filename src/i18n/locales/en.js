@@ -336,7 +336,7 @@ export default {
       demoPremium: { name: 'Alexander König', role: 'Attorney', location: 'USA, New York' },
       avatarAlt: 'Attorney',
       avatarLabel: 'AI avatar preview',
-      avatarTagline: 'Your AI avatar runs Your profile and social media for You',
+      avatarTagline: 'Your AI avatar creates professional videos on Your behalf for your website and social media',
       monthly: 'Monthly',
       annual: 'Yearly',
       saveBadge: '−10%',
