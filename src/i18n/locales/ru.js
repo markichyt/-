@@ -340,7 +340,7 @@ export default {
       demoPremium: { name: 'Alexander König', role: 'Attorney', location: 'Украина, Киев' },
       avatarAlt: 'Адвокат',
       avatarLabel: 'Просмотр AI-аватара',
-      avatarTagline: 'Ваш AI-аватар говорит за вас 24/7',
+      avatarTagline: 'AI-аватар ведёт Ваш профиль и соцсети за Вас',
       monthly: 'Ежемесячно',
       annual: 'Ежегодно',
       saveBadge: '−10%',
