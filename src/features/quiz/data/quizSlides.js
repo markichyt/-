@@ -139,10 +139,10 @@ export const quizSlides = [
     ]
   },
   // Анімаційні сцени
-  { type: 'card', id: 'video1', q: '', sub: '' },
-  { type: 'card', id: 'video2', q: '', sub: '' },
-  { type: 'card', id: 'videoAds', q: '', sub: '' },
-  { type: 'card', id: 'videoQa', q: '', sub: '' },
+  { type: 'card', id: 'video1', q: 'slides.video1.q', sub: 'slides.video1.sub' },
+  { type: 'card', id: 'video2', q: 'slides.video2.q', sub: 'slides.video2.sub' },
+  { type: 'card', id: 'videoAds', q: 'slides.videoAds.q', sub: 'slides.videoAds.sub' },
+  { type: 'card', id: 'videoQa', q: 'slides.videoQa.q', sub: 'slides.videoQa.sub' },
   // Оцінка готовності профілю
   { type: 'card', id: 'assessment', q: 'slides.assessment.q', sub: 'slides.assessment.sub' },
   // Плани і ціни

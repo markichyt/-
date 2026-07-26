@@ -42,8 +42,24 @@ export default {
       sub: 'Upload your photo to generate a video avatar for your profile'
     },
     videoProof: {
-      q: 'Buy clients at <span class="accent">cost price</span>',
-      sub: 'Short on clients? Buy a ready lead, unlock its contacts and start calling right away — no ads, no team.'
+      q: 'Buy <span class="accent">ready client leads</span>',
+      sub: 'Contacts unlock instantly — just call and take the case'
+    },
+    video1: {
+      q: 'AI writes <span class="accent">expert articles</span> for you',
+      sub: 'Get noticed and attract clients'
+    },
+    video2: {
+      q: 'Clients <span class="accent">find you first on Google</span>',
+      sub: 'Just upload your CV — AI does the rest'
+    },
+    videoAds: {
+      q: 'One click — <span class="accent">on every social network</span>',
+      sub: 'More reach — more clients'
+    },
+    videoQa: {
+      q: 'Answer <span class="accent">client questions</span>',
+      sub: 'And they choose you as their lawyer'
     },
     profession: {
       q: 'Which best describes your <span class="accent">profession?</span>',
@@ -222,7 +238,7 @@ export default {
       warnRatio: '⚠ Photo is not horizontal 16:9 — the video may look incorrect',
       uploadOwn: 'Upload your photo',
       samplesTitle: 'No photo handy? Pick a sample 👇',
-      videoTitle: 'Why upload a photo? Watch 👇',
+      videoTitle: 'One photo → an AI video card that sells you 24/7',
       sampleLabel: 'Sample',
       modalUploadOther: 'Upload another photo',
       modalProceed: 'Continue',

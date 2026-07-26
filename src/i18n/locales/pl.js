@@ -42,8 +42,24 @@ export default {
       sub: 'Prześlij zdjęcie, aby wygenerować awatar wideo do Twojego profilu'
     },
     videoProof: {
-      q: 'Kupuj klientów po <span class="accent">kosztach</span>',
-      sub: 'Brakuje klientów? Kup gotowe zgłoszenie, odblokuj jego kontakty i od razu dzwoń — bez reklamy i zespołu.'
+      q: 'Kupuj <span class="accent">gotowe zgłoszenia</span> klientów',
+      sub: 'Kontakty odblokowują się od razu — dzwoń i bierz sprawę'
+    },
+    video1: {
+      q: 'AI pisze <span class="accent">eksperckie artykuły</span> za Ciebie',
+      sub: 'Stań się widoczny i przyciągaj klientów'
+    },
+    video2: {
+      q: 'Klienci <span class="accent">znajdą Cię w Google</span> pierwszego',
+      sub: 'Po prostu wgraj CV — resztę zrobi AI'
+    },
+    videoAds: {
+      q: 'Jedno kliknięcie — jesteś <span class="accent">we wszystkich social media</span>',
+      sub: 'Większy zasięg — więcej klientów'
+    },
+    videoQa: {
+      q: 'Odpowiadaj na <span class="accent">pytania klientów</span>',
+      sub: 'A oni wybierają właśnie Ciebie na prawnika'
     },
     profession: {
       q: 'Co najlepiej opisuje Twój <span class="accent">zawód?</span>',
@@ -234,7 +250,7 @@ export default {
       warnRatio: '⚠ Zdjęcie nie jest poziome 16:9 — wideo może wyglądać nieprawidłowo',
       uploadOwn: 'Prześlij swoje zdjęcie',
       samplesTitle: 'Nie masz zdjęcia pod ręką? Wybierz przykład 👇',
-      videoTitle: 'Po co przesyłać zdjęcie? Zobacz 👇',
+      videoTitle: 'Jedno zdjęcie → wideo-wizytówka AI, która sprzedaje Cię 24/7',
       sampleLabel: 'Przykład',
       modalUploadOther: 'Prześlij inne zdjęcie',
       modalProceed: 'Kontynuuj',
