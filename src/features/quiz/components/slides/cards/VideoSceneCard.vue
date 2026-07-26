@@ -2,10 +2,10 @@
 import { videoSceneSources } from '../../../data/videoScenes.js'
 import { nativeScenes } from '../../scenes/nativeScenes.js'
 
-// Renders an animation step. Scenes with a native Vue rebuild (Phase 2) are
-// mounted only while the card is active so their one-shot animation replays on
-// entry. Scenes not yet rebuilt fall back to the Phase 1 iframe, whose real
-// source is likewise only loaded while active.
+// Renders an animation step. .mp4 sources render as a native <video> (and take
+// priority over any legacy native Vue scene / iframe). Non-video sources fall
+// back to a native Vue scene when available, else the Phase 1 HTML iframe. Media
+// is only loaded/played while the card is the active one in the deck.
 export default {
   name: 'VideoSceneCard',
   props: {
@@ -13,11 +13,25 @@ export default {
     active: { type: Boolean, default: false }
   },
   computed: {
+    rawSrc() {
+      return videoSceneSources[this.sceneId] || ''
+    },
+    isVideo() {
+      return /\.mp4(\?|$)/i.test(this.rawSrc)
+    },
     nativeScene() {
       return nativeScenes[this.sceneId]
     },
     sceneSrc() {
-      return encodeURI(videoSceneSources[this.sceneId] || '')
+      return encodeURI(this.rawSrc)
+    }
+  },
+  watch: {
+    active(v) {
+      const el = this.$refs.vid
+      if (!el) return
+      if (v) el.play().catch(() => {})
+      else el.pause()
     }
   }
 }
@@ -25,7 +39,18 @@ export default {
 
 <template>
   <div class="video-wrap">
-    <component :is="nativeScene" v-if="nativeScene && active" />
+    <video
+      v-if="isVideo"
+      ref="vid"
+      :src="active ? sceneSrc : ''"
+      autoplay
+      muted
+      loop
+      playsinline
+      controls
+      class="video-scene-vid"
+    />
+    <component :is="nativeScene" v-else-if="nativeScene && active" />
     <div v-else-if="nativeScene" class="video-scene-placeholder" />
     <iframe
       v-else
@@ -39,6 +64,15 @@ export default {
 </template>
 
 <style scoped>
+.video-scene-vid {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border: 0;
+  display: block;
+  background: #000;
+  object-fit: cover;
+  border-radius: 14px;
+}
 /* Keeps the card height stable for a native scene while it is in the deck's
    background (matching the iframe's white box before it is activated). */
 .video-scene-placeholder {

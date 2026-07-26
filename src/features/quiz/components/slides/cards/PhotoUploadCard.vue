@@ -21,6 +21,9 @@ const SAMPLE_PHOTOS = [
   { id: 'man', file: 'lawyer-man.jpg', src: publicAsset('images/samples/lawyer-man.jpg') }
 ]
 
+// Мотиваційне відео «навіщо потрібне фото / який буде результат» — під галереєю прикладів.
+const WHY_VIDEO = publicAsset('videos/shorts/short-avatar.mp4')
+
 // Коди помилок фото. WRONG_RATIO перевіряється на клієнті (співвідношення сторін),
 // решта — коди від бекенду (перевірка вмісту). Тексти — в i18n (cards.photo.errors.<code>).
 // canContinue=true лише для «мʼякого» попередження, коли аватар усе одно можна згенерувати.
@@ -38,6 +41,7 @@ export default {
     return {
       quizData,
       samples: SAMPLE_PHOTOS,
+      whyVideo: WHY_VIDEO,
       selectedSampleId: '',
       previewSrc: '',
       dimText: '',
@@ -225,6 +229,12 @@ export default {
       </div>
     </div>
 
+    <!-- Мотиваційне відео: навіщо фото / який буде результат -->
+    <div class="pu-why">
+      <div class="pu-why-title">{{ $t('cards.photo.videoTitle') }}</div>
+      <video class="pu-why-video" :src="whyVideo" controls playsinline preload="metadata" />
+    </div>
+
     <!-- Модалка-застереження (текст залежить від коду помилки) -->
     <div class="pu-modal" :class="{ open: !!photoError }" :hidden="!photoError">
       <div class="pu-modal-overlay" @click="closeModal" />
@@ -345,6 +355,30 @@ export default {
   transition: background .18s;
 }
 .pu-upload-own:hover { background: rgba(0, 180, 216, 0.12); }
+
+/* ---- Мотиваційне відео ---- */
+.pu-why {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.pu-why-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-dark);
+  text-align: center;
+  margin-bottom: 10px;
+}
+.pu-why-video {
+  width: 100%;
+  max-width: 240px;
+  margin: 0 auto;
+  aspect-ratio: 3 / 4;
+  display: block;
+  border-radius: 14px;
+  background: #000;
+  object-fit: cover;
+}
 
 /* ---- Галерея прикладів ---- */
 .pu-samples {

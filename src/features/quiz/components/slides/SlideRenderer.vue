@@ -30,7 +30,7 @@ const CARD_COMPONENTS = {
   fullProfile: FullProfileCard
 }
 // Card steps that show only static/computed content + a generic Continue button.
-const SIMPLE_CARD_IDS = ['videoProof', 'aiCalc', 'video1', 'video2', 'videoAds', 'videoSocials', 'assessment']
+const SIMPLE_CARD_IDS = ['videoProof', 'aiCalc', 'video1', 'video2', 'videoAds', 'videoQa', 'videoSocials', 'assessment']
 
 // Resolves the slide at `stepIndex` and renders the matching component. The
 // `active` flag is true only for the visible card in the deck and gates media

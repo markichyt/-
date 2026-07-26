@@ -23,14 +23,10 @@ export const quizSlides = [
       { field: 'first_name', type: 'text' },
       { field: 'last_name', type: 'text' },
       { field: 'email', type: 'email' },
-      { field: 'phone', type: 'tel' },
-      { field: 'password', type: 'password' },
-      { field: 'password_confirm', type: 'password', match: 'password' }
+      { field: 'phone', type: 'tel' }
     ]
   },
-  // 2. Завантаження фото для відео-аватара
-  { type: 'card', id: 'photoUpload', q: 'slides.photoUpload.q', sub: 'slides.photoUpload.sub' },
-  // 3. Професія (набір — з marketConfig)
+  // 2. Професія (набір — з marketConfig)
   {
     type: 'checkbox',
     field: 'profession',
@@ -39,6 +35,8 @@ export const quizSlides = [
     q: 'slides.profession.q',
     sub: 'slides.profession.sub'
   },
+  // 3. Завантаження фото для відео-аватара
+  { type: 'card', id: 'photoUpload', q: 'slides.photoUpload.q', sub: 'slides.photoUpload.sub' },
   // Сцена соціального доказу
   { type: 'card', id: 'videoProof', q: '', sub: '' },
   // 4. Місто роботи
@@ -144,6 +142,7 @@ export const quizSlides = [
   { type: 'card', id: 'video1', q: '', sub: '' },
   { type: 'card', id: 'video2', q: '', sub: '' },
   { type: 'card', id: 'videoAds', q: '', sub: '' },
+  { type: 'card', id: 'videoQa', q: '', sub: '' },
   // Оцінка готовності профілю
   { type: 'card', id: 'assessment', q: 'slides.assessment.q', sub: 'slides.assessment.sub' },
   // Плани і ціни

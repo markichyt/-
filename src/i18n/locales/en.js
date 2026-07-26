@@ -218,6 +218,7 @@ export default {
       warnRatio: '⚠ Photo is not horizontal 16:9 — the video may look incorrect',
       uploadOwn: 'Upload your photo',
       samplesTitle: 'No photo handy? Pick a sample 👇',
+      videoTitle: 'Why upload a photo? Watch 👇',
       sampleLabel: 'Sample',
       modalUploadOther: 'Upload another photo',
       modalProceed: 'Continue',

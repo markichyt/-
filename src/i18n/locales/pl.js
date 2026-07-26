@@ -230,6 +230,7 @@ export default {
       warnRatio: '⚠ Zdjęcie nie jest poziome 16:9 — wideo może wyglądać nieprawidłowo',
       uploadOwn: 'Prześlij swoje zdjęcie',
       samplesTitle: 'Nie masz zdjęcia pod ręką? Wybierz przykład 👇',
+      videoTitle: 'Po co przesyłać zdjęcie? Zobacz 👇',
       sampleLabel: 'Przykład',
       modalUploadOther: 'Prześlij inne zdjęcie',
       modalProceed: 'Kontynuuj',

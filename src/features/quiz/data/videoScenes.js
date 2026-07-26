@@ -1,14 +1,16 @@
-// Maps each video-card step id to its pre-built HTML animation scene.
-// Phase 1 embeds these scenes in an <iframe>; Phase 2 will swap selected
-// entries for native Vue scene components.
+// Maps each video-card step id to its media source.
+// Раніше сцени були HTML-анімаціями в <iframe>; тепер це готові відео-шортси (.mp4)
+// із public/videos/shorts. VideoSceneCard рендерить <video> для .mp4, інакше — iframe.
+import { publicAsset } from './publicAsset.js'
+
 export const videoSceneSources = {
-  videoProof: './htmlTOvideo/8/ConsultantLM Promo.html',
-  video1: './htmlTOvideo/2/ConsultantLM Promo 2.html',
-  video2: './htmlTOvideo/9/ConsultantLM Promo.html',
-  videoAds: './htmlTOvideo/1/ConsultantLM Promo 1.html',
-  videoSocials: './htmlTOvideo/3/ConsultantLM Promo 3.html'
+  videoProof: publicAsset('videos/shorts/short-leads.mp4'),
+  video1: publicAsset('videos/shorts/short-articles.mp4'),
+  video2: publicAsset('videos/shorts/short-profile.mp4'),
+  videoAds: publicAsset('videos/shorts/short-social.mp4'),
+  videoQa: publicAsset('videos/shorts/short-qa.mp4')
 }
 
-// All scenes, pre-warmed in a hidden iframe at quiz start so they are cached
-// by the time the user swipes to an animation step.
-export const allSceneSources = Object.values(videoSceneSources)
+// Тільки HTML-сцени префваримо у прихованому iframe; .mp4 вантажаться на вимогу,
+// коли користувач доходить до кроку (щоб не тягнути ~7 МБ відео на старті).
+export const allSceneSources = Object.values(videoSceneSources).filter((s) => !/\.mp4(\?|$)/i.test(s))
