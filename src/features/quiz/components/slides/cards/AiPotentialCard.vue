@@ -128,7 +128,7 @@ export default {
 }
 .ap-eyebrow { font-size: 12px; font-weight: 800; letter-spacing: .5px; text-transform: uppercase; color: var(--accent); }
 .ap-hero { font-size: 44px; font-weight: 900; line-height: 1; color: #16a34a; letter-spacing: -1px; white-space: nowrap; margin: 8px 0 3px; }
-.ap-avg { font-size: 13px; font-weight: 800; color: var(--text-dark); }
+.ap-avg { font-size: 11px; font-weight: 600; color: var(--text-light); }
 .ap-range { font-size: 12px; font-weight: 600; color: var(--text-muted); margin-top: 1px; }
 .ap-clients {
   margin-top: 12px; background: #fff; border: 1px solid #a7f3d0; border-radius: 12px;

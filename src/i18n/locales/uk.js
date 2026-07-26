@@ -61,7 +61,7 @@ export default {
       sub: 'І вони обирають саме тебе своїм юристом'
     },
     profession: {
-      q: 'Яка з варіантів найкраще описує вашу <span class="accent">професію?</span>',
+      q: 'Який з варіантів найкраще описує вашу <span class="accent">професію?</span>',
       sub: 'Оберіть сферу вашої діяльності',
       opt: {
         lawyer: 'Юрист',
@@ -265,9 +265,9 @@ export default {
       }
     },
     aiPotential: {
-      heroEyebrow: 'З нами ви заробляєте',
+      heroEyebrow: 'З нами ви заробите',
       heroCapHtml: 'потенційних клієнтів<br>щомісяця',
-      avgLabel: 'у середньому на місяць',
+      avgLabel: 'розраховано на основі заробітків юристів у CONSULTANT',
       rangeLabel: 'реальний діапазон: {low} – {high}/міс',
       clientsLabel: 'потенційних клієнтів щомісяця',
       priceLabel: 'усе це за підписку {amount}/міс',

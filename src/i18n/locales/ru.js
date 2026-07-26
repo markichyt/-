@@ -266,9 +266,9 @@ export default {
       }
     },
     aiPotential: {
-      heroEyebrow: 'С нами вы зарабатываете',
+      heroEyebrow: 'С нами вы заработаете',
       heroCapHtml: 'потенциальных клиентов<br>ежемесячно',
-      avgLabel: 'в среднем в месяц',
+      avgLabel: 'рассчитано на основе заработков юристов в CONSULTANT',
       rangeLabel: 'реальный диапазон: {low} – {high}/мес',
       clientsLabel: 'потенциальных клиентов ежемесячно',
       priceLabel: 'всё это за подписку {amount}/мес',

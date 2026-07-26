@@ -262,9 +262,9 @@ export default {
       }
     },
     aiPotential: {
-      heroEyebrow: 'With us you earn',
+      heroEyebrow: 'With us you will earn',
       heroCapHtml: 'potential clients<br>per month',
-      avgLabel: 'on average per month',
+      avgLabel: 'based on real lawyer earnings on CONSULTANT',
       rangeLabel: 'real range: {low} – {high}/mo',
       clientsLabel: 'potential clients per month',
       priceLabel: 'all this for a {amount}/mo subscription',
