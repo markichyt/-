@@ -47,8 +47,11 @@ export default {
       muted
       loop
       playsinline
-      controls
+      disablepictureinpicture
+      controlslist="nodownload noplaybackrate nofullscreen"
+      tabindex="-1"
       class="video-scene-vid"
+      @contextmenu.prevent
     />
     <component :is="nativeScene" v-else-if="nativeScene && active" />
     <div v-else-if="nativeScene" class="video-scene-placeholder" />
@@ -72,6 +75,7 @@ export default {
   background: #000;
   object-fit: cover;
   border-radius: 14px;
+  pointer-events: none;
 }
 /* Keeps the card height stable for a native scene while it is in the deck's
    background (matching the iframe's white box before it is activated). */

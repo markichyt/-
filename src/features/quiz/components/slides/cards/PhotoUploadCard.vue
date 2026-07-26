@@ -232,7 +232,17 @@ export default {
     <!-- Мотиваційне відео: навіщо фото / який буде результат -->
     <div class="pu-why">
       <div class="pu-why-title">{{ $t('cards.photo.videoTitle') }}</div>
-      <video class="pu-why-video" :src="whyVideo" controls playsinline preload="metadata" />
+      <video
+        class="pu-why-video"
+        :src="whyVideo"
+        autoplay
+        muted
+        loop
+        playsinline
+        disablepictureinpicture
+        tabindex="-1"
+        @contextmenu.prevent
+      />
     </div>
 
     <!-- Модалка-застереження (текст залежить від коду помилки) -->
@@ -371,13 +381,14 @@ export default {
 }
 .pu-why-video {
   width: 100%;
-  max-width: 240px;
+  max-width: 320px;
   margin: 0 auto;
   aspect-ratio: 3 / 4;
   display: block;
   border-radius: 14px;
   background: #000;
   object-fit: cover;
+  pointer-events: none;
 }
 
 /* ---- Галерея прикладів ---- */
