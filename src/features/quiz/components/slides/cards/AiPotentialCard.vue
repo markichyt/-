@@ -2,7 +2,7 @@
 import QuizIcon from '../../QuizIcon.vue'
 import { quizData } from '../../../store/quizDataStore.js'
 import { market } from '../../../../../i18n/marketConfig.js'
-import { formatNumber } from '../../../../../i18n/format.js'
+import { formatNumber, formatMoney } from '../../../../../i18n/format.js'
 
 // «Ваш потенціал з Консультант» — прогноз нових клієнтів/доходу за напрямами
 // користувача. Числа-константи — з marketConfig (aiPotential); підписи та валюта — з i18n.
@@ -13,20 +13,9 @@ const PROFESSION_MULTIPLIER = {
 }
 const ROLE_MULTIPLIER = { founder: 1.2, executive: 1.15, self_employed: 1.0, employee: 0.85 }
 
-// Іконки блоку «що входить у підписку» (підписи — в i18n cards.aiPotential.how).
-const HOW_ITEMS = [
-  { key: 'marketing', icon: 'megaphone' },
-  { key: 'content', icon: 'film' },
-  { key: 'leads', icon: 'search' },
-  { key: 'clients', icon: 'users' }
-]
-
 export default {
   name: 'AiPotentialCard',
   components: { QuizIcon },
-  data() {
-    return { howItems: HOW_ITEMS }
-  },
   computed: {
     model() {
       const ap = market(this.$i18n.locale).aiPotential
@@ -42,14 +31,17 @@ export default {
         : 0.9
       const multiplier = professionMultiplier * (ROLE_MULTIPLIER[role] || 1.0) * serviceMultiplier
 
-      const seoMin = Math.round(15 * multiplier)
-      const seoMax = Math.round(30 * multiplier)
-      const adsMin = Math.round(20 * multiplier)
-      const adsMax = Math.round(40 * multiplier)
-      const socMin = Math.round(10 * multiplier)
-      const socMax = Math.round(20 * multiplier)
-      const totalMin = seoMin + adsMin + socMin
-      const totalMax = seoMax + adsMax + socMax
+      // Ліди по каналах → загальна вилка потенційних клієнтів/міс.
+      const totalMin = Math.round(15 * multiplier) + Math.round(20 * multiplier) + Math.round(10 * multiplier)
+      const totalMax = Math.round(30 * multiplier) + Math.round(40 * multiplier) + Math.round(20 * multiplier)
+
+      // Дохід: вилка + «середнє» (округлене) для великого числа.
+      const round1k = (n) => Math.round(n / 1000) * 1000
+      const revLow = round1k(totalMin * ap.caseValueLow)
+      const revHigh = round1k(totalMax * ap.caseValueHigh)
+      const avg = Math.round(((totalMin + totalMax) / 2) * ((ap.caseValueLow + ap.caseValueHigh) / 2) / 10000) * 10000
+      // Ціна підписки на слайді (якірна «до знижки» = реальна ÷ 0,8): UA → 1999.
+      const subscription = Math.round(ap.ourPlan / 0.8)
 
       // Підпис із i18n з фолбеком на сирий ключ, якщо перекладу немає.
       const label = (key, fallback) => (this.$te(key) ? this.$t(key) : fallback)
@@ -64,9 +56,11 @@ export default {
       const teamHigh = ap.teamRoles.reduce((s, r) => s + r.high, 0)
 
       return {
-        seoMin, seoMax, adsMin, adsMax, socMin, socMax, totalMin, totalMax,
-        revenueMin: formatNumber(totalMin * ap.caseValueLow),
-        revenueMax: formatNumber(totalMax * ap.caseValueHigh),
+        totalMin, totalMax,
+        avgMoney: formatMoney(avg),
+        revenueMin: formatMoney(revLow),
+        revenueMax: formatMoney(revHigh),
+        subscription: formatMoney(subscription),
         professionLabel: professions.length
           ? professions.map((p) => label('slides.profession.opt.' + p, p)).join(', ')
           : this.$t('cards.aiPotential.professionFallback'),
@@ -78,10 +72,7 @@ export default {
           cost: this.$t('cards.aiPotential.teamRoleCost', { low: r.low / 1000, high: r.high / 1000 })
         })),
         teamTotalLow: formatNumber(teamLow),
-        teamTotalHigh: formatNumber(teamHigh),
-        ourPlan: formatNumber(ap.ourPlan),
-        saveHigh: formatNumber(teamHigh - ap.ourPlan),
-        cheaperHigh: Math.round(teamHigh / ap.ourPlan)
+        teamTotalHigh: formatNumber(teamHigh)
       }
     }
   }
@@ -90,22 +81,20 @@ export default {
 
 <template>
   <div class="ai-potential">
-    <!-- УДАР 1: що ви отримуєте -->
-    <div class="ap-hero">
-      <div class="ap-hero-eyebrow">{{ $t('cards.aiPotential.heroEyebrow') }}</div>
-      <div class="ap-hero-main">
-        <span class="ap-hero-num">{{ model.totalMin }}–{{ model.totalMax }}</span>
-        <span class="ap-hero-cap" v-html="$t('cards.aiPotential.heroCapHtml')" />
+    <!-- З НАМИ: потенційний заробіток + ліди + підписка -->
+    <div class="ap-withus">
+      <div class="ap-eyebrow">{{ $t('cards.aiPotential.heroEyebrow') }}</div>
+      <div class="ap-hero">≈ {{ model.avgMoney }}</div>
+      <div class="ap-avg">{{ $t('cards.aiPotential.avgLabel') }}</div>
+      <div class="ap-range">{{ $t('cards.aiPotential.rangeLabel', { low: model.revenueMin, high: model.revenueMax }) }}</div>
+      <div class="ap-clients">
+        <span class="ap-clients-n">{{ model.totalMin }}–{{ model.totalMax }}</span>
+        <span class="ap-clients-t">{{ $t('cards.aiPotential.clientsLabel') }}</span>
       </div>
-      <div class="ap-hero-money">{{ $t('cards.aiPotential.revenue', { low: model.revenueMin, high: model.revenueMax }) }} <span>{{ $t('cards.aiPotential.revenueCaption') }}</span></div>
-      <div class="ap-channels">
-        <span>{{ $t('cards.aiPotential.channels.seo', { min: model.seoMin, max: model.seoMax }) }}</span>
-        <span>{{ $t('cards.aiPotential.channels.ads', { min: model.adsMin, max: model.adsMax }) }}</span>
-        <span>{{ $t('cards.aiPotential.channels.social', { min: model.socMin, max: model.socMax }) }}</span>
-      </div>
+      <div class="ap-price">{{ $t('cards.aiPotential.priceLabel', { amount: model.subscription }) }}</div>
     </div>
 
-    <!-- УДАР 2+3: скільки це коштувало б самому vs з нами -->
+    <!-- БЕЗ НАС: скільки коштувала б власна команда -->
     <div class="ap-compare">
       <div class="ap-compare-q" v-html="$t('cards.aiPotential.compareQ')" />
       <ul class="ap-team">
@@ -116,20 +105,6 @@ export default {
       <div class="ap-team-total">
         <span>{{ $t('cards.aiPotential.teamTotalLabel') }}</span>
         <span class="ap-red">{{ $t('cards.aiPotential.teamTotal', { low: model.teamTotalLow, high: model.teamTotalHigh }) }}</span>
-      </div>
-      <div class="ap-us">
-        <span>{{ $t('cards.aiPotential.usLabel') }}</span>
-        <span class="ap-green">{{ $t('cards.aiPotential.ourPlan', { amount: model.ourPlan }) }}</span>
-      </div>
-      <div class="ap-punch" v-html="$t('cards.aiPotential.punchHtml', { times: model.cheaperHigh, save: model.saveHigh })" />
-    </div>
-
-    <!-- УДАР 4: як це працює -->
-    <div class="ap-how">
-      <div class="ap-how-title">{{ $t('cards.aiPotential.howTitle') }}</div>
-      <div class="ap-how-item" v-for="item in howItems" :key="item.key">
-        <span class="ap-how-ic"><QuizIcon :name="item.icon" /></span>
-        <span class="ap-how-txt"><b>{{ $t('cards.aiPotential.how.' + item.key + '.t') }}</b> — {{ $t('cards.aiPotential.how.' + item.key + '.d') }}</span>
       </div>
     </div>
 
@@ -143,63 +118,45 @@ export default {
 <style scoped>
 .ai-potential { display: flex; flex-direction: column; gap: 12px; }
 
-/* УДАР 1 — hero */
-.ap-hero {
-  background: linear-gradient(135deg, #ecfeff 0%, #eff6ff 100%);
-  border: 1px solid #cffafe;
+/* З НАМИ — зелений блок */
+.ap-withus {
+  background: linear-gradient(135deg, #ecfdf5 0%, #eff6ff 100%);
+  border: 1px solid #a7f3d0;
   border-radius: 16px;
   padding: 16px 18px;
   text-align: center;
 }
-.ap-hero-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--accent); }
-.ap-hero-main { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 6px 0 4px; }
-.ap-hero-num { font-size: 46px; font-weight: 800; line-height: 1; color: var(--text-dark); white-space: nowrap; }
-.ap-hero-cap { font-size: 13px; font-weight: 600; color: var(--text-muted); text-align: left; line-height: 1.15; }
-.ap-hero-money { font-size: 18px; font-weight: 800; color: #16a34a; }
-.ap-hero-money span { font-size: 12px; font-weight: 600; color: var(--text-light); }
-.ap-channels { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-top: 10px; }
-.ap-channels span {
-  font-size: 11px; font-weight: 600; color: var(--text-muted);
-  background: rgba(255,255,255,.7); border: 1px solid #d1e9f0; border-radius: 999px; padding: 3px 9px;
+.ap-eyebrow { font-size: 12px; font-weight: 800; letter-spacing: .5px; text-transform: uppercase; color: var(--accent); }
+.ap-hero { font-size: 44px; font-weight: 900; line-height: 1; color: #16a34a; letter-spacing: -1px; white-space: nowrap; margin: 8px 0 3px; }
+.ap-avg { font-size: 13px; font-weight: 800; color: var(--text-dark); }
+.ap-range { font-size: 12px; font-weight: 600; color: var(--text-muted); margin-top: 1px; }
+.ap-clients {
+  margin-top: 12px; background: #fff; border: 1px solid #a7f3d0; border-radius: 12px;
+  padding: 10px 12px; display: flex; flex-direction: column; align-items: center; gap: 2px;
+}
+.ap-clients-n { font-size: 24px; font-weight: 900; color: var(--text-dark); line-height: 1.05; white-space: nowrap; }
+.ap-clients-t { font-size: 12px; font-weight: 700; color: var(--text-muted); }
+.ap-price {
+  margin-top: 12px; display: inline-block; background: #16a34a; color: #fff;
+  border-radius: 999px; padding: 8px 16px; font-size: 13px; font-weight: 800;
 }
 
-/* УДАР 2+3 — порівняння */
+/* БЕЗ НАС — темно-синій блок */
 .ap-compare {
   background: linear-gradient(135deg, #0a2540, #143a5e);
   border-radius: 16px; padding: 16px 18px; color: #fff;
 }
 .ap-compare-q { font-size: 13.5px; color: #cbd5e1; margin-bottom: 10px; }
 .ap-compare-q b { color: #fff; }
-.ap-team { list-style: none; margin: 0 0 10px; padding: 0; }
+.ap-team { list-style: none; margin: 0; padding: 0; }
 .ap-team li {
   display: flex; justify-content: space-between; align-items: baseline; gap: 8px;
-  font-size: 13px; color: #e2e8f0; padding: 4px 0; border-bottom: 1px dashed rgba(255,255,255,.1);
+  font-size: 13px; color: #e2e8f0; padding: 5px 0; border-bottom: 1px dashed rgba(255,255,255,.1);
 }
 .ap-team-cost { color: #fca5a5; font-weight: 600; white-space: nowrap; }
-.ap-team-total, .ap-us {
+.ap-team-total {
   display: flex; justify-content: space-between; align-items: baseline; gap: 8px;
-  font-size: 14px; font-weight: 700; padding: 8px 0;
+  font-size: 14px; font-weight: 700; padding: 10px 0 2px;
 }
-.ap-team-total { border-bottom: 1px solid rgba(255,255,255,.14); }
 .ap-red { color: #ef4444; white-space: nowrap; }
-.ap-green { color: #22c55e; white-space: nowrap; }
-.ap-punch {
-  margin-top: 10px; text-align: center; font-size: 12px; color: #e2f7ec;
-  background: rgba(34,197,94,.14); border: 1px solid rgba(34,197,94,.35);
-  border-radius: 10px; padding: 9px 8px; white-space: nowrap;
-}
-.ap-punch b { color: #4ade80; font-size: 13px; }
-
-/* УДАР 4 — як це працює */
-.ap-how {
-  background: #f8fafc; border: 1px solid var(--border); border-radius: 16px; padding: 14px 16px;
-}
-.ap-how-title { font-size: 13px; font-weight: 800; color: var(--text-dark); margin-bottom: 10px; }
-.ap-how-item { display: flex; align-items: flex-start; gap: 10px; padding: 6px 0; }
-.ap-how-ic {
-  flex-shrink: 0; width: 30px; height: 30px; border-radius: 9px;
-  background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center;
-}
-.ap-how-txt { font-size: 12.5px; color: var(--text-muted); line-height: 1.35; }
-.ap-how-txt b { color: var(--text-dark); }
 </style>

@@ -253,8 +253,12 @@ export default {
       }
     },
     aiPotential: {
-      heroEyebrow: 'Z nami otrzymujesz',
+      heroEyebrow: 'Z nami zarabiasz',
       heroCapHtml: 'potencjalnych klientów<br>miesięcznie',
+      avgLabel: 'średnio na miesiąc',
+      rangeLabel: 'realny zakres: {low} – {high}/mies.',
+      clientsLabel: 'potencjalnych klientów miesięcznie',
+      priceLabel: 'wszystko to za subskrypcję {amount}/mies.',
       revenue: '≈ {low} – {high} zł',
       revenueCaption: 'przychodu / mies.',
       channels: {

@@ -245,8 +245,12 @@ export default {
       }
     },
     aiPotential: {
-      heroEyebrow: 'С нами вы получаете',
+      heroEyebrow: 'С нами вы зарабатываете',
       heroCapHtml: 'потенциальных клиентов<br>ежемесячно',
+      avgLabel: 'в среднем в месяц',
+      rangeLabel: 'реальный диапазон: {low} – {high}/мес',
+      clientsLabel: 'потенциальных клиентов ежемесячно',
+      priceLabel: 'всё это за подписку {amount}/мес',
       revenue: '≈ {low} – {high} ₴',
       revenueCaption: 'дохода / мес',
       channels: {
