@@ -37,8 +37,8 @@ export const quizSlides = [
   },
   // 3. Завантаження фото для відео-аватара
   { type: 'card', id: 'photoUpload', q: 'slides.photoUpload.q', sub: 'slides.photoUpload.sub' },
-  // Сцена соціального доказу
-  { type: 'card', id: 'videoProof', q: '', sub: '' },
+  // Відео: купівля готових заявок (лідів)
+  { type: 'card', id: 'videoProof', q: 'slides.videoProof.q', sub: 'slides.videoProof.sub' },
   // 4. Місто роботи
   { type: 'city', field: 'city', q: 'slides.city.q', sub: 'slides.city.sub' },
   // 5. Роль

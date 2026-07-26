@@ -41,6 +41,10 @@ export default {
       q: 'Prześlij <span class="accent">swoje zdjęcie!</span>',
       sub: 'Prześlij zdjęcie, aby wygenerować awatar wideo do Twojego profilu'
     },
+    videoProof: {
+      q: 'Kupuj klientów po <span class="accent">kosztach</span>',
+      sub: 'Brakuje klientów? Kup gotowe zgłoszenie, odblokuj jego kontakty i od razu dzwoń — bez reklamy i zespołu.'
+    },
     profession: {
       q: 'Co najlepiej opisuje Twój <span class="accent">zawód?</span>',
       sub: 'Wybierz obszar swojej działalności',

@@ -41,6 +41,10 @@ export default {
       q: 'Upload <span class="accent">your photo!</span>',
       sub: 'Upload your photo to generate a video avatar for your profile'
     },
+    videoProof: {
+      q: 'Buy clients at <span class="accent">cost price</span>',
+      sub: 'Short on clients? Buy a ready lead, unlock its contacts and start calling right away — no ads, no team.'
+    },
     profession: {
       q: 'Which best describes your <span class="accent">profession?</span>',
       sub: 'Select your area of expertise',
