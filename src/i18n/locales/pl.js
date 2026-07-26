@@ -2,7 +2,7 @@
 // Struktura kluczy taka sama jak uk/en. Ceny/progi w zł — szkic, do zatwierdzenia.
 export default {
   meta: {
-    title: 'ConsultantLM — Czy Twoja kancelaria jest gotowa?'
+    title: 'CONSULTANT — Czy Twoja kancelaria jest gotowa?'
   },
   common: {
     next: 'Dalej →',
@@ -188,7 +188,7 @@ export default {
     },
     assessment: {
       q: 'Jak gotowy jest Twój <span class="accent">profil</span>',
-      sub: 'Oceniliśmy Twoje odpowiedzi — im pełniejszy profil, tym wyższa ocena i większe zaufanie klientów na ConsultantLM.'
+      sub: 'Oceniliśmy Twoje odpowiedzi — im pełniejszy profil, tym wyższa ocena i większe zaufanie klientów na CONSULTANT.'
     },
     fullProfile: {
       q: 'Uzupełnij swój <span class="accent">profil</span>',
@@ -298,7 +298,7 @@ export default {
       },
       teamTotalLabel: 'Razem własny zespół',
       teamTotal: '{low}–{high} zł/mies.',
-      usLabel: 'ConsultantLM — wszystko w jednym',
+      usLabel: 'CONSULTANT — wszystko w jednym',
       ourPlan: '{amount} zł/mies.',
       punchHtml: '<b>{times}×</b> taniej — oszczędność do <b>{save} zł/mies.</b>',
       howTitle: 'Co obejmuje subskrypcja',
@@ -306,7 +306,7 @@ export default {
         marketing: { t: 'Marketing pod klucz', d: 'Promujemy Cię w Google, reklamach i social media' },
         content: { t: 'Fabryka treści', d: 'Regularne treści na stronę, reklamy i markę' },
         leads: { t: 'Gotowe leady', d: 'Wysokiej jakości zapytania klientów w Twoich obszarach' },
-        clients: { t: 'Klienci platformy', d: 'Osoby już szukające prawnika na ConsultantLM' }
+        clients: { t: 'Klienci platformy', d: 'Osoby już szukające prawnika na CONSULTANT' }
       },
       finePrintLabel: 'Obliczono dla:',
       finePrintDisclaimer: 'Tylko szacunek — rzeczywisty wynik zależy od rynku, optymalizacji profilu i własnego wysiłku. Nie stanowi gwarancji dochodu.',
@@ -359,7 +359,7 @@ export default {
       referralPh: 'Wpisz kod polecający',
       skipModal: {
         title: 'Zaczekaj — Twój profil będzie zbyt słaby',
-        body: 'Bez <strong>bio</strong> lub <strong>CV</strong> nasze AI nie zbuduje konkurencyjnego profilu. Prawnicy, którzy pomijają ten krok, otrzymują <strong>znacznie mniej zapytań od klientów</strong> na ConsultantLM.<br><br>To zajmie 2 minuty i znacząco poprawi Twoje wyniki.',
+        body: 'Bez <strong>bio</strong> lub <strong>CV</strong> nasze AI nie zbuduje konkurencyjnego profilu. Prawnicy, którzy pomijają ten krok, otrzymują <strong>znacznie mniej zapytań od klientów</strong> na CONSULTANT.<br><br>To zajmie 2 minuty i znacząco poprawi Twoje wyniki.',
         back: '← Wróć i uzupełnij',
         confirm: 'Pomiń mimo to'
       }
@@ -482,7 +482,7 @@ export default {
     },
     content: {
       headlineHtml: 'Obserwuj konkurencję <span class="accent">24/7</span>',
-      sub: 'i twórz lepsze treści w kilka minut z ConsultantLM.',
+      sub: 'i twórz lepsze treści w kilka minut z CONSULTANT.',
       steps: { scan: 'Skan', generate: 'Generacja', publish: 'Publikacja', analyze: 'Analiza', scale: 'Skala' },
       before: 'Przed', after: 'Po',
       competitor: 'Konkurent', yours: 'Twoja treść',

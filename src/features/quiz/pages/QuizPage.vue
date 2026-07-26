@@ -6,7 +6,7 @@ import LanguageSwitcher from '../components/LanguageSwitcher.vue'
 import { publicAsset } from '../data/publicAsset.js'
 import { quizData, saveQuizData } from '../store/quizDataStore.js'
 
-// Top-level container for the Консультант quiz funnel. Composes the top bar,
+// Top-level container for the CONSULTANT quiz funnel. Composes the top bar,
 // brand logo, the animated card deck and the hidden scene pre-warmer, and
 // persists answers to localStorage whenever they change.
 export default {
@@ -33,7 +33,7 @@ export default {
     <QuizTopBar />
 
     <div class="logo-area">
-      <img :src="logoSrc" alt="Консультант" class="logo">
+      <img :src="logoSrc" alt="CONSULTANT" class="logo">
     </div>
 
     <LanguageSwitcher />

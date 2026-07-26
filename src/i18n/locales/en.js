@@ -2,7 +2,7 @@
 // service & profession sets and market figures harvested from web-quiz/Vue2ENG.
 export default {
   meta: {
-    title: 'ConsultantLM — Is Your Firm Ready?'
+    title: 'CONSULTANT — Is Your Firm Ready?'
   },
   common: {
     next: 'Next →',
@@ -176,7 +176,7 @@ export default {
     },
     assessment: {
       q: 'How ready is your <span class="accent">profile</span>',
-      sub: 'We assessed your answers — the fuller your profile, the higher your rating and the more client trust on ConsultantLM.'
+      sub: 'We assessed your answers — the fuller your profile, the higher your rating and the more client trust on CONSULTANT.'
     },
     fullProfile: {
       q: 'Complete your <span class="accent">profile</span>',
@@ -286,7 +286,7 @@ export default {
       },
       teamTotalLabel: 'Your own team total',
       teamTotal: '${low} – ${high}/mo',
-      usLabel: 'ConsultantLM — all in one',
+      usLabel: 'CONSULTANT — all in one',
       ourPlan: '${amount}/mo',
       punchHtml: "That's <b>{times}×</b> cheaper — save up to <b>${save}/mo</b>",
       howTitle: "What's included in the subscription",
@@ -294,7 +294,7 @@ export default {
         marketing: { t: 'Turnkey marketing', d: 'We promote you in Google, ads and social media' },
         content: { t: 'Content factory', d: 'Regular content for your site, ads and brand' },
         leads: { t: 'Ready leads', d: 'Quality client inquiries in your practice areas' },
-        clients: { t: 'Platform clients', d: 'People already looking for a lawyer on ConsultantLM' }
+        clients: { t: 'Platform clients', d: 'People already looking for a lawyer on CONSULTANT' }
       },
       finePrintLabel: 'Calculated for:',
       finePrintDisclaimer: 'Estimate only — actual results depend on the market, profile optimization and your own effort. Not a guarantee of income.',
@@ -347,7 +347,7 @@ export default {
       referralPh: 'Enter referral code',
       skipModal: {
         title: 'Wait — your profile will be too weak',
-        body: 'Without a <strong>bio</strong> or <strong>CV</strong>, our AI cannot build a competitive profile. Lawyers who skip this step get <strong>far fewer client inquiries</strong> on ConsultantLM.<br><br>It takes 2 minutes and significantly improves your results.',
+        body: 'Without a <strong>bio</strong> or <strong>CV</strong>, our AI cannot build a competitive profile. Lawyers who skip this step get <strong>far fewer client inquiries</strong> on CONSULTANT.<br><br>It takes 2 minutes and significantly improves your results.',
         back: '← Go back and fill it in',
         confirm: 'Skip anyway'
       }
@@ -470,7 +470,7 @@ export default {
     },
     content: {
       headlineHtml: 'Watch competitors <span class="accent">24/7</span>',
-      sub: 'and create better content in minutes with ConsultantLM.',
+      sub: 'and create better content in minutes with CONSULTANT.',
       steps: { scan: 'Scan', generate: 'Generate', publish: 'Publish', analyze: 'Analyze', scale: 'Scale' },
       before: 'Before', after: 'After',
       competitor: 'Competitor', yours: 'Your content',

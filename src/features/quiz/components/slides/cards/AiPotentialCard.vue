@@ -4,7 +4,7 @@ import { quizData } from '../../../store/quizDataStore.js'
 import { market } from '../../../../../i18n/marketConfig.js'
 import { formatNumber, formatMoney } from '../../../../../i18n/format.js'
 
-// «Ваш потенціал з Консультант» — прогноз нових клієнтів/доходу за напрямами
+// «Ваш потенціал з CONSULTANT» — прогноз нових клієнтів/доходу за напрямами
 // користувача. Числа-константи — з marketConfig (aiPotential); підписи та валюта — з i18n.
 const PROFESSION_MULTIPLIER = {
   medicine: 1.1, ecology: 0.9, scanner: 0.7, auto: 0.8, business: 1.2, war: 1.0,
