@@ -89,13 +89,12 @@
   color: var(--text-muted);
   margin-bottom: 8px;
 }
-/* Ролик вертикальний (9:16) — обмежуємо ШИРИНУ, а не висоту, інакше
-   object-fit лишає чорні поля з боків. */
+/* Ролик вертикальний (9:16), джерело теж рівно 9:16 — тож ні чорних полів,
+   ні обрізання. Розмір один і той самий до і під час відтворення: плеєр не
+   мусить стрибати, коли натиснули play. */
 .cv-player {
   position: relative;
   width: 100%;
-  max-width: 216px;
-  margin: 0 auto;
   border-radius: 14px;
   overflow: hidden;
   background: #000;
@@ -107,8 +106,6 @@
   object-fit: cover;
   background: #000;
 }
-.cv-player.playing { max-width: 100%; }
-.cv-player.playing .cv-video { object-fit: contain; }
 .cv-play {
   position: absolute;
   inset: 0;
