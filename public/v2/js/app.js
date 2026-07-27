@@ -745,32 +745,12 @@ renderers.payment = function (slide, root) {
 const BIO_TARGET = 3000
 
 renderers.assessment = function (slide, root) {
-  // Бал зростає прямо на очах, коли людина вантажить резюме або пише про себе —
-  // це і є аргумент: видно, наскільки профіль стає сильнішим.
-  function score () {
-    let s = 25
-    if (answers.first_name && answers.last_name) s += 8
-    if (answers.email) s += 7
-    if (answers.phone) s += 5
-    if ((answers.services || []).length) s += Math.min(10, answers.services.length * 3)
-    if (answers.desired_clients) s += 5
-    if (answers.cv_name) s += 20
-    s += Math.min(20, Math.round(((answers.about || '').length / BIO_TARGET) * 20))
-    return Math.min(100, s)
-  }
-  const levelOf = (s) => (s >= 80 ? 'high' : s >= 60 ? 'mid' : s >= 40 ? 'normal' : 'low')
   const hasContent = () => !!answers.cv_name || (answers.about || '').length > 0
 
   let tab = answers.about && !answers.cv_name ? 'bio' : 'cv'
 
   root.innerHTML = frame(slide, `
     <div class="as-wrap">
-      <div class="as-score">
-        <div class="as-score-num" data-score>0<span>/100</span></div>
-        <div class="as-bar"><div class="as-bar-fill" data-bar style="width:0%"></div></div>
-        <div class="as-level">${t('cards.assessment.yourLevel')} <b data-level></b></div>
-      </div>
-
       <div class="as-why">
         <div class="as-why-title">${t('cards.assessment.whyTitle')}</div>
         <div class="as-why-lead">${t('cards.assessment.whyLead')}</div>
@@ -812,29 +792,16 @@ renderers.assessment = function (slide, root) {
 
       <div class="as-warn" data-warn>${t('cards.assessment.warn')}</div>
 
-      <div class="dg-fine"><span class="dg-fine-label">${t('cards.assessment.calculatedFor')}</span> ${esc(servicesLabel())}</div>
-      <div class="dg-disclaimer">${t('cards.assessment.disclaimer')}</div>
-
       ${actionBar(continueBtn(t('cards.assessment.finish')))}
     </div>
   `, true)
 
-  const scoreEl = root.querySelector('[data-score]')
-  const barEl = root.querySelector('[data-bar]')
-  const levelEl = root.querySelector('[data-level]')
   const warnEl = root.querySelector('[data-warn]')
   const bio = root.querySelector('[data-bio]')
   const bioFill = root.querySelector('[data-bio-fill]')
   const bioCount = root.querySelector('[data-bio-count]')
 
   function repaint () {
-    const s = score()
-    const lvl = levelOf(s)
-    scoreEl.innerHTML = s + '<span>/100</span>'
-    barEl.style.width = s + '%'
-    barEl.className = 'as-bar-fill as-level-' + lvl
-    levelEl.textContent = t('cards.assessment.levels.' + lvl)
-    levelEl.className = 'as-level-' + lvl + '-text'
     warnEl.hidden = hasContent()
 
     const len = (answers.about || '').length
