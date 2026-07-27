@@ -176,33 +176,34 @@ export const DIAGNOSIS = {
   weeksPerMonth: 4.3,
   // Годин на тиждень на пошук клієнтів → середина діапазону.
   hoursPerWeek: { lt_2: 1.5, h_2_5: 3.5, h_5_10: 7.5, no_time: 0 },
-  // Скільки клієнтів хоче на місяць → середина діапазону.
-  desiredMid: { c_1_3: 2, c_4_10: 7, c_10_plus: 12 },
-  // Бажана кількість клієнтів → рекомендований тариф.
-  tierByDesired: { c_1_3: 'base', c_4_10: 'pro', c_10_plus: 'premium' }
+  // Скільки клієнтів на місяць юрист недоотримує — задано таблицею під кожен
+  // рівень амбіцій, а не формулою: формула на чотирьох рівнях упиралась у
+  // стелю й давала однакові числа для 30–50 і 50+.
+  // Оцінка навмисно стримана: навіть у верхньому рядку це 12 справ на місяць.
+  missedByDesired: {
+    c_to_10: { low: 2, high: 4 },
+    c_10_30: { low: 3, high: 6 },
+    c_30_50: { low: 5, high: 9 },
+    c_50_plus: { low: 7, high: 12 }
+  },
+  // Бажана кількість клієнтів → рекомендований тариф. Прив'язано до ліміту
+  // лідів у планах: Base — 6 купівель, Pro — 30, Premium — безліміт.
+  tierByDesired: { c_to_10: 'base', c_10_30: 'pro', c_30_50: 'premium', c_50_plus: 'premium' }
 }
 
-function clamp (n, min, max) {
-  return Math.min(max, Math.max(min, n))
-}
-
-// Рахує «діагноз» із відповідей. Свідомо консервативно: нижня межа беремо
-// 40% від бажаного, верхня — 70%, і затискаємо, щоб цифри лишались реальними.
+// Рахує «діагноз» із відповідей.
 export function computeDiagnosis (answers) {
   const hoursWeek = DIAGNOSIS.hoursPerWeek[answers.search_time] ?? 0
   const hoursMonth = Math.round(hoursWeek * DIAGNOSIS.weeksPerMonth)
-
-  const mid = DIAGNOSIS.desiredMid[answers.desired_clients] ?? 7
-  const missedLow = clamp(Math.round(mid * 0.4), 2, 8)
-  const missedHigh = clamp(Math.round(mid * 0.7), missedLow + 1, 12)
+  const missed = DIAGNOSIS.missedByDesired[answers.desired_clients] || DIAGNOSIS.missedByDesired.c_10_30
 
   return {
     hoursMonth,
     noTime: answers.search_time === 'no_time',
-    missedLow,
-    missedHigh,
-    revenueLow: missedLow * DIAGNOSIS.caseValueLow,
-    revenueHigh: missedHigh * DIAGNOSIS.caseValueHigh,
+    missedLow: missed.low,
+    missedHigh: missed.high,
+    revenueLow: missed.low * DIAGNOSIS.caseValueLow,
+    revenueHigh: missed.high * DIAGNOSIS.caseValueHigh,
     branch: answers.growth_blocker || 'few_leads',
     tier: DIAGNOSIS.tierByDesired[answers.desired_clients] || 'pro'
   }
@@ -262,9 +263,10 @@ export const SLIDES = [
     q: 'slides.desired_clients.q',
     sub: 'slides.desired_clients.sub',
     options: [
-      { v: 'c_1_3', icon: 'user', color: '#3b82f6' },
-      { v: 'c_4_10', icon: 'users', color: '#10b981' },
-      { v: 'c_10_plus', icon: 'sparkle', color: '#f59e0b' }
+      { v: 'c_to_10', icon: 'user', color: '#3b82f6' },
+      { v: 'c_10_30', icon: 'users', color: '#10b981' },
+      { v: 'c_30_50', icon: 'bar-chart', color: '#0ea5e9' },
+      { v: 'c_50_plus', icon: 'sparkle', color: '#f59e0b' }
     ]
   },
   { type: 'card', dynamic: true, id: 'diagnosis', q: 'slides.diagnosis.q', sub: 'slides.diagnosis.sub' },

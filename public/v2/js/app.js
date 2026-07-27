@@ -1104,7 +1104,7 @@ function boot () {
         email: 'oleksandr@example.com', phone: '+380 67 123 45 67',
         search_time: 'h_5_10', growth_blocker: 'no_deals',
         services: ['family', 'criminal', 'real_estate'],
-        desired_clients: 'c_4_10', plan: 'pro', billing: 'monthly'
+        desired_clients: 'c_10_30', plan: 'pro', billing: 'monthly'
       })
     }
     const jump = parseInt(params.get('step'), 10)
