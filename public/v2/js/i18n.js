@@ -117,6 +117,10 @@ const uk = {
   },
   cards: {
     intro: { videoNote: 'Відео-заглушка — буде замінена фінальним роликом' },
+    contact: {
+      videoTitle: 'Як це працює? Подивіться 👇',
+      videoPlay: 'Відтворити відео'
+    },
     diagnosis: {
       eyebrow: 'За вашими відповідями',
       hoursLabel: 'годин на місяць',
@@ -475,6 +479,10 @@ const ru = {
   },
   cards: {
     intro: { videoNote: 'Видео-заглушка — будет заменена финальным роликом' },
+    contact: {
+      videoTitle: 'Как это работает? Посмотрите 👇',
+      videoPlay: 'Воспроизвести видео'
+    },
     diagnosis: {
       eyebrow: 'По вашим ответам',
       hoursLabel: 'часов в месяц',

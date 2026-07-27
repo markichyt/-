@@ -249,11 +249,36 @@ renderers.form = function (slide, root) {
     })
   }
 
+  // Відео під формою. Воно довге (5 хв) і зі звуком, тому НЕ автоплеїться:
+  // preload="none" + постер — сторінка не тягне мегабайти, доки не натиснуть play.
   root.innerHTML = frame(slide, `
     <div class="form-with-files-slide" data-fields>${fieldsHtml()}</div>
+
+    <div class="cv-block">
+      <div class="cv-title">${t('cards.contact.videoTitle')}</div>
+      <div class="cv-player" data-cv-player>
+        <video class="cv-video" playsinline preload="none" poster="assets/intro-contact-poster.jpg">
+          <source src="assets/intro-contact.mp4" type="video/mp4">
+        </video>
+        <button class="cv-play" data-cv-play aria-label="${esc(t('cards.contact.videoPlay'))}">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20"/></svg>
+        </button>
+      </div>
+    </div>
+
     ${actionBar(continueBtn())}
   `, true)
   wire()
+
+  const cvVideo = root.querySelector('.cv-video')
+  const cvPlayer = root.querySelector('[data-cv-player]')
+  root.querySelector('[data-cv-play]').addEventListener('click', () => {
+    cvPlayer.classList.add('playing')
+    cvVideo.controls = true
+    cvVideo.play().catch(() => {})
+  })
+  cvVideo.addEventListener('pause', () => cvPlayer.classList.remove('playing'))
+  cvVideo.addEventListener('play', () => cvPlayer.classList.add('playing'))
 
   root.querySelector('[data-continue]').addEventListener('click', () => {
     slide.fields.forEach((f) => { touched[f.field] = true })
@@ -266,6 +291,8 @@ renderers.form = function (slide, root) {
       paint()
     }
   })
+
+  return () => { if (cvVideo) cvVideo.pause() }
 }
 
 // ── 3/4/6. Один варіант (radio) ──────────────────────────────────────────────
@@ -518,9 +545,13 @@ renderers.pricing = function (slide, root) {
         </div>
       </div>
 
-      <div class="pp-cta-area">
-        <button class="pp-cta-btn pp-cta-${PLAN_SLIDES[index].tier}" data-cta>${t('cards.profilesPricing.cta.' + PLAN_SLIDES[index].tier)}</button>
-      </div>
+    </div>
+
+    <!-- Кнопка вибору плану — у стандартній панелі дій, як на решті кроків.
+         Раніше вона стояла останнім блоком усередині .profiles-pricing-wrap,
+         і до неї треба було прокрутити всю довгу картку. -->
+    <div class="card-action-bar pp-action-bar">
+      <button class="pp-cta-btn pp-cta-${PLAN_SLIDES[index].tier}" data-cta>${t('cards.profilesPricing.cta.' + PLAN_SLIDES[index].tier)}</button>
     </div>
   `, true)
 

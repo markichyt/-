@@ -72,6 +72,64 @@
   color: var(--text-light);
 }
 
+/* ── Слайд 2: відео під формою знайомства ──────────────────────────────────
+   Ролик довгий і зі звуком, тож грає лише за натиском: preload="none" +
+   постер, щоб крок не тягнув мегабайти при відкритті. */
+.cv-block { margin-top: 4px; }
+/* На телефоні .slide-frame — flex-колонка, а quiz.css дає формі flex:1 +
+   min-height:0, щоб панель дій притискалась донизу. Коли під формою зʼявився
+   ще й відеоблок, форма почала стискатись і поля Email/Телефон обрізались та
+   налазили на відео. Обидва блоки робимо нестискуваними — крок просто скролиться.
+   Слайдів radio/checkbox це не чіпає: там своя обгортка. */
+.stack-card.active .slide-frame > .form-with-files-slide,
+.stack-card.active .slide-frame > .cv-block { flex: 0 0 auto; }
+.cv-title {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+/* Ролик вертикальний (9:16) — обмежуємо ШИРИНУ, а не висоту, інакше
+   object-fit лишає чорні поля з боків. */
+.cv-player {
+  position: relative;
+  width: 100%;
+  max-width: 216px;
+  margin: 0 auto;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #000;
+}
+.cv-video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  object-fit: cover;
+  background: #000;
+}
+.cv-player.playing { max-width: 100%; }
+.cv-player.playing .cv-video { object-fit: contain; }
+.cv-play {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 58px;
+  height: 58px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0, 180, 216, .92);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, .4);
+  transition: transform .15s, background .2s;
+}
+.cv-play:hover { transform: scale(1.06); background: var(--accent); }
+.cv-play svg { width: 24px; height: 24px; margin-left: 3px; }
+.cv-player.playing .cv-play { display: none; }
+
 /* ── Слайд «Діагноз» ───────────────────────────────────────────────────────── */
 .dg-eyebrow {
   text-transform: uppercase;
@@ -213,7 +271,44 @@
   color: var(--text-light);
 }
 
-/* ── Тарифи: бейдж «рекомендовано вам» ─────────────────────────────────────── */
+/* ── Тарифи ────────────────────────────────────────────────────────────────
+   Картка тарифів довга (профіль + аватар + 16 рядків функцій), тож кнопку
+   вибору плану винесено у звичайну .card-action-bar — вона липне до низу
+   області прокрутки й доступна завжди, скролити всю картку не треба.
+   .pp-cta-btn стилізована в quiz.css лише всередині .profiles-pricing-wrap,
+   тому дублюємо потрібні правила для кнопки в панелі дій. */
+.pp-action-bar { padding-bottom: calc(4px + env(safe-area-inset-bottom)); }
+.pp-action-bar .pp-cta-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: .3px;
+  transition: transform .2s, box-shadow .2s, opacity .2s;
+}
+.pp-action-bar .pp-cta-base {
+  background: #fff;
+  color: #1a1a2e;
+  border: 1.5px solid var(--border);
+}
+.pp-action-bar .pp-cta-pro {
+  background: linear-gradient(135deg, #00b4d8, #0284c7);
+  color: #fff;
+  box-shadow: 0 4px 18px rgba(0, 180, 216, .35);
+}
+.pp-action-bar .pp-cta-premium {
+  background: linear-gradient(135deg, #0a2540, #16305a);
+  color: #fff;
+  box-shadow: 0 4px 18px rgba(10, 37, 64, .4);
+}
+.pp-action-bar .pp-cta-btn:active { transform: translateY(1px); }
+
+/* Бейдж «рекомендовано вам» */
 .profiles-pricing-wrap .pp-pricing-panel { position: relative; }
 .pp-reco-badge {
   display: inline-block;
