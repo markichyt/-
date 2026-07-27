@@ -741,20 +741,27 @@ renderers.payment = function (slide, root) {
   }))
 }
 
-// ── 10. Після оплати: оцінка профілю + завантаження резюме ──────────────────
+// ── 10. Після оплати: профіль (резюме АБО текст про себе) ───────────────────
+const BIO_TARGET = 3000
+
 renderers.assessment = function (slide, root) {
-  // Бал складається з того, що вже заповнено на попередніх кроках.
+  // Бал зростає прямо на очах, коли людина вантажить резюме або пише про себе —
+  // це і є аргумент: видно, наскільки профіль стає сильнішим.
   function score () {
-    let s = 30
-    if (answers.first_name && answers.last_name) s += 10
-    if (answers.email) s += 10
-    if (answers.phone) s += 10
-    if ((answers.services || []).length) s += Math.min(15, answers.services.length * 4)
+    let s = 25
+    if (answers.first_name && answers.last_name) s += 8
+    if (answers.email) s += 7
+    if (answers.phone) s += 5
+    if ((answers.services || []).length) s += Math.min(10, answers.services.length * 3)
     if (answers.desired_clients) s += 5
     if (answers.cv_name) s += 20
+    s += Math.min(20, Math.round(((answers.about || '').length / BIO_TARGET) * 20))
     return Math.min(100, s)
   }
   const levelOf = (s) => (s >= 80 ? 'high' : s >= 60 ? 'mid' : s >= 40 ? 'normal' : 'low')
+  const hasContent = () => !!answers.cv_name || (answers.about || '').length > 0
+
+  let tab = answers.about && !answers.cv_name ? 'bio' : 'cv'
 
   root.innerHTML = frame(slide, `
     <div class="as-wrap">
@@ -764,9 +771,30 @@ renderers.assessment = function (slide, root) {
         <div class="as-level">${t('cards.assessment.yourLevel')} <b data-level></b></div>
       </div>
 
-      <div class="fp-cv">
-        <div class="fp-cv-title">${t('cards.assessment.cvCtaTitle')}</div>
-        <div class="fp-cv-body">${t('cards.assessment.cvCtaBody')}</div>
+      <div class="as-why">
+        <div class="as-why-title">${t('cards.assessment.whyTitle')}</div>
+        <div class="as-why-lead">${t('cards.assessment.whyLead')}</div>
+        <ul class="as-why-list">
+          ${['profile', 'google', 'clients'].map((k) => `
+            <li>${icon('check', 13)}<span>${t('cards.assessment.why.' + k)}</span></li>`).join('')}
+        </ul>
+      </div>
+
+      <div class="as-choose">${t('cards.assessment.chooseLabel')}</div>
+      <div class="as-tabs" data-tabs>
+        <button class="as-tab${tab === 'cv' ? ' active' : ''}" data-tab="cv">
+          <span class="as-tab-ico">${icon('upload', 15)}</span>
+          <span class="as-tab-name">${t('cards.assessment.tabCv')}</span>
+          <span class="as-tab-note">${t('cards.assessment.tabCvNote')}</span>
+        </button>
+        <button class="as-tab${tab === 'bio' ? ' active' : ''}" data-tab="bio">
+          <span class="as-tab-ico">${icon('pen', 15)}</span>
+          <span class="as-tab-name">${t('cards.assessment.tabBio')}</span>
+          <span class="as-tab-note">${t('cards.assessment.tabBioNote')}</span>
+        </button>
+      </div>
+
+      <div class="as-pane" data-pane="cv"${tab === 'cv' ? '' : ' hidden'}>
         <div class="upload-area" data-cv-drop>
           <div class="upload-text" data-cv-text>${answers.cv_name || t('cards.assessment.cvPlaceholder')}</div>
           <div class="pu-drop-sub">${t('cards.assessment.cvHint')}</div>
@@ -774,7 +802,16 @@ renderers.assessment = function (slide, root) {
         </div>
       </div>
 
-      <div class="as-factors">${t('cards.assessment.factors')}</div>
+      <div class="as-pane" data-pane="bio"${tab === 'bio' ? '' : ' hidden'}>
+        <textarea class="card-input as-bio" rows="8" data-bio placeholder="${esc(t('cards.assessment.bioPh'))}">${esc(answers.about)}</textarea>
+        <div class="as-bio-meter">
+          <div class="as-bio-bar"><div class="as-bio-fill" data-bio-fill style="width:0%"></div></div>
+          <div class="as-bio-count" data-bio-count></div>
+        </div>
+      </div>
+
+      <div class="as-warn" data-warn>${t('cards.assessment.warn')}</div>
+
       <div class="dg-fine"><span class="dg-fine-label">${t('cards.assessment.calculatedFor')}</span> ${esc(servicesLabel())}</div>
       <div class="dg-disclaimer">${t('cards.assessment.disclaimer')}</div>
 
@@ -785,8 +822,12 @@ renderers.assessment = function (slide, root) {
   const scoreEl = root.querySelector('[data-score]')
   const barEl = root.querySelector('[data-bar]')
   const levelEl = root.querySelector('[data-level]')
+  const warnEl = root.querySelector('[data-warn]')
+  const bio = root.querySelector('[data-bio]')
+  const bioFill = root.querySelector('[data-bio-fill]')
+  const bioCount = root.querySelector('[data-bio-count]')
 
-  function paintScore () {
+  function repaint () {
     const s = score()
     const lvl = levelOf(s)
     scoreEl.innerHTML = s + '<span>/100</span>'
@@ -794,8 +835,22 @@ renderers.assessment = function (slide, root) {
     barEl.className = 'as-bar-fill as-level-' + lvl
     levelEl.textContent = t('cards.assessment.levels.' + lvl)
     levelEl.className = 'as-level-' + lvl + '-text'
+    warnEl.hidden = hasContent()
+
+    const len = (answers.about || '').length
+    bioFill.style.width = Math.min(100, (len / BIO_TARGET) * 100) + '%'
+    bioCount.textContent = t('cards.assessment.charCount', { n: formatNumber(len), target: formatNumber(BIO_TARGET) })
+    bioCount.classList.toggle('enough', len >= BIO_TARGET)
   }
-  paintScore()
+
+  root.querySelector('[data-tabs]').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-tab]')
+    if (!b) return
+    tab = b.dataset.tab
+    root.querySelectorAll('.as-tab').forEach((n) => n.classList.toggle('active', n === b))
+    root.querySelectorAll('[data-pane]').forEach((n) => { n.hidden = n.dataset.pane !== tab })
+    if (tab === 'bio') bio.focus()
+  })
 
   const cvDrop = root.querySelector('[data-cv-drop]')
   const cvInput = cvDrop.querySelector('input')
@@ -807,8 +862,16 @@ renderers.assessment = function (slide, root) {
     root.querySelector('[data-cv-text]').textContent = file.name
     cvDrop.classList.add('uploaded')
     saveAnswers()
-    paintScore()
+    repaint()
   })
+
+  bio.addEventListener('input', () => {
+    answers.about = bio.value
+    saveAnswers()
+    repaint()
+  })
+
+  repaint()
 
   root.querySelector('[data-continue]').addEventListener('click', (e) => {
     e.currentTarget.disabled = true
