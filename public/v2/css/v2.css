@@ -305,10 +305,30 @@
 }
 .pp-action-bar .pp-cta-btn:active { transform: translateY(1px); }
 
-/* Бейдж «рекомендовано вам» */
+/* Усередині картки тарифів дві каруселі — flex-рядки, де кожна панель має
+   min-width:100%. Через це min-content обгортки виходить утричі ширший за
+   картку, обгортка не стискається, і бейджі («4X БІЛЬШЕ» тощо) зрізало
+   правим краєм. Дозволяємо стискатись до ширини картки. */
+.profiles-pricing-wrap,
+.profiles-pricing-wrap .pp-pricing-section,
+.profiles-pricing-wrap .pp-viewport { min-width: 0; max-width: 100%; }
+/* Панелі каруселей мають бути рівно шириною контейнера. min-width:100% з
+   quiz.css лишав їх ширшими за картку — бейджі виїжджали за правий край. */
+.profiles-pricing-wrap .pp-pricing-content > .pp-pricing-panel,
+.profiles-pricing-wrap .pp-track > .pp-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  min-width: 0;
+}
+
+/* Бейдж «рекомендовано вам».
+   ВАЖЛИВО: не ставити text-align:center на всю .pp-pricing-panel — рядки
+   функцій це flex-рядок «✓ назва … бейдж», і центрування зсувало їх усі.
+   Центруємо лише сам бейдж. */
 .profiles-pricing-wrap .pp-pricing-panel { position: relative; }
 .pp-reco-badge {
-  display: inline-block;
+  display: block;
+  width: fit-content;
   margin: 0 auto 6px;
   padding: 3px 10px;
   border-radius: 999px;
@@ -317,9 +337,86 @@
   font-size: 9.5px;
   font-weight: 800;
   letter-spacing: .6px;
-  text-align: center;
 }
-.profiles-pricing-wrap .pp-pricing-panel { text-align: center; }
+
+/* ── Плашка «Замовити дзвінок» під тарифами ────────────────────────────────
+   Номер підтягується з кроку знайомства; за натиском його можна виправити. */
+.cb-block { margin-top: 14px; }
+.cb-plaque {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--input-bg);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: var(--text-muted);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color .2s, background .2s;
+}
+.cb-plaque:hover { border-color: #94a3b8; }
+.cb-plaque .cb-icon {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: #e2e8f0;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cb-plaque .cb-text { flex: 1; line-height: 1.35; }
+.cb-plaque .cb-phone { display: block; font-weight: 700; color: var(--text-dark); white-space: nowrap; }
+.cb-plaque .cb-arrow { flex: 0 0 auto; color: var(--text-light); }
+
+.cb-edit {
+  margin-top: 8px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #fff;
+}
+.cb-edit-label { font-size: 11.5px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; }
+.cb-edit input {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  background: var(--input-bg);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  color: var(--text-dark);
+}
+.cb-edit input:focus { outline: none; border-color: var(--accent); background: #fff; }
+.cb-submit {
+  width: 100%;
+  height: 42px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 12px;
+  background: var(--text-dark);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.cb-submit:disabled { opacity: .5; cursor: not-allowed; }
+.cb-done {
+  margin-top: 8px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(16, 185, 129, .1);
+  border: 1px solid rgba(16, 185, 129, .3);
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--text-dark);
+}
 
 /* ── Подвійний CTA ─────────────────────────────────────────────────────────── */
 .cta2-plan {

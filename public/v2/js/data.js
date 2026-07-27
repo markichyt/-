@@ -35,7 +35,10 @@ export const ICONS = {
   calendar: '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
   user: '<path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>',
   camera: '<path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/>',
-  check: '<polyline points="20 6 9 17 4 12"/>'
+  check: '<polyline points="20 6 9 17 4 12"/>',
+  phone: '<path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.7 2.6a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.5-1.2a2 2 0 012.1-.5c.8.4 1.7.6 2.6.7a2 2 0 011.7 2z"/>',
+  'chevron-right': '<polyline points="9 18 15 12 9 6"/>',
+  upload: '<path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>'
 }
 
 export function iconPath (name) {
@@ -270,13 +273,11 @@ export const SLIDES = [
     ]
   },
   { type: 'card', dynamic: true, id: 'diagnosis', q: 'slides.diagnosis.q', sub: 'slides.diagnosis.sub' },
+  // Тарифи: «Обрати план» веде одразу на оплату; поруч — плашка «Замовити дзвінок».
   { type: 'card', dynamic: true, id: 'pricing', q: 'slides.pricing.q', sub: '' },
-  { type: 'card', dynamic: true, id: 'cta', q: 'slides.cta.q', sub: 'slides.cta.sub' },
-  // ── Після оплати ───────────────────────────────────────────────────────────
-  { type: 'card', id: 'photoUpload', q: 'slides.photoUpload.q', sub: 'slides.photoUpload.sub' },
-  { type: 'card', dynamic: true, id: 'aiPotential', q: 'slides.aiPotential.q', sub: 'slides.aiPotential.sub' },
-  { type: 'card', dynamic: true, id: 'assessment', q: 'slides.assessment.q', sub: 'slides.assessment.sub' },
-  { type: 'card', id: 'fullProfile', q: 'slides.fullProfile.q', sub: 'slides.fullProfile.sub' }
+  { type: 'card', dynamic: true, id: 'payment', q: 'slides.payment.q', sub: '' },
+  // ── Після оплати: єдиний крок — оцінка профілю + завантаження резюме ───────
+  { type: 'card', dynamic: true, id: 'assessment', q: 'slides.assessment.q', sub: 'slides.assessment.sub' }
 ]
 
 export const TOTAL_STEPS = SLIDES.length

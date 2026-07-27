@@ -531,17 +531,18 @@ renderers.pricing = function (slide, root) {
         <div class="pp-pricing-content" data-pricing-track>${PLAN_SLIDES.map(pricingPanel).join('')}</div>
       </div>
 
-      <div class="pp-trust-block">
-        <div class="pp-trust-title">${t('cards.profilesPricing.trustTitle')}</div>
-        <div class="pp-trust-grid">
-          <div class="pp-trust-item">
-            <span class="pp-trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M5 7h14"/><path d="M8 7l-3 7a4 4 0 0 0 6 0z"/><path d="M16 7l-3 7a4 4 0 0 0 6 0z"/><path d="M8 21h8"/></svg></span>
-            <span class="pp-trust-text">${t('cards.profilesPricing.trustEthicsHtml')}</span>
-          </div>
-          <div class="pp-trust-item">
-            <span class="pp-trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
-            <span class="pp-trust-text">${t('cards.profilesPricing.trustDataHtml')}</span>
-          </div>
+      <!-- Замість блоку довіри — плашка замовлення дзвінка. Номер уже є
+           з кроку знайомства, тож лишається підтвердити або виправити його. -->
+      <div class="cb-block" data-callback>
+        <button class="cb-plaque" data-cb-toggle>
+          <span class="cb-icon">${icon('phone', 17)}</span>
+          <span class="cb-text">${t('cards.callback.plaque')}<span class="cb-phone">${esc(answers.phone) || t('cards.callback.noPhone')}</span></span>
+          <span class="cb-arrow">${icon('chevron-right', 16)}</span>
+        </button>
+        <div class="cb-edit" data-cb-edit hidden>
+          <div class="cb-edit-label">${t('cards.callback.label')}</div>
+          <input type="tel" data-cb-input value="${esc(answers.phone)}" placeholder="+380 67 123 45 67" autocomplete="tel">
+          <button class="cb-submit" data-cb-submit>${t('cards.callback.submit')}</button>
         </div>
       </div>
 
@@ -600,379 +601,195 @@ renderers.pricing = function (slide, root) {
   root.querySelector('[data-bill-toggle]').addEventListener('click', () => setBilling(!isAnnual))
   root.querySelectorAll('[data-bill]').forEach((n) => n.addEventListener('click', () => setBilling(n.dataset.bill === 'annual')))
 
+  // «Обрати план» → одразу на крок оплати.
   cta.addEventListener('click', () => { answers.plan = PLAN_SLIDES[index].tier; saveAnswers(); goNext() })
+
+  // ── Плашка «Замовити дзвінок» ──────────────────────────────────────────────
+  const cbBlock = root.querySelector('[data-callback]')
+  const cbEdit = cbBlock.querySelector('[data-cb-edit]')
+  const cbInput = cbBlock.querySelector('[data-cb-input]')
+  const cbSubmit = cbBlock.querySelector('[data-cb-submit]')
+
+  cbBlock.querySelector('[data-cb-toggle]').addEventListener('click', () => {
+    cbEdit.hidden = !cbEdit.hidden
+    if (!cbEdit.hidden) cbInput.focus()
+  })
+  cbInput.addEventListener('input', () => {
+    cbSubmit.disabled = cbInput.value.replace(/\D/g, '').length < 9
+  })
+  cbSubmit.addEventListener('click', () => {
+    const phone = cbInput.value.trim()
+    if (phone.replace(/\D/g, '').length < 9) return
+    answers.phone = phone
+    answers.lead_type = 'callback_request'
+    saveAnswers()
+    cbSubmit.disabled = true
+    cbSubmit.textContent = t('cards.callback.sending')
+    submitAnswers(() => {
+      cbBlock.innerHTML = `<div class="cb-done">${t('cards.callback.done', { phone: esc(phone) })}</div>`
+    })
+  })
 
   paint()
   return () => { if (avatarVideo) avatarVideo.pause() }
 }
 
-// ── 9. Подвійний CTA + календар ──────────────────────────────────────────────
-const CALL_TOPICS = ['plan', 'leads', 'demo', 'team']
-const TIME_SLOTS = ['09:00', '10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '17:00', '18:00']
+// ── 9. Оплата (порт PaymentCard квіза 1) ─────────────────────────────────────
+const PAY_PERIODS = { '1_month': 1, '1_year': 12 }
+const FAQ_KEYS = ['clients', 'guarantee', 'payment', 'noClients', 'data']
 
-renderers.cta = function (slide, root) {
-  const plan = answers.plan || 'pro'
-  const price = PRICING[answers.billing === 'annual' ? 'annual' : 'monthly'][plan]
-  const planName = plan === 'base' ? 'Base' : plan === 'pro' ? 'Pro' : 'Premium'
+renderers.payment = function (slide, root) {
+  let period = PAY_PERIODS[answers.payment_period] ? answers.payment_period : '1_year'
 
-  // Найближчі 10 днів, без вихідних — менеджер телефонує у робочі дні.
-  const days = []
-  const cursor = new Date()
-  while (days.length < 10) {
-    cursor.setDate(cursor.getDate() + (days.length === 0 ? 0 : 1))
-    if (days.length === 0 && cursor.getHours() >= 17) continue
-    const wd = cursor.getDay()
-    if (wd !== 0 && wd !== 6) days.push(new Date(cursor))
-    if (days.length === 0) cursor.setDate(cursor.getDate() + 1)
-  }
-
-  const weekdays = t('cards.cta.calendar.weekdays')
-  const months = t('cards.cta.calendar.months')
-  const todayKey = new Date().toDateString()
-  const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1)
-  const tomorrowKey = tomorrow.toDateString()
-
-  function dayLabel (date) {
-    if (date.toDateString() === todayKey) return t('cards.cta.calendar.today')
-    if (date.toDateString() === tomorrowKey) return t('cards.cta.calendar.tomorrow')
-    return weekdays[date.getDay()]
-  }
-  function dayFull (date) {
-    return date.getDate() + ' ' + months[date.getMonth()]
-  }
-
-  let selDay = 0
-  let selTime = ''
-  let selTopic = ''
-
-  root.innerHTML = frame(slide, `
-    <div class="cta2-wrap">
-      <div class="cta2-plan">${t('cards.cta.recommendedNote', { plan: planName, price: formatMoney(price) })}</div>
-
-      <div class="cta2-buttons">
-        <button class="cta2-btn cta2-btn--buy" data-buy>
-          <span class="cta2-btn-title">${t('cards.cta.buyNow')}</span>
-          <span class="cta2-btn-hint">${t('cards.cta.buyNowHint')}</span>
-        </button>
-        <button class="cta2-btn cta2-btn--call" data-call>
-          <span class="cta2-btn-title">${t('cards.cta.scheduleCall')}</span>
-          <span class="cta2-btn-hint">${t('cards.cta.scheduleHint')}</span>
-        </button>
-      </div>
-    </div>
-  `, true)
-
-  // ── Календар — окремим оверлеєм у <body> (як лід-модалка в квізі 1),
-  // бо .card-stack має perspective і ламає position:fixed усередині колоди.
-  const overlay = el(`
-    <div class="cal-overlay" aria-hidden="true">
-      <div class="cal-modal" role="dialog">
-        <button class="cal-close" aria-label="${t('cards.cta.calendar.close')}">×</button>
-        <div class="cal-header">
-          <div class="cal-icon">${icon('calendar', 26)}</div>
-          <div class="cal-title">${t('cards.cta.calendar.title')}</div>
-          <div class="cal-sub">${t('cards.cta.calendar.sub', { phone: esc(answers.phone) || '—' })}</div>
-        </div>
-
-        <div class="cal-section-label">${t('cards.cta.calendar.pickDay')}</div>
-        <div class="cal-days" data-days>
-          ${days.map((d, i) => `
-            <button class="cal-day${i === 0 ? ' active' : ''}" data-day="${i}">
-              <span class="cal-day-wd">${dayLabel(d)}</span>
-              <span class="cal-day-num">${d.getDate()}</span>
-              <span class="cal-day-mo">${months[d.getMonth()].slice(0, 3)}</span>
-            </button>`).join('')}
-        </div>
-
-        <div class="cal-section-label">${t('cards.cta.calendar.pickTime')}</div>
-        <div class="cal-times" data-times>
-          ${TIME_SLOTS.map((s) => `<button class="cal-time" data-time="${s}">${s}</button>`).join('')}
-        </div>
-
-        <div class="cal-section-label">${t('cards.cta.calendar.topicLabel')}</div>
-        <div class="cal-topics" data-topics>
-          ${CALL_TOPICS.map((k) => `<button class="cal-topic" data-topic="${k}">${t('cards.cta.calendar.topics.' + k)}</button>`).join('')}
-        </div>
-        <textarea class="cal-note" rows="2" placeholder="${esc(t('cards.cta.calendar.topicPh'))}"></textarea>
-
-        <button class="cal-submit" data-submit disabled>${t('cards.cta.calendar.submit')}</button>
-      </div>
-    </div>`)
-  document.body.appendChild(overlay)
-
-  const submitBtn = overlay.querySelector('[data-submit]')
-  function refreshSubmit () { submitBtn.disabled = !selTime }
-
-  overlay.querySelector('[data-days]').addEventListener('click', (e) => {
-    const b = e.target.closest('[data-day]')
-    if (!b) return
-    selDay = parseInt(b.dataset.day, 10)
-    overlay.querySelectorAll('.cal-day').forEach((n) => n.classList.toggle('active', n === b))
-  })
-  overlay.querySelector('[data-times]').addEventListener('click', (e) => {
-    const b = e.target.closest('[data-time]')
-    if (!b) return
-    selTime = b.dataset.time
-    overlay.querySelectorAll('.cal-time').forEach((n) => n.classList.toggle('active', n === b))
-    refreshSubmit()
-  })
-  overlay.querySelector('[data-topics]').addEventListener('click', (e) => {
-    const b = e.target.closest('[data-topic]')
-    if (!b) return
-    selTopic = selTopic === b.dataset.topic ? '' : b.dataset.topic
-    overlay.querySelectorAll('.cal-topic').forEach((n) => n.classList.toggle('active', n.dataset.topic === selTopic))
-  })
-
-  function closeCal () { overlay.classList.remove('open'); overlay.setAttribute('aria-hidden', 'true') }
-  overlay.querySelector('.cal-close').addEventListener('click', closeCal)
-  overlay.addEventListener('click', (e) => { if (e.target === overlay) closeCal() })
-
-  submitBtn.addEventListener('click', () => {
-    const date = days[selDay]
-    answers.call_day = date.toISOString().slice(0, 10)
-    answers.call_time = selTime
-    answers.call_topic = selTopic
-    answers.call_note = overlay.querySelector('.cal-note').value.trim()
-    answers.lead_type = 'scheduled_call'
-    saveAnswers()
-
-    submitBtn.disabled = true
-    submitBtn.textContent = t('cards.cta.calendar.sending')
-    submitAnswers(() => {
-      const when = dayFull(date) + ', ' + selTime
-      overlay.querySelector('.cal-modal').innerHTML = `
-        <div class="cal-thanks">
-          <div class="cal-thanks-icon">${icon('check', 34)}</div>
-          <div class="cal-thanks-title">${t('cards.cta.calendar.thanksTitle')}</div>
-          <div class="cal-thanks-sub">${t('cards.cta.calendar.thanksSub', { when: when, phone: esc(answers.phone) })}</div>
-          <button class="cal-thanks-close">${t('cards.cta.calendar.close')}</button>
-        </div>`
-      overlay.querySelector('.cal-thanks-close').addEventListener('click', closeCal)
-    })
-  })
-
-  root.querySelector('[data-call]').addEventListener('click', () => {
-    overlay.classList.add('open')
-    overlay.setAttribute('aria-hidden', 'false')
-  })
-  root.querySelector('[data-buy]').addEventListener('click', () => {
-    answers.lead_type = 'direct_purchase'
-    answers.payment_method = 'card'
-    answers.payment_period = answers.billing === 'annual' ? '1_year' : '1_month'
-    saveAnswers()
-    goNext()
-  })
-
-  return () => { if (overlay.parentNode) overlay.parentNode.removeChild(overlay) }
-}
-
-// ── Після оплати: фото для AI-аватара ────────────────────────────────────────
-const PHOTO_SAMPLES = [
-  { file: 'assets/lawyer-man.jpg' },
-  { file: 'assets/lawyer-woman.jpg' }
-]
-
-renderers.photoUpload = function (slide, root) {
-  root.innerHTML = frame(slide, `
-    <div class="pu-wrap">
-      <div class="upload-area" data-drop>
-        <div class="upload-text" data-drop-text>${answers.photo_name || t('cards.photo.dropHint')}</div>
-        <div class="pu-drop-sub">${t('cards.photo.dropSub')}</div>
-        <input type="file" accept="image/jpeg,image/png" hidden>
-      </div>
-      <div class="form-error" data-photo-error hidden></div>
-      <div class="pu-preview" data-preview${answers.photo_data ? '' : ' hidden'}>
-        <img src="${answers.photo_data || ''}" alt="${t('cards.photo.previewAlt')}">
-      </div>
-      <div class="pu-samples-title">${t('cards.photo.samplesTitle')}</div>
-      <div class="pu-samples" data-samples>
-        ${PHOTO_SAMPLES.map((s, i) => `
-          <button class="pu-sample" data-sample="${s.file}">
-            <img src="${s.file}" alt="${t('cards.photo.sampleLabel')} ${i + 1}">
-          </button>`).join('')}
-      </div>
-      ${actionBar(continueBtn())}
-    </div>
-  `, true)
-
-  const drop = root.querySelector('[data-drop]')
-  const input = drop.querySelector('input')
-  const dropText = root.querySelector('[data-drop-text]')
-  const preview = root.querySelector('[data-preview]')
-  const errorBox = root.querySelector('[data-photo-error]')
-
-  function showError (msg) {
-    errorBox.textContent = msg
-    errorBox.hidden = !msg
-  }
-
-  drop.addEventListener('click', () => input.click())
-  input.addEventListener('change', () => {
-    const file = input.files[0]
-    if (!file) return
-    if (['image/jpeg', 'image/png'].indexOf(file.type) < 0) return showError(t('cards.photo.error.badType'))
-    if (file.size > 5 * 1024 * 1024) return showError(t('cards.photo.error.tooBig'))
-    showError('')
-    answers.photo_name = file.name
-    dropText.textContent = file.name
-    drop.classList.add('uploaded')
-    const reader = new FileReader()
-    reader.onload = () => {
-      answers.photo_data = reader.result
-      preview.querySelector('img').src = reader.result
-      preview.hidden = false
-      saveAnswers()
+  function summary () {
+    const months = PAY_PERIODS[period]
+    const isAnnual = period === '1_year'
+    const prices = PRICING[isAnnual ? 'annual' : 'monthly']
+    const plan = prices[answers.plan] != null ? answers.plan : 'pro'
+    // Реальна сума = ціна плану × місяці. «Якірна» ціна така, що знижка
+    // за терміновість (−20%) повертає рівно до реальної суми — як у квізі 1.
+    const real = prices[plan] * months
+    const full = Math.round(real / 0.8)
+    return {
+      planName: plan === 'base' ? 'Base' : plan === 'pro' ? 'Pro' : 'Premium',
+      periodLabel: t('cards.payment.periods.' + period),
+      full: formatMoney(full),
+      urgency: formatMoney(full - real),
+      total: formatMoney(real),
+      saved: full - real,
+      savedText: formatMoney(full - real)
     }
-    reader.readAsDataURL(file)
-  })
+  }
 
-  root.querySelector('[data-samples]').addEventListener('click', (e) => {
-    const b = e.target.closest('[data-sample]')
-    if (!b) return
-    showError('')
-    answers.photo_name = b.dataset.sample.split('/').pop()
-    answers.photo_data = ''
-    dropText.textContent = answers.photo_name
-    drop.classList.add('uploaded')
-    preview.querySelector('img').src = b.dataset.sample
-    preview.hidden = false
-    root.querySelectorAll('.pu-sample').forEach((n) => n.classList.toggle('active', n === b))
-    saveAnswers()
-  })
+  function bodyHtml () {
+    const s = summary()
+    return `
+      <div class="pay-period-toggle">
+        <button class="pay-period-btn${period === '1_month' ? ' active' : ''}" data-period="1_month">${t('cards.payment.periods.1_month')}</button>
+        <button class="pay-period-btn${period === '1_year' ? ' active' : ''}" data-period="1_year">${t('cards.payment.periods.1_year')} <span class="pay-period-save">${t('cards.payment.saveBadge')}</span></button>
+      </div>
 
-  root.querySelector('[data-continue]').addEventListener('click', goNext)
-}
+      <div class="pay-savings-hero"${s.saved > 0 ? '' : ' hidden'}>
+        <div class="pay-savings-amount">${s.savedText}</div>
+        <div class="pay-savings-text">${t('cards.payment.savedHero')}</div>
+      </div>
 
-// ── Після оплати: AI-потенціал ───────────────────────────────────────────────
-renderers.aiPotential = function (slide, root) {
-  const d = computeDiagnosis(answers)
-  const teamLow = AI_POTENTIAL.teamRoles.reduce((s, r) => s + r.low, 0)
-  const teamHigh = AI_POTENTIAL.teamRoles.reduce((s, r) => s + r.high, 0)
-  const ourPlan = PRICING.monthly[answers.plan || 'pro']
-  const times = Math.round(teamLow / ourPlan)
+      <div class="discount-summary">
+        <div class="discount-row"><span>${t('cards.payment.rows.plan', { plan: s.planName, period: s.periodLabel })}</span><span>${s.full}</span></div>
+        <div class="discount-row"><span>${t('cards.payment.rows.urgency')}</span><span class="saved">-${s.urgency}</span></div>
+        <div class="discount-row total"><span>${t('cards.payment.rows.total')}</span><span>${s.total}</span></div>
+      </div>`
+  }
 
   root.innerHTML = frame(slide, `
-    <div class="ai-wrap">
-      <div class="ai-hero">
-        <div class="ai-hero-eyebrow">${t('cards.aiPotential.heroEyebrow')}</div>
-        <div class="ai-hero-num">${d.missedLow}–${d.missedHigh}</div>
-        <div class="ai-hero-cap">${t('cards.aiPotential.clientsLabel')}</div>
-        <div class="ai-hero-rev">${t('cards.aiPotential.revenue', {
-          low: formatNumber(d.revenueLow), high: formatMoney(d.revenueHigh)
-        })}</div>
-        <div class="ai-hero-rev-cap">${t('cards.aiPotential.revenueCaption')}</div>
-        <div class="ai-hero-price">${t('cards.aiPotential.priceLabel', { amount: formatMoney(ourPlan) })}</div>
+    <div class="pay-wrap">
+      ${timerBarHtml('pay-timer-top')}
+      <div data-pay-body>${bodyHtml()}</div>
+
+      <div class="payment-icons">
+        <svg class="pay-icon" viewBox="0 0 38 24"><rect width="38" height="24" rx="3" fill="#1434CB"/><text x="19" y="15" font-size="9" fill="#fff" text-anchor="middle" font-weight="bold" font-family="Arial">VISA</text></svg>
+        <svg class="pay-icon" viewBox="0 0 38 24"><rect width="38" height="24" rx="3" fill="#252525"/><circle cx="15" cy="12" r="7" fill="#EB001B"/><circle cx="23" cy="12" r="7" fill="#F79E1B"/><path d="M19 6.5a7 7 0 010 11 7 7 0 010-11z" fill="#FF5F00"/></svg>
+        <svg class="pay-icon" viewBox="0 0 38 24"><rect width="38" height="24" rx="3" fill="#003087"/><text x="19" y="15" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold" font-family="Arial">PayPal</text></svg>
       </div>
 
-      <div class="ai-compare-q">${t('cards.aiPotential.compareQ')}</div>
-      <div class="ai-team">
-        ${AI_POTENTIAL.teamRoles.map((r) => `
-          <div class="ai-team-row">
-            <span class="ai-team-role">${t('cards.aiPotential.teamRoles.' + r.key)}</span>
-            <span class="ai-team-cost">${t('cards.aiPotential.teamRoleCost', { low: Math.round(r.low / 1000), high: Math.round(r.high / 1000) })}</span>
+      <div class="payment-buttons">
+        <button class="btn btn-paypal" data-pay="paypal"><img class="btn-icon-paypal" src="assets/paypal.svg" alt="" width="24" height="24"> ${t('cards.payment.paypal')}</button>
+        <button class="btn btn-primary" data-pay="card"><img class="btn-icon-card" src="assets/card-credit.svg" alt="" width="24" height="24"> ${t('cards.payment.card')}</button>
+      </div>
+
+      <h3 class="faq-heading">${t('cards.payment.faqHeading')}</h3>
+      <div class="faq-list" data-faq>
+        ${FAQ_KEYS.map((k, i) => `
+          <div class="faq-item" data-faq-i="${i}">
+            <div class="faq-question">${t('cards.payment.faq.' + k + '.q')}</div>
+            <div class="faq-answer"><div class="faq-answer-inner">${t('cards.payment.faq.' + k + '.a')}</div></div>
           </div>`).join('')}
-        <div class="ai-team-row ai-team-total">
-          <span class="ai-team-role">${t('cards.aiPotential.teamTotalLabel')}</span>
-          <span class="ai-team-cost">${t('cards.aiPotential.teamTotal', { low: formatNumber(teamLow), high: formatNumber(teamHigh) })}</span>
-        </div>
       </div>
-
-      <div class="ai-us">
-        <span class="ai-us-label">${t('cards.aiPotential.usLabel')}</span>
-        <span class="ai-us-price">${t('cards.aiPotential.ourPlan', { amount: formatMoney(ourPlan) })}</span>
-      </div>
-      <div class="ai-punch">${t('cards.aiPotential.punchHtml', { times: times, save: formatMoney(teamLow - ourPlan) })}</div>
-
-      <div class="dg-fine"><span class="dg-fine-label">${t('cards.aiPotential.finePrintLabel')}</span> ${esc(servicesLabel())}</div>
-      <div class="dg-disclaimer">${t('cards.aiPotential.finePrintDisclaimer')}</div>
-      ${actionBar(continueBtn())}
     </div>
   `, true)
 
-  root.querySelector('[data-continue]').addEventListener('click', goNext)
+  const payBody = root.querySelector('[data-pay-body]')
+  function repaint () {
+    payBody.innerHTML = bodyHtml()
+    payBody.querySelectorAll('[data-period]').forEach((b) => b.addEventListener('click', () => {
+      period = b.dataset.period
+      answers.payment_period = period
+      saveAnswers()
+      repaint()
+    }))
+  }
+  repaint()
+
+  root.querySelector('[data-faq]').addEventListener('click', (e) => {
+    const item = e.target.closest('.faq-item')
+    if (item) item.classList.toggle('open')
+  })
+
+  root.querySelectorAll('[data-pay]').forEach((b) => b.addEventListener('click', () => {
+    answers.payment_method = b.dataset.pay
+    answers.payment_period = period
+    answers.lead_type = 'purchase'
+    saveAnswers()
+    submitAnswers()
+    goNext()
+  }))
 }
 
-// ── Після оплати: оцінка профілю ─────────────────────────────────────────────
+// ── 10. Після оплати: оцінка профілю + завантаження резюме ──────────────────
 renderers.assessment = function (slide, root) {
-  // Бал складається з того, що вже заповнено: контакти, сфери, ціль, фото.
-  let score = 30
-  if (answers.first_name && answers.last_name) score += 10
-  if (answers.email) score += 10
-  if (answers.phone) score += 10
-  if ((answers.services || []).length) score += Math.min(20, answers.services.length * 4)
-  if (answers.desired_clients) score += 5
-  if (answers.photo_name) score += 15
-  score = Math.min(100, score)
-
-  const level = score >= 80 ? 'high' : score >= 60 ? 'mid' : score >= 40 ? 'normal' : 'low'
+  // Бал складається з того, що вже заповнено на попередніх кроках.
+  function score () {
+    let s = 30
+    if (answers.first_name && answers.last_name) s += 10
+    if (answers.email) s += 10
+    if (answers.phone) s += 10
+    if ((answers.services || []).length) s += Math.min(15, answers.services.length * 4)
+    if (answers.desired_clients) s += 5
+    if (answers.cv_name) s += 20
+    return Math.min(100, s)
+  }
+  const levelOf = (s) => (s >= 80 ? 'high' : s >= 60 ? 'mid' : s >= 40 ? 'normal' : 'low')
 
   root.innerHTML = frame(slide, `
     <div class="as-wrap">
       <div class="as-score">
-        <div class="as-score-num">${score}<span>/100</span></div>
-        <div class="as-bar"><div class="as-bar-fill as-level-${level}" style="width:${score}%"></div></div>
-        <div class="as-level">${t('cards.assessment.yourLevel')} <b class="as-level-${level}-text">${t('cards.assessment.levels.' + level)}</b></div>
-      </div>
-      <div class="as-factors">${t('cards.assessment.factors')}</div>
-      <div class="dg-fine"><span class="dg-fine-label">${t('cards.assessment.calculatedFor')}</span> ${esc(servicesLabel())}</div>
-      <div class="dg-disclaimer">${t('cards.assessment.disclaimer')}</div>
-      ${actionBar(continueBtn())}
-    </div>
-  `, true)
-
-  root.querySelector('[data-continue]').addEventListener('click', goNext)
-}
-
-// ── Після оплати: повний профіль (фінальне надсилання) ───────────────────────
-renderers.fullProfile = function (slide, root) {
-  root.innerHTML = frame(slide, `
-    <div class="fp-wrap">
-      <div class="fp-strength">
-        <span>${t('cards.fullProfile.strengthLabel')}</span>
-        <div class="as-bar"><div class="as-bar-fill" data-strength-bar style="width:0%"></div></div>
-      </div>
-      <div class="fp-strength-hint" data-strength-hint>${t('cards.fullProfile.strengthHint.low')}</div>
-
-      <div class="form-group">
-        <label class="form-label">${t('cards.fullProfile.aboutLabel')}
-          <span class="fp-hint">${t('cards.fullProfile.aboutHint')}</span>
-        </label>
-        <textarea class="card-input fp-about" rows="7" data-about placeholder="${esc(t('cards.fullProfile.aboutPh'))}">${esc(answers.about)}</textarea>
+        <div class="as-score-num" data-score>0<span>/100</span></div>
+        <div class="as-bar"><div class="as-bar-fill" data-bar style="width:0%"></div></div>
+        <div class="as-level">${t('cards.assessment.yourLevel')} <b data-level></b></div>
       </div>
 
       <div class="fp-cv">
-        <div class="fp-cv-title">${t('cards.fullProfile.cvCtaTitle')}</div>
-        <div class="fp-cv-body">${t('cards.fullProfile.cvCtaBody')}</div>
-        <label class="form-label">${t('cards.fullProfile.cvLabel')}
-          <span class="fp-hint">${t('cards.fullProfile.cvHint')}</span>
-        </label>
+        <div class="fp-cv-title">${t('cards.assessment.cvCtaTitle')}</div>
+        <div class="fp-cv-body">${t('cards.assessment.cvCtaBody')}</div>
         <div class="upload-area" data-cv-drop>
-          <div class="upload-text" data-cv-text>${answers.cv_name || t('cards.fullProfile.cvPlaceholder')}</div>
+          <div class="upload-text" data-cv-text>${answers.cv_name || t('cards.assessment.cvPlaceholder')}</div>
+          <div class="pu-drop-sub">${t('cards.assessment.cvHint')}</div>
           <input type="file" accept=".pdf,.doc,.docx" hidden>
         </div>
       </div>
 
-      ${actionBar(continueBtn(t('cards.fullProfile.finish')))}
+      <div class="as-factors">${t('cards.assessment.factors')}</div>
+      <div class="dg-fine"><span class="dg-fine-label">${t('cards.assessment.calculatedFor')}</span> ${esc(servicesLabel())}</div>
+      <div class="dg-disclaimer">${t('cards.assessment.disclaimer')}</div>
+
+      ${actionBar(continueBtn(t('cards.assessment.finish')))}
     </div>
   `, true)
 
-  const about = root.querySelector('[data-about]')
-  const bar = root.querySelector('[data-strength-bar]')
-  const hint = root.querySelector('[data-strength-hint]')
+  const scoreEl = root.querySelector('[data-score]')
+  const barEl = root.querySelector('[data-bar]')
+  const levelEl = root.querySelector('[data-level]')
 
-  function refreshStrength () {
-    const len = about.value.length
-    const pct = Math.min(100, Math.round((len / 3000) * 100) + (answers.cv_name ? 30 : 0))
-    bar.style.width = Math.min(100, pct) + '%'
-    const key = pct >= 80 ? 'high' : pct >= 40 ? 'mid' : 'low'
-    hint.textContent = t('cards.fullProfile.strengthHint.' + key)
+  function paintScore () {
+    const s = score()
+    const lvl = levelOf(s)
+    scoreEl.innerHTML = s + '<span>/100</span>'
+    barEl.style.width = s + '%'
+    barEl.className = 'as-bar-fill as-level-' + lvl
+    levelEl.textContent = t('cards.assessment.levels.' + lvl)
+    levelEl.className = 'as-level-' + lvl + '-text'
   }
-
-  about.addEventListener('input', () => {
-    answers.about = about.value
-    saveAnswers()
-    refreshStrength()
-  })
+  paintScore()
 
   const cvDrop = root.querySelector('[data-cv-drop]')
   const cvInput = cvDrop.querySelector('input')
@@ -984,21 +801,18 @@ renderers.fullProfile = function (slide, root) {
     root.querySelector('[data-cv-text]').textContent = file.name
     cvDrop.classList.add('uploaded')
     saveAnswers()
-    refreshStrength()
+    paintScore()
   })
 
-  refreshStrength()
-
   root.querySelector('[data-continue]').addEventListener('click', (e) => {
-    const btn = e.currentTarget
-    btn.disabled = true
+    e.currentTarget.disabled = true
     submitAnswers(() => {
       root.innerHTML = `
         <div class="slide-frame card-scroll">
           <div class="fp-done">
             <div class="cal-thanks-icon">${icon('check', 34)}</div>
-            <div class="cal-thanks-title">${t('cards.fullProfile.doneTitle')}</div>
-            <div class="cal-thanks-sub">${t('cards.fullProfile.doneSub', { email: esc(answers.email) })}</div>
+            <div class="cal-thanks-title">${t('cards.assessment.doneTitle')}</div>
+            <div class="cal-thanks-sub">${t('cards.assessment.doneSub', { email: esc(answers.email) })}</div>
           </div>
         </div>`
     })
