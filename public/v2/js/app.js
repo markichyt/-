@@ -742,7 +742,8 @@ renderers.payment = function (slide, root) {
 }
 
 // ── 10. Після оплати: профіль (резюме АБО текст про себе) ───────────────────
-const BIO_TARGET = 3000
+// 3 000 символів — це МІНІМУМ, а не ціль: більше тільки краще.
+const BIO_MIN = 3000
 
 renderers.assessment = function (slide, root) {
   const hasContent = () => !!answers.cv_name || (answers.about || '').length > 0
@@ -788,6 +789,7 @@ renderers.assessment = function (slide, root) {
           <div class="as-bio-bar"><div class="as-bio-fill" data-bio-fill style="width:0%"></div></div>
           <div class="as-bio-count" data-bio-count></div>
         </div>
+        <div class="as-bio-hint">${t('cards.assessment.bioMinHint')}</div>
       </div>
 
       <div class="as-warn" data-warn>${t('cards.assessment.warn')}</div>
@@ -805,9 +807,15 @@ renderers.assessment = function (slide, root) {
     warnEl.hidden = hasContent()
 
     const len = (answers.about || '').length
-    bioFill.style.width = Math.min(100, (len / BIO_TARGET) * 100) + '%'
-    bioCount.textContent = t('cards.assessment.charCount', { n: formatNumber(len), target: formatNumber(BIO_TARGET) })
-    bioCount.classList.toggle('enough', len >= BIO_TARGET)
+    const enough = len >= BIO_MIN
+    bioFill.style.width = Math.min(100, (len / BIO_MIN) * 100) + '%'
+    bioFill.classList.toggle('enough', enough)
+    // До мінімуму показуємо, скільки ще лишилось; після — просто скільки написано,
+    // щоб не створювати враження, ніби 3 000 це стеля.
+    bioCount.textContent = enough
+      ? t('cards.assessment.charEnough', { n: formatNumber(len) })
+      : t('cards.assessment.charLeft', { n: formatNumber(BIO_MIN - len) })
+    bioCount.classList.toggle('enough', enough)
   }
 
   root.querySelector('[data-tabs]').addEventListener('click', (e) => {

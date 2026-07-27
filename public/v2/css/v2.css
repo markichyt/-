@@ -1005,8 +1005,15 @@
   border-radius: 999px;
   transition: width .3s;
 }
-.as-bio-count { font-size: 10.5px; color: var(--text-light); white-space: nowrap; }
+.as-bio-fill.enough { background: #10b981; }
+.as-bio-count { font-size: 10.5px; color: #f59e0b; white-space: nowrap; font-weight: 600; }
 .as-bio-count.enough { color: #10b981; font-weight: 700; }
+.as-bio-hint {
+  font-size: 10.5px;
+  line-height: 1.45;
+  color: var(--text-light);
+  margin-top: 6px;
+}
 
 /* Попередження, поки нічого не додано */
 .as-warn {
