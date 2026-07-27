@@ -379,50 +379,56 @@ renderers.diagnosis = function (slide, root) {
   const branch = PAIN_BRANCHES[d.branch] || PAIN_BRANCHES.few_leads
   const bt = 'cards.diagnosis.branch.' + d.branch
 
-  const hoursBlock = d.noTime
-    ? `<div class="dg-stat dg-stat--wide">
-         <div class="dg-stat-title">${t('cards.diagnosis.noTimeTitle')}</div>
-         <div class="dg-stat-cap">${t('cards.diagnosis.noTimeCap')}</div>
-       </div>`
-    : `<div class="dg-stat">
-         <div class="dg-stat-num">${d.hoursMonth}</div>
-         <div class="dg-stat-lbl">${t('cards.diagnosis.hoursLabel')}</div>
-         <div class="dg-stat-cap">${t('cards.diagnosis.hoursCap')}</div>
-       </div>`
+  // Чіп про час: якщо людина взагалі не встигає — це окреме формулювання.
+  const timeChip = d.noTime
+    ? `<span class="dg-chip-num">0</span><span class="dg-chip-txt">${t('cards.diagnosis.noTimeChip')}</span>`
+    : `<span class="dg-chip-num">${d.hoursMonth}</span><span class="dg-chip-txt">${t('cards.diagnosis.hoursChip')}</span>`
 
   root.innerHTML = frame(slide, `
-    <div class="dg-wrap">
-      <div class="dg-head" style="--dg-color:${branch.color}">
-        <span class="dg-head-icon">${icon(branch.icon, 22)}</span>
-        <div class="dg-head-title">${t(bt + '.title')}</div>
+    <div class="dg-wrap" style="--dg-color:${branch.color}">
+
+      <div class="dg-head">
+        <span class="dg-head-icon">${icon(branch.icon, 20)}</span>
+        <div>
+          <div class="dg-head-eyebrow">${t('cards.diagnosis.situationLabel')}</div>
+          <div class="dg-head-title">${t(bt + '.title')}</div>
+        </div>
       </div>
       <div class="dg-body">${t(bt + '.body')}</div>
 
-      <div class="dg-stats">
-        ${hoursBlock}
-        <div class="dg-stat">
-          <div class="dg-stat-num">${d.missedLow}–${d.missedHigh}</div>
-          <div class="dg-stat-lbl">${t('cards.diagnosis.missedLabel')}</div>
-          <div class="dg-stat-cap">${t('cards.diagnosis.missedCap')}</div>
+      <div class="dg-hero">
+        <div class="dg-hero-eyebrow">${t('cards.diagnosis.lostEyebrow')}</div>
+        <div class="dg-hero-num">${formatNumber(d.revenueLow)} – ${formatMoney(d.revenueHigh)}</div>
+        <div class="dg-hero-cap">${t('cards.diagnosis.lostCap', { low: d.missedLow, high: d.missedHigh })}</div>
+        <div class="dg-hero-year">
+          <span>${t('cards.diagnosis.yearlyLabel')}</span>
+          <b>${formatNumber(d.revenueYearLow)} – ${formatMoney(d.revenueYearHigh)}</b>
         </div>
       </div>
 
-      <div class="dg-revenue">
-        <div class="dg-revenue-num">${formatNumber(d.revenueLow)} – ${formatMoney(d.revenueHigh)}</div>
-        <div class="dg-revenue-lbl">${t('cards.diagnosis.revenueLabel')}</div>
-        <div class="dg-revenue-note">${t('cards.diagnosis.revenueNote', {
-          low: formatMoney(DIAGNOSIS.caseValueLow), high: formatMoney(DIAGNOSIS.caseValueHigh)
-        })}</div>
+      <div class="dg-chips">
+        <div class="dg-chip">${timeChip}</div>
+        <div class="dg-chip">
+          <span class="dg-chip-num">${d.missedLow}–${d.missedHigh}</span>
+          <span class="dg-chip-txt">${t('cards.diagnosis.clientsChip')}</span>
+        </div>
       </div>
 
-      <div class="dg-fix">${t(bt + '.fix')}</div>
+      <div class="dg-fix">
+        <div class="dg-fix-title">${icon('check', 15)} ${t('cards.diagnosis.fixTitle')}</div>
+        <div class="dg-fix-lead">${t(bt + '.fix')}</div>
+        <ul class="dg-fix-list">
+          ${d.fixFeatures.map((k) => `<li>${icon('check', 13)}<span>${t('pricing.features.' + k)}</span></li>`).join('')}
+        </ul>
+      </div>
 
       <div class="dg-fine">
         <span class="dg-fine-label">${t('cards.diagnosis.forLabel')}</span> ${esc(servicesLabel())}
+        <span class="dg-fine-label">· ${t('cards.diagnosis.caseLabel')}</span> ${formatMoney(DIAGNOSIS.caseValueLow)} – ${formatMoney(DIAGNOSIS.caseValueHigh)}
       </div>
       <div class="dg-disclaimer">${t('cards.diagnosis.disclaimer')}</div>
 
-      ${actionBar(continueBtn())}
+      ${actionBar(continueBtn(t('cards.diagnosis.cta')))}
     </div>
   `, true)
 

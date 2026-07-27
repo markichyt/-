@@ -179,15 +179,18 @@ export const DIAGNOSIS = {
   weeksPerMonth: 4.3,
   // Годин на тиждень на пошук клієнтів → середина діапазону.
   hoursPerWeek: { lt_2: 1.5, h_2_5: 3.5, h_5_10: 7.5, no_time: 0 },
-  // Скільки клієнтів на місяць юрист недоотримує — задано таблицею під кожен
-  // рівень амбіцій, а не формулою: формула на чотирьох рівнях упиралась у
-  // стелю й давала однакові числа для 30–50 і 50+.
-  // Оцінка навмисно стримана: навіть у верхньому рядку це 12 справ на місяць.
+  // Скільки клієнтів на місяць юрист недоотримує — таблицею під кожен рівень
+  // амбіцій (формула на чотирьох рівнях упиралась у стелю й повторювалась).
+  //
+  // Орієнтир — власна обіцянка сервісу з FAQ квіза 1: «багато юристів
+  // отримують 5–15 клієнтів вже в перший місяць, з часом 20–30+». Тобто
+  // недоотриманий потік має бути в тому ж порядку, інакше діагноз занижує
+  // те, що сервіс сам обіцяє на кроці оплати.
   missedByDesired: {
-    c_to_10: { low: 2, high: 4 },
-    c_10_30: { low: 3, high: 6 },
-    c_30_50: { low: 5, high: 9 },
-    c_50_plus: { low: 7, high: 12 }
+    c_to_10: { low: 4, high: 8 },
+    c_10_30: { low: 8, high: 15 },
+    c_30_50: { low: 14, high: 25 },
+    c_50_plus: { low: 20, high: 35 }
   },
   // Бажана кількість клієнтів → рекомендований тариф. Прив'язано до ліміту
   // лідів у планах: Base — 6 купівель, Pro — 30, Premium — безліміт.
@@ -200,14 +203,25 @@ export function computeDiagnosis (answers) {
   const hoursMonth = Math.round(hoursWeek * DIAGNOSIS.weeksPerMonth)
   const missed = DIAGNOSIS.missedByDesired[answers.desired_clients] || DIAGNOSIS.missedByDesired.c_10_30
 
+  const revenueLow = missed.low * DIAGNOSIS.caseValueLow
+  const revenueHigh = missed.high * DIAGNOSIS.caseValueHigh
+  const branch = answers.growth_blocker || 'few_leads'
+
   return {
     hoursMonth,
+    hoursYear: hoursMonth * 12,
     noTime: answers.search_time === 'no_time',
     missedLow: missed.low,
     missedHigh: missed.high,
-    revenueLow: missed.low * DIAGNOSIS.caseValueLow,
-    revenueHigh: missed.high * DIAGNOSIS.caseValueHigh,
-    branch: answers.growth_blocker || 'few_leads',
+    revenueLow,
+    revenueHigh,
+    // Річна сума — просто ×12, нічого нового не вигадуємо, але масштаб втрати
+    // видно значно краще, ніж у місячній цифрі.
+    revenueYearLow: revenueLow * 12,
+    revenueYearHigh: revenueHigh * 12,
+    branch,
+    // Пункти підписки, які закривають саме цю біль (з PAIN_BRANCHES.focus).
+    fixFeatures: (PAIN_BRANCHES[branch] || PAIN_BRANCHES.few_leads).focus,
     tier: DIAGNOSIS.tierByDesired[answers.desired_clients] || 'pro'
   }
 }

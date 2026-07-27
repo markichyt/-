@@ -127,42 +127,43 @@
 .cv-play svg { width: 24px; height: 24px; margin-left: 3px; }
 .cv-player.playing .cv-play { display: none; }
 
-/* ── Слайд «Діагноз» ───────────────────────────────────────────────────────── */
-.dg-eyebrow {
-  text-transform: uppercase;
-  letter-spacing: .8px;
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--text-light);
-  margin-bottom: 8px;
-}
+/* ── Слайд «Діагноз» ──────────────────────────────────────────────────────
+   Головне на кроці — сума втрати. Вона винесена у темний герой-блок, під ним
+   два чіпи з ключовими числами, а рішення оформлене як помітний чек-лист із
+   реальних пунктів підписки (а не абзац дрібним текстом). */
+.dg-wrap { --dg-color: #ef4444; }
+
 .dg-head {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  padding: 12px;
-  border-radius: 14px;
-  background: color-mix(in srgb, var(--dg-color) 10%, #fff);
-  border-left: 3px solid var(--dg-color);
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 .dg-head-icon {
   flex: 0 0 auto;
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
   background: var(--dg-color);
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--dg-color) 40%, transparent);
+}
+.dg-head-eyebrow {
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: .9px;
+  text-transform: uppercase;
+  color: var(--dg-color);
+  margin-bottom: 2px;
 }
 .dg-head-title {
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 17px;
+  font-weight: 800;
   color: var(--text-dark);
-  line-height: 1.3;
-  padding-top: 3px;
+  line-height: 1.25;
 }
 .dg-body {
   font-size: 13px;
@@ -171,90 +172,141 @@
   margin-bottom: 14px;
 }
 
-.dg-stats {
+/* Герой: скільки грошей проходить повз */
+.dg-hero {
+  position: relative;
+  border-radius: 18px;
+  padding: 16px 14px 14px;
+  text-align: center;
+  background: linear-gradient(135deg, #0b1425, #16305a);
+  color: #fff;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.dg-hero::after {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -50px;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(239, 68, 68, .30), transparent 68%);
+  pointer-events: none;
+}
+.dg-hero-eyebrow {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .9px;
+  text-transform: uppercase;
+  color: #fca5a5;
+}
+.dg-hero-num {
+  font-size: 27px;
+  font-weight: 800;
+  line-height: 1.12;
+  margin-top: 5px;
+  white-space: nowrap;
+  color: #fff;
+}
+.dg-hero-cap {
+  font-size: 12px;
+  line-height: 1.4;
+  color: #cbd5e1;
+  margin-top: 6px;
+}
+.dg-hero-year {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 11px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, .14);
+  font-size: 11.5px;
+  color: #94a3b8;
+}
+.dg-hero-year b { font-size: 14px; color: #fca5a5; white-space: nowrap; }
+
+/* Два чіпи з ключовими числами */
+.dg-chips {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
-.dg-stat {
+.dg-chip {
   background: var(--input-bg);
   border: 1px solid var(--border);
   border-radius: 14px;
-  padding: 12px 10px;
+  padding: 11px 10px;
   text-align: center;
 }
-.dg-stat--wide {
-  grid-column: 1 / -1;
-  text-align: left;
-}
-.dg-stat-num {
-  font-size: 28px;
+.dg-chip-num {
+  display: block;
+  font-size: 22px;
   font-weight: 800;
   color: var(--text-dark);
   line-height: 1.1;
   white-space: nowrap;
 }
-.dg-stat-title {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--text-dark);
-  line-height: 1.3;
-  margin-bottom: 4px;
-}
-.dg-stat-lbl {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--text-dark);
-  margin-top: 2px;
-}
-.dg-stat-cap {
+.dg-chip-txt {
+  display: block;
   font-size: 10.5px;
-  line-height: 1.4;
+  line-height: 1.35;
   color: var(--text-light);
   margin-top: 4px;
 }
 
-.dg-revenue {
+/* Рішення — головний акцент після втрати */
+.dg-fix {
   border-radius: 16px;
-  padding: 14px 12px;
-  text-align: center;
-  background: linear-gradient(135deg, #0b1425, #16305a);
-  color: #fff;
+  padding: 13px 14px;
+  background: rgba(16, 185, 129, .08);
+  border: 1.5px solid rgba(16, 185, 129, .35);
   margin-bottom: 12px;
 }
-.dg-revenue-num {
-  font-size: 24px;
+.dg-fix-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
   font-weight: 800;
-  line-height: 1.15;
-  white-space: nowrap;
-  color: #fff;
+  letter-spacing: .8px;
+  color: #059669;
+  margin-bottom: 7px;
 }
-.dg-revenue-lbl {
-  font-size: 12px;
-  font-weight: 600;
-  color: #cbd5e1;
-  margin-top: 4px;
-}
-.dg-revenue-note {
-  font-size: 10.5px;
-  color: #94a3b8;
-  margin-top: 6px;
-}
-
-.dg-fix {
+.dg-fix-lead {
   font-size: 12.5px;
   line-height: 1.5;
   color: var(--text-dark);
-  background: rgba(0, 180, 216, .08);
-  border: 1px solid rgba(0, 180, 216, .25);
-  border-radius: 12px;
-  padding: 10px 12px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
+}
+.dg-fix-list { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+.dg-fix-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12.5px;
+  line-height: 1.35;
+  color: var(--text-dark);
+  font-weight: 600;
+}
+.dg-fix-list li svg {
+  flex: 0 0 auto;
+  margin-top: 2px;
+  color: #fff;
+  background: #10b981;
+  border-radius: 50%;
+  padding: 2px;
+  width: 15px;
+  height: 15px;
 }
 
 .dg-fine {
-  font-size: 11px;
+  font-size: 10.5px;
+  line-height: 1.5;
   color: var(--text-muted);
   margin-bottom: 4px;
 }
