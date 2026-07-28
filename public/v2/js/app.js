@@ -965,6 +965,15 @@ function boot () {
         desired_clients: 'c_10_30', plan: 'pro', billing: 'monthly'
       })
     }
+    // Точкове перевизначення відповідей — щоб відкрити конкретний варіант
+    // слайда «Діагноз» (гілка болю / рівень клієнтів / витрачений час).
+    const branch = params.get('branch')
+    if (branch && PAIN_BRANCHES[branch]) answers.growth_blocker = branch
+    const clients = params.get('clients')
+    if (clients && DIAGNOSIS.missedByDesired[clients]) answers.desired_clients = clients
+    const time = params.get('time')
+    if (time && DIAGNOSIS.hoursPerWeek[time] !== undefined) answers.search_time = time
+
     const jump = parseInt(params.get('step'), 10)
     if (jump >= 1 && jump <= TOTAL_STEPS) progress.currentStep = jump
   }
