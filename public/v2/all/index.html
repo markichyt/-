@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>CONSULTANT Quiz v2 — усі слайди</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --s: .58; --w: 375px; --h: 812px; }
+  body {
+    background: #0b1425;
+    color: #e2e8f0;
+    font-family: 'Inter', -apple-system, sans-serif;
+    padding: 20px 20px 60px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  header { max-width: 1400px; margin: 0 auto 18px; }
+  h1 { font-size: 19px; font-weight: 800; letter-spacing: .2px; }
+  .sub { font-size: 12.5px; color: #94a3b8; margin-top: 4px; line-height: 1.5; }
+
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+    margin-top: 14px;
+    padding: 12px 14px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.09);
+    border-radius: 14px;
+  }
+  .ctl { display: flex; align-items: center; gap: 7px; }
+  .ctl > span { font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: .6px; font-weight: 700; }
+  select, .zoom button {
+    background: #16305a;
+    color: #e2e8f0;
+    border: 1px solid rgba(255,255,255,.16);
+    border-radius: 9px;
+    padding: 6px 10px;
+    font-family: inherit;
+    font-size: 12.5px;
+    cursor: pointer;
+  }
+  .zoom { display: flex; gap: 4px; }
+  .zoom button { width: 30px; padding: 6px 0; text-align: center; }
+
+  section { max-width: 1400px; margin: 0 auto; }
+  h2 {
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #00b4d8;
+    margin: 30px 0 12px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid rgba(255,255,255,.09);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(calc(var(--w) * var(--s)), 1fr));
+    gap: 22px 16px;
+  }
+  figure { display: flex; flex-direction: column; gap: 8px; }
+  figcaption { font-size: 11.5px; font-weight: 600; color: #cbd5e1; line-height: 1.35; }
+  figcaption b { color: #fff; }
+  figcaption em { display: block; font-style: normal; font-size: 10.5px; color: #64748b; margin-top: 1px; }
+
+  .screen {
+    width: calc(var(--w) * var(--s));
+    height: calc(var(--h) * var(--s));
+    border-radius: calc(22px * var(--s));
+    overflow: hidden;
+    background: #0b1425;
+    box-shadow: 0 10px 30px rgba(0,0,0,.5);
+    border: 1px solid rgba(255,255,255,.1);
+  }
+  .screen iframe {
+    width: var(--w);
+    height: var(--h);
+    border: 0;
+    transform: scale(var(--s));
+    transform-origin: 0 0;
+    display: block;
+  }
+  .note { font-size: 11.5px; color: #64748b; margin-top: 26px; line-height: 1.6; max-width: 1400px; margin-inline: auto; }
+  a { color: #00b4d8; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>CONSULTANT Quiz v2 — усі слайди</h1>
+  <div class="sub">Кожен кадр — справжній квіз у iframe, тому картинка завжди збігається з тим, що бачить користувач. Клікати всередині можна.</div>
+
+  <div class="controls">
+    <label class="ctl"><span>Мова</span>
+      <select id="lang"><option value="uk">Українська</option><option value="ru">Русский</option></select>
+    </label>
+    <label class="ctl"><span>Хоче клієнтів</span>
+      <select id="clients">
+        <option value="c_to_10">До 10</option>
+        <option value="c_10_30" selected>10–30</option>
+        <option value="c_30_50">30–50</option>
+        <option value="c_50_plus">50+</option>
+      </select>
+    </label>
+    <label class="ctl"><span>Часу на пошук</span>
+      <select id="time">
+        <option value="lt_2">менше 2 год</option>
+        <option value="h_2_5">2–5 год</option>
+        <option value="h_5_10" selected>5–10 год</option>
+        <option value="no_time">не встигає</option>
+      </select>
+    </label>
+    <div class="ctl zoom"><span>Масштаб</span>
+      <button data-zoom="-">−</button><button data-zoom="+">+</button>
+    </div>
+  </div>
+</header>
+
+<section>
+  <h2>Воронка — 10 кроків</h2>
+  <div class="grid" id="steps"></div>
+
+  <h2>Крок 7 «Діагноз» — 4 гілки болю</h2>
+  <div class="grid" id="branches"></div>
+
+  <h2>Крок 8 «Тарифи» — який план рекомендується</h2>
+  <div class="grid" id="plans"></div>
+</section>
+
+<div class="note">
+  Слайд «Діагноз» має <b>4 різних вигляди</b> (текст, колір, іконка та чек-лист залежать від відповіді «Що заважає рости?»)
+  і <b>16 наборів чисел</b> (4 рівні бажаних клієнтів × 4 варіанти витраченого часу) — разом 64 комбінації.
+  Перемикачі вгорі змінюють числа одразу в усіх кадрах.
+</div>
+
+<script>
+  const STEPS = [
+    ['Відео «Що ми пропонуємо»', 'склейка 6 шортсів'],
+    ['Контакти', 'ранній перехоплювач ліда + відео'],
+    ['Час на пошук клієнтів', '4 варіанти'],
+    ['Що заважає рости', '4 гілки — сегментатор'],
+    ['Сфера права', '16 категорій'],
+    ['Скільки клієнтів хоче', '4 рівні'],
+    ['Діагноз', 'персональний під гілку'],
+    ['Тарифи', '499 / 1999 / 3999 ₴ + дзвінок'],
+    ['Оплата', 'період, знижка, FAQ'],
+    ['Профіль', 'резюме або текст про себе']
+  ]
+  const BRANCHES = [
+    ['few_leads', 'Мало заявок'],
+    ['no_deals', 'Не доходять до угоди'],
+    ['routine', 'Губиться в рутині'],
+    ['no_system', 'Немає системи']
+  ]
+  const PLANS = [
+    ['c_to_10', 'До 10 клієнтів → Base'],
+    ['c_10_30', '10–30 → Pro'],
+    ['c_30_50', '30–50 → Premium'],
+    ['c_50_plus', '50+ → Premium']
+  ]
+
+  const $ = (id) => document.getElementById(id)
+  const opts = () => ({ lang: $('lang').value, clients: $('clients').value, time: $('time').value })
+
+  // Галерея лежить у /v2/all/, сам квіз — на рівень вище (/v2/index.html).
+  // Шлях обовʼязково явний: голий '?…' резолвиться відносно ЦІЄЇ сторінки,
+  // і галерея почала б вантажити саму себе в кожен iframe.
+  function url (step, extra = {}) {
+    const o = Object.assign({ demo: 1, step: step }, opts(), extra)
+    return '../index.html?' + Object.entries(o).map(([k, v]) => k + '=' + encodeURIComponent(v)).join('&')
+  }
+
+  function card (title, note, src) {
+    return `<figure>
+      <figcaption><b>${title}</b><em>${note}</em></figcaption>
+      <div class="screen"><iframe loading="lazy" src="${src}"></iframe></div>
+    </figure>`
+  }
+
+  function render () {
+    $('steps').innerHTML = STEPS
+      .map((s, i) => card(`${i + 1}. ${s[0]}`, s[1], url(i + 1)))
+      .join('')
+    $('branches').innerHTML = BRANCHES
+      .map(([v, name]) => card(name, 'крок 7', url(7, { branch: v })))
+      .join('')
+    $('plans').innerHTML = PLANS
+      .map(([v, name]) => card(name, 'крок 8', url(8, { clients: v })))
+      .join('')
+  }
+
+  ;['lang', 'clients', 'time'].forEach((id) => $(id).addEventListener('change', render))
+
+  let scale = 0.58
+  document.querySelectorAll('[data-zoom]').forEach((b) => b.addEventListener('click', () => {
+    scale = Math.min(1, Math.max(0.32, scale + (b.dataset.zoom === '+' ? 0.08 : -0.08)))
+    document.documentElement.style.setProperty('--s', scale)
+  }))
+
+  render()
+</script>
+</body>
+</html>
