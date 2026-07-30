@@ -8,7 +8,7 @@
 import { t, state as i18nState, setLocale, applyDocumentLocale, SUPPORTED_LOCALES } from './i18n.js'
 import {
   SLIDES, TOTAL_STEPS, PRICING, PRACTICE_AREAS, AI_POTENTIAL, DIAGNOSIS,
-  PAIN_BRANCHES, buildTierFeatures, computeDiagnosis, iconPath, formatMoney, formatNumber
+  PAIN_BRANCHES, buildTierFeatures, computeDiagnosis, metaPainOf, iconPath, formatMoney, formatNumber
 } from './data.js'
 
 // ── Сховище відповідей ───────────────────────────────────────────────────────
@@ -106,17 +106,6 @@ function esc (s) {
   ))
 }
 
-// Підпис сфер практики користувача — для «Розраховано для:».
-function servicesLabel () {
-  const list = (answers.services || []).map((v) => t('slides.services.opt.' + v)).filter(Boolean)
-  if (!list.length) return t('cards.diagnosis.serviceFallback')
-  return list.slice(0, 3).join(' · ') + (list.length > 3 ? ' +' + (list.length - 3) : '')
-}
-
-function fullName () {
-  return [answers.first_name, answers.last_name].filter(Boolean).join(' ').trim()
-}
-
 // ── Спільний зворотний відлік (як у квізі 1: 24 години, спільний дедлайн) ────
 const TIMER_KEY = 'clm_quiz2_timer_end'
 function deadline () {
@@ -178,20 +167,34 @@ function continueBtn (label, disabled) {
 // ─────────────────────────────────────────────────────────────────────────────
 const renderers = {}
 
-// ── 1. Відео «Що ми пропонуємо» ──────────────────────────────────────────────
-renderers.intro = function (slide, root) {
+// ── 1. Привітання: Андрій вітається й запрошує пройти опитування ───────────
+// Відео зі звуком, тому НЕ автоплеїться: постер + play (preload="none").
+renderers.greeting = function (slide, root) {
   root.innerHTML = frame(slide, `
-    <div class="intro-video-wrap">
-      <video class="intro-video" src="assets/intro.mp4" autoplay muted loop playsinline preload="auto"></video>
+    <div class="cv-player" data-player>
+      <video class="cv-video" playsinline preload="none" poster="assets/intro-contact-poster.jpg">
+        <source src="assets/intro-contact.mp4" type="video/mp4">
+      </video>
+      <button class="cv-play" data-play aria-label="▶">
+        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20"/></svg>
+      </button>
     </div>
-    <div class="intro-video-note">${t('cards.intro.videoNote')}</div>
-    ${actionBar(continueBtn())}
+    <div class="intro-video-note">${t('cards.greeting.videoNote')}</div>
+    ${actionBar(continueBtn(t('cards.greeting.start')))}
   `, true)
 
-  const video = root.querySelector('video')
-  if (video) video.play().catch(() => { /* автоплей заблоковано — не критично */ })
+  const player = root.querySelector('[data-player]')
+  const video = player.querySelector('video')
+  player.querySelector('[data-play]').addEventListener('click', () => {
+    player.classList.add('playing')
+    video.controls = true
+    video.play().catch(() => {})
+  })
+  video.addEventListener('pause', () => player.classList.remove('playing'))
+  video.addEventListener('play', () => player.classList.add('playing'))
+
   root.querySelector('[data-continue]').addEventListener('click', goNext)
-  return () => { if (video) video.pause() }
+  return () => video.pause()
 }
 
 // ── 2. Контактна форма (ранній перехоплювач ліда) ────────────────────────────
@@ -249,36 +252,12 @@ renderers.form = function (slide, root) {
     })
   }
 
-  // Відео під формою. Воно довге (5 хв) і зі звуком, тому НЕ автоплеїться:
-  // preload="none" + постер — сторінка не тягне мегабайти, доки не натиснуть play.
+  // Без відео: привітальний ролик тепер на кроці 1, тут лише форма.
   root.innerHTML = frame(slide, `
     <div class="form-with-files-slide" data-fields>${fieldsHtml()}</div>
-
-    <div class="cv-block">
-      <div class="cv-title">${t('cards.contact.videoTitle')}</div>
-      <div class="cv-player" data-cv-player>
-        <video class="cv-video" playsinline preload="none" poster="assets/intro-contact-poster.jpg">
-          <source src="assets/intro-contact.mp4" type="video/mp4">
-        </video>
-        <button class="cv-play" data-cv-play aria-label="${esc(t('cards.contact.videoPlay'))}">
-          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20"/></svg>
-        </button>
-      </div>
-    </div>
-
     ${actionBar(continueBtn())}
   `, true)
   wire()
-
-  const cvVideo = root.querySelector('.cv-video')
-  const cvPlayer = root.querySelector('[data-cv-player]')
-  root.querySelector('[data-cv-play]').addEventListener('click', () => {
-    cvPlayer.classList.add('playing')
-    cvVideo.controls = true
-    cvVideo.play().catch(() => {})
-  })
-  cvVideo.addEventListener('pause', () => cvPlayer.classList.remove('playing'))
-  cvVideo.addEventListener('play', () => cvPlayer.classList.add('playing'))
 
   root.querySelector('[data-continue]').addEventListener('click', () => {
     slide.fields.forEach((f) => { touched[f.field] = true })
@@ -291,8 +270,6 @@ renderers.form = function (slide, root) {
       paint()
     }
   })
-
-  return () => { if (cvVideo) cvVideo.pause() }
 }
 
 // ── 3/4/6. Один варіант (radio) ──────────────────────────────────────────────
@@ -372,67 +349,59 @@ renderers.checkbox = function (slide, root) {
   })
   btn.addEventListener('click', goNext)
 }
-
-// ── 7. Діагноз ───────────────────────────────────────────────────────────────
-renderers.diagnosis = function (slide, root) {
+// ── 7. Рішення: квадратне відео Андрія + заголовок під мета-біль + інфографіка
+renderers.solution = function (slide, root) {
   const d = computeDiagnosis(answers)
-  const branch = PAIN_BRANCHES[d.branch] || PAIN_BRANCHES.few_leads
-  const bt = 'cards.diagnosis.branch.' + d.branch
-
-  // Чіп про час: якщо людина взагалі не встигає — це окреме формулювання.
-  const timeChip = d.noTime
-    ? `<span class="dg-chip-num">0</span><span class="dg-chip-txt">${t('cards.diagnosis.noTimeChip')}</span>`
-    : `<span class="dg-chip-num">${d.hoursMonth}</span><span class="dg-chip-txt">${t('cards.diagnosis.hoursChip')}</span>`
+  const meta = metaPainOf(answers)
 
   root.innerHTML = frame(slide, `
-    <div class="dg-wrap" style="--dg-color:${branch.color}">
+    <div class="sol-wrap">
+      <div class="sol-meta sol-meta--${meta}">${t('cards.solution.meta.' + meta)}</div>
 
-      <div class="dg-head">
-        <span class="dg-head-icon">${icon(branch.icon, 20)}</span>
-        <div>
-          <div class="dg-head-eyebrow">${t('cards.diagnosis.situationLabel')}</div>
-          <div class="dg-head-title">${t(bt + '.title')}</div>
-        </div>
+      <div class="cv-player sol-square" data-player>
+        <video class="cv-video" playsinline preload="none" poster="assets/intro-contact-poster.jpg">
+          <source src="assets/intro-contact.mp4" type="video/mp4">
+        </video>
+        <button class="cv-play" data-play aria-label="▶">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20"/></svg>
+        </button>
       </div>
-      <div class="dg-body">${t(bt + '.body')}</div>
+      <div class="intro-video-note">${t('cards.solution.videoNote')}</div>
 
-      <div class="dg-hero">
-        <div class="dg-hero-eyebrow">${t('cards.diagnosis.lostEyebrow')}</div>
-        <div class="dg-hero-num">${formatNumber(d.revenueLow)} – ${formatMoney(d.revenueHigh)}</div>
-        <div class="dg-hero-cap">${t('cards.diagnosis.lostCap', { low: d.missedLow, high: d.missedHigh })}</div>
-        <div class="dg-hero-year">
-          <span>${t('cards.diagnosis.yearlyLabel')}</span>
-          <b>${formatNumber(d.revenueYearLow)} – ${formatMoney(d.revenueYearHigh)}</b>
-        </div>
-      </div>
-
-      <div class="dg-chips">
-        <div class="dg-chip">${timeChip}</div>
-        <div class="dg-chip">
-          <span class="dg-chip-num">${d.missedLow}–${d.missedHigh}</span>
-          <span class="dg-chip-txt">${t('cards.diagnosis.clientsChip')}</span>
+      <div class="sol-gain">
+        <div class="sol-gain-eyebrow">${t('cards.solution.gainEyebrow')}</div>
+        <div class="sol-gain-num">+${d.missedLow}–${d.missedHigh}</div>
+        <div class="sol-gain-cap">${t('cards.solution.gainCap')}</div>
+        <div class="sol-gain-rev">
+          <span>${t('cards.solution.gainRevenueLabel')}</span>
+          <b>${formatNumber(d.revenueLow)} – ${formatMoney(d.revenueHigh)}</b>
         </div>
       </div>
 
-      <div class="dg-fix">
-        <div class="dg-fix-title">${icon('check', 15)} ${t('cards.diagnosis.fixTitle')}</div>
-        <div class="dg-fix-lead">${t(bt + '.fix')}</div>
-        <ul class="dg-fix-list">
-          ${d.fixFeatures.map((k) => `<li>${icon('check', 13)}<span>${t('pricing.features.' + k)}</span></li>`).join('')}
-        </ul>
+      <div class="sol-proof">
+        ${['lawyers', 'growth', 'renew'].map((k) => `
+          <div class="sol-proof-item">
+            <div class="sol-proof-num">${t('cards.solution.proof.' + k)}</div>
+            <div class="sol-proof-cap">${t('cards.solution.proof.' + k + 'Cap')}</div>
+          </div>`).join('')}
       </div>
 
-      <div class="dg-fine">
-        <span class="dg-fine-label">${t('cards.diagnosis.forLabel')}</span> ${esc(servicesLabel())}
-        <span class="dg-fine-label">· ${t('cards.diagnosis.caseLabel')}</span> ${formatMoney(DIAGNOSIS.caseValueLow)} – ${formatMoney(DIAGNOSIS.caseValueHigh)}
-      </div>
-      <div class="dg-disclaimer">${t('cards.diagnosis.disclaimer')}</div>
-
-      ${actionBar(continueBtn(t('cards.diagnosis.cta')))}
+      ${actionBar(continueBtn(t('cards.solution.cta')))}
     </div>
   `, true)
 
+  const player = root.querySelector('[data-player]')
+  const video = player.querySelector('video')
+  player.querySelector('[data-play]').addEventListener('click', () => {
+    player.classList.add('playing')
+    video.controls = true
+    video.play().catch(() => {})
+  })
+  video.addEventListener('pause', () => player.classList.remove('playing'))
+  video.addEventListener('play', () => player.classList.add('playing'))
+
   root.querySelector('[data-continue]').addEventListener('click', goNext)
+  return () => video.pause()
 }
 
 // ── 8. Тарифи (карусель — порт із квіза 1) ───────────────────────────────────

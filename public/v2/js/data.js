@@ -198,6 +198,16 @@ export const DIAGNOSIS = {
   tierByDesired: { c_to_10: 'base', c_10_30: 'pro', c_30_50: 'premium', c_50_plus: 'premium' }
 }
 
+// Мета-біль: платформа розвʼязує одну проблему двома формулюваннями.
+// few_leads / no_deals — юристу бракує КЛІЄНТІВ;
+// routine / no_system — юристу бракує ЧАСУ, щоб їх залучати.
+export function metaPainOf (answers) {
+  const b = answers.growth_blocker
+  if (b === 'routine' || b === 'no_system') return 'time'
+  if (b === 'few_leads' || b === 'no_deals') return 'clients'
+  return answers.search_time === 'no_time' ? 'time' : 'clients'
+}
+
 // Рахує «діагноз» із відповідей.
 export function computeDiagnosis (answers) {
   const hoursWeek = DIAGNOSIS.hoursPerWeek[answers.search_time] ?? 0
@@ -230,7 +240,7 @@ export function computeDiagnosis (answers) {
 // ── Структура воронки ────────────────────────────────────────────────────────
 // type: video | form | radio | checkbox | card
 export const SLIDES = [
-  { type: 'card', id: 'intro', q: 'slides.intro.q', sub: 'slides.intro.sub' },
+  { type: 'card', id: 'greeting', q: 'slides.greeting.q', sub: 'slides.greeting.sub' },
   {
     type: 'form',
     id: 'contact',
@@ -287,7 +297,9 @@ export const SLIDES = [
       { v: 'c_50_plus', icon: 'sparkle', color: '#f59e0b' }
     ]
   },
-  { type: 'card', dynamic: true, id: 'diagnosis', q: 'slides.diagnosis.q', sub: 'slides.diagnosis.sub' },
+  // Кульмінація: після всіх питань — рішення. Квадратне відео Андрія +
+  // персональний заголовок під мета-біль + інфографіка.
+  { type: 'card', dynamic: true, id: 'solution', q: 'slides.solution.q', sub: 'slides.solution.sub' },
   // Тарифи: «Обрати план» веде одразу на оплату; поруч — плашка «Замовити дзвінок».
   { type: 'card', dynamic: true, id: 'pricing', q: 'slides.pricing.q', sub: '' },
   { type: 'card', dynamic: true, id: 'payment', q: 'slides.payment.q', sub: '' },
