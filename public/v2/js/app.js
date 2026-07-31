@@ -8,7 +8,7 @@
 import { t, state as i18nState, setLocale, applyDocumentLocale, SUPPORTED_LOCALES } from './i18n.js'
 import {
   SLIDES, TOTAL_STEPS, PRICING, PRACTICE_AREAS, AI_POTENTIAL, DIAGNOSIS,
-  PAIN_BRANCHES, buildTierFeatures, computeDiagnosis, metaPainOf, iconPath, formatMoney, formatNumber
+  PAIN_BRANCHES, buildTierFeatures, computeDiagnosis, iconPath, formatMoney, formatNumber
 } from './data.js'
 
 // ── Сховище відповідей ───────────────────────────────────────────────────────
@@ -182,10 +182,17 @@ function wireLoopingVideo (root) {
   video.addEventListener('canplay', tryPlay)
   document.addEventListener('visibilitychange', onVisible)
 
+  // Іконка — наша SVG (емодзі 🔊 на різних системах малюється по-різному).
+  const paintBtn = (on) => {
+    btn.innerHTML = icon(on ? 'volume-off' : 'volume', 15) +
+      '<span>' + t(on ? 'common.videoSound.off' : 'common.videoSound.on') + '</span>'
+    btn.classList.toggle('on', on)
+  }
+  paintBtn(false)
+
   function setSound (on) {
     video.muted = !on
-    btn.textContent = t(on ? 'common.videoSound.off' : 'common.videoSound.on')
-    btn.classList.toggle('on', on)
+    paintBtn(on)
     if (on) {
       video.currentTime = 0
       tryPlay()
@@ -206,7 +213,7 @@ renderers.greeting = function (slide, root) {
     <div class="cv-player" data-player>
       <video class="cv-video" src="assets/greeting.mp4" poster="assets/greeting-poster.jpg"
              autoplay muted loop playsinline preload="auto"></video>
-      <button class="vv-sound" data-sound>${t('common.videoSound.on')}</button>
+      <button class="vv-sound" data-sound></button>
     </div>
     ${actionBar(continueBtn(t('cards.greeting.start')))}
   `, true)
@@ -371,16 +378,13 @@ renderers.checkbox = function (slide, root) {
 // ── 7. Рішення: квадратне відео Андрія + заголовок під мета-біль + інфографіка
 renderers.solution = function (slide, root) {
   const d = computeDiagnosis(answers)
-  const meta = metaPainOf(answers)
 
   root.innerHTML = frame(slide, `
     <div class="sol-wrap">
-      <div class="sol-meta sol-meta--${meta}">${t('cards.solution.meta.' + meta)}</div>
-
       <div class="cv-player" data-player>
         <video class="cv-video" src="assets/solution.mp4" poster="assets/solution-poster.jpg"
                autoplay muted loop playsinline preload="auto"></video>
-        <button class="vv-sound" data-sound>${t('common.videoSound.on')}</button>
+        <button class="vv-sound" data-sound></button>
       </div>
 
       <div class="sol-gain">

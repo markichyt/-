@@ -16,7 +16,7 @@ const uk = {
     chosen: 'обрано',
     discountBanner: 'ЗНИЖКА 20% ТІЛЬКИ ДЛЯ ВАС!',
     timer: { hours: 'год', minutes: 'хв', seconds: 'сек' },
-    videoSound: { on: '🔊 Увімкнути звук', off: '🔇 Вимкнути звук' }
+    videoSound: { on: 'Увімкнути звук', off: 'Вимкнути звук' }
   },
   topbar: { step: 'КРОК {n} / {total}' },
   validation: {
@@ -117,10 +117,6 @@ const uk = {
   cards: {
     greeting: { start: 'Почати →' },
     solution: {
-      meta: {
-        clients: 'Вам не вистачає <b>клієнтів</b>.<br>Ми їх дамо.',
-        time: 'Вам не вистачає <b>часу</b>.<br>Ми приведемо клієнтів за Вас.'
-      },
       gainEyebrow: 'З CONSULTANT це',
       gainCap: 'нових клієнтів щомісяця',
       gainRevenueLabel: 'додатково на місяць',
@@ -388,7 +384,7 @@ const ru = {
     chosen: 'выбрано',
     discountBanner: 'СКИДКА 20% ТОЛЬКО ДЛЯ ВАС!',
     timer: { hours: 'ч', minutes: 'мин', seconds: 'сек' },
-    videoSound: { on: '🔊 Включить звук', off: '🔇 Выключить звук' }
+    videoSound: { on: 'Включить звук', off: 'Выключить звук' }
   },
   topbar: { step: 'ШАГ {n} / {total}' },
   validation: {
@@ -489,10 +485,6 @@ const ru = {
   cards: {
     greeting: { start: 'Начать →' },
     solution: {
-      meta: {
-        clients: 'Вам не хватает <b>клиентов</b>.<br>Мы их дадим.',
-        time: 'Вам не хватает <b>времени</b>.<br>Мы приведём клиентов за Вас.'
-      },
       gainEyebrow: 'С CONSULTANT это',
       gainCap: 'новых клиентов ежемесячно',
       gainRevenueLabel: 'дополнительно в месяц',
