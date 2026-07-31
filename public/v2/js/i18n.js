@@ -16,7 +16,8 @@ const uk = {
     chosen: 'обрано',
     discountBanner: 'ЗНИЖКА 20% ТІЛЬКИ ДЛЯ ВАС!',
     timer: { hours: 'год', minutes: 'хв', seconds: 'сек' },
-    videoSound: { on: 'Увімкнути звук', off: 'Вимкнути звук' }
+    videoSound: { on: 'Увімкнути звук', off: 'Вимкнути звук' },
+    videoPause: { pause: 'Пауза', play: 'Відтворити' }
   },
   topbar: { step: 'КРОК {n} / {total}' },
   validation: {
@@ -93,7 +94,7 @@ const uk = {
     },
     solution: {
       q: 'Ось Ваше <span class="accent">рішення</span>',
-      sub: 'Андрій пояснить у відео, а числа нижче розраховані за Вашими відповідями.'
+      sub: 'Розраховано за Вашими відповідями.'
     },
     pricing: { q: 'Ось що <span class="accent">вирішить</span> цю проблему', sub: '' },
     payment: { q: 'Завершіть <span class="accent">покупку</span>', sub: '' },
@@ -119,7 +120,7 @@ const uk = {
     solution: {
       gainEyebrow: 'З CONSULTANT це',
       gainCap: 'нових клієнтів щомісяця',
-      gainRevenueLabel: 'додатково на місяць',
+      gainRevenueLabel: 'Потенційний дохід',
       proof: {
         lawyers: '2 500+',
         lawyersCap: 'юристів уже з нами',
@@ -384,7 +385,8 @@ const ru = {
     chosen: 'выбрано',
     discountBanner: 'СКИДКА 20% ТОЛЬКО ДЛЯ ВАС!',
     timer: { hours: 'ч', minutes: 'мин', seconds: 'сек' },
-    videoSound: { on: 'Включить звук', off: 'Выключить звук' }
+    videoSound: { on: 'Включить звук', off: 'Выключить звук' },
+    videoPause: { pause: 'Пауза', play: 'Воспроизвести' }
   },
   topbar: { step: 'ШАГ {n} / {total}' },
   validation: {
@@ -461,7 +463,7 @@ const ru = {
     },
     solution: {
       q: 'Вот Ваше <span class="accent">решение</span>',
-      sub: 'Андрей объяснит в видео, а числа ниже рассчитаны по Вашим ответам.'
+      sub: 'Рассчитано по Вашим ответам.'
     },
     pricing: { q: 'Вот что <span class="accent">решит</span> эту проблему', sub: '' },
     payment: { q: 'Завершите <span class="accent">покупку</span>', sub: '' },
@@ -487,7 +489,7 @@ const ru = {
     solution: {
       gainEyebrow: 'С CONSULTANT это',
       gainCap: 'новых клиентов ежемесячно',
-      gainRevenueLabel: 'дополнительно в месяц',
+      gainRevenueLabel: 'Потенциальный доход',
       proof: {
         lawyers: '2 500+',
         lawyersCap: 'юристов уже с нами',

@@ -199,7 +199,23 @@ function wireLoopingVideo (root) {
     }
   }
   btn.addEventListener('click', () => setSound(video.muted))
-  video.addEventListener('click', () => setSound(video.muted))
+
+  // Кнопка паузи — той самий стиль, що й у кнопки звуку. Клік по самому відео
+  // теж ставить на паузу / відновлює (стандартна поведінка плеєра).
+  const pauseBtn = root.querySelector('[data-pause]')
+  const togglePause = () => { if (video.paused) tryPlay(); else video.pause() }
+  if (pauseBtn) {
+    const paintPause = (paused) => {
+      pauseBtn.innerHTML = icon(paused ? 'play' : 'pause', 15) +
+        '<span>' + t(paused ? 'common.videoPause.play' : 'common.videoPause.pause') + '</span>'
+      pauseBtn.classList.toggle('on', paused)
+    }
+    paintPause(false)
+    pauseBtn.addEventListener('click', togglePause)
+    video.addEventListener('play', () => paintPause(false))
+    video.addEventListener('pause', () => paintPause(true))
+  }
+  video.addEventListener('click', togglePause)
 
   return () => {
     document.removeEventListener('visibilitychange', onVisible)
@@ -213,6 +229,7 @@ renderers.greeting = function (slide, root) {
     <div class="cv-player" data-player>
       <video class="cv-video" src="assets/greeting.mp4" poster="assets/greeting-poster.jpg"
              autoplay muted loop playsinline preload="auto"></video>
+      <button class="vv-pause" data-pause></button>
       <button class="vv-sound" data-sound></button>
     </div>
     ${actionBar(continueBtn(t('cards.greeting.start')))}
@@ -381,9 +398,10 @@ renderers.solution = function (slide, root) {
 
   root.innerHTML = frame(slide, `
     <div class="sol-wrap">
-      <div class="cv-player" data-player>
+      <div class="cv-player sol-square" data-player>
         <video class="cv-video" src="assets/solution.mp4" poster="assets/solution-poster.jpg"
                autoplay muted loop playsinline preload="auto"></video>
+        <button class="vv-pause" data-pause></button>
         <button class="vv-sound" data-sound></button>
       </div>
 

@@ -131,10 +131,9 @@
 /* Кнопка звуку поверх зацикленого відео (привітання і рішення).
    Стиль — як у кнопки play: акцентний бренд-циан, SVG-іконка з нашого
    набору (емодзі 🔊 на різних системах виглядало по-різному). */
-.vv-sound {
+.vv-sound, .vv-pause {
   position: absolute;
   top: 12px;
-  right: 12px;
   display: inline-flex;
   align-items: center;
   gap: 7px;
@@ -152,11 +151,13 @@
   box-shadow: 0 6px 24px rgba(0, 0, 0, .4);
   transition: transform .15s, background .2s, opacity .2s;
 }
-.vv-sound svg { display: block; }
-.vv-sound:hover { transform: scale(1.04); background: var(--accent); }
-.vv-sound:active { transform: scale(.97); }
-/* Звук увімкнено — кнопка стає тихою, щоб не сперечатись із відео */
-.vv-sound.on {
+.vv-sound { right: 12px; }
+.vv-pause { left: 12px; }
+.vv-sound svg, .vv-pause svg { display: block; }
+.vv-sound:hover, .vv-pause:hover { transform: scale(1.04); background: var(--accent); }
+.vv-sound:active, .vv-pause:active { transform: scale(.97); }
+/* Активний стан (звук увімкнено / відео на паузі) — кнопка притемнюється */
+.vv-sound.on, .vv-pause.on {
   background: rgba(11, 20, 37, .72);
   font-weight: 600;
   backdrop-filter: blur(6px);
@@ -165,7 +166,9 @@
 .cv-player:has(.vv-sound) { cursor: pointer; }
 
 /* ── Крок 7 «Рішення» ─────────────────────────────────────────────────────
-   Відео Андрія → інфографіка: що юрист ОТРИМУЄ (темна плашка) + 3 докази. */
+   Відео Андрія (квадрат) → інфографіка: що юрист ОТРИМУЄ + 3 докази. */
+.sol-square .cv-video { aspect-ratio: 1 / 1; }
+
 /* Що юрист отримує — та сама «гero»-плашка, але в плюс, а не в мінус */
 .sol-gain {
   position: relative;
