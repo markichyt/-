@@ -127,6 +127,31 @@
 .cv-play svg { width: 24px; height: 24px; margin-left: 3px; }
 .cv-player.playing .cv-play { display: none; }
 
+/* Кнопка звуку поверх зацикленого відео (привітання і рішення) */
+.vv-sound {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  transform: translateX(-50%);
+  border: none;
+  border-radius: 999px;
+  padding: 9px 16px;
+  background: rgba(11, 20, 37, .82);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 12.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .35);
+  transition: background .2s, opacity .2s;
+}
+.vv-sound:hover { background: rgba(0, 180, 216, .9); }
+.vv-sound.on { opacity: .75; font-weight: 600; }
+.cv-player:has(.vv-sound) { cursor: pointer; }
+
 /* ── Крок 7 «Рішення» ─────────────────────────────────────────────────────
    Порядок на екрані: персональний заголовок під мета-біль → квадратне відео
    Андрія → інфографіка: що юрист ОТРИМУЄ (temна плашка) + 3 докази. */
@@ -144,9 +169,6 @@
 .sol-meta b { color: var(--accent); }
 .sol-meta--time { border-left-color: #8b5cf6; background: rgba(139, 92, 246, .08); }
 .sol-meta--time b { color: #8b5cf6; }
-
-/* Квадратне відео: та сама механіка cv-player, лише формат 1:1 */
-.sol-square .cv-video { aspect-ratio: 1 / 1; }
 
 /* Що юрист отримує — та сама «гero»-плашка, але в плюс, а не в мінус */
 .sol-gain {

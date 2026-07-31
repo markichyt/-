@@ -167,34 +167,53 @@ function continueBtn (label, disabled) {
 // ─────────────────────────────────────────────────────────────────────────────
 const renderers = {}
 
+// Зациклене відео, що грає одразу. Автоплей дозволений браузерами лише без
+// звуку, тож стартуємо muted; за натиском (кнопка або саме відео) вмикаємо
+// звук і перезапускаємо з початку — щоб глядач почув від першого слова.
+function wireLoopingVideo (root) {
+  const video = root.querySelector('video')
+  const btn = root.querySelector('[data-sound]')
+
+  // Якщо вкладка була у фоні, браузер відкладає автоплей — повторюємо запуск,
+  // щойно відео готове і щойно вкладка стає видимою.
+  const tryPlay = () => { video.play().catch(() => {}) }
+  const onVisible = () => { if (!document.hidden) tryPlay() }
+  tryPlay()
+  video.addEventListener('canplay', tryPlay)
+  document.addEventListener('visibilitychange', onVisible)
+
+  function setSound (on) {
+    video.muted = !on
+    btn.textContent = t(on ? 'common.videoSound.off' : 'common.videoSound.on')
+    btn.classList.toggle('on', on)
+    if (on) {
+      video.currentTime = 0
+      tryPlay()
+    }
+  }
+  btn.addEventListener('click', () => setSound(video.muted))
+  video.addEventListener('click', () => setSound(video.muted))
+
+  return () => {
+    document.removeEventListener('visibilitychange', onVisible)
+    video.pause()
+  }
+}
+
 // ── 1. Привітання: Андрій вітається й запрошує пройти опитування ───────────
-// Відео зі звуком, тому НЕ автоплеїться: постер + play (preload="none").
 renderers.greeting = function (slide, root) {
   root.innerHTML = frame(slide, `
     <div class="cv-player" data-player>
-      <video class="cv-video" playsinline preload="none" poster="assets/intro-contact-poster.jpg">
-        <source src="assets/intro-contact.mp4" type="video/mp4">
-      </video>
-      <button class="cv-play" data-play aria-label="▶">
-        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20"/></svg>
-      </button>
+      <video class="cv-video" src="assets/greeting.mp4" poster="assets/greeting-poster.jpg"
+             autoplay muted loop playsinline preload="auto"></video>
+      <button class="vv-sound" data-sound>${t('common.videoSound.on')}</button>
     </div>
-    <div class="intro-video-note">${t('cards.greeting.videoNote')}</div>
     ${actionBar(continueBtn(t('cards.greeting.start')))}
   `, true)
 
-  const player = root.querySelector('[data-player]')
-  const video = player.querySelector('video')
-  player.querySelector('[data-play]').addEventListener('click', () => {
-    player.classList.add('playing')
-    video.controls = true
-    video.play().catch(() => {})
-  })
-  video.addEventListener('pause', () => player.classList.remove('playing'))
-  video.addEventListener('play', () => player.classList.add('playing'))
-
+  const dispose = wireLoopingVideo(root)
   root.querySelector('[data-continue]').addEventListener('click', goNext)
-  return () => video.pause()
+  return dispose
 }
 
 // ── 2. Контактна форма (ранній перехоплювач ліда) ────────────────────────────
@@ -358,15 +377,11 @@ renderers.solution = function (slide, root) {
     <div class="sol-wrap">
       <div class="sol-meta sol-meta--${meta}">${t('cards.solution.meta.' + meta)}</div>
 
-      <div class="cv-player sol-square" data-player>
-        <video class="cv-video" playsinline preload="none" poster="assets/intro-contact-poster.jpg">
-          <source src="assets/intro-contact.mp4" type="video/mp4">
-        </video>
-        <button class="cv-play" data-play aria-label="▶">
-          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20"/></svg>
-        </button>
+      <div class="cv-player" data-player>
+        <video class="cv-video" src="assets/solution.mp4" poster="assets/solution-poster.jpg"
+               autoplay muted loop playsinline preload="auto"></video>
+        <button class="vv-sound" data-sound>${t('common.videoSound.on')}</button>
       </div>
-      <div class="intro-video-note">${t('cards.solution.videoNote')}</div>
 
       <div class="sol-gain">
         <div class="sol-gain-eyebrow">${t('cards.solution.gainEyebrow')}</div>
@@ -390,18 +405,9 @@ renderers.solution = function (slide, root) {
     </div>
   `, true)
 
-  const player = root.querySelector('[data-player]')
-  const video = player.querySelector('video')
-  player.querySelector('[data-play]').addEventListener('click', () => {
-    player.classList.add('playing')
-    video.controls = true
-    video.play().catch(() => {})
-  })
-  video.addEventListener('pause', () => player.classList.remove('playing'))
-  video.addEventListener('play', () => player.classList.add('playing'))
-
+  const dispose = wireLoopingVideo(root)
   root.querySelector('[data-continue]').addEventListener('click', goNext)
-  return () => video.pause()
+  return dispose
 }
 
 // ── 8. Тарифи (карусель — порт із квіза 1) ───────────────────────────────────
