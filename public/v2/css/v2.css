@@ -259,6 +259,39 @@
   .sol-gain-num { font-size: 32px; }
 }
 
+/* ── Крок 8: стрілки каруселі тарифів ──────────────────────────────────────
+   Раніше план перемикався лише крихітними точками (8px) під профілем — їх
+   не помічали. Додано помітні стрілки по боках + свайп. */
+.pp-navrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+.pp-nav {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: var(--text-dark);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .22);
+  transition: background .2s, opacity .2s, transform .15s;
+}
+.pp-nav svg { width: 20px; height: 20px; display: block; }
+.pp-nav:hover { background: var(--accent); }
+.pp-nav:active { transform: scale(.92); }
+.pp-nav:disabled { opacity: .25; cursor: default; pointer-events: none; }
+
+/* Точки робимо трохи більшими й контраснішими */
+.profiles-pricing-wrap .pp-dot { width: 9px; height: 9px; }
+.profiles-pricing-wrap .pp-dot.active { background: var(--accent); transform: scale(1.25); }
+
 /* ── Тарифи ────────────────────────────────────────────────────────────────
    Картка тарифів довга (профіль + аватар + 16 рядків функцій), тож кнопку
    вибору плану винесено у звичайну .card-action-bar — вона липне до низу

@@ -509,8 +509,12 @@ renderers.pricing = function (slide, root) {
         <div class="pp-track" data-track>${PLAN_SLIDES.map(profileCard).join('')}</div>
       </div>
 
-      <div class="pp-dots" data-dots>
-        ${PLAN_SLIDES.map((p, i) => `<button class="pp-dot${i === index ? ' active' : ''}" data-idx="${i}" aria-label="${p.tier}"></button>`).join('')}
+      <div class="pp-navrow">
+        <button class="pp-nav pp-nav--prev" data-nav="-1" aria-label="${t('cards.profilesPricing.prevPlan')}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+        <div class="pp-dots" data-dots>
+          ${PLAN_SLIDES.map((p, i) => `<button class="pp-dot${i === index ? ' active' : ''}" data-idx="${i}" aria-label="${p.tier}"></button>`).join('')}
+        </div>
+        <button class="pp-nav pp-nav--next" data-nav="1" aria-label="${t('cards.profilesPricing.nextPlan')}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
       </div>
 
       <div class="pp-avatar-section${index !== 0 ? ' visible' : ''}" data-avatar-section>
@@ -571,6 +575,10 @@ renderers.pricing = function (slide, root) {
     priceTrack.style.transform = shift
     avatarSection.classList.toggle('visible', index !== 0)
     root.querySelectorAll('.pp-dot').forEach((n, i) => n.classList.toggle('active', i === index))
+    const prevBtn = root.querySelector('.pp-nav--prev')
+    const nextBtn = root.querySelector('.pp-nav--next')
+    if (prevBtn) prevBtn.disabled = index === 0
+    if (nextBtn) nextBtn.disabled = index === PLAN_SLIDES.length - 1
     const tier = PLAN_SLIDES[index].tier
     cta.className = 'pp-cta-btn pp-cta-' + tier
     cta.textContent = t('cards.profilesPricing.cta.' + tier)
@@ -593,12 +601,31 @@ renderers.pricing = function (slide, root) {
     root.querySelectorAll('[data-bill]').forEach((n) => n.classList.toggle('active', (n.dataset.bill === 'annual') === isAnnual))
   }
 
+  function goTo (idx) {
+    index = Math.max(0, Math.min(PLAN_SLIDES.length - 1, idx))
+    paint()
+  }
+
   root.querySelector('[data-dots]').addEventListener('click', (e) => {
     const dot = e.target.closest('[data-idx]')
     if (!dot) return
-    index = parseInt(dot.dataset.idx, 10)
-    paint()
+    goTo(parseInt(dot.dataset.idx, 10))
   })
+
+  // Стрілки по боках каруселі — головний спосіб перемикати план.
+  root.querySelectorAll('[data-nav]').forEach((b) =>
+    b.addEventListener('click', () => goTo(index + parseInt(b.dataset.nav, 10))))
+
+  // Свайп по каруселі (палець ліворуч → наступний план).
+  const viewport = root.querySelector('.pp-viewport')
+  let swipeX = null
+  viewport.addEventListener('touchstart', (e) => { swipeX = e.touches[0].clientX }, { passive: true })
+  viewport.addEventListener('touchend', (e) => {
+    if (swipeX === null) return
+    const dx = e.changedTouches[0].clientX - swipeX
+    if (Math.abs(dx) > 40) goTo(index + (dx < 0 ? 1 : -1))
+    swipeX = null
+  }, { passive: true })
 
   function setBilling (annual) { isAnnual = annual; repaintPrices(); paint() }
   root.querySelector('[data-bill-toggle]').addEventListener('click', () => setBilling(!isAnnual))
