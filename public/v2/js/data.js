@@ -72,81 +72,33 @@ export const PRACTICE_AREAS = [
 
 // ── Ціни (₴). Річна = місячна −10%, як у квізі 1. ────────────────────────────
 export const PRICING = {
-  monthly: { base: 499, pro: 1999, premium: 3999 },
-  annual: { base: 449, pro: 1799, premium: 3599 }
+  // Канон від 04.08.2026 (ПАКЕТЫ-И-ЦЕНЫ-CONSULTANT.md). Річна = місячна −10%.
+  monthly: { base: 399, pro: 1599, premium: 3999 },
+  annual: { base: 359, pro: 1439, premium: 3599 }
 }
 
-// ── Підписки: повна копія набору функцій із квіза 1 (pricingPlans.js) ────────
-export const PRICING_FEATURES = [
-  { key: 'ai_pro_avatar', graduated: true, base: false, pro: true, premium: false },
-  { key: 'ai_premium_avatar', graduated: true, base: false, pro: false, premium: true },
-  { key: 'posts_10', graduated: true, base: true, pro: false, premium: false },
-  { key: 'posts_40', graduated: true, base: false, pro: true, premium: false },
-  { key: 'posts_100', graduated: true, base: false, pro: false, premium: true },
-  { key: 'leads_6', graduated: true, base: true, pro: false, premium: false },
-  { key: 'leads_30', graduated: true, base: false, pro: true, premium: false },
-  { key: 'leads_unlim', graduated: true, base: false, pro: false, premium: true },
-  { key: 'reputation_10', graduated: true, base: false, pro: true, premium: false },
-  { key: 'reputation_unlim', graduated: true, base: false, pro: false, premium: true },
-  { key: 'google_top', base: false, pro: false, premium: true },
-  { key: 'manager_24_7', base: false, pro: false, premium: true },
-  { key: 'exclusive_smm', base: false, pro: false, premium: true },
-  { key: 'rating_boost', base: false, pro: true, premium: true },
-  { key: 'own_prices', base: false, pro: true, premium: true },
-  { key: 'ai_module', base: true, pro: true, premium: true },
-  { key: 'ai_monitoring', base: true, pro: true, premium: true },
-  { key: 'ai_assistant', base: true, pro: true, premium: true },
-  { key: 'referral', base: true, pro: true, premium: true },
-  { key: 'private_chat', base: true, pro: true, premium: true },
-  { key: 'crm', base: true, pro: true, premium: true },
-  { key: 'messenger', base: true, pro: true, premium: true }
-]
-
-export const PRICING_PLACEHOLDERS = [
-  { categoryRows: ['ai_pro_avatar', 'ai_premium_avatar'], key: 'ai_avatar' },
-  { categoryRows: ['reputation_10', 'reputation_unlim'], key: 'reputation' }
-]
-
-export const PRO_BADGES = {
-  posts_40: { text: 'pricing.badges.more_4x', type: 'green' },
-  leads_30: { text: 'pricing.badges.more_5x', type: 'green' },
-  reputation_10: { text: 'pricing.badges.new', type: 'cyan' },
-  rating_boost: { text: 'pricing.badges.new', type: 'cyan' },
-  own_prices: { text: 'pricing.badges.new', type: 'cyan' },
-  ai_pro_avatar: { text: 'pricing.badges.new', type: 'cyan' }
+// ── Склад пакетів (канон). Ключ → підпис у pricing.features.<key>.
+//    Кожен тариф показує свій точний список (усе ✓), у порядку, як затверджено.
+export const PLAN_FEATURES = {
+  base: [
+    'profile_basic', 'leads_3', 'google', 'exclusive_smm', 'own_services',
+    'ai_google', 'ai_meta', 'ai_monitoring', 'crm', 'referral', 'messenger'
+  ],
+  pro: [
+    'profile_pro', 'video_avatar', 'leads_6', 'google', 'manager_ext',
+    'exclusive_smm', 'own_services', 'ai_google', 'ai_meta', 'ai_monitoring',
+    'crm', 'referral', 'messenger'
+  ],
+  premium: [
+    'profile_pro', 'video_avatar', 'leads_unlim', 'google', 'manager_ext',
+    'exclusive_smm', 'own_services', 'ai_google', 'ai_meta', 'ai_monitoring',
+    'crm', 'referral', 'messenger', 'private_chat', 'manager_247', 'rating_boost'
+  ]
 }
 
-export const PREMIUM_BADGES = {
-  posts_100: { text: 'pricing.badges.more_2_5x', type: 'green' },
-  leads_unlim: { text: 'pricing.badges.infinity', type: 'green' },
-  google_top: { text: 'pricing.badges.new', type: 'cyan' },
-  manager_24_7: { text: 'pricing.badges.new', type: 'cyan' },
-  exclusive_smm: { text: 'pricing.badges.new', type: 'cyan' },
-  reputation_unlim: { text: 'pricing.badges.infinity', type: 'green' },
-  ai_premium_avatar: { text: 'pricing.badges.upgrade', type: 'cyan' }
-}
-
-// Формує видимий список функцій тарифу (та сама логіка, що й у квізі 1).
+// Список функцій тарифу для картки — усі увімкнені (✓), у канонічному порядку.
 export function buildTierFeatures (tier) {
-  const badgeMap = tier === 'pro' ? PRO_BADGES : tier === 'premium' ? PREMIUM_BADGES : null
-  const relevant = []
-
-  PRICING_FEATURES.forEach((feature) => {
-    if (feature.graduated && !feature[tier]) return
-    const item = { key: feature.key, on: !!feature[tier] }
-    if (badgeMap && badgeMap[feature.key]) item.badge = badgeMap[feature.key]
-    relevant.push(item)
-  })
-
-  PRICING_PLACEHOLDERS.forEach((placeholder) => {
-    const hasOwnEntry = PRICING_FEATURES.some(
-      (feature) => placeholder.categoryRows.indexOf(feature.key) >= 0 && feature[tier]
-    )
-    if (!hasOwnEntry) relevant.push({ key: placeholder.key, on: false })
-  })
-
-  relevant.sort((a, b) => (b.on ? 1 : 0) - (a.on ? 1 : 0))
-  return relevant
+  return (PLAN_FEATURES[tier] || []).map((key) => ({ key, on: true }))
 }
 
 // ── Гілки болю ───────────────────────────────────────────────────────────────

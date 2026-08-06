@@ -483,7 +483,7 @@ renderers.pricing = function (slide, root) {
   }
 
   function pricingPanel (p) {
-    const name = p.tier === 'base' ? 'Base' : p.tier === 'pro' ? 'Pro' : 'Premium'
+    const name = p.tier === 'base' ? 'Start' : p.tier === 'pro' ? 'Pro' : 'Premium'
     const rows = features[p.tier].map((f) => `
       <div class="pp-feat ${f.on ? 'yes' : 'no'}">
         <span class="feat-left"><span class="icon">${f.on ? '✓' : '✗'}</span><span>${t('pricing.features.' + f.key)}</span></span>
