@@ -6,6 +6,8 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 // ── Іконки (той самий набір, що й у квізі 1) ─────────────────────────────────
+import { state as i18nState } from './i18n.js'
+
 export const ICONS = {
   medical: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
   leaf: '<path d="M11 20A7 7 0 019.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/>',
@@ -44,7 +46,10 @@ export const ICONS = {
   'volume-off': '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>',
   pause: '<rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/>',
   play: '<polygon points="6 4 20 12 6 20"/>',
-  eye: '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>'
+  eye: '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>',
+  dollar: '<line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>',
+  scales: '<path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>',
+  stamp: '<rect x="5" y="14" width="14" height="6" rx="1"/><path d="M12 14V6"/><circle cx="12" cy="4" r="2"/>'
 }
 
 export function iconPath (name) {
@@ -71,12 +76,94 @@ export const PRACTICE_AREAS = [
   { v: 'other', icon: 'plus', color: '#94a3b8' }
 ]
 
-// ── Ціни (₴). Річна = місячна −10%, як у квізі 1. ────────────────────────────
-export const PRICING = {
-  // Канон від 04.08.2026 (ПАКЕТЫ-И-ЦЕНЫ-CONSULTANT.md). Річна = місячна −10%.
-  monthly: { base: 399, pro: 1599, premium: 3999 },
-  annual: { base: 359, pro: 1439, premium: 3599 }
+// ── Ринки: валюта, ціни (канон CONSULTANT_PACKAGES_TRUTH.md), чек справи,
+//    набір сфер права. Локаль обирає ринок через market(locale). ────────────
+const SERVICES = {
+  en: [
+    { v: 'banking_finance', icon: 'dollar', color: '#3b82f6' },
+    { v: 'real_estate', icon: 'home', color: '#f59e0b' },
+    { v: 'labour_law', icon: 'briefcase', color: '#8b5cf6' },
+    { v: 'intellectual_property', icon: 'file-text', color: '#7c3aed' },
+    { v: 'general', icon: 'scales', color: '#6366f1' },
+    { v: 'family_law', icon: 'users', color: '#ef4444' },
+    { v: 'business', icon: 'bar-chart', color: '#0ea5e9' },
+    { v: 'taxes', icon: 'dollar', color: '#10b981' },
+    { v: 'cars', icon: 'car', color: '#ec4899' },
+    { v: 'employment', icon: 'user', color: '#14b8a6' },
+    { v: 'immigration_law', icon: 'globe', color: '#0284c7' }
+  ],
+  'en-GB': [
+    { v: 'corporate_commercial', icon: 'bar-chart', color: '#3b82f6' },
+    { v: 'motoring', icon: 'car', color: '#ec4899' },
+    { v: 'general', icon: 'scales', color: '#6366f1' },
+    { v: 'criminal', icon: 'gavel', color: '#b91c1c' },
+    { v: 'notarial', icon: 'stamp', color: '#8b5cf6' },
+    { v: 'banking_finance', icon: 'dollar', color: '#10b981' },
+    { v: 'property', icon: 'home', color: '#f59e0b' },
+    { v: 'employment', icon: 'user', color: '#14b8a6' },
+    { v: 'consular', icon: 'globe', color: '#0284c7' },
+    { v: 'family_law', icon: 'family', color: '#db2777' },
+    { v: 'business', icon: 'briefcase', color: '#0ea5e9' },
+    { v: 'taxes', icon: 'dollar', color: '#7c3aed' },
+    { v: 'labour_law', icon: 'briefcase', color: '#6366f1' },
+    { v: 'immigration', icon: 'globe', color: '#0891b2' }
+  ],
+  'en-AE': [
+    { v: 'consular', icon: 'globe', color: '#0284c7' },
+    { v: 'business', icon: 'bar-chart', color: '#3b82f6' },
+    { v: 'motor', icon: 'car', color: '#ec4899' },
+    { v: 'general', icon: 'scales', color: '#6366f1' },
+    { v: 'criminal', icon: 'gavel', color: '#b91c1c' },
+    { v: 'notarial', icon: 'stamp', color: '#8b5cf6' },
+    { v: 'banking_finance', icon: 'dollar', color: '#10b981' },
+    { v: 'real_estate', icon: 'home', color: '#f59e0b' },
+    { v: 'labour', icon: 'briefcase', color: '#14b8a6' },
+    { v: 'family_law', icon: 'family', color: '#db2777' },
+    { v: 'taxes', icon: 'dollar', color: '#7c3aed' },
+    { v: 'immigration', icon: 'globe', color: '#0891b2' }
+  ],
+  pl: [
+    { v: 'social_integration', icon: 'users', color: '#8b5cf6' },
+    { v: 'digital_id', icon: 'globe', color: '#0284c7' },
+    { v: 'tax_zus', icon: 'dollar', color: '#10b981' },
+    { v: 'ip', icon: 'file-text', color: '#7c3aed' },
+    { v: 'notarial', icon: 'stamp', color: '#8b5cf6' },
+    { v: 'accounting', icon: 'bar-chart', color: '#3b82f6' },
+    { v: 'sworn_translation', icon: 'scroll', color: '#14b8a6' },
+    { v: 'social_benefits', icon: 'users', color: '#ec4899' },
+    { v: 'education', icon: 'scroll', color: '#f59e0b' },
+    { v: 'social_insurance', icon: 'shield-check', color: '#0891b2' },
+    { v: 'residence', icon: 'globe', color: '#0ea5e9' },
+    { v: 'compensation', icon: 'banknote', color: '#db2777' },
+    { v: 'real_estate', icon: 'home', color: '#f59e0b' },
+    { v: 'inheritance', icon: 'scroll', color: '#10b981' },
+    { v: 'criminal', icon: 'gavel', color: '#b91c1c' },
+    { v: 'tax_advisory', icon: 'dollar', color: '#14b8a6' },
+    { v: 'transport', icon: 'car', color: '#ec4899' },
+    { v: 'labour', icon: 'briefcase', color: '#6366f1' },
+    { v: 'investment', icon: 'bar-chart', color: '#0ea5e9' },
+    { v: 'family', icon: 'family', color: '#db2777' },
+    { v: 'corporate', icon: 'briefcase', color: '#3b82f6' },
+    { v: 'migration', icon: 'globe', color: '#0284c7' },
+    { v: 'other', icon: 'plus', color: '#94a3b8' }
+  ]
 }
+
+export const MARKETS = {
+  uk: { currency: 'UAH', pricing: { monthly: { base: 399, pro: 1599, premium: 3999 }, annual: { base: 359, pro: 1439, premium: 3599 } }, caseValue: { low: 1800, high: 5500 }, services: PRACTICE_AREAS },
+  en: { currency: 'USD', pricing: { monthly: { base: 49, pro: 199, premium: 499 }, annual: { base: 44, pro: 179, premium: 449 } }, caseValue: { low: 500, high: 2000 }, services: SERVICES.en },
+  'en-GB': { currency: 'GBP', pricing: { monthly: { base: 39, pro: 159, premium: 399 }, annual: { base: 35, pro: 143, premium: 359 } }, caseValue: { low: 500, high: 2000 }, services: SERVICES['en-GB'] },
+  'en-AE': { currency: 'AED', pricing: { monthly: { base: 179, pro: 729, premium: 1829 }, annual: { base: 161, pro: 656, premium: 1646 } }, caseValue: { low: 500, high: 2500 }, services: SERVICES['en-AE'] },
+  pl: { currency: 'PLN', pricing: { monthly: { base: 70, pro: 300, premium: 750 }, annual: { base: 63, pro: 270, premium: 675 } }, caseValue: { low: 800, high: 2500 }, services: SERVICES.pl }
+}
+MARKETS.ru = MARKETS.uk
+
+export function market (locale) {
+  return MARKETS[locale || i18nState.locale] || MARKETS.uk
+}
+
+// Сумісність: PRICING за поточним ринком (для коду, що читає прямо).
+export const PRICING = MARKETS.uk.pricing
 
 // ── Склад пакетів (канон). Ключ → підпис у pricing.features.<key>.
 //    Кожен тариф показує свій точний список (усе ✓), у порядку, як затверджено.
@@ -132,8 +219,6 @@ export const PAIN_BRANCHES = {
 // Усі константи взяті з уже узгоджених чисел квіза 1 (marketConfig.uk):
 // середній чек однієї справи 1 800 – 5 500 ₴. Нових обіцянок не вводимо.
 export const DIAGNOSIS = {
-  caseValueLow: 1800,
-  caseValueHigh: 5500,
   weeksPerMonth: 4.3,
   // Годин на тиждень на пошук клієнтів → середина діапазону.
   hoursPerWeek: { lt_2: 1.5, h_2_5: 3.5, h_5_10: 7.5, no_time: 0 },
@@ -171,8 +256,9 @@ export function computeDiagnosis (answers) {
   const hoursMonth = Math.round(hoursWeek * DIAGNOSIS.weeksPerMonth)
   const missed = DIAGNOSIS.missedByDesired[answers.desired_clients] || DIAGNOSIS.missedByDesired.c_10_30
 
-  const revenueLow = missed.low * DIAGNOSIS.caseValueLow
-  const revenueHigh = missed.high * DIAGNOSIS.caseValueHigh
+  const cv = market().caseValue
+  const revenueLow = missed.low * cv.low
+  const revenueHigh = missed.high * cv.high
   const branch = answers.growth_blocker || 'few_leads'
 
   return {
@@ -190,6 +276,8 @@ export function computeDiagnosis (answers) {
     branch,
     // Пункти підписки, які закривають саме цю біль (з PAIN_BRANCHES.focus).
     fixFeatures: (PAIN_BRANCHES[branch] || PAIN_BRANCHES.few_leads).focus,
+    caseLow: cv.low,
+    caseHigh: cv.high,
     tier: DIAGNOSIS.tierByDesired[answers.desired_clients] || 'pro'
   }
 }
@@ -238,9 +326,9 @@ export const SLIDES = [
     type: 'checkbox',
     field: 'services',
     requireSelection: true,
+    marketKey: 'services',
     q: 'slides.services.q',
-    sub: 'slides.services.sub',
-    options: PRACTICE_AREAS
+    sub: 'slides.services.sub'
   },
   {
     type: 'radio',
@@ -279,10 +367,22 @@ export const AI_POTENTIAL = {
 }
 
 // ── Форматування грошей (₴, як у квізі 1) ────────────────────────────────────
-export function formatMoney (value) {
-  return String(Math.round(Number(value) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' ₴'
+// Валютні правила по ринках.
+const CURRENCY = {
+  UAH: { symbol: '₴', pos: 'after', group: ' ' },
+  USD: { symbol: '$', pos: 'before', group: ',' },
+  GBP: { symbol: '£', pos: 'before', group: ',' },
+  AED: { symbol: 'AED', pos: 'before', space: ' ', group: ',' },
+  PLN: { symbol: 'zł', pos: 'after', group: ' ' }
 }
 
-export function formatNumber (value) {
-  return String(Math.round(Number(value) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+export function formatNumber (value, locale) {
+  const sep = CURRENCY[market(locale).currency].group
+  return String(Math.round(Number(value) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, sep)
+}
+
+export function formatMoney (value, locale) {
+  const c = CURRENCY[market(locale).currency]
+  const n = formatNumber(value, locale)
+  return c.pos === 'before' ? c.symbol + (c.space || '') + n : n + ' ' + c.symbol
 }

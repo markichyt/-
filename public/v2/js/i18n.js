@@ -278,7 +278,7 @@ const uk = {
       lead: {
         title: 'Реєстрація команди',
         sub: "Розкажіть про Вашу фірму — менеджер зв'яжеться протягом 24 годин з індивідуальним планом.",
-        note: 'Цей план для команд від 10 спеціалістів. Для менших — оберіть Base, Pro або Premium.',
+        note: 'Цей план для команд від 10 спеціалістів. Для менших — оберіть Start, Pro або Premium.',
         firmName: 'Назва фірми',
         companyName: 'Назва компанії',
         teamSize: 'Розмір команди',
@@ -320,7 +320,7 @@ const uk = {
         },
         payment: {
           q: 'Як працює оплата?',
-          a: 'У нас три тарифи: Base, Pro і Premium. Вартість значно нижча за традиційні маркетингові агенції. Багато юристів окуповують підписку вже 1–2 клієнтами.'
+          a: 'У нас три тарифи: Start, Pro і Premium. Вартість значно нижча за традиційні маркетингові агенції. Багато юристів окуповують підписку вже 1–2 клієнтами.'
         },
         noClients: {
           q: 'А якщо клієнтів не буде?',
@@ -643,7 +643,7 @@ const ru = {
       lead: {
         title: 'Регистрация команды',
         sub: 'Расскажите о Вашей фирме — менеджер свяжется в течение 24 часов с индивидуальным планом.',
-        note: 'Этот план для команд от 10 специалистов. Для меньших — выберите Base, Pro или Premium.',
+        note: 'Этот план для команд от 10 специалистов. Для меньших — выберите Start, Pro или Premium.',
         firmName: 'Название фирмы',
         companyName: 'Название компании',
         teamSize: 'Размер команды',
@@ -685,7 +685,7 @@ const ru = {
         },
         payment: {
           q: 'Как работает оплата?',
-          a: 'У нас три тарифа: Base, Pro и Premium. Стоимость значительно ниже, чем у традиционных маркетинговых агентств. Многие юристы окупают подписку уже 1–2 клиентами.'
+          a: 'У нас три тарифа: Start, Pro и Premium. Стоимость значительно ниже, чем у традиционных маркетинговых агентств. Многие юристы окупают подписку уже 1–2 клиентами.'
         },
         noClients: {
           q: 'А если клиентов не будет?',
@@ -737,15 +737,1798 @@ const ru = {
 }
 
 // ── Рушій локалізації ────────────────────────────────────────────────────────
-export const MESSAGES = { uk, ru }
-export const SUPPORTED_LOCALES = ['uk', 'ru']
+
+const en = {
+  "meta": {
+    "title": "CONSULTANT — more clients for your practice"
+  },
+  "common": {
+    "next": "Next →",
+    "back": "Back",
+    "skip": "Skip",
+    "selectOneOrMore": "Select one or more",
+    "chosen": "selected",
+    "discountBanner": "20% OFF — JUST FOR YOU!",
+    "timer": {
+      "hours": "h",
+      "minutes": "min",
+      "seconds": "sec"
+    },
+    "videoSound": {
+      "on": "Turn on sound",
+      "off": "Turn off sound"
+    },
+    "videoPause": {
+      "pause": "Pause",
+      "play": "Play"
+    }
+  },
+  "topbar": {
+    "step": "STEP {n} / {total}"
+  },
+  "validation": {
+    "required": "Please fill in this field",
+    "emailInvalid": "Invalid email format",
+    "phoneInvalid": "Invalid phone number"
+  },
+  "slides": {
+    "greeting": {
+      "q": "Welcome to <span class=\"accent\">CONSULTANT</span>",
+      "sub": "Watch a short intro and take the quiz. It's 2 minutes, and at the end you'll see your solution."
+    },
+    "contact": {
+      "q": "Let's <span class=\"accent\">get to know you</span>",
+      "sub": "So we can send your personal estimate — even if you don't finish the quiz.",
+      "fields": {
+        "first_name": {
+          "label": "First name",
+          "ph": "Alexander"
+        },
+        "last_name": {
+          "label": "Last name",
+          "ph": "Miller"
+        },
+        "email": {
+          "label": "Email",
+          "ph": "alexander@example.com"
+        },
+        "phone": {
+          "label": "Phone",
+          "ph": "+1 202 555 0147"
+        }
+      }
+    },
+    "search_time": {
+      "q": "How much time a week do you spend on <span class=\"accent\">finding new clients?</span>",
+      "sub": "Including calls, social media and referrals",
+      "opt": {
+        "lt_2": "Less than 2 hours",
+        "h_2_5": "2–5 hours",
+        "h_5_10": "5–10 hours",
+        "no_time": "I never have time"
+      }
+    },
+    "growth_blocker": {
+      "q": "What's holding you back <span class=\"accent\">from growing?</span>",
+      "sub": "Pick what hurts the most",
+      "opt": {
+        "few_leads": "Too few inquiries",
+        "no_deals": "Inquiries come, but don't convert",
+        "routine": "Lost in the routine (documents, calls)",
+        "no_system": "No system, everything is chaotic"
+      }
+    },
+    "services": {
+      "q": "What area of law do you <span class=\"accent\">practice in?</span>",
+      "sub": "Select all that apply",
+      "opt": {
+        "banking_finance": "Banking & Financial Law",
+        "real_estate": "Real Estate Law",
+        "labour_law": "Labor Law",
+        "intellectual_property": "Intellectual Property Law",
+        "general": "General Legal Services",
+        "family_law": "Family Law",
+        "business": "Business & Corporate Law",
+        "taxes": "Tax Law",
+        "cars": "Motor Vehicle Law",
+        "employment": "Employment Law",
+        "immigration_law": "Immigration Law"
+      }
+    },
+    "desired_clients": {
+      "q": "How many clients do you want to get <span class=\"accent\">per month?</span>",
+      "sub": "This will determine which plan fits you",
+      "opt": {
+        "c_to_10": "Up to 10 clients",
+        "c_10_30": "10–30 clients",
+        "c_30_50": "30–50 clients",
+        "c_50_plus": "50+ clients"
+      }
+    },
+    "solution": {
+      "q": "Here's your <span class=\"accent\">solution</span>",
+      "sub": "Calculated from your answers."
+    },
+    "pricing": {
+      "q": "Here's what will <span class=\"accent\">solve</span> this",
+      "sub": ""
+    },
+    "payment": {
+      "q": "Complete your <span class=\"accent\">purchase</span>",
+      "sub": ""
+    },
+    "photoUpload": {
+      "q": "Upload <span class=\"accent\">your photo!</span>",
+      "sub": "Upload your photo to generate a video avatar for your profile"
+    },
+    "aiPotential": {
+      "q": "Your potential with <span class=\"accent\">CONSULTANT</span>",
+      "sub": "AI calculated for your areas and market: how many new clients and income you can get per month — and what it would cost without us."
+    },
+    "assessment": {
+      "q": "Last step — your <span class=\"accent\">profile</span>",
+      "sub": "Choose how to fill it in. AI does the rest."
+    },
+    "fullProfile": {
+      "q": "Complete your <span class=\"accent\">profile</span>",
+      "sub": "Choose one — write a detailed bio (3,000+ characters) or upload a CV. AI generates the rest."
+    }
+  },
+  "cards": {
+    "greeting": {
+      "start": "Start →"
+    },
+    "solution": {
+      "gainEyebrow": "With CONSULTANT that's",
+      "gainCap": "new clients per month",
+      "gainRevenueLabel": "Potential income",
+      "proof": {
+        "lawyers": "2,500+",
+        "lawyersCap": "lawyers already with us",
+        "growth": "+183%",
+        "growthCap": "avg. income growth",
+        "renew": "94%",
+        "renewCap": "renew their subscription"
+      },
+      "cta": "Show plans →"
+    },
+    "callback": {
+      "plaque": "Not ready to pay now? Request a manager call to",
+      "noPhone": "enter number",
+      "label": "Number to call",
+      "submit": "Request a call",
+      "sending": "Sending…",
+      "done": "✓ Done — a manager will call {phone} during the business day."
+    },
+    "cta": {
+      "recommendedNote": "Your plan: {plan} — {price}/mo",
+      "buyNow": "Buy now",
+      "buyNowHint": "Straight to checkout for the selected plan",
+      "scheduleCall": "Schedule a call",
+      "scheduleHint": "A manager will call at a convenient time",
+      "calendar": {
+        "title": "Pick a convenient time",
+        "sub": "We'll call {phone} — the number is already saved.",
+        "today": "Today",
+        "tomorrow": "Tomorrow",
+        "pickDay": "Day",
+        "pickTime": "Time",
+        "topicLabel": "What to talk about?",
+        "topicPh": "Briefly: what exactly you want to solve…",
+        "topics": {
+          "plan": "Which plan to choose",
+          "leads": "How inquiries work",
+          "demo": "Show the platform",
+          "team": "Terms for a team"
+        },
+        "submit": "Confirm the call",
+        "sending": "Sending…",
+        "thanksTitle": "Call scheduled!",
+        "thanksSub": "A manager will call {when} at {phone}.",
+        "close": "Close",
+        "weekdays": [
+          "Sun",
+          "Mon",
+          "Tue",
+          "Wed",
+          "Thu",
+          "Fri",
+          "Sat"
+        ],
+        "months": [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December"
+        ]
+      }
+    },
+    "photo": {
+      "dropHint": "Tap to upload your photo",
+      "dropSub": "JPEG or PNG · up to 5 MB · landscape 16:9",
+      "error": {
+        "badType": "Wrong format — JPEG / PNG only",
+        "tooBig": "File too large — 5 MB max"
+      },
+      "previewAlt": "Photo preview",
+      "uploadOwn": "Upload your photo",
+      "samplesTitle": "No photo handy? Pick a sample 👇",
+      "sampleLabel": "Sample"
+    },
+    "aiPotential": {
+      "heroEyebrow": "With us you earn",
+      "clientsLabel": "potential clients per month",
+      "revenue": "≈ {low} – {high}",
+      "revenueCaption": "income / mo",
+      "priceLabel": "all this for a {amount}/mo subscription",
+      "compareQ": "To get this flow on your own you'd need <b>a whole team:</b>",
+      "teamRoleCost": "{low}–{high}k",
+      "teamRoles": {
+        "seo": "SEO specialist",
+        "targeting": "Ad specialist",
+        "content": "Content creator",
+        "video": "Video editor",
+        "smm": "SMM manager"
+      },
+      "teamTotalLabel": "Your own team total",
+      "teamTotal": "{low}–{high}/mo",
+      "usLabel": "CONSULTANT — all in one",
+      "ourPlan": "{amount}/mo",
+      "punchHtml": "<b>{times}×</b> cheaper — save up to <b>{save}/mo</b>",
+      "finePrintLabel": "Calculated for:",
+      "finePrintDisclaimer": "Estimate only — actual results depend on the market, profile optimization and your own effort. Not a guarantee of income.",
+      "serviceFallback": "General"
+    },
+    "assessment": {
+      "levels": {
+        "low": "Low",
+        "normal": "Normal",
+        "mid": "Moderate",
+        "high": "High"
+      },
+      "yourLevel": "Your level:",
+      "calculatedFor": "Calculated for:",
+      "factors": "Factors: practice area, desired number of clients, current workload.",
+      "disclaimer": "Estimate only — actual results may differ. Not a guarantee of income.",
+      "serviceFallback": "General",
+      "whyTitle": "Why this matters",
+      "whyLead": "From this, AI builds your public CONSULTANT profile — on its own, in a few minutes. Experience, education, certifications and notable cases are extracted automatically.",
+      "why": {
+        "profile": "A ready profile instead of an empty card",
+        "google": "Top of Google for your name",
+        "clients": "Clients find you themselves, without ads"
+      },
+      "warn": "AI has nothing to build your profile from yet. Lawyers with an empty profile rank below peers and get far fewer inquiries.",
+      "chooseLabel": "Choose how to fill in the profile",
+      "tabCv": "Upload a CV",
+      "tabCvNote": "fastest — 10 seconds",
+      "tabBio": "Write about yourself",
+      "tabBioNote": "at least 3,000 characters",
+      "cvPlaceholder": "Tap to choose a file",
+      "cvHint": ".pdf / .doc / .docx",
+      "bioPh": "Tell us about your experience, education, specialization, notable cases, certifications and awards. Write freely — there's no upper limit.",
+      "charLeft": "{n} more characters to the minimum",
+      "charEnough": "{n} characters — enough ✓",
+      "bioMinHint": "Minimum 3,000 characters. More is better: the more detail, the stronger the profile AI builds.",
+      "finish": "Finish →",
+      "doneTitle": "Done!",
+      "doneSub": "Your profile is being created. We'll send confirmation to {email}."
+    },
+    "fullProfile": {
+      "finish": "Finish →",
+      "strengthLabel": "Profile strength",
+      "strengthHint": {
+        "high": "✓ Strong profile — AI will do great",
+        "mid": "Good start — add more detail for better AI quality",
+        "low": "Add details below — the more info, the stronger your AI profile"
+      },
+      "aboutLabel": "About you",
+      "aboutHint": "recommended 3000+ characters",
+      "aboutPh": "Tell us about your experience, education, achievements, notable cases, certifications, awards…",
+      "cvCtaTitle": "📄 Have a CV? Upload it — it boosts profile strength by 30%",
+      "cvCtaBody": "Our AI generates your public profile <strong>right from your CV</strong>. Experience, education, certifications, notable cases and achievements are extracted automatically. <em>Optional, but highly recommended.</em>",
+      "cvLabel": "Upload a CV",
+      "cvHint": "optional · .pdf / .doc / .docx",
+      "cvPlaceholder": "Tap to choose .pdf / .doc / .docx",
+      "optional": "optional",
+      "doneTitle": "Done!",
+      "doneSub": "Your profile is being created. We'll send confirmation to {email}."
+    },
+    "profilesPricing": {
+      "previewTitle": "Your profile on",
+      "prevPlan": "Previous plan",
+      "nextPlan": "Next plan",
+      "recommended": "RECOMMENDED FOR YOU",
+      "plans": {
+        "base": "Start",
+        "pro": "Pro",
+        "premium": "Premium"
+      },
+      "cta": {
+        "base": "Choose Start",
+        "pro": "Choose Pro",
+        "premium": "Choose Premium"
+      },
+      "demo": {
+        "name": "Alexander Miller",
+        "role": "Attorney",
+        "location": "New York, USA"
+      },
+      "demoPremium": {
+        "name": "Alexander König",
+        "role": "Attorney",
+        "location": "New York, USA"
+      },
+      "avatarAlt": "Attorney",
+      "avatarLabel": "AI avatar preview",
+      "avatarTagline": "Your AI avatar creates professional videos in your name for your website and social media",
+      "monthly": "Monthly",
+      "annual": "Yearly",
+      "saveBadge": "−10%",
+      "trustTitle": "Built for lawyers",
+      "trustEthicsHtml": "Complies with <strong>legal ethics rules</strong>",
+      "trustDataHtml": "<strong>Data protection</strong> · SOC 2",
+      "customQuote": "Large firm? Custom offer",
+      "close": "Close",
+      "lead": {
+        "title": "Team registration",
+        "sub": "Tell us about your firm — a manager will reach out within 24 hours with a custom plan.",
+        "note": "This plan is for teams of 10+ specialists. For smaller ones — choose Start, Pro or Premium.",
+        "firmName": "Firm name",
+        "companyName": "Company name",
+        "teamSize": "Team size",
+        "teamSizeHint": "(minimum 10)",
+        "teamSizePh": "e.g. 12",
+        "location": "City",
+        "email": "Contact email",
+        "phone": "Phone",
+        "message": "What do you need?",
+        "messagePh": "Volume, integrations, white-label, timeline…",
+        "submit": "Request a call",
+        "sending": "Sending…",
+        "foot": "By submitting, you agree that our team will contact you.",
+        "thanksTitle": "Thank you!",
+        "thanksSub": "A manager will reach out within 24 hours with a custom plan for your team."
+      }
+    },
+    "payment": {
+      "periods": {
+        "1_month": "1 month",
+        "1_year": "1 year"
+      },
+      "saveBadge": "-10%",
+      "savedHero": "YOU JUST SAVED",
+      "rows": {
+        "plan": "{plan} plan — {period}",
+        "urgency": "Urgency discount (20%)",
+        "total": "Total"
+      },
+      "paypal": "Pay with PayPal",
+      "card": "Pay by card",
+      "sending": "Sending…",
+      "faqHeading": "Frequently asked questions",
+      "faq": {
+        "clients": {
+          "q": "How many clients can I get per month?",
+          "a": "Depending on specialization, city and profile optimization — many lawyers get 5–15 clients in the first month, scaling to 20–30+ over time thanks to AI content and SEO."
+        },
+        "guarantee": {
+          "q": "Is that a guaranteed number of clients?",
+          "a": "We provide you with leads you work with yourself. You can also work on exclusive terms with platform clients — in that case they're already-paid clients."
+        },
+        "payment": {
+          "q": "How does payment work?",
+          "a": "We have three plans: Start, Pro and Premium. The cost is far lower than traditional marketing agencies. Many lawyers cover the subscription with just 1–2 clients."
+        },
+        "noClients": {
+          "q": "What if there are no clients?",
+          "a": "Lead availability depends on your activity on the platform. We guarantee uninterrupted access to the platform and its resources. Payment is non-refundable once access is granted."
+        },
+        "data": {
+          "q": "Is my data safe?",
+          "a": "Yes, we use a secure messenger, data encryption and don't share information with third parties. The platform complies with data protection requirements (GDPR)."
+        }
+      }
+    }
+  },
+  "pricing": {
+    "perMonthShort": "/mo",
+    "note": {
+      "monthly": "per month, billed monthly",
+      "annual": "per month, billed yearly (−10%)"
+    },
+    "features": {
+      "profile_basic": "Basic personal profile level",
+      "profile_pro": "Professional personal profile level",
+      "video_avatar": "Video avatar to promote your services",
+      "leads_3": "Up to 3 leads/mo",
+      "leads_6": "Up to 6 leads/mo",
+      "leads_unlim": "Unlimited leads",
+      "google": "Promotion of your name and professional profile on Google",
+      "manager_ext": "Personal manager with extended support",
+      "manager_247": "24/7 personal manager to ensure fast earnings",
+      "exclusive_smm": "Exclusive promotion on social media",
+      "own_services": "Promotion of your own services",
+      "ai_google": "AI module to launch ads on Google",
+      "ai_meta": "AI module to launch ads on Meta",
+      "ai_monitoring": "AI monitoring of competitors' activity and offers",
+      "crm": "Built-in system for clients and inquiries",
+      "referral": "Earn by sharing your referral code with colleagues",
+      "messenger": "Secure connection via a dedicated in-app messenger with call recording and staff control",
+      "private_chat": "Private chat for specialists",
+      "rating_boost": "Boost your rating based on prior experience"
+    },
+    "badges": {
+      "new": "NEW",
+      "more_4x": "4x more",
+      "more_5x": "5x more",
+      "more_2_5x": "2.5x more",
+      "infinity": "∞",
+      "upgrade": "UPGRADE"
+    }
+  }
+}
+
+const pl = {
+  "meta": {
+    "title": "CONSULTANT — więcej klientów dla Twojej praktyki"
+  },
+  "common": {
+    "next": "Dalej →",
+    "back": "Wstecz",
+    "skip": "Pomiń",
+    "selectOneOrMore": "Wybierz jeden lub więcej",
+    "chosen": "wybrano",
+    "discountBanner": "ZNIŻKA 20% TYLKO DLA CIEBIE!",
+    "timer": {
+      "hours": "godz",
+      "minutes": "min",
+      "seconds": "sek"
+    },
+    "videoSound": {
+      "on": "Włącz dźwięk",
+      "off": "Wyłącz dźwięk"
+    },
+    "videoPause": {
+      "pause": "Pauza",
+      "play": "Odtwórz"
+    }
+  },
+  "topbar": {
+    "step": "KROK {n} / {total}"
+  },
+  "validation": {
+    "required": "Wypełnij to pole",
+    "emailInvalid": "Nieprawidłowy format email",
+    "phoneInvalid": "Nieprawidłowy numer telefonu"
+  },
+  "slides": {
+    "greeting": {
+      "q": "Witamy w <span class=\"accent\">CONSULTANT</span>",
+      "sub": "Obejrzyj krótkie powitanie i wypełnij ankietę. To 2 minuty, a na końcu zobaczysz swoje rozwiązanie."
+    },
+    "contact": {
+      "q": "<span class=\"accent\">Poznajmy się</span>",
+      "sub": "Abyśmy mogli wysłać Twoją indywidualną kalkulację — nawet jeśli nie dokończysz ankiety.",
+      "fields": {
+        "first_name": {
+          "label": "Imię",
+          "ph": "Aleksander"
+        },
+        "last_name": {
+          "label": "Nazwisko",
+          "ph": "Kowalski"
+        },
+        "email": {
+          "label": "Email",
+          "ph": "aleksander@example.com"
+        },
+        "phone": {
+          "label": "Telefon",
+          "ph": "+48 601 234 567"
+        }
+      }
+    },
+    "search_time": {
+      "q": "Ile czasu tygodniowo poświęcasz na <span class=\"accent\">pozyskiwanie nowych klientów?</span>",
+      "sub": "Łącznie z telefonami, mediami społecznościowymi i poleceniami",
+      "opt": {
+        "lt_2": "Mniej niż 2 godziny",
+        "h_2_5": "2–5 godzin",
+        "h_5_10": "5–10 godzin",
+        "no_time": "W ogóle nie nadążam"
+      }
+    },
+    "growth_blocker": {
+      "q": "Co najbardziej <span class=\"accent\">przeszkadza Ci rosnąć?</span>",
+      "sub": "Wybierz to, co boli najbardziej",
+      "opt": {
+        "few_leads": "Mało zapytań",
+        "no_deals": "Zapytania są, ale nie kończą się umową",
+        "routine": "Gubię się w rutynie (dokumenty, telefony)",
+        "no_system": "Brak systemu, wszystko chaotycznie"
+      }
+    },
+    "services": {
+      "q": "W jakiej dziedzinie prawa <span class=\"accent\">praktykujesz?</span>",
+      "sub": "Wybierz wszystkie pasujące",
+      "opt": {
+        "social_integration": "Prawo świadczeń społecznych i integracji",
+        "digital_id": "Identyfikacja cyfrowa i e-administracja",
+        "tax_zus": "Prawo podatkowe, ZUS i finanse",
+        "ip": "Prawo własności intelektualnej",
+        "notarial": "Usługi notarialne",
+        "accounting": "Doradztwo księgowe i podatkowe",
+        "sworn_translation": "Tłumaczenia przysięgłe i prawne",
+        "social_benefits": "Prawo świadczeń socjalnych",
+        "education": "Prawo edukacyjne i studenckie",
+        "social_insurance": "Prawo ubezpieczeń społecznych",
+        "residence": "Legalizacja pobytu i prawo pobytowe",
+        "compensation": "Odszkodowania i dochodzenie roszczeń",
+        "real_estate": "Prawo nieruchomości",
+        "inheritance": "Prawo spadkowe",
+        "criminal": "Prawo karne",
+        "tax_advisory": "Doradztwo podatkowe",
+        "transport": "Prawo transportowe i drogowe",
+        "labour": "Prawo pracy",
+        "investment": "Prawo inwestycyjne i dotacje",
+        "family": "Prawo rodzinne i opiekuńcze",
+        "corporate": "Prawo gospodarcze i handlowe",
+        "migration": "Prawo migracyjne",
+        "other": "Pozostałe usługi prawne"
+      }
+    },
+    "desired_clients": {
+      "q": "Ilu klientów chcesz pozyskiwać <span class=\"accent\">miesięcznie?</span>",
+      "sub": "To określi, który plan będzie dla Ciebie odpowiedni",
+      "opt": {
+        "c_to_10": "Do 10 klientów",
+        "c_10_30": "10–30 klientów",
+        "c_30_50": "30–50 klientów",
+        "c_50_plus": "50+ klientów"
+      }
+    },
+    "solution": {
+      "q": "Oto Twoje <span class=\"accent\">rozwiązanie</span>",
+      "sub": "Obliczono na podstawie Twoich odpowiedzi."
+    },
+    "pricing": {
+      "q": "Oto co <span class=\"accent\">rozwiąże</span> ten problem",
+      "sub": ""
+    },
+    "payment": {
+      "q": "Dokończ <span class=\"accent\">zakup</span>",
+      "sub": ""
+    },
+    "photoUpload": {
+      "q": "Prześlij <span class=\"accent\">swoje zdjęcie!</span>",
+      "sub": "Prześlij swoje zdjęcie, aby wygenerować awatar wideo dla Twojego profilu"
+    },
+    "aiPotential": {
+      "q": "Twój potencjał z <span class=\"accent\">CONSULTANT</span>",
+      "sub": "AI obliczyło dla Twoich obszarów i rynku: ilu nowych klientów i przychodu możesz uzyskać miesięcznie — i ile kosztowałoby to bez nas."
+    },
+    "assessment": {
+      "q": "Ostatni krok — Twój <span class=\"accent\">profil</span>",
+      "sub": "Wybierz, jak go wypełnić. Resztę zrobi AI."
+    },
+    "fullProfile": {
+      "q": "Uzupełnij swój <span class=\"accent\">profil</span>",
+      "sub": "Wybierz jedno — napisz szczegółowe bio (3 000+ znaków) lub prześlij CV. Resztę wygeneruje nasze AI."
+    }
+  },
+  "cards": {
+    "greeting": {
+      "start": "Zacznij →"
+    },
+    "solution": {
+      "gainEyebrow": "Z CONSULTANT to",
+      "gainCap": "nowych klientów miesięcznie",
+      "gainRevenueLabel": "Potencjalny przychód",
+      "proof": {
+        "lawyers": "2 500+",
+        "lawyersCap": "prawników już z nami",
+        "growth": "+183%",
+        "growthCap": "śr. wzrost przychodu",
+        "renew": "94%",
+        "renewCap": "przedłuża subskrypcję"
+      },
+      "cta": "Pokaż plany →"
+    },
+    "callback": {
+      "plaque": "Nie jesteś gotów zapłacić teraz? Zamów rozmowę z managerem na numer",
+      "noPhone": "podaj numer",
+      "label": "Numer do rozmowy",
+      "submit": "Zamów rozmowę",
+      "sending": "Wysyłanie…",
+      "done": "✓ Gotowe — manager zadzwoni na {phone} w ciągu dnia roboczego."
+    },
+    "cta": {
+      "recommendedNote": "Twój plan: {plan} — {price}/mies",
+      "buyNow": "Kup teraz",
+      "buyNowHint": "Od razu do płatności za wybrany plan",
+      "scheduleCall": "Zaplanuj rozmowę",
+      "scheduleHint": "Manager zadzwoni w dogodnym czasie",
+      "calendar": {
+        "title": "Wybierz dogodny czas",
+        "sub": "Zadzwonimy na {phone} — numer jest już zapisany.",
+        "today": "Dziś",
+        "tomorrow": "Jutro",
+        "pickDay": "Dzień",
+        "pickTime": "Godzina",
+        "topicLabel": "O czym porozmawiać?",
+        "topicPh": "Krótko: co dokładnie chcesz rozwiązać…",
+        "topics": {
+          "plan": "Który plan wybrać",
+          "leads": "Jak działają zapytania",
+          "demo": "Pokaż platformę",
+          "team": "Warunki dla zespołu"
+        },
+        "submit": "Potwierdź rozmowę",
+        "sending": "Wysyłanie…",
+        "thanksTitle": "Rozmowa zaplanowana!",
+        "thanksSub": "Manager zadzwoni {when} na numer {phone}.",
+        "close": "Zamknij",
+        "weekdays": [
+          "Nd",
+          "Pn",
+          "Wt",
+          "Śr",
+          "Cz",
+          "Pt",
+          "Sb"
+        ],
+        "months": [
+          "stycznia",
+          "lutego",
+          "marca",
+          "kwietnia",
+          "maja",
+          "czerwca",
+          "lipca",
+          "sierpnia",
+          "września",
+          "października",
+          "listopada",
+          "grudnia"
+        ]
+      }
+    },
+    "photo": {
+      "dropHint": "Kliknij, aby przesłać swoje zdjęcie",
+      "dropSub": "JPEG lub PNG · do 5 MB · poziome 16:9",
+      "error": {
+        "badType": "Zły format — tylko JPEG / PNG",
+        "tooBig": "Plik za duży — maksymalnie 5 MB"
+      },
+      "previewAlt": "Podgląd zdjęcia",
+      "uploadOwn": "Prześlij swoje zdjęcie",
+      "samplesTitle": "Nie masz zdjęcia pod ręką? Wybierz przykład 👇",
+      "sampleLabel": "Przykład"
+    },
+    "aiPotential": {
+      "heroEyebrow": "Z nami zarabiasz",
+      "clientsLabel": "potencjalnych klientów miesięcznie",
+      "revenue": "≈ {low} – {high}",
+      "revenueCaption": "przychodu / mies",
+      "priceLabel": "to wszystko za subskrypcję {amount}/mies",
+      "compareQ": "Aby uzyskać taki przepływ samodzielnie, potrzebujesz <b>całego zespołu:</b>",
+      "teamRoleCost": "{low}–{high} tys",
+      "teamRoles": {
+        "seo": "Specjalista SEO",
+        "targeting": "Specjalista ds. reklam",
+        "content": "Twórca treści",
+        "video": "Montażysta wideo",
+        "smm": "Manager SMM"
+      },
+      "teamTotalLabel": "Razem własny zespół",
+      "teamTotal": "{low}–{high}/mies",
+      "usLabel": "CONSULTANT — wszystko w jednym",
+      "ourPlan": "{amount}/mies",
+      "punchHtml": "<b>{times}×</b> taniej — oszczędność do <b>{save}/mies</b>",
+      "finePrintLabel": "Obliczono dla:",
+      "finePrintDisclaimer": "Tylko szacunek — rzeczywisty wynik zależy od rynku, optymalizacji profilu i własnych starań. Nie jest gwarancją dochodu.",
+      "serviceFallback": "Ogólne"
+    },
+    "assessment": {
+      "levels": {
+        "low": "Niski",
+        "normal": "Normalny",
+        "mid": "Umiarkowany",
+        "high": "Wysoki"
+      },
+      "yourLevel": "Twój poziom:",
+      "calculatedFor": "Obliczono dla:",
+      "factors": "Czynniki: dziedzina praktyki, pożądana liczba klientów, obecne obciążenie.",
+      "disclaimer": "Tylko szacunek — rzeczywisty wynik może się różnić. Nie jest gwarancją dochodu.",
+      "serviceFallback": "Ogólne",
+      "whyTitle": "Po co to potrzebne",
+      "whyLead": "Z tego AI zbuduje Twój publiczny profil na CONSULTANT — samodzielnie, w kilka minut. Doświadczenie, wykształcenie, certyfikaty i znane sprawy są pobierane automatycznie.",
+      "why": {
+        "profile": "Gotowy profil zamiast pustej karty",
+        "google": "Top w Google na Twoje nazwisko",
+        "clients": "Klienci sami Cię znajdują, bez reklam"
+      },
+      "warn": "AI nie ma jeszcze z czego zbudować Twojego profilu. Prawnicy z pustym profilem są niżej w wynikach i dostają znacznie mniej zapytań.",
+      "chooseLabel": "Wybierz, jak wypełnić profil",
+      "tabCv": "Prześlij CV",
+      "tabCvNote": "najszybciej — 10 sekund",
+      "tabBio": "Napisz o sobie",
+      "tabBioNote": "minimum 3 000 znaków",
+      "cvPlaceholder": "Kliknij, aby wybrać plik",
+      "cvHint": ".pdf / .doc / .docx",
+      "bioPh": "Opowiedz o swoim doświadczeniu, wykształceniu, specjalizacji, znanych sprawach, certyfikatach i nagrodach. Pisz swobodnie — nie ma górnego limitu.",
+      "charLeft": "jeszcze {n} znaków do minimum",
+      "charEnough": "{n} znaków — wystarczy ✓",
+      "bioMinHint": "Minimum 3 000 znaków. Więcej — lepiej: im więcej szczegółów, tym silniejszy profil zbuduje AI.",
+      "finish": "Zakończ →",
+      "doneTitle": "Gotowe!",
+      "doneSub": "Twój profil jest tworzony. Wyślemy potwierdzenie na {email}."
+    },
+    "fullProfile": {
+      "finish": "Zakończ →",
+      "strengthLabel": "Siła profilu",
+      "strengthHint": {
+        "high": "✓ Silny profil — AI da świetny wynik",
+        "mid": "Dobry początek — dodaj więcej szczegółów dla lepszej jakości AI",
+        "low": "Dodaj szczegóły poniżej — im więcej informacji, tym silniejszy Twój profil AI"
+      },
+      "aboutLabel": "O sobie",
+      "aboutHint": "zalecane 3000+ znaków",
+      "aboutPh": "Opowiedz o swoim doświadczeniu, wykształceniu, osiągnięciach, znanych sprawach, certyfikatach, nagrodach…",
+      "cvCtaTitle": "📄 Masz CV? Prześlij — zwiększa siłę profilu o 30%",
+      "cvCtaBody": "Nasze AI wygeneruje Twój publiczny profil <strong>bezpośrednio z Twojego CV</strong>. Doświadczenie, wykształcenie, certyfikaty, znane sprawy i osiągnięcia są pobierane automatycznie. <em>Opcjonalnie, ale bardzo zalecane.</em>",
+      "cvLabel": "Prześlij CV",
+      "cvHint": "opcjonalnie · .pdf / .doc / .docx",
+      "cvPlaceholder": "Kliknij, aby wybrać .pdf / .doc / .docx",
+      "optional": "opcjonalnie",
+      "doneTitle": "Gotowe!",
+      "doneSub": "Twój profil jest tworzony. Wyślemy potwierdzenie na {email}."
+    },
+    "profilesPricing": {
+      "previewTitle": "Twój profil na",
+      "prevPlan": "Poprzedni plan",
+      "nextPlan": "Następny plan",
+      "recommended": "REKOMENDOWANE DLA CIEBIE",
+      "plans": {
+        "base": "Start",
+        "pro": "Pro",
+        "premium": "Premium"
+      },
+      "cta": {
+        "base": "Wybierz Start",
+        "pro": "Wybierz Pro",
+        "premium": "Wybierz Premium"
+      },
+      "demo": {
+        "name": "Aleksander Kowalski",
+        "role": "Adwokat",
+        "location": "Warszawa, Polska"
+      },
+      "demoPremium": {
+        "name": "Alexander König",
+        "role": "Adwokat",
+        "location": "Warszawa, Polska"
+      },
+      "avatarAlt": "Adwokat",
+      "avatarLabel": "Podgląd awatara AI",
+      "avatarTagline": "Twój awatar AI tworzy profesjonalne wideo w Twoim imieniu na stronę i media społecznościowe",
+      "monthly": "Miesięcznie",
+      "annual": "Rocznie",
+      "saveBadge": "−10%",
+      "trustTitle": "Stworzone dla polskich prawników",
+      "trustEthicsHtml": "Zgodne z <strong>zasadami etyki zawodowej</strong>",
+      "trustDataHtml": "<strong>Ochrona danych</strong> · SOC 2",
+      "customQuote": "Duża kancelaria? Indywidualna oferta",
+      "close": "Zamknij",
+      "lead": {
+        "title": "Rejestracja zespołu",
+        "sub": "Opowiedz o swojej kancelarii — manager skontaktuje się w ciągu 24 godzin z indywidualnym planem.",
+        "note": "Ten plan jest dla zespołów od 10 specjalistów. Dla mniejszych — wybierz Start, Pro lub Premium.",
+        "firmName": "Nazwa kancelarii",
+        "companyName": "Nazwa firmy",
+        "teamSize": "Wielkość zespołu",
+        "teamSizeHint": "(minimum 10)",
+        "teamSizePh": "np. 12",
+        "location": "Miasto",
+        "email": "Email kontaktowy",
+        "phone": "Telefon",
+        "message": "Czego potrzebujesz?",
+        "messagePh": "Zakres, integracje, white-label, terminy…",
+        "submit": "Zamów rozmowę",
+        "sending": "Wysyłanie…",
+        "foot": "Wysyłając, zgadzasz się, że nasz zespół się z Tobą skontaktuje.",
+        "thanksTitle": "Dziękujemy!",
+        "thanksSub": "Manager skontaktuje się w ciągu 24 godzin z indywidualnym planem dla Twojego zespołu."
+      }
+    },
+    "payment": {
+      "periods": {
+        "1_month": "1 miesiąc",
+        "1_year": "1 rok"
+      },
+      "saveBadge": "-10%",
+      "savedHero": "WŁAŚNIE ZAOSZCZĘDZIŁEŚ",
+      "rows": {
+        "plan": "Plan {plan} — {period}",
+        "urgency": "Zniżka za pilność (20%)",
+        "total": "Razem"
+      },
+      "paypal": "Zapłać przez PayPal",
+      "card": "Zapłać kartą",
+      "sending": "Wysyłanie…",
+      "faqHeading": "Częste pytania",
+      "faq": {
+        "clients": {
+          "q": "Ilu klientów mogę pozyskiwać miesięcznie?",
+          "a": "W zależności od specjalizacji, miasta i optymalizacji profilu — wielu prawników pozyskuje 5–15 klientów już w pierwszym miesiącu, z czasem skalując do 20–30+ dzięki treściom AI i SEO."
+        },
+        "guarantee": {
+          "q": "Czy to gwarantowana liczba klientów?",
+          "a": "Dostarczamy Ci leady, z którymi pracujesz samodzielnie. Można też pracować na zasadach wyłączności z klientami platformy — wtedy są to już opłaceni klienci."
+        },
+        "payment": {
+          "q": "Jak działa płatność?",
+          "a": "Mamy trzy plany: Start, Pro i Premium. Koszt jest znacznie niższy niż tradycyjne agencje marketingowe. Wielu prawników zwraca subskrypcję już przy 1–2 klientach."
+        },
+        "noClients": {
+          "q": "A jeśli klientów nie będzie?",
+          "a": "Dostępność leadów zależy od Twojej aktywności na platformie. Gwarantujemy nieprzerwany dostęp do platformy i jej zasobów. Płatność nie podlega zwrotowi po udzieleniu dostępu."
+        },
+        "data": {
+          "q": "Czy moje dane są bezpieczne?",
+          "a": "Tak, używamy bezpiecznego komunikatora, szyfrowania danych i nie przekazujemy informacji stronom trzecim. Platforma spełnia wymogi ochrony danych osobowych (RODO)."
+        }
+      }
+    }
+  },
+  "pricing": {
+    "perMonthShort": "/mies",
+    "note": {
+      "monthly": "miesięcznie, płatność co miesiąc",
+      "annual": "miesięcznie, płatność roczna (−10%)"
+    },
+    "features": {
+      "profile_basic": "Podstawowy poziom profilu osobistego",
+      "profile_pro": "Profesjonalny poziom profilu osobistego",
+      "video_avatar": "Awatar wideo do promocji Twoich usług",
+      "leads_3": "Zakup do 3 leadów/mies",
+      "leads_6": "Zakup do 6 leadów/mies",
+      "leads_unlim": "Nieograniczony zakup leadów",
+      "google": "Promocja Twojego nazwiska i profilu zawodowego w Google",
+      "manager_ext": "Osobisty manager z rozszerzonym wsparciem",
+      "manager_247": "Osobisty manager 24/7, który zapewni szybki zarobek",
+      "exclusive_smm": "Ekskluzywna promocja w mediach społecznościowych",
+      "own_services": "Promocja własnych usług",
+      "ai_google": "Moduł AI do uruchamiania reklam w Google",
+      "ai_meta": "Moduł AI do uruchamiania reklam w Meta",
+      "ai_monitoring": "Monitoring AI aktywności i ofert konkurencji",
+      "crm": "Wbudowany system do obsługi klientów i zapytań",
+      "referral": "Możliwość zarobku przez udostępnienie kodu polecającego kolegom",
+      "messenger": "Bezpieczna komunikacja przez dedykowany komunikator w aplikacji z nagrywaniem rozmów i kontrolą pracowników",
+      "private_chat": "Zamknięty czat dla specjalistów",
+      "rating_boost": "Możliwość podniesienia oceny na podstawie wcześniejszego doświadczenia"
+    },
+    "badges": {
+      "new": "NOWE",
+      "more_4x": "4x więcej",
+      "more_5x": "5x więcej",
+      "more_2_5x": "2.5x więcej",
+      "infinity": "∞",
+      "upgrade": "UPGRADE"
+    }
+  }
+}
+
+const enGB = {
+  "meta": {
+    "title": "CONSULTANT — more clients for your practice"
+  },
+  "common": {
+    "next": "Next →",
+    "back": "Back",
+    "skip": "Skip",
+    "selectOneOrMore": "Select one or more",
+    "chosen": "selected",
+    "discountBanner": "20% OFF — JUST FOR YOU!",
+    "timer": {
+      "hours": "h",
+      "minutes": "min",
+      "seconds": "sec"
+    },
+    "videoSound": {
+      "on": "Turn on sound",
+      "off": "Turn off sound"
+    },
+    "videoPause": {
+      "pause": "Pause",
+      "play": "Play"
+    }
+  },
+  "topbar": {
+    "step": "STEP {n} / {total}"
+  },
+  "validation": {
+    "required": "Please fill in this field",
+    "emailInvalid": "Invalid email format",
+    "phoneInvalid": "Invalid phone number"
+  },
+  "slides": {
+    "greeting": {
+      "q": "Welcome to <span class=\"accent\">CONSULTANT</span>",
+      "sub": "Watch a short intro and take the quiz. It's 2 minutes, and at the end you'll see your solution."
+    },
+    "contact": {
+      "q": "Let's <span class=\"accent\">get to know you</span>",
+      "sub": "So we can send your personal estimate — even if you don't finish the quiz.",
+      "fields": {
+        "first_name": {
+          "label": "First name",
+          "ph": "Alexander"
+        },
+        "last_name": {
+          "label": "Last name",
+          "ph": "Miller"
+        },
+        "email": {
+          "label": "Email",
+          "ph": "alexander@example.com"
+        },
+        "phone": {
+          "label": "Phone",
+          "ph": "+1 202 555 0147"
+        }
+      }
+    },
+    "search_time": {
+      "q": "How much time a week do you spend on <span class=\"accent\">finding new clients?</span>",
+      "sub": "Including calls, social media and referrals",
+      "opt": {
+        "lt_2": "Less than 2 hours",
+        "h_2_5": "2–5 hours",
+        "h_5_10": "5–10 hours",
+        "no_time": "I never have time"
+      }
+    },
+    "growth_blocker": {
+      "q": "What's holding you back <span class=\"accent\">from growing?</span>",
+      "sub": "Pick what hurts the most",
+      "opt": {
+        "few_leads": "Too few inquiries",
+        "no_deals": "Inquiries come, but don't convert",
+        "routine": "Lost in the routine (documents, calls)",
+        "no_system": "No system, everything is chaotic"
+      }
+    },
+    "services": {
+      "q": "What area of law do you <span class=\"accent\">practice in?</span>",
+      "sub": "Select all that apply",
+      "opt": {
+        "corporate_commercial": "Corporate & Commercial Law",
+        "motoring": "Motoring & Road Traffic Law",
+        "general": "General Legal Services",
+        "criminal": "Criminal Law",
+        "notarial": "Notarial Services",
+        "banking_finance": "Banking & Financial Law",
+        "property": "Property Law",
+        "employment": "Employment Law",
+        "consular": "Consular & Embassy Services",
+        "family_law": "Family Law",
+        "business": "Business Law",
+        "taxes": "Tax Law",
+        "labour_law": "Labour Law",
+        "immigration": "Immigration & Nationality Law"
+      }
+    },
+    "desired_clients": {
+      "q": "How many clients do you want to get <span class=\"accent\">per month?</span>",
+      "sub": "This will determine which plan fits you",
+      "opt": {
+        "c_to_10": "Up to 10 clients",
+        "c_10_30": "10–30 clients",
+        "c_30_50": "30–50 clients",
+        "c_50_plus": "50+ clients"
+      }
+    },
+    "solution": {
+      "q": "Here's your <span class=\"accent\">solution</span>",
+      "sub": "Calculated from your answers."
+    },
+    "pricing": {
+      "q": "Here's what will <span class=\"accent\">solve</span> this",
+      "sub": ""
+    },
+    "payment": {
+      "q": "Complete your <span class=\"accent\">purchase</span>",
+      "sub": ""
+    },
+    "photoUpload": {
+      "q": "Upload <span class=\"accent\">your photo!</span>",
+      "sub": "Upload your photo to generate a video avatar for your profile"
+    },
+    "aiPotential": {
+      "q": "Your potential with <span class=\"accent\">CONSULTANT</span>",
+      "sub": "AI calculated for your areas and market: how many new clients and income you can get per month — and what it would cost without us."
+    },
+    "assessment": {
+      "q": "Last step — your <span class=\"accent\">profile</span>",
+      "sub": "Choose how to fill it in. AI does the rest."
+    },
+    "fullProfile": {
+      "q": "Complete your <span class=\"accent\">profile</span>",
+      "sub": "Choose one — write a detailed bio (3,000+ characters) or upload a CV. AI generates the rest."
+    }
+  },
+  "cards": {
+    "greeting": {
+      "start": "Start →"
+    },
+    "solution": {
+      "gainEyebrow": "With CONSULTANT that's",
+      "gainCap": "new clients per month",
+      "gainRevenueLabel": "Potential income",
+      "proof": {
+        "lawyers": "2,500+",
+        "lawyersCap": "lawyers already with us",
+        "growth": "+183%",
+        "growthCap": "avg. income growth",
+        "renew": "94%",
+        "renewCap": "renew their subscription"
+      },
+      "cta": "Show plans →"
+    },
+    "callback": {
+      "plaque": "Not ready to pay now? Request a manager call to",
+      "noPhone": "enter number",
+      "label": "Number to call",
+      "submit": "Request a call",
+      "sending": "Sending…",
+      "done": "✓ Done — a manager will call {phone} during the business day."
+    },
+    "cta": {
+      "recommendedNote": "Your plan: {plan} — {price}/mo",
+      "buyNow": "Buy now",
+      "buyNowHint": "Straight to checkout for the selected plan",
+      "scheduleCall": "Schedule a call",
+      "scheduleHint": "A manager will call at a convenient time",
+      "calendar": {
+        "title": "Pick a convenient time",
+        "sub": "We'll call {phone} — the number is already saved.",
+        "today": "Today",
+        "tomorrow": "Tomorrow",
+        "pickDay": "Day",
+        "pickTime": "Time",
+        "topicLabel": "What to talk about?",
+        "topicPh": "Briefly: what exactly you want to solve…",
+        "topics": {
+          "plan": "Which plan to choose",
+          "leads": "How inquiries work",
+          "demo": "Show the platform",
+          "team": "Terms for a team"
+        },
+        "submit": "Confirm the call",
+        "sending": "Sending…",
+        "thanksTitle": "Call scheduled!",
+        "thanksSub": "A manager will call {when} at {phone}.",
+        "close": "Close",
+        "weekdays": [
+          "Sun",
+          "Mon",
+          "Tue",
+          "Wed",
+          "Thu",
+          "Fri",
+          "Sat"
+        ],
+        "months": [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December"
+        ]
+      }
+    },
+    "photo": {
+      "dropHint": "Tap to upload your photo",
+      "dropSub": "JPEG or PNG · up to 5 MB · landscape 16:9",
+      "error": {
+        "badType": "Wrong format — JPEG / PNG only",
+        "tooBig": "File too large — 5 MB max"
+      },
+      "previewAlt": "Photo preview",
+      "uploadOwn": "Upload your photo",
+      "samplesTitle": "No photo handy? Pick a sample 👇",
+      "sampleLabel": "Sample"
+    },
+    "aiPotential": {
+      "heroEyebrow": "With us you earn",
+      "clientsLabel": "potential clients per month",
+      "revenue": "≈ {low} – {high}",
+      "revenueCaption": "income / mo",
+      "priceLabel": "all this for a {amount}/mo subscription",
+      "compareQ": "To get this flow on your own you'd need <b>a whole team:</b>",
+      "teamRoleCost": "{low}–{high}k",
+      "teamRoles": {
+        "seo": "SEO specialist",
+        "targeting": "Ad specialist",
+        "content": "Content creator",
+        "video": "Video editor",
+        "smm": "SMM manager"
+      },
+      "teamTotalLabel": "Your own team total",
+      "teamTotal": "{low}–{high}/mo",
+      "usLabel": "CONSULTANT — all in one",
+      "ourPlan": "{amount}/mo",
+      "punchHtml": "<b>{times}×</b> cheaper — save up to <b>{save}/mo</b>",
+      "finePrintLabel": "Calculated for:",
+      "finePrintDisclaimer": "Estimate only — actual results depend on the market, profile optimization and your own effort. Not a guarantee of income.",
+      "serviceFallback": "General"
+    },
+    "assessment": {
+      "levels": {
+        "low": "Low",
+        "normal": "Normal",
+        "mid": "Moderate",
+        "high": "High"
+      },
+      "yourLevel": "Your level:",
+      "calculatedFor": "Calculated for:",
+      "factors": "Factors: practice area, desired number of clients, current workload.",
+      "disclaimer": "Estimate only — actual results may differ. Not a guarantee of income.",
+      "serviceFallback": "General",
+      "whyTitle": "Why this matters",
+      "whyLead": "From this, AI builds your public CONSULTANT profile — on its own, in a few minutes. Experience, education, certifications and notable cases are extracted automatically.",
+      "why": {
+        "profile": "A ready profile instead of an empty card",
+        "google": "Top of Google for your name",
+        "clients": "Clients find you themselves, without ads"
+      },
+      "warn": "AI has nothing to build your profile from yet. Lawyers with an empty profile rank below peers and get far fewer inquiries.",
+      "chooseLabel": "Choose how to fill in the profile",
+      "tabCv": "Upload a CV",
+      "tabCvNote": "fastest — 10 seconds",
+      "tabBio": "Write about yourself",
+      "tabBioNote": "at least 3,000 characters",
+      "cvPlaceholder": "Tap to choose a file",
+      "cvHint": ".pdf / .doc / .docx",
+      "bioPh": "Tell us about your experience, education, specialization, notable cases, certifications and awards. Write freely — there's no upper limit.",
+      "charLeft": "{n} more characters to the minimum",
+      "charEnough": "{n} characters — enough ✓",
+      "bioMinHint": "Minimum 3,000 characters. More is better: the more detail, the stronger the profile AI builds.",
+      "finish": "Finish →",
+      "doneTitle": "Done!",
+      "doneSub": "Your profile is being created. We'll send confirmation to {email}."
+    },
+    "fullProfile": {
+      "finish": "Finish →",
+      "strengthLabel": "Profile strength",
+      "strengthHint": {
+        "high": "✓ Strong profile — AI will do great",
+        "mid": "Good start — add more detail for better AI quality",
+        "low": "Add details below — the more info, the stronger your AI profile"
+      },
+      "aboutLabel": "About you",
+      "aboutHint": "recommended 3000+ characters",
+      "aboutPh": "Tell us about your experience, education, achievements, notable cases, certifications, awards…",
+      "cvCtaTitle": "📄 Have a CV? Upload it — it boosts profile strength by 30%",
+      "cvCtaBody": "Our AI generates your public profile <strong>right from your CV</strong>. Experience, education, certifications, notable cases and achievements are extracted automatically. <em>Optional, but highly recommended.</em>",
+      "cvLabel": "Upload a CV",
+      "cvHint": "optional · .pdf / .doc / .docx",
+      "cvPlaceholder": "Tap to choose .pdf / .doc / .docx",
+      "optional": "optional",
+      "doneTitle": "Done!",
+      "doneSub": "Your profile is being created. We'll send confirmation to {email}."
+    },
+    "profilesPricing": {
+      "previewTitle": "Your profile on",
+      "prevPlan": "Previous plan",
+      "nextPlan": "Next plan",
+      "recommended": "RECOMMENDED FOR YOU",
+      "plans": {
+        "base": "Start",
+        "pro": "Pro",
+        "premium": "Premium"
+      },
+      "cta": {
+        "base": "Choose Start",
+        "pro": "Choose Pro",
+        "premium": "Choose Premium"
+      },
+      "demo": {
+        "name": "Alexander Miller",
+        "role": "Attorney",
+        "location": "London, UK"
+      },
+      "demoPremium": {
+        "name": "Alexander König",
+        "role": "Attorney",
+        "location": "London, UK"
+      },
+      "avatarAlt": "Attorney",
+      "avatarLabel": "AI avatar preview",
+      "avatarTagline": "Your AI avatar creates professional videos in your name for your website and social media",
+      "monthly": "Monthly",
+      "annual": "Yearly",
+      "saveBadge": "−10%",
+      "trustTitle": "Built for UK solicitors",
+      "trustEthicsHtml": "Complies with <strong>legal ethics rules</strong>",
+      "trustDataHtml": "<strong>Data protection</strong> · SOC 2",
+      "customQuote": "Large firm? Custom offer",
+      "close": "Close",
+      "lead": {
+        "title": "Team registration",
+        "sub": "Tell us about your firm — a manager will reach out within 24 hours with a custom plan.",
+        "note": "This plan is for teams of 10+ specialists. For smaller ones — choose Start, Pro or Premium.",
+        "firmName": "Firm name",
+        "companyName": "Company name",
+        "teamSize": "Team size",
+        "teamSizeHint": "(minimum 10)",
+        "teamSizePh": "e.g. 12",
+        "location": "City",
+        "email": "Contact email",
+        "phone": "Phone",
+        "message": "What do you need?",
+        "messagePh": "Volume, integrations, white-label, timeline…",
+        "submit": "Request a call",
+        "sending": "Sending…",
+        "foot": "By submitting, you agree that our team will contact you.",
+        "thanksTitle": "Thank you!",
+        "thanksSub": "A manager will reach out within 24 hours with a custom plan for your team."
+      }
+    },
+    "payment": {
+      "periods": {
+        "1_month": "1 month",
+        "1_year": "1 year"
+      },
+      "saveBadge": "-10%",
+      "savedHero": "YOU JUST SAVED",
+      "rows": {
+        "plan": "{plan} plan — {period}",
+        "urgency": "Urgency discount (20%)",
+        "total": "Total"
+      },
+      "paypal": "Pay with PayPal",
+      "card": "Pay by card",
+      "sending": "Sending…",
+      "faqHeading": "Frequently asked questions",
+      "faq": {
+        "clients": {
+          "q": "How many clients can I get per month?",
+          "a": "Depending on specialization, city and profile optimization — many lawyers get 5–15 clients in the first month, scaling to 20–30+ over time thanks to AI content and SEO."
+        },
+        "guarantee": {
+          "q": "Is that a guaranteed number of clients?",
+          "a": "We provide you with leads you work with yourself. You can also work on exclusive terms with platform clients — in that case they're already-paid clients."
+        },
+        "payment": {
+          "q": "How does payment work?",
+          "a": "We have three plans: Start, Pro and Premium. The cost is far lower than traditional marketing agencies. Many lawyers cover the subscription with just 1–2 clients."
+        },
+        "noClients": {
+          "q": "What if there are no clients?",
+          "a": "Lead availability depends on your activity on the platform. We guarantee uninterrupted access to the platform and its resources. Payment is non-refundable once access is granted."
+        },
+        "data": {
+          "q": "Is my data safe?",
+          "a": "Yes, we use a secure messenger, data encryption and don't share information with third parties. The platform complies with data protection requirements (GDPR)."
+        }
+      }
+    }
+  },
+  "pricing": {
+    "perMonthShort": "/mo",
+    "note": {
+      "monthly": "per month, billed monthly",
+      "annual": "per month, billed yearly (−10%)"
+    },
+    "features": {
+      "profile_basic": "Basic personal profile level",
+      "profile_pro": "Professional personal profile level",
+      "video_avatar": "Video avatar to promote your services",
+      "leads_3": "Up to 3 leads/mo",
+      "leads_6": "Up to 6 leads/mo",
+      "leads_unlim": "Unlimited leads",
+      "google": "Promotion of your name and professional profile on Google",
+      "manager_ext": "Personal manager with extended support",
+      "manager_247": "24/7 personal manager to ensure fast earnings",
+      "exclusive_smm": "Exclusive promotion on social media",
+      "own_services": "Promotion of your own services",
+      "ai_google": "AI module to launch ads on Google",
+      "ai_meta": "AI module to launch ads on Meta",
+      "ai_monitoring": "AI monitoring of competitors' activity and offers",
+      "crm": "Built-in system for clients and inquiries",
+      "referral": "Earn by sharing your referral code with colleagues",
+      "messenger": "Secure connection via a dedicated in-app messenger with call recording and staff control",
+      "private_chat": "Private chat for specialists",
+      "rating_boost": "Boost your rating based on prior experience"
+    },
+    "badges": {
+      "new": "NEW",
+      "more_4x": "4x more",
+      "more_5x": "5x more",
+      "more_2_5x": "2.5x more",
+      "infinity": "∞",
+      "upgrade": "UPGRADE"
+    }
+  }
+}
+
+const enAE = {
+  "meta": {
+    "title": "CONSULTANT — more clients for your practice"
+  },
+  "common": {
+    "next": "Next →",
+    "back": "Back",
+    "skip": "Skip",
+    "selectOneOrMore": "Select one or more",
+    "chosen": "selected",
+    "discountBanner": "20% OFF — JUST FOR YOU!",
+    "timer": {
+      "hours": "h",
+      "minutes": "min",
+      "seconds": "sec"
+    },
+    "videoSound": {
+      "on": "Turn on sound",
+      "off": "Turn off sound"
+    },
+    "videoPause": {
+      "pause": "Pause",
+      "play": "Play"
+    }
+  },
+  "topbar": {
+    "step": "STEP {n} / {total}"
+  },
+  "validation": {
+    "required": "Please fill in this field",
+    "emailInvalid": "Invalid email format",
+    "phoneInvalid": "Invalid phone number"
+  },
+  "slides": {
+    "greeting": {
+      "q": "Welcome to <span class=\"accent\">CONSULTANT</span>",
+      "sub": "Watch a short intro and take the quiz. It's 2 minutes, and at the end you'll see your solution."
+    },
+    "contact": {
+      "q": "Let's <span class=\"accent\">get to know you</span>",
+      "sub": "So we can send your personal estimate — even if you don't finish the quiz.",
+      "fields": {
+        "first_name": {
+          "label": "First name",
+          "ph": "Alexander"
+        },
+        "last_name": {
+          "label": "Last name",
+          "ph": "Miller"
+        },
+        "email": {
+          "label": "Email",
+          "ph": "alexander@example.com"
+        },
+        "phone": {
+          "label": "Phone",
+          "ph": "+1 202 555 0147"
+        }
+      }
+    },
+    "search_time": {
+      "q": "How much time a week do you spend on <span class=\"accent\">finding new clients?</span>",
+      "sub": "Including calls, social media and referrals",
+      "opt": {
+        "lt_2": "Less than 2 hours",
+        "h_2_5": "2–5 hours",
+        "h_5_10": "5–10 hours",
+        "no_time": "I never have time"
+      }
+    },
+    "growth_blocker": {
+      "q": "What's holding you back <span class=\"accent\">from growing?</span>",
+      "sub": "Pick what hurts the most",
+      "opt": {
+        "few_leads": "Too few inquiries",
+        "no_deals": "Inquiries come, but don't convert",
+        "routine": "Lost in the routine (documents, calls)",
+        "no_system": "No system, everything is chaotic"
+      }
+    },
+    "services": {
+      "q": "What area of law do you <span class=\"accent\">practice in?</span>",
+      "sub": "Select all that apply",
+      "opt": {
+        "consular": "Consular & Embassy Services",
+        "business": "Business & Corporate Law",
+        "motor": "Motor Vehicle Law",
+        "general": "General Legal Services",
+        "criminal": "Criminal Law",
+        "notarial": "Notarial Services",
+        "banking_finance": "Banking & Financial Law",
+        "real_estate": "Real Estate Law",
+        "labour": "Labour & Employment Law",
+        "family_law": "Family Law",
+        "taxes": "Tax Law",
+        "immigration": "Immigration & Residency Law"
+      }
+    },
+    "desired_clients": {
+      "q": "How many clients do you want to get <span class=\"accent\">per month?</span>",
+      "sub": "This will determine which plan fits you",
+      "opt": {
+        "c_to_10": "Up to 10 clients",
+        "c_10_30": "10–30 clients",
+        "c_30_50": "30–50 clients",
+        "c_50_plus": "50+ clients"
+      }
+    },
+    "solution": {
+      "q": "Here's your <span class=\"accent\">solution</span>",
+      "sub": "Calculated from your answers."
+    },
+    "pricing": {
+      "q": "Here's what will <span class=\"accent\">solve</span> this",
+      "sub": ""
+    },
+    "payment": {
+      "q": "Complete your <span class=\"accent\">purchase</span>",
+      "sub": ""
+    },
+    "photoUpload": {
+      "q": "Upload <span class=\"accent\">your photo!</span>",
+      "sub": "Upload your photo to generate a video avatar for your profile"
+    },
+    "aiPotential": {
+      "q": "Your potential with <span class=\"accent\">CONSULTANT</span>",
+      "sub": "AI calculated for your areas and market: how many new clients and income you can get per month — and what it would cost without us."
+    },
+    "assessment": {
+      "q": "Last step — your <span class=\"accent\">profile</span>",
+      "sub": "Choose how to fill it in. AI does the rest."
+    },
+    "fullProfile": {
+      "q": "Complete your <span class=\"accent\">profile</span>",
+      "sub": "Choose one — write a detailed bio (3,000+ characters) or upload a CV. AI generates the rest."
+    }
+  },
+  "cards": {
+    "greeting": {
+      "start": "Start →"
+    },
+    "solution": {
+      "gainEyebrow": "With CONSULTANT that's",
+      "gainCap": "new clients per month",
+      "gainRevenueLabel": "Potential income",
+      "proof": {
+        "lawyers": "2,500+",
+        "lawyersCap": "lawyers already with us",
+        "growth": "+183%",
+        "growthCap": "avg. income growth",
+        "renew": "94%",
+        "renewCap": "renew their subscription"
+      },
+      "cta": "Show plans →"
+    },
+    "callback": {
+      "plaque": "Not ready to pay now? Request a manager call to",
+      "noPhone": "enter number",
+      "label": "Number to call",
+      "submit": "Request a call",
+      "sending": "Sending…",
+      "done": "✓ Done — a manager will call {phone} during the business day."
+    },
+    "cta": {
+      "recommendedNote": "Your plan: {plan} — {price}/mo",
+      "buyNow": "Buy now",
+      "buyNowHint": "Straight to checkout for the selected plan",
+      "scheduleCall": "Schedule a call",
+      "scheduleHint": "A manager will call at a convenient time",
+      "calendar": {
+        "title": "Pick a convenient time",
+        "sub": "We'll call {phone} — the number is already saved.",
+        "today": "Today",
+        "tomorrow": "Tomorrow",
+        "pickDay": "Day",
+        "pickTime": "Time",
+        "topicLabel": "What to talk about?",
+        "topicPh": "Briefly: what exactly you want to solve…",
+        "topics": {
+          "plan": "Which plan to choose",
+          "leads": "How inquiries work",
+          "demo": "Show the platform",
+          "team": "Terms for a team"
+        },
+        "submit": "Confirm the call",
+        "sending": "Sending…",
+        "thanksTitle": "Call scheduled!",
+        "thanksSub": "A manager will call {when} at {phone}.",
+        "close": "Close",
+        "weekdays": [
+          "Sun",
+          "Mon",
+          "Tue",
+          "Wed",
+          "Thu",
+          "Fri",
+          "Sat"
+        ],
+        "months": [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December"
+        ]
+      }
+    },
+    "photo": {
+      "dropHint": "Tap to upload your photo",
+      "dropSub": "JPEG or PNG · up to 5 MB · landscape 16:9",
+      "error": {
+        "badType": "Wrong format — JPEG / PNG only",
+        "tooBig": "File too large — 5 MB max"
+      },
+      "previewAlt": "Photo preview",
+      "uploadOwn": "Upload your photo",
+      "samplesTitle": "No photo handy? Pick a sample 👇",
+      "sampleLabel": "Sample"
+    },
+    "aiPotential": {
+      "heroEyebrow": "With us you earn",
+      "clientsLabel": "potential clients per month",
+      "revenue": "≈ {low} – {high}",
+      "revenueCaption": "income / mo",
+      "priceLabel": "all this for a {amount}/mo subscription",
+      "compareQ": "To get this flow on your own you'd need <b>a whole team:</b>",
+      "teamRoleCost": "{low}–{high}k",
+      "teamRoles": {
+        "seo": "SEO specialist",
+        "targeting": "Ad specialist",
+        "content": "Content creator",
+        "video": "Video editor",
+        "smm": "SMM manager"
+      },
+      "teamTotalLabel": "Your own team total",
+      "teamTotal": "{low}–{high}/mo",
+      "usLabel": "CONSULTANT — all in one",
+      "ourPlan": "{amount}/mo",
+      "punchHtml": "<b>{times}×</b> cheaper — save up to <b>{save}/mo</b>",
+      "finePrintLabel": "Calculated for:",
+      "finePrintDisclaimer": "Estimate only — actual results depend on the market, profile optimization and your own effort. Not a guarantee of income.",
+      "serviceFallback": "General"
+    },
+    "assessment": {
+      "levels": {
+        "low": "Low",
+        "normal": "Normal",
+        "mid": "Moderate",
+        "high": "High"
+      },
+      "yourLevel": "Your level:",
+      "calculatedFor": "Calculated for:",
+      "factors": "Factors: practice area, desired number of clients, current workload.",
+      "disclaimer": "Estimate only — actual results may differ. Not a guarantee of income.",
+      "serviceFallback": "General",
+      "whyTitle": "Why this matters",
+      "whyLead": "From this, AI builds your public CONSULTANT profile — on its own, in a few minutes. Experience, education, certifications and notable cases are extracted automatically.",
+      "why": {
+        "profile": "A ready profile instead of an empty card",
+        "google": "Top of Google for your name",
+        "clients": "Clients find you themselves, without ads"
+      },
+      "warn": "AI has nothing to build your profile from yet. Lawyers with an empty profile rank below peers and get far fewer inquiries.",
+      "chooseLabel": "Choose how to fill in the profile",
+      "tabCv": "Upload a CV",
+      "tabCvNote": "fastest — 10 seconds",
+      "tabBio": "Write about yourself",
+      "tabBioNote": "at least 3,000 characters",
+      "cvPlaceholder": "Tap to choose a file",
+      "cvHint": ".pdf / .doc / .docx",
+      "bioPh": "Tell us about your experience, education, specialization, notable cases, certifications and awards. Write freely — there's no upper limit.",
+      "charLeft": "{n} more characters to the minimum",
+      "charEnough": "{n} characters — enough ✓",
+      "bioMinHint": "Minimum 3,000 characters. More is better: the more detail, the stronger the profile AI builds.",
+      "finish": "Finish →",
+      "doneTitle": "Done!",
+      "doneSub": "Your profile is being created. We'll send confirmation to {email}."
+    },
+    "fullProfile": {
+      "finish": "Finish →",
+      "strengthLabel": "Profile strength",
+      "strengthHint": {
+        "high": "✓ Strong profile — AI will do great",
+        "mid": "Good start — add more detail for better AI quality",
+        "low": "Add details below — the more info, the stronger your AI profile"
+      },
+      "aboutLabel": "About you",
+      "aboutHint": "recommended 3000+ characters",
+      "aboutPh": "Tell us about your experience, education, achievements, notable cases, certifications, awards…",
+      "cvCtaTitle": "📄 Have a CV? Upload it — it boosts profile strength by 30%",
+      "cvCtaBody": "Our AI generates your public profile <strong>right from your CV</strong>. Experience, education, certifications, notable cases and achievements are extracted automatically. <em>Optional, but highly recommended.</em>",
+      "cvLabel": "Upload a CV",
+      "cvHint": "optional · .pdf / .doc / .docx",
+      "cvPlaceholder": "Tap to choose .pdf / .doc / .docx",
+      "optional": "optional",
+      "doneTitle": "Done!",
+      "doneSub": "Your profile is being created. We'll send confirmation to {email}."
+    },
+    "profilesPricing": {
+      "previewTitle": "Your profile on",
+      "prevPlan": "Previous plan",
+      "nextPlan": "Next plan",
+      "recommended": "RECOMMENDED FOR YOU",
+      "plans": {
+        "base": "Start",
+        "pro": "Pro",
+        "premium": "Premium"
+      },
+      "cta": {
+        "base": "Choose Start",
+        "pro": "Choose Pro",
+        "premium": "Choose Premium"
+      },
+      "demo": {
+        "name": "Ahmed Al Mansoori",
+        "role": "Legal Consultant",
+        "location": "Dubai, UAE"
+      },
+      "demoPremium": {
+        "name": "Alexander König",
+        "role": "Attorney",
+        "location": "Dubai, UAE"
+      },
+      "avatarAlt": "Attorney",
+      "avatarLabel": "AI avatar preview",
+      "avatarTagline": "Your AI avatar creates professional videos in your name for your website and social media",
+      "monthly": "Monthly",
+      "annual": "Yearly",
+      "saveBadge": "−10%",
+      "trustTitle": "Built for UAE lawyers",
+      "trustEthicsHtml": "Complies with <strong>legal ethics rules</strong>",
+      "trustDataHtml": "<strong>Data protection</strong> · SOC 2",
+      "customQuote": "Large firm? Custom offer",
+      "close": "Close",
+      "lead": {
+        "title": "Team registration",
+        "sub": "Tell us about your firm — a manager will reach out within 24 hours with a custom plan.",
+        "note": "This plan is for teams of 10+ specialists. For smaller ones — choose Start, Pro or Premium.",
+        "firmName": "Firm name",
+        "companyName": "Company name",
+        "teamSize": "Team size",
+        "teamSizeHint": "(minimum 10)",
+        "teamSizePh": "e.g. 12",
+        "location": "City",
+        "email": "Contact email",
+        "phone": "Phone",
+        "message": "What do you need?",
+        "messagePh": "Volume, integrations, white-label, timeline…",
+        "submit": "Request a call",
+        "sending": "Sending…",
+        "foot": "By submitting, you agree that our team will contact you.",
+        "thanksTitle": "Thank you!",
+        "thanksSub": "A manager will reach out within 24 hours with a custom plan for your team."
+      }
+    },
+    "payment": {
+      "periods": {
+        "1_month": "1 month",
+        "1_year": "1 year"
+      },
+      "saveBadge": "-10%",
+      "savedHero": "YOU JUST SAVED",
+      "rows": {
+        "plan": "{plan} plan — {period}",
+        "urgency": "Urgency discount (20%)",
+        "total": "Total"
+      },
+      "paypal": "Pay with PayPal",
+      "card": "Pay by card",
+      "sending": "Sending…",
+      "faqHeading": "Frequently asked questions",
+      "faq": {
+        "clients": {
+          "q": "How many clients can I get per month?",
+          "a": "Depending on specialization, city and profile optimization — many lawyers get 5–15 clients in the first month, scaling to 20–30+ over time thanks to AI content and SEO."
+        },
+        "guarantee": {
+          "q": "Is that a guaranteed number of clients?",
+          "a": "We provide you with leads you work with yourself. You can also work on exclusive terms with platform clients — in that case they're already-paid clients."
+        },
+        "payment": {
+          "q": "How does payment work?",
+          "a": "We have three plans: Start, Pro and Premium. The cost is far lower than traditional marketing agencies. Many lawyers cover the subscription with just 1–2 clients."
+        },
+        "noClients": {
+          "q": "What if there are no clients?",
+          "a": "Lead availability depends on your activity on the platform. We guarantee uninterrupted access to the platform and its resources. Payment is non-refundable once access is granted."
+        },
+        "data": {
+          "q": "Is my data safe?",
+          "a": "Yes, we use a secure messenger, data encryption and don't share information with third parties. The platform complies with data protection requirements (GDPR)."
+        }
+      }
+    }
+  },
+  "pricing": {
+    "perMonthShort": "/mo",
+    "note": {
+      "monthly": "per month, billed monthly",
+      "annual": "per month, billed yearly (−10%)"
+    },
+    "features": {
+      "profile_basic": "Basic personal profile level",
+      "profile_pro": "Professional personal profile level",
+      "video_avatar": "Video avatar to promote your services",
+      "leads_3": "Up to 3 leads/mo",
+      "leads_6": "Up to 6 leads/mo",
+      "leads_unlim": "Unlimited leads",
+      "google": "Promotion of your name and professional profile on Google",
+      "manager_ext": "Personal manager with extended support",
+      "manager_247": "24/7 personal manager to ensure fast earnings",
+      "exclusive_smm": "Exclusive promotion on social media",
+      "own_services": "Promotion of your own services",
+      "ai_google": "AI module to launch ads on Google",
+      "ai_meta": "AI module to launch ads on Meta",
+      "ai_monitoring": "AI monitoring of competitors' activity and offers",
+      "crm": "Built-in system for clients and inquiries",
+      "referral": "Earn by sharing your referral code with colleagues",
+      "messenger": "Secure connection via a dedicated in-app messenger with call recording and staff control",
+      "private_chat": "Private chat for specialists",
+      "rating_boost": "Boost your rating based on prior experience"
+    },
+    "badges": {
+      "new": "NEW",
+      "more_4x": "4x more",
+      "more_5x": "5x more",
+      "more_2_5x": "2.5x more",
+      "infinity": "∞",
+      "upgrade": "UPGRADE"
+    }
+  }
+}
+
+export const MESSAGES = { uk, ru, en, pl, 'en-GB': enGB, 'en-AE': enAE }
+export const SUPPORTED_LOCALES = ['uk', 'ru', 'en', 'en-GB', 'en-AE', 'pl']
 export const DEFAULT_LOCALE = 'uk'
-export const BCP47 = { uk: 'uk-UA', ru: 'ru-UA' }
+export const BCP47 = { uk: 'uk-UA', ru: 'ru-UA', en: 'en-US', 'en-GB': 'en-GB', 'en-AE': 'en-AE', pl: 'pl-PL' }
 
 function normalizeLocale (raw) {
   if (!raw) return null
-  const s = String(raw).trim().toLowerCase().replace('_', '-').split('-')[0]
-  return SUPPORTED_LOCALES.indexOf(s) >= 0 ? s : null
+  const s = String(raw).trim().toLowerCase().replace('_', '-')
+  // Точний збіг (uk, en-gb, en-ae…) з урахуванням регістру списку.
+  const exact = SUPPORTED_LOCALES.find((l) => l.toLowerCase() === s)
+  if (exact) return exact
+  const [lang, region] = s.split('-')
+  if (lang === 'en') {
+    if (region === 'gb' || region === 'uk') return 'en-GB'
+    if (region === 'ae') return 'en-AE'
+    return 'en'
+  }
+  const byLang = SUPPORTED_LOCALES.find((l) => l.split('-')[0] === lang)
+  return byLang || null
 }
 
 // Порядок вибору локалі: window.QUIZ_LANG → ?lang= → localStorage → браузер → дефолт.

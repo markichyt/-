@@ -8,7 +8,7 @@
 import { t, state as i18nState, setLocale, applyDocumentLocale, SUPPORTED_LOCALES } from './i18n.js'
 import {
   SLIDES, TOTAL_STEPS, PRICING, PRACTICE_AREAS, AI_POTENTIAL, DIAGNOSIS,
-  PAIN_BRANCHES, buildTierFeatures, computeDiagnosis, iconPath, formatMoney, formatNumber
+  PAIN_BRANCHES, buildTierFeatures, computeDiagnosis, market, iconPath, formatMoney, formatNumber
 } from './data.js'
 
 // ── Сховище відповідей ───────────────────────────────────────────────────────
@@ -348,9 +348,11 @@ renderers.radio = function (slide, root) {
 // ── 5. Кілька варіантів (checkbox) — сфери права ─────────────────────────────
 renderers.checkbox = function (slide, root) {
   const selected = Array.isArray(answers[slide.field]) ? answers[slide.field].slice() : []
+  // Набір сфер права залежить від ринку (locale); решта checkbox — свій slide.options.
+  const opts = slide.marketKey ? market()[slide.marketKey] : slide.options
 
   function optionsHtml () {
-    return slide.options.map((o) => `
+    return opts.map((o) => `
       <div class="option-item${selected.indexOf(o.v) >= 0 ? ' selected' : ''}" role="button" tabindex="0" data-v="${o.v}">
         <span class="opt-icon" style="background:${o.color}">${icon(o.icon)}</span>
         <span class="option-text">${t('slides.' + slide.field + '.opt.' + o.v)}</span>
@@ -445,7 +447,8 @@ renderers.pricing = function (slide, root) {
   const recommended = d.tier
   let index = PLAN_SLIDES.findIndex((p) => p.tier === recommended)
   if (index < 0) index = 1
-  let isAnnual = answers.billing === 'annual'
+  // На кроці тарифів показуємо місячну ціну; вибір «рік −10%» — на кроці оплати.
+  const isAnnual = false
 
   const features = {
     base: buildTierFeatures('base'),
@@ -495,7 +498,7 @@ renderers.pricing = function (slide, root) {
         ${p.tier === recommended ? `<div class="pp-reco-badge">${t('cards.profilesPricing.recommended')}</div>` : ''}
         <div class="pp-plan-name pp-${p.tier}-name">${name}</div>
         <div class="pp-price-row">
-          <span class="pp-new-price" data-price="${p.tier}">${formatMoney(PRICING[isAnnual ? 'annual' : 'monthly'][p.tier])}<span class="period">${t('pricing.perMonthShort')}</span></span>
+          <span class="pp-new-price" data-price="${p.tier}">${formatMoney(market().pricing[isAnnual ? 'annual' : 'monthly'][p.tier])}<span class="period">${t('pricing.perMonthShort')}</span></span>
         </div>
         <div class="pp-billing-note" data-note>${t('pricing.note.' + (isAnnual ? 'annual' : 'monthly'))}</div>
         <div class="pp-features">${rows}</div>
@@ -512,13 +515,6 @@ renderers.pricing = function (slide, root) {
 
       <div class="pp-dots" data-dots>
         ${PLAN_SLIDES.map((p, i) => `<button class="pp-dot${i === index ? ' active' : ''}" data-idx="${i}" aria-label="${p.tier}"></button>`).join('')}
-      </div>
-
-      <div class="pp-billing-toggle">
-        <span class="toggle-label${!isAnnual ? ' active' : ''}" data-bill="monthly">${t('cards.profilesPricing.monthly')}</span>
-        <div class="pp-toggle-track${isAnnual ? ' annual' : ''}" data-bill-toggle><div class="pp-toggle-thumb"></div></div>
-        <span class="toggle-label${isAnnual ? ' active' : ''}" data-bill="annual">${t('cards.profilesPricing.annual')}</span>
-        <span class="pp-save-badge">${t('cards.profilesPricing.saveBadge')}</span>
       </div>
 
       <div class="pp-pricing-section">
@@ -570,16 +566,6 @@ renderers.pricing = function (slide, root) {
     saveAnswers()
   }
 
-  function repaintPrices () {
-    const table = PRICING[isAnnual ? 'annual' : 'monthly']
-    root.querySelectorAll('[data-price]').forEach((n) => {
-      n.innerHTML = formatMoney(table[n.dataset.price]) + `<span class="period">${t('pricing.perMonthShort')}</span>`
-    })
-    root.querySelectorAll('[data-note]').forEach((n) => { n.textContent = t('pricing.note.' + (isAnnual ? 'annual' : 'monthly')) })
-    root.querySelector('[data-bill-toggle]').classList.toggle('annual', isAnnual)
-    root.querySelectorAll('[data-bill]').forEach((n) => n.classList.toggle('active', (n.dataset.bill === 'annual') === isAnnual))
-  }
-
   function goTo (idx) {
     index = Math.max(0, Math.min(PLAN_SLIDES.length - 1, idx))
     paint()
@@ -618,10 +604,6 @@ renderers.pricing = function (slide, root) {
     if (Math.abs(dx) > 40) goTo(index + (dx < 0 ? 1 : -1))
     swipeX = null
   }, { passive: true })
-
-  function setBilling (annual) { isAnnual = annual; repaintPrices(); paint() }
-  root.querySelector('[data-bill-toggle]').addEventListener('click', () => setBilling(!isAnnual))
-  root.querySelectorAll('[data-bill]').forEach((n) => n.addEventListener('click', () => setBilling(n.dataset.bill === 'annual')))
 
   // «Обрати план» → одразу на крок оплати.
   cta.addEventListener('click', () => { answers.plan = PLAN_SLIDES[index].tier; saveAnswers(); goNext() })
@@ -670,7 +652,7 @@ renderers.payment = function (slide, root) {
   function summary () {
     const months = PAY_PERIODS[period]
     const isAnnual = period === '1_year'
-    const prices = PRICING[isAnnual ? 'annual' : 'monthly']
+    const prices = market().pricing[isAnnual ? 'annual' : 'monthly']
     const plan = prices[answers.plan] != null ? answers.plan : 'pro'
     // Реальна сума = ціна плану × місяці. «Якірна» ціна така, що знижка
     // за терміновість (−20%) повертає рівно до реальної суми — як у квізі 1.
