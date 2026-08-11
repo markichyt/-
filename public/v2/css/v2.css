@@ -262,13 +262,15 @@
 /* ── Крок 8: стрілки каруселі тарифів ──────────────────────────────────────
    Раніше план перемикався лише крихітними точками (8px) під профілем — їх
    не помічали. Додано помітні стрілки по боках + свайп. */
-/* Заголовок над каруселлю профілю на кроці 8 */
-.profiles-pricing-wrap .pp-preview-title {
+/* Підпис усередині картки профілю: «Так виглядатиме Ваш профіль» */
+.profiles-pricing-wrap .prof-preview-label {
   text-align: center;
-  font-size: 15px;
+  font-size: 11.5px;
   font-weight: 700;
-  color: var(--text-dark);
-  margin: 4px 0 10px;
+  letter-spacing: .3px;
+  color: var(--text-muted);
+  background: #fff;
+  padding: 8px 10px 6px;
 }
 
 /* Бічні стрілки, зафіксовані до екрана (винесені у <body>). Видно лише коли

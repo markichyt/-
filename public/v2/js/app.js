@@ -466,6 +466,7 @@ renderers.pricing = function (slide, root) {
     return `
       <div class="pp-slide">
         <div class="prof-card prof-${p.tier}">
+          <div class="prof-preview-label">${t('cards.profilesPricing.previewTitle')}</div>
           <div class="prof-topbar">
             <span class="tier-label">${t('cards.profilesPricing.plans.' + p.tier)}</span>
             <span class="separator"></span>
@@ -504,8 +505,6 @@ renderers.pricing = function (slide, root) {
   root.innerHTML = frame(slide, `
     <div class="profiles-pricing-wrap">
       ${timerBarHtml('pp-timer-bar pp-timer-top')}
-
-      <div class="pp-preview-title">${t('cards.profilesPricing.previewTitle')}</div>
 
       <div class="pp-viewport">
         <div class="pp-track" data-track>${PLAN_SLIDES.map(profileCard).join('')}</div>
