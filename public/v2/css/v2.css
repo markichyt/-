@@ -283,6 +283,11 @@
   height: 13px;
   flex: 0 0 auto;
 }
+.profiles-pricing-wrap .prof-preview-label span { white-space: nowrap; }
+.profiles-pricing-wrap .prof-preview-tier {
+  font-weight: 900;
+  color: var(--text-dark);
+}
 
 /* Бічні стрілки, зафіксовані до екрана (винесені у <body>). Видно лише коли
    активний крок тарифів. На широкому екрані тримаються біля країв картки. */
