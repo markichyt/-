@@ -466,7 +466,7 @@ renderers.pricing = function (slide, root) {
     return `
       <div class="pp-slide">
         <div class="prof-card prof-${p.tier}">
-          <div class="prof-preview-label">${t('cards.profilesPricing.previewTitle')}</div>
+          <div class="prof-preview-label">${icon('eye', 13)}<span>${t('cards.profilesPricing.previewTitle')}</span></div>
           <div class="prof-topbar">
             <span class="tier-label">${t('cards.profilesPricing.plans.' + p.tier)}</span>
             <span class="separator"></span>
