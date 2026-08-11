@@ -505,26 +505,14 @@ renderers.pricing = function (slide, root) {
     <div class="profiles-pricing-wrap">
       ${timerBarHtml('pp-timer-bar pp-timer-top')}
 
+      <div class="pp-preview-title">${t('cards.profilesPricing.previewTitle')}</div>
+
       <div class="pp-viewport">
         <div class="pp-track" data-track>${PLAN_SLIDES.map(profileCard).join('')}</div>
       </div>
 
-      <div class="pp-navrow">
-        <button class="pp-nav pp-nav--prev" data-nav="-1" aria-label="${t('cards.profilesPricing.prevPlan')}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
-        <div class="pp-dots" data-dots>
-          ${PLAN_SLIDES.map((p, i) => `<button class="pp-dot${i === index ? ' active' : ''}" data-idx="${i}" aria-label="${p.tier}"></button>`).join('')}
-        </div>
-        <button class="pp-nav pp-nav--next" data-nav="1" aria-label="${t('cards.profilesPricing.nextPlan')}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
-      </div>
-
-      <div class="pp-avatar-section${index !== 0 ? ' visible' : ''}" data-avatar-section>
-        <div class="pp-avatar-inner">
-          <span class="pp-avatar-label">${t('cards.profilesPricing.avatarLabel')}</span>
-          <div class="pp-avatar-video-wrap">
-            <video data-avatar loop playsinline muted preload="metadata"><source src="assets/avatar.mp4" type="video/mp4"></video>
-          </div>
-          <div class="pp-avatar-tagline">${t('cards.profilesPricing.avatarTagline')}</div>
-        </div>
+      <div class="pp-dots" data-dots>
+        ${PLAN_SLIDES.map((p, i) => `<button class="pp-dot${i === index ? ' active' : ''}" data-idx="${i}" aria-label="${p.tier}"></button>`).join('')}
       </div>
 
       <div class="pp-billing-toggle">
@@ -565,30 +553,22 @@ renderers.pricing = function (slide, root) {
 
   const track = root.querySelector('[data-track]')
   const priceTrack = root.querySelector('[data-pricing-track]')
-  const avatarSection = root.querySelector('[data-avatar-section]')
-  const avatarVideo = root.querySelector('[data-avatar]')
   const cta = root.querySelector('[data-cta]')
+  let railPrev = null, railNext = null
 
   function paint () {
     const shift = `translateX(${-index * 100}%)`
     track.style.transform = shift
     priceTrack.style.transform = shift
-    avatarSection.classList.toggle('visible', index !== 0)
     root.querySelectorAll('.pp-dot').forEach((n, i) => n.classList.toggle('active', i === index))
-    const prevBtn = root.querySelector('.pp-nav--prev')
-    const nextBtn = root.querySelector('.pp-nav--next')
-    if (prevBtn) prevBtn.disabled = index === 0
-    if (nextBtn) nextBtn.disabled = index === PLAN_SLIDES.length - 1
+    if (railPrev) railPrev.disabled = index === 0
+    if (railNext) railNext.disabled = index === PLAN_SLIDES.length - 1
     const tier = PLAN_SLIDES[index].tier
     cta.className = 'pp-cta-btn pp-cta-' + tier
     cta.textContent = t('cards.profilesPricing.cta.' + tier)
     answers.plan = tier
     answers.billing = isAnnual ? 'annual' : 'monthly'
     saveAnswers()
-    if (avatarVideo) {
-      if (index === 0) avatarVideo.pause()
-      else avatarVideo.play().catch(() => {})
-    }
   }
 
   function repaintPrices () {
@@ -612,8 +592,21 @@ renderers.pricing = function (slide, root) {
     goTo(parseInt(dot.dataset.idx, 10))
   })
 
-  // Стрілки по боках каруселі — головний спосіб перемикати план.
-  root.querySelectorAll('[data-nav]').forEach((b) =>
+  // Бічні стрілки, зафіксовані до екрана. .card-stack має perspective, тож
+  // position:fixed усередині картки рахувався б від колоди — виносимо планку
+  // у <body> (як лід-модалку/календар). Видимість — лише коли активний крок
+  // тарифів (клас body.pp-arrows-on, яким керує колода).
+  const SVG_PREV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>'
+  const SVG_NEXT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>'
+  document.querySelectorAll('.pp-side-arrows').forEach((n) => n.remove())
+  const rail = el('<div class="pp-side-arrows" aria-hidden="true">' +
+    '<button class="pp-nav pp-nav--prev" data-nav="-1" aria-label="' + t('cards.profilesPricing.prevPlan') + '">' + SVG_PREV + '</button>' +
+    '<button class="pp-nav pp-nav--next" data-nav="1" aria-label="' + t('cards.profilesPricing.nextPlan') + '">' + SVG_NEXT + '</button>' +
+  '</div>')
+  document.body.appendChild(rail)
+  railPrev = rail.querySelector('.pp-nav--prev')
+  railNext = rail.querySelector('.pp-nav--next')
+  rail.querySelectorAll('[data-nav]').forEach((b) =>
     b.addEventListener('click', () => goTo(index + parseInt(b.dataset.nav, 10))))
 
   // Свайп по каруселі (палець ліворуч → наступний план).
@@ -661,7 +654,11 @@ renderers.pricing = function (slide, root) {
   })
 
   paint()
-  return () => { if (avatarVideo) avatarVideo.pause() }
+
+  return () => {
+    if (rail && rail.parentNode) rail.parentNode.removeChild(rail)
+    document.body.classList.remove('pp-arrows-on')
+  }
 }
 
 // ── 9. Оплата (порт PaymentCard квіза 1) ─────────────────────────────────────
@@ -925,6 +922,11 @@ function preRenderNext () {
   renderInto(behind1, next)
 }
 
+function updateSideArrows () {
+  const slide = SLIDES[progress.currentStep - 1]
+  document.body.classList.toggle('pp-arrows-on', !!slide && slide.id === 'pricing')
+}
+
 function setStep (step, direction) {
   progress.currentStep = step
   paintTopBar()
@@ -952,6 +954,7 @@ function setStep (step, direction) {
     // Замок навігації знімаємо в будь-якому разі, інакше збій пре-рендера
     // назавжди блокує кнопку «Далі».
     try { preRenderNext() } finally { navLocked = false }
+    updateSideArrows()
     const stack = document.querySelector('.card-stack')
     if (stack) stack.scrollTop = 0
     const active = cards[activeSlot].querySelector('.card-scroll')
@@ -1006,6 +1009,7 @@ function boot () {
   renderInto(0, progress.currentStep)
   preRenderNext()
   paintTopBar()
+  updateSideArrows()
 
   // Перемикач мови — тільки в режимі прототипу (коли бекенд не задав window.QUIZ_LANG).
   const switcher = document.querySelector('[data-lang-switcher]')

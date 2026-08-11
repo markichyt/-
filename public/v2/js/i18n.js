@@ -256,6 +256,7 @@ const uk = {
       doneSub: 'Ваш профіль створюється. Ми надішлемо підтвердження на {email}.'
     },
     profilesPricing: {
+      previewTitle: 'Так виглядатиме Ваш профіль',
       prevPlan: 'Попередній план',
       nextPlan: 'Наступний план',
       recommended: 'РЕКОМЕНДОВАНО ВАМ',
@@ -620,6 +621,7 @@ const ru = {
       doneSub: 'Ваш профиль создаётся. Мы отправим подтверждение на {email}.'
     },
     profilesPricing: {
+      previewTitle: 'Так будет выглядеть Ваш профиль',
       prevPlan: 'Предыдущий план',
       nextPlan: 'Следующий план',
       recommended: 'РЕКОМЕНДОВАНО ВАМ',

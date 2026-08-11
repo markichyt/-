@@ -262,31 +262,42 @@
 /* ── Крок 8: стрілки каруселі тарифів ──────────────────────────────────────
    Раніше план перемикався лише крихітними точками (8px) під профілем — їх
    не помічали. Додано помітні стрілки по боках + свайп. */
-.pp-navrow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
+/* Заголовок над каруселлю профілю на кроці 8 */
+.profiles-pricing-wrap .pp-preview-title {
+  text-align: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 4px 0 10px;
 }
+
+/* Бічні стрілки, зафіксовані до екрана (винесені у <body>). Видно лише коли
+   активний крок тарифів. На широкому екрані тримаються біля країв картки. */
+.pp-side-arrows { display: none; }
+body.pp-arrows-on .pp-side-arrows { display: block; }
 .pp-nav {
-  flex: 0 0 auto;
-  width: 40px;
-  height: 40px;
+  position: fixed;
+  top: 50%;
+  z-index: 90;
+  width: 44px;
+  height: 44px;
   border: none;
   border-radius: 50%;
-  background: var(--text-dark);
+  background: var(--text-dark, #1a1a2e);
   color: #fff;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, .22);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .35);
   transition: background .2s, opacity .2s, transform .15s;
 }
 .pp-nav svg { width: 20px; height: 20px; display: block; }
+.pp-nav--prev { left: max(8px, calc(50% - 216px)); transform: translateY(-50%); }
+.pp-nav--next { right: max(8px, calc(50% - 216px)); transform: translateY(-50%); }
 .pp-nav:hover { background: var(--accent); }
-.pp-nav:active { transform: scale(.92); }
-.pp-nav:disabled { opacity: .25; cursor: default; pointer-events: none; }
+.pp-nav--prev:active, .pp-nav--next:active { transform: translateY(-50%) scale(.92); }
+.pp-nav:disabled { opacity: .22; cursor: default; pointer-events: none; }
 
 /* Точки робимо трохи більшими й контраснішими */
 .profiles-pricing-wrap .pp-dot { width: 9px; height: 9px; }
