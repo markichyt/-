@@ -285,7 +285,6 @@ export function computeDiagnosis (answers) {
 // ── Структура воронки ────────────────────────────────────────────────────────
 // type: video | form | radio | checkbox | card
 export const SLIDES = [
-  { type: 'card', id: 'greeting', q: 'slides.greeting.q', sub: 'slides.greeting.sub' },
   {
     type: 'form',
     id: 'contact',

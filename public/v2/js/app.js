@@ -223,24 +223,13 @@ function wireLoopingVideo (root) {
   }
 }
 
-// ── 1. Привітання: Андрій вітається й запрошує пройти опитування ───────────
-renderers.greeting = function (slide, root) {
-  root.innerHTML = frame(slide, `
-    <div class="cv-player cv-square" data-player>
-      <video class="cv-video" src="assets/greeting.mp4" poster="assets/greeting-poster.jpg"
-             autoplay muted loop playsinline preload="auto"></video>
-      <button class="vv-pause" data-pause></button>
-      <button class="vv-sound" data-sound></button>
-    </div>
-    ${actionBar(continueBtn(t('cards.greeting.start')))}
-  `, true)
-
-  const dispose = wireLoopingVideo(root)
-  root.querySelector('[data-continue]').addEventListener('click', goNext)
-  return dispose
+// Локалізоване відео Андрія на слайді «Рішення»: ru→ru, en/en-GB/en-AE→en, pl→pl,
+// решта → uk. Файли лежать у assets/video/<loc>/.
+function solutionVideoDir () {
+  return ({ uk: 'uk', ru: 'ru', pl: 'pl', en: 'en', 'en-GB': 'en', 'en-AE': 'en' })[i18nState.locale] || 'uk'
 }
 
-// ── 2. Контактна форма (ранній перехоплювач ліда) ────────────────────────────
+// ── Контактна форма (ранній перехоплювач ліда) — тепер перший слайд ───────────
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 renderers.form = function (slide, root) {
@@ -401,7 +390,7 @@ renderers.solution = function (slide, root) {
   root.innerHTML = frame(slide, `
     <div class="sol-wrap">
       <div class="cv-player cv-square" data-player>
-        <video class="cv-video" src="assets/solution.mp4" poster="assets/solution-poster.jpg"
+        <video class="cv-video" src="assets/video/${solutionVideoDir()}/solution.mp4" poster="assets/video/${solutionVideoDir()}/solution-poster.jpg"
                autoplay muted loop playsinline preload="auto"></video>
         <button class="vv-pause" data-pause></button>
         <button class="vv-sound" data-sound></button>
