@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="only light">
-<title>Кешфлоу — Консультант CRM</title>
+<title>PnL — Прибутки та збитки — Консультант CRM</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -206,73 +206,103 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px}
 }
 </style>
 <style>
-/* ===== Cash Flow page ===== */
-.kpi-formula{display:grid;grid-template-columns:1fr 34px 1fr 34px 1fr 34px 1fr 34px 1fr;align-items:stretch;gap:0;margin-bottom:20px}
-.kpi-card{background:#fff;border:1px solid #EFEFF1;border-radius:10px;box-shadow:var(--card-shadow);padding:16px 18px;display:flex;flex-direction:column;gap:6px;min-width:0;transition:transform .15s, box-shadow .15s}
+/* ===== PnL page ===== */
+.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:20px}
+@media (max-width:1250px){.kpi-row{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:640px){.kpi-row{grid-template-columns:1fr}}
+.kpi-card{background:#fff;border:1px solid #EFEFF1;border-radius:10px;box-shadow:var(--card-shadow);padding:16px 18px;display:flex;flex-direction:column;gap:6px;min-width:0;position:relative;overflow:hidden;transition:transform .15s, box-shadow .15s;cursor:pointer}
 .kpi-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(20,22,30,.08)}
+.kpi-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--kacc,#0043EA)}
 .kpi-card .k-label{font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--font-color-secondary);font-weight:700;display:flex;align-items:center}
-.kpi-card .k-value{font-size:24px;font-weight:800;color:var(--font-color-heading);font-variant-numeric:tabular-nums;letter-spacing:-.5px;white-space:nowrap}
-.kpi-card .k-sub{font-size:12px;color:var(--font-color-secondary)}
-.kpi-card.k-in .k-value{color:var(--green-color)}
-.kpi-card.k-out .k-value{color:var(--red-color)}
-.kpi-card.k-net .k-value{color:var(--primary-color)}
-.kpi-op{display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#c3c4c9;user-select:none}
-@media (max-width:1250px){.kpi-formula{grid-template-columns:1fr 1fr;gap:12px}.kpi-op{display:none}}
-@media (max-width:640px){.kpi-formula{grid-template-columns:1fr}}
+.kpi-card .k-value{font-size:23px;font-weight:800;color:var(--font-color-heading);font-variant-numeric:tabular-nums;letter-spacing:-.5px;white-space:nowrap}
+.kpi-card .k-sub{font-size:12px;color:var(--font-color-secondary);display:flex;gap:8px;flex-wrap:wrap}
+.kpi-card .k-sub .m{font-weight:700;color:var(--kacc,#0043EA)}
 
-.cf-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:16px;margin-bottom:16px}
-@media (max-width:1250px){.cf-grid{grid-template-columns:1fr}}
-.seg{display:inline-flex;background:#F1F1F3;border-radius:8px;padding:3px;gap:2px}
-.seg button{font-size:12px;font-weight:600;color:var(--font-color-secondary);padding:6px 12px;border-radius:6px;transition:all .15s}
-.seg button.on{background:#fff;color:var(--font-color-heading);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.view-tabs{display:inline-flex;background:#F1F1F3;border-radius:8px;padding:3px;gap:2px}
+.view-tabs button{font-size:13px;font-weight:600;color:var(--font-color-secondary);padding:8px 16px;border-radius:6px;transition:all .15s;white-space:nowrap}
+.view-tabs button.on{background:#fff;color:var(--font-color-heading);box-shadow:0 1px 3px rgba(0,0,0,.12)}
 
-.acc-row{display:flex;align-items:center;gap:12px;padding:9px 8px;border-radius:8px;cursor:pointer;transition:background .15s}
-.acc-row:hover{background:#F6F9FF}
-.acc-row.sel{background:var(--secondary-color)}
-.acc-ic{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;flex-shrink:0}
-.acc-main{flex:1;min-width:0}
-.acc-name{font-size:13px;font-weight:600;color:var(--font-color-heading);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.acc-cur{font-size:11px;color:var(--font-color-secondary)}
-.acc-bar{height:4px;border-radius:2px;background:#F0F0F2;margin-top:5px;overflow:hidden}
-.acc-bar i{display:block;height:100%;border-radius:2px;background:var(--color-light-blue)}
-.acc-amt{font-size:13px;font-weight:700;color:var(--font-color-heading);font-variant-numeric:tabular-nums;white-space:nowrap}
-.acc-amt .orig{display:block;font-size:11px;font-weight:400;color:var(--font-color-secondary);text-align:right}
+.pnl-grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start}
+@media (max-width:1250px){.pnl-grid{grid-template-columns:1fr}}
+.side-col{display:flex;flex-direction:column;gap:16px}
 
-.ctrl-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
-@media (max-width:1100px){.ctrl-grid{grid-template-columns:1fr}}
-.ctrl-chips{display:flex;flex-wrap:wrap;gap:8px}
-.ctrl-chip{display:flex;align-items:center;gap:8px;border:1px solid #ECECEE;background:#FAFAFB;border-radius:8px;padding:8px 12px;font-size:13px;cursor:pointer;transition:all .15s}
-.ctrl-chip:hover{border-color:var(--color-light-blue);background:#fff}
-.ctrl-chip b{font-size:15px}
-.ctrl-note{margin-top:12px;font-size:12px;color:var(--font-color-secondary);display:flex;gap:7px;align-items:flex-start;background:#FDF3E0;border:1px solid #F5E3BC;border-radius:8px;padding:9px 12px;color:#8a6414}
-.rec-tbl{width:100%;border-collapse:collapse;font-size:13px}
-.rec-tbl th{text-align:left;font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:var(--font-color-secondary);padding:6px 8px;border-bottom:1px solid #ECECEE;font-weight:700}
-.rec-tbl td{padding:8px;border-bottom:1px solid #F4F4F6}
-.rec-tbl tr:last-child td{border-bottom:none}
-.rec-tbl .num{text-align:right;font-variant-numeric:tabular-nums}
+/* statement */
+.stmt{width:100%;border-collapse:collapse;font-size:13.5px}
+.stmt th{text-align:right;font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:var(--font-color-secondary);font-weight:700;padding:8px 10px;border-bottom:2px solid #ECECEE;white-space:nowrap}
+.stmt th:first-child{text-align:left}
+.stmt td{padding:8px 10px;border-bottom:1px solid #F4F4F6;vertical-align:middle}
+.stmt .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.stmt .cat{display:flex;align-items:center;gap:7px}
+.stmt .caret{width:16px;height:16px;display:inline-flex;align-items:center;justify-content:center;transition:transform .25s;color:var(--font-color-secondary);flex-shrink:0}
+.stmt tr.expanded .caret{transform:rotate(90deg)}
+.stmt tr.sec-row{cursor:pointer;background:#FBFBFC}
+.stmt tr.sec-row:hover{background:#F6F9FF}
+.stmt tr.sec-row td{font-weight:800;color:var(--font-color-heading);border-top:1px solid #ECECEE;font-size:13.5px}
+.stmt tr.grp-row{cursor:pointer}
+.stmt tr.grp-row td:first-child{padding-left:30px}
+.stmt tr.grp-row td{font-weight:600;color:var(--font-color-heading)}
+.stmt tr.grp-row:hover{background:#F6F9FF}
+.stmt tr.leaf-row td:first-child{padding-left:52px}
+.stmt tr.leaf-row td{color:var(--font-color-primary);font-size:13px}
+.stmt tr.leaf-row:hover{background:#F6F9FF}
+.stmt tr.calc-row td{font-weight:800;color:var(--font-color-heading);background:var(--secondary-color);border-top:1px solid #D6E2FE;border-bottom:1px solid #D6E2FE;font-size:14px}
+.stmt tr.calc-row.final td{background:#E7F6EE;border-color:#C4E8D4}
+.stmt tr.margin-row td{border-bottom:none;padding-top:2px;padding-bottom:10px;font-size:12px;color:var(--font-color-secondary)}
+.stmt tr.simple-row td{color:var(--font-color-primary)}
+.stmt .clickable{cursor:pointer;border-bottom:1px dashed transparent}
+.stmt .clickable:hover{color:var(--primary-color);border-bottom-color:var(--primary-color)}
+.stmt .neg-val{color:var(--red-color)}
+.stmt .pos-val{color:var(--green-color)}
+.stmt .dneu{color:var(--font-color-secondary)}
+.stmt tr.hidden-row{display:none}
+.stmt .pct{color:var(--font-color-secondary);font-size:12px}
 
-.tx-toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
-.tx-search{position:relative;flex:1;min-width:220px;max-width:420px}
-.tx-search input{width:100%;padding:9px 12px 9px 36px;border:1px solid #E2E2E4;border-radius:8px;font-size:13px;outline:none;transition:border-color .2s, box-shadow .2s}
-.tx-search input:focus{border-color:var(--color-light-blue);box-shadow:0 0 0 3px rgba(0,149,212,.12)}
-.tx-search svg{position:absolute;left:11px;top:50%;transform:translateY(-50%)}
-.type-chips{display:flex;gap:6px;flex-wrap:wrap}
-.type-chip{font-size:12px;font-weight:600;border-radius:20px;padding:7px 13px;border:1px solid #E2E2E4;background:#fff;color:var(--font-color-secondary);transition:all .15s}
-.type-chip:hover{border-color:var(--color-light-blue);color:var(--font-color-heading)}
-.type-chip.on{background:var(--font-color-heading);border-color:var(--font-color-heading);color:#fff}
-.bulk-bar{display:none;align-items:center;gap:12px;background:var(--secondary-color);border:1px solid #D6E2FE;border-radius:8px;padding:8px 14px;margin-bottom:10px;font-size:13px;color:var(--primary-color);font-weight:600}
-.bulk-bar.show{display:flex}
-.bulk-bar .btn{padding:6px 12px;font-size:12px}
-.tbl .cbx{width:30px}
-input[type=checkbox]{width:15px;height:15px;accent-color:var(--primary-color);cursor:pointer}
-.tx-count{font-size:12px;color:var(--font-color-secondary);margin-left:auto}
-.no-impact{display:inline-flex;align-items:center;font-size:10px;font-weight:700;letter-spacing:.4px;color:#8a8a90;background:#F0F0F2;padding:2px 7px;border-radius:10px;margin-left:6px;text-transform:uppercase}
-.tx-empty{padding:40px;text-align:center;color:var(--font-color-secondary)}
-.tbl-scroll{max-height:560px;overflow:auto;border:1px solid #F0F0F2;border-radius:8px}
-.link-like{color:var(--primary-color);cursor:pointer;font-weight:600}
-.link-like:hover{text-decoration:underline}
-.fx-cell{color:#0078AB;font-weight:600}
-.pager{display:flex;justify-content:flex-end;align-items:center;gap:6px;margin-top:12px;font-size:13px;color:var(--font-color-secondary)}
+/* right column widgets */
+.donut-wrap{display:flex;flex-direction:column;align-items:center;gap:10px}
+.donut-legend{width:100%;display:flex;flex-direction:column;gap:6px}
+.donut-legend .dl{display:flex;align-items:center;gap:8px;font-size:12.5px;padding:5px 8px;border-radius:6px;cursor:pointer;transition:background .15s}
+.donut-legend .dl:hover{background:#F6F9FF}
+.donut-legend .sw{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.donut-legend .nm{flex:1;color:var(--font-color-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.donut-legend .vv{font-weight:700;color:var(--font-color-heading);font-variant-numeric:tabular-nums}
+.donut-legend .pp{color:var(--font-color-secondary);width:44px;text-align:right;font-variant-numeric:tabular-nums}
+
+.qa-list{display:flex;flex-direction:column;gap:8px}
+.qa-item{display:flex;align-items:flex-start;gap:9px;font-size:12.5px;padding:9px 11px;border-radius:8px;border:1px solid #EFEFF1;background:#FAFAFB;line-height:1.45}
+.qa-item.warn{background:var(--amber-bg);border-color:#F5E3BC;color:#8a6414}
+.qa-item.err{background:#FCECEC;border-color:#F3CACA;color:#a33}
+.qa-item.ok{color:var(--font-color-primary)}
+.qa-item .qi{flex-shrink:0;margin-top:1px}
+.qa-item a{color:var(--primary-color);font-weight:600}
+
+/* monthly & country views */
+.wide-tbl-wrap{overflow-x:auto;border:1px solid #F0F0F2;border-radius:8px}
+.wide-tbl{border-collapse:separate;border-spacing:0;font-size:12.5px;width:100%}
+.wide-tbl th{background:#FAFAFB;color:var(--font-color-secondary);font-size:11px;letter-spacing:.4px;text-transform:uppercase;font-weight:700;padding:9px 12px;border-bottom:1px solid #ECECEE;text-align:right;white-space:nowrap}
+.wide-tbl th:first-child{text-align:left}
+.wide-tbl td{padding:8px 12px;border-bottom:1px solid #F4F4F6;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--font-color-primary)}
+.wide-tbl td:first-child{text-align:left}
+.wide-tbl .sticky{position:sticky;left:0;background:#fff;z-index:3;box-shadow:2px 0 0 #F0F0F2;min-width:200px}
+.wide-tbl th.sticky{background:#FAFAFB;z-index:4}
+.wide-tbl tr.wt-total td{font-weight:800;color:var(--font-color-heading);background:var(--secondary-color)}
+.wide-tbl tr.wt-total td.sticky{background:#E4EDFE}
+.wide-tbl tr.wt-final td{font-weight:800;color:var(--font-color-heading);background:#E7F6EE}
+.wide-tbl tr.wt-final td.sticky{background:#DDF2E6}
+.wide-tbl tr.wt-margin td{font-size:11.5px;color:var(--font-color-secondary);border-bottom:1px solid #ECECEE}
+.wide-tbl .ytd{background:#FBFBFC;font-weight:700;border-left:1px solid #ECECEE}
+.wide-tbl tr:hover td{background:#F6F9FF}
+.wide-tbl tr:hover td.sticky{background:#EFF5FF}
+.view-panel{display:none}
+.view-panel.on{display:block}
+.hint-line{font-size:12px;color:var(--font-color-secondary);margin-top:10px}
+
+/* drill drawer table */
+.drill-tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.drill-tbl th{text-align:left;font-size:10.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--font-color-secondary);padding:7px 8px;border-bottom:1px solid #ECECEE;font-weight:700}
+.drill-tbl td{padding:8px;border-bottom:1px solid #F4F4F6}
+.drill-tbl .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.drill-tbl tfoot td{font-weight:800;color:var(--font-color-heading);border-top:2px solid #ECECEE;border-bottom:none}
+.drill-note{margin-top:12px;font-size:12px;color:var(--font-color-secondary);background:#F8F9FB;border:1px solid #EFEFF1;border-radius:8px;padding:9px 12px;line-height:1.5}
 </style>
 
 </head>
@@ -299,9 +329,9 @@ input[type=checkbox]{width:15px;height:15px;accent-color:var(--primary-color);cu
             </div>
             <ul class="submenu">
               <li><a class="submenu-link" href="https://dash.consultant.net.ua/balance">Баланс</a></li>
-              <li><a class="submenu-link is-active" href="./">Кешфлоу</a></li>
+              <li><a class="submenu-link " href="../v4/">Кешфлоу</a></li>
               <li><a class="submenu-link" href="https://dash.consultant.net.ua/payments">Рахунки</a></li>
-              <li><a class="submenu-link " href="../v5/">PnL</a></li>
+              <li><a class="submenu-link is-active" href="./">PnL</a></li>
             </ul>
           </li>
           <li class="menu-item">
@@ -341,7 +371,7 @@ input[type=checkbox]{width:15px;height:15px;accent-color:var(--primary-color);cu
   <header class="header">
     <div class="header-container">
       <div class="logo"><a href="https://dash.consultant.net.ua/"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALwAAAApCAYAAACP4kNbAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAvDSURBVHgB7ZxrbBxXFcfPrLdpSLLpkkdLbUEmlaCOcciSBwgVlLUDlA+lcQqVaNrgNVJTmgJ2WkRBFGUthTZAwDYlKQkS3qQtSCBhW/ABKpJdq3wpTsimiYoDAm+QYlKSNpu49JXaw/3P3FnfnZ3XPm2H+5OuxzNz7mNmz5w599x7h2gGaWyOREkiqSF1NENA2QMUSC5bfnN4UcNNL2TPn3+TJJIqo9AM0NgYUZU6Jakoiop9TdMy2qTWMjqazpBEUkUCNAMEgoEeKPuG9euovv5mwv94AFatjrSRRFJFau7SNDVHdrEXy5fr6+vpyb4f0Re3baV/jmUokzkbVkj5wtIbb6KL/zk/TBJJFfB0aeB+UJBUqgCKQmFFCwzg/yf7fkitrdHcuX37D9D+pw7q/2tEg28Epzoy6XSWJJIKYqvwqhoJz19EnQFFiZGmqFRhduzYTg89+ACNj/9bd2lMjhxN0Z7v7dWPS79eUg0KFH7VByNdzKeG2xHGfigUogamlNhWgtDikG7dx8fHKfal7QTX5vHd3TnFP3fOOA6lZ2SvTk21/P2ldNqpPPZgRNgmzNqccpHBtUT4bprJZi3HChDLE2Qz7HiGXGCyUbSbyaUd6veqK8KPOV4zl1PZRrVet3k/yB29fWYZxO+JWz3kn9w98mhL3r0s5R7zpFIRbcvbg3/d1LxWQ2qP3a+98OcRrVq0d9yvmXV96vY7NKbouXNXrlzRntjzA/P8pfc3RSIuF59EHpfzKktjvOg4P9blo4nIo5o3WMzvBpdLCfuo61IRdWXE/C71JMTr5teZ1PyREssw63aoJ64VB+TDPtvSI9QT48di5H7dKpfr14pvWyxoFmR0JgNxWPJvPvoItW3+LFWL/fsP0sjI8dw+rPpdn78nV6/Rhq/rW+bXh68LBJJM6V0tvR2a8UMmybAC3cxyxPkNxY3OsNRHhpWwEmWpnaV+llqoRCx1dVezLpq+zgRLbp3+fiqOQbJaxuk2J2zqwm+0i8sMcxkrsOabWYIxuIzfhUrDrW3dNudSusLrHVOm7Pj/x3176SMb1k+XOPRbPY2O/o0mJiZyx6GModAi8qKhob7gmKjsJij724/FdVdmx4Pb9WMP7XhAP/70M78MBxVlgLXTt09vp+z8lBn6bHF5dcLyYduuuVg/H9SkLs1wHVSUxerp8JAtSuG5a5W2lIENlGqYnU/Y1IH7Dtck6lwy9TK5S7ycOJWAR9tSdm6urvB1QaUfYuhMmsoOH/urnY/oim4HFFF8AJzgvrhvEK2Bxf/u7ri+D0uPNowcO45okS8r6KLs4Ab88fITado6qFQ6fuvqIuNHN98AK6g4TD/5LM0O0J5BH3JQ1ijVkCCsu0ZKFBa77c479YNmh/LcueKUtVLgjQJMpcf2c3dvxQMWxZSE0dPplDWPYB1xsxH6xH53Ga9LO8JlWnxbeIdRV3ZWPhSlk23hFgyRvRukt4Uqx5jm3A1C/WjTTqeObYXxusdu5zwJKnUB/bXb2hpl7ocRKTGs7MwouwmU3uxPwC1q23wHXBticXy8vlM2WcYs+70VVnbQyVM16SXDv41Tia/6EjhJzg8W3jYxMhStnD6GX3p4qgpBCjD/T1No1a0f0A/Aug8O/Y5mA08/8wva1BqlDRvWUSNvH4ujrnEQP8S3ZoeojVmKPh/uRDHgFXzSQ6adygDtZe3+MBn+f9RFdCOVae0E2tzuE2sPHkK8daJu4V8LqlfEhezfUilyd83M37ckclEaxMPBH4+kaDZxmCk9FL6hoUHfZ8/mSjs5BYNkHH6j4e8n2f8tFVT6Ia+3BquvLIUH3HVIkH2Ew6wH51SqDWbHUCX/RKk0//yQXUfYhLs75St8aLERcRk9c4ZmE2ccOs1u4IZxn9RO6S9T7dDrYvWH3fxf/oDiQdlJxuAL/u/weFAr6cNXA4Qk4x4ycF0iVENmZLZkLeBWAiE6lQylV/kp3VrxTqEtXLZdlC8RM2+nR11oiz7KyFMUxzRj9NEuD85vpvLa5gveBrP9Kf85aQzuj1si535D1ShK4d9a+j56vb7RUw4yr6y+3VN26voFutzEyrVUDRyUHv5ohiXHUToyOsCQ7S4zMlFMXehvZLkiIMVYuuSQByFXtGsnVYYxl/YhVo6HsbvC/aEZIehX8PxtW+nVD31G//+6iQukDj3BthcL5KDAL3/83tz+8pHf0PJjhSHZq6Fl9I+7d+tKD+a/cpZu+dV3qATQiXSc9Sm4NzGW4vD14eKQEft2ep1myBjESfF9KNcwFY7c2QG5NK87W0JdyNfC3ZyYS55eYb5NSe3j8l5TsfWwpMWv9qoP57w690T5v12x1+BUvlmOraHypfD/rV+VU3ZwNbScLqzfQvXJnxXIvrrm03n7FzbcRUtOPUd1b71uOb4lp+zgzaUr9DfCgvFRKgb2Q3T5kEmQ0AHklsoznyDve4DEOrpYbF1CvgS5dFotsiW1r9SwLcsHCzbopw6Pcrr8linIZcjlWr3K8eXSTF7/roJjVxcvs5edt5B8lTlvQcl5JZJSKVD4cZsBp4XM6gYsFvqG0T+RHcuPDVjkni+w7mDJi8/l7cM9CmUK59hIJJXEl0sDhb3l14/Ry7fdy6z9QgqNHafwmedtZZe++AddHu5J8LWLdOPIgK3cwvG/6mVmb/2Evr+E5ZNIqo3vTus8ZoHf+/s+X7J4GJweCJH5F/9F77n4rKvMIh8zMnnozBrCy5oRFs1mboawSMHxnJ/ykd+hrKyw0ISs0R4h5GgXehTzhm3aHLYpT70WoijVpkDhFy+uzMqmSuHVHq5keI3YDShFebx9C+X32tdoxvA94sstducsytNLRpRFlBvkx/uZfAdvgyLIrGDHzfn2KgmDMLzNCZ7QPutQOlYjpcgYmDkr5MPsyw5eb9SSB6FK21FoyTQ5hTen8YprTOcIUMS8IX9BoQCWLL5bzKAZ87VBzOWclS6XeSQqGUPivUI5sMwnyFiI4MYhu2iJZkwd6LAs/2ujGo9MXmvkFH7iijG3fVNriz4rcbZgThq7Ys691zRrfDXsUUS2xHNWBrT8ulM0PfCTMRVTUEqVpkcmN2r5ywPFNlvPZYUHJyMcN0Nu+iixZizkmC3z3+cMAYWMH+pIUt/oE7W23XcPzRa23WcMYo2MHNO3isfi5iIZZooDRe43EzlPkNrC6l5pJjJcqJiNHB6KDE+qzTEzkY9zTsANGyoyj4QRnFc3Nfj2O4GekZHjYSy9g8JjaR0+mVHsaqVKgwfPnKN/lD+QUxRIUeWAJYXvDUttWm+/LgOG3E1Ljamwu7C8TrD0Kk3P6jspjlTyc2125yxALiPkg7+PUUT0PTosnfJqz9O/Jgim0+lsU/NadK527fn+Xkr8/KC+8AJb4XMZNQef4cPyPoDFIPqCFIUyo6eOpUwZzZhE1cP/t07LhRL2elSjLxlU8j8X4eTmWF0auBMxMualI/9lzVijKcrgQfJyuTpt2p4io5Ob1PJXIp1lbe3WjDWsSS1/cplXX0FCfB5DJBIJvz0ZOEEaqfhqgLm0DmtL9z11gIZquCAEDxssO94yIG+5oUIdL536S4IkkhLJTbpqjETUwDsBRBXCUDbzywFA/CKYCJTz0W88TH6YmHjNc9E3IkSf3NSS++iTRdkTTNk7SCKpFE1NkQg+fIQPIH3law/nfRwJ/GTfT7WPfmxj7gNKhw8/q1UDfIhp3/4DQl3rTqjsLUQSSZkUTKuF0lNdYADuDSwtvu4rWnvTzUHWx3fHuX89TpUAb5BzzKqL38BhHmzfG8GpuPywqqQS2M4jh3ujTCpxRVP0zhS+GgClF79GBoWEq4OPJ1WJ4QAF4qdPT3dSJZJyUdxOrl69rm2StB5Ye+y3tkbpWyxyAl/b6l8zmfIHQVgUpo6U7ETdZEpadEk1UPwINa1eGyPM+eCKD0uPkc+jzMLLzqRkLuFL4YHVzeG5M1N1Uy2jafkNd8ncwLfCm/DwZYIw4CLj4pL/F5qb10dJIplj/A/1Irt3AXf70AAAAABJRU5ErkJggg==" alt="Консультант для бізнесу"></a></div>
-      <div class="page-title"><span class="title-icon"><svg fill="white" width="20" height="20" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 489.175 489.175" xml:space="preserve" class="flex-shrink-0"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><g><g><path d="M402.438,79.025l-67.7-67.7c-15.1-15.1-39.6-15.1-54.7,0l-67.7,67.7H402.438z"></path> <path d="M240.438,15.625h-97.1c-21.4,0-38.8,17.4-38.8,38.7v24.7h72.4L240.438,15.625z"></path> <path d="M249.738,475.525h93.9c20.6,0,37.4-16.8,37.4-37.4v-25.2h-68.7L249.738,475.525z"></path> <path d="M85.838,412.825l65.4,65.4c14.6,14.6,38.3,14.6,52.9,0l65.4-65.4H85.838z"></path> <path d="M247.238,161.125c-46.8,0-84.8,38-84.8,84.8s38,84.8,84.8,84.8s84.8-38,84.8-84.8S294.038,161.125,247.238,161.125z M271.538,279.425c-3.7,4.5-8.5,7.5-14.1,9.1c-2.5,0.7-3.5,2-3.4,4.5s0,5,0,7.5c0,2.2-1.1,3.4-3.3,3.5c-2.7,0.1-5.4,0.1-8.1,0 c-2.4,0-3.5-1.4-3.5-3.7c0-1.8,0-3.7-0.1-5.5c0-4-0.2-4.2-4.1-4.8c-5-0.8-9.8-1.9-14.4-4.1c-3.6-1.7-3.9-2.6-2.9-6.4 c0.8-2.8,1.5-5.6,2.4-8.3c1-3.2,1.9-3.6,4.8-2.1c5,2.6,10.4,4.1,16,4.8c3.6,0.5,7.1,0.1,10.5-1.4c6.2-2.7,7.2-10,1.9-14.3 c-1.8-1.5-3.8-2.6-6-3.5c-5.5-2.4-11.2-4.2-16.3-7.3c-8.4-5-13.7-11.9-13.1-22.1c0.7-11.5,7.2-18.7,17.8-22.6 c4.4-1.6,4.4-1.5,4.4-6.1c0-1.5,0-3.1,0-4.6c0.1-3.4,0.7-4,4.1-4.1c1.1,0,2.1,0,3.2,0c7.3,0,7.3,0,7.3,7.3c0,5.2,0,5.2,5.2,6 c3.9,0.6,7.7,1.8,11.3,3.4c2,0.9,2.8,2.3,2.1,4.4c-0.9,3.1-1.8,6.3-2.8,9.4c-1,2.9-1.9,3.4-4.7,2c-5.7-2.8-11.7-3.9-17.9-3.6 c-1.7,0.1-3.3,0.3-4.8,1c-5.4,2.4-6.3,8.4-1.7,12.1c2.3,1.9,5,3.2,7.8,4.4c4.8,2,9.6,3.9,14.2,6.4 C277.837,248.725,281.837,266.925,271.538,279.425z"></path> <circle cx="370.538" cy="250.225" r="23.5"></circle> <circle cx="123.838" cy="250.225" r="23.5"></circle> <path d="M429.138,107.625h-369.2c-21.3,0-38.7,17.4-38.7,38.7v199.2c0,21.3,17.4,38.7,38.7,38.7h369.3c21.3,0,38.7-17.4,38.7-38.7 v-199.2C467.837,125.025,450.538,107.625,429.138,107.625z M434.837,308.425c-3.1-0.8-6.3-1.2-9.7-1.2 c-21.6,0-39.2,17.5-39.2,39.2c0,1.6,0.1,3.3,0.3,4.9h-286.6c0.4-2.3,0.7-4.7,0.7-7.2c0-21.6-17.5-39.2-39.2-39.2 c-2.4,0-4.6,0.2-6.9,0.6v-119c2.2,0.4,4.5,0.6,6.9,0.6c21.6,0,39.2-17.5,39.2-39.2c0-2.5-0.2-4.9-0.7-7.2h287.5 c-0.8,3.1-1.2,6.3-1.2,9.6c0,21.6,17.5,39.2,39.2,39.2c3.3,0,6.6-0.4,9.7-1.2V308.425z"></path></g></g></g></svg></span><span>Кешфлоу</span></div>
+      <div class="page-title"><span class="title-icon"><svg fill="white" width="20" height="20" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 489.175 489.175" xml:space="preserve" class="flex-shrink-0"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><g><g><path d="M402.438,79.025l-67.7-67.7c-15.1-15.1-39.6-15.1-54.7,0l-67.7,67.7H402.438z"></path> <path d="M240.438,15.625h-97.1c-21.4,0-38.8,17.4-38.8,38.7v24.7h72.4L240.438,15.625z"></path> <path d="M249.738,475.525h93.9c20.6,0,37.4-16.8,37.4-37.4v-25.2h-68.7L249.738,475.525z"></path> <path d="M85.838,412.825l65.4,65.4c14.6,14.6,38.3,14.6,52.9,0l65.4-65.4H85.838z"></path> <path d="M247.238,161.125c-46.8,0-84.8,38-84.8,84.8s38,84.8,84.8,84.8s84.8-38,84.8-84.8S294.038,161.125,247.238,161.125z M271.538,279.425c-3.7,4.5-8.5,7.5-14.1,9.1c-2.5,0.7-3.5,2-3.4,4.5s0,5,0,7.5c0,2.2-1.1,3.4-3.3,3.5c-2.7,0.1-5.4,0.1-8.1,0 c-2.4,0-3.5-1.4-3.5-3.7c0-1.8,0-3.7-0.1-5.5c0-4-0.2-4.2-4.1-4.8c-5-0.8-9.8-1.9-14.4-4.1c-3.6-1.7-3.9-2.6-2.9-6.4 c0.8-2.8,1.5-5.6,2.4-8.3c1-3.2,1.9-3.6,4.8-2.1c5,2.6,10.4,4.1,16,4.8c3.6,0.5,7.1,0.1,10.5-1.4c6.2-2.7,7.2-10,1.9-14.3 c-1.8-1.5-3.8-2.6-6-3.5c-5.5-2.4-11.2-4.2-16.3-7.3c-8.4-5-13.7-11.9-13.1-22.1c0.7-11.5,7.2-18.7,17.8-22.6 c4.4-1.6,4.4-1.5,4.4-6.1c0-1.5,0-3.1,0-4.6c0.1-3.4,0.7-4,4.1-4.1c1.1,0,2.1,0,3.2,0c7.3,0,7.3,0,7.3,7.3c0,5.2,0,5.2,5.2,6 c3.9,0.6,7.7,1.8,11.3,3.4c2,0.9,2.8,2.3,2.1,4.4c-0.9,3.1-1.8,6.3-2.8,9.4c-1,2.9-1.9,3.4-4.7,2c-5.7-2.8-11.7-3.9-17.9-3.6 c-1.7,0.1-3.3,0.3-4.8,1c-5.4,2.4-6.3,8.4-1.7,12.1c2.3,1.9,5,3.2,7.8,4.4c4.8,2,9.6,3.9,14.2,6.4 C277.837,248.725,281.837,266.925,271.538,279.425z"></path> <circle cx="370.538" cy="250.225" r="23.5"></circle> <circle cx="123.838" cy="250.225" r="23.5"></circle> <path d="M429.138,107.625h-369.2c-21.3,0-38.7,17.4-38.7,38.7v199.2c0,21.3,17.4,38.7,38.7,38.7h369.3c21.3,0,38.7-17.4,38.7-38.7 v-199.2C467.837,125.025,450.538,107.625,429.138,107.625z M434.837,308.425c-3.1-0.8-6.3-1.2-9.7-1.2 c-21.6,0-39.2,17.5-39.2,39.2c0,1.6,0.1,3.3,0.3,4.9h-286.6c0.4-2.3,0.7-4.7,0.7-7.2c0-21.6-17.5-39.2-39.2-39.2 c-2.4,0-4.6,0.2-6.9,0.6v-119c2.2,0.4,4.5,0.6,6.9,0.6c21.6,0,39.2-17.5,39.2-39.2c0-2.5-0.2-4.9-0.7-7.2h287.5 c-0.8,3.1-1.2,6.3-1.2,9.6c0,21.6,17.5,39.2,39.2,39.2c3.3,0,6.6-0.4,9.7-1.2V308.425z"></path></g></g></g></svg></span><span>PnL — Прибутки та збитки</span></div>
       <ul class="header-actions">
         <li class="h-item" title="Сповіщення">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 3C8.68629 3 6 5.68629 6 9V12.5858L4.29289 14.2929C4.10536 14.4804 4 14.7348 4 15C4 15.5523 4.44772 16 5 16H19C19.5523 16 20 15.5523 20 15C20 14.7348 19.8946 14.4804 19.7071 14.2929L18 12.5858V9C18 5.68629 15.3137 3 12 3Z" fill="#fff"/><path d="M9.5 18C9.5 19.3807 10.6193 20.5 12 20.5C13.3807 20.5 14.5 19.3807 14.5 18H9.5Z" fill="#fff"/></svg>
@@ -352,21 +382,17 @@ input[type=checkbox]{width:15px;height:15px;accent-color:var(--primary-color);cu
   </header>
 
   <main class="main">
-<div class="crumbs">Бухгалтерія / <b>Кешфлоу</b></div>
+<div class="crumbs">Бухгалтерія / <b>PnL</b></div>
 <div class="page-head">
   <div>
-    <h1>Кешфлоу</h1>
-    <div class="sub">Фактичний рух грошей за всіма рахунками компанії. Відповідає на питання: <b>звідки прийшли гроші та куди вони пішли</b>. Не плутати з PnL — прибутком: переказ між своїми рахунками чи поповнення балансу юриста — це рух грошей, але не дохід.</div>
+    <h1>PnL — Прибутки та збитки</h1>
+    <div class="sub">Економічний результат діяльності: <b>скільки компанія заробила і на чому</b>. Не плутати з Кешфлоу — рухом грошей: тут поповнення балансів та перекази не враховуються, а дохід визнається у момент фактичного надання послуги.</div>
   </div>
   <div class="head-actions">
     <span class="period-chip"><span class="dot"></span>Серпень 2026 · <b>період відкритий</b></span>
     <button class="btn btn-secondary" id="btnExport">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 3V15M12 15L7 10M12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 17V19C4 20.1046 4.89543 21 6 21H18C19.1046 21 20 20.1046 20 19V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
       Експорт
-    </button>
-    <button class="btn btn-primary" id="btnAdd">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
-      Додати транзакцію
     </button>
   </div>
 </div>
@@ -377,7 +403,7 @@ input[type=checkbox]{width:15px;height:15px;accent-color:var(--primary-color);cu
     <button class="fselect-btn"><span class="fs-label">Період:</span><span class="fs-value">Серпень 2026</span>
       <svg width="10" height="6" viewBox="0 0 14 8" fill="none"><path d="M1 1L7 7L13 1" stroke="#97979a" stroke-width="2" stroke-linecap="round"/></svg></button>
     <div class="fselect-menu">
-      <button class="sel">Серпень 2026</button><button>Липень 2026</button><button>Квартал (Q3 2026)</button><button>З початку року</button><button>Останні 12 місяців</button><button>Власний період…</button>
+      <button class="sel">Серпень 2026</button><button>Липень 2026</button><button>Квартал (Q3 2026)</button><button>З початку року</button><button>Останні 12 місяців</button>
     </div>
   </div>
   <div class="fselect" data-filter="project">
@@ -387,187 +413,125 @@ input[type=checkbox]{width:15px;height:15px;accent-color:var(--primary-color);cu
       <button class="sel">Консолідовано</button><button>Україна</button><button>США</button><button>Велика Британія</button><button>Польща</button><button>ОАЕ</button>
     </div>
   </div>
-  <div class="fselect" data-filter="account">
-    <button class="fselect-btn"><span class="fs-label">Рахунок:</span><span class="fs-value">Всі</span>
-      <svg width="10" height="6" viewBox="0 0 14 8" fill="none"><path d="M1 1L7 7L13 1" stroke="#97979a" stroke-width="2" stroke-linecap="round"/></svg></button>
-    <div class="fselect-menu">
-      <button class="sel">Всі</button><button>Chase USD</button><button>Wise USD</button><button>ПриватБанк UAH</button><button>Monobank UAH</button><button>Stripe</button><button>PayPal</button><button>Каса</button>
-    </div>
-  </div>
   <div class="fselect" data-filter="currency">
     <button class="fselect-btn"><span class="fs-label">Валюта звіту:</span><span class="fs-value">USD</span>
       <svg width="10" height="6" viewBox="0 0 14 8" fill="none"><path d="M1 1L7 7L13 1" stroke="#97979a" stroke-width="2" stroke-linecap="round"/></svg></button>
-    <div class="fselect-menu">
-      <button class="sel">USD</button><button>UAH</button><button>EUR</button>
-    </div>
+    <div class="fselect-menu"><button class="sel">USD</button><button>UAH</button><button>EUR</button></div>
+  </div>
+  <div class="view-tabs" style="margin-left:auto" id="viewTabs">
+    <button class="on" data-v="summary">Зведений</button>
+    <button data-v="monthly">По місяцях</button>
+    <button data-v="country">По країнах</button>
   </div>
 </div>
 
-<!-- KPI formula: Opening + In − Out = Net → Closing -->
-<div class="kpi-formula">
-  <div class="kpi-card">
-    <span class="k-label">Кошти на початок<span class="info">i<span class="tip">Сумарний залишок на всіх рахунках компанії станом на 1 серпня 2026.</span></span></span>
-    <span class="k-value">$1 102 400</span>
-    <span class="k-sub">на 01.08.2026 · всі рахунки</span>
+<div class="kpi-row" id="kpiRow">
+  <div class="kpi-card" style="--kacc:#0043EA" data-kpi="rev">
+    <span class="k-label">Дохід<span class="info">i<span class="tip">Визнаний дохід за період: замовлення, підписки, ліди, AI-функції. Поповнення балансів юристів — не дохід.</span></span></span>
+    <span class="k-value" id="kRev">$842 500</span>
+    <span class="k-sub"><span class="pos" id="kRevD">↑ 18,4%</span><span>до попер. періоду</span></span>
   </div>
-  <div class="kpi-op">+</div>
-  <div class="kpi-card k-in">
-    <span class="k-label">Надходження<span class="info">i<span class="tip">Всі гроші, що фактично зайшли на рахунки за період: оплати клієнтів, підписки, поповнення балансів юристів тощо.</span></span></span>
-    <span class="k-value">+$384 200</span>
-    <span class="k-sub pos">↑ 6,1% до липня</span>
+  <div class="kpi-card" style="--kacc:#0095D4" data-kpi="gp">
+    <span class="k-label">Валовий прибуток<span class="info">i<span class="tip">Дохід мінус собівартість (виплати юристам, комісії платіжних систем, прямі AI/API-витрати).</span></span></span>
+    <span class="k-value" id="kGP">$651 200</span>
+    <span class="k-sub"><span class="m" id="kGPm">77,3%</span><span>маржа</span></span>
   </div>
-  <div class="kpi-op">−</div>
-  <div class="kpi-card k-out">
-    <span class="k-label">Витрати<span class="info">i<span class="tip">Всі гроші, що фактично пішли з рахунків: виплати юристам, реклама, зарплати, сервіси, податки.</span></span></span>
-    <span class="k-value">−$246 100</span>
-    <span class="k-sub pos">↑ 2,4% до липня</span>
+  <div class="kpi-card" style="--kacc:#17ab83" data-kpi="cm">
+    <span class="k-label">Маржинальний прибуток<span class="info">i<span class="tip">Contribution Margin: валовий прибуток мінус всі витрати на продажі та маркетинг. Показує реальну економіку залучення клієнтів.</span></span></span>
+    <span class="k-value" id="kCM">$348 600</span>
+    <span class="k-sub"><span class="m" id="kCMm">41,4%</span><span>від доходу</span></span>
   </div>
-  <div class="kpi-op">=</div>
-  <div class="kpi-card k-net">
-    <span class="k-label">Чистий рух коштів<span class="info">i<span class="tip">Надходження мінус витрати. Показує, на скільки змінився залишок грошей за період.</span></span></span>
-    <span class="k-value">+$138 100</span>
-    <span class="k-sub pos">↑ 13,3% до липня</span>
+  <div class="kpi-card" style="--kacc:#E8930C" data-kpi="ebitda">
+    <span class="k-label">EBITDA<span class="info">i<span class="tip">Операційний прибуток до амортизації, відсотків і податків: дохід − собівартість − маркетинг − продукт − адміністративні.</span></span></span>
+    <span class="k-value" id="kEB">$194 300</span>
+    <span class="k-sub"><span class="m" id="kEBm">23,1%</span><span>маржа</span></span>
   </div>
-  <div class="kpi-op">→</div>
-  <div class="kpi-card">
-    <span class="k-label">Кошти на кінець<span class="info">i<span class="tip">Початок + надходження − витрати = кінець. Із них $186 400 — поворотні баланси юристів, які не є вільними коштами компанії.</span></span></span>
-    <span class="k-value">$1 240 500</span>
-    <span class="k-sub">з них поворотні баланси: $186 400</span>
+  <div class="kpi-card" style="--kacc:#149E60" data-kpi="ni">
+    <span class="k-label">Чистий прибуток<span class="info">i<span class="tip">Фінальний результат після амортизації, фінансових витрат і податку на прибуток.</span></span></span>
+    <span class="k-value" id="kNI">$157 800</span>
+    <span class="k-sub"><span class="m" id="kNIm">18,7%</span><span>чиста маржа</span></span>
   </div>
 </div>
 
-<div class="cf-grid">
-  <div class="card card-pad">
-    <div class="card-title">
-      <h3>Надходження та витрати<span class="info">i<span class="tip">Динаміка фактичного руху грошей. Наведіть курсор на стовпчик, щоб побачити деталі.</span></span></h3>
-      <div class="seg" id="granSeg">
-        <button data-g="day">День</button>
-        <button data-g="week">Тиждень</button>
-        <button data-g="month" class="on">Місяць</button>
+<!-- ЗВЕДЕНИЙ -->
+<div class="view-panel on" id="view-summary">
+  <div class="pnl-grid">
+    <div class="card card-pad">
+      <div class="card-title">
+        <h3>Звіт про прибутки та збитки<span class="info">i<span class="tip">Класична структура: Дохід → Валовий прибуток → Маржинальний прибуток → EBITDA → Чистий прибуток. Розгортайте розділи та клікайте на суми, щоб побачити транзакції, з яких вони складаються.</span></span></h3>
+        <span class="hint" id="stmtHint">Серпень 2026 · консолідовано · USD</span>
       </div>
+      <div class="tbl-wrap">
+        <table class="stmt" id="stmtTable">
+          <thead>
+            <tr><th style="min-width:230px">Стаття</th><th id="colCur">Серпень 2026</th><th>% доходу</th><th id="colPrev">Липень 2026</th><th>Δ</th></tr>
+          </thead>
+          <tbody id="stmtBody"></tbody>
+        </table>
+      </div>
+      <div class="hint-line">▸ — розділ можна розгорнути. Будь-яка сума клікабельна: відкриється список транзакцій, які її сформували (принцип повного аудиту кожної цифри).</div>
     </div>
-    <div id="cfChart" style="min-height:280px"></div>
-    <div class="legend" style="margin-top:10px">
-      <span class="li"><span class="sw" style="background:var(--chart-in)"></span>Надходження</span>
-      <span class="li"><span class="sw" style="background:var(--chart-out)"></span>Витрати</span>
-      <span class="li"><span class="swl" style="background:var(--chart-net)"></span>Чистий рух</span>
-    </div>
-  </div>
-  <div class="card card-pad">
-    <div class="card-title">
-      <h3>Кошти за рахунками</h3>
-      <span class="hint">на 27.08.2026</span>
-    </div>
-    <div id="accList"></div>
-    <div style="display:flex;justify-content:space-between;border-top:1px solid #EFEFF1;margin-top:10px;padding:12px 8px 0;font-size:13px">
-      <b style="color:var(--font-color-heading)">Всього на рахунках</b>
-      <b style="color:var(--font-color-heading)" class="mono">$1 240 500</b>
-    </div>
-  </div>
-</div>
-
-<div class="ctrl-grid">
-  <div class="card card-pad">
-    <div class="card-title">
-      <h3>Контроль операцій<span class="info">i<span class="tip">Транзакції, які потребують уваги бухгалтера. Місяць не можна закрити, поки не виправлені критичні помилки.</span></span></h3>
-      <span class="badge badge-amber"><span class="bdot"></span>потребує уваги</span>
-    </div>
-    <div class="ctrl-chips">
-      <button class="ctrl-chip" data-status="draft"><span class="badge badge-gray"><span class="bdot"></span>Чернетки</span><b>12</b></button>
-      <button class="ctrl-chip" data-status="review"><span class="badge badge-amber"><span class="bdot"></span>На перевірці</span><b>8</b></button>
-      <button class="ctrl-chip" data-miss="cat"><span class="badge badge-red"><span class="bdot"></span>Без категорії PnL</span><b>3</b></button>
-      <button class="ctrl-chip" data-miss="proj"><span class="badge badge-red"><span class="bdot"></span>Без проєкту</span><b>2</b></button>
-      <button class="ctrl-chip" data-miss="date"><span class="badge badge-red"><span class="bdot"></span>Без дати</span><b>1</b></button>
-    </div>
-    <div class="ctrl-note">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:1px"><path d="M12 9V13M12 16.5V17M4.9 19H19.1C20.6 19 21.6 17.4 20.9 16L13.8 4.5C13 3.2 11 3.2 10.2 4.5L3.1 16C2.4 17.4 3.4 19 4.9 19Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-      <span>Закриття періоду <b>заблоковано</b>: 6 транзакцій із критичними помилками. Виправте їх, щоб бухгалтер міг натиснути «Закрити період».</span>
-    </div>
-  </div>
-  <div class="card card-pad">
-    <div class="card-title">
-      <h3>Звірка рахунків<span class="info">i<span class="tip">Автоматична перевірка: Початок + Надходження − Витрати = Кінець для кожного рахунку. Розбіжність = помилка звірки.</span></span></h3>
-      <span class="badge badge-red"><span class="bdot"></span>1 розбіжність</span>
-    </div>
-    <table class="rec-tbl">
-      <thead><tr><th>Рахунок</th><th class="num">У системі</th><th class="num">Фактично</th><th class="num">Різниця</th><th style="text-align:right">Статус</th></tr></thead>
-      <tbody>
-        <tr><td>Chase USD</td><td class="num mono">$430 200</td><td class="num mono">$430 200</td><td class="num mono">$0</td><td style="text-align:right"><span class="badge badge-green"><span class="bdot"></span>Збіг</span></td></tr>
-        <tr><td>Wise USD</td><td class="num mono">$187 510</td><td class="num mono">$187 500</td><td class="num mono neg"><b>$10</b></td><td style="text-align:right"><span class="badge badge-red"><span class="bdot"></span>Помилка</span></td></tr>
-        <tr><td>ПриватБанк UAH</td><td class="num mono">$221 400</td><td class="num mono">$221 400</td><td class="num mono">$0</td><td style="text-align:right"><span class="badge badge-green"><span class="bdot"></span>Збіг</span></td></tr>
-        <tr><td>Stripe</td><td class="num mono">$146 300</td><td class="num mono">$146 300</td><td class="num mono">$0</td><td style="text-align:right"><span class="badge badge-green"><span class="bdot"></span>Збіг</span></td></tr>
-        <tr><td>Monobank UAH</td><td class="num mono">$103 600</td><td class="num mono">$103 600</td><td class="num mono">$0</td><td style="text-align:right"><span class="badge badge-green"><span class="bdot"></span>Збіг</span></td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<div class="card card-pad">
-  <div class="card-title" style="margin-bottom:4px">
-    <h3>Реєстр транзакцій</h3>
-    <span class="hint">клікніть на рядок, щоб побачити повну картку операції</span>
-  </div>
-  <div class="sub" style="font-size:12px;color:var(--font-color-secondary);margin-bottom:14px">Кожна операція має тип, рахунок, проєкт і категорію PnL. Перекази між своїми рахунками та поповнення балансів <b>не впливають на PnL</b> — вони позначені міткою «не дохід/витрата».</div>
-  <div class="tx-toolbar">
-    <div class="tx-search">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#97979a" stroke-width="2"/><path d="M20 20L16.5 16.5" stroke="#97979a" stroke-width="2" stroke-linecap="round"/></svg>
-      <input id="txSearch" type="text" placeholder="Пошук: ID, сума, коментар, контрагент, замовлення, лід…">
-    </div>
-    <div class="type-chips" id="typeChips">
-      <button class="type-chip on" data-t="all">Всі</button>
-      <button class="type-chip" data-t="in">Надходження</button>
-      <button class="type-chip" data-t="out">Витрати</button>
-      <button class="type-chip" data-t="transfer">Перекази</button>
-      <button class="type-chip" data-t="fx">Обмін валют</button>
-    </div>
-    <div class="fselect" data-filter="status" style="margin-left:auto">
-      <button class="fselect-btn"><span class="fs-label">Статус:</span><span class="fs-value">Всі</span>
-        <svg width="10" height="6" viewBox="0 0 14 8" fill="none"><path d="M1 1L7 7L13 1" stroke="#97979a" stroke-width="2" stroke-linecap="round"/></svg></button>
-      <div class="fselect-menu">
-        <button class="sel" data-s="all">Всі</button>
-        <button data-s="completed">Завершено</button>
-        <button data-s="review">На перевірці</button>
-        <button data-s="draft">Чернетка</button>
-        <button data-s="cancelled">Скасовано</button>
+    <div class="side-col">
+      <div class="card card-pad">
+        <div class="card-title"><h3>Структура доходу</h3><span class="hint" id="mixHint">серпень</span></div>
+        <div class="donut-wrap">
+          <div id="revDonut"></div>
+          <div class="donut-legend" id="donutLegend"></div>
+        </div>
+      </div>
+      <div class="card card-pad">
+        <div class="card-title"><h3>Динаміка маржі</h3><span class="hint">12 місяців</span></div>
+        <div id="marginChart" style="min-height:190px"></div>
+        <div class="legend" style="margin-top:8px">
+          <span class="li"><span class="swl" style="background:#0095D4"></span>Валова</span>
+          <span class="li"><span class="swl" style="background:#17ab83"></span>Маржинальна</span>
+          <span class="li"><span class="swl" style="background:#E8930C"></span>EBITDA</span>
+          <span class="li"><span class="swl" style="background:#0043EA"></span>Чиста</span>
+        </div>
+      </div>
+      <div class="card card-pad">
+        <div class="card-title"><h3>Контроль якості даних</h3></div>
+        <div class="qa-list">
+          <div class="qa-item ok"><span class="qi">🟢</span><span>Маппінг PnL: всі автоматичні транзакції розкладені за довідником категорій.</span></div>
+          <div class="qa-item ok"><span class="qi">🟢</span><span>Категорія «Інше»: 2,1% витрат — у межах порогу 5%.</span></div>
+          <div class="qa-item warn"><span class="qi">🟡</span><span>18 транзакцій очікують перевірки бухгалтера — цифри можуть уточнитися. <a href="../v4/">Перейти в Кешфлоу →</a></span></div>
+          <div class="qa-item err"><span class="qi">🔴</span><span>3 транзакції без категорії PnL — не потрапили у звіт. <a href="../v4/">Виправити →</a></span></div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="bulk-bar" id="bulkBar">
-    <span id="bulkCount">Обрано: 0</span>
-    <button class="btn btn-primary" id="bulkComplete">Завершити обрані</button>
-    <button class="btn btn-secondary">Призначити категорію</button>
-    <button class="btn btn-secondary">Призначити проєкт</button>
-    <span class="muted" style="font-weight:400;margin-left:auto">масові дії скорочують ручну роботу бухгалтера</span>
-  </div>
-  <div class="tbl-scroll">
-    <table class="tbl" id="txTable">
-      <thead>
-        <tr>
-          <th class="cbx"><input type="checkbox" id="cbAll"></th>
-          <th>Дата</th>
-          <th>ID</th>
-          <th>Тип</th>
-          <th>Рахунок</th>
-          <th>Контрагент / призначення</th>
-          <th>Проєкт</th>
-          <th class="num">Сума <span style="text-transform:none;font-weight:400">(та USD)</span></th>
-          <th>Категорія PnL</th>
-          <th>Статус</th>
-        </tr>
-      </thead>
-      <tbody id="txBody"></tbody>
-    </table>
-    <div class="tx-empty" id="txEmpty" style="display:none">Нічого не знайдено. Змініть фільтри або пошуковий запит.</div>
-  </div>
-  <div class="pager"><span id="txShown"></span></div>
 </div>
 
-<!-- transaction drawer -->
+<!-- ПО МІСЯЦЯХ -->
+<div class="view-panel" id="view-monthly">
+  <div class="card card-pad">
+    <div class="card-title">
+      <h3>PnL по місяцях · 2026</h3>
+      <span class="hint">консолідовано · USD · перша колонка закріплена</span>
+    </div>
+    <div class="wide-tbl-wrap" id="monthlyWrap"></div>
+    <div class="hint-line">Гортайте таблицю горизонтально. YTD — накопичений підсумок з початку року.</div>
+  </div>
+</div>
+
+<!-- ПО КРАЇНАХ -->
+<div class="view-panel" id="view-country">
+  <div class="card card-pad">
+    <div class="card-title">
+      <h3>PnL по країнах · <span id="countryPeriodLabel">Серпень 2026</span></h3>
+      <span class="hint">USD · клік на країну — відкрити її PnL</span>
+    </div>
+    <div class="wide-tbl-wrap" id="countryWrap"></div>
+    <div class="hint-line">Консолідовано = сума всіх проєктів. Від’ємні значення у дужках.</div>
+  </div>
+</div>
+
+<!-- drill-down drawer -->
 <div class="drawer-overlay" id="dOverlay"></div>
-<div class="drawer" id="txDrawer">
+<div class="drawer" id="drillDrawer">
   <div class="drawer-head">
     <div>
-      <h3 id="dTitle">Транзакція</h3>
+      <h3 id="dTitle">Категорія</h3>
       <div class="sub" id="dSub"></div>
     </div>
     <button class="drawer-close" id="dClose">✕</button>
@@ -618,401 +582,597 @@ function fmtPct(x, d=1){ return (Math.round(x * Math.pow(10,d)) / Math.pow(10,d)
 function fmtDelta(x){ return (x >= 0 ? '↑ ' : '↓ ') + fmtPct(Math.abs(x)); }
 </script>
 <script>
-/* =================== ДАНІ =================== */
+/* =================== МОДЕЛЬ ДАНИХ =================== */
 const M_LABELS = ['Вер 25','Жов 25','Лис 25','Гру 25','Січ 26','Лют 26','Бер 26','Кві 26','Тра 26','Чер 26','Лип 26','Сер 26'];
-const M_IN  = [247740, 261630, 274950, 257910, 283880, 300770, 317730, 332290, 348710, 338350, 362140, 384200];
-const M_OUT = [195640, 203630, 210710, 221870, 207890, 219240, 231370, 237630, 247310, 251850, 240290, 246100];
-const CHAIN = (() => { // залишок на початок кожного місяця + фінальний кінець
-  const net = M_IN.map((v,i)=>v-M_OUT[i]);
-  let open = 1240500 - net.reduce((a,b)=>a+b,0);
-  const c=[open]; net.forEach(n=>c.push(c[c.length-1]+n)); return c;
-})();
-const W_LABELS = Array.from({length:12},(_,i)=>'Тиж ' + (i+1));
-const W_IN  = [82908, 83679, 79233, 94602, 91729, 76151, 82988, 79225, 77598, 91851, 74657, 81878];
-const W_OUT = [54462, 54191, 52761, 48782, 56270, 50247, 64601, 49418, 53277, 59316, 63938, 54509];
-const D_LABELS = Array.from({length:30},(_,i)=> (i<3 ? (29+i)+'.07' : (i-2)+'.08'));
-const D_IN  = [10692, 8974, 17258, 18823, 21793, 19974, 20131, 13322, 14348, 19678, 10277, 12974, 17382, 17825, 43570, 9000, 16890, 15478, 11427, 14472, 11779, 20955, 17634, 11075, 12540, 18756, 8783, 37505, 19271, 13616];
-const D_OUT = [5596, 13218, 10105, 11461, 6914, 9493, 12962, 10786, 6286, 30257, 11705, 9851, 11723, 8856, 10252, 8258, 13976, 6245, 9442, 11802, 12750, 6376, 6440, 11124, 41368, 8463, 10363, 9212, 7263, 9979];
-
-const ACCOUNTS = [
-  {name:'Chase USD',      cur:'USD', usd:430200, orig:'$430 200',  color:'#1A56DB', ab:'Ch'},
-  {name:'ПриватБанк UAH', cur:'UAH', usd:221400, orig:'₴9 137 000', color:'#3BA55D', ab:'Пр'},
-  {name:'Wise USD',       cur:'USD', usd:187500, orig:'$187 500',  color:'#0095D4', ab:'Wi'},
-  {name:'Stripe',         cur:'USD', usd:146300, orig:'$146 300',  color:'#635BFF', ab:'St'},
-  {name:'Monobank UAH',   cur:'UAH', usd:103600, orig:'₴4 275 500', color:'#2a2c32', ab:'Mo'},
-  {name:'Каса',           cur:'UAH', usd:79400,  orig:'₴3 276 800', color:'#8A6D3B', ab:'Кс'},
-  {name:'PayPal',         cur:'USD', usd:72100,  orig:'$72 100',   color:'#0070BA', ab:'PP'},
-];
-
-const TYPE_META = {
-  in:       {label:'Надходження', cls:'badge-green'},
-  out:      {label:'Витрата',     cls:'badge-red'},
-  transfer: {label:'Переказ',     cls:'badge-blue'},
-  fx:       {label:'Обмін валют', cls:'badge-cyan'},
+const M_SHORT  = ['Січ','Лют','Бер','Кві','Тра','Чер','Лип','Сер']; // 2026, індекси 4..11
+const SERIES = {
+  rev:  [512300,538600,561200,549800,578400,601200,634500,662800,689400,668200,711400,842500],
+  cogs: [121900,127400,131800,130200,136400,140900,148300,154200,159800,157400,172000,191300],
+  sm:   [198400,206800,213500,210300,219600,226400,238700,247900,257300,251200,281000,302600],
+  pd:   [72400,73800,74600,76900,78300,79800,82400,84100,86300,87600,87000,91400],
+  ga:   [51200,52000,52600,53900,54700,55400,57200,58300,59600,60400,60900,62900],
+  da:   [11800,11800,11800,11800,12100,12100,12100,12100,12500,12500,12500,12500],
+  fin:  [3600,3600,3700,3700,3800,3800,3900,4000,4000,4100,4200,4200],
 };
-const STATUS_META = {
-  completed: {label:'Завершено',    cls:'badge-green'},
-  review:    {label:'На перевірці', cls:'badge-amber'},
-  draft:     {label:'Чернетка',     cls:'badge-gray'},
-  cancelled: {label:'Скасовано',    cls:'badge-red'},
-};
+const TAX_RATE = 19800 / 177600; // ставка з фактичного серпня
 
-/* Реєстр транзакцій (останні операції серпня) */
-const TX = [
- {id:'CF-25 918', date:'27.08.2026', type:'in',  acc:'Stripe', cp:'Клієнт · Замовлення №25058', proj:'Україна', amt:'+₴51 250', usd:1250, cat:'Дохід / Маркетплейс', impact:true, status:'review', source:'Замовлення', comment:'Оплата Замовлення №25058 / Лід №254128 / Проєкт Україна', author:'Система (авто)', order:'25058', lead:'254128', extra:{'Дата створення':'27.08.2026 14:32','Курс':'41,00'}},
- {id:'CF-25 917', date:'27.08.2026', type:'in',  acc:'ПриватБанк UAH', cp:'Юрист #1257 · поповнення балансу', proj:'Україна', amt:'+₴10 000', usd:244, cat:'Баланс юриста / Поповнення', impact:false, impactNote:'Поворотні кошти юриста. Стануть доходом лише при купівлі лідів чи AI-функцій.', status:'completed', source:'Баланс', comment:'Оплата за використання програмного продукту Consultant', author:'Система (авто)', approved:'Гончарук О.', consultant:'1257', extra:{'Вплив на баланс':'+₴10 000 (поворотний гаманець)'}},
- {id:'CF-25 916', date:'27.08.2026', type:'out', acc:'Chase USD', cp:'Google Ads · серпень', proj:'США', amt:'−$12 400', usd:-12400, cat:'Продажі та маркетинг / Реклама', impact:true, status:'completed', source:'Вручну', comment:'Регулярний оборотний бюджет, масштабування робочих зв’язок', author:'Гончарук О.', approved:'Гончарук О.'},
- {id:'CF-25 915', date:'26.08.2026', type:'transfer', acc:'Chase USD', cp:'Внутрішній переказ → Wise USD', proj:'Корпоративний', amt:'↔ $10 000', usd:-10000, cat:null, impact:false, impactNote:'Гроші перемістилися між власними рахунками — доходу чи витрати немає.', status:'completed', source:'Вручну', comment:'Поповнення Wise для виплат юристам ЄС. Пов’язана операція: CF-25 914', author:'Гончарук О.', approved:'Гончарук О.', pair:'CF-25 914'},
- {id:'CF-25 914', date:'26.08.2026', type:'transfer', acc:'Wise USD', cp:'Внутрішній переказ ← Chase USD', proj:'Корпоративний', amt:'↔ +$10 000', usd:10000, cat:null, impact:false, impactNote:'Дзеркальна частина переказу CF-25 915.', status:'completed', source:'Вручну', comment:'Пов’язана операція: CF-25 915', author:'Гончарук О.', approved:'Гончарук О.', pair:'CF-25 915'},
- {id:'CF-25 913', date:'26.08.2026', type:'out', acc:'Wise USD', cp:'Виплата Consultant #1257', proj:'Україна', amt:'−₴8 400', usd:-205, cat:'Собівартість / Виплати юристам', impact:true, status:'completed', source:'Баланс', comment:'Виплата Consultant #1257 / Проєкт Україна', author:'Система (авто)', approved:'Гончарук О.', consultant:'1257'},
- {id:'CF-25 912', date:'26.08.2026', type:'fx', acc:'ПриватБанк UAH', cp:'Конвертація UAH → USD', proj:'Корпоративний', amt:'₴100 000 → $2 300', usd:2300, cat:null, impact:false, impactNote:'Конвертація не є доходом чи витратою. Курсова різниця: +$14,20 (FX Gain).', status:'completed', source:'Вручну', comment:'Курс 43,4783. FX Gain +$14,20', author:'Гончарук О.', approved:'Гончарук О.', extra:{'Курс обміну':'43,4783','Курсова різниця':'+$14,20'}},
- {id:'CF-25 911', date:'25.08.2026', type:'in',  acc:'Stripe', cp:'Юрист #2044 · підписка', proj:'Україна', amt:'+₴2 000', usd:49, cat:'Дохід / Підписка юриста', impact:true, status:'completed', source:'Підписка', comment:'Безповоротна підписка за доступ до платформи', author:'Система (авто)', approved:'Гончарук О.', consultant:'2044'},
- {id:'CF-25 910', date:'25.08.2026', type:'out', acc:'Chase USD', cp:'Зарплата · команда розробки', proj:'Корпоративний', amt:'−$18 600', usd:-18600, cat:'Продукт і розробка / Команда розробки', impact:true, status:'completed', source:'Вручну', comment:'ЗП за серпень: backend, frontend, QA, DevOps', author:'Гончарук О.', approved:'Гончарук О.'},
- {id:'CF-25 909', date:'25.08.2026', type:'in',  acc:'Chase USD', cp:'Acme Legal LLC · B2B договір', proj:'США', amt:'+$8 500', usd:8500, cat:'Дохід / B2B', impact:true, status:'completed', source:'Замовлення', comment:'Щомісячний B2B-контракт, корпоративний доступ', author:'Система (авто)', approved:'Гончарук О.', order:'25012'},
- {id:'CF-25 908', date:'24.08.2026', type:'out', acc:'Stripe', cp:'Stripe · комісія за процесинг', proj:'Консолідовано', amt:'−$1 890', usd:-1890, cat:'Собівартість / Комісії платіжних систем', impact:true, status:'completed', source:'Банк', comment:'Комісія еквайрингу за тиждень', author:'Система (авто)', approved:'Гончарук О.'},
- {id:'CF-25 907', date:'24.08.2026', type:'out', acc:'Monobank UAH', cp:'Менеджер Коваленко І. · виведення балансу', proj:'Україна', amt:'−₴5 000', usd:-122, cat:'Виведення балансу менеджера', impact:false, impactNote:'Комісію вже визнано витратою при нарахуванні на баланс. Повторної витрати немає.', status:'completed', source:'Баланс', comment:'Виведення балансу менеджера Коваленко І. / серпень / Проєкт Україна', author:'Система (авто)', approved:'Гончарук О.'},
- {id:'CF-25 906', date:'24.08.2026', type:'out', acc:'Chase USD', cp:'AWS · інфраструктура', proj:'Корпоративний', amt:'−$3 150', usd:-3150, cat:'Продукт і розробка / Інфраструктура', impact:true, status:'completed', source:'Банк', comment:'EC2, RDS, S3, CloudFront за серпень', author:'Система (авто)', approved:'Гончарук О.'},
- {id:'CF-25 905', date:'23.08.2026', type:'out', acc:'Chase USD', cp:'Anthropic · API', proj:'Корпоративний', amt:'−$2 240', usd:-2240, cat:'Собівартість / AI та API', impact:true, status:'completed', source:'Банк', comment:'Прямі API-витрати на AI-функції платформи', author:'Система (авто)', approved:'Гончарук О.'},
- {id:'CF-25 904', date:'23.08.2026', type:'in',  acc:'PayPal', cp:'Клієнт · підписка B2C', proj:'Велика Британія', amt:'+£390', usd:490, cat:'Дохід / Підписка клієнта', impact:true, status:'completed', source:'Підписка', comment:'Річна клієнтська підписка', author:'Система (авто)', approved:'Гончарук О.'},
- {id:'CF-25 903', date:'22.08.2026', type:'out', acc:'ПриватБанк UAH', cp:'Поповнення ПДВ-рахунку', proj:'Україна', amt:'−₴86 000', usd:-2098, cat:null, impact:false, impactNote:'ПДВ не стає витратою PnL автоматично — це податкове зобов’язання. Потрібне рішення бухгалтера.', status:'review', source:'Вручну', comment:'Поповнення ПДВ рахунка згідно з декларацією', author:'Литвин А.'},
- {id:'CF-25 902', date:'22.08.2026', type:'in',  acc:'Chase USD', cp:'SAFE-інвестиція · Horizon Ventures', proj:'Корпоративний', amt:'+$50 000', usd:50000, cat:null, impact:false, impactNote:'Інвестиція — не дохід. У PnL не потрапляє.', status:'completed', source:'Вручну', comment:'Транш за SAFE-угодою від 15.08.2026', author:'Гончарук О.', approved:'Гончарук О.'},
- {id:'CF-25 901', date:'21.08.2026', type:'out', acc:'PayPal', cp:'Повернення коштів клієнту', proj:'Польща', amt:'−zł2 480', usd:-620, cat:'Дохід / Повернення (Contra Revenue)', impact:true, status:'completed', source:'Замовлення', comment:'Повернення за скасоване замовлення №24988. Це зменшення доходу, а не маркетингова витрата.', author:'Система (авто)', approved:'Гончарук О.', order:'24988'},
- {id:'CF-25 900', date:'21.08.2026', type:'out', acc:'Monobank UAH', cp:'LiqPay · комісія', proj:'Україна', amt:'−₴4 300', usd:-105, cat:'Собівартість / Комісії платіжних систем', impact:true, status:'completed', source:'Банк', comment:'Комісія за еквайринг', author:'Система (авто)', approved:'Гончарук О.'},
- {id:'CF-25 899', date:'20.08.2026', type:'out', acc:'Chase USD', cp:'Claude Code · підписка', proj:'Корпоративний', amt:'−$200', usd:-200, cat:'Продукт і розробка / AI-інструменти', impact:true, status:'completed', source:'Вручну', comment:'Компенсація співробітнику за сервіс. Економічна суть — софт, а не зарплата.', author:'Литвин А.', approved:'Гончарук О.'},
- {id:'CF-25 898', date:'20.08.2026', type:'out', acc:'Wise USD', cp:'Офіс · оренда за вересень', proj:'Україна', amt:'−$2 800', usd:-2800, cat:'Адміністративні / Офіс', impact:true, status:'completed', source:'Вручну', comment:'Оренда офісу + комунальні', author:'Литвин А.', approved:'Гончарук О.'},
- {id:'CF-25 897', date:'19.08.2026', type:'in',  acc:'Stripe', cp:'Клієнт · Замовлення №25041', proj:'Польща', amt:'+zł4 960', usd:1240, cat:'Дохід / Маркетплейс', impact:true, status:'completed', source:'Замовлення', comment:'Оплата Замовлення №25041 / Лід №254016', author:'Система (авто)', approved:'Гончарук О.', order:'25041', lead:'254016'},
- {id:'CF-25 896', date:'19.08.2026', type:'out', acc:'Chase USD', cp:'Meta Ads · серпень', proj:'Україна', amt:'−$8 700', usd:-8700, cat:'Продажі та маркетинг / Реклама', impact:true, status:'completed', source:'Вручну', comment:'Оплата та масштабування робочих зв’язок', author:'Гончарук О.', approved:'Гончарук О.'},
- {id:'CF-25 895', date:'18.08.2026', type:'out', acc:'Monobank UAH', cp:'Тестування нової рекламної зв’язки', proj:'Україна', amt:'−₴41 000', usd:-1000, cat:'Продажі та маркетинг / Тестування реклами', impact:true, status:'draft', source:'Вручну', comment:'Оплата тестувань нових напрямків, TikTok', author:'Литвин А.'},
- {id:'CF-25 894', date:'18.08.2026', type:'out', acc:'Wise USD', cp:'Курси LinkedIn · навчання маркетолога', proj:'Велика Британія', amt:'−£197', usd:-250, cat:'Продажі та маркетинг / Навчання команди', impact:true, status:'review', source:'Вручну', comment:'Навчання маркетолога — витрата на маркетинг, а не «інше»', author:'Литвин А.'},
- {id:'CF-25 893', date:'17.08.2026', type:'in',  acc:'ПриватБанк UAH', cp:'Юрист #1893 · поповнення балансу', proj:'Україна', amt:'+₴25 000', usd:610, cat:'Баланс юриста / Поповнення', impact:false, impactNote:'Поворотні кошти юриста — не дохід компанії.', status:'completed', source:'Баланс', comment:'Оплата за використання програмного продукту Consultant', author:'Система (авто)', approved:'Гончарук О.', consultant:'1893'},
- {id:'CF-25 892', date:'17.08.2026', type:'out', acc:'Chase USD', cp:'Зарплата · відділ продажів', proj:'Консолідовано', amt:'−$9 800', usd:-9800, cat:'Продажі та маркетинг / Команда продажів', impact:true, status:'completed', source:'Вручну', comment:'Фіксовані ЗП сейлзів за серпень', author:'Гончарук О.', approved:'Гончарук О.'},
- {id:'CF-25 891', date:'16.08.2026', type:'out', acc:'Каса', cp:'Канцелярія та господарські витрати', proj:'Україна', amt:'−₴3 700', usd:-90, cat:null, impact:true, status:'draft', source:'Вручну', comment:'Чек №8841. Категорію ще не призначено.', author:'Литвин А.', missCat:true},
+const BLOCKS = [
+  {id:'rev', label:'Дохід', eng:'Revenue', sign:1, groups:[
+    {id:'g_mk', label:'Маркетплейс', info:'Оплати клієнтів за юридичні послуги: B2C-замовлення та корпоративні договори.', leaves:[
+      {id:'mk1', label:'Послуги клієнтам (B2C)', aug:402500},
+      {id:'mk2', label:'Корпоративні клієнти (B2B)', aug:78500},
+    ]},
+    {id:'g_sub', label:'Підписки', info:'Безповоротні підписки за доступ до платформи.', leaves:[
+      {id:'sub1', label:'Підписки юристів', aug:92000},
+      {id:'sub2', label:'Підписки клієнтів', aug:54000},
+      {id:'sub3', label:'Корпоративні підписки', aug:21000},
+    ]},
+    {id:'g_lead', label:'Лід-маркетплейс', info:'Списання балансів юристів за придбані ліди. Дохід визнається у момент купівлі ліда, а не поповнення балансу.', leaves:[
+      {id:'lead', label:'Продаж лідів юристам', aug:82500},
+    ]},
+    {id:'g_ai', label:'AI та платні функції', info:'Використання AI-функцій і платних можливостей платформи, що списуються з балансів.', leaves:[
+      {id:'ai1', label:'Генерація AI-статей', aug:31200},
+      {id:'ai2', label:'AI-відповіді', aug:18400},
+      {id:'ai3', label:'AI-документи', aug:22600},
+      {id:'pf1', label:'Розблокування контактів', aug:12300},
+      {id:'pf2', label:'Платні питання', aug:9500},
+    ]},
+    {id:'g_oth', label:'Інший операційний дохід', leaves:[
+      {id:'oth', label:'Інший дохід', aug:18000},
+    ]},
+  ]},
+  {id:'cogs', label:'Собівартість', eng:'COGS', sign:-1, groups:[
+    {id:'g_lp', label:'Виплати юристам', info:'Винагороди юристам та виконавцям за надані клієнтам послуги.', leaves:[{id:'lp', label:'Виплати юристам', aug:128400}]},
+    {id:'g_fee', label:'Комісії платіжних систем', leaves:[{id:'fee', label:'Комісії платіжних систем', aug:24600}]},
+    {id:'g_dc', label:'Прямі підрядники', leaves:[{id:'dc', label:'Прямі підрядники', aug:14800}]},
+    {id:'g_api', label:'Прямі AI/API та інфраструктура', info:'Собівартість AI-функцій: вартість API пропорційна наданим послугам.', leaves:[{id:'api', label:'Прямі AI/API та інфраструктура', aug:23500}]},
+  ]},
+  {id:'sm', label:'Продажі та маркетинг', eng:'Sales & Marketing', sign:-1, groups:[
+    {id:'g_ads', label:'Реклама', info:'Performance-канали: масштабування робочих зв’язок, тестування нових напрямків, ретаргетинг.', leaves:[
+      {id:'ads_g', label:'Google Ads', aug:62000},
+      {id:'ads_m', label:'Meta', aug:43000},
+      {id:'ads_t', label:'TikTok', aug:21000},
+    ]},
+    {id:'g_st', label:'Команда продажів', leaves:[{id:'st', label:'Команда продажів', aug:74000}]},
+    {id:'g_sc', label:'Комісії продажів', info:'Комісії визнаються витратою при нарахуванні на баланс менеджера, а не при виведенні.', leaves:[{id:'sc', label:'Комісії продажів', aug:38000}]},
+    {id:'g_mt', label:'Команда маркетингу', leaves:[{id:'mt', label:'Команда маркетингу', aug:31000}]},
+    {id:'g_seo', label:'SEO та контент', leaves:[{id:'seo', label:'SEO та контент', aug:19000}]},
+    {id:'g_tool', label:'Маркетингові інструменти', leaves:[{id:'tool', label:'Маркетингові інструменти', aug:14600}]},
+  ]},
+  {id:'pd', label:'Продукт і розробка', eng:'Product & Development', sign:-1, groups:[
+    {id:'g_dev', label:'Команда розробки', leaves:[{id:'dev', label:'Команда розробки', aug:48200}]},
+    {id:'g_prod', label:'Продуктова команда', leaves:[{id:'prod', label:'Продуктова команда', aug:12600}]},
+    {id:'g_aid', label:'AI / Data команда', leaves:[{id:'aid', label:'AI / Data команда', aug:9800}]},
+    {id:'g_infra', label:'Інфраструктура', leaves:[{id:'infra', label:'Інфраструктура (AWS, Cloudflare)', aug:8400}]},
+    {id:'g_papi', label:'AI / API', leaves:[{id:'papi', label:'AI / API (продуктові)', aug:6900}]},
+    {id:'g_soft', label:'Продуктовий софт', leaves:[{id:'soft', label:'Продуктовий софт (GitHub, Jira, Figma)', aug:3300}]},
+    {id:'g_pdc', label:'Підрядники', leaves:[{id:'pdc', label:'Зовнішня розробка', aug:2200}]},
+  ]},
+  {id:'ga', label:'Адміністративні витрати', eng:'General & Administrative', sign:-1, groups:[
+    {id:'g_mgmt', label:'Менеджмент', leaves:[{id:'mgmt', label:'Менеджмент (CEO, COO, CFO)', aug:28000}]},
+    {id:'g_finacc', label:'Фінанси та бухгалтерія', leaves:[{id:'finacc', label:'Фінанси та бухгалтерія', aug:9400}]},
+    {id:'g_legal', label:'Юридичні та комплаєнс', leaves:[{id:'legal', label:'Юридичні та комплаєнс', aug:6800}]},
+    {id:'g_office', label:'Офіс', leaves:[{id:'office', label:'Оренда та утримання офісу', aug:5600}]},
+    {id:'g_hr', label:'HR та рекрутинг', leaves:[{id:'hr', label:'HR та рекрутинг', aug:5200}]},
+    {id:'g_csoft', label:'Корпоративний софт', leaves:[{id:'csoft', label:'Корпоративний софт (Google, Slack, Notion)', aug:3100}]},
+    {id:'g_travel', label:'Відрядження', leaves:[{id:'travel', label:'Відрядження', aug:2200}]},
+    {id:'g_ins', label:'Страхування', leaves:[{id:'ins', label:'Страхування', aug:1400}]},
+    {id:'g_oga', label:'Інші адміністративні', info:'Якщо «Інше» перевищує 5% витрат за місяць — система показує попередження.', leaves:[{id:'oga', label:'Інші адміністративні', aug:1200}]},
+  ]},
 ];
+const BLOCK_AUG = {}; BLOCKS.forEach(b => BLOCK_AUG[b.id] = b.groups.reduce((s,g)=>s+g.leaves.reduce((x,l)=>x+l.aug,0),0));
 
-/* =================== KPI за період =================== */
+const COUNTRIES = ['Україна','США','Велика Британія','Польща','ОАЕ'];
+const CSHARE = {
+  rev: [.461,.255,.117,.101,.066],
+  cogs:[.52,.20,.10,.11,.07],
+  sm:  [.44,.28,.11,.10,.07],
+  pd:  [.40,.25,.12,.13,.10],
+  ga:  [.42,.24,.12,.12,.10],
+  da:  [.42,.24,.12,.12,.10],
+  fin: [.461,.255,.117,.101,.066],
+};
 const PERIODS = {
-  'Серпень 2026':        {s:11, e:11},
-  'Липень 2026':         {s:10, e:10},
-  'Квартал (Q3 2026)':   {s:10, e:11},
-  'З початку року':      {s:4,  e:11},
-  'Останні 12 місяців':  {s:0,  e:11},
+  'Серпень 2026':       {s:11, e:11, short:'серпень 2026'},
+  'Липень 2026':        {s:10, e:10, short:'липень 2026'},
+  'Квартал (Q3 2026)':  {s:10, e:11, short:'Q3 2026 (лип–сер)'},
+  'З початку року':     {s:4,  e:11, short:'січень–серпень 2026'},
+  'Останні 12 місяців': {s:0,  e:11, short:'вересень 2025 – серпень 2026'},
 };
-function kpiForRange(s, e){
-  const cin = M_IN.slice(s, e+1).reduce((a,b)=>a+b,0);
-  const cout = M_OUT.slice(s, e+1).reduce((a,b)=>a+b,0);
-  return {open: CHAIN[s], cin, cout, net: cin-cout, close: CHAIN[e+1]};
+let curPeriod = 'Серпень 2026';
+let curCountry = 'Консолідовано';
+
+function cFactor(blockId){
+  if (curCountry === 'Консолідовано') return 1;
+  const i = COUNTRIES.indexOf(curCountry);
+  return CSHARE[blockId][i];
 }
-function renderKPI(name){
-  const p = PERIODS[name]; if (!p) return;
-  const k = kpiForRange(p.s, p.e);
-  const cards = document.querySelectorAll('.kpi-formula .kpi-card');
-  cards[0].querySelector('.k-value').textContent = fmt$(k.open);
-  cards[1].querySelector('.k-value').textContent = '+' + fmt$(k.cin);
-  cards[2].querySelector('.k-value').textContent = '−' + fmt$(k.cout);
-  cards[3].querySelector('.k-value').textContent = (k.net>=0?'+':'−') + fmt$(k.net);
-  cards[4].querySelector('.k-value').textContent = fmt$(k.close);
-  const openSub = p.s===11 ? 'на 01.08.2026 · всі рахунки' : 'на початок періоду · всі рахунки';
-  cards[0].querySelector('.k-sub').textContent = openSub;
-  // дельти лише для одномісячних періодів
-  const subIn = cards[1].querySelector('.k-sub'), subOut = cards[2].querySelector('.k-sub'), subNet = cards[3].querySelector('.k-sub');
-  if (p.s === p.e && p.s > 0) {
-    const prev = kpiForRange(p.s-1, p.e-1);
-    const dIn = (k.cin/prev.cin-1)*100, dOut = (k.cout/prev.cout-1)*100, dNet = (k.net/prev.net-1)*100;
-    subIn.textContent = fmtDelta(dIn) + ' до попереднього місяця'; subIn.className = 'k-sub ' + (dIn>=0?'pos':'neg');
-    subOut.textContent = fmtDelta(dOut) + ' до попереднього місяця'; subOut.className = 'k-sub';
-    subNet.textContent = fmtDelta(dNet) + ' до попереднього місяця'; subNet.className = 'k-sub ' + (dNet>=0?'pos':'neg');
-  } else {
-    subIn.textContent = 'за обраний період'; subIn.className='k-sub';
-    subOut.textContent = 'за обраний період'; subOut.className='k-sub';
-    subNet.textContent = 'за обраний період'; subNet.className='k-sub';
-  }
+function blockSum(blockId, s, e, countryFactor = true){
+  let v = 0; for (let m = s; m <= e; m++) v += SERIES[blockId][m];
+  return countryFactor ? v * cFactor(blockId) : v;
+}
+function taxFor(pbt, s, e){
+  if (s === 11 && e === 11 && curCountry === 'Консолідовано') return 19800;
+  return Math.round(pbt * TAX_RATE);
+}
+function calcAll(s, e){
+  const r = {};
+  ['rev','cogs','sm','pd','ga','da','fin'].forEach(b => r[b] = Math.round(blockSum(b, s, e)));
+  r.gp = r.rev - r.cogs; r.cm = r.gp - r.sm; r.ebitda = r.cm - r.pd - r.ga;
+  r.ebit = r.ebitda - r.da; r.pbt = r.ebit - r.fin; r.tax = taxFor(r.pbt, s, e); r.ni = r.pbt - r.tax;
+  return r;
+}
+function prevRange(p){
+  const len = p.e - p.s + 1, s = p.s - len, e = p.s - 1;
+  return s >= 0 ? {s, e} : null;
+}
+function leafVal(leaf, blockId, s, e){
+  return Math.round(blockSum(blockId, s, e) * leaf.aug / BLOCK_AUG[blockId]);
+}
+function groupVal(g, blockId, s, e){
+  return g.leaves.reduce((x,l) => x + leafVal(l, blockId, s, e), 0);
 }
 
-/* =================== ГРАФІК =================== */
-let gran = 'month';
-function chartData(){
-  if (gran==='day')  return {labels:D_LABELS, cin:D_IN, cout:D_OUT, every:4};
-  if (gran==='week') return {labels:W_LABELS, cin:W_IN, cout:W_OUT, every:2};
-  return {labels:M_LABELS, cin:M_IN, cout:M_OUT, every:1};
+/* =================== KPI =================== */
+function renderKPI(){
+  const p = PERIODS[curPeriod], cur = calcAll(p.s, p.e);
+  const pr = prevRange(p), prev = pr ? calcAll(pr.s, pr.e) : null;
+  document.getElementById('kRev').textContent = fmt$(cur.rev);
+  document.getElementById('kGP').textContent  = fmt$(cur.gp);
+  document.getElementById('kCM').textContent  = fmt$(cur.cm);
+  document.getElementById('kEB').textContent  = fmt$(cur.ebitda);
+  document.getElementById('kNI').textContent  = fmt$(cur.ni);
+  const d = document.getElementById('kRevD');
+  if (prev) { const dd = (cur.rev/prev.rev - 1)*100; d.textContent = fmtDelta(dd); d.className = dd >= 0 ? 'pos' : 'neg'; }
+  else { d.textContent = '—'; d.className = 'muted'; }
+  document.getElementById('kGPm').textContent = fmtPct(cur.gp/cur.rev*100);
+  document.getElementById('kCMm').textContent = fmtPct(cur.cm/cur.rev*100);
+  document.getElementById('kEBm').textContent = fmtPct(cur.ebitda/cur.rev*100);
+  document.getElementById('kNIm').textContent = fmtPct(cur.ni/cur.rev*100);
 }
-function niceMax(v){
-  const p = Math.pow(10, Math.floor(Math.log10(v)));
-  for (const m of [1,1.5,2,2.5,3,4,5,6,8,10]) if (m*p >= v) return m*p;
-  return 10*p;
+
+/* =================== ЗВІТ (STATEMENT) =================== */
+const openSecs = new Set(['rev']);
+const openGrps = new Set();
+function money(v, sign){ return sign < 0 ? `($${fmt(v)})` : '$' + fmt(v); }
+function deltaCell(cur, prev, goodUp){
+  if (prev === null || prev === 0) return '<span class="dneu">—</span>';
+  const d = (cur/prev - 1)*100;
+  if (!isFinite(d)) return '<span class="dneu">—</span>';
+  const cls = goodUp === null ? 'dneu' : ((d >= 0) === goodUp ? 'pos-val' : 'neg-val');
+  return `<span class="${cls}">${fmtDelta(d)}</span>`;
 }
-function fmtK(v){ return v>=1e6 ? '$'+(v/1e6).toFixed(1).replace('.',',')+'M' : '$'+Math.round(v/1e3)+'K'; }
-function renderChart(){
-  const el = document.getElementById('cfChart');
-  const d = chartData();
-  const W = el.clientWidth || 760, H = 280, L=52, R=8, T=12, B=26;
-  const iw = W-L-R, ih = H-T-B, n = d.labels.length;
-  const max = niceMax(Math.max(...d.cin, ...d.cout) * 1.08);
-  const y = v => T + ih - (v/max)*ih;
-  const gw = iw/n;
-  const bw = Math.max(3, Math.min(15, gw*0.30));
-  let s = `<svg width="${W}" height="${H}" style="display:block">`;
-  for (let i=0;i<=4;i++){
-    const v = max*i/4, yy = y(v);
-    s += `<line x1="${L}" y1="${yy}" x2="${W-R}" y2="${yy}" stroke="#EFEFF1" stroke-width="1"/>`;
-    s += `<text x="${L-8}" y="${yy+4}" text-anchor="end" font-size="11" fill="#97979a">${fmtK(v)}</text>`;
-  }
-  for (let i=0;i<n;i++){
-    const cx = L + gw*i + gw/2;
-    s += `<rect x="${cx-bw-1}" y="${y(d.cin[i])}" width="${bw}" height="${ih+T-y(d.cin[i])}" rx="2.5" fill="var(--chart-in)" class="bar" data-i="${i}"/>`;
-    s += `<rect x="${cx+1}" y="${y(d.cout[i])}" width="${bw}" height="${ih+T-y(d.cout[i])}" rx="2.5" fill="var(--chart-out)" class="bar" data-i="${i}"/>`;
-    if (i % d.every === 0) s += `<text x="${cx}" y="${H-8}" text-anchor="middle" font-size="10.5" fill="#97979a">${d.labels[i]}</text>`;
-  }
-  let pts = '';
-  for (let i=0;i<n;i++){ const cx = L + gw*i + gw/2; pts += `${cx},${y(d.cin[i]-d.cout[i])} `; }
-  s += `<polyline points="${pts}" fill="none" stroke="var(--chart-net)" stroke-width="2" stroke-linejoin="round"/>`;
-  for (let i=0;i<n;i++){ const cx = L + gw*i + gw/2; s += `<circle cx="${cx}" cy="${y(d.cin[i]-d.cout[i])}" r="2.6" fill="var(--chart-net)"/>`; }
-  for (let i=0;i<n;i++){
-    const gx = L + gw*i;
-    s += `<rect x="${gx}" y="${T}" width="${gw}" height="${ih}" fill="transparent" data-hi="${i}"/>`;
-  }
-  s += '</svg>';
-  el.innerHTML = s;
-  el.querySelectorAll('[data-hi]').forEach(r => {
-    const i = +r.dataset.hi;
-    r.addEventListener('mousemove', e => {
-      showTip(`<b>${d.labels[i]}</b><br>Надходження: <b>+${fmt$(d.cin[i])}</b><br>Витрати: <b>−${fmt$(d.cout[i])}</b><br>Чистий рух: <b>${fmtSigned(d.cin[i]-d.cout[i])}</b>`, e.clientX, e.clientY);
+const M_FULL = ['Вересень 2025','Жовтень 2025','Листопад 2025','Грудень 2025','Січень 2026','Лютий 2026','Березень 2026','Квітень 2026','Травень 2026','Червень 2026','Липень 2026','Серпень 2026'];
+function renderStmt(){
+  const p = PERIODS[curPeriod], pr = prevRange(p);
+  const cur = calcAll(p.s, p.e), prev = pr ? calcAll(pr.s, pr.e) : null;
+  document.getElementById('colCur').textContent = curPeriod;
+  document.getElementById('colPrev').textContent = pr ? (pr.s === pr.e ? M_FULL[pr.s] : 'Попер. період') : '—';
+  document.getElementById('stmtHint').textContent = `${p.short} · ${curCountry.toLowerCase()} · USD`;
+  const rows = [];
+  const caret = '<span class="caret"><svg width="10" height="10" viewBox="0 0 8 12" fill="none"><path d="M1.5 1L6.5 6L1.5 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
+  const infoIcon = t => t ? `<span class="info">i<span class="tip">${t}</span></span>` : '';
+
+  BLOCKS.forEach(b => {
+    const bCur = cur[b.id], bPrev = prev ? prev[b.id] : null;
+    const secOpen = openSecs.has(b.id);
+    rows.push(`<tr class="sec-row ${secOpen?'expanded':''}" data-sec="${b.id}">
+      <td><span class="cat">${caret}<span>${b.label} <span class="muted" style="font-weight:400;font-size:11.5px">${b.eng}</span></span></span></td>
+      <td class="num ${b.sign<0?'neg-val':''}" style="font-weight:800">${money(bCur, b.sign)}</td>
+      <td class="num pct">${fmtPct(bCur/cur.rev*100)}</td>
+      <td class="num muted">${bPrev !== null ? money(bPrev, b.sign) : '—'}</td>
+      <td class="num">${deltaCell(bCur, bPrev, b.sign > 0 ? true : null)}</td>
+    </tr>`);
+    b.groups.forEach(g => {
+      const gCur = groupVal(g, b.id, p.s, p.e);
+      const gPrev = pr ? groupVal(g, b.id, pr.s, pr.e) : null;
+      const single = g.leaves.length === 1;
+      const gOpen = openGrps.has(g.id);
+      if (single) {
+        const l = g.leaves[0];
+        rows.push(`<tr class="grp-row ${secOpen?'':'hidden-row'}" data-leaf="${l.id}" data-block="${b.id}">
+          <td><span class="cat"><span style="width:16px"></span><span class="clickable">${g.label}</span>${infoIcon(g.info)}</span></td>
+          <td class="num clickable" data-leafcell="${l.id}">${money(gCur, b.sign)}</td>
+          <td class="num pct">${fmtPct(gCur/cur.rev*100)}</td>
+          <td class="num muted">${gPrev !== null ? money(gPrev, b.sign) : '—'}</td>
+          <td class="num">${deltaCell(gCur, gPrev, b.sign > 0 ? true : null)}</td>
+        </tr>`);
+      } else {
+        rows.push(`<tr class="grp-row ${secOpen?'':'hidden-row'} ${gOpen?'expanded':''}" data-grp="${g.id}">
+          <td><span class="cat">${caret}<span>${g.label}</span>${infoIcon(g.info)}</span></td>
+          <td class="num" style="font-weight:700">${money(gCur, b.sign)}</td>
+          <td class="num pct">${fmtPct(gCur/cur.rev*100)}</td>
+          <td class="num muted">${gPrev !== null ? money(gPrev, b.sign) : '—'}</td>
+          <td class="num">${deltaCell(gCur, gPrev, b.sign > 0 ? true : null)}</td>
+        </tr>`);
+        g.leaves.forEach(l => {
+          const lc = leafVal(l, b.id, p.s, p.e);
+          const lp = pr ? leafVal(l, b.id, pr.s, pr.e) : null;
+          rows.push(`<tr class="leaf-row ${(secOpen && gOpen)?'':'hidden-row'}" data-parent="${g.id}" data-leaf="${l.id}" data-block="${b.id}">
+            <td><span class="cat"><span class="clickable">${l.label}</span></span></td>
+            <td class="num clickable" data-leafcell="${l.id}">${money(lc, b.sign)}</td>
+            <td class="num pct">${fmtPct(lc/cur.rev*100)}</td>
+            <td class="num muted">${lp !== null ? money(lp, b.sign) : '—'}</td>
+            <td class="num">${deltaCell(lc, lp, b.sign > 0 ? true : null)}</td>
+          </tr>`);
+        });
+      }
     });
-    r.addEventListener('mouseleave', hideTip);
+    // проміжні підсумки після блоків
+    const pushCalc = (label, eng, curV, prevV, marginLabel, tipTxt, final=false) => {
+      rows.push(`<tr class="calc-row ${final?'final':''}">
+        <td><span class="cat"><span style="width:16px"></span><span>${label} <span class="muted" style="font-weight:400;font-size:11.5px">${eng}</span></span>${infoIcon(tipTxt)}</span></td>
+        <td class="num" style="font-weight:800">${curV < 0 ? '<span class="neg-val">('+fmt$(curV)+')</span>' : fmt$(curV)}</td>
+        <td class="num pct">${fmtPct(curV/cur.rev*100)}</td>
+        <td class="num muted">${prevV !== null ? (prevV < 0 ? '('+fmt$(prevV)+')' : fmt$(prevV)) : '—'}</td>
+        <td class="num">${deltaCell(curV, prevV, true)}</td>
+      </tr>`);
+      if (marginLabel) rows.push(`<tr class="margin-row"><td colspan="5" style="padding-left:36px">${marginLabel}: <b>${fmtPct(curV/cur.rev*100)}</b>${prevV !== null && prev ? ` · попер. період: ${fmtPct(prevV/prev.rev*100)}` : ''}</td></tr>`);
+    };
+    if (b.id === 'cogs') pushCalc('Валовий прибуток','Gross Profit', cur.gp, prev ? prev.gp : null, 'Валова маржа', 'Дохід мінус собівартість. Показує, скільки заробляємо безпосередньо на наданні послуг.');
+    if (b.id === 'sm') pushCalc('Маржинальний прибуток','Contribution Margin', cur.cm, prev ? prev.cm : null, 'Маржинальність', 'Валовий прибуток мінус всі витрати на продажі та маркетинг: реальна економіка залучення клієнтів.');
+    if (b.id === 'ga') {
+      pushCalc('EBITDA','', cur.ebitda, prev ? prev.ebitda : null, 'EBITDA маржа', 'Операційний прибуток до амортизації, відсотків і податків.');
+      rows.push(simpleRow('Амортизація','D&A', -cur.da, prev ? -prev.da : null, 'da'));
+      pushCalc('EBIT','', cur.ebit, prev ? prev.ebit : null, null, 'EBITDA мінус амортизація.');
+      rows.push(simpleRow('Фінансові витрати (нетто)','Interest', -cur.fin, prev ? -prev.fin : null, 'fin'));
+      pushCalc('Прибуток до оподаткування','Profit Before Tax', cur.pbt, prev ? prev.pbt : null, null, null);
+      rows.push(simpleRow('Податок на прибуток','Income Tax', -cur.tax, prev ? -prev.tax : null, 'tax'));
+      pushCalc('Чистий прибуток','Net Income', cur.ni, prev ? prev.ni : null, 'Чиста маржа', 'Фінальний результат за період після всіх витрат і податків.', true);
+    }
   });
-}
-document.getElementById('granSeg').addEventListener('click', e => {
-  const b = e.target.closest('button'); if (!b) return;
-  document.querySelectorAll('#granSeg button').forEach(x=>x.classList.remove('on'));
-  b.classList.add('on'); gran = b.dataset.g; renderChart();
-});
-window.addEventListener('resize', renderChart);
-
-/* =================== РАХУНКИ =================== */
-let accFilter = null;
-function renderAccounts(){
-  const total = ACCOUNTS.reduce((a,b)=>a+b.usd,0);
-  document.getElementById('accList').innerHTML = ACCOUNTS.map(a => `
-    <div class="acc-row ${accFilter===a.name?'sel':''}" data-acc="${a.name}" title="Клік — відфільтрувати транзакції за рахунком">
-      <span class="acc-ic" style="background:${a.color}">${a.ab}</span>
-      <div class="acc-main">
-        <div class="acc-name">${a.name}</div>
-        <div class="acc-bar"><i style="width:${(a.usd/total*100).toFixed(1)}%"></i></div>
-      </div>
-      <div class="acc-amt">${fmt$(a.usd)}${a.cur!=='USD' ? `<span class="orig">${a.orig}</span>`:''}</div>
-    </div>`).join('');
-  document.querySelectorAll('.acc-row').forEach(r => r.addEventListener('click', () => {
-    accFilter = (accFilter === r.dataset.acc) ? null : r.dataset.acc;
-    const sel = document.querySelector('[data-filter="account"] .fs-value');
-    sel.textContent = accFilter || 'Всі';
-    renderAccounts(); renderTable();
-  }));
-}
-
-/* =================== ТАБЛИЦЯ =================== */
-let typeFilter = 'all', statusFilter = 'all', q = '';
-const checked = new Set();
-function txMatches(t){
-  if (typeFilter !== 'all' && t.type !== typeFilter) return false;
-  if (statusFilter !== 'all' && t.status !== statusFilter) return false;
-  if (accFilter && t.acc !== accFilter) return false;
-  if (q) {
-    const hay = [t.id, t.cp, t.comment, t.amt, t.proj, t.cat, t.order, t.lead, t.consultant, String(Math.abs(t.usd))].join(' ').toLowerCase();
-    if (!hay.includes(q)) return false;
+  function simpleRow(label, eng, curV, prevV, key){
+    return `<tr class="simple-row" data-simple="${key}">
+      <td><span class="cat"><span style="width:16px"></span><span class="clickable">${label}</span> <span class="muted" style="font-size:11.5px">${eng}</span></span></td>
+      <td class="num clickable neg-val" data-simplecell="${key}">(${fmt$(curV)})</td>
+      <td class="num pct">${fmtPct(Math.abs(curV)/cur.rev*100)}</td>
+      <td class="num muted">${prevV !== null ? '('+fmt$(prevV)+')' : '—'}</td>
+      <td class="num"><span class="dneu">${prevV !== null ? fmtDelta((Math.abs(curV)/Math.abs(prevV)-1)*100) : '—'}</span></td>
+    </tr>`;
   }
-  return true;
-}
-function catCell(t){
-  if (t.missCat) return '<span class="badge badge-red"><span class="bdot"></span>вкажіть категорію</span>';
-  if (!t.impact) return `<span class="muted">${t.cat || '—'}</span><span class="no-impact" title="${t.impactNote || 'Не впливає на PnL'}">не в PnL</span>`;
-  return t.cat || '—';
-}
-function amtCls(t){
-  if (t.type==='in') return 'pos'; if (t.type==='out') return 'neg';
-  if (t.type==='fx') return 'fx-cell'; return 'muted';
-}
-function renderTable(){
-  const rows = TX.filter(txMatches);
-  const body = document.getElementById('txBody');
-  body.innerHTML = rows.map(t => `
-    <tr data-id="${t.id}">
-      <td class="cbx" onclick="event.stopPropagation()"><input type="checkbox" data-cb="${t.id}" ${checked.has(t.id)?'checked':''}></td>
-      <td class="muted">${t.date.slice(0,5)}</td>
-      <td><span class="link-like">${t.id}</span></td>
-      <td><span class="badge ${TYPE_META[t.type].cls}"><span class="bdot"></span>${TYPE_META[t.type].label}</span></td>
-      <td>${t.acc}</td>
-      <td style="white-space:normal;min-width:210px"><div style="font-weight:600;color:var(--font-color-heading)">${t.cp}</div><div class="muted" style="font-size:11.5px;max-width:340px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.comment||''}</div></td>
-      <td class="muted">${t.proj}</td>
-      <td class="num"><div class="amount ${amtCls(t)}">${t.amt}</div>${/[₴£€]|zł/.test(t.amt) ? `<div class="muted mono" style="font-size:11px">${t.type==='transfer'?'↔ ':''}${t.usd>=0?'+':'−'}$${fmt(Math.abs(t.usd))}</div>` : ''}</td>
-      <td style="max-width:230px;overflow:hidden;text-overflow:ellipsis">${catCell(t)}</td>
-      <td><span class="badge ${STATUS_META[t.status].cls}"><span class="bdot"></span>${STATUS_META[t.status].label}</span></td>
-    </tr>`).join('');
-  document.getElementById('txEmpty').style.display = rows.length ? 'none' : 'block';
-  document.getElementById('txShown').textContent = `Показано ${rows.length} з ${TX.length} операцій за серпень`;
-  body.querySelectorAll('tr').forEach(tr => tr.addEventListener('click', () => openDrawer(tr.dataset.id)));
-  body.querySelectorAll('[data-cb]').forEach(cb => cb.addEventListener('change', () => {
-    cb.checked ? checked.add(cb.dataset.cb) : checked.delete(cb.dataset.cb);
-    updateBulk();
+  document.getElementById('stmtBody').innerHTML = rows.join('');
+
+  // interactions
+  document.querySelectorAll('#stmtBody tr.sec-row').forEach(tr => tr.addEventListener('click', () => {
+    const id = tr.dataset.sec;
+    openSecs.has(id) ? openSecs.delete(id) : openSecs.add(id);
+    renderStmt();
+  }));
+  document.querySelectorAll('#stmtBody tr[data-grp]').forEach(tr => tr.addEventListener('click', () => {
+    const id = tr.dataset.grp;
+    openGrps.has(id) ? openGrps.delete(id) : openGrps.add(id);
+    renderStmt();
+  }));
+  document.querySelectorAll('#stmtBody [data-leafcell]').forEach(el => el.addEventListener('click', e => {
+    e.stopPropagation();
+    openDrill(el.dataset.leafcell);
+  }));
+  document.querySelectorAll('#stmtBody tr[data-leaf] .cat .clickable').forEach(el => el.addEventListener('click', e => {
+    e.stopPropagation();
+    openDrill(el.closest('tr').dataset.leaf);
+  }));
+  document.querySelectorAll('#stmtBody [data-simplecell]').forEach(el => el.addEventListener('click', e => {
+    e.stopPropagation(); openSimpleDrill(el.dataset.simplecell);
   }));
 }
-function updateBulk(){
-  const bar = document.getElementById('bulkBar');
-  bar.classList.toggle('show', checked.size > 0);
-  document.getElementById('bulkCount').textContent = 'Обрано: ' + checked.size;
-}
-document.getElementById('cbAll').addEventListener('change', e => {
-  checked.clear();
-  if (e.target.checked) TX.filter(txMatches).forEach(t => checked.add(t.id));
-  renderTable(); updateBulk();
-});
-document.getElementById('bulkComplete').addEventListener('click', () => {
-  let n = 0;
-  TX.forEach(t => { if (checked.has(t.id) && (t.status==='draft'||t.status==='review') && !t.missCat) { t.status='completed'; t.approved='Гончарук О.'; n++; } });
-  checked.clear(); updateBulk(); renderTable();
-  alert(n ? `Завершено транзакцій: ${n}. Вони увійшли до Кешфлоу та PnL за серпень 2026.` : 'Серед обраних немає транзакцій, які можна завершити (чернетки без категорії потребують заповнення).');
-});
-document.getElementById('txSearch').addEventListener('input', e => { q = e.target.value.trim().toLowerCase(); renderTable(); });
-document.getElementById('typeChips').addEventListener('click', e => {
-  const b = e.target.closest('.type-chip'); if (!b) return;
-  document.querySelectorAll('.type-chip').forEach(x=>x.classList.remove('on'));
-  b.classList.add('on'); typeFilter = b.dataset.t; renderTable();
-});
-document.querySelectorAll('[data-filter="status"] .fselect-menu button').forEach(b => b.addEventListener('click', () => {
-  statusFilter = b.dataset.s;
-  document.querySelector('[data-filter="status"] .fs-value').textContent = b.textContent;
-  document.querySelectorAll('[data-filter="status"] .fselect-menu button').forEach(x=>x.classList.toggle('sel', x===b));
-}));
-document.querySelectorAll('[data-filter="status"] .fselect-menu button').forEach(b => b.addEventListener('click', renderTable));
-document.querySelectorAll('[data-filter="account"] .fselect-menu button').forEach(b => b.addEventListener('click', () => {
-  accFilter = b.textContent === 'Всі' ? null : b.textContent;
-  document.querySelector('[data-filter="account"] .fs-value').textContent = b.textContent;
-  document.querySelectorAll('[data-filter="account"] .fselect-menu button').forEach(x=>x.classList.toggle('sel', x===b));
-  renderAccounts(); renderTable();
-}));
-document.querySelectorAll('[data-filter="period"] .fselect-menu button').forEach(b => b.addEventListener('click', () => {
-  document.querySelector('[data-filter="period"] .fs-value').textContent = b.textContent;
-  document.querySelectorAll('[data-filter="period"] .fselect-menu button').forEach(x=>x.classList.toggle('sel', x===b));
-  renderKPI(b.textContent);
-}));
-document.querySelectorAll('.ctrl-chip').forEach(ch => ch.addEventListener('click', () => {
-  if (ch.dataset.status) {
-    statusFilter = ch.dataset.status;
-    document.querySelector('[data-filter="status"] .fs-value').textContent = STATUS_META[statusFilter].label;
-  } else { statusFilter = 'draft'; document.querySelector('[data-filter="status"] .fs-value').textContent = STATUS_META.draft.label; }
-  renderTable();
-  document.getElementById('txTable').scrollIntoView({behavior:'smooth', block:'start'});
-}));
 
-/* =================== DRAWER =================== */
-const overlay = document.getElementById('dOverlay'), drawer = document.getElementById('txDrawer');
+/* =================== DRILL-DOWN =================== */
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function hashStr(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
+const CP_MAP = {
+  mk1:['Замовлення №25058 · Лід №254128','Замовлення №25041 · Лід №254016','Замовлення №25017 · Лід №253902','Замовлення №24996 · Лід №253771','Замовлення №24971 · Лід №253640','Замовлення №24950 · Лід №253518'],
+  mk2:['Acme Legal LLC · договір №B2B-114','Grain Trade Group · договір №B2B-98','Nordwind Logistics · договір №B2B-121','Vertex Development · договір №B2B-87'],
+  sub1:['Підписки юристів · Stripe batch 08/26','Підписки юристів · LiqPay batch 08/26','Підписки юристів · продовження'],
+  sub2:['Клієнтські підписки · Stripe','Клієнтські підписки · PayPal','Клієнтські підписки · продовження'],
+  sub3:['Корпоративна підписка · Acme Legal','Корпоративна підписка · Vertex','Корпоративна підписка · Nordwind'],
+  lead:['Списання балансів · купівля лідів (юристи UA)','Списання балансів · купівля лідів (юристи PL)','Списання балансів · купівля лідів (юристи UK)','Списання балансів · купівля лідів (юристи US)'],
+  ai1:['AI-статті · списання балансів юристів'], ai2:['AI-відповіді · списання балансів'], ai3:['AI-документи · списання балансів'],
+  pf1:['Розблокування контактів · списання балансів'], pf2:['Платні питання · списання балансів'],
+  oth:['Інші операційні надходження'],
+  lp:['Виплата Consultant #1257','Виплата Consultant #1893','Виплата Consultant #2044','Виплата Consultant #1631','Виплати юристам · тижневий реєстр №34','Виплати юристам · тижневий реєстр №35'],
+  fee:['Stripe · комісія процесингу','LiqPay · комісія еквайрингу','PayPal · комісія'],
+  dc:['Підрядник · переклад документів','Підрядник · нотаріальні послуги'],
+  api:['Anthropic · API (прямі)','OpenAI · API (прямі)','Google Cloud · AI API'],
+  ads_g:['Google Ads · кампанії UA','Google Ads · кампанії US','Google Ads · тестування нових зв’язок','Google Ads · ретаргетинг'],
+  ads_m:['Meta · кампанії UA','Meta · кампанії PL','Meta · ретаргетинг'],
+  ads_t:['TikTok · тестування нових напрямків','TikTok · масштабування зв’язок'],
+  st:['ЗП · відділ продажів (фікс)','ЗП · керівники відділу продажів'],
+  sc:['Комісії менеджерів · нарахування на баланс','Комісії тімлідів · нарахування'],
+  mt:['ЗП · команда маркетингу'],
+  seo:['SEO-агенція · лінкбілдинг','Контент-продакшн · статті','PR · публікації'],
+  tool:['AdHeart · підписка','Semrush · підписка','Трекінг та аналітика'],
+  dev:['ЗП · backend-команда','ЗП · frontend-команда','ЗП · QA та DevOps'],
+  prod:['ЗП · продакт-менеджери','ЗП · UX/UI дизайн'],
+  aid:['ЗП · AI/Data інженери'],
+  infra:['AWS · інфраструктура','Cloudflare','Бази даних та моніторинг'],
+  papi:['Anthropic · продуктові експерименти','OpenAI · продуктові експерименти'],
+  soft:['GitHub','Jira / Confluence','Figma'],
+  pdc:['Зовнішня розробка · мобільний застосунок'],
+  mgmt:['ЗП · виконавчий менеджмент'],
+  finacc:['Бухгалтерські послуги','Аудит та фінконсультації'],
+  legal:['Юридичний супровід','Ліцензії та комплаєнс'],
+  office:['Оренда офісу','Комунальні послуги','Канцелярія'],
+  hr:['Рекрутинг · job-боарди','HR-сервіси'],
+  csoft:['Google Workspace','Slack','Notion'],
+  travel:['Відрядження · Варшава','Відрядження · Лондон'],
+  ins:['Страхування відповідальності'],
+  oga:['Інші адміністративні витрати'],
+};
+const PROJECTS_POOL = ['Україна','США','Велика Британія','Польща','ОАЕ'];
+function findLeaf(id){
+  for (const b of BLOCKS) for (const g of b.groups) for (const l of g.leaves) if (l.id === id) return {leaf:l, block:b, group:g};
+  return null;
+}
+function genTx(leafId, total, seedExtra){
+  const rnd = mulberry32(hashStr(leafId + '|' + seedExtra));
+  const cps = CP_MAP[leafId] || ['Операція'];
+  const n = Math.max(3, Math.min(8, cps.length + Math.floor(rnd()*3)));
+  const weights = Array.from({length:n}, () => 0.4 + rnd());
+  const wsum = weights.reduce((a,b)=>a+b,0);
+  const txs = []; let acc = 0;
+  for (let i = 0; i < n; i++){
+    let amt = (i === n-1) ? total - acc : Math.round(total * weights[i]/wsum / 10) * 10;
+    acc += amt;
+    const day = 2 + Math.floor(rnd() * 26);
+    txs.push({date: (day<10?'0':'')+day+'.08.2026', cp: cps[i % cps.length], proj: curCountry === 'Консолідовано' ? PROJECTS_POOL[Math.floor(rnd()*PROJECTS_POOL.length)] : curCountry, amt});
+  }
+  txs.sort((a,b) => a.date.localeCompare(b.date));
+  return txs;
+}
+const overlay = document.getElementById('dOverlay'), drawer = document.getElementById('drillDrawer');
 function closeDrawer(){ overlay.classList.remove('show'); drawer.classList.remove('show'); }
 overlay.addEventListener('click', closeDrawer);
 document.getElementById('dClose').addEventListener('click', closeDrawer);
-document.addEventListener('keydown', e => { if (e.key==='Escape') closeDrawer(); });
-
-function impactBlock(t){
-  let cash, bal, pnl;
-  if (t.type==='transfer') { cash = `↔ ${fmt$(Math.abs(t.usd))}`; bal='Без впливу'; pnl='Без впливу'; }
-  else if (t.type==='fx') { cash='Конвертація'; bal='Без впливу'; pnl='FX-різниця: +$14,20'; }
-  else {
-    cash = fmtSigned(t.usd);
-    bal = t.cat && t.cat.startsWith('Баланс') ? fmtSigned(Math.abs(t.usd)) + ' (гаманець юриста)' : (t.cat==='Виведення балансу менеджера' ? '−' + fmt$(Math.abs(t.usd)) + ' (гаманець менеджера)' : 'Без впливу');
-    pnl = t.impact ? (t.usd>=0 ? '+'+fmt$(t.usd)+' · Дохід' : '−'+fmt$(-t.usd)+' · Витрата') : 'Без впливу';
-  }
-  return `<div class="dsec"><h4>Фінансовий вплив операції</h4>
-    <div class="impact">
-      <div class="impact-row"><span class="lab">Кешфлоу</span><span class="val" style="color:${t.type==='transfer'?'#77787d':(t.usd>=0?'var(--green-color)':'var(--red-color)')}">${cash}</span></div>
-      <div class="impact-row"><span class="lab">Баланс</span><span class="val" style="color:${bal==='Без впливу'?'#77787d':'var(--color-light-blue)'};font-size:13px">${bal}</span></div>
-      <div class="impact-row"><span class="lab">PnL</span><span class="val" style="color:${t.impact?(t.usd>=0?'var(--green-color)':'var(--red-color)'):'#77787d'};font-size:13px">${pnl}${t.impactNote?`<span class="subv">${t.impactNote}</span>`:''}</span></div>
-    </div></div>`;
-}
-function openDrawer(id){
-  const t = TX.find(x=>x.id===id); if (!t) return;
-  document.getElementById('dTitle').textContent = 'Транзакція ' + t.id;
-  document.getElementById('dSub').innerHTML = `${t.date} · <span class="badge ${STATUS_META[t.status].cls}" style="vertical-align:middle"><span class="bdot"></span>${STATUS_META[t.status].label}</span>`;
-  const rows = [];
-  rows.push(['Тип', `<span class="badge ${TYPE_META[t.type].cls}"><span class="bdot"></span>${TYPE_META[t.type].label}</span>`]);
-  rows.push(['Рахунок', t.acc]);
-  rows.push(['Сума', `<span class="${amtCls(t)}">${t.amt}</span>`]);
-  rows.push(['Сума у валюті звіту', (t.usd>=0?'+':'−') + '$' + fmt(Math.abs(t.usd))]);
-  rows.push(['Дата проведення (банк)', t.date]);
-  const cls = [];
-  cls.push(['Проєкт', t.proj]);
-  cls.push(['Категорія PnL', t.missCat ? '<span class="neg">не призначено</span>' : (t.cat || '—')]);
-  cls.push(['Вплив на PnL', t.impact ? '<span class="pos">Так</span>' : '<span class="muted">Ні</span>']);
-  const src = [];
-  src.push(['Джерело', t.source]);
-  if (t.order) src.push(['Замовлення', `<span class="link-like">№${t.order}</span>`]);
-  if (t.lead) src.push(['Лід', `<span class="link-like">№${t.lead}</span>`]);
-  if (t.consultant) src.push(['Консультант', `<span class="link-like">#${t.consultant}</span>`]);
-  if (t.pair) src.push(['Пов’язана операція', `<span class="link-like">${t.pair}</span>`]);
-  if (t.extra) Object.entries(t.extra).forEach(([k,v]) => src.push([k, v]));
-  const audit = [];
-  audit.push(['Створив', t.author || '—']);
-  audit.push(['Підтвердив', t.approved || '<span class="muted">очікує</span>']);
-  const rr = a => a.map(([k,v])=>`<div class="drow"><span class="k">${k}</span><span class="v">${v}</span></div>`).join('');
-  const canComplete = (t.status==='draft'||t.status==='review');
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+function drillTable(title, sub, total, txs, sign, note){
+  document.getElementById('dTitle').textContent = title;
+  document.getElementById('dSub').textContent = sub;
   document.getElementById('dBody').innerHTML = `
-    <div class="dsec"><h4>Операція</h4>${rr(rows)}</div>
-    ${impactBlock(t)}
-    <div class="dsec"><h4>Класифікація</h4>${rr(cls)}</div>
-    <div class="dsec"><h4>Джерело та зв’язки</h4>${rr(src)}</div>
-    <div class="dsec"><h4>Коментар</h4><div style="font-size:13px;background:#F8F9FB;border:1px solid #EFEFF1;border-radius:8px;padding:10px 12px;line-height:1.5">${t.comment || '—'}</div></div>
-    <div class="dsec"><h4>Аудит</h4>${rr(audit)}</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;padding-top:4px">
-      ${canComplete ? '<button class="btn btn-primary" id="dComplete">Завершити</button>' : ''}
-      <button class="btn btn-secondary">Копіювати</button>
-      ${t.status==='completed' ? '<button class="btn btn-secondary">Сторнувати</button>' : '<button class="btn btn-secondary">Скасувати</button>'}
-    </div>`;
-  if (canComplete) document.getElementById('dComplete').addEventListener('click', () => {
-    if (t.missCat || !t.proj) {
-      alert('Неможливо завершити транзакцію.\n\nВідсутні обов’язкові поля:\n' + (t.missCat ? '• Категорія PnL\n' : '') + (!t.proj ? '• Проєкт\n' : ''));
-      return;
-    }
-    t.status = 'completed'; t.approved = 'Гончарук О.';
-    renderTable(); openDrawer(t.id);
+    <div class="dsec"><h4>Разом за період</h4>
+      <div style="font-size:24px;font-weight:800;color:${sign<0?'var(--red-color)':'var(--green-color)'};font-variant-numeric:tabular-nums">${sign<0?'−':'+'}${fmt$(total)}</div>
+      <div class="muted" style="font-size:12px;margin-top:3px">${txs.length} транзакцій</div>
+    </div>
+    <div class="dsec"><h4>Транзакції, що сформували цю суму</h4>
+      <table class="drill-tbl">
+        <thead><tr><th>Дата</th><th>Операція</th><th>Проєкт</th><th class="num">Сума</th></tr></thead>
+        <tbody>${txs.map(t => `<tr><td class="muted">${t.date.slice(0,5)}</td><td style="white-space:normal">${t.cp}</td><td class="muted">${t.proj}</td><td class="num" style="font-weight:600">${sign<0?'−':'+'}$${fmt(t.amt)}</td></tr>`).join('')}</tbody>
+        <tfoot><tr><td colspan="3">Разом</td><td class="num">${sign<0?'−':'+'}$${fmt(total)}</td></tr></tfoot>
+      </table>
+    </div>
+    <div class="drill-note">✓ Сума транзакцій точно дорівнює цифрі у звіті — <b>принцип повного аудиту</b>: будь-яку цифру PnL можна розкласти до конкретних операцій. ${note || ''}</div>
+    <div style="margin-top:14px"><a class="btn btn-secondary" href="../v4/">Відкрити реєстр транзакцій →</a></div>`;
+  overlay.classList.add('show'); drawer.classList.add('show');
+}
+function openDrill(leafId){
+  const f = findLeaf(leafId); if (!f) return;
+  const p = PERIODS[curPeriod];
+  const total = leafVal(f.leaf, f.block.id, p.s, p.e);
+  const txs = genTx(leafId, total, curPeriod + '|' + curCountry);
+  drillTable(f.leaf.label, `${f.block.label} · ${p.short} · ${curCountry}`, total, txs, f.block.sign, f.group.info ? '<br><br>' + f.group.info : '');
+}
+function openSimpleDrill(key){
+  const p = PERIODS[curPeriod], cur = calcAll(p.s, p.e);
+  const map = {
+    da:  {t:'Амортизація', total: cur.da, cps:['Амортизація обладнання','Амортизація нематеріальних активів']},
+    fin: {t:'Фінансові витрати', total: cur.fin, cps:['Відсотки за кредитною лінією','Банківські фінансові комісії']},
+    tax: {t:'Податок на прибуток', total: cur.tax, cps:['Податок на прибуток · нарахування']},
+  };
+  const m = map[key]; if (!m) return;
+  CP_MAP['_' + key] = m.cps;
+  const txs = genTx('_' + key, m.total, curPeriod + '|' + curCountry);
+  drillTable(m.t, `${p.short} · ${curCountry}`, m.total, txs, -1);
+}
+
+/* =================== ДІАГРАМА ДОХОДУ (donut) =================== */
+const DONUT_COLORS = ['#0043EA','#0095D4','#17ab83','#F0A63A','#97979a'];
+function renderDonut(){
+  const p = PERIODS[curPeriod];
+  const revBlock = BLOCKS[0];
+  const parts = revBlock.groups.map((g,i) => ({label:g.label, v: groupVal(g, 'rev', p.s, p.e), color: DONUT_COLORS[i % DONUT_COLORS.length], gid:g.id}));
+  const total = parts.reduce((a,b)=>a+b.v,0);
+  const R = 74, r = 48, C = 88;
+  let a0 = -Math.PI/2, s = `<svg width="176" height="176" viewBox="0 0 176 176">`;
+  parts.forEach((pt,i) => {
+    const frac = pt.v/total, a1 = a0 + frac * Math.PI * 2;
+    const large = (a1 - a0) > Math.PI ? 1 : 0;
+    const x0 = C + R*Math.cos(a0), y0 = C + R*Math.sin(a0), x1 = C + R*Math.cos(a1), y1 = C + R*Math.sin(a1);
+    const xi1 = C + r*Math.cos(a1), yi1 = C + r*Math.sin(a1), xi0 = C + r*Math.cos(a0), yi0 = C + r*Math.sin(a0);
+    s += `<path d="M${x0} ${y0} A${R} ${R} 0 ${large} 1 ${x1} ${y1} L${xi1} ${yi1} A${r} ${r} 0 ${large} 0 ${xi0} ${yi0} Z" fill="${pt.color}" stroke="#fff" stroke-width="2" data-slice="${i}" style="cursor:pointer;transition:opacity .15s"/>`;
+    a0 = a1;
   });
-  overlay.classList.add('show'); drawer.classList.add('show');
+  s += `<text x="${C}" y="${C-4}" text-anchor="middle" font-size="16" font-weight="800" fill="#2a2c32">${total >= 1e6 ? '$'+(total/1e6).toFixed(2).replace('.',',')+'M' : '$'+(total/1e3).toFixed(1).replace('.',',')+'K'}</text>`;
+  s += `<text x="${C}" y="${C+15}" text-anchor="middle" font-size="11" fill="#97979a">дохід</text></svg>`;
+  document.getElementById('revDonut').innerHTML = s;
+  document.getElementById('mixHint').textContent = p.short;
+  document.getElementById('donutLegend').innerHTML = parts.map((pt,i) => `
+    <div class="dl" data-gid="${pt.gid}"><span class="sw" style="background:${pt.color}"></span>
+      <span class="nm">${pt.label}</span><span class="vv">${fmt$(pt.v)}</span><span class="pp">${fmtPct(pt.v/total*100)}</span></div>`).join('');
+  document.querySelectorAll('#revDonut [data-slice]').forEach(path => {
+    const i = +path.dataset.slice;
+    path.addEventListener('mousemove', e => {
+      showTip(`<b>${parts[i].label}</b><br>${fmt$(parts[i].v)} · ${fmtPct(parts[i].v/total*100)} доходу`, e.clientX, e.clientY);
+      document.querySelectorAll('#revDonut [data-slice]').forEach(pp => pp.style.opacity = pp === path ? 1 : 0.45);
+    });
+    path.addEventListener('mouseleave', () => { hideTip(); document.querySelectorAll('#revDonut [data-slice]').forEach(pp => pp.style.opacity = 1); });
+  });
+  document.querySelectorAll('#donutLegend .dl').forEach(dl => dl.addEventListener('click', () => {
+    openSecs.add('rev'); openGrps.add(dl.dataset.gid); renderStmt();
+    document.getElementById('stmtTable').scrollIntoView({behavior:'smooth', block:'start'});
+  }));
 }
 
-/* Додати транзакцію + експорт */
-document.getElementById('btnAdd').addEventListener('click', () => {
-  document.getElementById('dTitle').textContent = 'Нова транзакція';
-  document.getElementById('dSub').textContent = 'чернетка · не впливає на звіти до завершення';
-  document.getElementById('dBody').innerHTML = `
-    <div class="dsec"><h4>Обов’язкові поля</h4>
-      <div style="display:flex;flex-direction:column;gap:10px;font-size:13px">
-        ${[['Тип операції','Надходження / Витрата / Переказ / Обмін валют'],['Дата проведення','дата фактичного руху грошей у банку'],['Рахунок','звідки або куди рухаються кошти'],['Сума та валюта','в оригінальній валюті операції'],['Проєкт','Україна / США / UK / Польща / ОАЕ'],['Категорія PnL','обирається лише з довідника'],['Контрагент','за наявності'],['Коментар','додається до автоматичного']].map(([k,v])=>`
-        <label style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600;color:var(--font-color-heading)">${k}</span>
-        <input type="text" placeholder="${v}" style="padding:9px 12px;border:1px solid #E2E2E4;border-radius:7px;font-size:13px;outline:none"></label>`).join('')}
-      </div>
-    </div>
-    <div class="ctrl-note" style="margin-bottom:14px">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:1px"><path d="M12 9V13M12 16.5V17M4.9 19H19.1C20.6 19 21.6 17.4 20.9 16L13.8 4.5C13 3.2 11 3.2 10.2 4.5L3.1 16C2.4 17.4 3.4 19 4.9 19Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-      <span>Кнопка «Завершити» — фінансова контрольна точка. Система не дасть завершити операцію без обов’язкових полів.</span>
-    </div>
-    <div style="display:flex;gap:8px">
-      <button class="btn btn-primary" onclick="alert('Неможливо завершити транзакцію.\\n\\nВідсутні обов’язкові поля:\\n• Рахунок\\n• Категорія PnL\\n• Дата проведення')">Завершити</button>
-      <button class="btn btn-secondary" onclick="document.getElementById('dClose').click()">Зберегти чернетку</button>
-    </div>`;
-  overlay.classList.add('show'); drawer.classList.add('show');
+/* =================== ДИНАМІКА МАРЖІ =================== */
+function renderMargins(){
+  const el = document.getElementById('marginChart');
+  const W = el.clientWidth || 300, H = 190, L = 34, R = 6, T = 10, B = 22;
+  const iw = W-L-R, ih = H-T-B;
+  const series = [[],[],[],[]];
+  for (let m = 0; m < 12; m++){
+    const r = {}; ['rev','cogs','sm','pd','ga','da','fin'].forEach(b => r[b] = SERIES[b][m] * cFactor(b));
+    const gp = r.rev - r.cogs, cm = gp - r.sm, eb = cm - r.pd - r.ga;
+    const pbt = eb - r.da - r.fin, ni = pbt - pbt * TAX_RATE;
+    series[0].push(gp/r.rev*100); series[1].push(cm/r.rev*100); series[2].push(eb/r.rev*100); series[3].push(ni/r.rev*100);
+  }
+  const colors = ['#0095D4','#17ab83','#E8930C','#0043EA'];
+  const names = ['Валова','Маржинальна','EBITDA','Чиста'];
+  const maxV = 90, minV = 0;
+  const x = i => L + iw * i/11, y = v => T + ih - (v-minV)/(maxV-minV)*ih;
+  let s = `<svg width="${W}" height="${H}" style="display:block">`;
+  for (let gv = 0; gv <= 80; gv += 20){
+    s += `<line x1="${L}" y1="${y(gv)}" x2="${W-R}" y2="${y(gv)}" stroke="#EFEFF1"/>`;
+    s += `<text x="${L-6}" y="${y(gv)+4}" text-anchor="end" font-size="10" fill="#97979a">${gv}%</text>`;
+  }
+  series.forEach((sr,si) => {
+    s += `<polyline points="${sr.map((v,i)=>`${x(i)},${y(v)}`).join(' ')}" fill="none" stroke="${colors[si]}" stroke-width="2" stroke-linejoin="round"/>`;
+  });
+  [0,3,6,9,11].forEach(i => s += `<text x="${x(i)}" y="${H-6}" text-anchor="middle" font-size="9.5" fill="#97979a">${M_LABELS[i]}</text>`);
+  for (let i = 0; i < 12; i++) s += `<rect x="${x(i)-iw/22}" y="${T}" width="${iw/11}" height="${ih}" fill="transparent" data-mi="${i}"/>`;
+  s += '</svg>';
+  el.innerHTML = s;
+  el.querySelectorAll('[data-mi]').forEach(rc => {
+    const i = +rc.dataset.mi;
+    rc.addEventListener('mousemove', e => {
+      showTip(`<b>${M_LABELS[i]}</b><br>` + names.map((n,si)=>`${n}: <b>${fmtPct(series[si][i])}</b>`).join('<br>'), e.clientX, e.clientY);
+    });
+    rc.addEventListener('mouseleave', hideTip);
+  });
+}
+
+/* =================== ПО МІСЯЦЯХ =================== */
+function monthlyRows(){
+  const months = [4,5,6,7,8,9,10,11];
+  const cols = months.map(m => calcAll(m, m));
+  const ytd = calcAll(4, 11);
+  const line = (label, get, opts={}) => ({label, vals: cols.map(get).concat([get(ytd)]), ...opts});
+  return [
+    line('Дохід', c => c.rev, {cls:'wt-plain', money:1}),
+    line('Собівартість', c => -c.cogs, {money:1}),
+    line('Валовий прибуток', c => c.gp, {cls:'wt-total', money:1}),
+    line('Валова маржа', c => c.gp/c.rev*100, {cls:'wt-margin', pct:1}),
+    line('Продажі та маркетинг', c => -c.sm, {money:1}),
+    line('Маржинальний прибуток', c => c.cm, {cls:'wt-total', money:1}),
+    line('Маржинальність', c => c.cm/c.rev*100, {cls:'wt-margin', pct:1}),
+    line('Продукт і розробка', c => -c.pd, {money:1}),
+    line('Адміністративні', c => -c.ga, {money:1}),
+    line('EBITDA', c => c.ebitda, {cls:'wt-total', money:1}),
+    line('EBITDA маржа', c => c.ebitda/c.rev*100, {cls:'wt-margin', pct:1}),
+    line('Амортизація', c => -c.da, {money:1}),
+    line('EBIT', c => c.ebit, {cls:'wt-total', money:1}),
+    line('Фінансові витрати', c => -c.fin, {money:1}),
+    line('Прибуток до податку', c => c.pbt, {cls:'wt-total', money:1}),
+    line('Податок на прибуток', c => -c.tax, {money:1}),
+    line('Чистий прибуток', c => c.ni, {cls:'wt-final', money:1}),
+    line('Чиста маржа', c => c.ni/c.rev*100, {cls:'wt-margin', pct:1}),
+  ];
+}
+function renderMonthly(){
+  const rows = monthlyRows();
+  const head = ['Стаття'].concat(M_SHORT.map(m => m + ' 26')).concat(['YTD 2026']);
+  let h = '<table class="wide-tbl"><thead><tr>' + head.map((c,i) => `<th class="${i===0?'sticky':''} ${i===head.length-1?'ytd':''}">${c}</th>`).join('') + '</tr></thead><tbody>';
+  rows.forEach(r => {
+    h += `<tr class="${r.cls||''}">` + `<td class="sticky">${r.label}</td>` + r.vals.map((v,i) => {
+      const cell = r.pct ? fmtPct(v) : (v < 0 ? `<span class="neg" style="color:inherit">(${fmt(-v)})</span>` : fmt(v));
+      return `<td class="${i===r.vals.length-1?'ytd':''}">${cell}</td>`;
+    }).join('') + '</tr>';
+  });
+  h += '</tbody></table>';
+  document.getElementById('monthlyWrap').innerHTML = h;
+}
+
+/* =================== ПО КРАЇНАХ =================== */
+function renderCountry(){
+  const p = PERIODS[curPeriod];
+  document.getElementById('countryPeriodLabel').textContent = curPeriod;
+  const saved = curCountry;
+  const cols = COUNTRIES.map(c => { curCountry = c; return calcAll(p.s, p.e); });
+  curCountry = 'Консолідовано';
+  const cons = calcAll(p.s, p.e);
+  curCountry = saved;
+  const lines = [
+    ['Дохід', c => c.rev, ''],
+    ['Собівартість', c => -c.cogs, ''],
+    ['Валовий прибуток', c => c.gp, 'wt-total'],
+    ['Продажі та маркетинг', c => -c.sm, ''],
+    ['Маржинальний прибуток', c => c.cm, 'wt-total'],
+    ['Продукт і розробка', c => -c.pd, ''],
+    ['Адміністративні', c => -c.ga, ''],
+    ['EBITDA', c => c.ebitda, 'wt-total'],
+    ['EBITDA маржа', c => c.ebitda/c.rev*100, 'wt-margin'],
+    ['Чистий прибуток', c => c.ni, 'wt-final'],
+    ['Чиста маржа', c => c.ni/c.rev*100, 'wt-margin'],
+  ];
+  let h = '<table class="wide-tbl"><thead><tr><th class="sticky">Стаття</th>' +
+    COUNTRIES.map(c => `<th style="cursor:pointer" data-cc="${c}" title="Відкрити PnL: ${c}">${c}</th>`).join('') +
+    '<th class="ytd">Консолідовано</th></tr></thead><tbody>';
+  lines.forEach(([label, get, cls]) => {
+    const pct = cls === 'wt-margin';
+    h += `<tr class="${cls}"><td class="sticky">${label}</td>` +
+      cols.map(c => `<td>${pct ? fmtPct(get(c)) : (get(c) < 0 ? '('+fmt(-get(c))+')' : fmt(get(c)))}</td>`).join('') +
+      `<td class="ytd">${pct ? fmtPct(get(cons)) : (get(cons) < 0 ? '('+fmt(-get(cons))+')' : fmt(get(cons)))}</td></tr>`;
+  });
+  h += '</tbody></table>';
+  document.getElementById('countryWrap').innerHTML = h;
+  document.querySelectorAll('#countryWrap [data-cc]').forEach(th => th.addEventListener('click', () => {
+    curCountry = th.dataset.cc;
+    document.querySelector('[data-filter="project"] .fs-value').textContent = curCountry;
+    document.querySelectorAll('[data-filter="project"] .fselect-menu button').forEach(x => x.classList.toggle('sel', x.textContent === curCountry));
+    switchView('summary');
+    renderAll();
+  }));
+}
+
+/* =================== ПЕРЕМИКАННЯ / ФІЛЬТРИ =================== */
+function switchView(v){
+  document.querySelectorAll('#viewTabs button').forEach(b => b.classList.toggle('on', b.dataset.v === v));
+  document.querySelectorAll('.view-panel').forEach(pn => pn.classList.toggle('on', pn.id === 'view-' + v));
+}
+document.getElementById('viewTabs').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  switchView(b.dataset.v);
 });
+document.querySelectorAll('[data-filter="period"] .fselect-menu button').forEach(b => b.addEventListener('click', () => {
+  curPeriod = b.textContent;
+  document.querySelector('[data-filter="period"] .fs-value').textContent = curPeriod;
+  document.querySelectorAll('[data-filter="period"] .fselect-menu button').forEach(x => x.classList.toggle('sel', x === b));
+  renderAll();
+}));
+document.querySelectorAll('[data-filter="project"] .fselect-menu button').forEach(b => b.addEventListener('click', () => {
+  curCountry = b.textContent;
+  document.querySelector('[data-filter="project"] .fs-value').textContent = curCountry;
+  document.querySelectorAll('[data-filter="project"] .fselect-menu button').forEach(x => x.classList.toggle('sel', x === b));
+  renderAll();
+}));
+document.querySelectorAll('#kpiRow .kpi-card').forEach(c => c.addEventListener('click', () => {
+  switchView('summary');
+  document.getElementById('stmtTable').scrollIntoView({behavior:'smooth', block:'start'});
+}));
 document.getElementById('btnExport').addEventListener('click', () => {
-  const rows = TX.filter(txMatches);
-  const head = 'Дата;ID;Тип;Рахунок;Контрагент;Проєкт;Сума;Сума USD;Категорія PnL;Вплив на PnL;Статус;Коментар';
-  const csv = '﻿' + head + '\n' + rows.map(t =>
-    [t.date, t.id, TYPE_META[t.type].label, t.acc, t.cp, t.proj, t.amt.replace(/ /g,' '), t.usd, t.cat||'', t.impact?'Так':'Ні', STATUS_META[t.status].label, (t.comment||'').replace(/;/g,',')].join(';')
-  ).join('\n');
+  const p = PERIODS[curPeriod], cur = calcAll(p.s, p.e);
+  const lines = [['Стаття','Сума USD','% доходу']];
+  BLOCKS.forEach(b => {
+    lines.push([b.label, cur[b.id] * (b.sign < 0 ? -1 : 1), (cur[b.id]/cur.rev*100).toFixed(1) + '%']);
+    b.groups.forEach(g => lines.push(['  ' + g.label, groupVal(g, b.id, p.s, p.e) * (b.sign < 0 ? -1 : 1), '']));
+    if (b.id === 'cogs') lines.push(['ВАЛОВИЙ ПРИБУТОК', cur.gp, (cur.gp/cur.rev*100).toFixed(1) + '%']);
+    if (b.id === 'sm') lines.push(['МАРЖИНАЛЬНИЙ ПРИБУТОК', cur.cm, (cur.cm/cur.rev*100).toFixed(1) + '%']);
+    if (b.id === 'ga') {
+      lines.push(['EBITDA', cur.ebitda, (cur.ebitda/cur.rev*100).toFixed(1) + '%']);
+      lines.push(['Амортизація', -cur.da, '']); lines.push(['EBIT', cur.ebit, '']);
+      lines.push(['Фінансові витрати', -cur.fin, '']); lines.push(['Прибуток до податку', cur.pbt, '']);
+      lines.push(['Податок', -cur.tax, '']); lines.push(['ЧИСТИЙ ПРИБУТОК', cur.ni, (cur.ni/cur.rev*100).toFixed(1) + '%']);
+    }
+  });
+  const csv = '﻿' + lines.map(l => l.join(';')).join('\n');
   const a = document.createElement('a');
   a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
-  a.download = 'cash-flow_серпень-2026.csv';
+  a.download = `pnl_${curPeriod.replace(/ /g,'-')}_${curCountry}.csv`;
   a.click();
 });
+window.addEventListener('resize', () => { renderMargins(); });
 
-/* init */
-renderKPI('Серпень 2026');
-renderChart();
-renderAccounts();
-renderTable();
+function renderAll(){
+  renderKPI(); renderStmt(); renderDonut(); renderMargins(); renderMonthly(); renderCountry();
+}
+renderAll();
 </script>
 
 </body>

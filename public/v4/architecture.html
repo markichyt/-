@@ -1,0 +1,991 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<title>Фінансова архітектура ConsultantLM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --page: #ffffff;
+    --alt: #f5f5f7;
+    --ink: #1d1d1f;
+    --gray: #86868b;
+    --gray2: #6e6e73;
+    --hairline: #d2d2d7;
+    --blue: #0071e3;
+    --blue-bright: #2997ff;
+    --cash: #248a3d;
+    --cash-bright: #30d158;
+    --bal: #c56a00;
+    --bal-bright: #ff9f0a;
+    --pnl: #5e5ce6;
+    --pnl-bright: #7d7aff;
+    --red: #e30000;
+    --red-bright: #ff453a;
+    --dark-card: #1d1d1f;
+    --dark-card2: #2c2c2e;
+    --dark-hair: #424245;
+    --dark-gray: #a1a1a6;
+    --radius: 18px;
+    --radius-lg: 28px;
+    --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, monospace;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+    font-family: var(--font);
+    font-size: 17px;
+    line-height: 1.47059;
+    letter-spacing: -.022em;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  .inner { max-width: 980px; margin: 0 auto; padding: 0 22px; }
+  .inner.wide { max-width: 1120px; }
+
+  h1, h2 { margin: 0; font-weight: 700; letter-spacing: -.015em; text-wrap: balance; }
+  h2 { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.08; }
+  h3 { font-size: 1.3rem; font-weight: 600; letter-spacing: -.01em; margin: 0 0 8px; }
+  p { margin: 0 0 14px; }
+  .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; letter-spacing: 0; }
+
+  section, header.hero { scroll-margin-top: 60px; }
+  .section { padding: 110px 0; }
+  .section.tight { padding-top: 70px; }
+  .section.alt { background: var(--alt); }
+  .section.dark { background: #000; color: #f5f5f7; }
+
+  .sec-head { text-align: center; max-width: 720px; margin: 0 auto 56px; }
+  .sec-head .kicker {
+    font-size: 1rem; font-weight: 600; margin-bottom: 12px;
+    color: var(--gray2);
+  }
+  .sec-head .sub {
+    font-size: 1.25rem; line-height: 1.4; color: var(--gray2);
+    margin: 18px auto 0; max-width: 600px; font-weight: 400;
+  }
+  .dark .sec-head .sub, .dark .sec-head .kicker { color: var(--dark-gray); }
+
+  /* ---------- nav ---------- */
+  nav.toc {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(251,251,253,.82);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid rgba(0,0,0,.08);
+  }
+  nav.toc .inner {
+    display: flex; gap: 8px; justify-content: center; align-items: center;
+    height: 48px; overflow-x: auto; white-space: nowrap;
+  }
+  nav.toc a {
+    color: rgba(0,0,0,.72); text-decoration: none;
+    font-size: .78rem; font-weight: 400; letter-spacing: -.01em;
+    padding: 6px 12px; border-radius: 999px; transition: color .2s;
+  }
+  nav.toc a:hover { color: #000; }
+
+  /* ---------- hero ---------- */
+  header.hero { padding: 130px 0 120px; text-align: center; }
+  .hero .kicker { font-size: 1.05rem; font-weight: 600; color: var(--gray2); margin: 0 0 14px; }
+  .hero h1 {
+    font-size: clamp(2.9rem, 9vw, 5.4rem);
+    line-height: 1.05; letter-spacing: -.02em; font-weight: 800;
+  }
+  .hero h1 .grad {
+    background: linear-gradient(92deg, #30d158 0%, #ffb340 38%, #ff9f0a 52%, #7d7aff 78%, #5e5ce6 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero .lede {
+    font-size: clamp(1.15rem, 2.6vw, 1.45rem); line-height: 1.45;
+    color: var(--gray2); max-width: 640px; margin: 26px auto 0; font-weight: 400;
+  }
+  .hero .lede b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- three worlds ---------- */
+  .worlds { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 64px; text-align: left; }
+  .world {
+    background: var(--alt); border-radius: var(--radius-lg);
+    padding: 34px 30px 30px;
+  }
+  .world .dot { width: 14px; height: 14px; border-radius: 50%; background: var(--w); margin-bottom: 18px; }
+  .world .wname { font-size: .82rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--w); }
+  .world .wq { font-size: 1.35rem; font-weight: 700; letter-spacing: -.015em; margin: 6px 0 10px; line-height: 1.2; }
+  .world p { font-size: .95rem; color: var(--gray2); margin: 0; }
+
+  .axiom {
+    max-width: 780px; margin: 96px auto 0; text-align: center;
+    font-size: clamp(1.3rem, 3vw, 1.8rem); line-height: 1.35; font-weight: 600;
+    letter-spacing: -.015em; color: var(--gray);
+  }
+  .axiom b { color: var(--ink); font-weight: 600; }
+  .axiom .c { color: var(--cash); } .axiom .b { color: var(--bal); } .axiom .p { color: var(--pnl); }
+
+  /* ---------- architecture ---------- */
+  .figframe {
+    background: #fff; border-radius: var(--radius-lg);
+    padding: clamp(16px, 4vw, 44px);
+    box-shadow: 0 4px 40px rgba(0,0,0,.06);
+    overflow-x: auto;
+  }
+  figure { margin: 0; }
+  figure svg { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  figcaption {
+    font-size: .95rem; color: var(--gray2); margin: 28px auto 0;
+    max-width: 620px; text-align: center; line-height: 1.5;
+  }
+
+  /* ---------- simulator (dark) ---------- */
+  .sim { display: grid; grid-template-columns: 320px minmax(0,1fr); gap: 22px; }
+  .sim-events { display: flex; flex-direction: column; gap: 12px; }
+  .sim-group-label {
+    font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--dark-gray); margin: 10px 0 -4px;
+  }
+  .sim-events button {
+    text-align: left; font: inherit; font-size: .92rem; font-weight: 500; letter-spacing: -.01em;
+    background: var(--dark-card); color: #f5f5f7;
+    border: 1px solid transparent; border-radius: 14px; padding: 12px 16px;
+    cursor: pointer; transition: background .2s, border-color .2s;
+  }
+  .sim-events button:hover { background: var(--dark-card2); }
+  .sim-events button[aria-pressed="true"] {
+    background: var(--dark-card2); border-color: var(--blue-bright);
+  }
+  .sim-stage {
+    background: var(--dark-card); border-radius: var(--radius-lg);
+    padding: 30px; align-self: start; position: sticky; top: 68px;
+  }
+  .sim-title { font-weight: 700; font-size: 1.25rem; letter-spacing: -.015em; margin-bottom: 22px; }
+  .ledgers { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+  .ledger {
+    border-radius: 16px; padding: 16px 16px 18px;
+    background: #000; min-height: 118px;
+  }
+  .ledger .lname { font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--w); }
+  .ledger .lval { font-family: var(--mono); font-size: 1.1rem; font-weight: 600; margin-top: 10px; line-height: 1.35; font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+  .ledger .lsub { font-size: .78rem; color: var(--dark-gray); margin-top: 5px; line-height: 1.4; }
+  .lval.pos { color: var(--cash-bright); }
+  .lval.neg { color: var(--red-bright); }
+  .lval.zero { color: var(--dark-gray); font-weight: 400; }
+  .sim-note { margin-top: 22px; font-size: .95rem; line-height: 1.5; color: #f5f5f7; }
+  .sim-note .muted { display: block; font-size: .84rem; margin-top: 6px; color: var(--dark-gray); }
+
+  /* ---------- story ---------- */
+  .story {
+    background: #fff; border-radius: var(--radius-lg);
+    box-shadow: 0 4px 40px rgba(0,0,0,.06);
+    padding: clamp(24px, 4vw, 44px);
+  }
+  .story-head { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; justify-content: space-between; }
+  .story-head h3 { margin: 0; font-size: 1.1rem; color: var(--gray2); font-weight: 500; }
+  .story-controls { display: flex; gap: 10px; }
+  .story-controls button {
+    font: inherit; font-size: .95rem; font-weight: 500; letter-spacing: -.01em; cursor: pointer;
+    border: none; border-radius: 999px; padding: 10px 22px;
+    background: var(--alt); color: var(--ink);
+    transition: background .2s, opacity .2s;
+  }
+  .story-controls button:hover:not(:disabled) { background: #e8e8ed; }
+  .story-controls button:disabled { opacity: .35; cursor: default; }
+  .story-controls button.primary { background: var(--blue); color: #fff; }
+  .story-controls button.primary:hover:not(:disabled) { background: #0077ed; }
+
+  .timeline { display: flex; gap: 8px; margin: 30px 0 6px; flex-wrap: wrap; }
+  .tstep {
+    flex: 1 1 105px; border-radius: 14px; padding: 12px 14px; cursor: pointer;
+    background: var(--alt); border: 1px solid transparent;
+    font-size: .8rem; line-height: 1.4; color: var(--gray2);
+    transition: background .2s, border-color .2s, box-shadow .2s;
+  }
+  .tstep .tdate { font-family: var(--mono); font-size: .68rem; display: block; letter-spacing: 0; }
+  .tstep .top { font-weight: 600; color: var(--ink); display: block; letter-spacing: -.01em; }
+  .tstep.done { background: #e9f6ee; }
+  .tstep.current { background: #fff; border-color: var(--blue); box-shadow: 0 4px 16px rgba(0,0,0,.08); }
+
+  .counters { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; margin-top: 26px; }
+  .counter { border-radius: var(--radius); padding: 20px 22px; background: var(--alt); }
+  .counter .cname { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--w); }
+  .counter .cval { font-family: var(--mono); font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 600; margin-top: 8px; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+  .counter .cdelta { font-family: var(--mono); font-size: .82rem; margin-top: 2px; min-height: 1.25em; letter-spacing: 0; }
+  .cdelta.pos { color: var(--cash); } .cdelta.neg { color: var(--red); } .cdelta.zero { color: var(--gray); }
+
+  .story-comment { margin-top: 22px; font-size: 1.05rem; line-height: 1.5; color: var(--ink); min-height: 3em; max-width: 720px; }
+  .punch {
+    margin-top: 22px; padding: 22px 26px; border-radius: var(--radius);
+    background: #eef2ff; font-size: 1.02rem; line-height: 1.5;
+    display: none;
+  }
+  .punch.show { display: block; }
+  .punch b { color: var(--pnl); }
+
+  /* ---------- P&L ladder ---------- */
+  .ladder {
+    background: #fff; border-radius: var(--radius-lg); overflow: hidden;
+    box-shadow: 0 4px 40px rgba(0,0,0,.06);
+  }
+  .lrow { border-top: 1px solid var(--hairline); }
+  .lrow:first-child { border-top: none; }
+  .lrow summary, .lrow .flat {
+    display: flex; align-items: center; gap: 16px; padding: 17px 28px;
+    font-weight: 500; font-size: 1.02rem; letter-spacing: -.01em; cursor: default; list-style: none;
+  }
+  .lrow summary { cursor: pointer; transition: background .15s; }
+  .lrow summary:hover { background: #fafafa; }
+  .lrow summary::-webkit-details-marker { display: none; }
+  .lrow summary::after {
+    content: "+"; margin-left: auto; color: var(--gray);
+    font-family: var(--mono); font-size: 1rem;
+  }
+  .lrow details[open] summary::after { content: "–"; }
+  .op { width: 26px; flex: none; text-align: center; font-family: var(--mono); font-weight: 600; font-size: .95rem; color: var(--gray); }
+  .op.minus { color: var(--red); }
+  .op.eq { color: var(--blue); }
+  .lrow.total summary, .lrow.total .flat { font-weight: 700; background: var(--alt); }
+  .lrow.total.final .flat { background: var(--ink); color: #fff; font-size: 1.1rem; }
+  .lrow.total.final .op.eq { color: var(--cash-bright); }
+  .marginchip {
+    margin-left: auto; font-family: var(--mono); font-size: .72rem; letter-spacing: 0;
+    color: var(--blue); background: #eaf3fe;
+    padding: 4px 12px; border-radius: 999px; white-space: nowrap;
+  }
+  .lrow.total.final .marginchip { background: rgba(255,255,255,.14); color: #fff; }
+  .subitems { padding: 6px 28px 20px 70px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .subitems span {
+    font-size: .82rem; color: var(--gray2); background: var(--alt);
+    border-radius: 999px; padding: 5px 14px;
+  }
+
+  .rulebox { margin-top: 22px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .rule { background: #fff; border-radius: var(--radius); padding: 24px 24px 22px; font-size: .92rem; line-height: 1.5; color: var(--gray2); box-shadow: 0 2px 16px rgba(0,0,0,.04); }
+  .rule b { display: block; margin-bottom: 6px; color: var(--ink); font-size: .98rem; letter-spacing: -.01em; }
+  .rule .arrowto { color: var(--blue); font-weight: 600; }
+
+  /* ---------- lifecycle ---------- */
+  .flowline { display: flex; align-items: stretch; gap: 0; flex-wrap: wrap; justify-content: center; }
+  .status { background: #fff; border-radius: var(--radius); padding: 22px 24px; flex: 1 1 180px; min-width: 180px; box-shadow: 0 2px 16px rgba(0,0,0,.04); }
+  .status .sname { font-weight: 700; font-family: var(--mono); font-size: .95rem; letter-spacing: 0; }
+  .status p { font-size: .85rem; color: var(--gray2); margin: 8px 0 0; line-height: 1.45; }
+  .status.completed { background: #e9f6ee; }
+  .status.completed .sname { color: var(--cash); }
+  .status.cancelled { background: transparent; border: 1px dashed var(--hairline); box-shadow: none; }
+  .flow-arrow { flex: none; display: flex; align-items: center; padding: 0 10px; color: var(--gray); font-size: 1.2rem; }
+
+  .gate { margin-top: 26px; background: #fff; border-radius: var(--radius-lg); padding: clamp(24px, 4vw, 40px); box-shadow: 0 4px 40px rgba(0,0,0,.06); }
+  .gate h3 { font-size: 1.35rem; }
+  .gate .gsub { color: var(--gray2); font-size: .95rem; margin-bottom: 18px; }
+  .gate ul { columns: 2; margin: 0; padding: 0; list-style: none; font-size: .95rem; }
+  .gate li { margin-bottom: 8px; break-inside: avoid; padding-left: 26px; position: relative; }
+  .gate li::before { content: "✓"; position: absolute; left: 0; color: var(--cash); font-weight: 700; }
+  .gate .after { margin-top: 22px; font-size: .92rem; color: var(--gray2); border-top: 1px solid var(--hairline); padding-top: 18px; line-height: 1.55; }
+  .gate .after b { color: var(--ink); }
+
+  /* ---------- treasury (dark) ---------- */
+  .treasury { display: grid; grid-template-columns: minmax(0, 440px) minmax(0,1fr); gap: 22px; }
+  .cashcard { background: var(--dark-card); border-radius: var(--radius-lg); padding: 34px; }
+  .cashcard h3 { color: #f5f5f7; font-size: 1.2rem; margin-bottom: 16px; }
+  .cashrow { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; font-size: .98rem; align-items: baseline; color: #f5f5f7; }
+  .cashrow .amt { font-family: var(--mono); font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: 0; }
+  .cashrow.sub { color: var(--dark-gray); font-size: .9rem; }
+  .cashrow.sub .amt { color: var(--red-bright); font-weight: 500; }
+  .cashrow.result { border-top: 1px solid var(--dark-hair); margin-top: 8px; padding-top: 16px; font-weight: 600; }
+  .cashrow.result .amt { color: var(--cash-bright); font-size: 1.45rem; }
+  .cashcard .note { color: var(--dark-gray); font-size: .82rem; margin-top: 14px; line-height: 1.5; }
+
+  .wallets { display: flex; flex-direction: column; gap: 14px; }
+  .wallet { background: var(--dark-card); border-radius: var(--radius); padding: 20px 24px; font-size: .9rem; color: var(--dark-gray); line-height: 1.5; }
+  .wallet b { display: flex; align-items: center; gap: 10px; font-size: 1.02rem; color: #f5f5f7; margin-bottom: 4px; letter-spacing: -.01em; }
+  .wallet b::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--w); flex: none; }
+  .wallet .flags { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .wallet .flags span {
+    font-family: var(--mono); font-size: .68rem; letter-spacing: 0; padding: 3px 10px;
+    border-radius: 999px; background: #000; color: var(--dark-gray);
+  }
+  .buckets { margin-top: 6px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .buckets span {
+    font-family: var(--mono); font-size: .74rem; letter-spacing: 0;
+    padding: 6px 14px; border-radius: 999px; background: var(--dark-card); color: var(--dark-gray);
+  }
+
+  /* ---------- reconciliation ---------- */
+  .recon { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; }
+  .reconcard { background: #fff; border-radius: var(--radius); padding: 26px 26px 24px; box-shadow: 0 2px 16px rgba(0,0,0,.04); }
+  .reconcard .lname { font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--w); }
+  .reconcard .formula { font-family: var(--mono); font-size: .84rem; margin-top: 14px; line-height: 1.65; letter-spacing: 0; }
+  .reconcard p { font-size: .84rem; color: var(--gray2); margin: 12px 0 0; }
+
+  .never { margin-top: 64px; text-align: center; }
+  .never h3 { font-size: 1.5rem; }
+  .never-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; justify-content: center; }
+  .never-chips span {
+    font-size: .88rem; padding: 8px 18px; border-radius: 999px;
+    background: #fdeeee; color: var(--red);
+  }
+  .never .fine { color: var(--gray2); font-size: .88rem; margin-top: 16px; }
+
+  .criterion {
+    max-width: 760px; margin: 96px auto 0; text-align: center;
+    font-size: clamp(1.25rem, 2.8vw, 1.7rem); line-height: 1.4; font-weight: 600;
+    letter-spacing: -.015em; color: var(--gray);
+  }
+  .criterion b { color: var(--ink); font-weight: 600; }
+
+  footer { padding: 40px 0 60px; text-align: center; font-size: .8rem; color: var(--gray); border-top: 1px solid var(--hairline); }
+
+  @media (max-width: 900px) {
+    .worlds, .ledgers, .counters, .recon { grid-template-columns: 1fr; }
+    .sim { grid-template-columns: 1fr; }
+    .sim-stage { position: static; }
+    .treasury { grid-template-columns: 1fr; }
+    .gate ul { columns: 1; }
+    .section { padding: 76px 0; }
+    header.hero { padding: 90px 0 80px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+  }
+  html { scroll-behavior: smooth; }
+</style>
+</head>
+<body>
+<nav class="toc" aria-label="Розділи">
+  <div class="inner">
+    <a href="#arch">Архітектура</a>
+    <a href="#sim">Симулятор</a>
+    <a href="#story">Приклад</a>
+    <a href="#pnl">P&L</a>
+    <a href="#lifecycle">Процес</a>
+    <a href="#treasury">Treasury</a>
+    <a href="#recon">Контроль</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="inner">
+    <p class="kicker">ConsultantLM · Фінансовий модуль</p>
+    <h1>Одна подія.<br><span class="grad">Три реєстри грошей.</span></h1>
+    <p class="lede">Уся фінансова система тримається на одному принципі: <b>рух грошей</b>, <b>внутрішній баланс користувача</b> та <b>економічний результат</b> — це три окремі світи. Одна подія може торкатися будь-якої їх комбінації.</p>
+
+    <div class="worlds">
+      <div class="world" style="--w: var(--cash)">
+        <div class="dot"></div>
+        <div class="wname">Cash Ledger</div>
+        <div class="wq">Де гроші?</div>
+        <p>Фактичний рух коштів за банківськими рахунками. Inflow, Outflow, перекази, обмін валют.</p>
+      </div>
+      <div class="world" style="--w: var(--bal)">
+        <div class="dot"></div>
+        <div class="wname">Balance Ledger</div>
+        <div class="wq">Кому належить всередині платформи?</div>
+        <p>Внутрішні гаманці юристів, менеджерів, маркетологів. Не банк і не P&L.</p>
+      </div>
+      <div class="world" style="--w: var(--pnl)">
+        <div class="dot"></div>
+        <div class="wname">P&L Ledger</div>
+        <div class="wq">Скільки ми заробили?</div>
+        <p>Події визнання Revenue та Expenses. Формує Gross Profit, EBITDA, Net Income.</p>
+      </div>
+    </div>
+
+    <p class="axiom">Переказ між власними рахунками — <span class="c">два рухи Cash</span> і <span class="p">нуль P&L</span>. Поповнення балансу — <span class="c">Cash In</span>, але <b>ще не дохід</b>. Купівля ліда з балансу — <span class="p">дохід</span> без руху грошей у банку. <b>Без цього розділення P&L завищує і доходи, і витрати.</b></p>
+  </div>
+</header>
+
+<!-- ================= ARCHITECTURE ================= -->
+<section id="arch" class="section alt">
+  <div class="inner wide">
+    <div class="sec-head">
+      <p class="kicker">Загальна схема</p>
+      <h2>Чотирирівнева архітектура.</h2>
+      <p class="sub">Продуктові події не пишуть напряму у звіти. Кожна створює financial_event, який роздає наслідки в один, два або три реєстри.</p>
+    </div>
+
+    <figure>
+      <div class="figframe">
+      <svg viewBox="0 0 960 590" role="img" aria-label="Схема: продуктові події проходять через Financial Event Ledger і розподіляються у Cash Ledger, Balance Ledger та P&L Ledger, після чого проходять reconciliation і потрапляють в управлінську звітність" style="min-width: 680px; color: #1d1d1f;">
+        <defs>
+          <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#86868b"/>
+          </marker>
+        </defs>
+
+        <rect x="180" y="16" width="600" height="66" rx="16" fill="#f5f5f7"/>
+        <text x="480" y="44" text-anchor="middle" font-size="14" font-weight="700" fill="#1d1d1f">ПРОДУКТОВІ ПОДІЇ</text>
+        <text x="480" y="64" text-anchor="middle" font-size="11.5" fill="#86868b">Orders · Leads · AI Usage · Subscriptions · Commissions</text>
+
+        <line x1="480" y1="82" x2="480" y2="112" stroke="#86868b" stroke-width="1.3" marker-end="url(#arr)"/>
+        <text x="492" y="102" font-size="11" fill="#86868b">кожна подія отримує financial_event_id</text>
+
+        <rect x="180" y="116" width="600" height="66" rx="16" fill="#ffffff" stroke="#1d1d1f" stroke-width="1.4"/>
+        <text x="480" y="144" text-anchor="middle" font-size="14" font-weight="700" fill="#1d1d1f">FINANCIAL EVENT LEDGER</text>
+        <text x="480" y="164" text-anchor="middle" font-size="11.5" fill="#86868b">шар оркестрації: визначає cash_flow_impact · balance_impact · pnl_impact</text>
+
+        <line x1="330" y1="182" x2="235" y2="242" stroke="#86868b" stroke-width="1.3" marker-end="url(#arr)"/>
+        <line x1="480" y1="182" x2="480" y2="242" stroke="#86868b" stroke-width="1.3" marker-end="url(#arr)"/>
+        <line x1="630" y1="182" x2="725" y2="242" stroke="#86868b" stroke-width="1.3" marker-end="url(#arr)"/>
+        <text x="248" y="214" text-anchor="end" font-size="11" fill="#86868b">рух грошей</text>
+        <text x="492" y="218" font-size="11" fill="#86868b">wallet ±</text>
+        <text x="712" y="214" font-size="11" fill="#86868b">Revenue / Expense</text>
+
+        <rect x="110" y="246" width="245" height="88" rx="16" fill="#e9f6ee"/>
+        <text x="232" y="280" text-anchor="middle" font-size="13.5" font-weight="700" fill="#248a3d">CASH LEDGER</text>
+        <text x="232" y="300" text-anchor="middle" font-size="11" fill="#6e6e73">банківські рахунки, каси,</text>
+        <text x="232" y="315" text-anchor="middle" font-size="11" fill="#6e6e73">платіжні системи</text>
+
+        <rect x="358" y="246" width="245" height="88" rx="16" fill="#fdf3e3"/>
+        <text x="480" y="280" text-anchor="middle" font-size="13.5" font-weight="700" fill="#c56a00">BALANCE LEDGER</text>
+        <text x="480" y="300" text-anchor="middle" font-size="11" fill="#6e6e73">wallets: refundable · earned ·</text>
+        <text x="480" y="315" text-anchor="middle" font-size="11" fill="#6e6e73">promotional · reserved</text>
+
+        <rect x="606" y="246" width="245" height="88" rx="16" fill="#ecebff"/>
+        <text x="728" y="280" text-anchor="middle" font-size="13.5" font-weight="700" fill="#5e5ce6">P&amp;L LEDGER</text>
+        <text x="728" y="300" text-anchor="middle" font-size="11" fill="#6e6e73">події визнання доходів</text>
+        <text x="728" y="315" text-anchor="middle" font-size="11" fill="#6e6e73">та витрат</text>
+
+        <line x1="232" y1="334" x2="382" y2="398" stroke="#86868b" stroke-width="1.3" marker-end="url(#arr)"/>
+        <line x1="480" y1="334" x2="480" y2="398" stroke="#86868b" stroke-width="1.3" marker-end="url(#arr)"/>
+        <line x1="728" y1="334" x2="578" y2="398" stroke="#86868b" stroke-width="1.3" marker-end="url(#arr)"/>
+
+        <rect x="270" y="402" width="420" height="62" rx="16" fill="#ffffff" stroke="#1d1d1f" stroke-width="1.4"/>
+        <text x="480" y="428" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1d1d1f">RECONCILIATION</text>
+        <text x="480" y="448" text-anchor="middle" font-size="11" fill="#86868b">три незалежні перевірки · розбіжність блокує закриття періоду</text>
+
+        <line x1="480" y1="464" x2="480" y2="494" stroke="#86868b" stroke-width="1.3" marker-end="url(#arr)"/>
+
+        <rect x="220" y="498" width="520" height="66" rx="16" fill="#f5f5f7"/>
+        <text x="480" y="526" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1d1d1f">MANAGEMENT REPORTING</text>
+        <text x="480" y="546" text-anchor="middle" font-size="11" fill="#86868b">P&amp;L по країнах · Consolidated · Cash Flow Dashboard · Balance Dashboard · KPI</text>
+      </svg>
+      </div>
+      <figcaption>Продуктова подія (наприклад, купівля AI-статті) породжує один financial_event, який одночасно списує Balance, визнає Revenue і COGS — а Cash при цьому не рухається. Жоден ledger не замінює інший.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ================= SIMULATOR ================= -->
+<section id="sim" class="section dark">
+  <div class="inner wide">
+    <div class="sec-head">
+      <p class="kicker">Центральна бізнес-логіка</p>
+      <h2>Симулятор подій.<br>Що куди потрапляє.</h2>
+      <p class="sub">Оберіть подію — і побачите, як вона впливає на кожен із трьох реєстрів. Ця матриця визначена в ТЗ як центральна логіка backend.</p>
+    </div>
+
+    <div class="sim">
+      <div class="sim-events" id="eventList" role="group" aria-label="Події"></div>
+
+      <div class="sim-stage" aria-live="polite">
+        <div class="sim-title" id="simTitle"></div>
+        <div class="ledgers">
+          <div class="ledger" style="--w: var(--cash-bright)">
+            <span class="lname">Cash</span>
+            <div class="lval" id="simCash"></div>
+            <div class="lsub" id="simCashSub"></div>
+          </div>
+          <div class="ledger" style="--w: var(--bal-bright)">
+            <span class="lname">Balance</span>
+            <div class="lval" id="simBal"></div>
+            <div class="lsub" id="simBalSub"></div>
+          </div>
+          <div class="ledger" style="--w: var(--pnl-bright)">
+            <span class="lname">P&L</span>
+            <div class="lval" id="simPnl"></div>
+            <div class="lsub" id="simPnlSub"></div>
+          </div>
+        </div>
+        <div class="sim-note" id="simNote"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STORY ================= -->
+<section id="story" class="section alt">
+  <div class="inner wide">
+    <div class="sec-head">
+      <p class="kicker">Наскрізний приклад із ТЗ</p>
+      <h2>Юрист №1257.<br>Один місяць, три реєстри.</h2>
+      <p class="sub">Юрист поповнює баланс на 10 000 ₴, користується платформою і виводить залишок. Прогорніть кроки — і подивіться, як розходяться Cash, Balance та Revenue.</p>
+    </div>
+
+    <div class="story">
+      <div class="story-head">
+        <h3>Вересень · Lawyer #1257 · UAH wallet</h3>
+        <div class="story-controls">
+          <button id="prevStep">Назад</button>
+          <button id="nextStep" class="primary">Наступний крок</button>
+        </div>
+      </div>
+
+      <div class="timeline" id="timeline"></div>
+
+      <div class="counters">
+        <div class="counter" style="--w: var(--cash)">
+          <div class="cname">Cash · банк компанії</div>
+          <div class="cval" id="cCash">0 ₴</div>
+          <div class="cdelta" id="dCash"></div>
+        </div>
+        <div class="counter" style="--w: var(--bal)">
+          <div class="cname">Balance юриста</div>
+          <div class="cval" id="cBal">0 ₴</div>
+          <div class="cdelta" id="dBal"></div>
+        </div>
+        <div class="counter" style="--w: var(--pnl)">
+          <div class="cname">Визнаний Revenue</div>
+          <div class="cval" id="cRev">0 ₴</div>
+          <div class="cdelta" id="dRev"></div>
+        </div>
+      </div>
+
+      <div class="story-comment" id="storyComment">Натисніть «Наступний крок», щоб почати.</div>
+
+      <div class="punch" id="punch">
+        Підсумок місяця: у банк зайшло і лишилося <b class="mono">2 230 ₴</b> — і рівно стільки ж визнано доходу. <b>Revenue = 2 230 ₴, а не 10 000 ₴.</b> Якби top-up одразу записали в дохід, звіт завищив би виручку в 4,5 раза, а вивід залишку довелося б вигадувати як «витрату».
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= P&L ================= -->
+<section id="pnl" class="section">
+  <div class="inner wide">
+    <div class="sec-head">
+      <p class="kicker">Економічний результат</p>
+      <h2>Структура P&L.<br>Від Revenue до Net Income.</h2>
+      <p class="sub">Єдина інвесторська форма звіту. Кожен блок розкривається до підкатегорій — так само, як у системі кожна цифра P&L клікабельна до рівня транзакцій.</p>
+    </div>
+
+    <div class="ladder">
+      <details class="lrow"><summary><span class="op"> </span> REVENUE</summary>
+        <div class="subitems"><span>Marketplace Revenue</span><span>Lawyer Subscription</span><span>Client Subscription</span><span>Lead Revenue</span><span>Document Revenue</span><span>AI &amp; Platform Usage</span><span>B2B Revenue</span><span>Other Operating Revenue</span></div>
+      </details>
+      <details class="lrow"><summary><span class="op minus">−</span> COGS</summary>
+        <div class="subitems"><span>Lawyer Payouts</span><span>Payment Processing</span><span>Direct Contractors</span><span>Direct AI / API</span><span>Direct Infrastructure</span></div>
+      </details>
+      <div class="lrow total"><div class="flat"><span class="op eq">=</span> GROSS PROFIT <span class="marginchip">Gross Margin %</span></div></div>
+      <details class="lrow"><summary><span class="op minus">−</span> SALES &amp; MARKETING</summary>
+        <div class="subitems"><span>Advertising</span><span>Ad Testing</span><span>Sales Team</span><span>Sales Commission</span><span>Marketing Team</span><span>Marketing Commission</span><span>SEO / Content</span><span>PR / Brand</span><span>Partnerships / Affiliates</span><span>Marketing Tools</span></div>
+      </details>
+      <div class="lrow total"><div class="flat"><span class="op eq">=</span> CONTRIBUTION MARGIN <span class="marginchip">CM %</span></div></div>
+      <details class="lrow"><summary><span class="op minus">−</span> PRODUCT &amp; DEVELOPMENT</summary>
+        <div class="subitems"><span>Development Team</span><span>Product Team</span><span>AI / Data Team</span><span>Infrastructure</span><span>AI / API</span><span>Product Software</span><span>Contractors</span></div>
+      </details>
+      <details class="lrow"><summary><span class="op minus">−</span> GENERAL &amp; ADMINISTRATIVE</summary>
+        <div class="subitems"><span>Management</span><span>Finance / Accounting</span><span>HR / Recruiting</span><span>Legal / Compliance</span><span>Office</span><span>Corporate Software</span><span>Insurance</span><span>Travel</span><span>Bank Fees</span><span>Other G&amp;A</span></div>
+      </details>
+      <div class="lrow total"><div class="flat"><span class="op eq">=</span> EBITDA <span class="marginchip">EBITDA Margin %</span></div></div>
+      <div class="lrow"><div class="flat"><span class="op minus">−</span> Depreciation &amp; Amortization</div></div>
+      <div class="lrow total"><div class="flat"><span class="op eq">=</span> EBIT</div></div>
+      <div class="lrow"><div class="flat"><span class="op">±</span> Interest · FX Gain / Loss</div></div>
+      <div class="lrow total"><div class="flat"><span class="op eq">=</span> PROFIT BEFORE TAX</div></div>
+      <div class="lrow"><div class="flat"><span class="op minus">−</span> Income Tax</div></div>
+      <div class="lrow total final"><div class="flat"><span class="op eq">=</span> NET INCOME <span class="marginchip">Net Margin %</span></div></div>
+    </div>
+
+    <div class="rulebox">
+      <div class="rule">
+        <b>Головне правило бухгалтера</b>
+        Категорію визначає <em>економічна суть</em> витрати — не спосіб оплати і не той, кому перерахували гроші.
+      </div>
+      <div class="rule">
+        <b>Claude Code «як ЗП співробітнику»</b>
+        <span class="arrowto">→ Product &amp; Development / Software</span><br>Це програмний сервіс, навіть якщо гроші пройшли через працівника. Не Salary.
+      </div>
+      <div class="rule">
+        <b>Google Ads з особистої карти маркетолога</b>
+        <span class="arrowto">→ S&amp;M / Advertising</span><br>Не Marketing Salary.
+      </div>
+      <div class="rule">
+        <b>Повернення коштів клієнту</b>
+        <span class="arrowto">→ Contra Revenue</span><br>Не Marketing Expense.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LIFECYCLE ================= -->
+<section id="lifecycle" class="section alt">
+  <div class="inner wide">
+    <div class="sec-head">
+      <p class="kicker">Операційний процес</p>
+      <h2>Життя транзакції.<br>Від чернетки до звіту.</h2>
+      <p class="sub">Жодна операція не потрапляє у звіти, доки бухгалтер не пройшов контрольну точку «Завершити». І жодна не видаляється фізично — тільки Cancelled + Audit Log.</p>
+    </div>
+
+    <div class="flowline">
+      <div class="status">
+        <div class="sname">Draft</div>
+        <p>Створена (вручну або системою). Не впливає на жоден звіт.</p>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="status">
+        <div class="sname">Review</div>
+        <p>Очікує перевірки бухгалтера. Автоматичні поля вже підставлені.</p>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="status completed">
+        <div class="sname">Completed</div>
+        <p>Фінансовий event проведено. Входить у Cash / Balance / P&L відповідно до impact-прапорців.</p>
+      </div>
+      <div class="flow-arrow">↘</div>
+      <div class="status cancelled">
+        <div class="sname">Cancelled</div>
+        <p>Не входить у звіти, але лишається в Audit Log назавжди.</p>
+      </div>
+    </div>
+
+    <div class="gate">
+      <h3>Кнопка «Завершити» — фінансова контрольна точка</h3>
+      <p class="gsub">Система блокує завершення, поки не заповнені:</p>
+      <ul>
+        <li>рахунок</li><li>валюта</li><li>сума</li><li>дата проведення</li><li>проєкт / країна</li>
+        <li>P&L категорія</li><li>P&L підкатегорія</li><li>тип операції</li><li>коментар</li><li>P&L status</li>
+      </ul>
+      <div class="after">
+        <b>Після натискання:</b> транзакція потрапляє у звіти · <span class="mono">P&L period = month(date_posted)</span> · фіксується бухгалтер і timestamp · створюється запис Audit Log. Після закриття місяця — <b>Lock Period</b>: зміни лише через reversal, reopen тільки CFO/Admin із зазначенням причини.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TREASURY ================= -->
+<section id="treasury" class="section dark">
+  <div class="inner wide">
+    <div class="sec-head">
+      <p class="kicker">Гроші компанії ≠ вільні гроші</p>
+      <h2>Treasury.<br>Скільки грошей насправді наших.</h2>
+      <p class="sub">Частина коштів на рахунках — це refundable-баланси юристів, які вони можуть будь-коли вивести. Dashboard має завжди показувати цю різницю.</p>
+    </div>
+
+    <div class="treasury">
+      <div class="cashcard">
+        <h3>Available Company Cash</h3>
+        <div class="cashrow"><span>TOTAL CASH</span><span class="amt">$300 000</span></div>
+        <div class="cashrow sub"><span>− Refundable User Funds</span><span class="amt">−$80 000</span></div>
+        <div class="cashrow sub"><span>− Other Restricted Funds</span><span class="amt">−$0</span></div>
+        <div class="cashrow result"><span>OPERATIONALLY AVAILABLE</span><span class="amt">$220 000</span></div>
+        <p class="note">Earned payables (нараховані, але не виплачені комісії) показуються окремим рядком — це інший тип зобов'язання.</p>
+      </div>
+
+      <div class="wallets">
+        <div class="wallet" style="--w: var(--bal-bright)">
+          <b>Refundable Wallet</b>
+          Кошти, внесені користувачем: top-up юриста. Компанія тримає їх як зобов'язання.
+          <div class="flags"><span>withdrawable</span><span>P&L impact = NO</span><span>liability</span></div>
+        </div>
+        <div class="wallet" style="--w: var(--pnl-bright)">
+          <b>Earned / Payable Wallet</b>
+          Нараховані винагороди: комісії менеджерів, earnings юристів. Expense визнається при нарахуванні, вивід — уже без P&L.
+          <div class="flags"><span>payable</span><span>expense при accrual</span></div>
+        </div>
+        <div class="wallet" style="--w: var(--cash-bright)">
+          <b>Promotional / Bonus Wallet</b>
+          Бонусні кредити й free tokens. Ними можна платити за послуги, але не можна вивести як гроші.
+          <div class="flags"><span>cash value = 0</span><span>withdrawable = false</span></div>
+        </div>
+        <div class="buckets" aria-label="Поля wallet">
+          <span>available_balance</span><span>withdrawable_balance</span><span>reserved_balance</span><span>pending_balance</span><span>non_withdrawable_balance</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RECONCILIATION ================= -->
+<section id="recon" class="section">
+  <div class="inner wide">
+    <div class="sec-head">
+      <p class="kicker">Audit-ready система</p>
+      <h2>Потрійна reconciliation.</h2>
+      <p class="sub">Наприкінці кожного місяця — три незалежні перевірки. Якщо хоч одна не сходиться, період закрити неможливо.</p>
+    </div>
+
+    <div class="recon">
+      <div class="reconcard" style="--w: var(--cash)">
+        <span class="lname">Cash</span>
+        <div class="formula">Opening Cash<br>+ Inflows − Outflows<br>= Closing Cash</div>
+        <p>Для кожного рахунку окремо.</p>
+      </div>
+      <div class="reconcard" style="--w: var(--bal)">
+        <span class="lname">Balance</span>
+        <div class="formula">Opening Wallets<br>+ Credits − Debits<br>= Closing Wallets</div>
+        <p>Для кожного wallet і глобально: Σ балансів = Σ ledger-записів.</p>
+      </div>
+      <div class="reconcard" style="--w: var(--pnl)">
+        <span class="lname">P&L ↔ Balance</span>
+        <div class="formula">Σ LEAD_PURCHASE<br>= Lead Revenue<br>(same period, ± refunds)</div>
+        <p>Кожне списання балансу з pnl_impact має свій P&L event. Жодних orphan-транзакцій.</p>
+      </div>
+    </div>
+
+    <div class="never">
+      <h3>Що ніколи не потрапляє в Revenue</h3>
+      <div class="never-chips">
+        <span>переказ між своїми рахунками</span>
+        <span>поповнення Balance</span>
+        <span>внесення коштів власником</span>
+        <span>SAFE investment</span>
+        <span>кредит</span>
+        <span>обмін валют</span>
+        <span>помилкове зарахування</span>
+        <span>внутрішні перекази між країнами</span>
+      </div>
+      <p class="fine">Для всіх таких операцій: <span class="mono">P&L impact = false</span>.</p>
+    </div>
+
+    <p class="criterion"><b>Критерій готовності системи:</b> будь-яку цифру P&L можна клікнути й побачити повний перелік транзакцій, що дають рівно цю суму. А для будь-якої банківської транзакції можна відповісти — чому вона потрапила саме в цю категорію.</p>
+  </div>
+</section>
+
+<footer>
+  Побудовано за ТЗ «Фінансовий модуль ConsultantLM: Cash Flow + P&L». Суми в прикладах — ілюстративні, з тексту ТЗ.
+</footer>
+
+<script>
+(function () {
+  /* ---------- Event simulator ---------- */
+  const EVENTS = [
+    { group: "Гроші від юриста" },
+    {
+      id: "sub", label: "Підписка юриста · 2 000 ₴",
+      cash: { v: "+2 000 ₴", s: "pos", sub: "невідшкодовуваний платіж" },
+      bal:  { v: "0", s: "zero", sub: "гаманця не торкається" },
+      pnl:  { v: "Revenue +2 000", s: "pos", sub: "Lawyer Subscription Revenue" },
+      note: "Підписку повернути не можна, тому вона одразу стає доходом.",
+      sub2: "Для річних підписок — параметр revenue_recognition_method: IMMEDIATE або OVER_SUBSCRIPTION_PERIOD ($1 200/рік → $100/міс в accrual-звіті)."
+    },
+    {
+      id: "topup", label: "Поповнення Balance · 10 000 ₴",
+      cash: { v: "+10 000 ₴", s: "pos", sub: "гроші зайшли в банк" },
+      bal:  { v: "+10 000 ₴", s: "pos", sub: "refundable wallet" },
+      pnl:  { v: "0", s: "zero", sub: "P&L impact = false" },
+      note: "Компанія отримала гроші, але ще не заробила їх: юрист може вивести залишок назад.",
+      sub2: "У балансовій логіці це liability: Cash +10 000 / Lawyer Balance Liability +10 000 / Revenue 0."
+    },
+    { group: "Споживання платформи" },
+    {
+      id: "lead", label: "Купівля ліда з Balance · 2 000 ₴",
+      cash: { v: "0", s: "zero", sub: "банк не рухається" },
+      bal:  { v: "−2 000 ₴", s: "neg", sub: "списання з wallet" },
+      pnl:  { v: "Revenue +2 000", s: "pos", sub: "Lead Marketplace Revenue" },
+      note: "Саме в цей момент ConsultantLM заробляє гроші — хоча по банку не рухається нічого.",
+      sub2: "Гроші фізично зайшли раніше, під час top-up. Тому нового Cash In немає."
+    },
+    {
+      id: "ai", label: "AI-стаття · 200 ₴ (API cost 18 ₴)",
+      cash: { v: "0", s: "zero", sub: "банк не рухається" },
+      bal:  { v: "−200 ₴", s: "neg", sub: "списання з wallet" },
+      pnl:  { v: "Rev +200 · COGS +18", s: "pos", sub: "Gross Profit 182 ₴ · маржа 91%" },
+      note: "Кожне AI-використання — це usage_event із власною unit-економікою.",
+      sub2: "usage_event зберігає модель, токени, ціну юристу і фактичну API-собівартість — система сама рахує gross margin кожної AI-функції."
+    },
+    {
+      id: "doc", label: "Купівля документа · 150 ₴",
+      cash: { v: "0", s: "zero", sub: "банк не рухається" },
+      bal:  { v: "−150 ₴", s: "neg", sub: "списання з wallet" },
+      pnl:  { v: "Revenue +150", s: "pos", sub: "Platform Feature Revenue" },
+      note: "Усі платні функції платформи працюють за однією схемою: Balance −, Revenue +.",
+      sub2: "Ціни — з platform_price_catalog; історична ціна операції зберігається в транзакції."
+    },
+    { group: "Вивід коштів" },
+    {
+      id: "wreq", label: "Запит на вивід · 5 000 ₴",
+      cash: { v: "0", s: "zero", sub: "гроші ще не пішли" },
+      bal:  { v: "Reserve 5 000 ₴", s: "neg", sub: "Available −5 000 → Reserved +5 000" },
+      pnl:  { v: "0", s: "zero", sub: "без впливу" },
+      note: "Кошти резервуються, щоб юрист не міг одночасно витратити їх на ліди і вивести.",
+      sub2: "Ланцюжок: Requested → Approved → Processing → Paid (або Rejected: reserve повертається в available)."
+    },
+    {
+      id: "wpaid", label: "Вивід виплачено · 5 000 ₴",
+      cash: { v: "−5 000 ₴", s: "neg", sub: "банк відправив гроші" },
+      bal:  { v: "−5 000 ₴", s: "neg", sub: "reserved списується" },
+      pnl:  { v: "0", s: "zero", sub: "це НЕ Expense" },
+      note: "Повернення юристу його ж невикористаних коштів. Якщо записати це у витрати — подвійна помилка: спершу завищили дохід, тепер завищуємо витрати.",
+      sub2: "Створюється cash_transaction_id, пов'язаний із balance-операцією."
+    },
+    { group: "Комісії команди" },
+    {
+      id: "acc", label: "Нараховано комісію менеджеру · 3 000 ₴",
+      cash: { v: "0", s: "zero", sub: "виплати ще не було" },
+      bal:  { v: "+3 000 ₴", s: "pos", sub: "earned wallet менеджера" },
+      pnl:  { v: "Expense +3 000", s: "neg", sub: "S&M / Sales Commission" },
+      note: "Expense виникає в момент нарахування (accrual) — компанія вже винна ці гроші.",
+      sub2: "Earned wallet ≠ refundable wallet: менеджер цих грошей не вносив, це payable компанії."
+    },
+    {
+      id: "wcom", label: "Менеджер виводить комісію · 3 000 ₴",
+      cash: { v: "−3 000 ₴", s: "neg", sub: "банк відправив гроші" },
+      bal:  { v: "−3 000 ₴", s: "neg", sub: "earned wallet" },
+      pnl:  { v: "0", s: "zero", sub: "expense вже визнано раніше" },
+      note: "Поточний mapping «withdrawal → Sales Commission» треба виправити: інакше та сама комісія стане витратою двічі.",
+      sub2: "Правило: expense — при нарахуванні, вивід — тільки рух грошей."
+    },
+    { group: "Технічні операції" },
+    {
+      id: "transfer", label: "Переказ між своїми рахунками · $10 000",
+      cash: { v: "−10 000 / +10 000", s: "neg", sub: "два пов'язані рухи, спільний transfer_id" },
+      bal:  { v: "0", s: "zero", sub: "без впливу" },
+      pnl:  { v: "0", s: "zero", sub: "P&L impact = false" },
+      note: "Внутрішній переказ — не дохід і не витрата. Без цього правила P&L завищує обидві сторони звіту.",
+      sub2: "Те саме стосується внутрішніх перерахувань між країнами ConsultantLM."
+    },
+    {
+      id: "fx", label: "Обмін валют · −100 000 ₴ → +$2 300",
+      cash: { v: "два рухи", s: "neg", sub: "списання UAH + зарахування USD" },
+      bal:  { v: "0", s: "zero", sub: "без впливу" },
+      pnl:  { v: "0*", s: "zero", sub: "*окремо може виникнути FX Gain / Loss" },
+      note: "Конвертація сама по собі — не витрата. У P&L потрапляє лише курсова різниця.",
+      sub2: "FX Gain / Loss показується після EBIT, поруч з Interest."
+    },
+    {
+      id: "refund", label: "Refund ліда на Balance · 1 000 ₴",
+      cash: { v: "0", s: "zero", sub: "гроші лишаються в банку" },
+      bal:  { v: "+1 000 ₴", s: "pos", sub: "повернення у wallet" },
+      pnl:  { v: "Contra Revenue −1 000", s: "neg", sub: "Lead Refund + original_transaction_id" },
+      note: "Revenue вже було визнано, тому повернення зменшує дохід — але це не новий Cash Out.",
+      sub2: "Якщо повернення йде на банківську картку — тоді Cash −1 000 і той самий Contra Revenue, без подвоєння."
+    }
+  ];
+
+  const list = document.getElementById("eventList");
+  const els = {
+    title: document.getElementById("simTitle"),
+    cash: document.getElementById("simCash"), cashSub: document.getElementById("simCashSub"),
+    bal: document.getElementById("simBal"), balSub: document.getElementById("simBalSub"),
+    pnl: document.getElementById("simPnl"), pnlSub: document.getElementById("simPnlSub"),
+    note: document.getElementById("simNote")
+  };
+  const buttons = {};
+
+  EVENTS.forEach(ev => {
+    if (ev.group) {
+      const l = document.createElement("div");
+      l.className = "sim-group-label";
+      l.textContent = ev.group;
+      list.appendChild(l);
+      return;
+    }
+    const b = document.createElement("button");
+    b.type = "button";
+    b.textContent = ev.label;
+    b.setAttribute("aria-pressed", "false");
+    b.addEventListener("click", () => select(ev.id));
+    list.appendChild(b);
+    buttons[ev.id] = { btn: b, data: ev };
+  });
+
+  function setVal(el, subEl, d) {
+    el.textContent = d.v;
+    el.className = "lval " + d.s;
+    subEl.textContent = d.sub;
+  }
+
+  function select(id) {
+    Object.values(buttons).forEach(x => x.btn.setAttribute("aria-pressed", "false"));
+    const { btn, data } = buttons[id];
+    btn.setAttribute("aria-pressed", "true");
+    els.title.textContent = data.label;
+    setVal(els.cash, els.cashSub, data.cash);
+    setVal(els.bal, els.balSub, data.bal);
+    setVal(els.pnl, els.pnlSub, data.pnl);
+    els.note.innerHTML = "";
+    const main = document.createElement("span");
+    main.textContent = data.note;
+    const extra = document.createElement("span");
+    extra.className = "muted";
+    extra.textContent = data.sub2;
+    els.note.appendChild(main);
+    els.note.appendChild(extra);
+  }
+  select("topup");
+
+  /* ---------- Story stepper ---------- */
+  const STEPS = [
+    { date: "01.09", op: "TOP_UP", amount: "+10 000",
+      cash: 10000, bal: 10000, rev: 0,
+      comment: "Юрист поповнив refundable wallet. Гроші зайшли в банк — але це зобов'язання перед юристом, а не дохід. Revenue досі 0." },
+    { date: "03.09", op: "LEAD_PURCHASE", amount: "−2 000",
+      cash: 10000, bal: 8000, rev: 2000,
+      comment: "Купівля ліда. Банк не рухається, але компанія щойно заробила 2 000 ₴ — перше визнання Revenue." },
+    { date: "05.09", op: "AI_ARTICLE", amount: "−200",
+      cash: 10000, bal: 7800, rev: 2200,
+      comment: "Генерація AI-статті за 200 ₴. Паралельно визнається COGS 18 ₴ (фактична API-собівартість) — gross margin функції 91%." },
+    { date: "06.09", op: "AI_ANSWER", amount: "−30",
+      cash: 10000, bal: 7770, rev: 2230,
+      comment: "AI-відповідь за 30 ₴. Ще +30 ₴ до Revenue, Cash усе ще не змінився з 1 вересня." },
+    { date: "10.09", op: "WITHDRAWAL", amount: "−7 770",
+      cash: 2230, bal: 0, rev: 2230,
+      comment: "Юрист вивів невикористаний залишок. Гроші пішли з банку, але це не Expense — це повернення його власних коштів." }
+  ];
+
+  let cur = -1;
+  const tl = document.getElementById("timeline");
+  const stepEls = STEPS.map((s, i) => {
+    const d = document.createElement("div");
+    d.className = "tstep";
+    d.setAttribute("role", "button");
+    d.setAttribute("tabindex", "0");
+    d.innerHTML = '<span class="tdate">' + s.date + '</span><span class="top">' + s.op + '</span><span class="mono">' + s.amount + ' ₴</span>';
+    d.addEventListener("click", () => go(i));
+    d.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(i); } });
+    tl.appendChild(d);
+    return d;
+  });
+
+  const fmt = n => n.toLocaleString("uk-UA").replace(/ /g, " ") + " ₴";
+  const cEls = {
+    cash: document.getElementById("cCash"), dCash: document.getElementById("dCash"),
+    bal: document.getElementById("cBal"), dBal: document.getElementById("dBal"),
+    rev: document.getElementById("cRev"), dRev: document.getElementById("dRev")
+  };
+  const comment = document.getElementById("storyComment");
+  const punch = document.getElementById("punch");
+  const prevB = document.getElementById("prevStep");
+  const nextB = document.getElementById("nextStep");
+
+  function delta(el, now, before) {
+    const d = now - before;
+    el.textContent = d === 0 ? "без змін" : (d > 0 ? "+" : "−") + Math.abs(d).toLocaleString("uk-UA").replace(/ /g, " ") + " ₴";
+    el.className = "cdelta " + (d > 0 ? "pos" : d < 0 ? "neg" : "zero");
+  }
+
+  function go(i) {
+    cur = i;
+    const s = i >= 0 ? STEPS[i] : { cash: 0, bal: 0, rev: 0 };
+    const p = i >= 1 ? STEPS[i - 1] : { cash: 0, bal: 0, rev: 0 };
+    cEls.cash.textContent = fmt(s.cash);
+    cEls.bal.textContent = fmt(s.bal);
+    cEls.rev.textContent = fmt(s.rev);
+    if (i >= 0) {
+      delta(cEls.dCash, s.cash, p.cash);
+      delta(cEls.dBal, s.bal, p.bal);
+      delta(cEls.dRev, s.rev, p.rev);
+      comment.textContent = STEPS[i].comment;
+    } else {
+      cEls.dCash.textContent = cEls.dBal.textContent = cEls.dRev.textContent = "";
+      comment.textContent = "Натисніть «Наступний крок», щоб почати.";
+    }
+    stepEls.forEach((el, j) => {
+      el.classList.toggle("done", j < i);
+      el.classList.toggle("current", j === i);
+    });
+    punch.classList.toggle("show", i === STEPS.length - 1);
+    prevB.disabled = i < 0;
+    nextB.disabled = i >= STEPS.length - 1;
+    nextB.textContent = i >= STEPS.length - 1 ? "Кінець місяця" : "Наступний крок";
+  }
+
+  prevB.addEventListener("click", () => go(Math.max(-1, cur - 1)));
+  nextB.addEventListener("click", () => go(Math.min(STEPS.length - 1, cur + 1)));
+  go(-1);
+})();
+</script>
+</body>
+</html>
