@@ -1,0 +1,10 @@
+.demo-toast{
+  position:fixed;left:50%;bottom:28px;transform:translate(-50%,14px);
+  z-index:100000;max-width:min(520px,calc(100vw - 32px));
+  background:#0f1b26;color:#fff;padding:13px 20px;border-radius:6px;
+  font:14px/1.45 'AvenirNextCyr','Avenir Next',Arial,sans-serif;
+  box-shadow:0 12px 40px rgba(6,32,44,.28);
+  opacity:0;visibility:hidden;transition:opacity .22s,transform .22s,visibility .22s;
+  pointer-events:none;text-align:center;
+}
+.demo-toast.is-on{opacity:1;visibility:visible;transform:translate(-50%,0)}

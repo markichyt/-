@@ -1,0 +1,118 @@
+/* Demo lead purchase flow. The pl-* classes belong to this layer only and never touch the cabinet markup. */
+.pl-modal .modal__box{gap:0;width:100%}
+.pl-head{border-bottom:1px solid #e8edf2;padding-bottom:16px;text-align:left;width:100%}
+.pl-badge{background:#fff4d6;border-radius:1.25rem;color:#8a5b00;display:inline-block;
+  font-family:var(--font-family2),Arial,sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:.02em;margin-bottom:10px;padding:4px 12px}
+.pl-badge--blue{background:#e3f3fc;color:#0b6f9e}
+.pl-title{color:#2c2c2c;font-family:var(--font-family2),Arial,sans-serif;font-size:20px;
+  font-weight:700;line-height:1.3;margin:0}
+.pl-sub{color:#686868;font-family:var(--font-family2),Arial,sans-serif;font-size:13.5px;
+  line-height:1.55;margin:8px 0 0;text-align:left}
+
+.pl-reserve{background:#f6f9fb;border:1px solid #e2eaf0;border-radius:3px;margin-top:18px;
+  padding:14px 16px 12px;width:100%}
+.pl-reserve__row{align-items:center;display:flex;justify-content:space-between;gap:12px}
+.pl-reserve__label{color:#2c2c2c;font-family:var(--font-family2),Arial,sans-serif;font-size:14px;font-weight:700}
+.pl-reserve__time{color:#1397d6;font-family:var(--font-family2),Arial,sans-serif;font-size:22px;
+  font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
+.pl-reserve__bar{background:#e2eaf0;border-radius:2px;height:5px;margin-top:10px;overflow:hidden;width:100%}
+.pl-reserve__bar i{background:#1397d6;display:block;height:100%;transition:width .95s linear;width:100%}
+.pl-reserve__hint{color:#686868;font-family:var(--font-family2),Arial,sans-serif;font-size:12.5px;
+  line-height:1.5;margin:10px 0 0;text-align:left}
+.pl-rebook{background:none;border:0;color:#1397d6;cursor:pointer;font-family:var(--font-family2),Arial,sans-serif;
+  font-size:13.5px;font-weight:700;margin-top:10px;padding:0;text-decoration:underline}
+.pl-modal.is-expired .pl-reserve{background:#fdf3f4;border-color:#f3d6da}
+.pl-modal.is-expired .pl-reserve__time{color:#c2334d}
+.pl-modal.is-expired .pl-reserve__bar i{background:#c2334d}
+
+.pl-stats{margin-top:18px;width:100%}
+.pl-stat{align-items:baseline;border-bottom:1px solid #eef2f6;display:flex;gap:14px;
+  justify-content:space-between;padding:11px 0}
+.pl-stat span{color:#686868;font-family:var(--font-family2),Arial,sans-serif;font-size:14px;text-align:left}
+.pl-stat b{color:#2c2c2c;font-family:var(--font-family2),Arial,sans-serif;font-size:15px;
+  font-weight:700;white-space:nowrap}
+.pl-stat--discount b{color:#1397d6}
+.pl-stat--total{border-bottom:0}
+.pl-stat--total span{color:#2c2c2c;font-weight:700}
+.pl-stat--total b{font-size:20px}
+.pl-note{color:#686868;font-family:var(--font-family2),Arial,sans-serif;font-size:12.5px;
+  line-height:1.5;margin:14px 0 0;text-align:left;width:100%}
+
+.pl-foot{align-items:center;display:flex;gap:14px;justify-content:flex-end;margin-top:22px;width:100%}
+.pl-cancel{background:none;border:0;color:#686868;cursor:pointer;font-family:var(--font-family2),Arial,sans-serif;
+  font-size:14px;padding:8px 4px;transition:color .3s}
+.pl-cancel:hover{color:#2c2c2c}
+.pl-btn{align-items:center;background-color:#1397d6;border:1px solid transparent;border-radius:3px;
+  color:#fff;cursor:pointer;display:inline-flex;font-family:var(--font-family2),Arial,sans-serif;
+  font-size:15px;font-weight:700;justify-content:center;line-height:100%;min-height:45px;
+  padding:14px 28px;text-align:center;text-decoration:none;transition:background-color .3s}
+.pl-btn:hover{background-color:#0f7fb4;color:#fff}
+.pl-btn[disabled]{background-color:#c9d4dd;cursor:default}
+
+.pl-result{align-items:center;display:flex;flex-direction:column;text-align:center;width:100%}
+.pl-result__ico{align-items:center;border-radius:50%;display:flex;font-size:26px;font-weight:700;
+  height:64px;justify-content:center;margin-bottom:16px;width:64px}
+.pl-result__ico--ok{background:#e3f3fc;color:#1397d6}
+.pl-result__ico--warn{background:#fdf0e3;color:#c27a00}
+.pl-result__title{color:#2c2c2c;font-family:var(--font-family2),Arial,sans-serif;font-size:21px;
+  font-weight:700;margin:0 0 8px}
+.pl-result__text{color:#686868;font-family:var(--font-family2),Arial,sans-serif;font-size:14px;
+  line-height:1.6;margin:0 0 4px;max-width:34rem}
+
+/* lead card on its way to «My leads» */
+.order-list__item.is-bought{opacity:0;transform:translateY(-8px);transition:opacity .45s,transform .45s}
+.pl-moved{background:rgba(19,151,214,.94);border-radius:2px;color:#fff;display:flex;align-items:center;
+  justify-content:center;font-family:var(--font-family2),Arial,sans-serif;font-size:14px;font-weight:700;
+  inset:0;position:absolute;text-align:center;padding:16px;z-index:5}
+.order-list__item{position:relative}
+
+/* contacts in «My leads» */
+.pl-contacts{border-top:1px solid #eef2f6;display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:12px;padding-top:12px}
+.pl-contact{align-items:center;color:#2c2c2c;display:flex;font-family:var(--font-family2),Arial,sans-serif;
+  font-size:13.5px;gap:6px;text-decoration:none}
+.pl-contact b{font-weight:700}
+.pl-contact:hover{color:#1397d6}
+.pl-status{background:#e3f3fc;border-radius:1.25rem;color:#0b6f9e;font-family:var(--font-family2),Arial,sans-serif;
+  font-size:12px;font-weight:700;padding:4px 12px}
+
+@media (max-width:600px){
+  .pl-foot{flex-direction:column-reverse;gap:10px}
+  .pl-foot .pl-btn,.pl-cancel{width:100%}
+  .pl-title{font-size:17px}
+}
+
+.pl-modal [hidden]{display:none!important}
+.pl-reserve__row{text-align:left}
+.pl-modal .modal__box>[data-pl-screen]{width:100%}
+
+/* «not enough funds» block inside the purchase window */
+.pl-short{background:#fff8ec;border:1px solid #f3dcb5;border-radius:3px;margin-top:16px;
+  padding:14px 16px;text-align:left;width:100%}
+.pl-short b{color:#8a5b00;display:block;font-family:var(--font-family2),Arial,sans-serif;
+  font-size:15px;font-weight:700;margin-bottom:6px}
+.pl-short p{color:#6b5836;font-family:var(--font-family2),Arial,sans-serif;font-size:13px;
+  line-height:1.55;margin:0 0 12px}
+.pl-btn--sm{font-size:13.5px;min-height:38px;padding:10px 20px}
+
+/* active reservation bar — visible on any cabinet page */
+.pl-resbar{align-items:center;background:#0f1b26;border-radius:4px;bottom:20px;color:#fff;
+  display:flex;flex-wrap:wrap;gap:10px 14px;font-family:var(--font-family2),Arial,sans-serif;
+  font-size:13.5px;left:50%;max-width:min(680px,calc(100vw - 32px));padding:12px 16px;
+  position:fixed;transform:translateX(-50%);z-index:99999;
+  box-shadow:0 12px 40px rgba(6,32,44,.3)}
+.pl-resbar__dot{background:#1397d6;border-radius:50%;flex:0 0 auto;height:9px;width:9px;
+  animation:plResPulse 1.6s ease-in-out infinite}
+@keyframes plResPulse{0%,100%{opacity:1}50%{opacity:.35}}
+.pl-resbar__text{flex:1 1 220px}
+.pl-resbar__text b{font-weight:700}
+.pl-resbar__cta{background:#1397d6;border-radius:3px;color:#fff;flex:0 0 auto;font-weight:700;
+  padding:8px 16px;text-decoration:none;transition:background .25s}
+.pl-resbar__cta:hover{background:#0f7fb4;color:#fff}
+.pl-resbar__close{background:none;border:0;color:rgba(255,255,255,.6);cursor:pointer;
+  flex:0 0 auto;font-size:20px;line-height:1;padding:0 2px}
+.pl-resbar__close:hover{color:#fff}
+@media (max-width:560px){
+  .pl-resbar{bottom:12px;font-size:12.5px}
+  .pl-resbar__cta{width:100%;text-align:center}
+}

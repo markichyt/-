@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="demo/demo.js?v=4"></script>
+    <script src="demo/leads.js?v=11"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lawyer cabinet — demo</title>
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="demo/demo.css?v=4">
+    <link rel="stylesheet" href="demo/leads.css?v=11">
+<style>
+@font-face{font-family:AvenirNextCyr;src:url(assets/cabinet/fonts/AvenirNextCyr-Regular.woff) format("woff");font-weight:400;font-display:swap}
+@font-face{font-family:AvenirNextCyr;src:url(assets/cabinet/fonts/AvenirNextCyr-Demi.woff) format("woff");font-weight:600;font-display:swap}
+@font-face{font-family:AvenirNextCyr;src:url(assets/cabinet/fonts/AvenirNextCyr-Bold.woff) format("woff");font-weight:700;font-display:swap}
+*{box-sizing:border-box}
+body{margin:0;background:#f4f7f9;font-family:AvenirNextCyr,"Avenir Next",Arial,sans-serif;color:#2c2c2c}
+.st{max-width:1120px;margin:0 auto;padding:40px 20px 64px}
+.st__head{background:#0f1b26;color:#fff;border-radius:4px;padding:30px 28px}
+.st__eyebrow{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:#1397d6;font-weight:700}
+.st__title{font-size:26px;font-weight:700;margin:12px 0 8px}
+.st__sub{font-size:14.5px;line-height:1.6;color:rgba(255,255,255,.74);max-width:760px;margin:0}
+.st__cta{display:inline-block;margin-top:20px;background:#1397d6;color:#fff;text-decoration:none;font-size:14px;font-weight:600;padding:12px 26px;border-radius:3px;transition:background .2s}
+.st__cta:hover{background:#0f7fb4}
+.st__reset{display:inline-block;margin:20px 0 0 14px;color:rgba(255,255,255,.62);font-size:13px;
+  text-decoration:underline;transition:color .2s}
+.st__reset:hover{color:#fff}
+.st__grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));margin-top:26px}
+.st__card{background:#fff;border-radius:3px;box-shadow:0 2px 11px rgba(6,32,44,.09);padding:20px 22px 22px}
+.st__card h2{font-size:15px;font-weight:700;margin:0 0 12px}
+.st__list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.st__list a{display:block;padding:8px 9px;border-radius:2px;font-size:13.5px;color:#2c2c2c;text-decoration:none;transition:background .18s,color .18s}
+.st__list a:hover{background:rgba(19,151,214,.08);color:#1397d6}
+.st__tag{font-size:11px;color:#8a97a2;margin-left:7px}
+.st__note{margin-top:26px;font-size:12.5px;line-height:1.65;color:#686868;background:#fff;border-left:3px solid #1397d6;border-radius:0 3px 3px 0;padding:16px 20px}
+.st__note b{color:#2c2c2c}
+</style>
+</head>
+<body>
+<div class="st">
+  <div class="st__head">
+    <div class="st__eyebrow">CONSULTANT · Demo</div>
+    <div class="st__title">Lawyer cabinet — clickable demo</div>
+    <p class="st__sub">A copy of the consultant's personal cabinet: the design, layout and button behaviour are exactly as on the live site. All pages are linked together — you can walk through the menu, open tabs, expand cards and modals. The data is demo data and no form is submitted anywhere.</p>
+    <a class="st__cta" href="applications-relevant.html">Open the cabinet →</a>
+    <a class="st__reset" href="#" data-demo-reset>Reset demo state</a>
+  </div>
+
+  <div class="st__grid">
+    <div class="st__card">
+      <h2>Leads</h2>
+      <ul class="st__list">
+        <li><a href="applications-relevant.html">Buy a lead<span class="st__tag">start</span></a></li>
+        <li><a href="leads.html">Direct</a></li>
+        <li><a href="applications-my.html">My leads</a></li>
+      </ul>
+    </div>
+
+    <div class="st__card">
+      <h2>Services</h2>
+      <ul class="st__list">
+        <li><a href="services-in-progress.html">In progress</a></li>
+        <li><a href="services-selection.html">Choose services</a></li>
+        <li><a href="services-offer.html">Propose a service</a></li>
+        <li><a href="services-archive.html">Archive</a></li>
+        <li><a href="services-unconfirmed.html">Unconfirmed</a></li>
+      </ul>
+    </div>
+
+    <div class="st__card">
+      <h2>Documents</h2>
+      <ul class="st__list">
+        <li><a href="documents.html">All documents</a></li>
+        <li><a href="documents-add.html">Upload document</a></li>
+        <li><a href="documents-rejected.html">Declined</a></li>
+      </ul>
+    </div>
+
+    <div class="st__card">
+      <h2>Consultations and content</h2>
+      <ul class="st__list">
+        <li><a href="consultant-articles.html">My publications</a></li>
+        <li><a href="consultant-articles-propose-article.html">Propose an article</a></li>
+        <li><a href="consultant-articles-propose-case.html">Propose a case study</a></li>
+        <li><a href="consultant-articles-propose-video.html">Propose a video</a></li>
+        <li><a href="consultant-articles-rejected.html">Declined</a></li>
+      </ul>
+    </div>
+
+    <div class="st__card">
+      <h2>Money</h2>
+      <ul class="st__list">
+        <li><a href="balance.html">Balance</a></li>
+        <li><a href="balance-pay.html">Top up account</a></li>
+        <li><a href="balance-withdraw.html">Withdraw funds</a></li>
+        <li><a href="subscription-packages.html">Subscription · plans</a></li>
+      </ul>
+    </div>
+
+    <div class="st__card">
+      <h2>Rating and advertising</h2>
+      <ul class="st__list">
+        <li><a href="rating.html">My rating</a></li>
+        <li><a href="rating-ad-calculator.html">Advertise profile</a></li>
+      </ul>
+    </div>
+
+    <div class="st__card">
+      <h2>Other</h2>
+      <ul class="st__list">
+        <li><a href="contacts.html">Contacts</a></li>
+        <li><a href="contacts-info.html">Notifications</a></li>
+        <li><a href="referrals.html">Loyalty programme</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="st__note">
+    <b>What this is.</b> A static demo: 25 cabinet pages saved from a live logged-in session together with the styles, fonts, scripts and images. No internet needed.<br>
+    <b>Buying a lead works end to end.</b> On «Buy a lead» press «Respond»: the lead is reserved for you
+    for 90 seconds with a countdown, showing the price with the subscription discount and your balance after payment.
+    Confirming charges the money, the lead moves to «My leads» together with the client's contacts, and the counter
+    and balance in the cabinet update. If the reservation runs out it is released, with the option to
+    reserve again; if there is not enough money the demo offers to top up the balance.
+    The state is kept in the browser, and «Reset demo state» puts everything back to the start.<br>
+    <b>What else works.</b> All navigation through the menu and tabs, filters, search, expanding cards, accordions,
+    modal windows, calendars, text editors — everything the live cabinet does on the browser side.<br>
+    <b>What is missing.</b> The rest of the actions that go to the server on the live site: saving forms, payment, withdrawals,
+    logging out. On such a click the demo shows a hint instead of sending a request.
+  </div>
+</div>
+
+</body>
+</html>

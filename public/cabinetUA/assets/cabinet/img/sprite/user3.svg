@@ -1,0 +1,8 @@
+<svg width="116" height="115" viewBox="0 0 116 115" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g id="img">
+        <g id="base_img">
+            <rect id="8" x="2.5" y="2" width="111" height="111" rx="55.5" fill="black" stroke="black" stroke-width="4"/>
+            <path id="user-plus" fill-rule="evenodd" clip-rule="evenodd" d="M68.8676 41.1671C68.8676 47.8868 63.2163 53.3343 56.2451 53.3343C49.2739 53.3343 43.6225 47.8868 43.6225 41.1671C43.6225 34.4474 49.2739 29 56.2451 29C63.2163 29 68.8676 34.4474 68.8676 41.1671ZM81.4902 75.6125C81.4902 89.799 31 89.799 31 75.6125C31 50.5369 81.4902 50.7926 81.4902 75.6125Z" fill="white"/>
+        </g>
+    </g>
+</svg>

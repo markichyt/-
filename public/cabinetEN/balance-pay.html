@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en" hreflang="en" class="js-focus-visible" data-js-focus-visible=""><head>
+    <script src="demo/demo.js?v=4"></script>
+    <script src="demo/leads.js?v=11"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+            <meta name="description" content="">
+        <meta name="csrf-token" content="SoHaP3EqDN0CvTtFRx60bDE2ERzNuWy3PeYvBkXs">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Consultant Legal Marketplace</title>
+
+    <link rel="preload" href="assets/cabinet/fonts/AvenirNext-Regular.woff" as="font" crossorigin="anonymous">
+    <link rel="preload" href="assets/cabinet/fonts/AvenirNext-Medium.woff" as="font" crossorigin="anonymous">
+    <link rel="preload" href="assets/cabinet/fonts/AvenirNext-DemiBold.woff" as="font" crossorigin="anonymous">
+    <link rel="preload" href="assets/cabinet/fonts/AvenirNext-Bold.woff" as="font" crossorigin="anonymous">
+
+    <link rel="preload" href="assets/cabinet/fonts/AvenirNextCyr-Regular.woff" as="font" crossorigin="anonymous">
+    <link rel="preload" href="assets/cabinet/fonts/AvenirNextCyr-Medium.woff" as="font" crossorigin="anonymous">
+    <link rel="preload" href="assets/cabinet/fonts/AvenirNextCyr-Demi.woff" as="font" crossorigin="anonymous">
+    <link rel="preload" href="assets/cabinet/fonts/AvenirNextCyr-Bold.woff" as="font" crossorigin="anonymous">
+
+    <link rel="preload" href="assets/cabinet/fonts/AvenirLT-Roman.woff" as="font" crossorigin="anonymous">
+
+    <link rel="preload" href="assets/cabinet/fonts/Roboto-Regular.woff" as="font" crossorigin="anonymous">
+    <link rel="preload" href="assets/cabinet/fonts/Roboto-Medium.woff" as="font" crossorigin="anonymous">
+    <link rel="preload" href="assets/cabinet/fonts/Roboto-Bold.woff" as="font" crossorigin="anonymous">
+    <link rel="preload" href="assets/cabinet/fonts/DMSans-Regular.woff" as="font" crossorigin="anonymous">
+    <link rel="preload" href="assets/cabinet/fonts/Inter-Bold.woff" as="font" crossorigin="anonymous">
+
+    <style data-fullcalendar=""></style><link rel="stylesheet" href="assets/cabinet/css/glassupply.css">
+        <script>
+        // TODO: This code is related to Dashboard that is not in use already. So we need to check it and delete it.
+        const globalComission = 0;
+    </script>
+    <script>
+        window.AppConfig = window.AppConfig || {};
+        window.AppConfig.broadcasting = {
+            key: 'c93bbbac5ab0005e4e88',
+            wsHost: 'testing123.consultant.net.ua',
+            wsPort: 6001,
+            wssPort: 443,
+            scheme: 'http',
+            useTLS: false
+        };
+    </script>
+<style>.replenish-card-modal[data-v-15cb5f2b]{box-sizing:border-box;max-width:620px;padding:40px 48px;width:100%}.replenish-card-modal__header[data-v-15cb5f2b]{align-items:center;display:flex;justify-content:center;margin-bottom:32px;position:relative}.replenish-card-modal__title[data-v-15cb5f2b]{font-size:1.25rem;font-weight:700;margin:0;text-align:center}.replenish-card-modal__close[data-v-15cb5f2b]{background:none;border:none;cursor:pointer;opacity:.6;padding:4px;position:absolute;right:0;top:50%;transform:translateY(-50%);transition:opacity .2s}.replenish-card-modal__close[data-v-15cb5f2b]:hover{opacity:1}.replenish-card-modal__amount-wrap[data-v-15cb5f2b]{align-items:center;display:flex;flex-direction:column;margin-bottom:24px}.replenish-card-modal__amount-label[data-v-15cb5f2b]{color:#9e9e9e;font-size:.8125rem;margin-bottom:8px}.replenish-card-modal__amount-input[data-v-15cb5f2b]{background:transparent;border:none;border-bottom:2px solid #bdbdbd;box-sizing:border-box;font-size:2rem;font-weight:500;outline:none;padding:4px 0;text-align:center;transition:border-color .2s;width:100%}.replenish-card-modal__amount-input[data-v-15cb5f2b]:focus{border-bottom-color:#424242}.replenish-card-modal__currency[data-v-15cb5f2b]{color:#9e9e9e;font-size:.8125rem;margin-top:6px}.replenish-card-modal__info-box[data-v-15cb5f2b]{align-items:flex-start;background:#ebf4ff;border-radius:8px;display:flex;gap:12px;margin-bottom:24px;padding:14px 16px}.replenish-card-modal__info-icon[data-v-15cb5f2b]{align-items:center;background:#1a73e8;border-radius:50%;color:#fff;display:inline-flex;flex-shrink:0;font-size:.75rem;font-style:italic;font-weight:700;height:20px;justify-content:center;margin-top:1px;width:20px}.replenish-card-modal__info-body[data-v-15cb5f2b]{display:flex;flex-direction:column;gap:2px}.replenish-card-modal__info-title[data-v-15cb5f2b]{color:#212121;font-size:.875rem;font-weight:700;line-height:1.5;margin:0}.replenish-card-modal__info-text[data-v-15cb5f2b]{color:#424242;font-size:.875rem;line-height:1.5;margin:0}.replenish-card-modal__rows[data-v-15cb5f2b]{margin-bottom:32px}.replenish-card-modal__row[data-v-15cb5f2b]{align-items:center;border-bottom:1px solid #e0e0e0;display:flex;font-size:.9375rem;justify-content:space-between;padding:14px 0}.replenish-card-modal__row[data-v-15cb5f2b]:first-child{border-top:1px solid #e0e0e0}.replenish-card-modal__row-label[data-v-15cb5f2b]{color:#424242}.replenish-card-modal__row-value[data-v-15cb5f2b]{color:#212121;font-weight:500}.replenish-card-modal__row-value--tax[data-v-15cb5f2b]{color:#e05a5a}.replenish-card-modal__row--credited .replenish-card-modal__row-label[data-v-15cb5f2b],.replenish-card-modal__row--credited .replenish-card-modal__row-value[data-v-15cb5f2b]{color:#1a73e8;font-weight:600}.replenish-card-modal__submit[data-v-15cb5f2b]{background:#1a73e8;border:none;border-radius:8px;color:#fff;cursor:pointer;display:block;font-size:1rem;font-weight:500;margin:0 auto;padding:16px 64px;transition:background .2s}.replenish-card-modal__submit[data-v-15cb5f2b]:hover:not(:disabled){background:#1558b0}.replenish-card-modal__submit[data-v-15cb5f2b]:disabled{background:#bdbdbd;cursor:not-allowed}</style>    <link rel="stylesheet" href="demo/demo.css?v=4">
+    <link rel="stylesheet" href="demo/leads.css?v=11">
+</head>
+
+
+<body>
+
+    <header>
+        <div class="container">
+            <div class="header">
+                <div class="user-about">
+                    <div class="user-about__top">
+                        <a href="#demo-action:consultant-edit">
+                        <img class="user-about__icon" width="38" height="38" src="storage/media/1101/conversions/photo_2026-07-02_16-20-31-big_avatar_optimized.jpg" alt="image"></a>
+                        <a href="#demo-action:consultant-edit" class="user-about__name">Roman Vynohradov</a>
+                    </div>
+                    <a href="rating.html" class="user-about__rating">
+                        <svg width="32" height="32">
+                            <use href="assets/cabinet/img/sprite/sprite.svg"></use>
+                        </svg>
+                        <b class="user-about__rating-value">0</b>
+                    </a>
+
+                </div>
+                <button class="burger" data-burger="">
+                    <span class="burger__line"></span>
+                </button>
+            </div>
+
+            
+            <div class="mobile-menu ">
+                <button class="burger" data-burger="">
+                    <span class="burger__line"></span>
+                </button>
+                <div class="aside-menu__inner">
+
+                    <div class="user-about">
+                        <div class="user-about__top">
+                            <a href="#demo-action:consultant-edit">
+                            <img class="user-about__icon" width="104" height="104" src="storage/media/1101/conversions/photo_2026-07-02_16-20-31-big_avatar_optimized.jpg" alt="image"></a>
+                            <a href="#demo-action:consultant-edit" class="user-about__name">Roman Vynohradov</a>
+                        </div>
+                        <a href="rating.html" class="user-about__rating">
+                            <svg width="32" height="32">
+                                <use href="assets/cabinet/img/sprite/sprite.svg"></use>
+                            </svg>
+                            <b class="user-about__rating-value">0</b>
+                        </a>
+
+                        <span class="user-about__balance">
+                            Balance
+                            <a href="balance.html" class="user-about__balance-value">$3,040.00</a>
+                        </span>
+
+                        <div class="user-about__inner">
+                            <span class="user-about__subscribe">
+                                Subscription
+                                <a href="subscription-packages.html" class="subscribe-label">PREMIUM</a>
+                            </span>
+                                                            <span class="user-about__subscribe">
+                                    Valid until
+                                    <b>04.11.2026</b>
+                                </span>
+                                                    </div>
+                    </div>
+
+                    <div class="aside-advertising">
+        <div class="aside-advertising__inner">
+            <span class="aside-advertising__title">Advertising</span>
+            <p>Advertising helps a lawyer attract potential clients</p>
+            <a href="rating-ad-calculator.html" class="aside-advertising__link">Advertise</a>
+        </div>
+    </div>
+                    <ul class="aside-nav">
+            <li class="aside-nav__item  ">
+            <a href="applications-relevant.html" class="aside-nav__link">
+                <svg width="20" height="20">
+                    <use href="assets/cabinet/img/sprite/sprite.svg"></use>
+                </svg>
+                Leads
+                                    <new-orders-badge><span class="new-orders__badge">1232</span></new-orders-badge>
+                            </a>
+        </li>
+            <li class="aside-nav__item  ">
+            <a href="services-in-progress.html" class="aside-nav__link">
+                <svg width="20" height="20">
+                    <use href="assets/cabinet/img/sprite/sprite.svg"></use>
+                </svg>
+                Services
+                            </a>
+        </li>
+            <li class="aside-nav__item  ">
+            <a href="documents.html" class="aside-nav__link">
+                <svg width="20" height="20">
+                    <use href="assets/cabinet/img/sprite/sprite.svg"></use>
+                </svg>
+                Documents
+                            </a>
+        </li>
+            <li class="aside-nav__item  ">
+            <a href="consultant-articles.html" class="aside-nav__link">
+                <svg width="20" height="20">
+                    <use href="assets/cabinet/img/sprite/sprite.svg"></use>
+                </svg>
+                Consultations
+                            </a>
+        </li>
+            <li class="aside-nav__item  ">
+            <a href="contacts.html" class="aside-nav__link">
+                <svg width="20" height="20">
+                    <use href="assets/cabinet/img/sprite/sprite.svg"></use>
+                </svg>
+                Contacts
+                            </a>
+        </li>
+            <li class="aside-nav__item  ">
+            <a href="contacts-info.html" class="aside-nav__link">
+                <svg width="20" height="20">
+                    <use href="assets/cabinet/img/sprite/sprite.svg"></use>
+                </svg>
+                Notifications
+                            </a>
+        </li>
+            <li class="aside-nav__item  ">
+            <a href="referrals.html" class="aside-nav__link">
+                <svg width="20" height="20">
+                    <use href="assets/cabinet/img/sprite/sprite.svg"></use>
+                </svg>
+                Loyalty programme
+                            </a>
+        </li>
+    </ul>
+                </div>
+
+                <div class="aside-menu__wrapper">
+                    <span class="aside-menu__pretitle">Personal manager contacts</span>
+                    <ul class="aside-contacts">
+                        <li class="aside-contacts__item">
+                            <a href="#" class="aside-contacts__link">
+                                <span class="aside-contacts__icon">
+                                    <svg width="20" height="20">
+                                        <use href="assets/cabinet/img/sprite/sprite.svg"></use>
+                                    </svg>
+                                </span>
+                                0800 33 77 17
+                            </a>
+                        </li>
+                        <li class="aside-contacts__item">
+                            <a href="#" class="aside-contacts__link aside-contacts__link--mode">
+                                <span class="aside-contacts__icon">
+                                    <svg width="20" height="20">
+                                        <use href="assets/cabinet/img/sprite/sprite.svg"></use>
+                                    </svg>
+                                </span>
+                                support@consultant.net.ua
+                            </a>
+                        </li>
+                        <li class="aside-contacts__item">
+                            <form action="demo-stub.html?p=cabinet-logout" method="POST">
+                                <input type="hidden" name="_token" value="SoHaP3EqDN0CvTtFRx60bDE2ERzNuWy3PeYvBkXs" autocomplete="off">                                <button type="submit" class="aside-contacts__link">
+                                    <span class="aside-contacts__icon">
+                                        <svg width="20" height="20">
+                                            <use href="assets/cabinet/img/sprite/sprite.svg"></use>
+                                        </svg>
+                                    </span>
+                                    Log out
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </header>
+
+    <div id="app"><main><div class="container container--big cabinet-main-layout"><div class="main-inner"><aside data-consultant-heartbeat-url="#demo-action:consultant-heartbeat" data-consultant-heartbeat-interval-ms="900000" class="aside-menu"><div class="aside-menu__inner"><div class="user-about"><a href="#demo-action:consultant-edit" class="user-about__top"><span class="user-about__avatar-wrap"><img width="104" height="104" src="storage/media/1101/conversions/photo_2026-07-02_16-20-31-big_avatar_optimized.jpg" alt="image" class="user-about__icon user-about__icon--desk"> <span class="user-about__online-dot"></span></span> <span class="user-about__name">Roman Vynohradov</span></a> <a href="rating.html" class="user-about__rating"><svg width="32" height="32"><use href="assets/cabinet/img/sprite/sprite.svg"></use></svg> <b class="user-about__rating-value">0</b></a> <span class="user-about__balance">
+                Balance
+                <a href="balance.html" class="user-about__balance-value">$3,040.00</a></span> <div class="user-about__inner"><span class="user-about__subscribe">
+                    Subscription
+                    <a href="subscription-packages.html" class="subscribe-label">PREMIUM</a></span> <span class="user-about__subscribe">
+                        Valid until
+                        <b>04.11.2026</b></span></div></div> <div class="aside-advertising"><div class="aside-advertising__inner"><span class="aside-advertising__title">Advertising</span> <p>Advertising helps a lawyer attract potential clients</p> <a href="rating-ad-calculator.html" class="aside-advertising__link">Advertise</a></div></div> <ul class="aside-nav"><li class="aside-nav__item"><a href="applications-relevant.html" class="aside-nav__link"><svg width="20" height="20"><use href="assets/cabinet/img/sprite/sprite.svg"></use></svg>
+                Leads
+                                    <span class="new-orders__badge">1232</span></a></li> <li class="aside-nav__item"><a href="services-in-progress.html" class="aside-nav__link"><svg width="20" height="20"><use href="assets/cabinet/img/sprite/sprite.svg"></use></svg>
+                Services
+                            </a></li> <li class="aside-nav__item"><a href="documents.html" class="aside-nav__link"><svg width="20" height="20"><use href="assets/cabinet/img/sprite/sprite.svg"></use></svg>
+                Documents
+                            </a></li> <li class="aside-nav__item"><a href="consultant-articles.html" class="aside-nav__link"><svg width="20" height="20"><use href="assets/cabinet/img/sprite/sprite.svg"></use></svg>
+                Consultations
+                            </a></li> <li class="aside-nav__item"><a href="contacts.html" class="aside-nav__link"><svg width="20" height="20"><use href="assets/cabinet/img/sprite/sprite.svg"></use></svg>
+                Contacts
+                            </a></li> <li class="aside-nav__item"><a href="contacts-info.html" class="aside-nav__link"><svg width="20" height="20"><use href="assets/cabinet/img/sprite/sprite.svg"></use></svg>
+                Notifications
+                            </a></li> <li class="aside-nav__item"><a href="referrals.html" class="aside-nav__link"><svg width="20" height="20"><use href="assets/cabinet/img/sprite/sprite.svg"></use></svg>
+                Loyalty programme
+                            </a></li></ul></div> <div class="aside-menu__wrapper"><span class="aside-menu__pretitle">Personal manager contacts</span> <ul class="aside-contacts"><li class="aside-contacts__item"><a href="tel:+380730074400" class="aside-contacts__link"><span class="aside-contacts__icon"><svg width="20" height="20"><use href="assets/cabinet/img/sprite/sprite.svg"></use></svg></span>
+                    
+                    +380730074400
+                </a></li> <li class="aside-contacts__item"><a href="mailto:legal@consultant.net.ua" class="aside-contacts__link aside-contacts__link--mode"><span class="aside-contacts__icon"><svg width="20" height="20"><use href="assets/cabinet/img/sprite/sprite.svg"></use></svg></span>
+                    
+                    legal@consultant.net.ua
+                </a></li> <li class="aside-contacts__item"><form action="demo-stub.html?p=cabinet-logout" method="POST"><input type="hidden" name="_token" value="SoHaP3EqDN0CvTtFRx60bDE2ERzNuWy3PeYvBkXs" autocomplete="off"> <button type="submit" class="aside-contacts__link"><span class="aside-contacts__icon"><svg width="20" height="20"><use href="assets/cabinet/img/sprite/sprite.svg"></use></svg></span>
+                        Log out
+                    </button></form></li></ul></div></aside> <div class="main-inner__container"><section class="balance-section balance-section--pay"><div class="balance-section__box"><ul class="cabinet-nav"><li class="cabinet-nav__item"><a href="balance.html" data-tab="1" class="cabinet-nav__link">
+                Balance
+                            </a></li> <li class="cabinet-nav__item"><a href="balance-pay.html" data-tab="2" class="cabinet-nav__link active">
+                Top up balance
+                            </a></li> <li class="cabinet-nav__item"><a href="balance-withdraw.html" data-tab="3" class="cabinet-nav__link">
+                Withdraw funds
+                            </a></li></ul> <div data-select="" class="nav-select select"><input type="hidden" name="variant-nav" value="1" class="select__input"> <div class="select__body"><ul class="cabinet-nav select__wrapp"><li class="cabinet-nav__item"><a href="balance.html" type="button" data-choice="choosen" data-id="1" class="cabinet-nav__link">
+                        Balance
+                                            </a></li> <li class="cabinet-nav__item"><a href="balance-pay.html" type="button" data-choice="choosen" data-id="2" class="cabinet-nav__link">
+                        Top up balance
+                                            </a></li> <li class="cabinet-nav__item"><a href="balance-withdraw.html" type="button" data-choice="choosen" data-id="3" class="cabinet-nav__link">
+                        Withdraw funds
+                                            </a></li></ul></div></div> <ul class="balance-tabs"><li class="balance-tabs__item active"><div class="balance-tabs__box"><h2 class="balance-tabs__title">Top up balance</h2> <ul class="pay-list"><li class="pay-list__item"><a href="#" class="pay-card js-pay-card"><span class="pay-card__image pay-card__image--mode"><svg width="219" height="186"><use href="assets/cabinet/img/sprite/sprite.svg"></use></svg></span> <span class="pay-card__title">Top up by card</span></a></li></ul></div></li></ul></div></section></div></div></div></main> <section class="map-section"><div class="map-section__background bg-image"><iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d10164.748539655422!2d30.5273295!3d50.4376149!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4cf01aeda56cb%3A0x655c5c36d751a7d9!2z0J_QsNGA0YPRgQ!5e0!3m2!1sru!2sua!4v1707878940794!5m2!1sru!2sua&amp;amp;t=m" width="800" height="600" allowfullscreen="allowfullscreen" loading="lazy" title="Map" style="border: 0px;"></iframe></div> <div class="container"><div class="map-section__inner"><div class="map-card"><div class="map-card__image"><picture><source type="image/webp" srcset="site/img/map-section__image.webp"> <img loading="lazy" width="512" height="345" src="site/img/map-section__image.png" alt="image"></picture> <div class="map-card__logo"><img width="300" height="58" src="site/img/svg/logo_en.svg" alt="Site logo"></div></div> <div class="map-card__info"><span class="map-card__title">Portal administration</span> <ul class="contact-list"><li class="contact-list__item"><span class="contact-list__icon"><svg><use href="site/img/sprite/sprite.svg"></use></svg></span> <span class="contact-list__label">Address</span> <a href="https://maps.app.goo.gl/5tpnRW8NZM1Ub79m8"></a></li> <li class="contact-list__item"><span class="contact-list__icon"><svg><use href="site/img/sprite/sprite.svg"></use></svg></span> <span class="contact-list__label">Email</span> <a href="mailto:p.vovk.consult@gmail.com">p.vovk.consult@gmail.com</a></li> <li class="contact-list__item"><span class="contact-list__icon"><svg><use href="site/img/sprite/sprite.svg"></use></svg></span> <span class="contact-list__label">Phone</span> <a href="tel:+380730044470">380730044470</a></li></ul> <button id="js-call-trigger__button-call" class="map-card__btn blue-btn js-call-trigger__button">Get a call</button></div></div></div></div></section> <footer class="footer"><div class="footer-top"><div class="container"><div class="footer-top__inner"><div class="footer__coll footer__coll--left"><a href="https://consultant.net.ua" class="logo"><img width="300" height="58" src="site/img/svg/logo_en.svg" alt="Site logo"></a> <div class="footer__links"><a href="https://consultant.net.ua/prava/user-agreement" target="_blank" class="footer__link">
+        Public agreement with the User
+    </a> <a href="https://consultant.net.ua/prava/consultant-agreement" target="_blank" class="footer__link">
+        Public agreement with the Consultant
+    </a> <a href="https://consultant.net.ua/prava/site-rules" target="_blank" class="footer__link">
+        Website rules
+    </a> <a href="https://consultant.net.ua/prava/cookie-notice" target="_blank" class="footer__link">
+        Cookie notice
+    </a> <a href="https://consultant.net.ua/prava/dealer-network-services-regulation" target="_blank" class="footer__link">
+        Dealer network services regulation
+    </a></div> <div class="footer-social"><span class="footer-social__description">
+                            The service pays for 3 consultations in the CONSULTANT mobile app for our social media subscribers
+
+                        </span> <ul class="footer-social__list"><li class="footer-social__item"><a target="_blank" href="https://t.me/consultant_marketplace" rel="noopener nofollow" aria-label="Telegram" class="arrow-button"><svg width="20" height="20"><use href="site/img/sprite/sprite.svg"></use></svg></a></li> <li class="footer-social__item"><a target="_blank" href="https://www.instagram.com/consultant_law" rel="noopener nofollow" aria-label="Instagram" class="arrow-button"><svg width="20" height="20"><use href="site/img/sprite/sprite.svg"></use></svg></a></li> <li class="footer-social__item"><a target="_blank" href="https://www.facebook.com/consultant.net.ua" rel="noopener nofollow" aria-label="Facebook" class="arrow-button"><svg width="12" height="23"><use href="site/img/sprite/sprite.svg"></use></svg></a></li> <li class="footer-social__item"><a target="_blank" href="https://www.youtube.com/@consultant_law" rel="noopener nofollow" aria-label="YouTube" class="arrow-button"><svg width="22" height="15"><use href="site/img/sprite/sprite.svg"></use></svg></a></li></ul></div></div> <div class="footer__coll footer__coll--right"><div class="footer__map"><picture><source type="image/webp" srcset="site/img/footer_map.webp"> <img loading="lazy" src="site/img/footer_map.png" width="698" height="364" alt="map"></picture></div> <ul data-title="Offices" class="footer__nav"><li class="footer__nav-item"><a href="https://consultant.net.pl" target="_blank" class="footer__link">
+                                    Poland, Lublin
+                                </a></li> <li class="footer__nav-item"><a href="https://consultant.net.ua" target="_blank" class="footer__link">
+                                    Ukraine, Kyiv
+                                </a></li> <li class="footer__nav-item"><a href="https://consultantlm.uk" target="_blank" class="footer__link">
+                                    England, London
+                                </a></li> <li class="footer__nav-item"><a href="https://consultantlm.com" target="_blank" class="footer__link">
+                                    USA, Austin
+                                </a></li></ul> <ul class="footer__nav"><li class="footer__nav-item"><a href="https://consultant.net.ua/otsinka-konsultantiv" class="footer__link">
+                                Consultants
+                            </a></li> <li class="footer__nav-item"><a href="https://consultant.net.ua/konsultatsiyi" class="footer__link">
+                                Blog
+                            </a></li> <li class="footer__nav-item"><a href="https://consultant.net.ua/posluhy" class="footer__link">
+                                Services
+                            </a></li> <li class="footer__nav-item"><a href="https://consultant.net.ua/dokumenty" class="footer__link">
+                                Documents
+                            </a></li> <li class="footer__nav-item"><a href="https://consultant.net.ua/vakansiyi" class="footer__link">
+                                Careers
+                            </a></li> <li class="footer__nav-item"><a href="https://consultant.net.ua/pro-nas" class="footer__link">
+                                About us
+                            </a></li></ul></div></div></div></div> <div class="footer-bottom"><div class="container"><div class="footer-bottom__inner"><span>
+    2018 - 2026 All rights reserved
+</span> <div class="footer-bottom__partners"><div class="footer-bottom__partners-link"><img loading="lazy" width="65" height="33" src="site/img/partners/icon.svg" alt="icon"></div> <div class="footer-bottom__partners-link"><img loading="lazy" width="68" height="22" src="site/img/partners/icon3.svg" alt="icon"></div> <div class="footer-bottom__partners-link"><img loading="lazy" width="42" height="33" src="site/img/partners/icon4.svg" alt="icon"></div></div></div></div></div></footer> <div data-overlay="" class="overlay"><div data-popup="card_replenishment" class="modal requisites-modal"><form data-v-15cb5f2b="" role="dialog" aria-modal="true" class="modal__box replenish-card-modal"><div data-v-15cb5f2b="" class="replenish-card-modal__header"><h2 data-v-15cb5f2b="" class="replenish-card-modal__title">Balance top-up</h2> <button data-v-15cb5f2b="" type="button" class="close replenish-card-modal__close"><svg data-v-15cb5f2b="" width="20" height="20"><use data-v-15cb5f2b="" href="assets/cabinet/img/sprite/sprite.svg"></use></svg></button></div> <div data-v-15cb5f2b="" class="replenish-card-modal__amount-wrap"><span data-v-15cb5f2b="" class="replenish-card-modal__amount-label">Amount due</span> <input data-v-15cb5f2b="" type="text" placeholder="0" class="replenish-card-modal__amount-input" inputmode="text"> <span data-v-15cb5f2b="" class="replenish-card-modal__currency">$</span></div> <div data-v-15cb5f2b="" class="replenish-card-modal__info-box"><span data-v-15cb5f2b="" class="replenish-card-modal__info-icon">i</span> <div data-v-15cb5f2b="" class="replenish-card-modal__info-body"><p data-v-15cb5f2b="" class="replenish-card-modal__info-title">The top-up amount includes tax.</p> <p data-v-15cb5f2b="" class="replenish-card-modal__info-text">The actual amount credited to your internal balance is calculated after tax is deducted. The tax rate depends on the country of the site.</p></div></div> <div data-v-15cb5f2b="" class="replenish-card-modal__rows"><div data-v-15cb5f2b="" class="replenish-card-modal__row"><span data-v-15cb5f2b="" class="replenish-card-modal__row-label">Amount due:</span> <span data-v-15cb5f2b="" class="replenish-card-modal__row-value">0 $</span></div> <div data-v-15cb5f2b="" class="replenish-card-modal__row"><span data-v-15cb5f2b="" class="replenish-card-modal__row-label">Tax (23%):</span> <span data-v-15cb5f2b="" class="replenish-card-modal__row-value replenish-card-modal__row-value--tax">0 $</span></div> <div data-v-15cb5f2b="" class="replenish-card-modal__row replenish-card-modal__row--credited"><span data-v-15cb5f2b="" class="replenish-card-modal__row-label">Will be credited to your balance:</span> <span data-v-15cb5f2b="" class="replenish-card-modal__row-value">0 $</span></div></div> <button data-v-15cb5f2b="" type="submit" disabled="disabled" class="replenish-card-modal__submit">
+        Top up
+    </button></form></div> <div data-popup="balance" class="modal success-modal success-modal--balance"><div role="dialog" aria-modal="true" class="modal__box success-modal__box"><button aria-label="Close modal window" class="close modal__close js-close-balance-popup"><svg width="20" height="20"><use href="assets/cabinet/img/sprite/sprite.svg"></use></svg></button> <h2 class="success-modal__title modal-title">
+                Thank you!
+            </h2> <div class="success-modal__inner"><p>
+                    We have received your request!
+                    <br>
+                    Your funds will be credited to your balance shortly!
+                </p> <button class="main-button success-modal__button js-close-balance-popup">
+                    Close
+                </button></div></div></div> <div data-popup="fail" class="modal success-modal success-modal--fail"><div role="dialog" aria-modal="true" class="modal__box success-modal__box"><button aria-label="Close modal window" data-toggle="close-modal" class="close modal__close"><svg width="20" height="20"><use href="assets/cabinet/img/sprite/sprite.svg"></use></svg></button> <h2 class="success-modal__title modal-title js-error-message">
+            Your balance does not have enough funds for this charge
+        </h2> <div class="success-modal__inner"><p class="js-error-message__explanation">
+                Top up your balance or contact support
+            </p> <button data-toggle="close-modal" data-target="fail" class="main-button">
+                Close
+            </button></div></div></div></div></div>
+    
+    <div class="cookies" style="display: none;">
+    <div class="cookies-container">
+        <div class="cookies-text">
+            <p class="cookies-text__title"> Cookies and privacy</p>
+            <p class="cookies-text__description">We use our own and third-party cookies to personalise content and analyse web traffic.</p>
+        </div>
+        <div class="cookies-buttons">
+            <button class="cookies-buttons__accept cookies-button">Accept</button>
+            <button class="cookies-buttons__reject cookies-button">Decline</button>
+        </div>
+    </div>
+</div>
+
+    
+    <script src="vendor-cdn/socket.io.min.js"></script>
+    <script src="vendor-cdn/livekit-client.umd.js"></script>
+    <script src="assets/cabinet/js/manifest.js"></script>
+    <script src="assets/cabinet/js/vendor.js"></script>
+                <div id="callTrigger" class="modal call-trigger-modal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered form js-call-trigger-modal__dialog">
+                <div class="modal-content call-trigger-modal__form">
+                    <button type="button" class="call-trigger-modal__close" data-dismiss="modal" aria-label="Close">
+                        <svg class="call-trigger-modal__icon" width="30" height="30">
+                            <use href="site/img/sprite/sprite.svg"></use>
+                        </svg>
+                    </button>
+                    <div class="call-trigger-modal__left"></div>
+                    <div class="call-trigger-modal__right">
+                        <form id="callTriggerForm" method="POST" action="#demo-action:call-trigger">
+                            <input type="hidden" name="_token" value="SoHaP3EqDN0CvTtFRx60bDE2ERzNuWy3PeYvBkXs" autocomplete="off">                            <input type="hidden" name="country_code" value="UA">
+                            <input type="hidden" name="url" value="balance-pay.html">
+                            <input type="hidden" name="title" value="">
+                            <input type="hidden" name="marketer_profile_id" value="">
+                            <input type="hidden" name="position" value="footer_get_call">
+
+                                                            <div class="call-trigger-modal__description">
+                                    For a consultation or assistance, call
+                                </div>
+                            
+
+                            <div class="call-trigger-modal__working-time-content">
+                                <div class="call-trigger-modal__working-time">
+                                    24/7
+                                </div>
+                                <div class="call-trigger-modal__main-phone-number">
+                                    <a href=""></a>
+                                </div>
+                            </div>
+
+
+                            
+                            <div class="call-trigger-modal__form-content">
+                                <div class="call-trigger-modal__form-header">
+                                    Request a call
+                                </div>
+                                <div class="call-trigger-modal__input-group js-call-trigger-modal__input-group" id="js-custom-dropdown" data-initialized="true">
+                                    <div class="country-select"> 
+    <button class="country-select__button js-selected-country" type="button" data-country="UA">
+        <img width="24" height="17" src="site/img/flags/neutral.png" alt="ukraine" class="flag">
+        <span class="dropdown-arrow">▼</span>
+    </button>
+    <ul class="country-select__dropdown">
+        <li data-value="+380" data-country-value="UA" class="country-select__option">
+            <img width="24" height="17" src="site/img/flags/ukraine.png" alt="ukraine" class="flag">
+            <span class="country-name">Ukraine</span>
+            <span class="country-code">+380</span>
+        </li>
+        <li data-value="+48" data-country-value="PL" class="country-select__option">
+            <img width="24" height="17" src="site/img/flags/poland.png" alt="poland" class="flag">
+            <span class="country-name">Poland</span>
+            <span class="country-code">+48</span>
+        </li>
+        <li data-value="+44" data-country-value="UK" class="country-select__option">
+            <img width="24" height="17" src="site/img/flags/england.png" alt="england" class="flag">
+            <span class="country-name">United Kingdom</span>
+            <span class="country-code">+44</span>
+        </li>
+        <li data-value="+1" data-country-value="USA" class="country-select__option">
+            <img width="24" height="17" src="site/img/flags/usa.png" alt="usa" class="flag">
+            <span class="country-name">United States</span>
+            <span class="country-code">+1</span>
+        </li>
+        <li data-value="+971" data-country-value="AE" class="country-select__option">
+            <img width="24" height="17" src="site/img/flags/ae.png" alt="ae" class="flag">
+            <span class="country-name">United Arab Emirates</span>
+            <span class="country-code">+971</span>
+        </li>
+        <li data-value="+" data-country-value="NEUTRAL" class="country-select__option">
+            <img width="24" height="17" src="site/img/flags/neutral.png" alt="other" class="flag">
+            <span class="country-name">Other</span>
+            <span class="country-code">+</span>
+        </li>
+    </ul>
+</div>
+                                    <input class="call-trigger-modal__input js-phone-mask" type="tel" name="phone" value="" placeholder="+">
+                                </div>
+                                <textarea class="call-trigger-modal__comment" name="comment" maxlength="1000" placeholder="Comment" value=""></textarea>
+
+                                <button class="call-trigger-modal__submit" type="submit" id="callTriggerSubmit">
+                                    Send
+                                </button>
+                            </div>
+                                                    </form>
+                    </div>
+                </div>
+                <div class="modal-content call-trigger-modal__success">
+                    <button type="button" class="call-trigger-modal__close" data-dismiss="modal" aria-label="">
+                        <svg class="call-trigger-modal__icon" width="30" height="30">
+                            <use href="site/img/sprite/sprite.svg"></use>
+                        </svg>
+                    </button>
+                    <div class="call-trigger-modal__left">
+
+                    </div>
+                    <div class="call-trigger-modal__right">
+                        <div class="call-trigger-modal__header">
+                            Thank you<br> for signing up!
+                        </div>
+                        <div class="call-trigger-modal__description">
+                            Try our mobile app.<br> A lawyer always at hand!
+                        </div>
+                        <div class="call-trigger-modal__stores">
+                            <a href="https://apps.apple.com/us/app/%D0%BA%D0%BE%D0%BD%D1%81%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D0%BD%D1%82/id1459241538?l=uk&amp;ls=1" target="_blank" rel="noopener nofollow">
+                                <img loading="lazy" src="assets/profile/img/dist/appstore.svg" alt="img">
+                            </a>
+                            <a href="https://play.google.com/store/apps/details?id=ua.net.consultant" target="_blank" rel="noopener nofollow">
+                                <img loading="lazy" src="assets/profile/img/dist/googleplay.svg" alt="img">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <script src="assets/cabinet/js/main.js"></script>
+    <script src="assets/cabinet/js/pages/balancePay.js"></script>
+    
+
+
+
+</body></html>
