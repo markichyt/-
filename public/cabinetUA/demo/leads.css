@@ -116,3 +116,7 @@
   .pl-resbar{bottom:12px;font-size:12.5px}
   .pl-resbar__cta{width:100%;text-align:center}
 }
+
+/* річна ціна під основною — на сторінці підписок */
+.sub-year{color:#8a97a2;display:block;font-family:var(--font-family2),Arial,sans-serif;
+  font-size:12.5px;line-height:1.45;margin:6px 0 2px}

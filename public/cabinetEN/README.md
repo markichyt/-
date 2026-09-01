@@ -74,8 +74,8 @@ State (balance, purchased and hidden leads) lives in `localStorage` under the ke
 `promo_leads_v1`. To reset it use the «Reset demo state» button on `index.html`
 or call `demoLeadsReset()` in the console.
 
-For lead cards the price is taken **from the button text**, exactly as on the live site, and no
-discount is applied on top. For enquiries («Respond») the price and discount come from `CONFIG`.
+Lead cards are listed **first**, above the client enquiries. The price of a lead is taken
+**from the button text**, exactly as on the live site, and no discount is applied on top. For enquiries («Respond») the price and discount come from `CONFIG`.
 
 **Prices and the discount are configurable** in `CONFIG` at the top of `demo/leads.js`:
 by default a question lead costs 70.00 UAH and a service lead 250.00 UAH (both figures come
@@ -138,6 +138,8 @@ tooltips) are translated into English, and the logo is swapped for the English `
 
 The only text left in Ukrainian is what is baked into external widgets — the controls of the
 embedded Google map in the footer, whose language comes from Google, not from this page.
-Amounts stay in UAH with the site's own number format: the interface language changed, not the market.
+Amounts are in US dollars: the hryvnia figures from the snapshot were converted at a flat demo rate
+of 40 UAH per dollar (600 → $15.00, 1 000 → $25.00), and the lead prices were set by hand to the
+$30–40 range. The Ukrainian original keeps hryvnia.
 
 The Ukrainian original of this demo lives in `../cabinet-promo`.
