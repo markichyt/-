@@ -7,7 +7,7 @@
     // «$1.75 for each potential client» (consultation rules)
     // «$6.25 is charged each time contacts are revealed» (Contacts page)
     PRICE: { question: 1.75, order: 6.25 },
-    DISCOUNT_PCT: 20,          // PREMIUM subscription discount
+    DISCOUNT_PCT: 0,           // there is no discount on leads — the row stays hidden
     PLAN: 'PREMIUM',
     TAX_PCT: 23,            // top-up tax, as in the cabinet
     START_BALANCE: 0
