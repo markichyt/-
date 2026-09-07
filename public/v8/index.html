@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="description" content="ConsultantLM Quiz Funnel — бета-дизайн для внутрішнього перегляду: кликабельний mobile-first прототип за ТЗ, нотатки до кожного екрана, карта воронки.">
+<title>ConsultantLM Quiz Funnel</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#EDF0F5; --panel:#FFFFFF; --panel2:#F5F7FA; --line:#D6DDE8; --line2:#E6EAF1;
+  --text:#0F1B2D; --muted:#5D6B80; --faint:#8C98AB;
+  --brand:#0B1F3A; --brand-ink:#FFFFFF; --brand-soft:#E4EBF6;
+  --amber:#E9A23B; --green:#1B8F5A; --violet:#5B4BD6; --focus:#2456F0;
+  --bezel:#0B0F17; --shadow:0 30px 80px rgba(11,31,58,.22);
+  --ff-h:"Manrope",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --ff-b:"IBM Plex Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --ff-m:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  /* product palette inside the phone: fixed, not theme-dependent */
+  --p-bg:#F4F6FA; --p-surface:#FFFFFF; --p-line:#E1E6EF; --p-text:#0F1B2D; --p-muted:#5D6B80; --p-faint:#94A0B4;
+  --p-navy:#0B1F3A; --p-navy-2:#152C52; --p-navy-bg:#EAF0FA; --p-amber:#E9A23B; --p-amber-bg:#FBF1DF;
+  --p-green:#1B8F5A; --p-green-bg:#E3F4EB; --p-violet:#5B4BD6; --p-violet-bg:#EFEDFC;
+  --p-dark:#0B1F3A; --p-dark-2:#10294F; --p-on-dark:#FFFFFF; --p-on-dark-muted:rgba(255,255,255,.68); --p-dark-line:rgba(255,255,255,.14);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0A0F19; --panel:#111827; --panel2:#161F30; --line:#26314A; --line2:#1E2739;
+    --text:#E7ECF4; --muted:#9AA7BC; --faint:#6B7891;
+    --brand:#4A7BE6; --brand-ink:#FFFFFF; --brand-soft:#17284A;
+    --bezel:#000; --shadow:0 30px 80px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0A0F19; --panel:#111827; --panel2:#161F30; --line:#26314A; --line2:#1E2739;
+  --text:#E7ECF4; --muted:#9AA7BC; --faint:#6B7891;
+  --brand:#4A7BE6; --brand-ink:#FFFFFF; --brand-soft:#17284A;
+  --bezel:#000; --shadow:0 30px 80px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--ff-b);font-size:14px;line-height:1.45;min-height:100vh}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+h1,h2,h3,h4{font-family:var(--ff-h);margin:0;text-wrap:balance}
+.mono{font-family:var(--ff-m)}
+
+/* ---------- shell ---------- */
+.bar{display:flex;align-items:center;gap:18px;padding:12px 20px;border-bottom:1px solid var(--line);background:var(--panel);position:sticky;top:0;z-index:20;flex-wrap:wrap}
+.brand{display:flex;align-items:baseline;gap:10px;font-family:var(--ff-h)}
+.brand b{font-size:17px;font-weight:800;letter-spacing:-.01em}
+.brand span{color:var(--muted);font-size:13px;font-weight:600}
+.ver{font-family:var(--ff-m);font-size:11px;padding:2px 7px;border:1px solid var(--line);border-radius:6px;color:var(--muted)}
+.modes{display:flex;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:3px;gap:2px}
+.modes button{border:0;background:transparent;padding:6px 12px;border-radius:7px;font-weight:600;color:var(--muted)}
+.modes button.on{background:var(--panel);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.legend{margin-left:auto;display:flex;align-items:center;gap:14px;color:var(--muted);font-size:12px;flex-wrap:wrap}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.legend .dyn-key{border-bottom:2px dotted var(--amber);color:var(--text)}
+.bar .ghost{border:1px solid var(--line);background:var(--panel);padding:7px 12px;border-radius:9px;font-weight:600;font-size:13px}
+.bar .ghost:hover{background:var(--panel2)}
+
+.wrap{display:grid;grid-template-columns:270px minmax(0,1fr) 360px;gap:0;height:calc(100vh - 57px);min-height:600px}
+.nav{border-right:1px solid var(--line);background:var(--panel);overflow-y:auto;padding:14px 10px 30px}
+.nav .grp{font-family:var(--ff-h);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);padding:14px 10px 6px}
+.nav .grp:first-child{padding-top:4px}
+.nav button.item{display:grid;grid-template-columns:30px 1fr auto;align-items:center;gap:8px;width:100%;text-align:left;border:0;background:transparent;padding:7px 8px;border-radius:9px;color:var(--text)}
+.nav button.item:hover{background:var(--panel2)}
+.nav button.item.on{background:var(--brand-soft)}
+.nav .num{font-family:var(--ff-m);font-size:11px;color:var(--muted);text-align:center;border:1px solid var(--line);border-radius:6px;padding:2px 0}
+.nav .item.on .num{border-color:var(--brand);color:var(--brand)}
+.nav .lbl{font-size:13px;font-weight:500;line-height:1.25}
+.nav .lbl small{display:block;color:var(--muted);font-weight:400;font-size:11px;margin-top:1px}
+.nav .flags{display:flex;gap:4px;align-items:center}
+.kind{display:inline-block;width:8px;height:8px;border-radius:50%}
+.kind.q{background:var(--brand)} .kind.p{background:var(--amber)} .kind.x{background:var(--green)} .kind.a{background:var(--violet)}
+.rem{width:16px;height:16px;border-radius:50%;background:var(--amber);color:#1a1200;font-size:10px;font-weight:700;display:inline-grid;place-items:center;font-family:var(--ff-m)}
+
+.stage{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;background:
+ radial-gradient(1200px 600px at 50% 120%, var(--brand-soft), transparent 60%), var(--bg)}
+.phone-wrap{transform-origin:center center;position:relative}
+.phone{width:390px;height:844px;border-radius:52px;background:var(--bezel);padding:11px;box-shadow:var(--shadow);position:relative}
+.phone::before{content:"";position:absolute;top:22px;left:50%;transform:translateX(-50%);width:118px;height:34px;background:var(--bezel);border-radius:20px;z-index:3}
+.screen{width:100%;height:100%;border-radius:42px;overflow:hidden;background:var(--p-bg);color:var(--p-text);position:relative;font-family:var(--ff-b)}
+.stage-ctl{position:absolute;bottom:14px;left:0;right:0;display:flex;justify-content:center;gap:8px;align-items:center;font-size:12px;color:var(--muted)}
+.stage-ctl button{border:1px solid var(--line);background:var(--panel);border-radius:9px;padding:6px 10px;font-weight:600;font-size:12px}
+.stage-ctl button:hover{background:var(--panel2)}
+.stage-ctl .pos{font-family:var(--ff-m);padding:0 6px}
+.stage-hint{position:absolute;top:14px;right:16px;font-size:11px;color:var(--faint)}
+
+.notes{border-left:1px solid var(--line);background:var(--panel);overflow-y:auto;padding:18px 20px 30px;display:flex;flex-direction:column;gap:16px}
+.notes .eyebrow{display:flex;align-items:center;gap:8px;font-family:var(--ff-m);font-size:11px;color:var(--muted)}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:600;font-family:var(--ff-h);letter-spacing:.02em}
+.chip.q{background:var(--brand-soft);color:var(--brand)} .chip.p{background:#FBF1DF;color:#8A5A0C} .chip.x{background:#E3F4EB;color:#136B43} .chip.a{background:#EFEDFC;color:#4437B0}
+:root[data-theme="dark"] .chip.p,:root[data-theme="dark"] .chip.x,:root[data-theme="dark"] .chip.a{filter:brightness(.85) saturate(.9)}
+.notes h2{font-size:18px;font-weight:800;letter-spacing:-.01em;line-height:1.2}
+.notes h3{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-bottom:6px}
+.notes p{margin:0;color:var(--text)}
+.notes ul{margin:0;padding-left:16px;display:grid;gap:4px}
+.notes .data{display:flex;flex-wrap:wrap;gap:6px}
+.notes .data span{font-family:var(--ff-m);font-size:11px;padding:3px 7px;border:1px solid var(--line);border-radius:6px;background:var(--panel2)}
+.notes .rule{border-left:3px solid var(--amber);padding:6px 10px;background:var(--panel2);border-radius:0 8px 8px 0;font-size:13px}
+.notes textarea{width:100%;min-height:96px;resize:vertical;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font:inherit;background:var(--panel2);color:var(--text)}
+.notes .saved{font-size:11px;color:var(--faint);margin-top:4px;min-height:14px}
+
+/* ---------- map mode ---------- */
+.map{padding:22px 26px 60px;display:grid;gap:22px}
+.map .row{display:grid;gap:12px}
+.map .rowhead{display:flex;align-items:baseline;gap:12px}
+.map .rowhead h2{font-size:15px;font-weight:800}
+.map .rowhead p{margin:0;color:var(--muted);font-size:13px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:14px}
+.tile{border:0;background:transparent;padding:0;text-align:left;display:grid;gap:8px;color:var(--text)}
+.tile .mini{width:100%;aspect-ratio:390/844;border-radius:14px;overflow:hidden;background:var(--bezel);padding:3px;position:relative;box-shadow:0 8px 24px rgba(11,31,58,.18);transition:transform .15s}
+.tile:hover .mini{transform:translateY(-3px)}
+.tile .mini .screen{border-radius:12px;width:390px;height:844px;transform-origin:0 0;position:absolute;top:3px;left:3px}
+.tile .cap{display:grid;grid-template-columns:auto 1fr auto;gap:6px;align-items:start;font-size:12px;line-height:1.3}
+.tile .cap .num{font-family:var(--ff-m);color:var(--muted);font-size:11px}
+.tile .cap b{font-weight:600;font-family:var(--ff-b)}
+.tile .cap small{display:block;color:var(--muted)}
+.side{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.card h3{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+.score{display:grid;gap:6px;font-size:13px}
+.score div{display:grid;grid-template-columns:1fr auto;gap:10px;padding:5px 0;border-bottom:1px solid var(--line2)}
+.score div:last-child{border:0}
+.score .mono{color:var(--muted)}
+.tiers{display:flex;gap:8px;margin-top:8px}
+.tiers span{flex:1;padding:6px 8px;border-radius:8px;font-family:var(--ff-m);font-size:11px;text-align:center;font-weight:600}
+.arch{display:flex;flex-wrap:wrap;gap:6px;font-size:12px;align-items:center}
+.arch span{padding:4px 8px;border-radius:7px;background:var(--panel2);border:1px solid var(--line2)}
+.arch i{color:var(--faint);font-style:normal}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--text);color:var(--bg);padding:10px 16px;border-radius:10px;font-weight:600;opacity:0;transition:.25s;pointer-events:none;z-index:50}
+.toast.show{opacity:1;transform:translateX(-50%)}
+
+@media (max-width:1180px){
+  .wrap{grid-template-columns:230px minmax(0,1fr) 320px}
+}
+@media (max-width:900px){
+  .wrap{grid-template-columns:1fr;height:auto;min-height:0}
+  .nav{display:none}
+  .brand span:not(.ver){display:none}
+  .stage-hint{display:none}
+  .bar{gap:10px}
+  .stage{height:calc(100vh - 57px);min-height:560px}
+  .notes{border-left:0;border-top:1px solid var(--line)}
+  .legend{display:none}
+}
+@media (prefers-reduced-motion: reduce){
+  .screen *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+/* ---------- product UI inside the phone ---------- */
+.scr{height:100%;display:flex;flex-direction:column;background:var(--p-bg);color:var(--p-text)}
+.scr.dark{background:linear-gradient(180deg,var(--p-dark-2) 0%,var(--p-dark) 60%);color:var(--p-on-dark)}
+.status{height:54px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 30px 6px;font-family:var(--ff-h);font-weight:700;font-size:14px;flex:none}
+.status .ic{display:flex;gap:5px;align-items:center}
+.status .ic i{display:inline-block;width:16px;height:10px;border:1.5px solid currentColor;border-radius:3px;position:relative;opacity:.9}
+.status .ic i::after{content:"";position:absolute;inset:1.5px;right:4px;background:currentColor;border-radius:1px}
+.top{padding:6px 22px 4px;flex:none}
+.prog{display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:600;color:var(--p-muted);margin-bottom:8px;font-family:var(--ff-h)}
+.dark .prog{color:var(--p-on-dark-muted)}
+.segs{display:grid;grid-template-columns:repeat(6,1fr);gap:4px}
+.segs i{height:4px;border-radius:2px;background:var(--p-line)}
+.segs i.on{background:var(--p-navy)}
+.dark .segs i{background:var(--p-dark-line)} .dark .segs i.on{background:var(--p-amber)}
+.body{flex:1;overflow-y:auto;padding:10px 22px 16px;display:flex;flex-direction:column;gap:14px;scrollbar-width:none}
+.body::-webkit-scrollbar{display:none}
+.body.center{justify-content:center}
+.foot{flex:none;padding:10px 22px 26px;background:linear-gradient(180deg,rgba(244,246,250,0),var(--p-bg) 30%)}
+.dark .foot{background:linear-gradient(180deg,rgba(11,31,58,0),var(--p-dark) 30%)}
+.foot .micro{text-align:center;font-size:12px;color:var(--p-muted);margin-top:8px}
+.dark .foot .micro{color:var(--p-on-dark-muted)}
+.eyeb{font-family:var(--ff-h);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--p-amber)}
+.h1{font-size:25px;font-weight:800;line-height:1.15;letter-spacing:-.015em}
+.h2{font-size:20px;font-weight:800;line-height:1.2;letter-spacing:-.01em}
+.sub{font-size:15px;line-height:1.45;color:var(--p-muted);margin:0}
+.dark .sub{color:var(--p-on-dark-muted)}
+.small{font-size:12px;color:var(--p-muted)} .dark .small{color:var(--p-on-dark-muted)}
+.dyn{border-bottom:2px dotted var(--p-amber);padding-bottom:1px}
+
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:52px;border-radius:14px;border:0;background:var(--p-navy);color:#fff;font-family:var(--ff-h);font-weight:700;font-size:15.5px;letter-spacing:-.005em}
+.btn:active{transform:scale(.99)}
+.btn.sec{background:transparent;border:1.5px solid var(--p-line);color:var(--p-text);height:46px;font-weight:600;margin-top:8px}
+.dark .btn{background:#fff;color:var(--p-navy)}
+.dark .btn.sec{border-color:var(--p-dark-line);color:#fff;background:transparent}
+.btn.amber{background:var(--p-amber);color:#1b1200}
+.btn[disabled]{opacity:.45;pointer-events:none}
+.link{background:none;border:0;color:var(--p-navy);font-weight:600;font-size:13px;padding:0;text-decoration:underline;text-underline-offset:3px}
+.dark .link{color:#fff}
+
+.opts{display:grid;gap:8px}
+.opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--p-surface);border:1.5px solid var(--p-line);border-radius:14px;padding:13px 14px;font-size:15px;font-weight:500;color:var(--p-text)}
+.opt .r{width:20px;height:20px;border-radius:50%;border:2px solid var(--p-faint);flex:none;position:relative}
+.opt.on{border-color:var(--p-navy);background:var(--p-navy-bg)}
+.opt.on .r{border-color:var(--p-navy)} .opt.on .r::after{content:"";position:absolute;inset:4px;border-radius:50%;background:var(--p-navy)}
+.opt .t{display:grid;gap:2px}
+.opt .t small{font-size:12.5px;font-weight:400;color:var(--p-muted);line-height:1.35}
+.opt.muted{border-style:dashed}
+.hint{background:var(--p-navy-bg);border-radius:10px;padding:10px 12px;font-size:13px;color:var(--p-navy);display:flex;gap:8px;align-items:flex-start}
+.hint b{font-weight:700}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.cat{background:var(--p-surface);border:1.5px solid var(--p-line);border-radius:12px;padding:12px 12px;text-align:left;font-size:14px;font-weight:600;line-height:1.25;color:var(--p-text);display:grid;gap:6px}
+.cat i{display:block;width:26px;height:26px;border-radius:8px;background:var(--p-navy-bg)}
+.cat.on{border-color:var(--p-navy);background:var(--p-navy-bg)}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.pill{border:1.5px solid var(--p-line);background:var(--p-surface);border-radius:999px;padding:7px 12px;font-size:13px;font-weight:500;color:var(--p-text)}
+.pill.on{border-color:var(--p-navy);background:var(--p-navy);color:#fff}
+.seg2{display:grid;grid-template-columns:1fr 1fr;background:var(--p-surface);border:1.5px solid var(--p-line);border-radius:12px;padding:3px;gap:3px}
+.seg2 button{border:0;background:transparent;border-radius:9px;padding:9px;font-weight:600;color:var(--p-muted)}
+.seg2 button.on{background:var(--p-navy);color:#fff}
+.field{display:grid;gap:5px}
+.field label{font-size:12.5px;font-weight:600;color:var(--p-muted)}
+.inp{display:flex;align-items:center;gap:10px;width:100%;background:var(--p-surface);border:1.5px solid var(--p-line);border-radius:12px;padding:12px 14px;font-size:15px;color:var(--p-text);min-height:48px}
+.inp .ph{color:var(--p-faint)}
+.inp.ta{min-height:128px;align-items:flex-start;font-size:14.5px;line-height:1.45}
+.sugg{background:var(--p-surface);border:1.5px solid var(--p-line);border-radius:12px;overflow:hidden;margin-top:-6px}
+.sugg button{display:flex;justify-content:space-between;width:100%;text-align:left;border:0;background:transparent;padding:11px 14px;border-bottom:1px solid var(--p-line);font-size:14.5px}
+.sugg button:last-child{border-bottom:0} .sugg button small{color:var(--p-faint)}
+.chk{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--p-text)}
+.chk i{width:20px;height:20px;border-radius:6px;border:2px solid var(--p-faint);flex:none;display:grid;place-items:center;font-size:12px;color:#fff;font-style:normal;margin-top:1px}
+.chk.on i{background:var(--p-navy);border-color:var(--p-navy)}
+.attach{display:flex;align-items:center;gap:12px;background:var(--p-surface);border:1.5px dashed var(--p-line);border-radius:12px;padding:12px 14px;width:100%;text-align:left}
+.attach .ico{width:36px;height:36px;border-radius:10px;background:var(--p-navy-bg);display:grid;place-items:center;flex:none;font-size:16px}
+.attach .t{font-size:14px;font-weight:600} .attach .t small{display:block;font-weight:400;font-size:12px;color:var(--p-muted);margin-top:2px}
+.file{display:flex;align-items:center;gap:8px;font-size:12.5px;background:var(--p-green-bg);color:#125A38;border-radius:8px;padding:6px 10px;width:max-content}
+
+.vals{display:grid;gap:10px}
+.vals div{display:flex;gap:10px;align-items:flex-start;font-size:15px;font-weight:500}
+.tick{width:22px;height:22px;border-radius:50%;background:var(--p-green-bg);color:var(--p-green);display:grid;place-items:center;font-size:12px;font-weight:800;flex:none}
+.dark .tick{background:rgba(255,255,255,.14);color:#fff}
+
+/* hero illustration on slide 0 */
+.hero{position:relative;height:210px;margin:6px -22px 0;overflow:hidden;flex:none}
+.hero .flow{position:absolute;left:22px;top:14px;display:flex;flex-direction:column;gap:8px;font-family:var(--ff-h);font-size:11px;font-weight:700}
+.hero .flow span{display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border-radius:8px;background:var(--p-surface);border:1px solid var(--p-line);color:var(--p-navy);width:max-content;box-shadow:0 4px 12px rgba(11,31,58,.06)}
+.hero .flow span.ai{background:var(--p-violet-bg);color:var(--p-violet);border-color:transparent}
+.hero .flow em{font-style:normal;color:var(--p-faint);padding-left:12px;font-size:10px}
+.hero .ph{position:absolute;right:26px;top:10px;width:190px;height:260px;border-radius:26px;background:var(--p-navy);padding:8px;box-shadow:0 20px 40px rgba(11,31,58,.25)}
+.hero .ph .in{background:var(--p-surface);border-radius:20px;height:100%;padding:16px 12px;display:grid;gap:10px;align-content:start}
+.ans{display:grid;grid-template-columns:34px 1fr;gap:9px;align-items:start}
+.ans .av{width:34px;height:34px;border-radius:50%;background:var(--p-navy);color:#fff;display:grid;place-items:center;font-family:var(--ff-h);font-weight:800;font-size:12px}
+.ans .nm{font-size:11.5px;font-weight:700;font-family:var(--ff-h)} .ans .nm small{display:block;font-weight:500;color:var(--p-muted);font-size:10px}
+.lines{display:grid;gap:5px;margin-top:4px} .lines i{display:block;height:6px;border-radius:3px;background:var(--p-line)} .lines i:nth-child(2){width:85%} .lines i:nth-child(3){width:60%}
+.star{color:var(--p-amber)}
+
+/* proof: pipeline */
+.pipe{display:grid;gap:10px;margin-top:4px}
+.node{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.07);border:1px solid var(--p-dark-line);opacity:0;animation:rise .5s ease forwards}
+.node .n{font-family:var(--ff-h);font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1}
+.node .n small{display:block;font-size:12px;font-weight:600;color:var(--p-on-dark-muted);letter-spacing:0;margin-top:2px}
+.node.req{background:rgba(255,255,255,.14)}
+.node.best{background:#fff;color:var(--p-navy);border-color:transparent}
+.node.best .n small{color:var(--p-muted)}
+.crit{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;padding:2px 0}
+.crit span{font-size:12px;font-weight:600;padding:6px 10px;border-radius:999px;border:1px solid var(--p-dark-line);opacity:0;animation:pop .35s ease forwards}
+.crit span.lit{background:var(--p-amber);color:#1b1200;border-color:transparent}
+.arrow{text-align:center;color:var(--p-on-dark-muted);font-size:14px;line-height:1;opacity:0;animation:rise .4s ease forwards}
+@keyframes rise{to{opacity:1;transform:none}from{transform:translateY(8px)}}
+@keyframes pop{to{opacity:1;transform:none}from{transform:scale(.9)}}
+.static .node,.static .crit span,.static .arrow{animation:none;opacity:1;transform:none}
+
+/* proof: local */
+.avs{display:flex;align-items:center}
+.av{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-family:var(--ff-h);font-weight:800;font-size:14px;color:#fff;background:var(--p-navy-2);border:2px solid var(--p-dark);position:relative;flex:none}
+.avs .av{margin-left:-10px} .avs .av:first-child{margin-left:0}
+.av.v::after{content:"✓";position:absolute;right:-2px;bottom:-2px;width:16px;height:16px;border-radius:50%;background:var(--p-green);font-size:9px;display:grid;place-items:center;border:2px solid var(--p-dark)}
+.av.c1{background:#3E5C8F}.av.c2{background:#6A5ACD}.av.c3{background:#2E7D6B}.av.c4{background:#8A5A2B}.av.c5{background:#B24A5C}
+.mapbox{height:120px;border-radius:14px;position:relative;overflow:hidden;background:
+ radial-gradient(circle at 30% 40%, rgba(255,255,255,.12) 0 2px, transparent 3px) 0 0/22px 22px,
+ linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid var(--p-dark-line)}
+.mapbox .pin{position:absolute;left:52%;top:36%;width:14px;height:14px;border-radius:50%;background:var(--p-amber);box-shadow:0 0 0 8px rgba(233,162,59,.25),0 0 0 18px rgba(233,162,59,.12)}
+.mapbox .pin2{position:absolute;width:8px;height:8px;border-radius:50%;background:#fff;opacity:.85}
+.mapbox .tag{position:absolute;left:12px;bottom:10px;font-size:11px;font-weight:600;background:rgba(255,255,255,.14);padding:4px 8px;border-radius:6px}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.metric{background:rgba(255,255,255,.08);border:1px solid var(--p-dark-line);border-radius:12px;padding:10px 10px}
+.metric b{display:block;font-family:var(--ff-h);font-size:20px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.metric span{font-size:11px;color:var(--p-on-dark-muted);line-height:1.25;display:block;margin-top:3px}
+.light .metric{background:var(--p-surface);border-color:var(--p-line)} .light .metric span{color:var(--p-muted)}
+
+/* proof: cases */
+.case{display:grid;grid-template-columns:1fr 64px;gap:12px;background:rgba(255,255,255,.08);border:1px solid var(--p-dark-line);border-radius:14px;padding:12px 14px;align-items:center}
+.case .k{font-family:var(--ff-h);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--p-amber)}
+.case .res{font-size:14px;font-weight:600;margin-top:3px;line-height:1.3}
+.case .doc{height:74px;background:#fff;border-radius:6px;padding:8px 7px;display:grid;gap:4px;align-content:start;position:relative;box-shadow:0 6px 16px rgba(0,0,0,.25)}
+.case .doc i{display:block;height:3px;background:#C9D0DC;border-radius:2px}
+.case .doc i.b{background:#0F1B2D;height:5px} .case .doc i.s{width:70%}
+.case .doc::after{content:"⚖";position:absolute;right:5px;bottom:4px;font-size:10px;color:#94A0B4}
+.sp{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600}
+.sp .big{font-family:var(--ff-h);font-size:28px;font-weight:800;letter-spacing:-.02em}
+.sp .big small{font-size:14px;color:var(--p-on-dark-muted);font-weight:600;margin-left:4px}
+
+/* processing */
+.proc{display:grid;gap:12px}
+.pi{display:flex;gap:12px;align-items:center;font-size:15px;font-weight:500;opacity:.35;transition:opacity .3s}
+.pi.done{opacity:1} .pi.now{opacity:1}
+.pi .d{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;border:2px solid var(--p-line);flex:none;color:#fff}
+.pi.done .d{background:var(--p-green);border-color:var(--p-green)}
+.pi.now .d{border-color:var(--p-navy);position:relative}
+.pi.now .d::after{content:"";position:absolute;inset:5px;border-radius:50%;background:var(--p-navy);animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.25}}
+.flowv{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:6px;align-items:center;margin-top:8px}
+.flowv .box{background:var(--p-surface);border:1.5px solid var(--p-line);border-radius:12px;padding:10px 6px;text-align:center;font-family:var(--ff-h);font-size:11px;font-weight:700;line-height:1.25}
+.flowv .box.ai{border-color:var(--p-violet);color:var(--p-violet);background:var(--p-violet-bg)}
+.flowv .ar{color:var(--p-faint);font-size:14px}
+.flowv .abc{display:grid;gap:4px} .flowv .abc span{font-size:10.5px;background:var(--p-navy);color:#fff;border-radius:6px;padding:3px 5px;text-align:center;font-weight:700;font-family:var(--ff-h)}
+
+/* answers stack (proof 4) */
+.stack{display:grid;gap:8px}
+.acard{background:#fff;color:var(--p-text);border-radius:14px;padding:11px 12px;display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:center;box-shadow:0 10px 24px rgba(0,0,0,.18)}
+.acard.ai{background:var(--p-violet-bg);border:1.5px solid rgba(91,75,214,.35)}
+.acard .av{width:34px;height:34px;font-size:12px;border:0}
+.acard.ai .av{background:var(--p-violet);border-radius:10px}
+.acard .nm{font-family:var(--ff-h);font-size:13px;font-weight:700} .acard .nm small{display:block;font-weight:500;color:var(--p-muted);font-size:11px}
+.acard .st{font-size:11px;font-weight:600;color:var(--p-green);text-align:right;line-height:1.25} .acard.ai .st{color:var(--p-violet)}
+.acard .l{grid-column:1/-1;display:grid;gap:4px} .acard .l i{display:block;height:5px;border-radius:3px;background:var(--p-line)} .acard .l i:nth-child(2){width:78%}
+.acard.ai .l i{background:rgba(91,75,214,.22)}
+.key{font-family:var(--ff-h);font-weight:800;font-size:17px;line-height:1.3;letter-spacing:-.01em;border-left:3px solid var(--p-amber);padding-left:12px}
+.dots{display:grid;gap:6px;font-size:13.5px} .dots div{display:flex;gap:8px} .dots div::before{content:"•";color:var(--p-amber);font-weight:800}
+
+/* lawyer card */
+.lc{background:#fff;color:var(--p-text);border-radius:18px;padding:16px;display:grid;gap:12px;box-shadow:0 18px 40px rgba(0,0,0,.22)}
+.lc .hd{display:grid;grid-template-columns:56px 1fr auto;gap:12px;align-items:center}
+.lc .hd .av{width:56px;height:56px;font-size:18px;border:0;border-radius:16px}
+.lc .nm{font-family:var(--ff-h);font-size:17px;font-weight:800;letter-spacing:-.01em} .lc .nm small{display:block;font-size:12.5px;font-weight:500;color:var(--p-muted);margin-top:1px}
+.match{font-family:var(--ff-h);font-weight:800;font-size:15px;background:var(--p-amber-bg);color:#8A5A0C;padding:6px 9px;border-radius:10px;text-align:center;line-height:1.05}
+.match small{display:block;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:700}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.facts div{font-size:12.5px;color:var(--p-muted);display:flex;gap:6px;align-items:center}
+.facts b{color:var(--p-text);font-weight:700}
+.facts .ic{width:22px;height:22px;border-radius:7px;background:var(--p-bg);display:grid;place-items:center;font-size:11px;flex:none}
+.lc .btn{height:46px;font-size:14.5px}
+.lc .btn.sec{margin:0}
+.lc .txt{font-size:14px;line-height:1.5;color:var(--p-text);margin:0}
+.svc{border:1.5px solid var(--p-line);border-radius:14px;padding:12px 14px;display:grid;gap:6px;background:var(--p-bg)}
+.svc .k{font-family:var(--ff-h);font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--p-muted)}
+.svc .n{font-weight:700;font-size:14.5px}
+.svc .pr{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;color:var(--p-muted)}
+.svc .pr b{font-family:var(--ff-h);font-size:18px;color:var(--p-text);font-weight:800}
+.badges{display:flex;flex-wrap:wrap;gap:6px}
+.badges span{font-size:11.5px;font-weight:600;padding:4px 9px;border-radius:999px;background:var(--p-green-bg);color:#125A38}
+.badges span.n{background:var(--p-navy-bg);color:var(--p-navy)}
+.badges span.v{background:var(--p-violet-bg);color:var(--p-violet)}
+
+/* price card */
+.pc{background:#fff;color:var(--p-text);border-radius:18px;padding:16px;display:grid;gap:10px;box-shadow:0 18px 40px rgba(0,0,0,.22)}
+.pc .ttl{font-family:var(--ff-h);font-weight:800;font-size:16px;letter-spacing:-.01em}
+.stage-row{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--p-line);font-size:14px}
+.stage-row:last-of-type{border-bottom:0}
+.stage-row .no{font-family:var(--ff-m);font-size:11px;color:var(--p-muted);background:var(--p-bg);padding:3px 6px;border-radius:6px}
+.stage-row .p{font-family:var(--ff-h);font-weight:700;font-variant-numeric:tabular-nums}
+.stage-row small{display:block;color:var(--p-muted);font-size:12px}
+.total{display:flex;justify-content:space-between;align-items:baseline;border-top:2px solid var(--p-text);padding-top:10px;font-weight:700}
+.total b{font-family:var(--ff-h);font-size:24px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.note{font-size:12px;color:var(--p-muted);line-height:1.4}
+.dark .note{color:var(--p-on-dark-muted)}
+
+/* membership */
+.calc{background:var(--p-navy);color:#fff;border-radius:18px;padding:16px;display:grid;gap:8px}
+.calc div{display:flex;justify-content:space-between;align-items:baseline;font-size:14px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.12)}
+.calc div:last-child{border:0}
+.calc b{font-family:var(--ff-h);font-weight:800;font-size:16px;font-variant-numeric:tabular-nums}
+.calc .save b{color:var(--p-amber);font-size:20px}
+.calc .fee{margin-top:2px;background:rgba(255,255,255,.1);border-radius:10px;padding:8px 10px;border:0}
+.ben{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ben div{display:flex;gap:8px;align-items:flex-start;font-size:13px;font-weight:500;line-height:1.3}
+.ben .tick{width:18px;height:18px;font-size:10px}
+.badge{display:inline-flex;align-items:center;gap:8px;background:var(--p-amber);color:#1b1200;font-family:var(--ff-h);font-weight:800;letter-spacing:.12em;font-size:12px;padding:10px 16px;border-radius:999px;width:max-content}
+.okc{width:84px;height:84px;border-radius:50%;background:var(--p-green-bg);color:var(--p-green);display:grid;place-items:center;font-size:36px;font-weight:800;margin:0 auto}
+
+/* app chrome */
+.apph{display:flex;align-items:center;gap:10px;padding:8px 18px 10px;flex:none}
+.apph .bk{width:34px;height:34px;border-radius:50%;background:var(--p-surface);border:1.5px solid var(--p-line);display:grid;place-items:center;font-size:16px}
+.apph .t{font-family:var(--ff-h);font-weight:800;font-size:16px;line-height:1.15} .apph .t small{display:block;font-family:var(--ff-b);font-weight:500;color:var(--p-muted);font-size:12px}
+.apph .r{margin-left:auto}
+.tabbar{flex:none;display:grid;grid-template-columns:repeat(4,1fr);padding:10px 12px 26px;background:var(--p-surface);border-top:1px solid var(--p-line)}
+.tabbar div{text-align:center;font-size:10.5px;font-weight:600;color:var(--p-faint);display:grid;gap:3px;justify-items:center}
+.tabbar i{width:24px;height:24px;border-radius:8px;background:var(--p-line);display:block}
+.tabbar div.on{color:var(--p-navy)} .tabbar div.on i{background:var(--p-navy)}
+.stat{display:flex;align-items:center;gap:10px;background:var(--p-surface);border:1.5px solid var(--p-line);border-radius:14px;padding:12px 14px}
+.stat .pulse{width:10px;height:10px;border-radius:50%;background:var(--p-amber);box-shadow:0 0 0 4px rgba(233,162,59,.25);animation:blink 1.4s infinite}
+.stat b{font-family:var(--ff-h);font-weight:800}
+.cnt{display:grid;gap:6px}
+.cnt .row{display:flex;justify-content:space-between;font-size:13.5px;font-weight:600}
+.cnt .dotsr{display:grid;grid-template-columns:repeat(5,1fr);gap:4px} .cnt .dotsr i{height:6px;border-radius:3px;background:var(--p-line)} .cnt .dotsr i.on{background:var(--p-green)}
+.feedcard{background:var(--p-surface);border:1.5px solid var(--p-line);border-radius:16px;padding:14px;display:grid;gap:10px;color:var(--p-text)}
+.feedcard.ai{background:var(--p-violet-bg);border-color:rgba(91,75,214,.35)}
+.feedcard .hd{display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center}
+.feedcard .hd .av{width:40px;height:40px;font-size:13px;border:0;border-radius:12px}
+.feedcard.ai .hd .av{background:var(--p-violet)}
+.feedcard .nm{font-family:var(--ff-h);font-size:14px;font-weight:800} .feedcard .nm small{display:block;font-family:var(--ff-b);font-weight:500;color:var(--p-muted);font-size:11.5px}
+.feedcard .tm{font-size:11px;color:var(--p-faint);text-align:right}
+.feedcard p{margin:0;font-size:13.5px;line-height:1.5}
+.feedcard .meta{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:12px;color:var(--p-muted)} .feedcard .meta b{color:var(--p-text)}
+.feedcard .btn{height:42px;font-size:14px}
+.feedcard .btn.sec{margin:0}
+.ailbl{display:inline-flex;align-items:center;gap:6px;font-family:var(--ff-h);font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--p-violet);background:#fff;padding:4px 8px;border-radius:6px;border:1px solid rgba(91,75,214,.3);width:max-content}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.kv{display:grid;gap:8px}
+.kv div{display:flex;justify-content:space-between;gap:12px;font-size:13.5px;padding:8px 0;border-bottom:1px solid var(--p-line)} .kv div:last-child{border:0}
+.kv span{color:var(--p-muted)} .kv b{font-weight:600;text-align:right}
+.prof{display:grid;justify-items:center;text-align:center;gap:6px;padding-top:4px}
+.prof .av{width:84px;height:84px;font-size:26px;border-radius:26px;border:0}
+.prof .nm{font-family:var(--ff-h);font-size:22px;font-weight:800;letter-spacing:-.015em} .prof .nm small{display:block;font-size:13px;font-weight:500;color:var(--p-muted);font-family:var(--ff-b);margin-top:2px}
+.five{display:grid;gap:8px}
+.five div{display:grid;grid-template-columns:30px 1fr auto;gap:10px;align-items:center;background:var(--p-surface);border:1.5px solid var(--p-line);border-radius:12px;padding:10px 12px;font-size:13.5px}
+.five .ic{width:30px;height:30px;border-radius:9px;background:var(--p-navy-bg);display:grid;place-items:center;font-size:13px}
+.five b{font-family:var(--ff-h);font-weight:800;font-variant-numeric:tabular-nums}
+.five small{display:block;color:var(--p-muted);font-size:11.5px}
+.sect{display:grid;gap:6px} .sect h4{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--p-faint)}
+.sect p{margin:0;font-size:13.5px;line-height:1.5}
+.stores{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stores div{border:1.5px solid var(--p-line);border-radius:12px;padding:9px 10px;display:flex;gap:8px;align-items:center;font-family:var(--ff-h);font-weight:700;font-size:13px;background:var(--p-surface)}
+.stores div i{width:22px;height:22px;border-radius:6px;background:var(--p-text);flex:none}
+.stores small{display:block;font-family:var(--ff-b);font-weight:500;font-size:10px;color:var(--p-muted)}
+.qr{display:grid;grid-template-columns:64px 1fr;gap:12px;align-items:center;background:var(--p-surface);border:1.5px dashed var(--p-line);border-radius:12px;padding:10px 12px;font-size:12.5px;color:var(--p-muted)}
+.qr i{width:64px;height:64px;border-radius:6px;background:
+ repeating-linear-gradient(90deg,#0F1B2D 0 6px,transparent 6px 12px),repeating-linear-gradient(0deg,#0F1B2D 0 6px,#fff 6px 12px);background-blend-mode:multiply;border:3px solid #fff;outline:1px solid var(--p-line)}
+.nums{display:grid;gap:8px}
+.nums div{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:center;font-size:14.5px;font-weight:500}
+.nums b{width:28px;height:28px;border-radius:9px;background:var(--p-navy);color:#fff;display:grid;place-items:center;font-family:var(--ff-h);font-size:13px}
+.trig{display:flex;gap:8px;align-items:center;background:var(--p-amber-bg);color:#6B4508;font-size:12.5px;font-weight:600;padding:9px 12px;border-radius:10px}
+</style>
+
+<style>[hidden]{display:none!important}img{max-width:100%}</style>
+</head>
+<body>
+<header class="bar">
+  <div class="brand"><b>ConsultantLM</b><span>Quiz Funnel «Безкоштовний аналіз вашої ситуації»</span><span class="ver">бета-дизайн v0.1</span></div>
+  <div class="modes" role="tablist">
+    <button data-mode="proto" class="on" role="tab">Прототип</button>
+    <button data-mode="map" role="tab">Карта воронки</button>
+  </div>
+  <div class="legend">
+    <span><i style="background:var(--brand)"></i>Питання</span>
+    <span><i style="background:var(--amber)"></i>Proof</span>
+    <span><i style="background:var(--green)"></i>Обробка</span>
+    <span><i style="background:var(--violet)"></i>App</span>
+    <span class="dyn-key">пунктир</span><span style="margin-left:-8px">= динамічні дані з CRM, у прототипі — приклади з ТЗ</span>
+  </div>
+  <button class="ghost" id="copyAll">Скопіювати всі зауваження</button>
+</header>
+
+<main id="proto" class="wrap">
+  <aside class="nav" id="nav" aria-label="Екрани"></aside>
+  <section class="stage">
+    <div class="stage-hint">← → — перемикання екранів</div>
+    <div class="phone-wrap" id="phoneWrap"><div class="phone"><div class="screen" id="screen"></div></div></div>
+    <div class="stage-ctl">
+      <button id="prevBtn">← Назад</button>
+      <span class="pos" id="pos">0 / 22</span>
+      <button id="nextBtn">Далі →</button>
+      <button id="resetBtn" title="Скинути відповіді">↺ Скинути</button>
+    </div>
+  </section>
+  <aside class="notes" id="notes"></aside>
+</main>
+
+<main id="map" class="map" hidden></main>
+<div class="toast" id="toast">Скопійовано</div>
+
+<script>
+/* ===================== STATE ===================== */
+const S = {
+  specialist:null, country:'USA', city:null, remote:false,
+  category:null, sub:null, desc:'', files:0, voice:false,
+  intent:null, member:false, contact:{name:'',phone:'',email:''}, pref:'WhatsApp', consent:false
+};
+const DEF = { city:{USA:'Miami, FL',UA:'Київ'}, cat:'Family & Divorce' };
+const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const cityName = () => (S.city || DEF.city[S.country]).split(',')[0];
+const CATS = [
+  {n:'Immigration',proof:'Immigration',sub:['Green Card','Visa','Citizenship','Deportation defense','Other']},
+  {n:'Family & Divorce',proof:'Family Law',sub:['Divorce','Child Custody','Alimony','Domestic Violence','Property Division','Other']},
+  {n:'Criminal Defense',proof:'Criminal Defense'},
+  {n:'Personal Injury',proof:'Personal Injury'},
+  {n:'Business',proof:'Business Law',sub:['Company formation','Contracts','Disputes','Other']},
+  {n:'Employment',proof:'Employment Law',sub:['Wrongful termination','Discrimination','Unpaid wages','Contract','Other']},
+  {n:'Real Estate',proof:'Real Estate'},
+  {n:'Tax',proof:'Tax'},
+  {n:'Bankruptcy',proof:'Bankruptcy'},
+  {n:'Estate Planning',proof:'Estate Planning'},
+  {n:'Debt / Collections',proof:'Debt & Collections'},
+  {n:'Інше',proof:'вашій категорії'}
+];
+const catObj = () => CATS.find(c=>c.n===(S.category||DEF.cat)) || CATS[1];
+
+/* ===================== UI HELPERS ===================== */
+const status = (dark) => `<div class="status"><span>9:41</span><span class="ic">●●●<i></i></span></div>`;
+const prog = (n) => `<div class="top"><div class="prog"><span>Крок ${n} із 6</span><span>${Math.round(n/6*100)}%</span></div><div class="segs">${[1,2,3,4,5,6].map(i=>`<i class="${i<=n?'on':''}"></i>`).join('')}</div></div>`;
+const foot = (label, action, micro, extra='') => `<div class="foot">${extra}<button class="btn" data-act="${action}">${label}</button>${micro?`<div class="micro">${micro}</div>`:''}</div>`;
+const opt = (key,val,label,small,cls='') => `<button class="opt ${S[key]===val?'on':''} ${cls}" data-set="${key}" data-val="${esc(val)}"><span class="r"></span><span class="t">${label}${small?`<small>${small}</small>`:''}</span></button>`;
+const AV = (i,c) => `<span class="av ${c||''}">${i}</span>`;
+
+/* ===================== SCREENS ===================== */
+const SCREENS = [];
+const add = (o) => SCREENS.push(o);
+
+/* 0 — entry */
+add({tz:0, grp:'entry', kind:'x', title:'Вхід у квіз', short:'Landing / Start',
+ goal:'Пояснити, що отримає людина, і максимально легко запустити квіз.',
+ data:['traffic_source','utm','campaign','creative','landing'],
+ rules:['Візуал: телефон з прикладом відповіді адвоката, поруч AI → Lawyer A → B → C. Без stock-фото.','Мікротекст під CTA: «Без оплати · 2–3 хвилини».'],
+ render:()=>`<div class="scr">${status()}
+  <div class="hero">
+    <div class="flow"><span class="ai">◆ ConsultantLM AI</span><em>↓</em><span>Lawyer A</span><em>↓</em><span>Lawyer B</span><em>↓</em><span>Lawyer C</span></div>
+    <div class="ph"><div class="in">
+      <div class="ans">${AV('LB','c1')}<div class="nm">Laura Bennett<small>Family Law · <span class="star">★</span> 4.9</small></div></div>
+      <div class="lines"><i></i><i></i><i></i></div>
+      <div class="ans" style="margin-top:6px">${AV('MH','c3')}<div class="nm">Marcus Hale<small>Family Law · <span class="star">★</span> 4.8</small></div></div>
+      <div class="lines"><i></i><i></i></div>
+    </div></div>
+  </div>
+  <div class="body">
+    <h1 class="h1">Отримайте безкоштовний аналіз вашої ситуації</h1>
+    <p class="sub">Опишіть проблему за 2–3 хвилини. ConsultantLM проаналізує її та допоможе знайти релевантних спеціалістів.</p>
+    <div class="vals">
+      <div><span class="tick">✓</span>Попередній аналіз ситуації</div>
+      <div><span class="tick">✓</span>Декілька професійних поглядів</div>
+      <div><span class="tick">✓</span>Можливість порівняти адвокатів і вартість послуг</div>
+    </div>
+  </div>
+  ${foot('Почати безкоштовний аналіз','next','Без оплати · 2–3 хвилини')}
+ </div>`});
+
+/* 1 — Q1 specialist */
+add({tz:1, grp:'quiz', kind:'q', step:1, title:'Кого ви шукаєте?', short:'Q1 · Specialist',
+ goal:'Перше легке питання: тип спеціаліста. Варіант «Не знаю» — не помилка.',
+ data:['specialist_type'],
+ rules:['«Не знаю — допоможіть визначити» показуємо нейтрально, з поясненням: «Ми визначимо потрібного спеціаліста після аналізу вашої ситуації».'],
+ render:()=>`<div class="scr">${status()}${prog(1)}
+  <div class="body">
+    <h1 class="h2">Який спеціаліст вам потрібен?</h1>
+    <div class="opts">
+      ${['Адвокат','Юрист','Бухгалтер','Податковий консультант','Нотаріус'].map(v=>opt('specialist',v,v)).join('')}
+      ${opt('specialist','unknown','Не знаю — допоможіть визначити','', 'muted')}
+    </div>
+    ${S.specialist==='unknown'?`<div class="hint">💡 <span>Ми визначимо потрібного спеціаліста після аналізу вашої ситуації.</span></div>`:''}
+  </div>
+  ${foot('Продовжити','next')}
+ </div>`});
+
+/* 2 — Proof 1 matching */
+add({tz:2, grp:'quiz', kind:'p', title:'Proof №1 — як ми підбираємо', short:'Proof · Matching', anim:true,
+ goal:'Закрити страх «Як серед тисяч адвокатів знайти правильного?». Формат: анімація 10–15 секунд.',
+ data:[],
+ rules:['«3 500+ спеціалістів» — цифра з ТЗ, має бути реальною на момент запуску.','Proof-блок короткий: одна механіка, один CTA «Продовжити».'],
+ render:(o)=>`<div class="scr dark ${o.static?'static':''}">${status()}
+  <div class="body">
+    <div class="eyeb">Як працює підбір</div>
+    <h1 class="h2">Ми не просто показуємо список адвокатів</h1>
+    <p class="sub">ConsultantLM підбирає спеціалістів саме під вашу ситуацію.</p>
+    <div class="pipe">
+      <div class="node" style="animation-delay:.1s"><div class="n"><span class="dyn">3 500+</span><small>спеціалістів у базі</small></div></div>
+      <div class="arrow" style="animation-delay:.6s">↓</div>
+      <div class="node req" style="animation-delay:.8s"><div class="n" style="font-size:16px">Ваш запит<small>${esc(S.specialist&&S.specialist!=='unknown'?S.specialist:'Спеціаліст')} · ${esc(cityName())} · ${esc(catObj().proof)}</small></div></div>
+      <div class="arrow" style="animation-delay:1.3s">↓</div>
+      <div class="crit">
+        ${['Релевантний досвід','Відгуки клієнтів','Швидкість відповіді','Прозора ціна','Результати справ'].map((c,i)=>`<span class="lit" style="animation-delay:${1.5+i*.45}s">${c}</span>`).join('')}
+      </div>
+      <div class="arrow" style="animation-delay:3.9s">↓</div>
+      <div class="node best" style="animation-delay:4.1s"><div class="n" style="font-size:18px">Best Match<small>релевантні спеціалісти для вас</small></div><span style="margin-left:auto;font-size:22px">◎</span></div>
+    </div>
+    <p class="small">Ми аналізуємо спеціалізацію, досвід у схожих справах, рейтинг, відгуки, швидкість відповіді, ціни та результати роботи спеціаліста.</p>
+  </div>
+  ${foot('Продовжити','next')}
+ </div>`});
+
+/* 3 — Q2 location */
+add({tz:3, grp:'quiz', kind:'q', step:2, title:'Локація', short:'Q2 · Location',
+ goal:'Отримати місто/штат (USA) або місто/область (Україна). Autocomplete, автовизначення зі змогою змінити.',
+ data:['country','state/region','city','remote_ok'],
+ rules:['Додатковий чекбокс: «Моя ситуація може вирішуватися дистанційно».','Автовизначення геолокації — але завжди з можливістю змінити.'],
+ render:()=>{
+  const sug = S.country==='USA'?[['Miami','FL'],['New York','NY'],['Chicago','IL']]:[['Київ','Київська обл.'],['Львів','Львівська обл.'],['Одеса','Одеська обл.']];
+  return `<div class="scr">${status()}${prog(2)}
+  <div class="body">
+    <h1 class="h2">Де вам потрібна допомога?</h1>
+    <div class="seg2"><button class="${S.country==='USA'?'on':''}" data-set="country" data-val="USA">USA</button><button class="${S.country==='UA'?'on':''}" data-set="country" data-val="UA">Україна</button></div>
+    <div class="field"><label>${S.country==='USA'?'City + State':'Місто + Область'}</label>
+      <div class="inp">🔍 ${S.city?`<span>${esc(S.city)}</span>`:`<span class="ph">${S.country==='USA'?'Почніть вводити місто…':'Почніть вводити місто…'}</span>`}<button class="link" style="margin-left:auto" data-set="city" data-val="">${S.city?'змінити':'визначити автоматично'}</button></div>
+    </div>
+    ${!S.city?`<div class="sugg">${sug.map(([c,s])=>`<button data-set="city" data-val="${esc(c+', '+s)}"><span>${c}</span><small>${s}</small></button>`).join('')}</div>`:''}
+    <button class="chk ${S.remote?'on':''}" data-toggle="remote"><i>${S.remote?'✓':''}</i><span>Моя ситуація може вирішуватися дистанційно</span></button>
+  </div>
+  ${foot('Продовжити','next')}
+ </div>`}});
+
+/* 4 — Proof 2 local */
+add({tz:4, grp:'quiz', kind:'p', title:'Proof №2 — спеціалісти у вашій локації', short:'Proof · Local availability', anim:true,
+ goal:'Показати доступність і швидкість відповіді саме в локації користувача. Дані підтягуються з CRM.',
+ data:['specialists_in_city (CRM)','available_today','response_rate','avg_response_time'],
+ rules:['Показувати лише метрики, які реально є в даних. 47 / 12 / 94% / 8 хв — приклади з ТЗ.','Аватари — реальні спеціалісти з бази, не stock.'],
+ render:(o)=>`<div class="scr dark ${o.static?'static':''}">${status()}
+  <div class="body">
+    <div class="eyeb">Знайдено</div>
+    <h1 class="h2">У ${esc(cityName())} ми знайшли <span class="dyn">47</span> спеціалістів</h1>
+    <p class="sub">Ми відберемо тих, хто працює саме з вашим типом ситуації.</p>
+    <div class="mapbox"><span class="pin"></span><span class="pin2" style="left:28%;top:58%"></span><span class="pin2" style="left:70%;top:30%"></span><span class="pin2" style="left:64%;top:66%"></span><span class="pin2" style="left:40%;top:24%"></span><span class="tag">${esc(S.city||DEF.city[S.country])}</span></div>
+    <div class="avs">${AV('LB','v c1')}${AV('MH','v c3')}${AV('PA','v c2')}${AV('DR','v c4')}${AV('KS','v c5')}<span class="small" style="margin-left:12px"><span class="dyn">+42</span> спеціалісти</span></div>
+    <div class="metrics">
+      <div class="metric"><b class="dyn">12</b><span>доступні сьогодні</span></div>
+      <div class="metric"><b class="dyn">94%</b><span>response rate</span></div>
+      <div class="metric"><b class="dyn">~8 хв</b><span>середній час відповіді</span></div>
+    </div>
+    <p class="small">Ви зможете отримати декілька професійних поглядів на одну й ту саму ситуацію та порівняти підходи спеціалістів.</p>
+  </div>
+  ${foot('Продовжити','next')}
+ </div>`});
+
+/* 5 — Q3 category */
+add({tz:5, grp:'quiz', kind:'q', step:3, title:'Категорія права', short:'Q3 · Practice area',
+ goal:'Визначити practice area + одне коротке адаптивне уточнення (subcategory).',
+ data:['practice_area','subcategory'],
+ rules:['Дозволене лише одне уточнення. Family → Divorce / Child Custody / Alimony / Domestic Violence / Property Division / Other.','Для категорій без уточнення — одразу «Продовжити».'],
+ render:()=>{
+  const c = S.category?CATS.find(x=>x.n===S.category):null;
+  return `<div class="scr">${status()}${prog(3)}
+  <div class="body">
+    <h1 class="h2">З яким питанням вам потрібна допомога?</h1>
+    <div class="grid2">${CATS.map(x=>`<button class="cat ${S.category===x.n?'on':''}" data-set="category" data-val="${esc(x.n)}"><i></i>${x.n}</button>`).join('')}</div>
+    ${c&&c.sub?`<div class="field"><label>Уточніть, будь ласка</label><div class="chips">${c.sub.map(s=>`<button class="pill ${S.sub===s?'on':''}" data-set="sub" data-val="${esc(s)}">${s}</button>`).join('')}</div></div>`:''}
+  </div>
+  ${foot('Продовжити','next')}
+ </div>`}});
+
+/* 6 — Proof 3 category */
+add({tz:6, grp:'quiz', kind:'p', title:'Proof №3 — досвід у цій категорії', short:'Proof · Similar cases', anim:true,
+ goal:'Релевантний досвід + verified outcomes: ситуація → документ → результат → review. Окрема версія для кожної ключової категорії.',
+ data:['cases_last_12m (CRM)','verified_reviews','rating'],
+ rules:['«184 cases», «4.9», «126 reviews» — приклади з ТЗ, лише якщо цифри реальні.','Судові рішення — тільки з прихованими персональними даними.'],
+ render:(o)=>{
+  const c = catObj();
+  const cases = c.n==='Family & Divorce'||!S.category
+   ? [['Child Custody','Спільна опіка, графік погоджено без суду'],['Alimony','Аліменти зменшено за рішенням суду'],['Divorce','Розлучення завершено за 4 місяці']]
+   : [[c.sub?c.sub[0]:c.n,'Позитивний результат для клієнта'],[c.sub?c.sub[1]:c.n,'Рішення суду на користь клієнта'],[c.sub?c.sub[2]:c.n,'Справу закрито за 3 місяці']];
+  return `<div class="scr dark ${o.static?'static':''}">${status()}
+  <div class="body">
+    <div class="eyeb">${esc(c.proof)}</div>
+    <h1 class="h2">Наші спеціалісти вже працювали з подібними ситуаціями</h1>
+    <div class="sp"><span class="big"><span class="dyn">184</span><small>${esc(c.proof)} cases</small></span><span class="small">за останні 12 місяців</span></div>
+    ${cases.map(([k,r],i)=>`<div class="case node" style="animation-delay:${.2+i*.35}s"><div><div class="k">${esc(k)}</div><div class="res">${esc(r)}</div><div class="small">судове рішення · персональні дані приховані</div></div><div class="doc"><i class="s"></i><i></i><i class="b"></i><i></i><i class="s"></i><i class="b" style="width:45%"></i></div></div>`).join('')}
+    <div class="sp"><span class="big"><span class="star">★</span> <span class="dyn">4.9</span></span><span class="small"><span class="dyn">126</span> verified reviews · ${esc(c.proof)} clients</span></div>
+  </div>
+  ${foot('Продовжити','next')}
+ </div>`}});
+
+/* 7 — Q4 description */
+add({tz:7, grp:'quiz', kind:'q', step:4, title:'Опис проблеми', short:'Q4 · Case description',
+ goal:'Отримати опис ситуації текстом або голосом + документи (не обов’язково).',
+ data:['case_description','voice_description','attachments'],
+ rules:['Документи: PDF, DOC/DOCX, JPG, PNG. Мікротекст: «Не обов’язково. Документи допоможуть точніше проаналізувати ситуацію.»','CTA саме «Проаналізувати мою ситуацію», а не «Далі».'],
+ render:()=>`<div class="scr">${status()}${prog(4)}
+  <div class="body">
+    <h1 class="h2">Розкажіть, що сталося</h1>
+    <p class="sub">Чим більше деталей ви дасте, тим точніше буде аналіз.</p>
+    <button class="inp ta" data-toggle="desc">${S.desc?`<span>${esc(S.desc)}</span>`:`<span class="ph">Наприклад: ми вирішили розлучитися, є двоє дітей, не можемо домовитися про опіку та поділ майна…</span>`}</button>
+    <button class="attach" data-toggle="files"><span class="ico">📎</span><span class="t">Додати документи<small>Не обов’язково. Документи допоможуть точніше проаналізувати ситуацію.</small></span></button>
+    ${S.files?`<div class="file">📄 marriage_agreement.pdf · 1.2 MB ✓</div>`:''}
+    <button class="attach ${S.voice?'on':''}" data-toggle="voice"><span class="ico">🎤</span><span class="t">Розповісти голосом<small>${S.voice?'Запис розпізнано · voice-to-text ✓':'Ми перетворимо запис у текст автоматично'}</small></span></button>
+  </div>
+  ${foot('Проаналізувати мою ситуацію','next')}
+ </div>`});
+
+/* 8 — Processing */
+add({tz:8, grp:'quiz', kind:'x', title:'Processing — запит аналізується', short:'AI processing', anim:true, auto:3600,
+ goal:'Feedback-стан: користувач бачить, що його дані вже в роботі. Автоперехід через 3–4 с.',
+ data:[],
+ rules:['Checklist: Отримали опис → Визначили категорію → Аналізуємо документи → Підбираємо спеціалістів.','Анімація: Ваш кейс → ConsultantLM AI → Specialist matching → Attorney A/B/C.'],
+ render:(o)=>`<div class="scr">${status()}
+  <div class="body center">
+    <div class="eyeb" style="color:var(--p-navy)">Аналізуємо…</div>
+    <h1 class="h2">Ми вже аналізуємо вашу ситуацію</h1>
+    <div class="proc" data-proc>
+      <div class="pi ${o.static?'done':''}"><span class="d">✓</span>Отримали опис</div>
+      <div class="pi ${o.static?'done':''}"><span class="d">✓</span>Визначили категорію: ${esc(catObj().proof)}</div>
+      <div class="pi ${o.static?'done':''}"><span class="d">✓</span>Аналізуємо документи</div>
+      <div class="pi ${o.static?'now':''}"><span class="d"></span>Підбираємо релевантних спеціалістів</div>
+    </div>
+    <div class="flowv"><div class="box">Ваш кейс</div><span class="ar">→</span><div class="box ai">ConsultantLM AI</div><span class="ar">→</span><div class="abc"><span>Attorney A</span><span>Attorney B</span><span>Attorney C</span></div></div>
+  </div>
+  <div class="foot"><div class="micro">Зазвичай це займає кілька секунд</div></div>
+ </div>`});
+
+/* 9 — Proof 4 multiple opinions */
+add({tz:9, grp:'quiz', kind:'p', title:'Proof №4 — кілька професійних поглядів', short:'Proof · Multiple opinions',
+ goal:'Пояснити ключову відмінність продукту: одна ситуація → декілька відповідей (AI + адвокати).',
+ data:[],
+ rules:['Показати реальний інтерфейс застосунку: AI Assistant #1 → #2 → Attorney A → B → C.','AI-відповіді візуально відрізняються (фіолетовий, бейдж AI).','Key message: «Спочатку ви бачите експертизу. Потім обираєте адвоката.»'],
+ render:()=>`<div class="scr dark">${status()}
+  <div class="body">
+    <div class="eyeb">Як ви отримаєте відповіді</div>
+    <h1 class="h2">Одна ситуація. Кілька професійних поглядів.</h1>
+    <p class="sub">У ConsultantLM ви не отримуєте лише одну думку. Вашу ситуацію можуть проаналізувати декілька релевантних спеціалістів.</p>
+    <div class="stack">
+      <div class="acard ai">${AV('AI')}<div class="nm">AI Assistant #1<small>ConsultantLM AI · попередній аналіз</small></div><div class="st">готово</div><div class="l"><i></i><i></i></div></div>
+      <div class="acard ai">${AV('AI')}<div class="nm">AI Assistant #2<small>ConsultantLM AI · аналіз документів</small></div><div class="st">готово</div><div class="l"><i></i><i></i></div></div>
+      <div class="acard">${AV('LB','c1')}<div class="nm">Attorney A<small>Laura Bennett · Family Law</small></div><div class="st">відповіла</div><div class="l"><i></i><i></i></div></div>
+      <div class="acard">${AV('MH','c3')}<div class="nm">Attorney B<small>Marcus Hale · Family Law</small></div><div class="st">відповів</div><div class="l"><i></i><i></i></div></div>
+      <div class="acard" style="opacity:.75">${AV('PA','c2')}<div class="nm">Attorney C<small>Priya Anand · Family Law</small></div><div class="st" style="color:var(--p-amber)">пише…</div><div class="l"><i></i><i></i></div></div>
+    </div>
+    <div class="dots"><div>Побачити різні підходи та порівняти аргументацію</div><div>Оцінити експертизу до найму</div><div>Самостійно обрати того, кому довіряєте</div></div>
+    <div class="key">Спочатку ви бачите експертизу. Потім обираєте адвоката.</div>
+  </div>
+  ${foot('Продовжити','next')}
+ </div>`});
+
+/* 10 — comparison card */
+add({tz:10, grp:'quiz', kind:'p', title:'Що видно біля кожної відповіді', short:'Proof · Specialist card',
+ goal:'Закрити expertise + trust + responsiveness однією карткою спеціаліста.',
+ data:['match_score','rating','reviews_count','similar_cases','avg_reply_time','years_experience'],
+ rules:['Усі метрики картки — з реальних даних профілю. 94% / 4.9 / 184 / 68 / 6 хв / 12 років — приклади з ТЗ.','CTA «Переглянути профіль» → повний профіль: reviews, досвід, case results, послуги.'],
+ render:()=>`<div class="scr dark">${status()}
+  <div class="body">
+    <div class="eyeb">Порівнюйте спеціалістів</div>
+    <h1 class="h2">Порівнюйте не лише відповіді — порівнюйте самих спеціалістів</h1>
+    <div class="lc">
+      <div class="hd">${AV('LB','c1')}<div class="nm">Laura Bennett<small>Family Law · Miami, FL</small></div><div class="match"><span class="dyn">94%</span><small>match</small></div></div>
+      <div class="facts">
+        <div><span class="ic">★</span><span><b class="dyn">4.9</b> · <span class="dyn">184</span> reviews</span></div>
+        <div><span class="ic">⚖</span><span><b class="dyn">68</b> схожих кейсів</span></div>
+        <div><span class="ic">⏱</span><span>Replies in <b class="dyn">~6 min</b></span></div>
+        <div><span class="ic">◆</span><span><b class="dyn">12</b> years experience</span></div>
+      </div>
+      <button class="btn sec" data-go="22">Переглянути профіль</button>
+    </div>
+    <p class="small">У профілі: повний досвід, відгуки, результати справ, додаткові послуги.</p>
+  </div>
+  ${foot('Продовжити','next')}
+ </div>`});
+
+/* 11 — Q5 intent */
+add({tz:11, grp:'quiz', kind:'q', step:5, title:'Intent qualification', short:'Q5 · Intent',
+ goal:'Головний сигнал для lead scoring (до 30 балів): HIGH / MEDIUM / LOW-NURTURE.',
+ data:['client_intent'],
+ rules:['Варіант 1 = HIGH (30): потрібен адвокат якнайшвидше.','Варіант 2 = MEDIUM (20): спочатку зрозуміти рішення та вартість.','Варіант 3 = LOW / NURTURE (5): збирає інформацію.'],
+ render:()=>`<div class="scr">${status()}${prog(5)}
+  <div class="body">
+    <h1 class="h2">Що ви хочете зробити далі?</h1>
+    <div class="opts">
+      ${opt('intent','HIGH','Потрібен адвокат якнайшвидше','Готовий обговорити найм спеціаліста зараз')}
+      ${opt('intent','MEDIUM','Хочу спочатку зрозуміти рішення та вартість','Після цього прийму рішення щодо адвоката')}
+      ${opt('intent','LOW','Поки хочу отримати професійний аналіз','Збираю інформацію і ще не готовий приймати рішення')}
+    </div>
+  </div>
+  ${foot('Продовжити','next')}
+ </div>`});
+
+/* 12 — Proof 5 price */
+add({tz:12, grp:'quiz', kind:'p', title:'Proof №5 — прозора ціна', short:'Proof · Transparent pricing',
+ goal:'Показати, що вартість видно до рішення: етапи, ціна кожного, total.',
+ data:[],
+ rules:['Не обіцяти відсутність hourly billing глобально. Формулювання: «Без несподіваних погодинних рахунків — якщо для конкретної послуги адвокат запропонував fixed-price model».','Suma $10,000 — приклад з ТЗ.'],
+ render:()=>`<div class="scr dark">${status()}
+  <div class="body">
+    <div class="eyeb">Прозора ціна</div>
+    <h1 class="h2">Ви бачите вартість до того, як приймаєте рішення</h1>
+    <p class="sub">Кожен адвокат може одразу прикріпити до своєї відповіді релевантну юридичну послугу.</p>
+    <div class="pc">
+      <div class="ttl">Divorce + Child Custody Representation</div>
+      <div><div class="stage-row"><span class="no">Етап 1</span><span>Case analysis<small>аналіз документів та стратегія</small></span><span class="p">$500</span></div>
+      <div class="stage-row"><span class="no">Етап 2</span><span>Preparation<small>підготовка позову та доказів</small></span><span class="p">$2,000</span></div>
+      <div class="stage-row"><span class="no">Етап 3</span><span>Court Representation<small>представництво в суді</small></span><span class="p">$7,500</span></div></div>
+      <div class="total"><span>Total</span><b>$10,000</b></div>
+      <div class="badges"><span>Fixed price</span><span>Price known in advance</span><span class="n">Stages included</span></div>
+    </div>
+    <p class="small">Ви бачите, що входить у послугу, скільки коштує кожен етап і загальну суму до початку роботи.</p>
+    <p class="note">Без несподіваних погодинних рахунків — якщо для конкретної послуги адвокат запропонував fixed-price model.</p>
+  </div>
+  ${foot('Продовжити','next')}
+ </div>`});
+
+/* 13 — Membership */
+add({tz:13, grp:'quiz', kind:'x', title:'Membership offer', short:'Membership upsell',
+ goal:'Upsell, який не блокує воронку. Показати потенційну економію як приклад.',
+ data:['membership_status','prepaid'],
+ rules:['Показувати як приклад / potential / eligible services, не як гарантію.','Membership не блокує funnel: обов’язковий secondary CTA «Продовжити без Membership».'],
+ render:()=>`<div class="scr">${status()}
+  <div class="body">
+    <div class="eyeb" style="color:var(--p-navy)">ConsultantLM Membership</div>
+    <h1 class="h2">Зменшіть вартість юридичної допомоги з ConsultantLM Membership</h1>
+    <div class="calc">
+      <div><span>Legal service</span><b>$10,000</b></div>
+      <div><span>Member discount</span><b>−20%</b></div>
+      <div><span>Potential Member Price</span><b>$8,000</b></div>
+      <div class="save"><span>Potential saving</span><b>$2,000</b></div>
+      <div class="fee"><span>Membership</span><b>$100</b></div>
+    </div>
+    <p class="note">Приклад розрахунку для eligible services. Розмір знижки залежить від конкретної послуги та плану.</p>
+    <div class="ben">
+      <div><span class="tick">✓</span>3 консультації → unlimited (залежно від плану)</div>
+      <div><span class="tick">✓</span>Member pricing на eligible services</div>
+      <div><span class="tick">✓</span>Personal manager</div>
+      <div><span class="tick">✓</span>Premium specialists</div>
+      <div><span class="tick">✓</span>AI Assistant 24/7</div>
+      <div><span class="tick">✓</span>Document analysis</div>
+      <div><span class="tick">✓</span>Case status assistance</div>
+      <div><span class="tick">✓</span>Priority matching</div>
+    </div>
+  </div>
+  <div class="foot"><button class="btn amber" data-act="member">Стати ConsultantLM Member</button><button class="btn sec" data-go="15">Продовжити без Membership</button></div>
+ </div>`});
+
+/* 14 — Membership success */
+add({tz:14, grp:'quiz', kind:'x', title:'Membership success', short:'Payment success', cond:'лише після оплати',
+ goal:'Підтвердити статус і повернути у воронку без розриву.',
+ data:['membership_status = paid','prepaid = true'],
+ rules:['Показується тільки після успішної оплати.','PREPAID MEMBER — сильний scoring-сигнал (25), але не замінює intent.'],
+ render:()=>`<div class="scr">${status()}
+  <div class="body center" style="text-align:center;align-items:center">
+    <div class="okc">✓</div>
+    <h1 class="h2">Membership активовано</h1>
+    <span class="badge">★ PREPAID MEMBER</span>
+    <p class="sub">Ваш статус враховано під час обробки запиту.</p>
+  </div>
+  ${foot('Продовжити аналіз','go15')}
+ </div>`});
+
+/* 15 — Q6 contact */
+add({tz:15, grp:'quiz', kind:'q', step:6, title:'Контакти', short:'Q6 · Contact',
+ goal:'Отримати контакт для доставки результатів. Preferred channel залежить від ринку.',
+ data:['name','phone','email','preferred_channel','consent','contact_verification'],
+ rules:['Preferred communication: WhatsApp / SMS / Phone / Email / Telegram — набір залежить від ринку (USA vs Україна).','Consent checkbox + Privacy Policy обов’язкові.'],
+ render:()=>{
+  const chans = S.country==='USA'?['WhatsApp','SMS','Phone','Email']:['Telegram','WhatsApp','Phone','Email'];
+  return `<div class="scr">${status()}${prog(6)}
+  <div class="body">
+    <h1 class="h2">Куди надіслати результати аналізу?</h1>
+    <div class="field"><label>Ім’я</label><div class="inp"><span class="ph">Ваше ім’я</span></div></div>
+    <div class="field"><label>Телефон</label><div class="inp"><span class="ph">${S.country==='USA'?'+1 (___) ___-____':'+380 __ ___ __ __'}</span></div></div>
+    <div class="field"><label>Email</label><div class="inp"><span class="ph">name@email.com</span></div></div>
+    <div class="field"><label>Як зручніше отримати відповідь?</label><div class="chips">${chans.map(c=>`<button class="pill ${S.pref===c?'on':''}" data-set="pref" data-val="${c}">${c}</button>`).join('')}</div></div>
+    <button class="chk ${S.consent?'on':''}" data-toggle="consent"><i>${S.consent?'✓':''}</i><span>Погоджуюсь з <u>Privacy Policy</u> та обробкою персональних даних</span></button>
+  </div>
+  ${foot('Отримати безкоштовний аналіз','next')}
+ </div>`}});
+
+/* 16 — Final processing */
+add({tz:16, grp:'quiz', kind:'x', title:'Final processing', short:'Case created', anim:true, auto:3400,
+ goal:'2–4 секунди анімації перед фінальним CTA: кейс створено, AI-аналіз запущено.',
+ data:['case_id','lead_score','app_install_status'],
+ rules:['Checklist: Запит створено → Категорію визначено → Документи отримано → AI-аналіз запущено → Підбираємо спеціалістів.'],
+ render:(o)=>`<div class="scr">${status()}
+  <div class="body center">
+    <div class="eyeb" style="color:var(--p-navy)">Підбираємо…</div>
+    <h1 class="h2">Ваш кейс уже аналізується</h1>
+    <div class="proc" data-proc>
+      <div class="pi ${o.static?'done':''}"><span class="d">✓</span>Запит створено · <span class="mono" style="font-size:12px">#10123</span></div>
+      <div class="pi ${o.static?'done':''}"><span class="d">✓</span>Категорію визначено</div>
+      <div class="pi ${o.static?'done':''}"><span class="d">✓</span>Документи отримано</div>
+      <div class="pi ${o.static?'done':''}"><span class="d">✓</span>AI-аналіз запущено</div>
+      <div class="pi ${o.static?'now':''}"><span class="d"></span>Підбираємо релевантних спеціалістів</div>
+    </div>
+  </div>
+  <div class="foot"><div class="micro">Ще кілька секунд…</div></div>
+ </div>`});
+
+/* 17 — App CTA */
+add({tz:17, grp:'quiz', kind:'x', title:'Final App CTA', short:'Go to app',
+ goal:'Перевести користувача в застосунок, де з’являться відповіді.',
+ data:['deep_link','qr (desktop)','app_open_status'],
+ rules:['Desktop — QR-код; mobile — deep link у App Store / Google Play.','Тригер «Ваша перша безкоштовна консультація вже доступна» — лише якщо відповідає фактичним умовам продукту.'],
+ render:()=>`<div class="scr">${status()}
+  <div class="body">
+    <div class="eyeb" style="color:var(--p-navy)">Кейс #10123 створено</div>
+    <h1 class="h2">Відповіді з’являться у ConsultantLM App</h1>
+    <p class="sub">У застосунку ви зможете побачити всі розбори вашої ситуації в одному місці.</p>
+    <div class="nums">
+      <div><b>1</b>AI-аналіз вашої ситуації</div>
+      <div><b>2</b>Відповіді декількох релевантних спеціалістів</div>
+      <div><b>3</b>Рейтинг, відгуки та профіль кожного</div>
+      <div><b>4</b>Послуги з етапами та точною ціною</div>
+    </div>
+    <div class="key">Порівняйте підходи та самі оберіть спеціаліста.</div>
+    <div class="trig dyn">🎁 Ваша перша безкоштовна консультація вже доступна</div>
+    <div class="stores"><div><i></i><span>App Store<small>Download on the</small></span></div><div><i></i><span>Google Play<small>Get it on</small></span></div></div>
+    <div class="qr"><i></i><span>На desktop: скануйте QR, щоб відкрити ваш кейс у застосунку. На mobile — deep link.</span></div>
+  </div>
+  ${foot('Переглянути відповіді в ConsultantLM','next')}
+ </div>`});
+
+/* ===== APP ===== */
+const appTop = (title,sub,back) => `<div class="apph">${back!==undefined?`<button class="bk" data-go="${back}">‹</button>`:''}<div class="t">${title}<small>${sub}</small></div><span class="r small">⋯</span></div>`;
+const tabbar = (on) => `<div class="tabbar">${['Кейс','Відповіді','Спеціалісти','Профіль'].map((t,i)=>`<div class="${i===on?'on':''}"><i></i>${t}</div>`).join('')}</div>`;
+const aiCard = (full) => `<div class="feedcard ai">
+  <span class="ailbl">◆ AI Preliminary Analysis</span>
+  <div class="hd">${AV('AI')}<div class="nm">ConsultantLM AI<small>попередній аналіз · не є юридичною консультацією</small></div><div class="tm">сьогодні<br>14:02</div></div>
+  <p>${full?'На основі опису ситуація належить до Family Law (Divorce + Child Custody). Ключові питання: визначення місця проживання дітей, графік спілкування, поділ спільного майна. Рекомендуємо підготувати: свідоцтво про шлюб, документи на майно, підтвердження доходів. Кілька релевантних адвокатів уже отримали ваш запит.':'Ситуація належить до Family Law (Divorce + Child Custody). Ключові питання: місце проживання дітей, графік спілкування, поділ майна…'}</p>
+  ${full?'':'<button class="btn sec" data-go="19">Читати повністю</button>'}
+ </div>`;
+const lawyerCard = (full) => `<div class="feedcard">
+  <div class="hd">${AV('LB','c1')}<div class="nm">Laura Bennett<small>Family Law · Attorney</small></div><div class="match"><span class="dyn">94%</span><small>match</small></div></div>
+  <div class="meta"><span>★ <b class="dyn">4.9</b> · <span class="dyn">184</span> reviews</span><span><b class="dyn">68</b> similar cases</span><span>replies in <b class="dyn">~6 min</b></span></div>
+  <p>${full?'Дякую за детальний опис. У вашій ситуації в штаті Флорида суд орієнтується на «best interests of the child». Оскільки ви обидва хочете брати участь у вихованні, реалістичний сценарій — спільна опіка з погодженим parenting plan. Щодо майна: Флорида застосовує equitable distribution, тобто поділ не обов’язково 50/50. Пропоную почати з аналізу документів і стратегії, після чого ви точно знатимете обсяг роботи та вартість.':'У вашій ситуації суд у Флориді орієнтується на «best interests of the child». Реалістичний сценарій — спільна опіка з погодженим parenting plan…'}</p>
+  <div class="svc"><div class="k">Recommended service</div><div class="n">Divorce + Child Custody Representation</div><div class="pr"><span>Fixed price · 3 stages</span><b>$8,500</b></div></div>
+  ${full?`<button class="btn" data-go="21">Переглянути послугу</button><div class="two"><button class="btn sec" data-go="22">Переглянути профіль</button><button class="btn sec" data-act="none">Зв’язатися</button></div>`:`<button class="btn sec" data-go="20">Читати повністю</button>`}
+ </div>`;
+
+/* 18 — case screen */
+add({tz:18, grp:'app', kind:'a', title:'Перший екран у App', short:'App · Your case',
+ goal:'Continuity: користувач потрапляє одразу у свій кейс, а не на home screen. Feed відповідей → зрозумілий competitive selection.',
+ data:['case_id','status','answers_ready / answers_total','app_opened (engagement)'],
+ rules:['Header: Ваш кейс #10123 · Family Law · Miami, FL. Status «Аналіз триває». Counter «2 відповіді вже готові / 3 із 5 отримано».','AI-картки і картки адвокатів — різні візуально.'],
+ render:()=>`<div class="scr">${status()}${appTop('Ваш кейс #10123',esc(catObj().proof)+' · '+esc(S.city||DEF.city[S.country]))}
+  <div class="body" style="padding-top:2px">
+    <div class="stat"><span class="pulse"></span><div><b>Аналіз триває</b><div class="small">спеціалісти вже отримали ваш запит</div></div></div>
+    <div class="cnt"><div class="row"><span><span class="dyn">2</span> відповіді вже готові</span><span class="small"><span class="dyn">3</span> із <span class="dyn">5</span> отримано</span></div><div class="dotsr"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></div></div>
+    <p class="small">Порівняйте підходи, досвід і вартість послуг та оберіть спеціаліста, який найбільше вам підходить.</p>
+    ${aiCard(false)}
+    ${lawyerCard(false)}
+    <div class="feedcard" style="opacity:.7"><div class="hd">${AV('MH','c3')}<div class="nm">Marcus Hale<small>Family Law · Attorney</small></div><div class="tm">пише…</div></div></div>
+  </div>
+  ${tabbar(0)}
+ </div>`});
+
+/* 19 — AI answer card */
+add({tz:19, grp:'app', kind:'a', title:'AI Answer Card', short:'App · AI answer',
+ goal:'AI-відповідь чітко відрізняється від живого адвоката. Немає кнопки «Замовити послугу».',
+ data:['ai_answer_read (engagement)'],
+ rules:['Label: AI Preliminary Analysis / ConsultantLM AI. Дата/час + короткий аналіз + «Читати повністю».','У AI немає CTA «Замовити послугу» — тільки інформаційна роль.'],
+ render:()=>`<div class="scr">${status()}${appTop('AI-аналіз','Кейс #10123',18)}
+  <div class="body" style="padding-top:2px">
+    ${aiCard(true)}
+    <div class="hint">◆ <span>Це попередній AI-аналіз. Відповіді адвокатів з’являються окремо — ви зможете порівняти їх із цим розбором.</span></div>
+    <button class="btn sec" data-go="18">До всіх відповідей</button>
+  </div>
+  ${tabbar(1)}
+ </div>`});
+
+/* 20 — Lawyer answer card */
+add({tz:20, grp:'app', kind:'a', title:'Lawyer Answer Card', short:'App · Lawyer answer',
+ goal:'Відповідь адвоката на конкретний запит + Recommended Service з fixed price та етапами.',
+ data:['answer_read','service_opened','profile_opened (engagement)'],
+ rules:['Верх картки = 5 факторів вибору: match, рейтинг, схожі кейси, час відповіді.','Три CTA: Переглянути послугу / Переглянути профіль / Зв’язатися з адвокатом.'],
+ render:()=>`<div class="scr">${status()}${appTop('Відповідь адвоката','Кейс #10123',18)}
+  <div class="body" style="padding-top:2px">${lawyerCard(true)}</div>
+  ${tabbar(1)}
+ </div>`});
+
+/* 21 — Service detail */
+add({tz:21, grp:'app', kind:'a', title:'Service Detail', short:'App · Service',
+ goal:'Повна прозорість послуги: етапи, ціни, що включено / не включено, terms, Member discount.',
+ data:['service_id','service_opened'],
+ rules:['Member example (Regular $8,500 → Member $6,800 → You save $1,700) — тільки якщо це реальна бізнес-логіка конкретної послуги.'],
+ render:()=>`<div class="scr">${status()}${appTop('Послуга','Laura Bennett · Family Law',20)}
+  <div class="body" style="padding-top:2px">
+    <div class="pc" style="box-shadow:none;border:1.5px solid var(--p-line)">
+      <div class="ttl">Divorce + Child Custody Representation</div>
+      <div class="total" style="border-top:0;padding-top:0"><span class="small">Total price</span><b>$8,500</b></div>
+      <div><div class="stage-row"><span class="no">Stage 1</span><span>Case analysis<small>документи, стратегія, оцінка ризиків</small></span><span class="p">$500</span></div>
+      <div class="stage-row"><span class="no">Stage 2</span><span>Preparation<small>позов, докази, переговори</small></span><span class="p">$2,000</span></div>
+      <div class="stage-row"><span class="no">Stage 3</span><span>Court Representation<small>усі засідання першої інстанції</small></span><span class="p">$6,000</span></div></div>
+      <div class="badges"><span>Fixed price</span><span class="n">Stages included</span></div>
+    </div>
+    <div class="kv">
+      <div><span>Estimated timeline</span><b>4–6 місяців</b></div>
+      <div><span>Включено</span><b>Консультації, документи, суд 1-ї інстанції</b></div>
+      <div><span>Не включено</span><b>Судові збори, апеляція</b></div>
+      <div><span>Payment terms</span><b>Поетапно, перед кожним етапом</b></div>
+    </div>
+    <div class="calc dyn" style="padding:12px 14px"><div><span>Regular</span><b>$8,500</b></div><div><span>Member</span><b>$6,800</b></div><div class="save"><span>You save</span><b>$1,700</b></div></div>
+    <p class="note">Member-ціна показується лише якщо знижка доступна для цієї послуги.</p>
+  </div>
+  <div class="foot"><button class="btn" data-act="none">Замовити етап 1 · $500</button><button class="btn sec" data-go="20">Назад до відповіді</button></div>
+ </div>`});
+
+/* 22 — Lawyer profile */
+add({tz:22, grp:'app', kind:'a', title:'Lawyer Profile', short:'App · Profile',
+ goal:'Верх профілю = 5 ключових факторів вибору. Нижче — Experience, Education, Languages, Awards, Bio.',
+ data:['profile_opened (engagement)'],
+ rules:['Above the fold: Match 94% · ★ 4.9 · 184 verified reviews · 68 similar cases · ~6 min · Pricing available · Verified outcomes.'],
+ render:()=>`<div class="scr">${status()}${appTop('Профіль спеціаліста','',20)}
+  <div class="body" style="padding-top:0">
+    <div class="prof">${AV('LB','c1')}<div class="nm">Laura Bennett<small>Family Law Attorney · Miami, FL</small></div><div class="badges"><span>Verified outcomes</span><span class="n">Pricing available</span></div></div>
+    <div class="five">
+      <div><span class="ic">◎</span><span>Match to your case<small>релевантний досвід</small></span><b class="dyn">94%</b></div>
+      <div><span class="ic">★</span><span>Rating<small><span class="dyn">184</span> verified reviews</small></span><b class="dyn">4.9</b></div>
+      <div><span class="ic">⚖</span><span>Similar cases<small>Divorce · Child Custody</small></span><b class="dyn">68</b></div>
+      <div><span class="ic">⏱</span><span>Response time<small>зазвичай відповідає</small></span><b class="dyn">~6 min</b></div>
+    </div>
+    <div class="sect"><h4>Experience</h4><p><span class="dyn">12</span> років у Family Law, Florida Bar. Раніше — асоційований партнер у family-practice бутику в Майамі.</p></div>
+    <div class="sect"><h4>Education</h4><p>University of Miami School of Law, J.D.</p></div>
+    <div class="sect"><h4>Languages</h4><p>English · Español</p></div>
+    <div class="sect"><h4>Case results</h4><p>Публікуються лише verified outcomes з прихованими персональними даними.</p></div>
+  </div>
+  <div class="foot"><button class="btn" data-act="none">Зв’язатися з адвокатом</button><button class="btn sec" data-go="18">До кейсу</button></div>
+ </div>`});
+
+/* ===================== APP LOGIC ===================== */
+let cur = 0, timer = null;
+const $ = (s,r=document)=>r.querySelector(s);
+const screenEl = $('#screen'), navEl = $('#nav'), notesEl = $('#notes'), mapEl = $('#map');
+const GROUPS = {entry:'Вхід', quiz:'Квіз · 6 кроків + proof', app:'Застосунок після переходу'};
+const KINDN = {q:'Питання',p:'Proof',x:'Обробка / CTA',a:'App'};
+const REM_KEY = 'clm_quiz_remarks_v1';
+let remarks = {}; try{ remarks = JSON.parse(localStorage.getItem(REM_KEY)||'{}')||{} }catch(e){ remarks = {} }
+const saveRem = ()=>{ try{ localStorage.setItem(REM_KEY, JSON.stringify(remarks)) }catch(e){} };
+
+function renderScreen(){
+  clearTimeout(timer);
+  const sc = SCREENS[cur];
+  screenEl.innerHTML = sc.render({static:false});
+  const body = $('.body',screenEl); if(body) body.scrollTop = 0;
+  const proc = $('[data-proc]',screenEl);
+  if(proc){
+    const items=[...proc.children];
+    items.forEach((it,i)=>{ setTimeout(()=>{ items.forEach(x=>x.classList.remove('now')); if(i<items.length-1){it.classList.add('done')} else {it.classList.add('now')} }, 350+i*650) });
+  }
+  if(sc.auto){ timer=setTimeout(()=>go(cur+1), sc.auto) }
+  $('#pos').textContent = `${cur} / ${SCREENS.length-1}`;
+  $('#prevBtn').disabled = cur===0; $('#nextBtn').disabled = cur===SCREENS.length-1;
+  renderNav(); renderNotes();
+}
+function go(n){ if(n<0||n>=SCREENS.length) return; cur=n; renderScreen(); }
+
+function renderNav(){
+  let html='', g='';
+  SCREENS.forEach((sc,i)=>{
+    if(sc.grp!==g){ g=sc.grp; html+=`<div class="grp">${GROUPS[g]}</div>` }
+    const r = (remarks[sc.tz]||'').trim();
+    html+=`<button class="item ${i===cur?'on':''}" data-nav="${i}"><span class="num">${sc.tz}</span><span class="lbl">${sc.title}<small>${sc.short}${sc.step?` · крок ${sc.step}/6`:''}${sc.cond?` · ${sc.cond}`:''}</small></span><span class="flags">${r?'<span class="rem">!</span>':''}<span class="kind ${sc.kind}"></span></span></button>`;
+  });
+  navEl.innerHTML = html;
+}
+function renderNotes(){
+  const sc = SCREENS[cur];
+  notesEl.innerHTML = `
+   <div class="eyebrow">СЛАЙД ${sc.tz} з ТЗ <span class="chip ${sc.kind}">${KINDN[sc.kind]}</span>${sc.step?`<span class="chip q">Крок ${sc.step} із 6</span>`:''}${sc.anim?`<span class="chip x">анімація</span>`:''}</div>
+   <h2>${sc.title}</h2>
+   <div><h3>Мета екрана</h3><p>${sc.goal}</p></div>
+   ${sc.rules&&sc.rules.length?`<div><h3>Важливо з ТЗ</h3><div style="display:grid;gap:6px">${sc.rules.map(r=>`<div class="rule">${r}</div>`).join('')}</div></div>`:''}
+   <div><h3>Дані → CRM</h3>${sc.data&&sc.data.length?`<div class="data">${sc.data.map(d=>`<span>${d}</span>`).join('')}</div>`:'<p class="small" style="color:var(--muted)">Екран не збирає даних</p>'}</div>
+   <div><h3>Зауваження до екрана</h3><textarea id="remark" placeholder="Що змінити, що уточнити, що не так… Зберігається у вашому браузері; кнопка зверху збирає всі зауваження в один текст.">${esc(remarks[sc.tz]||'')}</textarea><div class="saved" id="savedMsg"></div></div>`;
+  const ta = $('#remark'); let t;
+  ta.addEventListener('input',()=>{ remarks[sc.tz]=ta.value; saveRem(); $('#savedMsg').textContent='Збережено'; clearTimeout(t); t=setTimeout(()=>{$('#savedMsg').textContent=''},1200); renderNav(); });
+}
+
+/* interactions inside the phone */
+screenEl.addEventListener('click',e=>{
+  const b = e.target.closest('[data-set],[data-toggle],[data-act],[data-go]'); if(!b) return;
+  if(b.dataset.go!==undefined){ go(+b.dataset.go); return }
+  if(b.dataset.set){
+    const k=b.dataset.set, v=b.dataset.val;
+    if(k==='country'){ S.country=v; S.city=null }
+    else if(k==='category'){ S.category=v; S.sub=null }
+    else if(k==='city'){ S.city=v||null }
+    else S[k]=v;
+    renderScreen(); return;
+  }
+  if(b.dataset.toggle){
+    const k=b.dataset.toggle;
+    if(k==='desc'){ S.desc = S.desc?'':'Ми вирішили розлучитися, є двоє дітей (6 і 9 років). Не можемо домовитися про опіку та поділ квартири в Майамі.' }
+    else if(k==='files'){ S.files = S.files?0:1 }
+    else S[k]=!S[k];
+    renderScreen(); return;
+  }
+  const a=b.dataset.act;
+  if(a==='next') go(cur+1);
+  else if(a==='member'){ S.member=true; go(14) }
+  else if(a==='go15') go(15);
+});
+$('#prevBtn').onclick=()=>go(cur-1); $('#nextBtn').onclick=()=>go(cur+1);
+$('#resetBtn').onclick=()=>{ Object.assign(S,{specialist:null,country:'USA',city:null,remote:false,category:null,sub:null,desc:'',files:0,voice:false,intent:null,member:false,consent:false,pref:'WhatsApp'}); go(0) };
+navEl.addEventListener('click',e=>{ const b=e.target.closest('[data-nav]'); if(b) go(+b.dataset.nav) });
+document.addEventListener('keydown',e=>{ if(e.target.matches('textarea,input')) return; if(e.key==='ArrowRight') go(cur+1); if(e.key==='ArrowLeft') go(cur-1) });
+
+/* fit phone into stage */
+function fit(){ const st=$('.stage'); const h=st.clientHeight-70, w=st.clientWidth-40; const s=Math.min(1,h/844,w/390); $('#phoneWrap').style.transform=`scale(${s})`; }
+window.addEventListener('resize',fit);
+
+/* map mode */
+function renderMap(){
+  const groups=[['entry','Вхід','Трафік: кейс / стаття / соцмережі → FREE CASE ANALYSIS'],['quiz','Квіз','6 питань, між ними — короткі proof-екрани. Question → Proof → Question → Proof.'],['app','Застосунок','Continuity: одразу у свій кейс. AI → адвокати → профілі → послуги → вибір.']];
+  let html='';
+  groups.forEach(([g,t,d])=>{
+    html+=`<section class="row"><div class="rowhead"><h2>${t}</h2><p>${d}</p></div><div class="tiles">`;
+    SCREENS.forEach((sc,i)=>{ if(sc.grp!==g) return; const r=(remarks[sc.tz]||'').trim();
+      html+=`<button class="tile" data-open="${i}"><div class="mini"><div class="screen">${sc.render({static:true})}</div></div><div class="cap"><span class="num">${sc.tz}</span><span><b>${sc.title}</b><small>${sc.short}${sc.step?` · крок ${sc.step}/6`:''}</small></span><span class="flags">${r?'<span class="rem">!</span>':''}<span class="kind ${sc.kind}"></span></span></div></button>`;
+    });
+    html+=`</div></section>`;
+  });
+  html+=`<section class="side">
+    <div class="card"><h3>Lead scoring (з ТЗ)</h3><div class="score">
+      <div><span>Intent · need now / considering / research</span><span class="mono">30 / 20 / 5</span></div>
+      <div><span>Membership · paid</span><span class="mono">25</span></div>
+      <div><span>Case completeness · description+docs / detailed / minimal</span><span class="mono">15 / 10 / 3</span></div>
+      <div><span>Contact quality · phone+email verified / one</span><span class="mono">10 / 5</span></div>
+      <div><span>Category / value (configurable)</span><span class="mono">до 10</span></div>
+      <div><span>Engagement · app opened, answer read, profile, service</span><span class="mono">до 10</span></div></div>
+      <div class="tiers"><span style="background:#FBE3E0;color:#8B2A1E">HOT 70–100</span><span style="background:#FBF1DF;color:#8A5A0C">WARM 40–69</span><span style="background:var(--brand-soft);color:var(--brand)">NURTURE 0–39</span></div>
+      <p class="small" style="margin:10px 0 0;color:var(--muted)">PREPAID MEMBER — окремий статус, не заміна Lead Score.</p></div>
+    <div class="card"><h3>Фінальна архітектура</h3><div class="arch">${['Traffic','FREE CASE ANALYSIS','Q1 Specialist','Expertise proof','Q2 Location','Availability proof','Q3 Category','Similar cases proof','Q4 Description + docs','AI processing','Multiple opinions','Specialist comparison','Q5 Intent','Transparent pricing','Membership upsell','Q6 Contact','Case created','APP','AI answers','Lawyer answers','Profiles + reviews','Service + stages + price','CLIENT COMPARES','CLIENT CHOOSES','Direct communication','Service purchase'].map(x=>`<span>${x}</span>`).join('<i>→</i>')}</div>
+      <p class="small" style="margin:12px 0 0;color:var(--muted)">Що НЕ робити: не 15 питань, не фейкові цифри, не змішувати AI і адвокатів, не робити Membership обов’язковим, не ставити довгий pitch перед кожним питанням.</p></div>
+   </section>`;
+  mapEl.innerHTML=html;
+  mapEl.querySelectorAll('.tile .mini').forEach(m=>{ const s=m.clientWidth-6; const sc=$('.screen',m); sc.style.transform=`scale(${s/390})`; });
+}
+mapEl.addEventListener('click',e=>{ const b=e.target.closest('[data-open]'); if(b){ setMode('proto'); go(+b.dataset.open) } });
+function setMode(m){
+  document.querySelectorAll('.modes button').forEach(b=>b.classList.toggle('on',b.dataset.mode===m));
+  $('#proto').hidden = m!=='proto'; mapEl.hidden = m!=='map';
+  if(m==='map'){ clearTimeout(timer); renderMap() } else { requestAnimationFrame(()=>{fit(); renderScreen()}) }
+}
+document.querySelectorAll('.modes button').forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
+window.addEventListener('resize',()=>{ if(!mapEl.hidden) mapEl.querySelectorAll('.tile .mini').forEach(m=>{ const s=m.clientWidth-6; $('.screen',m).style.transform=`scale(${s/390})` }) });
+
+/* copy remarks */
+$('#copyAll').onclick=async()=>{
+  const lines=SCREENS.filter(s=>(remarks[s.tz]||'').trim()).map(s=>`Слайд ${s.tz} — ${s.title}:\n${remarks[s.tz].trim()}`);
+  const text = lines.length?`Зауваження до ConsultantLM Quiz Funnel (бета-дизайн v0.1)\n\n${lines.join('\n\n')}`:'Зауважень поки немає.';
+  try{ await navigator.clipboard.writeText(text); toast(lines.length?`Скопійовано: ${lines.length} ${lines.length===1?'зауваження':'зауважень'}`:'Зауважень поки немає') }catch(e){ toast('Не вдалося скопіювати — виділіть текст у полях вручну') }
+};
+let tt; function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('show'); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove('show'),2200) }
+
+fit(); renderScreen();
+</script>
+
+</body>
+</html>
