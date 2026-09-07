@@ -4,7 +4,7 @@
   // Server routes of the live cabinet: in a static demo there is nobody to serve them
   var API = [
     '/consultant/', '/broadcasting/', '/cabinet/', '/api/',
-    '/call-trigger', '/livekit', '/login', '/logout'
+    '/call-trigger', '/livekit', '/login', '/logout', '/icons-list'
   ];
 
   function isBlocked(url) {

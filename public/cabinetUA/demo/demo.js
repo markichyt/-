@@ -4,7 +4,7 @@
   // Серверні шляхи бойового кабінету: у статичному демо їх нікому обслуговувати
   var API = [
     '/consultant/', '/broadcasting/', '/cabinet/', '/api/',
-    '/call-trigger', '/livekit', '/login', '/logout'
+    '/call-trigger', '/livekit', '/login', '/logout', '/icons-list'
   ];
 
   function isBlocked(url) {

@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="uk" hreflang="uk" class="js-focus-visible" data-js-focus-visible=""><head>
+    <script src="demo/demo.js?v=20"></script>
+    <script src="demo/leads.js?v=20"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+            <meta name="description" content="">
+        <meta name="csrf-token" content="SoHaP3EqDN0CvTtFRx60bDE2ERzNuWy3PeYvBkXs">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Консультант Юридичний Маркетплейс</title>
+
+    <link rel="preload" href="assets/cabinet/fonts/AvenirNext-Regular.woff" as="font" crossorigin="anonymous">
+    <link rel="preload" href="assets/cabinet/fonts/AvenirNext-Medium.woff" as="font" crossorigin="anonymous">
+    <link rel="preload" href="assets/cabinet/fonts/AvenirNext-DemiBold.woff" as="font" crossorigin="anonymous">
+    <link rel="preload" href="assets/cabinet/fonts/AvenirNext-Bold.woff" as="font" crossorigin="anonymous">
+
+    <link rel="preload" href="assets/cabinet/fonts/AvenirNextCyr-Regular.woff" as="font" crossorigin="anonymous">
+    <link rel="preload" href="assets/cabinet/fonts/AvenirNextCyr-Medium.woff" as="font" crossorigin="anonymous">
+    <link rel="preload" href="assets/cabinet/fonts/AvenirNextCyr-Demi.woff" as="font" crossorigin="anonymous">
+    <link rel="preload" href="assets/cabinet/fonts/AvenirNextCyr-Bold.woff" as="font" crossorigin="anonymous">
+
+    <link rel="preload" href="assets/cabinet/fonts/AvenirLT-Roman.woff" as="font" crossorigin="anonymous">
+
+    <link rel="preload" href="assets/cabinet/fonts/Roboto-Regular.woff" as="font" crossorigin="anonymous">
+    <link rel="preload" href="assets/cabinet/fonts/Roboto-Medium.woff" as="font" crossorigin="anonymous">
+    <link rel="preload" href="assets/cabinet/fonts/Roboto-Bold.woff" as="font" crossorigin="anonymous">
+    <link rel="preload" href="assets/cabinet/fonts/DMSans-Regular.woff" as="font" crossorigin="anonymous">
+    <link rel="preload" href="assets/cabinet/fonts/Inter-Bold.woff" as="font" crossorigin="anonymous">
+
+    <style data-fullcalendar=""></style><link rel="stylesheet" href="assets/cabinet/css/glassupply.css">
+        <script>
+        // TODO: This code is related to Dashboard that is not in use already. So we need to check it and delete it.
+        const globalComission = 0;
+    </script>
+    <script>
+        window.AppConfig = window.AppConfig || {};
+        window.AppConfig.broadcasting = {
+            key: 'c93bbbac5ab0005e4e88',
+            wsHost: 'testing123.consultant.net.ua',
+            wsPort: 6001,
+            wssPort: 443,
+            scheme: 'http',
+            useTLS: false
+        };
+    </script>
+    <link rel="stylesheet" href="demo/demo.css?v=20">
+    <link rel="stylesheet" href="demo/leads.css?v=20">
+</head>
+
+
+<body>
+
+    <header>
+        <div class="container">
+            <div class="header">
+                <div class="user-about">
+                    <div class="user-about__top">
+                        <a href="consultant-edit.html">
+                        <img class="user-about__icon" width="38" height="38" src="storage/media/profile/avatar.jpg" alt="image"></a>
+                        <a href="consultant-edit.html" class="user-about__name">Олександр Ковальчук</a>
+                    </div>
+                    <a href="rating.html" class="user-about__rating">
+                        <svg width="32" height="32">
+                            <use href="assets/cabinet/img/sprite/sprite.svg#star"></use>
+                        </svg>
+                        <b class="user-about__rating-value">0</b>
+                    </a>
+
+                </div>
+                <button class="burger" data-burger="">
+                    <span class="burger__line"></span>
+                </button>
+            </div>
+
+            
+            <div class="mobile-menu ">
+                <button class="burger" data-burger="">
+                    <span class="burger__line"></span>
+                </button>
+                <div class="aside-menu__inner">
+
+                    <div class="user-about">
+                        <div class="user-about__top">
+                            <a href="consultant-edit.html">
+                            <img class="user-about__icon" width="104" height="104" src="storage/media/profile/avatar.jpg" alt="image"></a>
+                            <a href="consultant-edit.html" class="user-about__name">Олександр Ковальчук</a>
+                        </div>
+                        <a href="rating.html" class="user-about__rating">
+                            <svg width="32" height="32">
+                                <use href="assets/cabinet/img/sprite/sprite.svg#star"></use>
+                            </svg>
+                            <b class="user-about__rating-value">0</b>
+                        </a>
+
+                        <span class="user-about__balance">
+                            Баланс
+                            <a href="balance.html" class="user-about__balance-value">121&nbsp;600,00&nbsp;₴</a>
+                        </span>
+
+                        <div class="user-about__inner">
+                            <span class="user-about__subscribe">
+                                Підписка
+                                <a href="subscription-packages.html" class="subscribe-label">PREMIUM</a>
+                            </span>
+                                                            <span class="user-about__subscribe">
+                                    Дійсна до
+                                    <b>04.11.2026</b>
+                                </span>
+                                                    </div>
+                    </div>
+
+                    <div class="aside-advertising">
+        <div class="aside-advertising__inner">
+            <span class="aside-advertising__title">Реклама</span>
+            <p>Метою реклами юриста є залучення потенційних клієнтів</p>
+            <a href="rating-ad-calculator.html" class="aside-advertising__link">Рекламувати</a>
+        </div>
+    </div>
+                    <ul class="aside-nav">
+            <li class="aside-nav__item  ">
+            <a href="applications-relevant.html" class="aside-nav__link">
+                <svg width="20" height="20">
+                    <use href="assets/cabinet/img/sprite/sprite.svg#time"></use>
+                </svg>
+                Ліди
+                                    <new-orders-badge><span class="new-orders__badge">1232</span></new-orders-badge>
+                            </a>
+        </li>
+            <li class="aside-nav__item  ">
+            <a href="services-in-progress.html" class="aside-nav__link">
+                <svg width="20" height="20">
+                    <use href="assets/cabinet/img/sprite/sprite.svg#comment"></use>
+                </svg>
+                Послуги
+                            </a>
+        </li>
+            <li class="aside-nav__item  ">
+            <a href="documents.html" class="aside-nav__link">
+                <svg width="20" height="20">
+                    <use href="assets/cabinet/img/sprite/sprite.svg#document"></use>
+                </svg>
+                Документи
+                            </a>
+        </li>
+            <li class="aside-nav__item  ">
+            <a href="consultant-articles.html" class="aside-nav__link">
+                <svg width="20" height="20">
+                    <use href="assets/cabinet/img/sprite/sprite.svg#user"></use>
+                </svg>
+                Консультації
+                            </a>
+        </li>
+            <li class="aside-nav__item   active ">
+            <a href="contacts.html" class="aside-nav__link">
+                <svg width="20" height="20">
+                    <use href="assets/cabinet/img/sprite/sprite.svg#phone"></use>
+                </svg>
+                Контакти
+                            </a>
+        </li>
+            <li class="aside-nav__item  ">
+            <a href="contacts-info.html" class="aside-nav__link">
+                <svg width="20" height="20">
+                    <use href="assets/cabinet/img/sprite/sprite.svg#info"></use>
+                </svg>
+                Інформування
+                            </a>
+        </li>
+            <li class="aside-nav__item  ">
+            <a href="referrals.html" class="aside-nav__link">
+                <svg width="20" height="20">
+                    <use href="assets/cabinet/img/sprite/sprite.svg#diamond"></use>
+                </svg>
+                Програма лояльності
+                            </a>
+        </li>
+    </ul>
+                </div>
+
+                <div class="aside-menu__wrapper">
+                    <span class="aside-menu__pretitle">Контакти персонального менеджера</span>
+                    <ul class="aside-contacts">
+                        <li class="aside-contacts__item">
+                            <a href="#" class="aside-contacts__link">
+                                <span class="aside-contacts__icon">
+                                    <svg width="20" height="20">
+                                        <use href="assets/cabinet/img/sprite/sprite.svg#phone"></use>
+                                    </svg>
+                                </span>
+                                0800 33 77 17
+                            </a>
+                        </li>
+                        <li class="aside-contacts__item">
+                            <a href="#" class="aside-contacts__link aside-contacts__link--mode">
+                                <span class="aside-contacts__icon">
+                                    <svg width="20" height="20">
+                                        <use href="assets/cabinet/img/sprite/sprite.svg#phone"></use>
+                                    </svg>
+                                </span>
+                                support@consultant.net.ua
+                            </a>
+                        </li>
+                        <li class="aside-contacts__item">
+                            <form action="demo-stub.html?p=cabinet-logout" method="POST">
+                                <input type="hidden" name="_token" value="SoHaP3EqDN0CvTtFRx60bDE2ERzNuWy3PeYvBkXs" autocomplete="off">                                <button type="submit" class="aside-contacts__link">
+                                    <span class="aside-contacts__icon">
+                                        <svg width="20" height="20">
+                                            <use href="assets/cabinet/img/sprite/sprite.svg#phone"></use>
+                                        </svg>
+                                    </span>
+                                    Вийти
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </header>
+
+    <div id="app">
+        <main>
+<form id="proposeForm" action="#demo-action:propose-changes" data-id="2383" data-translations="{&quot;limit&quot;:&quot;\u041e\u0431\u0435\u0440\u0456\u0442\u044c \u0432\u0456\u0434 1 \u0434\u043e 10 \u043c\u0456\u0441\u0442&quot;}" class="edit-form js-consultant-edit-form js-translations__active_item_uk"><input type="hidden" name="_token" value="LGkDM6jghebFIfGSaL1fJjLI6LTzSeSQKzB98bhf" autocomplete="off"> <input type="hidden" name="_method" value="PUT"> <input id="proposeFormSpecializationId" type="hidden" name="specialization_id" value="1"> <section class="hero-section"><div class="hero-section__bg"><picture><img src="assets/cabinet/img/edit/vip-bg.jpg" alt="image" data-load-image-id="proposeFormBackgroundImage"></picture></div> <div class="hero-section__bg hero-section__bg--mob"><picture><img src="assets/cabinet/img/edit/black-bg.png" alt="image" data-load-image-id="proposeFormBackgroundImage"></picture></div> <div class="container container--mode"><a href="applications-relevant.html" class="profile-edit__back"><svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><g stroke="rgba(var(--bg-d), 1)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m11 5-7 7 7 7"></path><path d="m4 12h16"></path></g></svg>
+            Повернутися назад
+        </a> <div class="hero-section__box"><div class="hero-section__inner"><ul class="version-list"><li class="version-list__item js-languages version-list__item-buttons"><a data-locale="uk" class="version-btn js-languages__item active">Українська*</a> <a data-locale="ru" class="version-btn js-languages__item">Російська*</a></li> <li class="version-list__item version-list__item--mode"><span class="edit-contact"><svg width="20" height="21"><use href="assets/cabinet/img/sprite/sprite.svg#mail3"></use></svg> <label for="email" class="edit-contact__label"><input type="email" id="email" name="email" value="o.kovalchuk@consultant.net.ua" placeholder="email@gmail.com" class="edit-contact__input"></label> <div data-tooltip-text="Редагуйте Ваш email" class="edit-btn"><svg width="12" height="12"><use href="assets/cabinet/img/sprite/sprite.svg#pencil"></use></svg> <span class="edit-btn__info"><svg width="11" height="11"><use href="assets/cabinet/img/sprite/sprite.svg#info2"></use></svg></span> <span data-tooltip="" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(14px, -39px, 0px);">Редагуйте Ваш email</span></div></span> <div class="edit-contact"><svg width="20" height="20"><use href="assets/cabinet/img/sprite/sprite.svg#phone2"></use></svg> <label for="phone" class="edit-contact__label"><input type="tel" id="phone" name="phone" placeholder="+" value="+380687213213" class="edit-contact__input js-masked__phone_number" maxlength="18"></label> <div data-tooltip-text="Редагуйте Ваш номер телефону" class="edit-btn"><svg width="12" height="12"><use href="assets/cabinet/img/sprite/sprite.svg#pencil"></use></svg> <span class="edit-btn__info"><svg width="11" height="11"><use href="assets/cabinet/img/sprite/sprite.svg#info2"></use></svg></span> <span data-tooltip="" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(14px, -39px, 0px);">Редагуйте Ваш номер телефону</span></div></div></li></ul> <label for="title" data-area="" class="hero-section__label hero-section__label--title main-textarea"><textarea name="translations[uk][name]" id="title" placeholder="Введіть ім'я" class="hero-section__title main-textarea__area js-translation__item_uk" style="height: 108px;">Ковальчук Олександр</textarea> <textarea name="translations[ru][name]" id="title" placeholder="Введіть ім'я" class="hero-section__title main-textarea__area js-translation__item_ru hidden" style="height: 108px;">Ковальчук Олександр</textarea></label> <div class="hero-section__col"><div class="hero-section__image"><picture><img width="658" height="728" src="storage/media/profile/avatar.jpg" alt="image" data-load-image-id="proposeFormBigAvatar"></picture></div> <div class="hero-section__rating"><div class="hero-section__rating-box"><a href="rating.html" data-tooltip-text="Редагуйте Ваш рейтинг" class="edit-btn"><svg width="16" height="16"><use href="assets/cabinet/img/sprite/sprite.svg#pencil"></use></svg> <span class="edit-btn__info"><svg width="11" height="11"><use href="assets/cabinet/img/sprite/sprite.svg#info2"></use></svg></span> <span data-tooltip="" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(16px, -43px, 0px);">Редагуйте Ваш рейтинг</span></a> <span class="rating"><svg width="52" height="52"><use href="assets/cabinet/img/sprite/sprite.svg#star"></use></svg> <b class="rating__value">0 </b></span></div> <div class="sign"><picture><img width="167" height="59" src="assets/cabinet/img/edit/sign.png" alt="image" data-load-image-id="proposeFormSignature"></picture> <input type="file" id="proposeFormSignature" name="signature" class="edit-btn__input js-load-image"> <label for="proposeFormSignature" data-tooltip-text="Змінити зображення підпису" class="edit-btn"><svg width="16" height="16"><use href="assets/cabinet/img/sprite/sprite.svg#pencil"></use></svg> <span class="edit-btn__info"><svg width="11" height="11"><use href="assets/cabinet/img/sprite/sprite.svg#info2"></use></svg></span> <span data-tooltip="" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, -312.5px, 0px);">Змінити зображення підпису</span></label></div></div></div> <div class="hero-section__position"><div class="hero-section__job"><span class="hero-section__job-text js-form_specialization_name">
+                            Юрист
+                        </span> <div data-btn-modal="choose" class="edit-btn"><svg width="12" height="12"><use href="assets/cabinet/img/sprite/sprite.svg#pencil"></use></svg></div></div> <div data-min="1" data-max="10" data-sprite-path-del="assets/cabinet/img/sprite/sprite.svg#close2" class="hero-section__geo js-hero-section__geo"><svg width="24" height="24"><use href="assets/cabinet/img/sprite/sprite.svg#map"></use></svg> <div class="js-regions-inputs"><input type="hidden" name="regions[1][id]" value="29"> <input type="hidden" name="regions[1][name]" value="Київська Область / Богуслав"></div> <div class="hero-section__geo__list flex items-center gap-2 js-hero-section__geo__list"><span class="hero-section__geo-text">
+                                Україна:
+                            </span> <span class="js-regions-summary hero-section__geo-text">Київська Область / Богуслав</span></div> <button type="button" aria-label="Редагувати" title="Редагувати" class="hero-geo-edit js-regions-edit-all edit-btn"><svg width="16" height="16"><use href="assets/cabinet/img/sprite/sprite.svg#pencil"></use></svg></button></div></div> <label for="proposeFormBackgroundImage" data-tooltip-text="Змінити фонове зображення" class="edit-btn edit-btn--mode"><svg width="16" height="16"><use href="assets/cabinet/img/sprite/sprite.svg#pencil"></use></svg> <span class="edit-btn__info"><svg width="11" height="11"><use href="assets/cabinet/img/sprite/sprite.svg#info2"></use></svg></span> <span data-tooltip="" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(111.5px, -669.5px, 0px);">Змінити фонове зображення</span></label></div> <div class="hero-section__wrapp"><div class="hero-section__content"><div class="hero-section__image"><picture><img width="658" height="728" src="storage/media/profile/avatar.jpg" alt="image" data-load-image-id="proposeFormBigAvatar"></picture></div></div> <div class="hero-section__info"><div class="hero-section__info-box"><label for="about" data-area="" class="main-textarea"><textarea id="about" name="translations[uk][slogan]" placeholder="Напишіть свій слоган" class="main-textarea__area js-translation__item_uk"></textarea> <textarea id="about" name="translations[ru][slogan]" placeholder="Напишіть свій слоган" class="main-textarea__area js-translation__item_ru hidden"></textarea> <div class="main-textarea__box"></div></label></div> <div class="hero-section__rating"><div class="hero-section__rating-box"><a href="rating.html" data-tooltip-text="Заповненням анкети ви можете збільшити свій рейтинг" class="edit-btn"><svg width="16" height="16"><use href="assets/cabinet/img/sprite/sprite.svg#pencil"></use></svg> <span class="edit-btn__info"><svg width="11" height="11"><use href="assets/cabinet/img/sprite/sprite.svg#info2"></use></svg></span> <span data-tooltip="" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="bottom" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 10px, 0px);">Заповненням анкети ви можете збільшити свій рейтинг</span></a> <span class="rating"><svg width="52" height="52"><use href="assets/cabinet/img/sprite/sprite.svg#star"></use></svg> <b class="rating__value">0</b></span></div> <div class="sign"><picture><img width="167" height="59" src="assets/cabinet/img/edit/sign.png" alt="image" data-load-image-id="proposeFormSignature"></picture> <label for="proposeFormSignature" data-tooltip-text="Змінити зображення підпису" class="edit-btn"><svg width="16" height="16"><use href="assets/cabinet/img/sprite/sprite.svg#pencil"></use></svg> <span class="edit-btn__info"><svg width="11" height="11"><use href="assets/cabinet/img/sprite/sprite.svg#info2"></use></svg></span> <span data-tooltip="" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="bottom" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 10px, 0px);">Змінити зображення підпису</span></label></div></div></div> <input type="file" id="proposeFormBackgroundImage" name="background_image" class="edit-btn__input js-load-image"> <label for="proposeFormBackgroundImage" data-tooltip-text="Змінити фонове зображення" class="edit-btn edit-btn--bg"><svg width="16" height="16"><use href="assets/cabinet/img/sprite/sprite.svg#pencil"></use></svg> <span class="edit-btn__info"><svg width="11" height="11"><use href="assets/cabinet/img/sprite/sprite.svg#info2"></use></svg></span> <span data-tooltip="" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="bottom" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 10px, 0px);">Змінити фонове зображення</span></label> <input data-avatar="" type="file" id="proposeFormBigAvatar" name="big_avatar" data-load-image-event="image.cropped" class="edit-btn__input js-load-image"> <label for="proposeFormBigAvatar" data-tooltip-text="Змінити фото" class="edit-btn edit-btn--image"><svg width="16" height="16"><use href="assets/cabinet/img/sprite/sprite.svg#pencil"></use></svg> <span class="edit-btn__info"><svg width="11" height="11"><use href="assets/cabinet/img/sprite/sprite.svg#info2"></use></svg></span> <span data-tooltip="" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="bottom" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 10px, 0px);">Змінити фото</span></label> <label for="proposeFormBigAvatar" data-tooltip-text="Змінити фото" class="edit-btn edit-btn--mob"><svg width="16" height="16"><use href="assets/cabinet/img/sprite/sprite.svg#pencil"></use></svg> <span class="edit-btn__info"><svg width="11" height="11"><use href="assets/cabinet/img/sprite/sprite.svg#info2"></use></svg></span> <span data-tooltip="" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(16px, -43px, 0px);">Змінити фото</span></label></div></div></div></section> <section class="choice-section"><div class="container container--mode"><div class="choice-section__box"><a target="_blank" href="demo-stub.html" class="main-button main-button--mode">Додати послугу</a></div></div></section> <section class="edit-section"><div class="edit-section__bg"><picture><source type="image/webp" srcset="assets/cabinet/img/edit/info-bg.webp"> <img width="1400" height="1148" src="assets/cabinet/img/edit/info-bg.png" alt="image"></picture></div> <div class="container container--mode"><div class="edit-section__box"><div class="title-top"><div class="title-top__icon"><svg width="30" height="30"><use href="assets/cabinet/img/sprite/sprite.svg#info"></use></svg></div> <h2 class="title-top__title">Інформація</h2></div> <div class="edit-section__inner"><div class="edit-section__col"><div class="edit-video"><img height="313" width="558" src="assets/cabinet/img/edit/video.png" alt="image" class="edit-video__bg"> <span class="edit-video__icon"><svg width="82" height="56"><use href="assets/cabinet/img/sprite/sprite.svg#play"></use></svg></span> <label for="link" class="edit-video__label"><input type="text" id="link" name="video" value="" placeholder="https://www.youtube.com/" class="edit-video__input"> <div data-tooltip-text="Тут можна розмістити посилання на відео про Вас. Відео повинно бути завантажене на сервіс youtube і мати формат https://www.youtube.com/embed/JEUuN8YhQPo?si=O1Se8HgtIcOST8TW" class="edit-btn"><svg width="16" height="16"><use href="assets/cabinet/img/sprite/sprite.svg#pencil"></use></svg> <span class="edit-btn__info"><svg width="11" height="11"><use href="assets/cabinet/img/sprite/sprite.svg#info2"></use></svg></span> <span data-tooltip="" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(335.5px, 599.5px, 0px);">Тут можна розмістити посилання на відео про Вас. Відео повинно бути завантажене на сервіс youtube і мати формат https://www.youtube.com/embed/JEUuN8YhQPo?si=O1Se8HgtIcOST8TW</span></div> <button type="button" title="Генерація відео" aria-label="Генерація відео" class="video-generation__open-btn" icon-href="assets/cabinet/img/sprite/sprite.svg#video-gen"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" class="video-generation__open-btn-icon"><path d="M6 0L7.6 4.4L12 6L7.6 7.6L6 12L4.4 7.6L0 6L4.4 4.4L6 0Z" fill="currentColor"></path></svg> <span class="video-generation__open-btn-text">Генерація відео</span></button></label></div></div> <div class="edit-section__col"><div class="edit-section__row"><span class="edit-section__name">Про консультанта</span> <div data-tooltip-text="Напишіть коротко про себе, не більше 200 символів" class="edit-btn"><svg width="16" height="16"><use href="assets/cabinet/img/sprite/sprite.svg#pencil"></use></svg> <span data-tooltip="" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(598.5px, 441px, 0px);">Напишіть коротко про себе, не більше 200 символів</span></div></div> <label for="info" data-area="" class="main-textarea"><textarea id="info" name="translations[uk][about]" placeholder="Напишіть про себе" maxlength="200" class="main-textarea__area js-translation__item_uk"></textarea> <textarea id="info" name="translations[ru][about]" placeholder="Напишіть про себе" maxlength="200" class="main-textarea__area js-translation__item_ru hidden"></textarea> <div class="main-textarea__box"></div></label></div></div> <div class="lang-block"><div class="lang-block__info"><div class="lang-block__icon"><svg width="28" height="28"><use href="assets/cabinet/img/sprite/sprite.svg#lang-icon"></use></svg></div> <div class="lang-block__text">Мова, якою Ви можете спілкуватися</div></div> <ul class="lang-list"><li class="lang-list__item"><div class="lang-list__box"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" name="locales[]" value="uk" class="custom-checkbox__field"> <span class="custom-checkbox__content"></span> <p>Українська</p></label></div></div></li> <li class="lang-list__item"><div class="lang-list__box"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" name="locales[]" value="en" class="custom-checkbox__field"> <span class="custom-checkbox__content"></span> <p>Англійська</p></label></div></div></li> <li class="lang-list__item"><div class="lang-list__box"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" name="locales[]" value="ru" class="custom-checkbox__field"> <span class="custom-checkbox__content"></span> <p>Російська</p></label></div></div></li></ul></div> <div class="edit-section__content"><div class="edit-section__wrapp"><div id="multiLangInputAwardsWrapper" data-value="[]" data-required="false" data-name="awards" class="edit-content js-multi-lang-items"><h3 class="edit-content__title"><svg width="22" height="22"><use href="assets/cabinet/img/sprite/sprite.svg#info-icon1"></use></svg>
+        Нагороди та визнання:
+    </h3> <ul id="multiLangInputAwards_uk_content" data-locale="uk" class="edit-content__list js-translation__item_uk js-multi-lang-items__items"></ul> <ul id="multiLangInputAwards_ru_content" data-locale="ru" class="edit-content__list js-translation__item_ru hidden js-multi-lang-items__items"></ul> <a href="#" class="edit-content__link js-multi-lang-items__add-item">
+        Додати
+    </a> <script type="text/x-template" class="js-multi-lang-items__template">
+        <li class="edit-content__item js-multi-lang-items__item">
+            <input type="text" name=":name[:index][:locale][text]"
+                class="edit-content__input js-multi-lang-items__control" value=":value"
+                placeholder="____________________________">
+            --}}
+            <textarea name=":name[:index][:locale][text]" class="main-textarea__area edit-content__input js-multi-lang-items__control">:value</textarea>
+            <button class="edit-content__close js-multi-lang-items__remote-item"></button>
+        </li>
+    </script> <script type="text/template" id="multiLangInputAwardsTabs" data-name="awards" class="js-multi-lang-items__nav-tabs"></script></div></div> <div class="edit-section__wrapp"><div id="multiLangInputEducationWrapper" data-value="[]" data-required="false" data-name="education" class="edit-content js-multi-lang-items"><h3 class="edit-content__title"><svg width="22" height="22"><use href="assets/cabinet/img/sprite/sprite.svg#info-icon2"></use></svg>
+        Освіта:
+    </h3> <ul id="multiLangInputEducation_uk_content" data-locale="uk" class="edit-content__list js-translation__item_uk js-multi-lang-items__items"></ul> <ul id="multiLangInputEducation_ru_content" data-locale="ru" class="edit-content__list js-translation__item_ru hidden js-multi-lang-items__items"></ul> <a href="#" class="edit-content__link js-multi-lang-items__add-item">
+        Додати
+    </a> <script type="text/x-template" class="js-multi-lang-items__template">
+        <li class="edit-content__item js-multi-lang-items__item">
+            <input type="text" name=":name[:index][:locale][text]"
+                class="edit-content__input js-multi-lang-items__control" value=":value"
+                placeholder="____________________________">
+            --}}
+            <textarea name=":name[:index][:locale][text]" class="main-textarea__area edit-content__input js-multi-lang-items__control">:value</textarea>
+            <button class="edit-content__close js-multi-lang-items__remote-item"></button>
+        </li>
+    </script> <script type="text/template" id="multiLangInputEducationTabs" data-name="education" class="js-multi-lang-items__nav-tabs"></script></div></div> <div class="edit-section__wrapp"><div id="multiLangInputExperiencesWrapper" data-value="[]" data-required="false" data-name="experiences" class="edit-content js-multi-lang-items"><h3 class="edit-content__title"><svg width="22" height="22"><use href="assets/cabinet/img/sprite/sprite.svg#info-icon3"></use></svg>
+        Досвід:
+    </h3> <ul id="multiLangInputExperiences_uk_content" data-locale="uk" class="edit-content__list js-translation__item_uk js-multi-lang-items__items"></ul> <ul id="multiLangInputExperiences_ru_content" data-locale="ru" class="edit-content__list js-translation__item_ru hidden js-multi-lang-items__items"></ul> <a href="#" class="edit-content__link js-multi-lang-items__add-item">
+        Додати
+    </a> <script type="text/x-template" class="js-multi-lang-items__template">
+        <li class="edit-content__item js-multi-lang-items__item">
+            <input type="text" name=":name[:index][:locale][text]"
+                class="edit-content__input js-multi-lang-items__control" value=":value"
+                placeholder="____________________________">
+            --}}
+            <textarea name=":name[:index][:locale][text]" class="main-textarea__area edit-content__input js-multi-lang-items__control">:value</textarea>
+            <button class="edit-content__close js-multi-lang-items__remote-item"></button>
+        </li>
+    </script> <script type="text/template" id="multiLangInputExperiencesTabs" data-name="experiences" class="js-multi-lang-items__nav-tabs"></script></div></div></div></div></div></section> <section class="about-section"><div class="container container--mode"><div class="about-section__box"><div class="js-translation__item_uk"><div data-locale="uk" data-generate-url="demo-stub.html" data-price-url="demo-stub.html" data-button-text="Згенерувати опис через ШІ" data-loading-text="Генерую..." data-price-hint-template="Буде списано :amount грн" data-msg-success="Опис успішно згенеровано! Списано :amount грн" data-msg-error-failed="Не вдалося згенерувати опис" data-msg-error="Помилка генерації опису" class="js-consultant-more-ai-btn"><div class="ai-generation-wrapper"><button type="button" class="ai-generation-btn ai-btn"><svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M5 0a.5.5 0 0 1 .5.5V2h1V.5a.5.5 0 0 1 1 0V2h1V.5a.5.5 0 0 1 1 0V2h1V.5a.5.5 0 0 1 1 0V2A2.5 2.5 0 0 1 14 4.5h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14a2.5 2.5 0 0 1-2.5 2.5v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14A2.5 2.5 0 0 1 2 11.5H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2A2.5 2.5 0 0 1 4.5 2V.5A.5.5 0 0 1 5 0z"></path></svg><span>Згенерувати опис через ШІ</span></button><small class="ai-hint">Буде списано 6.00 грн</small></div></div></div> <div class="js-translation__item_ru hidden"><div data-locale="ru" data-generate-url="demo-stub.html" data-price-url="demo-stub.html" data-button-text="Згенерувати опис через ШІ" data-loading-text="Генерую..." data-price-hint-template="Буде списано :amount грн" data-msg-success="Опис успішно згенеровано! Списано :amount грн" data-msg-error-failed="Не вдалося згенерувати опис" data-msg-error="Помилка генерації опису" class="js-consultant-more-ai-btn"><div class="ai-generation-wrapper"><button type="button" class="ai-generation-btn ai-btn"><svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M5 0a.5.5 0 0 1 .5.5V2h1V.5a.5.5 0 0 1 1 0V2h1V.5a.5.5 0 0 1 1 0V2h1V.5a.5.5 0 0 1 1 0V2A2.5 2.5 0 0 1 14 4.5h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14a2.5 2.5 0 0 1-2.5 2.5v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14A2.5 2.5 0 0 1 2 11.5H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2A2.5 2.5 0 0 1 4.5 2V.5A.5.5 0 0 1 5 0z"></path></svg><span>Згенерувати опис через ШІ</span></button><small class="ai-hint">Буде списано 6.00 грн</small></div></div></div> <label for="info2" data-area="" class="main-textarea"><div class="about-section__translate__item js-translation__item_uk"><div class="symbols-counter">
+                            Кількість символів:
+                            <span class="js-plain-content-length-uk">0</span> <span>/</span> <span>16000</span></div> <textarea id="info2_uk" name="translations[uk][more]" placeholder="Тут ви можете написати більш детально про себе та свої послуги, досвід, роботу тощо" class="main-textarea__area tinyMceEditor" style="display: none;"></textarea><div class="ck ck-reset ck-editor ck-rounded-corners" role="application" dir="ltr" lang="uk" aria-labelledby="ck-editor__label_e1d74d9723dfefc056cb73741b98b93dc"><label class="ck ck-label ck-voice-label" id="ck-editor__label_e1d74d9723dfefc056cb73741b98b93dc">Розширений текстовий редактор</label><div class="ck ck-editor__top ck-reset_all" role="presentation"><div class="ck ck-sticky-panel"><div class="ck ck-sticky-panel__placeholder" style="display: none;"></div><div class="ck ck-sticky-panel__content"><div class="ck ck-toolbar" role="toolbar" aria-label="Панель інструментів редактора" tabindex="-1"><div class="ck ck-toolbar__items"><button class="ck ck-button ck-off" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e347dae405c2f2fef3933724b51426a44" data-cke-tooltip-text="Відміна (⌘Z)" data-cke-tooltip-position="s"><svg class="ck ck-icon ck-reset_all-excluded ck-icon_inherit-color ck-button__icon" viewBox="0 0 20 20"><path d="m5.042 9.367 2.189 1.837a.75.75 0 0 1-.965 1.149l-3.788-3.18a.747.747 0 0 1-.21-.284.75.75 0 0 1 .17-.945L6.23 4.762a.75.75 0 1 1 .964 1.15L4.863 7.866h8.917A.75.75 0 0 1 14 7.9a4 4 0 1 1-1.477 7.718l.344-1.489a2.5 2.5 0 1 0 1.094-4.73l.008-.032H5.042z"></path></svg><span class="ck ck-button__label" id="ck-editor__aria-label_e347dae405c2f2fef3933724b51426a44">Відміна</span></button><button class="ck ck-button ck-off" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_ed2d2e5a8b327d223864888bf41955afb" data-cke-tooltip-text="Повтор (⌘Y)" data-cke-tooltip-position="s"><svg class="ck ck-icon ck-reset_all-excluded ck-icon_inherit-color ck-button__icon" viewBox="0 0 20 20"><path d="m14.958 9.367-2.189 1.837a.75.75 0 0 0 .965 1.149l3.788-3.18a.747.747 0 0 0 .21-.284.75.75 0 0 0-.17-.945L13.77 4.762a.75.75 0 1 0-.964 1.15l2.331 1.955H6.22A.75.75 0 0 0 6 7.9a4 4 0 1 0 1.477 7.718l-.344-1.489A2.5 2.5 0 1 1 6.039 9.4l-.008-.032h8.927z"></path></svg><span class="ck ck-button__label" id="ck-editor__aria-label_ed2d2e5a8b327d223864888bf41955afb">Повтор</span></button><span class="ck ck-toolbar__separator"></span><button class="ck ck-button ck-off" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_ef92dabfe99826a31265f86c67429b04f" aria-pressed="false" data-cke-tooltip-text="Жирний (⌘B)" data-cke-tooltip-position="s"><svg class="ck ck-icon ck-reset_all-excluded ck-icon_inherit-color ck-button__icon" viewBox="0 0 20 20"><path d="M10.187 17H5.773c-.637 0-1.092-.138-1.364-.415-.273-.277-.409-.718-.409-1.323V4.738c0-.617.14-1.062.419-1.332.279-.27.73-.406 1.354-.406h4.68c.69 0 1.288.041 1.793.124.506.083.96.242 1.36.478.341.197.644.447.906.75a3.262 3.262 0 0 1 .808 2.162c0 1.401-.722 2.426-2.167 3.075C15.05 10.175 16 11.315 16 13.01a3.756 3.756 0 0 1-2.296 3.504 6.1 6.1 0 0 1-1.517.377c-.571.073-1.238.11-2 .11zm-.217-6.217H7v4.087h3.069c1.977 0 2.965-.69 2.965-2.072 0-.707-.256-1.22-.768-1.537-.512-.319-1.277-.478-2.296-.478zM7 5.13v3.619h2.606c.729 0 1.292-.067 1.69-.2a1.6 1.6 0 0 0 .91-.765c.165-.267.247-.566.247-.897 0-.707-.26-1.176-.778-1.409-.519-.232-1.31-.348-2.375-.348H7z"></path></svg><span class="ck ck-button__label" id="ck-editor__aria-label_ef92dabfe99826a31265f86c67429b04f">Жирний</span></button><span class="ck ck-toolbar__separator"></span><button class="ck ck-button ck-off ck-button_with-text" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e340886bfc1450603883b058713a15808" data-cke-tooltip-text="Абзац" data-cke-tooltip-position="s"><span class="ck ck-button__label" id="ck-editor__aria-label_e340886bfc1450603883b058713a15808">Абзац</span></button><button class="ck ck-button ck-off ck-button_with-text" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e0ef0e4b695656f967de1dd9c22561c31" data-cke-tooltip-text="Заголовок" data-cke-tooltip-position="s"><span class="ck ck-button__label" id="ck-editor__aria-label_e0ef0e4b695656f967de1dd9c22561c31">Заголовок</span></button><button class="ck ck-button ck-off ck-button_with-text" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e2c5e6a16bc661e80bc18c159d7d501b3" data-cke-tooltip-text="Не нумерований перелік" data-cke-tooltip-position="s"><span class="ck ck-button__label" id="ck-editor__aria-label_e2c5e6a16bc661e80bc18c159d7d501b3">Не нумерований перелік</span></button><button class="ck ck-button ck-off ck-button_with-text" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e2c43b3477b78c6d88ca3445803e737fd" data-cke-tooltip-text="Нумерований перелік" data-cke-tooltip-position="s"><span class="ck ck-button__label" id="ck-editor__aria-label_e2c43b3477b78c6d88ca3445803e737fd">Нумерований перелік</span></button><button class="ck ck-button ck-off ck-button_with-text" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_ef62de4e955254b69d79bfa6c1668840e" data-cke-tooltip-text="Блок Висновок" data-cke-tooltip-position="s"><span class="ck ck-button__label" id="ck-editor__aria-label_ef62de4e955254b69d79bfa6c1668840e">Блок Висновок</span></button><button class="ck ck-button ck-off ck-button_with-text" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_ebd88e07b139b26f04217fbd2adc60b4e" data-cke-tooltip-position="s"><span class="ck ck-button__label" id="ck-editor__aria-label_ebd88e07b139b26f04217fbd2adc60b4e">Пункт з іконкою</span></button><button class="ck ck-button ck-off ck-button_with-text" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e740e2bc0e1bd5969dea9cd98ac1ebd06" data-cke-tooltip-position="s"><span class="ck ck-button__label" id="ck-editor__aria-label_e740e2bc0e1bd5969dea9cd98ac1ebd06">Блок Питання-Відповідь</span></button><button class="ck ck-button ck-off ck-button_with-text" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e74d1da74f4d6c4b6a225bace044bce95" data-cke-tooltip-text="Зображення" data-cke-tooltip-position="s"><span class="ck ck-button__label" id="ck-editor__aria-label_e74d1da74f4d6c4b6a225bace044bce95">Зображення</span></button><button class="ck ck-button ck-off ck-button_with-text" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e0d5f95258ce8ec952fe454486df2ec0a" data-cke-tooltip-text="Галерея зображень" data-cke-tooltip-position="s"><span class="ck ck-button__label" id="ck-editor__aria-label_e0d5f95258ce8ec952fe454486df2ec0a">Галерея зображень</span></button><span class="ck ck-toolbar__separator"></span><button class="ck ck-button ck-source-editing-button ck-off ck-button_with-text" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e1e409ea769ec613a8dd321d9803a57e1" data-cke-tooltip-text="Source" data-cke-tooltip-position="s"><svg class="ck ck-icon ck-reset_all-excluded ck-icon_inherit-color ck-button__icon" viewBox="0 0 20 20"><path d="m12.5 0 5 4.5v15.003h-16V0h11zM3 1.5v3.25l-1.497 1-.003 8 1.5 1v3.254L7.685 18l-.001 1.504H17.5V8.002L16 9.428l-.004-4.22-4.222-3.692L3 1.5z"></path><path d="M4.06 6.64a.75.75 0 0 1 .958 1.15l-.085.07L2.29 9.75l2.646 1.89c.302.216.4.62.232.951l-.058.095a.75.75 0 0 1-.951.232l-.095-.058-3.5-2.5V9.14l3.496-2.5zm4.194 6.22a.75.75 0 0 1-.958-1.149l.085-.07 2.643-1.89-2.646-1.89a.75.75 0 0 1-.232-.952l.058-.095a.75.75 0 0 1 .95-.232l.096.058 3.5 2.5v1.22l-3.496 2.5zm7.644-.836 2.122 2.122-5.825 5.809-2.125-.005.003-2.116zm2.539-1.847 1.414 1.414a.5.5 0 0 1 0 .707l-1.06 1.06-2.122-2.12 1.061-1.061a.5.5 0 0 1 .707 0z"></path></svg><span class="ck ck-button__label" id="ck-editor__aria-label_e1e409ea769ec613a8dd321d9803a57e1">Source</span></button></div></div></div></div></div><div class="ck ck-editor__main" role="presentation"><div class="ck-blurred ck ck-content ck-editor__editable ck-rounded-corners ck-editor__editable_inline" lang="uk" dir="ltr" role="textbox" aria-label="Область редагування редактора: main" contenteditable="true"><p class="ck-placeholder" data-placeholder="Тут ви можете написати більш детально про себе та свої послуги, досвід, роботу тощо"><br data-cke-filler="true"></p></div></div></div></div> <div class="about-section__translate__item js-translation__item_ru hidden"><div class="symbols-counter">
+                            Кількість символів:
+                            <span class="js-plain-content-length-ru">0</span> <span>/</span> <span>16000</span></div> <textarea id="info2_ru" name="translations[ru][more]" placeholder="Тут ви можете написати більш детально про себе та свої послуги, досвід, роботу тощо" class="main-textarea__area tinyMceEditor" style="display: none;"></textarea><div class="ck ck-reset ck-editor ck-rounded-corners" role="application" dir="ltr" lang="uk" aria-labelledby="ck-editor__label_e4b220cbcb57a39de13c7339c6fd30256"><label class="ck ck-label ck-voice-label" id="ck-editor__label_e4b220cbcb57a39de13c7339c6fd30256">Розширений текстовий редактор</label><div class="ck ck-editor__top ck-reset_all" role="presentation"><div class="ck ck-sticky-panel"><div class="ck ck-sticky-panel__placeholder" style="display: none;"></div><div class="ck ck-sticky-panel__content"><div class="ck ck-toolbar" role="toolbar" aria-label="Панель інструментів редактора" tabindex="-1"><div class="ck ck-toolbar__items"><button class="ck ck-button ck-off" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e3307b418655fc14f9a2f53eaf1155592" data-cke-tooltip-text="Відміна (⌘Z)" data-cke-tooltip-position="s"><svg class="ck ck-icon ck-reset_all-excluded ck-icon_inherit-color ck-button__icon" viewBox="0 0 20 20"><path d="m5.042 9.367 2.189 1.837a.75.75 0 0 1-.965 1.149l-3.788-3.18a.747.747 0 0 1-.21-.284.75.75 0 0 1 .17-.945L6.23 4.762a.75.75 0 1 1 .964 1.15L4.863 7.866h8.917A.75.75 0 0 1 14 7.9a4 4 0 1 1-1.477 7.718l.344-1.489a2.5 2.5 0 1 0 1.094-4.73l.008-.032H5.042z"></path></svg><span class="ck ck-button__label" id="ck-editor__aria-label_e3307b418655fc14f9a2f53eaf1155592">Відміна</span></button><button class="ck ck-button ck-off" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_ed47357b87a3dbf114fe1ca7d96fe3e1c" data-cke-tooltip-text="Повтор (⌘Y)" data-cke-tooltip-position="s"><svg class="ck ck-icon ck-reset_all-excluded ck-icon_inherit-color ck-button__icon" viewBox="0 0 20 20"><path d="m14.958 9.367-2.189 1.837a.75.75 0 0 0 .965 1.149l3.788-3.18a.747.747 0 0 0 .21-.284.75.75 0 0 0-.17-.945L13.77 4.762a.75.75 0 1 0-.964 1.15l2.331 1.955H6.22A.75.75 0 0 0 6 7.9a4 4 0 1 0 1.477 7.718l-.344-1.489A2.5 2.5 0 1 1 6.039 9.4l-.008-.032h8.927z"></path></svg><span class="ck ck-button__label" id="ck-editor__aria-label_ed47357b87a3dbf114fe1ca7d96fe3e1c">Повтор</span></button><span class="ck ck-toolbar__separator"></span><button class="ck ck-button ck-off" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_eff70edaf0dbcce03538a8f226c87b864" aria-pressed="false" data-cke-tooltip-text="Жирний (⌘B)" data-cke-tooltip-position="s"><svg class="ck ck-icon ck-reset_all-excluded ck-icon_inherit-color ck-button__icon" viewBox="0 0 20 20"><path d="M10.187 17H5.773c-.637 0-1.092-.138-1.364-.415-.273-.277-.409-.718-.409-1.323V4.738c0-.617.14-1.062.419-1.332.279-.27.73-.406 1.354-.406h4.68c.69 0 1.288.041 1.793.124.506.083.96.242 1.36.478.341.197.644.447.906.75a3.262 3.262 0 0 1 .808 2.162c0 1.401-.722 2.426-2.167 3.075C15.05 10.175 16 11.315 16 13.01a3.756 3.756 0 0 1-2.296 3.504 6.1 6.1 0 0 1-1.517.377c-.571.073-1.238.11-2 .11zm-.217-6.217H7v4.087h3.069c1.977 0 2.965-.69 2.965-2.072 0-.707-.256-1.22-.768-1.537-.512-.319-1.277-.478-2.296-.478zM7 5.13v3.619h2.606c.729 0 1.292-.067 1.69-.2a1.6 1.6 0 0 0 .91-.765c.165-.267.247-.566.247-.897 0-.707-.26-1.176-.778-1.409-.519-.232-1.31-.348-2.375-.348H7z"></path></svg><span class="ck ck-button__label" id="ck-editor__aria-label_eff70edaf0dbcce03538a8f226c87b864">Жирний</span></button><span class="ck ck-toolbar__separator"></span><button class="ck ck-button ck-off ck-button_with-text" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e6ba37e10dd37a6ae17e32832e643516c" data-cke-tooltip-text="Абзац" data-cke-tooltip-position="s"><span class="ck ck-button__label" id="ck-editor__aria-label_e6ba37e10dd37a6ae17e32832e643516c">Абзац</span></button><button class="ck ck-button ck-off ck-button_with-text" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e6d69e096cc368888c7c4aa8d3ea5848a" data-cke-tooltip-text="Заголовок" data-cke-tooltip-position="s"><span class="ck ck-button__label" id="ck-editor__aria-label_e6d69e096cc368888c7c4aa8d3ea5848a">Заголовок</span></button><button class="ck ck-button ck-off ck-button_with-text" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e5d5465c59729ab4f7c75634c5e666673" data-cke-tooltip-text="Не нумерований перелік" data-cke-tooltip-position="s"><span class="ck ck-button__label" id="ck-editor__aria-label_e5d5465c59729ab4f7c75634c5e666673">Не нумерований перелік</span></button><button class="ck ck-button ck-off ck-button_with-text" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e7a79b46bedfca2689c8d1dab6e344589" data-cke-tooltip-text="Нумерований перелік" data-cke-tooltip-position="s"><span class="ck ck-button__label" id="ck-editor__aria-label_e7a79b46bedfca2689c8d1dab6e344589">Нумерований перелік</span></button><button class="ck ck-button ck-off ck-button_with-text" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_ef694f1d45ffdbadb2e54099e87679386" data-cke-tooltip-text="Блок Висновок" data-cke-tooltip-position="s"><span class="ck ck-button__label" id="ck-editor__aria-label_ef694f1d45ffdbadb2e54099e87679386">Блок Висновок</span></button><button class="ck ck-button ck-off ck-button_with-text" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e314431c8a712bfb7dbfc4f8140596029" data-cke-tooltip-position="s"><span class="ck ck-button__label" id="ck-editor__aria-label_e314431c8a712bfb7dbfc4f8140596029">Пункт з іконкою</span></button><button class="ck ck-button ck-off ck-button_with-text" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e6a224d33e9c947d5489a93c5f5dcdb6a" data-cke-tooltip-position="s"><span class="ck ck-button__label" id="ck-editor__aria-label_e6a224d33e9c947d5489a93c5f5dcdb6a">Блок Питання-Відповідь</span></button><button class="ck ck-button ck-off ck-button_with-text" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e60c4c952987abf4ae1254ee87aabbdd2" data-cke-tooltip-text="Зображення" data-cke-tooltip-position="s"><span class="ck ck-button__label" id="ck-editor__aria-label_e60c4c952987abf4ae1254ee87aabbdd2">Зображення</span></button><button class="ck ck-button ck-off ck-button_with-text" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_ef3e34998dfe49507bbb1b890a5bd5d5b" data-cke-tooltip-text="Галерея зображень" data-cke-tooltip-position="s"><span class="ck ck-button__label" id="ck-editor__aria-label_ef3e34998dfe49507bbb1b890a5bd5d5b">Галерея зображень</span></button><span class="ck ck-toolbar__separator"></span><button class="ck ck-button ck-source-editing-button ck-off ck-button_with-text" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e1ba661dbbdd804182680590938b6dee2" data-cke-tooltip-text="Source" data-cke-tooltip-position="s"><svg class="ck ck-icon ck-reset_all-excluded ck-icon_inherit-color ck-button__icon" viewBox="0 0 20 20"><path d="m12.5 0 5 4.5v15.003h-16V0h11zM3 1.5v3.25l-1.497 1-.003 8 1.5 1v3.254L7.685 18l-.001 1.504H17.5V8.002L16 9.428l-.004-4.22-4.222-3.692L3 1.5z"></path><path d="M4.06 6.64a.75.75 0 0 1 .958 1.15l-.085.07L2.29 9.75l2.646 1.89c.302.216.4.62.232.951l-.058.095a.75.75 0 0 1-.951.232l-.095-.058-3.5-2.5V9.14l3.496-2.5zm4.194 6.22a.75.75 0 0 1-.958-1.149l.085-.07 2.643-1.89-2.646-1.89a.75.75 0 0 1-.232-.952l.058-.095a.75.75 0 0 1 .95-.232l.096.058 3.5 2.5v1.22l-3.496 2.5zm7.644-.836 2.122 2.122-5.825 5.809-2.125-.005.003-2.116zm2.539-1.847 1.414 1.414a.5.5 0 0 1 0 .707l-1.06 1.06-2.122-2.12 1.061-1.061a.5.5 0 0 1 .707 0z"></path></svg><span class="ck ck-button__label" id="ck-editor__aria-label_e1ba661dbbdd804182680590938b6dee2">Source</span></button></div></div></div></div></div><div class="ck ck-editor__main" role="presentation"><div class="ck-blurred ck ck-content ck-editor__editable ck-rounded-corners ck-editor__editable_inline" lang="uk" dir="ltr" role="textbox" aria-label="Область редагування редактора: main" contenteditable="true"><p class="ck-placeholder" data-placeholder="Тут ви можете написати більш детально про себе та свої послуги, досвід, роботу тощо"><br data-cke-filler="true"></p></div></div></div></div></label> <button id="proposeFormSubmit" type="sumbit" class="main-button main-button--mode">Зберегти зміни</button></div></div></section></form>
+</main>
+
+        <section class="map-section">
+    <div class="map-section__background bg-image">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d10164.748539655422!2d30.5273295!3d50.4376149!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4cf01aeda56cb%3A0x655c5c36d751a7d9!2z0J_QsNGA0YPRgQ!5e0!3m2!1sru!2sua!4v1707878940794!5m2!1sru!2sua&amp;amp;t=m" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy" title="Map"></iframe>
+    </div>
+    <div class="container">
+        <div class="map-section__inner">
+            <div class="map-card">
+                <div class="map-card__image">
+                    <picture>
+                        <source type="image/webp" srcset="site/img/map-section__image.webp">
+                        <img loading="lazy" width="512" height="345" src="site/img/map-section__image.png" alt="image">
+                    </picture>
+
+                    <div class="map-card__logo">
+                        <img width="300" height="58" src="site/img/svg/logo_uk.svg" alt="Site logo">
+                    </div>
+                </div>
+                <div class="map-card__info">
+                    <span class="map-card__title">Адміністрація порталу</span>
+
+                    <ul class="contact-list">
+                        <li class="contact-list__item">
+                                <span class="contact-list__icon">
+                                <svg><use href="site/img/sprite/sprite.svg#point"></use></svg>
+                                </span>
+                            <span class="contact-list__label">Адреса</span>
+                            <a href="https://maps.app.goo.gl/5tpnRW8NZM1Ub79m8">
+                                
+                            </a>
+                        </li>
+                        <li class="contact-list__item">
+                                <span class="contact-list__icon">
+                                <svg><use href="site/img/sprite/sprite.svg#contacts"></use></svg>
+                                </span>
+                            <span class="contact-list__label">Пошта</span>
+                            <a href="mailto:p.vovk.consult@gmail.com">p.vovk.consult@gmail.com</a>
+                        </li>
+                        <li class="contact-list__item">
+                                <span class="contact-list__icon">
+                                <svg><use href="site/img/sprite/sprite.svg#phone"></use></svg>
+                                </span>
+                            <span class="contact-list__label">Телефон</span>
+                            <a href="tel:+380730044470">380730044470</a>
+                        </li>
+                    </ul>
+
+                    <button class="map-card__btn blue-btn js-call-trigger__button" id="js-call-trigger__button-call">Отримати дзвінок</button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    </section>
+        <footer class="footer">
+    <div class="footer-top">
+        <div class="container">
+            <div class="footer-top__inner">
+                <div class="footer__coll footer__coll--left">
+                    <a href="https://consultant.net.ua" class="logo">
+                        <img width="300" height="58" src="site/img/svg/logo_uk.svg" alt="Site logo">
+                    </a>
+
+                    <div class="footer__links"><a href="https://consultant.net.ua/prava/user-agreement" target="_blank" class="footer__link">
+        Публічна угода з Користувачем
+    </a>
+    <a href="https://consultant.net.ua/prava/consultant-agreement" target="_blank" class="footer__link">
+        Публічна угода з Консультантом
+    </a>
+    <a href="https://consultant.net.ua/prava/site-rules" target="_blank" class="footer__link">
+        Правила користування веб-сайтом
+    </a>
+    <a href="https://consultant.net.ua/prava/cookie-notice" target="_blank" class="footer__link">
+        Повідомлення про кукі
+    </a>
+    <a href="https://consultant.net.ua/prava/dealer-network-services-regulation" target="_blank" class="footer__link">
+        Положення про реалізацію послуг диллерською мережею
+    </a>
+</div>
+
+                    <div class="footer-social">
+                        <span class="footer-social__description">
+                            Підписникам у наших соціальних мережах сервіс оплачує 3 консультації в мобільному
+    застосунку КОНСУЛЬТАНТ
+
+                        </span>
+
+                        <ul class="footer-social__list">
+                            <li class="footer-social__item">
+                                <a target="_blank" href="https://t.me/consultant_marketplace" rel="noopener nofollow" class="arrow-button" aria-label="Telegram">
+                                    <svg width="20" height="20">
+                                        <use href="site/img/sprite/sprite.svg#social"></use>
+                                    </svg>
+                                </a>
+                            </li>
+                            <li class="footer-social__item">
+                                <a target="_blank" href="https://www.instagram.com/consultant_law" rel="noopener nofollow" class="arrow-button" aria-label="Instagram">
+                                    <svg width="20" height="20">
+                                        <use href="site/img/sprite/sprite.svg#social2"></use>
+                                    </svg>
+                                </a>
+                            </li>
+                            <li class="footer-social__item">
+                                <a target="_blank" href="https://www.facebook.com/consultant.net.ua" rel="noopener nofollow" class="arrow-button" aria-label="Facebook">
+                                    <svg width="12" height="23">
+                                        <use href="site/img/sprite/sprite.svg#social3"></use>
+                                    </svg>
+                                </a>
+                            </li>
+                            <li class="footer-social__item">
+                                <a target="_blank" href="https://www.youtube.com/@consultant_law" rel="noopener nofollow" class="arrow-button" aria-label="YouTube">
+                                    <svg width="22" height="15">
+                                        <use href="site/img/sprite/sprite.svg#social4"></use>
+                                    </svg>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="footer__coll footer__coll--right">
+                    <div class="footer__map">
+                                                    <picture>
+                                <source type="image/webp" srcset="site/img/footer_map.webp">
+                                <img loading="lazy" src="site/img/footer_map.png" width="698" height="364" alt="map">
+                            </picture>
+                                            </div>
+
+                                            <ul class="footer__nav" data-title="Офіси">
+
+                            <li class="footer__nav-item">
+                                <a href="https://consultant.net.pl" class="footer__link" target="_blank">
+                                    Польща, Люблін
+                                </a>
+                            </li>
+                            <li class="footer__nav-item">
+                                <a href="https://consultant.net.ua" class="footer__link" target="_blank">
+                                    Україна, Київ
+                                </a>
+                            </li>
+                            <li class="footer__nav-item">
+                                <a href="https://consultantlm.uk" class="footer__link" target="_blank">
+                                    Англія, Лондон
+                                </a>
+                            </li>
+                            <li class="footer__nav-item">
+                                <a href="https://consultantlm.com" class="footer__link" target="_blank">
+                                    США, Остін
+                                </a>
+                            </li>
+
+                        </ul>
+                    
+                    <ul class="footer__nav">
+                        <li class="footer__nav-item">
+                            <a href="https://consultant.net.ua/otsinka-konsultantiv" class="footer__link">
+                                Консультанти
+                            </a>
+                        </li>
+                        <li class="footer__nav-item">
+                            <a href="https://consultant.net.ua/konsultatsiyi" class="footer__link">
+                                Блог
+                            </a>
+                        </li>
+                        <li class="footer__nav-item">
+                            <a href="https://consultant.net.ua/posluhy" class="footer__link">
+                                Послуги
+                            </a>
+                        </li>
+                        <li class="footer__nav-item">
+                            <a href="https://consultant.net.ua/dokumenty" class="footer__link">
+                                Документи
+                            </a>
+                        </li>
+                        <li class="footer__nav-item">
+                            <a href="https://consultant.net.ua/vakansiyi" class="footer__link">
+                                Вакансії
+                            </a>
+                        </li>
+                        <li class="footer__nav-item">
+                            <a href="https://consultant.net.ua/pro-nas" class="footer__link">
+                                Про нас
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="footer-bottom__inner">
+                                    <span>
+    2018 - 2026 Всі права захищені
+</span>
+                                <div class="footer-bottom__partners">
+                                            <div class="footer-bottom__partners-link">
+                            <img loading="lazy" width="65" height="33" src="site/img/partners/icon.svg" alt="icon">
+                        </div>
+                                        <div class="footer-bottom__partners-link">
+                        <img loading="lazy" width="68" height="22" src="site/img/partners/icon3.svg" alt="icon">
+                    </div>
+                    <div class="footer-bottom__partners-link">
+                        <img loading="lazy" width="42" height="33" src="site/img/partners/icon4.svg" alt="icon">
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+        <div data-overlay="" class="overlay"><div data-popup="video-generation" class="modal success-modal success-modal--video-generation"><div role="dialog" aria-modal="true" class="modal__box success-modal__box"><button aria-label="Закрити модальне вікно" data-toggle="close-modal" class="close modal__close"><svg width="20" height="20"><use href="assets/cabinet/img/sprite/sprite.svg#close2"></use></svg></button> <div class="video-generation"><h3 class="video-generation__heading">Генерація відео</h3> <!----> <!----> <div class="video-generation__scenario"><div class="video-generation__field"><label class="video-generation__label">Тема відео</label> <input type="text" placeholder="Введіть тему відео…" maxlength="255" class="video-generation__input"></div> <div class="video-generation__field"><label class="video-generation__label">Стиль відео</label> <div class="video-generation__select"><select class="video-generation__input"><option value="quick-tips">Швидкі поради</option> <option value="success-stories">Історії успіху</option> <option value="case-analysis">Розбір кейсу</option> <option value="explanations">Пояснення</option> <option value="myth-busting">Спростування міфів</option> <option value="faq">Поширені запитання</option></select> <span aria-hidden="true" class="video-generation__select-arrow"><svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></div></div> <small class="video-generation__price-hint">Буде списано 6.00 грн</small> <button type="button" disabled="disabled" class="video-generation__btn-reset video-generation__btn-reset--small"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" class="video-generation__btn-icon"><path d="M6 0L7.6 4.4L12 6L7.6 7.6L6 12L4.4 7.6L0 6L4.4 4.4L6 0Z" fill="currentColor"></path></svg> <span>Згенерувати сценарій</span></button></div> <hr class="video-generation__divider"> <div class="video-generation__form"><!----> <div class="video-generation__field"><label class="video-generation__label">Заголовок відео</label> <input type="text" placeholder="Введіть заголовок відео…" maxlength="255" class="video-generation__input"></div> <div class="video-generation__field"><label class="video-generation__label">Сценарій відео</label> <textarea rows="5" placeholder="Текст сценарію — введіть або згенеруйте автоматично…" maxlength="5000" class="video-generation__textarea"></textarea></div> <small class="video-generation__price-hint">Буде списано 12.00 грн</small> <button type="button" disabled="disabled" class="video-generation__btn-reset video-generation__btn-reset--submit"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" class="video-generation__btn-icon"><path d="M6 0L7.6 4.4L12 6L7.6 7.6L6 12L4.4 7.6L0 6L4.4 4.4L6 0Z" fill="currentColor"></path></svg> <span>Згенерувати відео</span></button></div></div></div></div> <div data-popup="choose" class="modal success-modal success-modal--choose"><div role="dialog" aria-modal="true" class="modal__box success-modal__box"><button aria-label="Закрити модальне вікно" data-toggle="close-modal" class="close modal__close"><svg width="20" height="20"><use href="assets/cabinet/img/sprite/sprite.svg#close2"></use></svg></button> <span class="success-modal__title">
+            Вибрати спеціалізацію
+        </span> <div data-select="" id="specializationSelect" class="choose-select modal-select select js-modal_specialization js-soinproduction-select"><input id="modalSpecializationId" type="hidden" name="specialization_id" value="1" class="select__input js-soinproduction-select__input"> <div class="select__header js-soinproduction-select__header"><span data-id="1" class="select__current js-modal_specialization_name js-soinproduction-select__title">
+                    Спеціалізація
+                </span> <div class="select__icon"><svg width="12" height="12"><use href="assets/cabinet/img/sprite/sprite.svg#down"></use></svg></div></div> <div class="select__body js-soinproduction-select__body"><ul class="select__wrapp"><li data-id="1" class="select__item js-soinproduction-select__item"><button type="button" data-choice="choosen" data-id="1" class="select__btn">
+                                Юрист
+                            </button></li> <li data-id="2" class="select__item js-soinproduction-select__item"><button type="button" data-choice="choosen" data-id="2" class="select__btn">
+                                Бухгалтер/Аудитор
+                            </button></li> <li data-id="3" class="select__item js-soinproduction-select__item"><button type="button" data-choice="choosen" data-id="3" class="select__btn">
+                                Нотаріус
+                            </button></li> <li data-id="4" class="select__item js-soinproduction-select__item"><button type="button" data-choice="choosen" data-id="4" class="select__btn">
+                                Приватний виконавець
+                            </button></li> <li data-id="5" class="select__item js-soinproduction-select__item"><button type="button" data-choice="choosen" data-id="5" class="select__btn">
+                                Арбітражний керуючий
+                            </button></li> <li data-id="6" class="select__item js-soinproduction-select__item"><button type="button" data-choice="choosen" data-id="6" class="select__btn">
+                                Патентний повірений
+                            </button></li> <li data-id="7" class="select__item js-soinproduction-select__item"><button type="button" data-choice="choosen" data-id="7" class="select__btn">
+                                Митний брокер
+                            </button></li> <li data-id="13" class="select__item js-soinproduction-select__item"><button type="button" data-choice="choosen" data-id="13" class="select__btn">
+                                Штучний інтелект
+                            </button></li> <li data-id="14" class="select__item js-soinproduction-select__item"><button type="button" data-choice="choosen" data-id="14" class="select__btn">
+                                Адвокат
+                            </button></li> <li data-id="15" class="select__item js-soinproduction-select__item"><button type="button" data-choice="choosen" data-id="15" class="select__btn">
+                                Консультант
+                            </button></li></ul></div></div> <div class="success-modal__bottom"><button onclick="ConsultantEditPage.setSpecialization()" class="main-button main-button--mode save">
+                Задати
+            </button> <button data-toggle="close-modal" class="main-button main-button--white close">
+                Закрити
+            </button></div></div></div> <div data-popup="city" class="modal success-modal success-modal--choose regions-modal"><div role="dialog" aria-modal="true" class="modal__box success-modal__box"><button aria-label="Закрити" data-toggle="close-modal" class="close modal__close"><svg width="20" height="20"><use href="assets/cabinet/img/sprite/sprite.svg#close2"></use></svg></button> <span class="success-modal__title">
+            Виберіть міста
+        </span> <div data-select="" id="regionSelect" class="city-select modal-select select js-soinproduction-select"><input id="modalRegionId" type="hidden" value="" class="select__input js-soinproduction-select__input"> <div class="select__header js-soinproduction-select__header"><div aria-live="polite" class="region-chips js-region-chips">
+    <span class="region-chip js-region-chip" data-id="29">
+      <span class="region-chip__text">Київська Область / Богуслав</span>
+      <button type="button" class="region-chip__remove js-region-chip-remove" aria-label="Remove Київська Область / Богуслав" title="Київська Область / Богуслав">
+        <svg width="12" height="12"><use href="assets/cabinet/img/sprite/sprite.svg#close2"></use></svg>
+      </button>
+    </span></div> <span data-id="" data-placeholder="Оберіть міста" class="select__current js-modal_region_name js-soinproduction-select__title is-hidden">
+                    Оберіть міста
+                </span> <div class="select__icon"><svg width="16" height="16"><use href="assets/cabinet/img/sprite/sprite.svg#down-blue"></use></svg></div></div> <div class="select__body js-soinproduction-select__body"><div class="sign-form__search-wrapper"><input placeholder="Введіть текст для пошуку" maxlength="50" class="sign-form__search-input js-soinproduction-select__search"> <div class="sign-form__search-empty js-soinproduction-select__search-empty" style="display: none;">
+                        Нічого не знайдено
+                    </div></div> <ul class="select__wrapp"><li data-id="1" data-name="Місто Київ / Київ" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="1" data-name="Місто Київ / Київ" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Місто Київ / Київ</span></label></div></li> <li data-id="27" data-name="Київська Область / Ірпінь" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="27" data-name="Київська Область / Ірпінь" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Київська Область / Ірпінь</span></label></div></li> <li data-id="28" data-name="Київська Область / Абрамівка" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="28" data-name="Київська Область / Абрамівка" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Київська Область / Абрамівка</span></label></div></li> <li data-id="29" data-name="Київська Область / Богуслав" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label is-active"><input type="checkbox" value="29" data-name="Київська Область / Богуслав" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Київська Область / Богуслав</span></label></div></li> <li data-id="30" data-name="Київська Область / Бориспіль" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="30" data-name="Київська Область / Бориспіль" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Київська Область / Бориспіль</span></label></div></li> <li data-id="31" data-name="Київська Область / Боярка" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="31" data-name="Київська Область / Боярка" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Київська Область / Боярка</span></label></div></li> <li data-id="32" data-name="Київська Область / Бровари" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="32" data-name="Київська Область / Бровари" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Київська Область / Бровари</span></label></div></li> <li data-id="33" data-name="Київська Область / Буча" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="33" data-name="Київська Область / Буча" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Київська Область / Буча</span></label></div></li> <li data-id="34" data-name="Київська Область / Біла Церква" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="34" data-name="Київська Область / Біла Церква" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Київська Область / Біла Церква</span></label></div></li> <li data-id="35" data-name="Київська Область / Васильків" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="35" data-name="Київська Область / Васильків" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Київська Область / Васильків</span></label></div></li> <li data-id="36" data-name="Київська Область / Вишгород" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="36" data-name="Київська Область / Вишгород" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Київська Область / Вишгород</span></label></div></li> <li data-id="37" data-name="Київська Область / Вишневе" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="37" data-name="Київська Область / Вишневе" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Київська Область / Вишневе</span></label></div></li> <li data-id="38" data-name="Київська Область / Обухів" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="38" data-name="Київська Область / Обухів" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Київська Область / Обухів</span></label></div></li> <li data-id="39" data-name="Київська Область / Переяслав" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="39" data-name="Київська Область / Переяслав" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Київська Область / Переяслав</span></label></div></li> <li data-id="40" data-name="Київська Область / Сквира" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="40" data-name="Київська Область / Сквира" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Київська Область / Сквира</span></label></div></li> <li data-id="41" data-name="Київська Область / Славутич" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="41" data-name="Київська Область / Славутич" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Київська Область / Славутич</span></label></div></li> <li data-id="42" data-name="Київська Область / Тетіїв" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="42" data-name="Київська Область / Тетіїв" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Київська Область / Тетіїв</span></label></div></li> <li data-id="43" data-name="Київська Область / Українка" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="43" data-name="Київська Область / Українка" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Київська Область / Українка</span></label></div></li> <li data-id="44" data-name="Київська Область / Фастів" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="44" data-name="Київська Область / Фастів" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Київська Область / Фастів</span></label></div></li> <li data-id="45" data-name="Одеська Область / Ізмаїл" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="45" data-name="Одеська Область / Ізмаїл" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Одеська Область / Ізмаїл</span></label></div></li> <li data-id="46" data-name="Одеська Область / Арциз" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="46" data-name="Одеська Область / Арциз" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Одеська Область / Арциз</span></label></div></li> <li data-id="47" data-name="Одеська Область / Балта" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="47" data-name="Одеська Область / Балта" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Одеська Область / Балта</span></label></div></li> <li data-id="48" data-name="Одеська Область / Білгород-дністровський" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="48" data-name="Одеська Область / Білгород-дністровський" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Одеська Область / Білгород-дністровський</span></label></div></li> <li data-id="49" data-name="Одеська Область / Кагарлик" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="49" data-name="Одеська Область / Кагарлик" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Одеська Область / Кагарлик</span></label></div></li> <li data-id="50" data-name="Одеська Область / Одеса" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="50" data-name="Одеська Область / Одеса" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Одеська Область / Одеса</span></label></div></li> <li data-id="51" data-name="Вінницька Область / Вінниця" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="51" data-name="Вінницька Область / Вінниця" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Вінницька Область / Вінниця</span></label></div></li> <li data-id="52" data-name="Вінницька Область / Іллінці" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="52" data-name="Вінницька Область / Іллінці" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Вінницька Область / Іллінці</span></label></div></li> <li data-id="53" data-name="Вінницька Область / Гайсин" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="53" data-name="Вінницька Область / Гайсин" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Вінницька Область / Гайсин</span></label></div></li> <li data-id="54" data-name="Вінницька Область / Жмеринка" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="54" data-name="Вінницька Область / Жмеринка" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Вінницька Область / Жмеринка</span></label></div></li> <li data-id="55" data-name="Вінницька Область / Козятин" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="55" data-name="Вінницька Область / Козятин" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Вінницька Область / Козятин</span></label></div></li> <li data-id="56" data-name="Вінницька Область / Ладижин" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="56" data-name="Вінницька Область / Ладижин" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Вінницька Область / Ладижин</span></label></div></li> <li data-id="57" data-name="Вінницька Область / Могилів-подільський" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="57" data-name="Вінницька Область / Могилів-подільський" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Вінницька Область / Могилів-подільський</span></label></div></li> <li data-id="58" data-name="Вінницька Область / Хмільник" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="58" data-name="Вінницька Область / Хмільник" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Вінницька Область / Хмільник</span></label></div></li> <li data-id="59" data-name="Закарпатська Область / Іршава" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="59" data-name="Закарпатська Область / Іршава" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Закарпатська Область / Іршава</span></label></div></li> <li data-id="60" data-name="Закарпатська Область / Берегове" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="60" data-name="Закарпатська Область / Берегове" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Закарпатська Область / Берегове</span></label></div></li> <li data-id="61" data-name="Закарпатська Область / Мукачево" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="61" data-name="Закарпатська Область / Мукачево" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Закарпатська Область / Мукачево</span></label></div></li> <li data-id="62" data-name="Закарпатська Область / Рахів" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="62" data-name="Закарпатська Область / Рахів" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Закарпатська Область / Рахів</span></label></div></li> <li data-id="63" data-name="Закарпатська Область / Свалява" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="63" data-name="Закарпатська Область / Свалява" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Закарпатська Область / Свалява</span></label></div></li> <li data-id="64" data-name="Закарпатська Область / Тячів" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="64" data-name="Закарпатська Область / Тячів" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Закарпатська Область / Тячів</span></label></div></li> <li data-id="65" data-name="Закарпатська Область / Хуст" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="65" data-name="Закарпатська Область / Хуст" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Закарпатська Область / Хуст</span></label></div></li> <li data-id="66" data-name="Закарпатська Область / Чоп" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="66" data-name="Закарпатська Область / Чоп" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Закарпатська Область / Чоп</span></label></div></li> <li data-id="67" data-name="Закарпатська Область / Ужгород" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="67" data-name="Закарпатська Область / Ужгород" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Закарпатська Область / Ужгород</span></label></div></li> <li data-id="68" data-name="Дніпропетровська Область / Дніпро" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="68" data-name="Дніпропетровська Область / Дніпро" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Дніпропетровська Область / Дніпро</span></label></div></li> <li data-id="69" data-name="Дніпропетровська Область / Апостолове" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="69" data-name="Дніпропетровська Область / Апостолове" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Дніпропетровська Область / Апостолове</span></label></div></li> <li data-id="70" data-name="Дніпропетровська Область / Верхньодніпровськ" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="70" data-name="Дніпропетровська Область / Верхньодніпровськ" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Дніпропетровська Область / Верхньодніпровськ</span></label></div></li> <li data-id="71" data-name="Дніпропетровська Область / Авіаторське" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="71" data-name="Дніпропетровська Область / Авіаторське" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Дніпропетровська Область / Авіаторське</span></label></div></li> <li data-id="72" data-name="Дніпропетровська Область / Кам'янське" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="72" data-name="Дніпропетровська Область / Кам'янське" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Дніпропетровська Область / Кам'янське</span></label></div></li> <li data-id="73" data-name="Дніпропетровська Область / Кривий Ріг" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="73" data-name="Дніпропетровська Область / Кривий Ріг" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Дніпропетровська Область / Кривий Ріг</span></label></div></li> <li data-id="74" data-name="Дніпропетровська Область / Новомосковськ" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="74" data-name="Дніпропетровська Область / Новомосковськ" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Дніпропетровська Область / Новомосковськ</span></label></div></li> <li data-id="75" data-name="Дніпропетровська Область / Нікополь" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="75" data-name="Дніпропетровська Область / Нікополь" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Дніпропетровська Область / Нікополь</span></label></div></li> <li data-id="76" data-name="Дніпропетровська Область / Павлоград" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="76" data-name="Дніпропетровська Область / Павлоград" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Дніпропетровська Область / Павлоград</span></label></div></li> <li data-id="77" data-name="Дніпропетровська Область / Покров" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="77" data-name="Дніпропетровська Область / Покров" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Дніпропетровська Область / Покров</span></label></div></li> <li data-id="78" data-name="Житомирська Область / Житомир" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="78" data-name="Житомирська Область / Житомир" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Житомирська Область / Житомир</span></label></div></li> <li data-id="79" data-name="Житомирська Область / Бердичів" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="79" data-name="Житомирська Область / Бердичів" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Житомирська Область / Бердичів</span></label></div></li> <li data-id="80" data-name="Житомирська Область / Баранівка" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="80" data-name="Житомирська Область / Баранівка" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Житомирська Область / Баранівка</span></label></div></li> <li data-id="81" data-name="Житомирська Область / Коростень" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="81" data-name="Житомирська Область / Коростень" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Житомирська Область / Коростень</span></label></div></li> <li data-id="82" data-name="Житомирська Область / Коростишів" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="82" data-name="Житомирська Область / Коростишів" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Житомирська Область / Коростишів</span></label></div></li> <li data-id="83" data-name="Чернігівська Область / Чернігів" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="83" data-name="Чернігівська Область / Чернігів" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Чернігівська Область / Чернігів</span></label></div></li> <li data-id="86" data-name="Чернігівська Область / Мена" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="86" data-name="Чернігівська Область / Мена" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Чернігівська Область / Мена</span></label></div></li> <li data-id="87" data-name="Чернігівська Область / Носівка" class="select__item js-soinproduction-select__item js-region-option"><div class="custom-checkbox"><label class="custom-checkbox__label"><input type="checkbox" value="87" data-name="Чернігівська Область / Носівка" class="custom-checkbox__field js-region-checkbox"> <span class="custom-checkbox__content"></span> <span class="custom-checkbox__title">Чернігівська Область / Носівка</span></label></div></li>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </ul></div></div> <div class="success-modal__bottom"><button id="saveRegion" class="main-button main-button--mode save blue-btn">
+                Зберегти
+            </button> <button data-toggle="close-modal" class="main-button main-button--white close blue-btn">
+                Закрити
+            </button></div></div></div> <div data-popup="cropp" class="modal success-modal success-modal--cropp"><div role="dialog" aria-modal="true" class="modal__box success-modal__box"><h2 class="success-modal__title modal-title">
+            Відредагуйте ваше фото
+        </h2> <div class="success-modal__image"><img id="cropp" alt="image"> <div class="buttons-zoom"><button id="zoom-in" class="zoom-btn"><svg width="18" height="18"><use href="assets/cabinet/img/sprite/sprite.svg#zondicon-zoom-in"></use></svg></button> <button id="zoom-out" class="zoom-btn"><svg width="18" height="18"><use href="assets/cabinet/img/sprite/sprite.svg#zondicon-zoom-out"></use></svg></button></div></div> <button data-cropp-close="" class="main-button">
+            Завершити редагування
+        </button></div></div> <div data-popup="profile-edit-success" class="modal success-modal success-modal--buy"><div role="dialog" aria-modal="true" class="modal__box success-modal__box"><button aria-label="Закрити модальне вікно" data-toggle="close-modal" class="close modal__close"><svg width="20" height="20"><use href="assets/cabinet/img/sprite/sprite.svg#close2"></use></svg></button> <h2 class="success-modal__title modal-title">
+            Ваші зміни збережені!
+        </h2> <div class="success-modal__inner"><p>
+                Ваші зміни будуть застосовані після підтвердження адміністратором.
+            </p> <button data-toggle="close-modal" class="main-button close success-modal__button">
+                Закрити
+            </button></div></div></div> <div data-popup="success" class="modal success-modal success-modal--fail"><div role="dialog" aria-modal="true" class="modal__box success-modal__box"><button aria-label="Закрити модальне вікно" data-toggle="close-modal" class="close modal__close"><svg width="20" height="20"><use href="assets/cabinet/img/sprite/sprite.svg#close2"></use></svg></button> <h2 class="success-modal__title modal-title js-success-message">
+            Виконано
+        </h2> <div class="success-modal__inner"><p class="js-success-message__explanation">
+                Поповніть баланс або зверніться до служби підтримки
+            </p> <button data-toggle="close-modal" data-target="success" class="main-button">
+                Закрити
+            </button></div></div></div> <div data-popup="fail" class="modal success-modal success-modal--fail"><div role="dialog" aria-modal="true" class="modal__box success-modal__box"><button aria-label="Закрити модальне вікно" data-toggle="close-modal" class="close modal__close"><svg width="20" height="20"><use href="assets/cabinet/img/sprite/sprite.svg#close2"></use></svg></button> <h2 class="success-modal__title modal-title js-error-message">
+            На вашому балансі недостатньо коштів для списання
+        </h2> <div class="success-modal__inner"><p class="js-error-message__explanation">
+                Поповніть баланс або зверніться до служби підтримки
+            </p> <button data-toggle="close-modal" data-target="fail" class="main-button">
+                Закрити
+            </button></div></div></div> <div data-popup="confirm" class="modal success-modal success-modal--fail"><div role="dialog" aria-modal="true" class="modal__box success-modal__box"><button aria-label="Закрити модальне вікно" data-toggle="close-modal" class="close modal__close"><svg width="20" height="20"><use href="assets/cabinet/img/sprite/sprite.svg#close2"></use></svg></button> <div class="success-modal__inner"><p class="js-confirm-message"></p> <div class="success-modal__buttons"><button class="main-button js-confirm-btn">
+                    Підтвердити
+                </button> <button data-toggle="close-modal" data-target="confirm" class="main-button js-confirm-cancel">
+                    Відмінити
+                </button></div></div></div></div></div>
+    </div>
+    
+    <div class="cookies" style="display: none;">
+    <div class="cookies-container">
+        <div class="cookies-text">
+            <p class="cookies-text__title"> Файли cookie та конфіденційність</p>
+            <p class="cookies-text__description">Ми використовуємо власні та сторонні файли cookie для персоналізації контенту та аналізу веб-трафіку.</p>
+        </div>
+        <div class="cookies-buttons">
+            <button class="cookies-buttons__accept cookies-button">Прийняти</button>
+            <button class="cookies-buttons__reject cookies-button">Відхилити</button>
+        </div>
+    </div>
+</div>
+
+    
+    <script src="vendor-cdn/socket.io.min.js"></script>
+    <script src="vendor-cdn/livekit-client.umd.js"></script>
+    <script src="assets/cabinet/js/manifest.js"></script>
+    <script src="assets/cabinet/js/vendor.js"></script>
+                <div id="callTrigger" class="modal call-trigger-modal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered form js-call-trigger-modal__dialog">
+                <div class="modal-content call-trigger-modal__form">
+                    <button type="button" class="call-trigger-modal__close" data-dismiss="modal" aria-label="Закрити">
+                        <svg class="call-trigger-modal__icon" width="30" height="30">
+                            <use href="site/img/sprite/sprite.svg#modal_close"></use>
+                        </svg>
+                    </button>
+                    <div class="call-trigger-modal__left"></div>
+                    <div class="call-trigger-modal__right">
+                        <form id="callTriggerForm" method="POST" action="#demo-action:call-trigger">
+                            <input type="hidden" name="_token" value="SoHaP3EqDN0CvTtFRx60bDE2ERzNuWy3PeYvBkXs" autocomplete="off">                            <input type="hidden" name="country_code" value="UA">
+                            <input type="hidden" name="url" value="contacts.html">
+                            <input type="hidden" name="title" value="">
+                            <input type="hidden" name="marketer_profile_id" value="1">
+                            <input type="hidden" name="position" value="footer_get_call">
+
+                                                            <div class="call-trigger-modal__description">
+                                    Тест
+                                </div>
+                            
+
+                            <div class="call-trigger-modal__working-time-content">
+                                <div class="call-trigger-modal__working-time">
+                                    24/7
+                                </div>
+                                <div class="call-trigger-modal__main-phone-number">
+                                    <a href="tel:+096666666666">+096 (66) 666-66-66</a>
+                                </div>
+                            </div>
+
+
+                                                            <div class="call-trigger-modal__phones">
+
+                                                                            <div class="call-trigger-modal__phone-number">
+                                            <svg class="call-trigger-modal__icon" width="26" height="26">
+                                                <use href="site/img/sprite/sprite.svg#modal_close"></use>
+                                            </svg>
+                                            <a href="tel:+096666666666">+096 (66) 666-66-66</a>
+                                        </div>
+                                    
+                                                                            <div class="call-trigger-modal__phone-number">
+                                            <svg class="call-trigger-modal__icon" width="26" height="26">
+                                                <use href="site/img/sprite/sprite.svg#modal_close"></use>
+                                            </svg>
+                                            <a href="tel:+096666666666">+096 (66) 666-66-66</a>
+                                        </div>
+                                    
+                                                                            <div class="call-trigger-modal__phone-number">
+                                            <svg class="call-trigger-modal__icon" width="26" height="26">
+                                                <use href="site/img/sprite/sprite.svg#modal_close"></use>
+                                            </svg>
+                                            <a href="tel:+096666666666">+096 (66) 666-66-66</a>
+                                        </div>
+                                                                    </div>
+                            
+                            <div class="call-trigger-modal__form-content">
+                                <div class="call-trigger-modal__form-header">
+                                    Замовити дзвінок
+                                </div>
+                                <div class="call-trigger-modal__input-group js-call-trigger-modal__input-group" id="js-custom-dropdown" data-initialized="true">
+                                    <div class="country-select"> 
+    <button class="country-select__button js-selected-country" type="button" data-country="UA">
+        <img width="24" height="17" src="site/img/flags/neutral.png" alt="ukraine" class="flag">
+        <span class="dropdown-arrow">▼</span>
+    </button>
+    <ul class="country-select__dropdown">
+        <li data-value="+380" data-country-value="UA" class="country-select__option">
+            <img width="24" height="17" src="site/img/flags/ukraine.png" alt="ukraine" class="flag">
+            <span class="country-name">Україна</span>
+            <span class="country-code">+380</span>
+        </li>
+        <li data-value="+48" data-country-value="PL" class="country-select__option">
+            <img width="24" height="17" src="site/img/flags/poland.png" alt="poland" class="flag">
+            <span class="country-name">Польща</span>
+            <span class="country-code">+48</span>
+        </li>
+        <li data-value="+44" data-country-value="UK" class="country-select__option">
+            <img width="24" height="17" src="site/img/flags/england.png" alt="england" class="flag">
+            <span class="country-name">Великобританія</span>
+            <span class="country-code">+44</span>
+        </li>
+        <li data-value="+1" data-country-value="USA" class="country-select__option">
+            <img width="24" height="17" src="site/img/flags/usa.png" alt="usa" class="flag">
+            <span class="country-name">Сполучені Штати</span>
+            <span class="country-code">+1</span>
+        </li>
+        <li data-value="+971" data-country-value="AE" class="country-select__option">
+            <img width="24" height="17" src="site/img/flags/ae.png" alt="ae" class="flag">
+            <span class="country-name">Об'єднані Арабські Емірати</span>
+            <span class="country-code">+971</span>
+        </li>
+        <li data-value="+" data-country-value="NEUTRAL" class="country-select__option">
+            <img width="24" height="17" src="site/img/flags/neutral.png" alt="other" class="flag">
+            <span class="country-name">Інше</span>
+            <span class="country-code">+</span>
+        </li>
+    </ul>
+</div>
+                                    <input class="call-trigger-modal__input js-phone-mask" type="tel" name="phone" value="" placeholder="+">
+                                </div>
+                                <textarea class="call-trigger-modal__comment" name="comment" maxlength="1000" placeholder="Коментар" value=""></textarea>
+
+                                <button class="call-trigger-modal__submit" type="submit" id="callTriggerSubmit">
+                                    Відправити
+                                </button>
+                            </div>
+                                                            <div class="call-trigger-modal__social-footer">
+                                    <div class="call-trigger-modal__form-header">
+                                        Напишіть нам:
+                                    </div>
+                                    <div class="call-trigger-modal__social">
+                                                                                    <a target="_blank" rel="noopener nofollow" href="+096 (66) 666-66-66" class="call-trigger-modal__social-link">
+                                                <svg class="call-trigger-modal__social-facebook" width="54" height="54">
+                                                    <use href="site/img/sprite/sprite.svg#soc_facebook"></use>
+                                                </svg>
+                                            </a>
+                                                                                                                            <a target="_blank" rel="noopener nofollow" href="+096 (66) 666-66-66" class="call-trigger-modal__social-link">
+                                                <svg class="call-trigger-modal__social-viber" width="54" height="54">
+                                                    <use href="site/img/sprite/sprite.svg#soc_viber"></use>
+                                                </svg>
+                                            </a>
+                                                                                                                            <a target="_blank" rel="noopener nofollow" href="+096 (66) 666-66-66" class="call-trigger-modal__social-link">
+                                                <svg class="call-trigger-modal__social-whatsapp" width="54" height="54">
+                                                    <use href="site/img/sprite/sprite.svg#soc_whatsapp"></use>
+                                                </svg>
+                                            </a>
+                                                                                                                            <a target="_blank" rel="noopener nofollow" href="+096 (66) 666-66-66" class="call-trigger-modal__social-link">
+                                                <svg class="call-trigger-modal__social-telegram" width="54" height="54">
+                                                    <use href="site/img/sprite/sprite.svg#soc_telegram"></use>
+                                                </svg>
+                                            </a>
+                                                                            </div>
+                                </div>
+                                                    </form>
+                    </div>
+                </div>
+                <div class="modal-content call-trigger-modal__success">
+                    <button type="button" class="call-trigger-modal__close" data-dismiss="modal" aria-label="">
+                        <svg class="call-trigger-modal__icon" width="30" height="30">
+                            <use href="site/img/sprite/sprite.svg#modal_close"></use>
+                        </svg>
+                    </button>
+                    <div class="call-trigger-modal__left">
+
+                    </div>
+                    <div class="call-trigger-modal__right">
+                        <div class="call-trigger-modal__header">
+                            Дякуємо<br> за реєстрацію!
+                        </div>
+                        <div class="call-trigger-modal__description">
+                            Скористайстесь нашим мобільним застосунком.<br> Юрист завжди поруч!
+                        </div>
+                        <div class="call-trigger-modal__stores">
+                            <a href="https://apps.apple.com/us/app/%D0%BA%D0%BE%D0%BD%D1%81%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D0%BD%D1%82/id1459241538?l=uk&amp;ls=1" target="_blank" rel="noopener nofollow">
+                                <img loading="lazy" src="assets/profile/img/dist/appstore.svg" alt="img">
+                            </a>
+                            <a href="https://play.google.com/store/apps/details?id=ua.net.consultant" target="_blank" rel="noopener nofollow">
+                                <img loading="lazy" src="assets/profile/img/dist/googleplay.svg" alt="img">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <script src="assets/cabinet/js/main.js"></script>
+    <script src="assets/cabinet/js/pages/consultantEdit.js"></script>
+    <script>
+
+        window.AppConfig = window.AppConfig || {};
+        window.AppConfig.broadcasting = {
+            key: 'd7312caxSf122b2a31216c5',
+            wsHost: 'consultant.net.ua',
+            wsPort: 6001,
+            wssPort: 443,
+            scheme: 'http',
+            useTLS: false
+        };
+    
+/* --- */
+
+        <li class="edit-content__item js-multi-lang-items__item">
+            <input type="text" name=":name[:index][:locale][text]"
+                class="edit-content__input js-multi-lang-items__control" value=":value"
+                placeholder="____________________________">
+            --}}
+            <textarea name=":name[:index][:locale][text]" class="main-textarea__area edit-content__input js-multi-lang-items__control">:value</textarea>
+            <button class="edit-content__close js-multi-lang-items__remote-item"></button>
+        </li>
+    
+/* --- */
+
+        <li class="edit-content__item js-multi-lang-items__item">
+            <input type="text" name=":name[:index][:locale][text]"
+                class="edit-content__input js-multi-lang-items__control" value=":value"
+                placeholder="____________________________">
+            --}}
+            <textarea name=":name[:index][:locale][text]" class="main-textarea__area edit-content__input js-multi-lang-items__control">:value</textarea>
+            <button class="edit-content__close js-multi-lang-items__remote-item"></button>
+        </li>
+    
+/* --- */
+
+        <li class="edit-content__item js-multi-lang-items__item">
+            <input type="text" name=":name[:index][:locale][text]"
+                class="edit-content__input js-multi-lang-items__control" value=":value"
+                placeholder="____________________________">
+            --}}
+            <textarea name=":name[:index][:locale][text]" class="main-textarea__area edit-content__input js-multi-lang-items__control">:value</textarea>
+            <button class="edit-content__close js-multi-lang-items__remote-item"></button>
+        </li>
+    
+    </script>
+    
+
+
+
+</body></html>
