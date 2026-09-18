@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="uk" data-theme="light" data-hours="open" data-ds-version="2.4.1">
+<html lang="uk" data-theme="light" data-hours="open" data-ds-version="2.4.2">
 <head>
 <meta charset="utf-8">
-<!-- Дизайн-система «Консультант» · Версия 2.4.1 · 2026-09-18 · Приложение Е (квиз-воронка «Безкоштовний аналіз вашої ситуації», ADR-038, ADR-039) -->
+<!-- Дизайн-система «Консультант» · Версия 2.4.2 · 2026-09-18 · Приложение Е (квиз-воронка «Безкоштовний аналіз вашої ситуації», ADR-038, ADR-039) -->
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <title>Безкоштовний аналіз вашої ситуації — квіз | Консультант</title>
@@ -64,7 +64,7 @@
 /* ===================== BEGIN tokens.css (единственный источник значений) ===================== */
 /* ============================================================================
    ДИЗАЙН-СИСТЕМА «КОНСУЛЬТАНТ» · tokens.css
-   Версия: 2.4.1 · 2026-09-18 · источник значений для всей поставки
+   Версия: 2.4.2 · 2026-09-18 · источник значений для всей поставки
    Правка этого файла в обход документа запрещена (§11.4.2.3).
    Версия обязана совпадать с ds/VERSION, шапкой документа и --ds-version (§11.3.1);
    расхождение ловит tools/gate.py.
@@ -99,7 +99,7 @@
    ============================================================================ */
 
 :root {
-  --ds-version:      "2.4.1";
+  --ds-version:      "2.4.2";
   --ds-version-date: "2026-09-18";
 }
 
@@ -898,7 +898,7 @@
 
 /* ===================== BEGIN base.css ===================== */
 /* ============================================================================
-   ДИЗАЙН-СИСТЕМА «КОНСУЛЬТАНТ» · base.css · Версия 2.4.1
+   ДИЗАЙН-СИСТЕМА «КОНСУЛЬТАНТ» · base.css · Версия 2.4.2
    Каркас страницы и утилиты. Подключается ВТОРЫМ, сразу после tokens.css.
    Здесь нет ни одного значения — только токены. Компоненты живут в components/,
    секции — в sections/; этот файл — то, что нужно любой странице до первого компонента.
@@ -1592,17 +1592,17 @@ button.ds-avatar--more.is-preview-hover{ color:var(--ds-text-primary); text-deco
 .ds-check__ctrl{ position:relative; flex:none; display:block; inline-size:var(--ds-icon-sm); block-size:var(--ds-icon-sm); margin-block-start:calc((var(--ds-lh-body-m) * var(--ds-text-body-m) - var(--ds-icon-sm)) / 2) }
 .ds-check__box{ appearance:none; position:relative; display:block; inline-size:100%; block-size:100%; margin:0; background:var(--ds-surface-raised); border:var(--ds-border-width) solid var(--ds-border-control); border-radius:var(--ds-radius-xs); cursor:pointer; transition:background-color var(--ds-duration-1) var(--ds-ease-standard), border-color var(--ds-duration-1) var(--ds-ease-standard), transform var(--ds-duration-1) var(--ds-ease-standard) }
 .ds-check__box::after{ content:""; position:absolute; inset:calc((var(--ds-tap-target) - var(--ds-icon-sm)) / -2 - var(--ds-border-width)) }
-.ds-check__box:checked, .ds-check__box:indeterminate{ background:var(--ds-action-primary-bg); border-color:var(--ds-action-primary-bg) }
+.ds-check__box:checked, .ds-check__box[type="checkbox"]:indeterminate{ background:var(--ds-action-primary-bg); border-color:var(--ds-action-primary-bg) }
 .ds-check__tick, .ds-check__dash{ position:absolute; inset:0; inline-size:100%; block-size:100%; pointer-events:none; color:var(--ds-action-primary-fg); fill:none; stroke:currentColor; opacity:0; transform:scale(.6); transition:opacity var(--ds-duration-1) var(--ds-ease-standard), transform var(--ds-duration-1) var(--ds-ease-enter) }
-.ds-check__box:checked ~ .ds-check__tick, .ds-check__box:indeterminate ~ .ds-check__dash{ opacity:1; transform:none }
-.ds-check__box:indeterminate ~ .ds-check__tick{ opacity:0; transform:scale(.6) }
+.ds-check__box:checked ~ .ds-check__tick, .ds-check__box[type="checkbox"]:indeterminate ~ .ds-check__dash{ opacity:1; transform:none }
+.ds-check__box[type="checkbox"]:indeterminate ~ .ds-check__tick{ opacity:0; transform:scale(.6) }
 .ds-check__label{ flex:1 1 auto; min-inline-size:0; max-inline-size:var(--ds-measure-body); overflow-wrap:anywhere; text-wrap:pretty }
 .ds-check__label a{ color:var(--ds-text-link); padding-block:var(--ds-space-4); text-underline-offset:var(--ds-space-2); text-decoration-thickness:from-font }
 .ds-check__label a:hover{ color:var(--ds-text-link-hover) }
 .ds-check__note{ display:block; margin-block-start:var(--ds-space-2); font-size:var(--ds-text-caption); line-height:var(--ds-lh-caption); letter-spacing:var(--ds-ls-caption); font-weight:var(--ds-fw-body); color:var(--ds-text-tertiary) }
 @media (hover:hover){
-  .ds-check:hover .ds-check__box:not(:disabled):not(:checked):not(:indeterminate){ border-color:var(--ds-border-accent) }
-  .ds-check:hover .ds-check__box:checked:not(:disabled), .ds-check:hover .ds-check__box:indeterminate:not(:disabled){ background:var(--ds-action-primary-bg-hover); border-color:var(--ds-action-primary-bg-hover) }
+  .ds-check:hover .ds-check__box:not(:disabled):not(:checked):not([type="checkbox"]:indeterminate){ border-color:var(--ds-border-accent) }
+  .ds-check:hover .ds-check__box:checked:not(:disabled), .ds-check:hover .ds-check__box[type="checkbox"]:indeterminate:not(:disabled){ background:var(--ds-action-primary-bg-hover); border-color:var(--ds-action-primary-bg-hover) }
 }
 .ds-check:active .ds-check__box:not(:disabled){ transform:scale(.9) }
 .ds-check__box:focus-visible{ outline:var(--ds-focus-width) solid var(--ds-focus-ring); outline-offset:var(--ds-focus-offset); box-shadow:0 0 0 calc(var(--ds-focus-width) + var(--ds-focus-offset) + var(--ds-space-2)) var(--ds-focus-halo) }
@@ -1616,7 +1616,7 @@ button.ds-avatar--more.is-preview-hover{ color:var(--ds-text-primary); text-deco
 .ds-check[aria-busy="true"] .ds-check__tick, .ds-check[aria-busy="true"] .ds-check__dash{ opacity:0 }
 @keyframes lab-checkbox-spin{ to{ transform:rotate(360deg); } }
 .ds-check--card{ padding:var(--ds-inset-control) var(--ds-inset-card); background:var(--ds-surface-raised); border:var(--ds-border-width) solid var(--ds-border-control); border-radius:var(--ds-radius-control); transition:background-color var(--ds-duration-1) var(--ds-ease-standard), border-color var(--ds-duration-1) var(--ds-ease-standard) }
-.ds-check--card:has(.ds-check__box:checked), .ds-check--card:has(.ds-check__box:indeterminate){ background:var(--ds-surface-accent-subtle); border-color:var(--ds-border-accent) }
+.ds-check--card:has(.ds-check__box:checked), .ds-check--card:has(.ds-check__box[type="checkbox"]:indeterminate){ background:var(--ds-surface-accent-subtle); border-color:var(--ds-border-accent) }
 @media (hover:hover){
   .ds-check--card:hover:not(:has(.ds-check__box:disabled)){ border-color:var(--ds-border-accent) }
 }
@@ -1629,8 +1629,8 @@ button.ds-avatar--more.is-preview-hover{ color:var(--ds-text-primary); text-deco
 @media (min-width:600px){
   .ds-check-grid--inline{ display:flex; flex-wrap:wrap; column-gap:var(--ds-space-24); row-gap:0 }
 }
-.ds-check.is-preview-hover .ds-check__box:not(:checked):not(:indeterminate){ border-color:var(--ds-border-accent) }
-.ds-check.is-preview-hover .ds-check__box:checked, .ds-check.is-preview-hover .ds-check__box:indeterminate{ background:var(--ds-action-primary-bg-hover); border-color:var(--ds-action-primary-bg-hover) }
+.ds-check.is-preview-hover .ds-check__box:not(:checked):not([type="checkbox"]:indeterminate){ border-color:var(--ds-border-accent) }
+.ds-check.is-preview-hover .ds-check__box:checked, .ds-check.is-preview-hover .ds-check__box[type="checkbox"]:indeterminate{ background:var(--ds-action-primary-bg-hover); border-color:var(--ds-action-primary-bg-hover) }
 .ds-check.is-preview-active .ds-check__box{ transform:scale(.9) }
 .ds-check.is-preview-focus:not(.ds-check--card) .ds-check__box{ outline:var(--ds-focus-width) solid var(--ds-focus-ring); outline-offset:var(--ds-focus-offset); box-shadow:0 0 0 calc(var(--ds-focus-width) + var(--ds-focus-offset) + var(--ds-space-2)) var(--ds-focus-halo) }
 .ds-check--card.is-preview-hover{ border-color:var(--ds-border-accent) }
@@ -3680,6 +3680,12 @@ body.ds-funnel-page{ background:var(--ds-surface-sunken); }
   border-radius:var(--ds-radius-full); background:var(--ds-surface-accent-subtle); color:var(--ds-text-link); }
 .ds-funnel__opt-icon .ds-icon{ inline-size:var(--ds-icon-sm); block-size:var(--ds-icon-sm); }
 .ds-funnel__options .ds-check--card:has(.ds-funnel__opt-icon){ grid-template-columns:auto auto 1fr; display:grid; }
+/* Одиночный выбор — Radio --card: круглый индикатор читается как «оберіть один» */
+.ds-funnel__options .ds-radio--card{ display:grid; grid-template-columns:auto auto 1fr; align-items:center; gap:var(--ds-space-8);
+  min-block-size:var(--ds-control-lg); padding:var(--ds-space-8) var(--ds-space-12); }
+.ds-funnel__options .ds-radio__ctrl{ margin-block-start:0; }
+.ds-funnel__options .ds-radio__label{ font-size:var(--ds-text-body-m); line-height:var(--ds-lh-body-m); }
+.ds-funnel__options .ds-radio__note{ margin-block-start:var(--ds-space-2); }
 
 /* Кейсы (S5) */
 .ds-funnel__counts{ display:flex; flex-wrap:wrap; gap:var(--ds-space-8) var(--ds-space-16); margin:0; padding:0; list-style:none; }
@@ -3696,6 +3702,7 @@ body.ds-funnel-page{ background:var(--ds-surface-sunken); }
   display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; overflow:hidden; }
 .ds-funnel__stores{ display:flex; flex-wrap:wrap; align-items:center; gap:var(--ds-space-8) var(--ds-space-20); }
 .ds-funnel__store{ display:inline-flex; align-items:baseline; gap:var(--ds-space-8); margin:0; font-size:var(--ds-text-caption); color:var(--ds-text-secondary); }
+.ds-funnel__store .ds-icon{ align-self:center; inline-size:var(--ds-icon-sm); block-size:var(--ds-icon-sm); color:var(--ds-text-primary); }
 .ds-funnel__store strong{ font-size:var(--ds-text-h3); line-height:var(--ds-lh-h3); letter-spacing:var(--ds-ls-h3); font-weight:var(--ds-fw-numeral); color:var(--ds-text-primary); }
 
 /* Описание (S6): голос */
@@ -3837,6 +3844,9 @@ body.ds-funnel-page{ background:var(--ds-surface-sunken); }
   <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/><path d="M8 7h7"/></symbol>
   <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
   <symbol id="i-message" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"/></symbol>
+  <!-- знаки магазинов — Simple Icons 16.31.0 (CC0), монохром: цвет задаёт страница, как у logo-wall (08-visual §8.6.3) -->
+  <symbol id="i-appstore" viewBox="0 0 24 24" fill="currentColor"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></symbol>
+  <symbol id="i-googleplay" viewBox="0 0 24 24" fill="currentColor"><path d="M22.018 13.298l-3.919 2.218-3.515-3.493 3.543-3.521 3.891 2.202a1.49 1.49 0 0 1 0 2.594zM1.337.924a1.486 1.486 0 0 0-.112.568v21.017c0 .217.045.419.124.6l11.155-11.087L1.337.924zm12.207 10.065l3.258-3.238L3.45.195a1.466 1.466 0 0 0-.946-.179l11.04 10.973zm0 2.067l-11 10.933c.298.036.612-.016.906-.183l13.324-7.54-3.23-3.21z"/></symbol>
   <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></symbol>
 </svg>
 
@@ -4025,8 +4035,8 @@ body.ds-funnel-page{ background:var(--ds-surface-sunken); }
       <ul class="ds-funnel__counts" id="s5-counts" data-gate-allow="G10 3.4: число кейсів за категорією з бази кейсів сайту — показник платформи (ТЗ квіза S5), не число справ консультанта"></ul>
       <div class="ds-funnel__cases" id="s5-cases"></div>
       <div class="ds-funnel__stores" role="group" aria-label="Оцінки застосунку в магазинах">
-        <p class="ds-funnel__store" data-gate-allow="G10 3.3: кількість відгуків застосунку в App Store — реальні дані магазину (ТЗ S5), не лічильник відгуків консультанта"><strong class="ds-num">4,8</strong> App Store · 592 відгуки</p>
-        <p class="ds-funnel__store" data-gate-allow="G10 3.3: кількість відгуків застосунку в Google Play — реальні дані магазину (ТЗ S5), не лічильник відгуків консультанта"><strong class="ds-num">4,7</strong> Google Play · 1&nbsp;240 відгуків</p>
+        <p class="ds-funnel__store" data-gate-allow="G10 3.3: кількість відгуків застосунку в App Store — реальні дані магазину (ТЗ S5), не лічильник відгуків консультанта"><svg class="ds-icon" aria-hidden="true"><use href="#i-appstore"></use></svg><strong class="ds-num">4,8</strong> App Store · 592 відгуки</p>
+        <p class="ds-funnel__store" data-gate-allow="G10 3.3: кількість відгуків застосунку в Google Play — реальні дані магазину (ТЗ S5), не лічильник відгуків консультанта"><svg class="ds-icon" aria-hidden="true"><use href="#i-googleplay"></use></svg><strong class="ds-num">4,7</strong> Google Play · 1&nbsp;240 відгуків</p>
       </div>
       <p class="ds-disclaimer ds-funnel__hint--sm">Відгуки залишають клієнти платформи. Досвід іншої людини не гарантує такого самого результату у вашій справі.</p>
     </section>
@@ -4126,31 +4136,22 @@ body.ds-funnel-page{ background:var(--ds-surface-sunken); }
         <h2 class="ds-funnel__title" id="s9-title" tabindex="-1">Що Ви хочете зробити далі?</h2>
         <p class="ds-funnel__hint ds-funnel__hint--sm">Оберіть один варіант.</p>
       </div>
-      <fieldset class="ds-funnel__options" id="s9-options" aria-describedby="s9-err">
+      <fieldset class="ds-funnel__options ds-radio-group" id="s9-options" aria-describedby="s9-err">
         <legend class="ds-visually-hidden">Оберіть один варіант</legend>
-        <label class="ds-check ds-check--card">
-          <span class="ds-check__ctrl">
-            <input class="ds-check__box" type="radio" name="client_intent" value="high">
-            <svg class="ds-check__tick" viewBox="0 0 24 24" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5.5 12.5l4 4 9-9"/></svg>
-          </span>
+        <label class="ds-radio ds-radio--card">
+          <span class="ds-radio__ctrl"><input class="ds-radio__dot-in" type="radio" name="client_intent" value="high"><span class="ds-radio__dot" aria-hidden="true"></span></span>
           <span class="ds-funnel__opt-icon" aria-hidden="true"><svg class="ds-icon"><use href="#i-bolt"></use></svg></span>
-          <span class="ds-check__label">Отримати допомогу якнайшвидше<span class="ds-check__note">Готовий(-а) обговорити роботу з фахівцем уже зараз</span></span>
+          <span class="ds-radio__label">Отримати допомогу якнайшвидше<span class="ds-radio__note">Готовий(-а) обговорити роботу з фахівцем уже зараз</span></span>
         </label>
-        <label class="ds-check ds-check--card">
-          <span class="ds-check__ctrl">
-            <input class="ds-check__box" type="radio" name="client_intent" value="medium">
-            <svg class="ds-check__tick" viewBox="0 0 24 24" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5.5 12.5l4 4 9-9"/></svg>
-          </span>
+        <label class="ds-radio ds-radio--card">
+          <span class="ds-radio__ctrl"><input class="ds-radio__dot-in" type="radio" name="client_intent" value="medium"><span class="ds-radio__dot" aria-hidden="true"></span></span>
           <span class="ds-funnel__opt-icon" aria-hidden="true"><svg class="ds-icon"><use href="#i-eye"></use></svg></span>
-          <span class="ds-check__label">Зрозуміти рішення та вартість<span class="ds-check__note">Готовий(-а) обрати фахівця після того, як побачу варіанти</span></span>
+          <span class="ds-radio__label">Зрозуміти рішення та вартість<span class="ds-radio__note">Готовий(-а) обрати фахівця після того, як побачу варіанти</span></span>
         </label>
-        <label class="ds-check ds-check--card">
-          <span class="ds-check__ctrl">
-            <input class="ds-check__box" type="radio" name="client_intent" value="low">
-            <svg class="ds-check__tick" viewBox="0 0 24 24" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5.5 12.5l4 4 9-9"/></svg>
-          </span>
+        <label class="ds-radio ds-radio--card">
+          <span class="ds-radio__ctrl"><input class="ds-radio__dot-in" type="radio" name="client_intent" value="low"><span class="ds-radio__dot" aria-hidden="true"></span></span>
           <span class="ds-funnel__opt-icon" aria-hidden="true"><svg class="ds-icon"><use href="#i-book"></use></svg></span>
-          <span class="ds-check__label">Зібрати інформацію без поспіху<span class="ds-check__note">Готовий(-а) отримати аналіз, рішення щодо фахівця поки не приймаю</span></span>
+          <span class="ds-radio__label">Зібрати інформацію без поспіху<span class="ds-radio__note">Готовий(-а) отримати аналіз, рішення щодо фахівця поки не приймаю</span></span>
         </label>
       </fieldset>
       <p class="ds-funnel__error" id="s9-err" role="alert" hidden>Оберіть один із варіантів, щоб продовжити</p>
@@ -4539,6 +4540,10 @@ body.ds-funnel-page{ background:var(--ds-surface-sunken); }
     payFail:false, attribution:{}, trail:[] };
   var reduce = matchMedia('(prefers-reduced-motion: reduce)');
   var timers = [];
+  /* модальность ввода: после мыши/касания фокус уходит на main без кольца, с клавиатуры — на заголовок с кольцом */
+  var modality = 'pointer';
+  addEventListener('pointerdown', function () { modality = 'pointer'; }, true);
+  addEventListener('keydown', function (e) { if (e.key === 'Tab' || e.key === 'Enter' || e.key === ' ' || e.key.indexOf('Arrow') === 0) modality = 'keyboard'; }, true);
 
   /* ── служебное ── */
   var $ = function (sel, ctx) { return (ctx || document).querySelector(sel); };
@@ -4646,7 +4651,7 @@ body.ds-funnel-page{ background:var(--ds-surface-sunken); }
     if (ENTER[id]) ENTER[id](el, dir);
     window.scrollTo(0, 0);
     var title = $('.ds-funnel__title', el);
-    if (title && !initial) setTimeout(function () { title.focus({ preventScroll: true }); }, 60);
+    if (!initial) setTimeout(function () { (modality === 'keyboard' && title ? title : $('#main')).focus({ preventScroll: true }); }, 60);
     var q = QUESTION[id];
     say((q ? 'Крок ' + q[0] + ' із 5. ' : '') + (title ? title.textContent.trim() : ''));
     if (current !== id) {
