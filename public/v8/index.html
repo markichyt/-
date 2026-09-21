@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="uk" data-theme="light" data-hours="open" data-ds-version="2.4.2">
+<html lang="uk" data-theme="light" data-hours="open" data-ds-version="2.5.1">
 <head>
 <meta charset="utf-8">
-<!-- Дизайн-система «Консультант» · Версия 2.4.2 · 2026-09-18 · Приложение Е (квиз-воронка «Безкоштовний аналіз вашої ситуації», ADR-038, ADR-039) -->
+<!-- Дизайн-система «Консультант» · Версия 2.5.1 · 2026-09-21 · Приложение Е (квиз-воронка «Безкоштовний аналіз вашої ситуації», ADR-038, ADR-039) -->
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <title>Безкоштовний аналіз вашої ситуації — квіз | Консультант</title>
@@ -64,7 +64,7 @@
 /* ===================== BEGIN tokens.css (единственный источник значений) ===================== */
 /* ============================================================================
    ДИЗАЙН-СИСТЕМА «КОНСУЛЬТАНТ» · tokens.css
-   Версия: 2.4.2 · 2026-09-18 · источник значений для всей поставки
+   Версия: 2.5.1 · 2026-09-21 · источник значений для всей поставки
    Правка этого файла в обход документа запрещена (§11.4.2.3).
    Версия обязана совпадать с ds/VERSION, шапкой документа и --ds-version (§11.3.1);
    расхождение ловит tools/gate.py.
@@ -99,8 +99,8 @@
    ============================================================================ */
 
 :root {
-  --ds-version:      "2.4.2";
-  --ds-version-date: "2026-09-18";
+  --ds-version:      "2.5.1";
+  --ds-version-date: "2026-09-21";
 }
 
 /* ЗАМЕНЯЕМЫЙ БЛОК: палитра бренда
@@ -898,7 +898,7 @@
 
 /* ===================== BEGIN base.css ===================== */
 /* ============================================================================
-   ДИЗАЙН-СИСТЕМА «КОНСУЛЬТАНТ» · base.css · Версия 2.4.2
+   ДИЗАЙН-СИСТЕМА «КОНСУЛЬТАНТ» · base.css · Версия 2.5.1
    Каркас страницы и утилиты. Подключается ВТОРЫМ, сразу после tokens.css.
    Здесь нет ни одного значения — только токены. Компоненты живут в components/,
    секции — в sections/; этот файл — то, что нужно любой странице до первого компонента.
@@ -3611,20 +3611,39 @@ body.ds-funnel-page{ background:var(--ds-surface-sunken); }
   border-radius:var(--ds-radius-full); background:var(--ds-surface-accent-subtle); color:var(--ds-text-link); }
 .ds-funnel__icon .ds-icon{ inline-size:var(--ds-icon-sm); block-size:var(--ds-icon-sm); }
 
-/* Чат-превью ответов (S0): вопрос справа, ответы слева; AI отличается тоном и меткой (ТЗ §10) */
-.ds-funnel__chat{ display:grid; gap:var(--ds-space-8); }
-.ds-funnel__msg{ display:grid; gap:var(--ds-space-4); padding:var(--ds-space-12); border-radius:var(--ds-radius-card);
-  background:var(--ds-surface-card); font-size:var(--ds-text-body-s); line-height:var(--ds-lh-body-s); color:var(--ds-text-secondary);
-  max-inline-size:calc(100% - var(--ds-space-32)); }
-.ds-funnel__msg--q{ justify-self:end; background:var(--ds-action-primary-bg); color:var(--ds-action-primary-fg); }
-.ds-funnel__msg--ai{ background:var(--ds-surface-accent-subtle); }
-.ds-funnel__msg-head{ display:flex; align-items:center; gap:var(--ds-space-8); font-weight:var(--ds-fw-semibold); color:var(--ds-text-primary); }
-.ds-funnel__msg-head .ds-avatar{ inline-size:var(--ds-avatar-2xs); block-size:var(--ds-avatar-2xs); font-size:calc(var(--ds-avatar-2xs) * .42); }
-.ds-funnel__msg-head .ds-avatar img{ inline-size:var(--ds-icon-xs); block-size:var(--ds-icon-xs); }
-.ds-funnel__msg-head .ds-score{ margin-inline-start:auto; }
-.ds-funnel__msg-head .ds-badge{ margin-inline-start:auto; }
-.ds-funnel__msg p{ margin:0; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
-.ds-funnel__msg--q p{ -webkit-line-clamp:2; }
+/* Сцена входа (S0, правка 21.09): слева цепочка «AI → юристи», справа кадр застосунку с интерфейсом страницы питання;
+   кадр обрезан сценой, как на макете владельца; текст, точки и CTA — под сценой */
+.ds-funnel__screen--entry{ gap:var(--ds-space-12); }
+.ds-funnel__stage{ display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 1.7fr); column-gap:var(--ds-space-12); align-items:start;
+  block-size:calc(var(--ds-space-120) + var(--ds-space-64)); overflow:hidden; padding:var(--ds-space-12) var(--ds-space-12) 0;
+  background:var(--ds-surface-accent-subtle); border-radius:var(--ds-radius-card); }
+.ds-funnel__flow{ display:grid; gap:var(--ds-space-2); margin:0; padding:0; list-style:none; min-inline-size:0; }
+/* чип AI длиннее колонки — уходит под кадр, как на макете владельца (кадр выше по z) */
+.ds-funnel__flow li{ display:grid; justify-items:start; gap:var(--ds-space-2); }
+.ds-funnel__flow-chip .ds-funnel__lbl--full{ display:none; }
+.ds-funnel__flow-chip .ds-funnel__lbl--short{ display:inline; }
+.ds-funnel__flow-chip{ display:inline-flex; align-items:center; gap:var(--ds-space-4); max-inline-size:100%; min-block-size:var(--ds-space-24);
+  padding-inline:var(--ds-space-8); border-radius:var(--ds-radius-control); background:var(--ds-surface-card);
+  font-size:var(--ds-text-caption); line-height:var(--ds-lh-caption); font-weight:var(--ds-fw-semibold); color:var(--ds-text-primary); white-space:nowrap; }
+.ds-funnel__flow-chip .ds-icon{ flex:none; inline-size:var(--ds-icon-xs); block-size:var(--ds-icon-xs); }
+.ds-funnel__flow-chip--ai{ color:var(--ds-text-link); }
+.ds-funnel__flow-arrow{ inline-size:var(--ds-icon-xs); block-size:var(--ds-icon-xs); margin-inline-start:var(--ds-space-8); color:var(--ds-text-tertiary); }
+.ds-funnel__device{ position:relative; z-index:calc(var(--ds-z-base) + 1); margin-block-start:var(--ds-space-12); padding:var(--ds-space-4) var(--ds-space-4) 0; background:var(--ds-surface-inverse);
+  border-radius:var(--ds-radius-lg) var(--ds-radius-lg) 0 0; min-inline-size:0; }
+.ds-funnel__device .ds-appframe{ border-radius:calc(var(--ds-radius-lg) - var(--ds-space-4)) calc(var(--ds-radius-lg) - var(--ds-space-4)) 0 0; overflow:hidden; }
+.ds-funnel__points-mark{ display:grid; place-items:center; flex:none; inline-size:var(--ds-space-24); block-size:var(--ds-space-24); border-radius:var(--ds-radius-full);
+  background:var(--ds-status-success-bg); color:var(--ds-status-success-text); }
+.ds-funnel__points-mark .ds-icon{ inline-size:var(--ds-icon-xs); block-size:var(--ds-icon-xs); margin:0; }
+/* На телефоне заголовок входа — кегль h2: две строки вместо трёх, сцена остаётся видимой целиком */
+@media (max-width:599px){ .ds-funnel__screen--entry .ds-funnel__title--hero{ font-size:var(--ds-text-h2); line-height:var(--ds-lh-h2); letter-spacing:var(--ds-ls-h2); } }
+@media (min-width:600px){ .ds-funnel__stage{ block-size:calc(var(--ds-space-120) * 2 + var(--ds-space-20)); grid-template-columns:minmax(0, 1fr) minmax(0, 1.4fr); padding-inline:var(--ds-space-24); column-gap:var(--ds-space-24); }
+  .ds-funnel__device{ margin-block-start:var(--ds-space-24); }
+  .ds-funnel__flow{ gap:var(--ds-space-4); }
+  .ds-funnel__flow-chip{ min-block-size:calc(var(--ds-space-24) + var(--ds-space-4)); }
+  .ds-funnel__flow-chip .ds-funnel__lbl--full{ display:inline; }
+  .ds-funnel__flow-chip .ds-funnel__lbl--short{ display:none; }
+  .ds-appframe--compact .ds-appframe__list{ grid-template-columns:repeat(2, minmax(0,1fr)); align-items:start; } }
+@media (min-width:1024px){ .ds-appframe--compact .ds-appframe__list{ grid-template-columns:repeat(3, minmax(0,1fr)); } }
 
 /* Локация: поле поиска 56px во всю ширину, список поверх */
 .ds-funnel__search{ max-inline-size:none; min-block-size:var(--ds-control-lg); background:var(--ds-surface-raised); }
@@ -3716,29 +3735,49 @@ body.ds-funnel-page{ background:var(--ds-surface-sunken); }
 @keyframes ds-funnel-pulse{ from{ opacity:1 } to{ opacity:.4 } }
 .ds-funnel__textarea .ds-textarea{ min-block-size:calc(var(--ds-space-120) + var(--ds-space-8)); }
 
-/* Макет экрана застосунку (S7, S8): компактный, лента не автопрокручивается (запрет 13) */
-.ds-appframe{ display:grid; gap:var(--ds-space-8); padding:var(--ds-space-12); background:var(--ds-surface-card); border-radius:var(--ds-radius-card); }
-.ds-appframe__bar{ display:flex; align-items:center; gap:var(--ds-space-8); padding-block-end:var(--ds-space-8);
-  border-block-end:var(--ds-border-width) solid var(--ds-border-subtle); font-size:var(--ds-text-caption); font-weight:var(--ds-fw-semibold); color:var(--ds-text-secondary); }
-.ds-appframe__bar img{ inline-size:var(--ds-icon-sm); block-size:var(--ds-icon-sm); }
-.ds-appframe__q{ display:grid; gap:var(--ds-space-2); padding:var(--ds-space-8) var(--ds-space-12); background:var(--ds-surface-sunken);
-  border-radius:var(--ds-radius-card); font-size:var(--ds-text-body-s); line-height:var(--ds-lh-body-s); }
-.ds-appframe__q p{ margin:0; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
-.ds-appframe__list{ display:grid; gap:var(--ds-space-8); }
-.ds-appframe__answer{ display:grid; gap:var(--ds-space-4); padding:var(--ds-space-8) var(--ds-space-12); background:var(--ds-surface-sunken);
-  border-radius:var(--ds-radius-card); font-size:var(--ds-text-caption); line-height:var(--ds-lh-caption); color:var(--ds-text-secondary); }
-.ds-appframe__answer--ai{ background:var(--ds-surface-accent-subtle); }
-.ds-appframe__head{ display:flex; align-items:center; gap:var(--ds-space-8); font-size:var(--ds-text-body-s); }
-.ds-appframe__head .ds-avatar{ inline-size:var(--ds-avatar-2xs); block-size:var(--ds-avatar-2xs); font-size:calc(var(--ds-avatar-2xs) * .42); }
-.ds-appframe__head .ds-avatar img{ inline-size:var(--ds-icon-xs); block-size:var(--ds-icon-xs); }
-.ds-appframe__name{ font-weight:var(--ds-fw-semibold); color:var(--ds-text-primary); }
-.ds-appframe__head .ds-score, .ds-appframe__head .ds-badge{ margin-inline-start:auto; }
-.ds-appframe__answer p{ margin:0; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
-.ds-appframe__skel{ display:grid; gap:var(--ds-space-8); padding:var(--ds-space-12); background:var(--ds-surface-sunken); border-radius:var(--ds-radius-card); }
+/* Кадр застосунку (S0, S7, S8; правка 21.09): интерфейс страницы питання как в продукте — шапка «Питання №», картка питання
+   с датой, картки відповідей со смугою рівня и балом «N зі 100», аватар, ім’я, роль, гео, час, текст. Лента не автопрокручивается (запрет 13) */
+.ds-appframe{ display:grid; grid-template-columns:minmax(0, 1fr); gap:var(--ds-space-8); padding:0 0 var(--ds-space-8); background:var(--ds-surface-card); border-radius:var(--ds-radius-card); }
+.ds-appframe__bar{ display:flex; align-items:center; justify-content:center; min-block-size:var(--ds-space-32); padding-inline:var(--ds-space-8);
+  border-block-end:var(--ds-border-width) solid var(--ds-border-subtle); font-size:var(--ds-text-caption); line-height:var(--ds-lh-caption); font-weight:var(--ds-fw-semibold); color:var(--ds-text-primary); }
+.ds-appframe__card{ display:grid; grid-template-columns:minmax(0, 1fr); gap:var(--ds-space-4); margin-inline:var(--ds-space-8); padding:var(--ds-space-8); background:var(--ds-surface-sunken); border-radius:var(--ds-radius-card); }
+.ds-appframe__date{ display:flex; align-items:center; gap:var(--ds-space-4); margin:0; font-size:var(--ds-text-caption); line-height:var(--ds-lh-caption); color:var(--ds-text-tertiary); font-variant-numeric:tabular-nums lining-nums; }
+.ds-appframe__date .ds-icon{ inline-size:var(--ds-icon-xs); block-size:var(--ds-icon-xs); color:var(--ds-text-link); }
+.ds-appframe__qt{ margin:0; font-size:var(--ds-text-body-s); line-height:var(--ds-lh-body-s); font-weight:var(--ds-fw-semibold); color:var(--ds-text-primary);
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; overflow-wrap:normal; }
+.ds-appframe__qtext{ margin:0; font-size:var(--ds-text-caption); line-height:var(--ds-lh-caption); color:var(--ds-text-tertiary); display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.ds-appframe__list{ display:grid; grid-template-columns:minmax(0, 1fr); gap:var(--ds-space-8); margin-inline:var(--ds-space-8); }
+.ds-appframe__ans{ display:grid; grid-template-columns:minmax(0, 1fr); background:var(--ds-surface-accent-subtle); border-radius:var(--ds-radius-card); overflow:hidden; }
+.ds-appframe__band{ display:flex; align-items:center; justify-content:space-between; gap:var(--ds-space-8); min-block-size:var(--ds-space-24); padding:var(--ds-space-2) var(--ds-space-8); background:var(--ds-alpha-hairline); }
+.ds-appframe__band .ds-score{ font-size:var(--ds-text-caption); line-height:var(--ds-lh-caption); }
+.ds-appframe__band .ds-tier-badge, .ds-appframe__band .ds-badge{ font-size:var(--ds-text-caption); }
+.ds-appframe__who{ display:grid; grid-template-columns:auto 1fr; column-gap:var(--ds-space-8); align-items:center; padding:var(--ds-space-8) var(--ds-space-8) 0; }
+.ds-appframe__who .ds-avatar{ inline-size:var(--ds-space-40); block-size:var(--ds-space-40); font-size:calc(var(--ds-space-40) * .4);
+  outline:var(--ds-space-2) solid var(--ds-border-accent); outline-offset:calc(-1 * var(--ds-border-width)); }
+.ds-appframe__who .ds-avatar--ai{ background:var(--ds-surface-inverse); }
+.ds-appframe__who .ds-avatar img{ position:static; inline-size:var(--ds-icon-sm); block-size:var(--ds-icon-sm); border-radius:0; object-fit:contain; }
+.ds-appframe__meta{ display:grid; min-inline-size:0; }
+.ds-appframe__name{ min-inline-size:0; font-size:var(--ds-text-body-s); line-height:var(--ds-lh-body-s); font-weight:var(--ds-fw-semibold); color:var(--ds-text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.ds-appframe__role{ font-size:var(--ds-text-caption); line-height:var(--ds-lh-caption); color:var(--ds-text-tertiary); }
+.ds-appframe__geo{ display:flex; align-items:center; gap:var(--ds-space-2); font-size:var(--ds-text-caption); line-height:var(--ds-lh-caption); color:var(--ds-text-secondary); }
+.ds-appframe__geo .ds-icon{ inline-size:var(--ds-icon-xs); block-size:var(--ds-icon-xs); color:var(--ds-text-tertiary); }
+.ds-appframe__ts{ margin:0; padding:var(--ds-space-4) var(--ds-space-8) 0; font-size:var(--ds-text-caption); line-height:var(--ds-lh-caption); color:var(--ds-text-tertiary); font-variant-numeric:tabular-nums lining-nums; }
+.ds-appframe__txt{ margin:0 0 var(--ds-space-8); padding:var(--ds-space-4) var(--ds-space-8) 0; font-size:var(--ds-text-caption); line-height:var(--ds-lh-caption); color:var(--ds-text-primary);
+  display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+.ds-appframe__skel{ display:grid; gap:var(--ds-space-8); padding:var(--ds-space-12); background:var(--ds-surface-accent-subtle); border-radius:var(--ds-radius-card); }
 .ds-appframe__skel .ds-skeleton{ block-size:var(--ds-space-12); }
 .ds-appframe__skel .ds-skeleton:nth-child(2){ inline-size:72%; }
 .ds-appframe__skel .ds-skeleton:nth-child(3){ inline-size:48%; }
 .ds-appframe__skel--short .ds-skeleton:nth-child(3){ display:none; }
+@media (max-height:43.6875em){ .ds-appframe__txt{ -webkit-line-clamp:2; } }
+/* Компактный кадр (S7, S8): аватар 32, имя · роль · гео в строку, без времени, текст в две строки — три ответа умещаются в телефон */
+.ds-appframe--compact{ padding-block-end:var(--ds-space-4); }
+.ds-appframe--compact .ds-appframe__who{ padding-block-start:var(--ds-space-4); }
+.ds-appframe--compact .ds-appframe__who .ds-avatar{ inline-size:var(--ds-space-32); block-size:var(--ds-space-32); font-size:calc(var(--ds-space-32) * .4); }
+.ds-appframe--compact .ds-appframe__who .ds-avatar img{ inline-size:var(--ds-icon-xs); block-size:var(--ds-icon-xs); }
+.ds-appframe--compact .ds-appframe__meta{ display:flex; flex-wrap:wrap; align-items:baseline; column-gap:var(--ds-space-8); }
+.ds-appframe--compact .ds-appframe__ts{ display:none; }
+.ds-appframe--compact .ds-appframe__txt{ -webkit-line-clamp:2; }
 .ds-funnel__checklist .ds-timeline__date{ display:none; }
 .ds-funnel__checklist .ds-timeline__title{ margin:0; }
 
@@ -3824,6 +3863,7 @@ body.ds-funnel-page{ background:var(--ds-surface-sunken); }
   <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4 4L19 7"/></symbol>
   <symbol id="i-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></symbol>
+  <symbol id="i-arrow-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></symbol>
   <symbol id="i-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
   <symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/><path d="M8 21h8"/></symbol>
   <symbol id="i-stop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/></symbol>
@@ -3886,28 +3926,35 @@ body.ds-funnel-page{ background:var(--ds-surface-sunken); }
 
   <div class="ds-funnel__body">
 
-    <!-- ── S0 · Вхід у квіз ─────────────────────────────────────────────── -->
-    <section class="ds-funnel__screen" id="s0" data-screen="s0" aria-labelledby="quiz-title">
+    <!-- ── S0 · Вхід у квіз — сцена «як це працює» + текст (правка владельца 21.09: формат скрина 3, интерфейс — как в застосунку) ── -->
+    <section class="ds-funnel__screen ds-funnel__screen--entry" id="s0" data-screen="s0" aria-labelledby="quiz-title">
+      <div class="ds-funnel__stage" role="img" aria-label="Так це працює в застосунку: ваше питання, відповідь AI-асистента та відповіді кількох юристів">
+        <ol class="ds-funnel__flow">
+          <li><span class="ds-funnel__flow-chip ds-funnel__flow-chip--ai"><svg class="ds-icon" aria-hidden="true"><use href="#i-bolt"></use></svg><span class="ds-funnel__lbl--full">ConsultantLM AI</span><span class="ds-funnel__lbl--short">AI-асистент</span></span><svg class="ds-icon ds-funnel__flow-arrow" aria-hidden="true"><use href="#i-arrow-down"></use></svg></li>
+          <li><span class="ds-funnel__flow-chip">Юрист A</span><svg class="ds-icon ds-funnel__flow-arrow" aria-hidden="true"><use href="#i-arrow-down"></use></svg></li>
+          <li><span class="ds-funnel__flow-chip">Юрист B</span><svg class="ds-icon ds-funnel__flow-arrow" aria-hidden="true"><use href="#i-arrow-down"></use></svg></li>
+          <li><span class="ds-funnel__flow-chip">Юрист C</span></li>
+        </ol>
+        <div class="ds-funnel__device">
+          <div class="ds-appframe">
+            <div class="ds-appframe__bar">Питання №14237</div>
+            <article class="ds-appframe__card"><p class="ds-appframe__date"><svg class="ds-icon" aria-hidden="true"><use href="#i-clock"></use></svg>01.07.2026, 18:04</p><p class="ds-appframe__qt">Чи можу я отримати компенсацію за неправомірне затримання через помилку в базі даних?</p></article>
+            <div class="ds-appframe__list">
+              <article class="ds-appframe__ans"><div class="ds-appframe__band"><span class="ds-badge">AI</span><span class="ds-score"><span class="ds-score__value ds-num">35,7</span><span class="ds-score__scale">зі 100</span></span></div><div class="ds-appframe__who"><span class="ds-avatar ds-avatar--ai" aria-hidden="true"><img src="brand/logo-icon.png" alt="" width="20" height="20" decoding="async"></span><span class="ds-appframe__meta"><span class="ds-appframe__name">Асистент Андрій</span><span class="ds-appframe__role">Штучний інтелект</span><span class="ds-appframe__geo"><svg class="ds-icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Україна</span></span></div><p class="ds-appframe__ts">01.07.2026, 18:05</p><p class="ds-appframe__txt">Компенсацію за неправомірне затримання можна вимагати за нормами про відшкодування шкоди, завданої органами влади: втрачений заробіток і моральна шкода. Результат залежить від обставин і доказів помилки.</p></article>
+              <article class="ds-appframe__ans"><div class="ds-appframe__band"><span class="ds-tier-badge" data-tier="pro"><svg class="ds-tier-badge__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PRO</span><span class="ds-score"><span class="ds-score__value ds-num">75,8</span><span class="ds-score__scale">зі 100</span></span></div><div class="ds-appframe__who"><span class="ds-avatar" aria-hidden="true">КО</span><span class="ds-appframe__meta"><span class="ds-appframe__name">Ковальчук Олександр</span><span class="ds-appframe__role">Адвокат</span><span class="ds-appframe__geo"><svg class="ds-icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Київ</span></span></div><p class="ds-appframe__ts">01.07.2026, 18:21</p><p class="ds-appframe__txt">Почніть із письмової вимоги до органу, що вніс помилкові дані, та запиту витягу з бази — це основний доказ. Далі — позов про відшкодування.</p></article>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="ds-funnel__head">
         <h1 class="ds-funnel__title ds-funnel__title--hero" id="quiz-title" tabindex="-1">Отримайте <span class="ds-title-split__tail">безкоштовний</span> аналіз вашої ситуації</h1>
-        <p class="ds-funnel__hint">Опишіть проблему за 2–3 хвилини — ми проаналізуємо її та підберемо фахівців.</p>
+        <p class="ds-funnel__hint ds-funnel__hint--sm">Опишіть проблему за 2–3 хвилини — ми проаналізуємо її та підберемо фахівців.</p>
       </div>
       <ul class="ds-funnel__points" aria-label="Що Ви отримаєте">
-        <li><svg class="ds-icon" width="20" height="20" aria-hidden="true"><use href="#i-check"></use></svg>Попередній аналіз ситуації</li>
-        <li><svg class="ds-icon" width="20" height="20" aria-hidden="true"><use href="#i-check"></use></svg>Декілька професійних поглядів</li>
-        <li><svg class="ds-icon" width="20" height="20" aria-hidden="true"><use href="#i-check"></use></svg>Порівняння фахівців і вартості послуг</li>
+        <li><span class="ds-funnel__points-mark" aria-hidden="true"><svg class="ds-icon"><use href="#i-check"></use></svg></span>Попередній аналіз ситуації</li>
+        <li><span class="ds-funnel__points-mark" aria-hidden="true"><svg class="ds-icon"><use href="#i-check"></use></svg></span>Декілька професійних поглядів</li>
+        <li><span class="ds-funnel__points-mark" aria-hidden="true"><svg class="ds-icon"><use href="#i-check"></use></svg></span>Порівняння фахівців і вартості послуг</li>
       </ul>
-      <div class="ds-funnel__chat" role="img" aria-label="Так виглядають відповіді в застосунку: ваше питання, відповідь AI-асистента та відповідь фахівця">
-        <div class="ds-funnel__msg ds-funnel__msg--q"><p>Ми вирішили розлучитися, є двоє дітей. Не можемо домовитися про опіку та поділ майна…</p></div>
-        <div class="ds-funnel__msg ds-funnel__msg--ai">
-          <div class="ds-funnel__msg-head"><span class="ds-avatar" aria-hidden="true"><img src="brand/logo-icon.png" alt="" width="16" height="16" decoding="async"></span>AI-асистент<span class="ds-badge">AI</span></div>
-          <p>Місце проживання дітей визначає суд з урахуванням їхніх інтересів. Майно, набуте у шлюбі, ділиться порівну…</p>
-        </div>
-        <div class="ds-funnel__msg ds-funnel__hide-short">
-          <div class="ds-funnel__msg-head"><span class="ds-avatar" aria-hidden="true">КО</span>Ковальчук Олександр<span class="ds-score"><span class="ds-score__value ds-num">75,8</span><span class="ds-score__scale">зі 100</span></span></div>
-          <p>Радив би почати з мирової угоди про графік спілкування з дітьми: суд її затвердить швидше…</p>
-        </div>
-      </div>
     </section>
 
     <!-- ── S1 · Proof №1 — як ConsultantLM підбирає фахівця ──────────────── -->
@@ -4086,9 +4133,9 @@ body.ds-funnel-page{ background:var(--ds-surface-sunken); }
         <li class="ds-timeline__item" data-state="upcoming"><span class="ds-timeline__dot" aria-hidden="true"></span><div class="ds-timeline__body"><p class="ds-timeline__title">Визначили категорію</p></div></li>
         <li class="ds-timeline__item" data-state="upcoming"><span class="ds-timeline__dot" aria-hidden="true"></span><div class="ds-timeline__body"><p class="ds-timeline__title">Підбираємо релевантних фахівців</p><p class="ds-timeline__status" data-status hidden>Триває…</p></div></li>
       </ol>
-      <div class="ds-appframe" role="img" aria-label="Макет сторінки питання: питання клієнта, під ним з’являються картки відповідей">
-        <div class="ds-appframe__bar"><img src="brand/logo-icon.png" alt="" width="20" height="20" decoding="async">Питання та відповіді</div>
-        <div class="ds-appframe__q"><span class="ds-caption">Ваше питання</span><p data-s7-question>Опис вашої ситуації</p></div>
+      <div class="ds-appframe ds-appframe--compact" role="img" aria-label="Сторінка питання в застосунку: ваше питання, під ним з’являються картки відповідей">
+        <div class="ds-appframe__bar">Питання №14238</div>
+        <article class="ds-appframe__card"><p class="ds-appframe__date"><svg class="ds-icon" aria-hidden="true"><use href="#i-clock"></use></svg>01.07.2026, 18:04</p><p class="ds-appframe__qt" data-s7-question>Опис вашої ситуації</p></article>
         <div class="ds-appframe__list" id="s7-answers">
           <div class="ds-appframe__skel ds-appframe__skel--short"><span class="ds-skeleton"></span><span class="ds-skeleton"></span><span class="ds-skeleton"></span></div>
           <div class="ds-appframe__skel ds-funnel__hide-short"><span class="ds-skeleton"></span><span class="ds-skeleton"></span><span class="ds-skeleton"></span></div>
@@ -4102,22 +4149,13 @@ body.ds-funnel-page{ background:var(--ds-surface-sunken); }
         <h2 class="ds-funnel__title" id="s8-title" tabindex="-1">Одна ситуація. Кілька професійних поглядів.</h2>
         <p class="ds-funnel__hint ds-funnel__hint--sm ds-funnel__hide-short">Вашу ситуацію можуть проаналізувати декілька релевантних фахівців — Ви порівнюєте підходи, а не одну думку.</p>
       </div>
-      <div class="ds-appframe" role="img" aria-label="Інтерфейс застосунку: питання клієнта, відповідь AI-асистента, відповіді фахівців">
-        <div class="ds-appframe__bar"><img src="brand/logo-icon.png" alt="" width="20" height="20" decoding="async">Моє питання</div>
-        <div class="ds-appframe__q"><span class="ds-caption">Ваше питання</span><p data-s8-question>Опис вашої ситуації</p></div>
+      <div class="ds-appframe ds-appframe--compact" role="img" aria-label="Сторінка питання в застосунку: ваше питання, відповідь AI-асистента та відповіді юристів із рейтингом">
+        <div class="ds-appframe__bar">Питання №14238</div>
+        <article class="ds-appframe__card"><p class="ds-appframe__date"><svg class="ds-icon" aria-hidden="true"><use href="#i-clock"></use></svg>01.07.2026, 18:04</p><p class="ds-appframe__qt" data-s8-question>Опис вашої ситуації</p></article>
         <div class="ds-appframe__list">
-          <article class="ds-appframe__answer ds-appframe__answer--ai">
-            <div class="ds-appframe__head"><span class="ds-avatar" aria-hidden="true"><img src="brand/logo-icon.png" alt="" width="16" height="16" decoding="async"></span><span class="ds-appframe__name">AI-асистент</span><span class="ds-badge">AI</span></div>
-            <p>Попередній розбір: які норми діють, які документи знадобляться і що робити першим кроком.</p>
-          </article>
-          <article class="ds-appframe__answer">
-            <div class="ds-appframe__head"><span class="ds-avatar" aria-hidden="true">КО</span><span class="ds-appframe__name">Фахівець A</span><span class="ds-score"><span class="ds-score__value ds-num">75,8</span><span class="ds-score__scale">зі 100</span></span></div>
-            <p>Пропонує позасудовий шлях і пояснює, чому він швидший у вашому випадку.</p>
-          </article>
-          <article class="ds-appframe__answer ds-funnel__hide-short">
-            <div class="ds-appframe__head"><span class="ds-avatar" aria-hidden="true">ТМ</span><span class="ds-appframe__name">Фахівець B</span><span class="ds-score"><span class="ds-score__value ds-num">68,1</span><span class="ds-score__scale">зі 100</span></span></div>
-            <p>Радить одразу готувати позов і показує, які докази посилять позицію.</p>
-          </article>
+          <article class="ds-appframe__ans"><div class="ds-appframe__band"><span class="ds-badge">AI</span><span class="ds-score"><span class="ds-score__value ds-num">35,7</span><span class="ds-score__scale">зі 100</span></span></div><div class="ds-appframe__who"><span class="ds-avatar ds-avatar--ai" aria-hidden="true"><img src="brand/logo-icon.png" alt="" width="20" height="20" decoding="async"></span><span class="ds-appframe__meta"><span class="ds-appframe__name">Асистент Андрій</span><span class="ds-appframe__role">Штучний інтелект</span><span class="ds-appframe__geo"><svg class="ds-icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Україна</span></span></div><p class="ds-appframe__ts">щойно</p><p class="ds-appframe__txt">Попередній розбір: які норми діють, які документи знадобляться і що робити першим кроком.</p></article>
+          <article class="ds-appframe__ans"><div class="ds-appframe__band"><span class="ds-tier-badge" data-tier="pro"><svg class="ds-tier-badge__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PRO</span><span class="ds-score"><span class="ds-score__value ds-num">75,8</span><span class="ds-score__scale">зі 100</span></span></div><div class="ds-appframe__who"><span class="ds-avatar" aria-hidden="true">КО</span><span class="ds-appframe__meta"><span class="ds-appframe__name">Ковальчук Олександр</span><span class="ds-appframe__role">Адвокат</span><span class="ds-appframe__geo"><svg class="ds-icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Київ</span></span></div><p class="ds-appframe__ts">через 14 хв</p><p class="ds-appframe__txt">Пропонує позасудовий шлях і пояснює, чому він швидший у вашому випадку.</p></article>
+          <article class="ds-appframe__ans ds-funnel__hide-short"><div class="ds-appframe__band"><span class="ds-tier-badge" data-tier="premium"><svg class="ds-tier-badge__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PREMIUM</span><span class="ds-score"><span class="ds-score__value ds-num">82,4</span><span class="ds-score__scale">зі 100</span></span></div><div class="ds-appframe__who"><span class="ds-avatar" aria-hidden="true">ТМ</span><span class="ds-appframe__meta"><span class="ds-appframe__name">Тарасенко Марія</span><span class="ds-appframe__role">Адвокат</span><span class="ds-appframe__geo"><svg class="ds-icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Львів</span></span></div><p class="ds-appframe__ts">через 26 хв</p><p class="ds-appframe__txt">Радить одразу готувати позов і показує, які докази посилять позицію.</p></article>
         </div>
       </div>
       <ul class="ds-funnel__chips ds-funnel__hide-short" aria-label="Що це дає">
@@ -4127,7 +4165,7 @@ body.ds-funnel-page{ background:var(--ds-surface-sunken); }
         <li class="ds-funnel__chip ds-funnel__chip--static"><svg class="ds-icon" aria-hidden="true"><use href="#i-check"></use></svg>Без додаткових пошуків</li>
         <li class="ds-funnel__chip ds-funnel__chip--static"><svg class="ds-icon" aria-hidden="true"><use href="#i-check"></use></svg>Ви обираєте, кому довіряти</li>
       </ul>
-      <p class="ds-funnel__key">Спочатку Ви бачите експертизу. Потім обираєте фахівця.</p>
+      <p class="ds-funnel__key ds-funnel__hide-short">Спочатку Ви бачите експертизу. Потім обираєте фахівця.</p>
     </section>
 
     <!-- ── S9 · Q4 · Intent — Крок 4 із 5 ──────────────────────────────── -->
@@ -4516,7 +4554,7 @@ body.ds-funnel-page{ background:var(--ds-surface-sunken); }
     s10:'s11', s13:'s14', s14:'s16', s15:'s16' };
   var ANIMATED = { s1:true, s3:true, s7:true, s15:true };
   var BAR = {
-    s0:  { label:'Почати безкоштовний аналіз', event:'quiz_start', back:false, note:'Без оплати · 2–3 хвилини · Перша консультація — безкоштовно' },
+    s0:  { label:'Почати безкоштовний аналіз', event:'quiz_start', back:false, note:'Без оплати · 2–3 хвилини' },
     s1:  { label:'Продовжити' },
     s2:  { label:'Далі', submit:true },
     s3:  { label:'Продовжити' },
@@ -5020,7 +5058,7 @@ body.ds-funnel-page{ background:var(--ds-surface-sunken); }
         '<div class="ds-appframe__skel ds-funnel__hide-short"><span class="ds-skeleton"></span><span class="ds-skeleton"></span><span class="ds-skeleton"></span></div>';
       runList($('#s7-list'), 800, null);
       later(function () {
-        answers.innerHTML = '<article class="ds-appframe__answer ds-appframe__answer--ai"><div class="ds-appframe__head"><span class="ds-avatar" aria-hidden="true"><img src="brand/logo-icon.png" alt="" width="16" height="16" decoding="async"></span><span class="ds-appframe__name">AI-асистент</span><span class="ds-badge">AI</span></div><p>Готуємо попередній розбір ситуації…</p></article>' +
+        answers.innerHTML = '<article class="ds-appframe__ans"><div class="ds-appframe__band"><span class="ds-badge">AI</span><span class="ds-score"><span class="ds-score__value ds-num">35,7</span><span class="ds-score__scale">зі 100</span></span></div><div class="ds-appframe__who"><span class="ds-avatar ds-avatar--ai" aria-hidden="true"><img src="brand/logo-icon.png" alt="" width="20" height="20" decoding="async"></span><span class="ds-appframe__meta"><span class="ds-appframe__name">Асистент Андрій</span><span class="ds-appframe__role">Штучний інтелект</span><span class="ds-appframe__geo"><svg class="ds-icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Україна</span></span></div><p class="ds-appframe__ts">щойно</p><p class="ds-appframe__txt">Готуємо попередній розбір ситуації…</p></article>' +
           '<div class="ds-appframe__skel ds-funnel__hide-short"><span class="ds-skeleton"></span><span class="ds-skeleton"></span><span class="ds-skeleton"></span></div>';
       }, 1500);
       later(function () { doneAnimating(); go('s8'); }, 3400);
