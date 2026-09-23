@@ -99,8 +99,9 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
   .btn--primary.funnel__next, .funnel__back, .btn--ghost { height: 52px; }
   .q-option { min-height: 48px; padding: 8px 14px; }
   .q-option__icon { width: 32px; height: 32px; }
-  .funnel__stage { height: 160px; }
-  .funnel__screen:not(.funnel__screen--entry) .funnel__head .funnel__hint { display: none; }
+  .funnel__stage { height: 150px; }
+  .funnel__head .funnel__hint { display: none; }
+  .funnel__points { gap: 6px; }
   .q-disclaimer { font-size: 12px; }
 }
 @media (min-width: 600px) {
@@ -274,16 +275,22 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 /* на высоких телефонах сцена занимает свободную высоту, телефон в ней виден целиком (aspect 9:19.5) */
 @media (min-height: 760px) {
   .funnel__screen--entry { flex: 1 1 auto; }
-  .funnel__stage { flex: 1 1 0; min-height: 300px; height: auto; grid-template-columns: minmax(0, 1fr) auto; align-items: center; padding: 12px; }
-  .funnel__flow { align-self: center; }
-  .funnel__device--real { margin-top: 0; align-self: center; justify-self: end; width: min(66cqw, calc((100cqh - 24px) * 9 / 19.5)); aspect-ratio: 9 / 19.5; padding: 2.4% 2.4% 2.4%; border-radius: clamp(24px, 12cqw, 44px); }
+  .funnel__stage { flex: 1 1 0; min-height: 300px; height: auto; grid-template-columns: minmax(0, 1fr) auto; align-items: start; padding: 12px 12px 0; }
+  .funnel__flow { align-self: start; padding-top: 4px; }
+  .funnel__device--real { margin-top: 0; align-self: start; justify-self: end; width: clamp(168px, calc((100cqh - 12px) * 9 / 19.5), min(66cqw, 360px)); aspect-ratio: 9 / 19.5; padding: 2.4% 2.4% 2.4%; border-radius: clamp(24px, 12cqw, 44px); }
   .funnel__device--real .app { height: 100%; border-radius: clamp(18px, 9.6cqw, 36px); }
   .funnel__device--real .app__screen { height: 100%; display: flex; flex-direction: column; }
   .funnel__device--real .app__scroll { flex: 1 1 auto; min-height: 0; overflow: hidden; }
   .app__tabbar { display: flex; }
 }
 @media (min-width: 600px) {
-  .funnel__stage { height: 300px; min-height: 300px; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); padding: 24px 24px 0; column-gap: 24px; }
+  .funnel__screen--entry { flex: 1 1 auto; }
+  .funnel__stage { flex: 1 1 0; height: auto; min-height: 300px; grid-template-columns: minmax(0, 1fr) auto; align-items: start; padding: 24px 24px 0; column-gap: 24px; }
+  .funnel__device--real { margin-top: 0; align-self: start; justify-self: end; width: clamp(200px, calc((100cqh - 24px) * 9 / 19.5), min(60cqw, 360px)); aspect-ratio: 9 / 19.5; padding: 2.4% 2.4% 2.4%; border-radius: clamp(24px, 12cqw, 44px); }
+  .funnel__device--real .app { height: 100%; border-radius: clamp(18px, 9.6cqw, 36px); }
+  .funnel__device--real .app__screen { height: 100%; display: flex; flex-direction: column; }
+  .funnel__device--real .app__scroll { flex: 1 1 auto; min-height: 0; overflow: hidden; }
+  .app__tabbar { display: flex; }
   .funnel__flow { gap: 4px; }
   .funnel__flow-chip { height: 32px; font-size: 13px; }
   .funnel__flow-chip .funnel__lbl--full { display: inline; }
