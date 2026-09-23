@@ -107,17 +107,17 @@
         <legend class="sr-only">Оберіть один варіант</legend>
         <label class="q-option">
           <input class="q-option__input" type="radio" name="need" value="yes" data-label="Так, потрібна">
-          <span class="funnel__opt-icon" aria-hidden="true"><svg class="icon"><use href="#i-check"></use></svg></span>
+          <span class="q-option__icon" aria-hidden="true"><svg class="icon"><use href="#i-check"></use></svg></span>
           <span class="q-option__label">Так, потрібна<span class="q-option__note">Підберемо фахівця за 1–2 хвилини</span></span>
         </label>
         <label class="q-option">
           <input class="q-option__input" type="radio" name="need" value="unsure" data-label="Поки не впевнений(-на)">
-          <span class="funnel__opt-icon" aria-hidden="true"><svg class="icon"><use href="#i-question"></use></svg></span>
+          <span class="q-option__icon" aria-hidden="true"><svg class="icon"><use href="#i-question"></use></svg></span>
           <span class="q-option__label">Поки не впевнений(-на)<span class="q-option__note">Допоможемо зрозуміти, чи потрібен юрист</span></span>
         </label>
         <label class="q-option">
           <input class="q-option__input" type="radio" name="need" value="no" data-label="Ні, просто дивлюся">
-          <span class="funnel__opt-icon" aria-hidden="true"><svg class="icon"><use href="#i-eye"></use></svg></span>
+          <span class="q-option__icon" aria-hidden="true"><svg class="icon"><use href="#i-eye"></use></svg></span>
           <span class="q-option__label">Ні, просто дивлюся<span class="q-option__note">Можна вийти або роздивитися платформу</span></span>
         </label>
       </fieldset>
@@ -499,7 +499,7 @@
   function optionHTML(name, o, grid) {
     var icon = '', note = '';
     if (o[3] && grid) icon = '<svg class="funnel__tile-icon" aria-hidden="true"><use href="#' + o[3] + '"></use></svg>';
-    else if (o[3]) icon = '<span class="funnel__opt-icon" aria-hidden="true"><svg class="icon"><use href="#' + o[3] + '"></use></svg></span>';
+    else if (o[3]) icon = '<span class="q-option__icon" aria-hidden="true"><svg class="icon"><use href="#' + o[3] + '"></use></svg></span>';
     if (o[2] && !grid) note = '<span class="q-option__note">' + esc(o[2]) + '</span>';
     return '<label class="q-option">' +
       '<input class="q-option__input" type="radio" name="' + esc(name) + '" value="' + esc(o[0]) + '" data-label="' + esc(o[1]) + '">' +
