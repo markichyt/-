@@ -93,9 +93,6 @@
         <img class="funnel__brand-img--dark"  src="design-system/assets/logo/logo-on-dark.svg" width="562" height="122" alt="" decoding="async">
       </a>
       <span class="funnel__step" id="funnel-where" hidden>Крок 1 із 8</span>
-      <button class="btn btn--icon funnel__close" type="button" id="funnel-exit" data-nav="exit" aria-label="Вийти з квізу">
-        <svg class="icon" width="24" height="24" aria-hidden="true"><use href="#i-x"></use></svg>
-      </button>
     </div>
     <div class="funnel__progress" id="funnel-progress" hidden>
       <div class="progress" id="funnel-bars" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="Крок 1 із 8">
@@ -638,7 +635,7 @@
     if (f.hintOf) $('[data-hint]', el).textContent = f.hintOf(state.answers);
     var nm = updateProgress(id);
     renderBar(id);
-    exitBtn.hidden = (id === 'exit' || id === 'bye' || id === 'thanks');
+    if (exitBtn) exitBtn.hidden = (id === 'exit' || id === 'bye' || id === 'thanks');
     if (ENTER[id]) ENTER[id](el, dir);
     window.scrollTo(0, 0);
     var title = $('.funnel__title', el);

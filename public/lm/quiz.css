@@ -14,12 +14,14 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 .icon { width: 20px; height: 20px; flex-shrink: 0; }
 .num { font-variant-numeric: tabular-nums lining-nums; }
 :where(button, a, input, textarea, summary, [tabindex]):focus-visible { outline: 2px solid var(--color-text); outline-offset: 2px; }
+.input:focus-visible, .input--soft:focus-visible, .q-textarea:focus-visible, .q-search__input:focus-visible { outline: none; }
+.input:focus { box-shadow: inset 0 0 0 1px var(--color-text); }
 .is-dark :where(button, a, input, textarea, summary, [tabindex]):focus-visible { outline-color: var(--color-white); }
 [hidden] { display: none !important; }
 
 /* ---------- top bar ---------- */
-.funnel__top { position: sticky; top: 0; z-index: 100; background: var(--color-white); border-bottom: 1px solid var(--color-gray-300); }
-.is-dark .funnel__top { background: var(--color-black); border-color: var(--color-dark-border); }
+.funnel__top { position: sticky; top: 0; z-index: 100; background: var(--color-white); }
+.is-dark .funnel__top { background: var(--color-black); }
 .funnel__topin { display: flex; align-items: center; gap: 12px; width: min(600px, 100% - 2 * var(--gutter)); margin-inline: auto; height: 56px; }
 .funnel__brand { display: inline-flex; align-items: center; margin-right: auto; }
 .funnel__brand img { height: 28px; width: auto; }
@@ -44,7 +46,7 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 /* ---------- body & screens ---------- */
 .funnel__body { flex: 1 1 auto; display: flex; flex-direction: column; width: min(600px, 100% - 2 * var(--gutter)); margin-inline: auto; padding: 16px 0 24px; }
 .funnel__screen { display: flex; flex-direction: column; gap: 12px; flex: 1 1 auto; }
-.funnel__screen > * { margin: 0; }
+.funnel__screen > * { margin: 0; flex-shrink: 0; }
 .funnel__head { display: flex; flex-direction: column; gap: 8px; }
 .funnel__title { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(22px, 5.6vw + 4px, 32px); line-height: 1.15; letter-spacing: -0.02em; text-wrap: pretty; overflow-wrap: anywhere; }
 .funnel__title--hero { font-size: clamp(24px, 6vw + 4px, 44px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
@@ -83,11 +85,15 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 .is-dark .btn--outline:hover { box-shadow: inset 0 0 0 1px var(--color-white); }
 .funnel__lbl--short { display: none; }
 @media (max-width: 599px) {
-  .funnel__next[data-has-short="true"] .funnel__lbl--full { display: none; }
-  .funnel__next[data-has-short="true"] .funnel__lbl--short { display: inline; }
+  .funnel__next[data-has-short="true"]:not([data-short-at="narrow"]) .funnel__lbl--full { display: none; }
+  .funnel__next[data-has-short="true"]:not([data-short-at="narrow"]) .funnel__lbl--short { display: inline; }
 }
 @media (max-width: 359px) {
   .funnel__grid, .funnel__options--grid, .q-options--grid { grid-template-columns: 1fr; }
+  .funnel__screen .funnel__stage { height: 168px; }
+  .funnel__screen--entry .funnel__title--hero { font-size: 24px; }
+  .funnel__next[data-short-at="narrow"] .funnel__lbl--full { display: none; }
+  .funnel__next[data-short-at="narrow"] .funnel__lbl--short { display: inline; }
   .funnel__brand img { height: 24px; }
   .funnel__topin { height: 52px; }
 }
@@ -99,7 +105,7 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
   .btn--primary.funnel__next, .funnel__back, .btn--ghost { height: 52px; }
   .q-option { min-height: 48px; padding: 8px 14px; }
   .q-option__icon { width: 32px; height: 32px; }
-  .funnel__stage { height: 150px; }
+  .funnel__screen .funnel__stage { height: 150px; }
   .funnel__head .funnel__hint { display: none; }
   .funnel__points { gap: 6px; }
   .q-disclaimer { font-size: 12px; }
@@ -272,30 +278,37 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 .funnel__device { position: relative; z-index: 1; margin-top: 6px; padding: 5px 5px 0; background: var(--color-text); border-radius: 30px 30px 0 0; min-width: 0; }
 .funnel__device .appframe { border-radius: 25px 25px 0 0; overflow: hidden; }
 @media (max-width: 599px) { .funnel__screen--entry .funnel__title--hero { font-size: 26px; line-height: 1.1; } }
+/* ---------- device with the real app screen (S0): frame around a screenshot of the question page ---------- */
+.funnel__device--real { --dw: 95%; position: relative; z-index: 1; box-sizing: border-box; width: var(--dw); margin: calc(var(--dw) * 0.03) calc(var(--dw) * 0.025) 0; padding: calc(var(--dw) * 0.042); background: #0b0b0d; border-radius: calc(var(--dw) * 0.108); box-shadow: 0 0 0 calc(var(--dw) * 0.006) #34383f, 0 0 0 calc(var(--dw) * 0.024) #17191d; }
+.funnel__device-screen { display: block; height: 100%; overflow: hidden; border-radius: calc(var(--dw) * 0.066); background: #fff; }
+.funnel__device-screen img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
 /* на высоких телефонах сцена занимает свободную высоту, телефон в ней виден целиком (aspect 9:19.5) */
 @media (min-height: 760px) {
   .funnel__screen--entry { flex: 1 1 auto; }
-  .funnel__stage { flex: 1 1 0; min-height: 300px; height: auto; grid-template-columns: minmax(0, 1fr) auto; align-items: start; padding: 12px 12px 0; }
+  .funnel__stage { flex: 1 1 0; min-height: 300px; height: auto; grid-template-columns: minmax(0, 1fr) auto; align-items: start; padding: 12px; }
   .funnel__flow { align-self: start; padding-top: 4px; }
-  .funnel__device--real { margin-top: 0; align-self: start; justify-self: end; width: clamp(168px, calc((100cqh - 12px) * 9 / 19.5), min(66cqw, 360px)); aspect-ratio: 9 / 19.5; padding: 2.4% 2.4% 2.4%; border-radius: clamp(24px, 12cqw, 44px); }
-  .funnel__device--real .app { height: 100%; border-radius: clamp(18px, 9.6cqw, 36px); }
-  .funnel__device--real .app__screen { height: 100%; display: flex; flex-direction: column; }
-  .funnel__device--real .app__scroll { flex: 1 1 auto; min-height: 0; overflow: hidden; }
-  .app__tabbar { display: flex; }
+  .funnel__device--real { --dw: clamp(168px, calc((100cqh - 12px) * 0.445), min(64cqw, 360px)); align-self: start; justify-self: end; aspect-ratio: 9 / 19.5; margin: calc(var(--dw) * 0.03) calc(var(--dw) * 0.03) 0; }
 }
 @media (min-width: 600px) {
   .funnel__screen--entry { flex: 1 1 auto; }
-  .funnel__stage { flex: 1 1 0; height: auto; min-height: 300px; grid-template-columns: minmax(0, 1fr) auto; align-items: start; padding: 24px 24px 0; column-gap: 24px; }
-  .funnel__device--real { margin-top: 0; align-self: start; justify-self: end; width: clamp(200px, calc((100cqh - 24px) * 9 / 19.5), min(60cqw, 360px)); aspect-ratio: 9 / 19.5; padding: 2.4% 2.4% 2.4%; border-radius: clamp(24px, 12cqw, 44px); }
-  .funnel__device--real .app { height: 100%; border-radius: clamp(18px, 9.6cqw, 36px); }
-  .funnel__device--real .app__screen { height: 100%; display: flex; flex-direction: column; }
-  .funnel__device--real .app__scroll { flex: 1 1 auto; min-height: 0; overflow: hidden; }
-  .app__tabbar { display: flex; }
+  .funnel__stage { flex: 1 1 0; height: auto; min-height: 240px; grid-template-columns: minmax(0, 1fr) auto; align-items: start; padding: 24px; column-gap: 24px; }
+  .funnel__device--real { --dw: clamp(200px, calc((100cqh - 12px) * 0.445), min(60cqw, 360px)); align-self: start; justify-self: end; aspect-ratio: 9 / 19.5; margin: calc(var(--dw) * 0.03) calc(var(--dw) * 0.03) 0; }
   .funnel__flow { gap: 4px; }
   .funnel__flow-chip { height: 32px; font-size: 13px; }
   .funnel__flow-chip .funnel__lbl--full { display: inline; }
   .funnel__flow-chip .funnel__lbl--short { display: none; }
   .funnel__device { margin-top: 24px; }
+}
+/* широкие окна: текст слева, сцена с телефоном справа на всю высоту */
+@media (min-width: 900px) and (min-height: 560px) {
+  .is-entry .funnel__body, .is-entry .funnel__topin, .is-entry .funnel__progress, .is-entry .funnel__botin { width: min(1040px, 100% - 2 * var(--gutter)); }
+  .funnel__screen--entry { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); grid-template-rows: 1fr auto auto 1fr; column-gap: 48px; align-items: start; }
+  .funnel__screen--entry .funnel__stage { grid-column: 2; grid-row: 1 / -1; align-self: stretch; height: auto; min-height: 360px; }
+  .funnel__screen--entry .funnel__head { grid-column: 1; grid-row: 2; }
+  .funnel__screen--entry .funnel__points { grid-column: 1; grid-row: 3; }
+  .is-entry .funnel__row { justify-content: flex-start; }
+  .is-entry .funnel__next { flex: 0 1 auto; min-width: 320px; }
+  .is-entry .funnel__note { text-align: left; }
 }
 
 /* ---------- product frame (S0, S7, S8): the question page as in the app, white screen ---------- */
@@ -346,11 +359,12 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 .q-search__input { padding-left: 48px; padding-right: 52px; }
 .q-search__clear { position: absolute; right: 8px; top: 8px; width: 40px; height: 40px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: var(--color-gray-600); cursor: pointer; display: grid; place-items: center; }
 .q-search__clear:hover { background: var(--color-gray-300); color: var(--color-text); }
-.q-search__pop { position: absolute; left: 0; right: 0; top: calc(100% + 8px); z-index: 20; padding: 8px 0; border: 1px solid var(--color-gray-300); border-radius: var(--radius-card); background: var(--color-white); }
-.q-search__opt { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; min-height: 44px; padding: 10px 20px; cursor: pointer; font-size: 15px; }
+.q-search__pop { position: absolute; left: 0; right: 0; top: calc(100% + 8px); z-index: 20; padding: 6px; border: 1px solid var(--color-gray-300); border-radius: var(--radius-card); background: var(--color-white); overflow: hidden; }
+.field:has(.q-search__pop:not([hidden])) .field__msg { visibility: hidden; }
+.q-search__opt { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; min-height: 44px; padding: 10px 14px; border-radius: calc(var(--radius-card) - 6px); cursor: pointer; font-size: 15px; }
 .q-search__opt:hover, .q-search__opt.is-active, .q-search__opt[aria-selected="true"] { background: var(--color-gray-100); }
 .q-search__opt-note { flex-shrink: 0; font-size: 13px; color: var(--color-gray-600); white-space: nowrap; }
-.q-search__empty { padding: 10px 20px; }
+.q-search__empty { padding: 10px 14px; }
 
 /* ---------- S3 · map & people ---------- */
 .funnel__media { display: flex; flex-direction: column; gap: 8px; }
@@ -482,46 +496,22 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
    (ask-question-demo.html): the app's own colours, radii and type are reproduced on purpose,
    like a screenshot would be. Scales with the phone width: 1em = phone width / 20 (design width 320). */
 .funnel__stage { container-type: size; }
-.funnel__device--real { padding: 1.6cqw 1.6cqw 0; background: #0a0a0c; border-radius: clamp(24px, 9cqw, 44px) clamp(24px, 9cqw, 44px) 0 0; }
-.funnel__device--real .app { container-type: inline-size; position: relative; overflow: hidden; border-radius: clamp(20px, 7.4cqw, 36px) clamp(20px, 7.4cqw, 36px) 0 0; background: #f4f6f8; color: #12161b; }
-.app__screen { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: calc(100cqw / 20); line-height: 1.4; text-align: left; }
-.app__notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 34%; height: 1.4em; background: #000; border-radius: 0 0 .9em .9em; z-index: 2; }
-.app__status { display: flex; align-items: center; justify-content: space-between; height: 2.4em; padding: .55em 1.25em 0; background: #fff; }
-.app__time { font-size: .875em; font-weight: 700; letter-spacing: .01em; color: #000; }
-.app__sig { display: flex; align-items: center; gap: .4em; }
-.app__sig svg { display: block; height: .75em; width: auto; fill: #000; }
-.app__bar { display: flex; align-items: center; justify-content: center; height: 2.75em; background: #fff; border-bottom: 1px solid #ececec; font-size: 1em; font-weight: 700; color: #0b0d12; }
-.app__scroll { display: grid; gap: .875em; padding: .875em 1em 0; }
-.app__card { padding: .875em; background: #fff; border: 1px solid #ececec; border-radius: .75em; }
-.app__date { display: flex; align-items: center; gap: .45em; margin-bottom: .55em; color: #9aa3ad; font-size: .75em; }
-.app__date svg { width: 1.25em; height: 1.25em; fill: none; stroke: #1397d6; stroke-width: 2; stroke-linecap: round; }
-.app__qt { font-size: 1em; font-weight: 600; line-height: 1.35; color: #12161b; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.app__body { margin-top: .55em; font-size: .8125em; line-height: 1.5; color: #aeb4bb; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
-@media (min-height: 700px) { .app__qt { -webkit-line-clamp: 3; } .app__body { -webkit-line-clamp: 2; } }
-.app__ans { overflow: hidden; border-radius: .75em; background: #eef5fb; }
-.app__hd { display: flex; align-items: center; justify-content: space-between; padding: .375em .75em; background: #dcebf7; }
-.app__base { font-size: .75em; font-weight: 700; color: #e08a2e; }
-.app__score { display: flex; align-items: center; gap: .3em; font-size: .8125em; font-weight: 700; color: #12161b; }
-.app__score svg { width: 1.15em; height: 1.15em; fill: #f5c518; }
-.app__who { position: relative; display: flex; align-items: center; gap: .75em; padding: .875em .875em .625em; }
-.app__av { flex: none; width: 3.5em; height: 3.5em; overflow: hidden; border-radius: 50%; border: .19em solid #1397d6; background: #000; }
-.app__av img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
-.app__name b { display: block; font-size: 1em; font-weight: 700; color: #12161b; }
-.app__name i { display: block; font-size: .8125em; font-style: italic; color: #9aa3ad; }
-.app__loc { display: flex; align-items: center; gap: .3em; margin-top: .25em; font-size: .8125em; color: #12161b; }
-.app__loc svg { width: 1em; height: 1em; fill: none; stroke: #4a5560; stroke-width: 2; }
-.app__i { position: absolute; right: .875em; top: .875em; display: grid; place-items: center; width: 1.375em; height: 1.375em; border-radius: .3125em; background: #1397d6; color: #fff; font-size: 1em; }
-.app__i span { font-size: .75em; font-weight: 700; font-style: italic; }
-.app__ts { padding: 0 .875em; font-size: .75em; color: #7b828a; }
-.app__txt { padding: .5em .875em .75em; font-size: .8125em; line-height: 1.5; color: #3a4149; }
-.app__btns { display: grid; gap: .625em; padding: 0 .875em .875em; }
-.app__btn { display: flex; align-items: center; justify-content: center; gap: .5em; height: 2.875em; border-radius: 1.5em; background: #1397d6; color: #fff; font-size: .9375em; font-weight: 700; }
-.app__btn svg { width: 1.2em; height: 1.2em; fill: #fff; }
-.app__tabbar { display: none; flex: none; align-items: center; justify-content: space-around; height: 4.4em; padding: .5em 1em 1.2em; background: #fff; border-top: 1px solid #ececec; }
-.app__tab { position: relative; display: grid; place-items: center; width: 2.2em; height: 2.2em; }
-.app__tab svg { width: 1.6em; height: 1.6em; fill: #c3c7cc; }
-.app__tab--on svg { fill: #1397d6; }
-.app__tab--logo { width: 3em; height: 3em; margin-top: -1.2em; }
-.app__tab--logo img { width: 3em; height: auto; display: block; }
-.app__badge { position: absolute; top: -.2em; right: -.5em; min-width: 1.1em; height: 1.1em; padding: 0 .25em; border-radius: .6em; background: #e8433a; color: #fff; font-size: .65em; font-weight: 700; line-height: 1.1em; text-align: center; box-shadow: 0 0 0 .12em #fff; }
-.app__home { position: absolute; left: 50%; bottom: .35em; width: 34%; height: .3em; border-radius: .2em; background: #0b0d12; transform: translateX(-50%); }
+
+/* ---------- S1: looped rows of specialists with ratings under «3 500+» ---------- */
+.funnel__card--stat { gap: 0; padding-bottom: 0; overflow: hidden; container-type: inline-size; }
+.funnel__stat { display: flex; align-items: center; gap: 16px; }
+.funnel__stat .funnel__hint--sm { font-size: 13px; line-height: 1.4; }
+.mq { --mq-size: 56px; --mq-gap: 12px; --mq-drift: 2.8cqw; --color-star: #f5b301; position: relative; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; margin: 8px -20px 0; padding: calc(4px + var(--mq-drift)) 0 calc(10px + var(--mq-drift)); overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+.mq__tilt { min-width: 0; transform: rotate(-3deg); }
+.mq__row { display: flex; width: max-content; will-change: transform; animation: mq-left 32s linear infinite; }
+.mq__row--b { animation: mq-right 38s linear infinite; }
+.mq__set { display: flex; gap: var(--mq-gap); padding-right: var(--mq-gap); }
+.mq__tile { position: relative; flex: none; width: var(--mq-size); height: var(--mq-size); background: var(--color-gray-300); }
+.mq__tile img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.mq__badge { position: absolute; right: -6px; bottom: -7px; display: inline-flex; align-items: center; gap: 3px; height: 20px; padding: 0 7px 0 5px; border-radius: var(--radius-pill); background: var(--color-black); color: var(--color-white); font-size: 11px; font-weight: 600; line-height: 1; white-space: nowrap; font-variant-numeric: tabular-nums; box-shadow: 0 0 0 2px var(--color-gray-100); }
+.mq__badge svg { width: 10px; height: 10px; fill: var(--color-star); }
+@keyframes mq-left { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes mq-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+@media (max-height: 699px) { .mq { --mq-size: 44px; --mq-drift: 1.9cqw; margin-top: 4px; padding: calc(2px + var(--mq-drift)) 0 calc(8px + var(--mq-drift)); } .mq__tilt { transform: rotate(-2deg); } .mq__tilt + .mq__tilt { display: none; } }
+@media (max-height: 37.5em) { .mq { display: none; } .funnel__card--stat { padding-bottom: 14px; } }
+@media (prefers-reduced-motion: reduce) { .mq__row { animation: none; } }
