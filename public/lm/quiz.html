@@ -24,7 +24,7 @@
   plural: function (n) { var m10 = n % 10, m100 = n % 100; return (m10 === 1 && m100 !== 11) ? 0 : (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) ? 1 : 2; },
   step: function (n, m) { return 'Крок ' + n + ' із ' + m; },
   money: function (n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '\u00a0') + '\u00a0₴'; },
-  calcBase: 40000 };</script>
+  calcBase: 40000 , geo: {"path":"M423.2 38.6L435.5 40.6L443.9 29.3L453.9 31.8L488.1 27L509.2 55.1L501 65.2L503.7 80.6L530 83L541.8 104.5L541 114.3L583 131.8L608.3 123.9L628.7 147.2L647.9 146.6L696.6 162.8L697 177.4L683.6 203.4L690.9 230.8L685.7 247.3L653.7 251L636.7 264.8L635.7 286.9L609.3 290.9L587.4 306.9L556.5 309.5L528 328.1L530 358.9L546.1 370.9L579.8 367.9L573.3 385.7L537.2 394.3L492.4 423L474 412.9L481.3 389.6L445.3 375L451.1 365.5L482.7 349L473.1 337.6L421.8 325.1L419.5 306.5L389 312.7L376.7 340L351.2 376.7L336.2 368.2L320.7 376.2L305.9 367L314.3 361.6L320 344.6L329.1 328.8L326.7 319.9L333.6 315.9L336.9 322.8L356.3 324.2L365.1 320.6L358.9 315.5L361.2 308.1L349.7 295.5L344.9 274.7L332.9 266.6L335.3 249.8L320.4 236.4L306.8 234.6L282.5 219.1L260.5 224L252.7 231.3L238.7 231.3L230.4 242.9L206.1 247.7L194.8 255.3L179.5 243.2L158.3 243L137.9 237.5L123.6 248.1L121.3 234.8L103 221.3L109.5 201.3L118.6 188.4L125.8 191.3L117.3 169L147.3 127.6L163.7 121.9L167.2 107.9L150.6 64.6L166.4 62.6L184.5 49.2L210 48.1L243.4 52L280.2 63.9L306.2 64.9L318.6 72.1L331 63.4L339.7 75L369.4 72.6L382.6 77.4L384.7 52.4L394.9 41.5L423.2 38.6Z","proj":[22.0856,52.3351,33.0067,49.6639,103.0,27.0],"cities":[[50.45,30.52],[49.84,24.03],[46.48,30.73],[49.99,36.23],[48.46,35.05],[49.23,28.47],[51.5,31.29],[48.62,22.29],[49.59,34.55],[48.92,24.71],[47.84,35.14],[46.97,32.0]]} };</script>
 <!-- CONSULTANT design system v1.0 · квиз-воронка «Безкоштовний аналіз вашої ситуації» (ТЗ v2) · локаль uk · build.py -->
 </head>
 <body class="funnel-page">
@@ -189,14 +189,11 @@
       </div>
       <div class="funnel__media funnel__reveal" data-s3-map>
         <div class="q-media" data-s3-media>
-          <svg class="funnel__map" viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="s3-map-title" focusable="false" data-s3-svg>
-            <title id="s3-map-title">Схематична карта населеного пункту</title>
-            <rect x="0" y="0" width="800" height="450" fill="currentColor"/>
-            <path class="funnel__map-water" d="M0 340 C120 300 220 380 330 330 S540 260 640 320 S760 360 800 330 L800 450 L0 450 Z"/>
-            <g class="funnel__map-roads" stroke-width="12"><path d="M-20 250 C140 200 260 320 420 270 S680 180 830 230"/></g>
-            <g class="funnel__map-roads" stroke-width="9"><path d="M110 -20 C150 120 60 250 150 470"/><path d="M590 -20 C540 140 660 280 610 470"/></g>
-            <g class="funnel__map-roads" stroke-width="6"><path d="M-20 90 C200 120 330 40 520 70 S760 130 830 80"/><path d="M330 -20 C350 150 280 260 360 470"/><path d="M-20 390 C160 350 300 410 470 370 S700 330 830 380"/></g>
-            <g class="funnel__map-pin" stroke-width="4" transform="translate(400 215)">
+          <svg class="funnel__geo" viewBox="0 0 800 450" role="img" aria-labelledby="s3-map-title" focusable="false" data-s3-svg>
+            <title id="s3-map-title">Карта країни з позначкою населеного пункту</title>
+            <path class="funnel__geo-land" data-geo-land d=""/>
+            <g class="funnel__geo-dots" data-geo-dots style="display:none"></g>
+            <g class="funnel__geo-pin" data-geo-pin stroke-width="4" transform="translate(400 215)">
               <path d="M0 -44 a24 24 0 0 1 24 24 c0 18 -24 44 -24 44 s-24 -26 -24 -44 a24 24 0 0 1 24 -24 z"/>
               <circle cx="0" cy="-20" r="8" fill="currentColor" stroke="none"/>
             </g>
@@ -285,9 +282,10 @@
         <li class="q-steps__item" data-state="upcoming"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">Визначили категорію</p></div></li>
         <li class="q-steps__item" data-state="upcoming"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">Підбираємо релевантних фахівців</p><p class="q-steps__status" data-status hidden>Триває…</p></div></li>
       </ol>
-      <div class="appframe appframe--compact" role="img" aria-label="Сторінка питання в застосунку: Ваше питання, під ним з’являються картки відповідей">
+      <div class="appframe appframe--compact" role="img" aria-label="Сторінка питання в застосунку: Ваше питання, під ним з’являється картка юриста, який узяв запит у роботу">
         <div class="appframe__bar">Питання №14238</div>
         <article class="appframe__card"><p class="appframe__date"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>01.07.2026, 18:04</p><p class="appframe__qt" data-s7-question>Опис Вашої ситуації</p></article>
+        <template id="s7-card"><article class="appframe__ans"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="pro"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PRO</span><span class="q-score"><span class="q-score__value num">75,8</span><span class="q-score__scale">зі 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="assets/people/ko.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">КО</span><span class="appframe__meta"><span class="appframe__name">Ковальчук Олександр</span><span class="appframe__role">Адвокат</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Київ</span></span></div><p class="appframe__ts">{{ts}}</p><p class="appframe__txt">{{txt}}</p></article></template>
         <div class="appframe__list" id="s7-answers">
           <div class="appframe__skel appframe__skel--short"><span class="q-skel"></span><span class="q-skel"></span><span class="q-skel"></span></div>
           <div class="appframe__skel funnel__hide-short"><span class="q-skel"></span><span class="q-skel"></span><span class="q-skel"></span></div>
@@ -301,13 +299,13 @@
         <h2 class="funnel__title" id="s8-title" tabindex="-1">Одна ситуація. Кілька професійних поглядів.</h2>
         <p class="funnel__hint funnel__hint--sm funnel__hide-short">Вашу ситуацію можуть проаналізувати декілька релевантних фахівців — Ви порівнюєте підходи, а не одну думку.</p>
       </div>
-      <div class="appframe appframe--compact" role="img" aria-label="Сторінка питання в застосунку: Ваше питання, відповідь AI-асистента та відповіді юристів із рейтингом">
+      <div class="appframe appframe--compact" role="img" aria-label="Сторінка питання в застосунку: Ваше питання та відповіді юристів із рейтингом">
         <div class="appframe__bar">Питання №14238</div>
         <article class="appframe__card"><p class="appframe__date"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>01.07.2026, 18:04</p><p class="appframe__qt" data-s8-question>Опис Вашої ситуації</p></article>
         <div class="appframe__list">
-          <article class="appframe__ans"><div class="appframe__band"><span class="chip chip--sm">AI</span><span class="q-score"><span class="q-score__value num">35,7</span><span class="q-score__scale">зі 100</span></span></div><div class="appframe__who"><span class="avatar avatar--dark" aria-hidden="true">AI</span><span class="appframe__meta"><span class="appframe__name">Асистент Андрій</span><span class="appframe__role">Штучний інтелект</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Україна</span></span></div><p class="appframe__ts">щойно</p><p class="appframe__txt">Попередній розбір: які норми діють, які документи знадобляться і що робити першим кроком.</p></article>
+          
           <article class="appframe__ans"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="pro"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PRO</span><span class="q-score"><span class="q-score__value num">75,8</span><span class="q-score__scale">зі 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="assets/people/ko.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">КО</span><span class="appframe__meta"><span class="appframe__name">Ковальчук Олександр</span><span class="appframe__role">Адвокат</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Київ</span></span></div><p class="appframe__ts">через 14 хв</p><p class="appframe__txt">Пропонує позасудовий шлях і пояснює, чому він швидший у Вашому випадку.</p></article>
-          <article class="appframe__ans funnel__hide-short funnel__hide-mid"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="premium"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PREMIUM</span><span class="q-score"><span class="q-score__value num">82,4</span><span class="q-score__scale">зі 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="assets/people/tm.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">ТМ</span><span class="appframe__meta"><span class="appframe__name">Тарасенко Михайло</span><span class="appframe__role">Адвокат</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Львів</span></span></div><p class="appframe__ts">через 26 хв</p><p class="appframe__txt">Радить одразу готувати позов і показує, які докази посилять позицію.</p></article>
+          <article class="appframe__ans"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="premium"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PREMIUM</span><span class="q-score"><span class="q-score__value num">82,4</span><span class="q-score__scale">зі 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="assets/people/tm.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">ТМ</span><span class="appframe__meta"><span class="appframe__name">Тарасенко Михайло</span><span class="appframe__role">Адвокат</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Львів</span></span></div><p class="appframe__ts">через 26 хв</p><p class="appframe__txt">Радить одразу готувати позов і показує, які докази посилять позицію.</p></article><article class="appframe__ans funnel__hide-short funnel__hide-mid"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="pro"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PRO</span><span class="q-score"><span class="q-score__value num">71,2</span><span class="q-score__scale">зі 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="assets/people/md.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">МД</span><span class="appframe__meta"><span class="appframe__name">Мар’яненко Денис</span><span class="appframe__role">Юрист</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Дніпро</span></span></div><p class="appframe__ts">через 14 хв</p><p class="appframe__txt">Радить закріпити домовленості письмово й одразу подати на аліменти — це зекономить час у суді.</p></article>
         </div>
       </div>
       <ul class="funnel__chips funnel__hide-short funnel__hide-mid" aria-label="Що це дає">
@@ -618,23 +616,26 @@
 
   /* ── данные-заглушки (в продукте — база сайта); населённые пункты — из локали ── */
   var SETTLEMENTS = L.settlements || [
-    ['Київ', 'м. Київ', 1000], ['Львів', 'Львівська обл.', 640], ['Одеса', 'Одеська обл.', 520],
-    ['Харків', 'Харківська обл.', 480], ['Дніпро', 'Дніпропетровська обл.', 450], ['Полтава', 'Полтавська обл.', 1000],
-    ['Запоріжжя', 'Запорізька обл.', 210], ['Вінниця', 'Вінницька обл.', 190], ['Івано-Франківськ', 'Івано-Франківська обл.', 170],
-    ['Черкаси', 'Черкаська обл.', 160], ['Хмельницький', 'Хмельницька обл.', 150], ['Житомир', 'Житомирська обл.', 140],
-    ['Кривий Ріг', 'Дніпропетровська обл.', 140], ['Рівне', 'Рівненська обл.', 130], ['Луцьк', 'Волинська обл.', 120],
-    ['Миколаїв', 'Миколаївська обл.', 120], ['Тернопіль', 'Тернопільська обл.', 110], ['Чернівці', 'Чернівецька обл.', 100],
-    ['Ужгород', 'Закарпатська обл.', 90], ['Чернігів', 'Чернігівська обл.', 90], ['Кропивницький', 'Кіровоградська обл.', 85],
-    ['Суми', 'Сумська обл.', 80], ['Кременчук', 'Полтавська обл.', 70], ['Херсон', 'Херсонська обл.', 60],
-    ['Біла Церква', 'Київська обл.', 60], ['Бровари', 'Київська обл.', 45], ['Дубно', 'Рівненська обл.', 41],
-    ['Ірпінь', 'Київська обл.', 40], ['Мукачево', 'Закарпатська обл.', 35], ['Кам’янець-Подільський', 'Хмельницька обл.', 32],
-    ['Умань', 'Черкаська обл.', 30], ['Буча', 'Київська обл.', 30], ['Дрогобич', 'Львівська обл.', 28],
-    ['Павлоград', 'Дніпропетровська обл.', 26], ['Бердичів', 'Житомирська обл.', 25], ['Ковель', 'Волинська обл.', 24],
-    ['Ніжин', 'Чернігівська обл.', 22], ['Васильків', 'Київська обл.', 20], ['Стрий', 'Львівська обл.', 20],
-    ['Обухів', 'Київська обл.', 18], ['Коломия', 'Івано-Франківська обл.', 18], ['Фастів', 'Київська обл.', 15],
-    ['Новоград-Волинський', 'Житомирська обл.', 12], ['Славутич', 'Київська обл.', 6], ['Тетіїв', 'Київська обл.', 4],
-    ['Дубно', 'Київська обл.', 3], ['Володарка', 'Київська обл.', 2], ['Ставище', 'Київська обл.', 1]
+    ['Київ', 'м. Київ', 1000, 50.45, 30.52], ['Львів', 'Львівська обл.', 640, 49.84, 24.03], ['Одеса', 'Одеська обл.', 520, 46.48, 30.73],
+    ['Харків', 'Харківська обл.', 480, 49.99, 36.23], ['Дніпро', 'Дніпропетровська обл.', 450, 48.46, 35.05], ['Полтава', 'Полтавська обл.', 1000, 49.59, 34.55],
+    ['Запоріжжя', 'Запорізька обл.', 210, 47.84, 35.14], ['Вінниця', 'Вінницька обл.', 190, 49.23, 28.47], ['Івано-Франківськ', 'Івано-Франківська обл.', 170, 48.92, 24.71],
+    ['Черкаси', 'Черкаська обл.', 160, 49.44, 32.06], ['Хмельницький', 'Хмельницька обл.', 150, 49.42, 26.98], ['Житомир', 'Житомирська обл.', 140, 50.25, 28.66],
+    ['Кривий Ріг', 'Дніпропетровська обл.', 140, 47.91, 33.39], ['Рівне', 'Рівненська обл.', 130, 50.62, 26.25], ['Луцьк', 'Волинська обл.', 120, 50.75, 25.33],
+    ['Миколаїв', 'Миколаївська обл.', 120, 46.97, 32.0], ['Тернопіль', 'Тернопільська обл.', 110, 49.55, 25.59], ['Чернівці', 'Чернівецька обл.', 100, 48.29, 25.94],
+    ['Ужгород', 'Закарпатська обл.', 90, 48.62, 22.29], ['Чернігів', 'Чернігівська обл.', 90, 51.5, 31.29], ['Кропивницький', 'Кіровоградська обл.', 85, 48.51, 32.26],
+    ['Суми', 'Сумська обл.', 80, 50.91, 34.8], ['Кременчук', 'Полтавська обл.', 70, 49.07, 33.42], ['Херсон', 'Херсонська обл.', 60, 46.64, 32.61],
+    ['Біла Церква', 'Київська обл.', 60, 49.8, 30.11], ['Бровари', 'Київська обл.', 45, 50.51, 30.79], ['Дубно', 'Рівненська обл.', 41, 50.42, 25.75],
+    ['Ірпінь', 'Київська обл.', 40, 50.52, 30.25], ['Мукачево', 'Закарпатська обл.', 35, 48.44, 22.72], ['Кам’янець-Подільський', 'Хмельницька обл.', 32, 48.68, 26.58],
+    ['Умань', 'Черкаська обл.', 30, 48.75, 30.22], ['Буча', 'Київська обл.', 30, 50.54, 30.21], ['Дрогобич', 'Львівська обл.', 28, 49.35, 23.51],
+    ['Павлоград', 'Дніпропетровська обл.', 26, 48.52, 35.87], ['Бердичів', 'Житомирська обл.', 25, 49.9, 28.58], ['Ковель', 'Волинська обл.', 24, 51.22, 24.71],
+    ['Ніжин', 'Чернігівська обл.', 22, 51.05, 31.89], ['Васильків', 'Київська обл.', 20, 50.18, 30.31], ['Стрий', 'Львівська обл.', 20, 49.26, 23.85],
+    ['Обухів', 'Київська обл.', 18, 50.11, 30.63], ['Коломия', 'Івано-Франківська обл.', 18, 48.53, 25.04], ['Фастів', 'Київська обл.', 15, 50.08, 29.92],
+    ['Новоград-Волинський', 'Житомирська обл.', 12, 50.59, 27.62], ['Славутич', 'Київська обл.', 6, 51.52, 30.76], ['Тетіїв', 'Київська обл.', 4, 49.37, 29.68],
+    ['Дубно', 'Київська обл.', 3, 49.9, 30.3], ['Володарка', 'Київська обл.', 2, 49.52, 29.92], ['Ставище', 'Київська обл.', 1, 49.39, 30.19]
   ];
+  /* карта країни на S3: контур і проекція приходять з QUIZ_LOCALE.geo (tools/make-geo.py) */
+  var GEO = L.geo || null;
+  function geoXY(lat, lon) { var p = GEO.proj; return [p[4] + (lon - p[0]) * p[2], p[5] + (p[1] - lat) * p[3]]; }
   var REGION_TOTAL = L.regionTotal || { 'Київська обл.': 1000, 'Рівненська обл.': 130, 'Житомирська обл.': 140 };
   var CATEGORIES = [
     ['family', 'Сім’я', 312, 'i-family'], ['general', 'Загальне', 240, 'i-file'], ['debtor', 'Захист боржника', 198, 'i-shield'],
@@ -734,7 +735,7 @@
   function pluralIndex(n) { if (L.plural) return L.plural(n); var m10 = n % 10, m100 = n % 100;
     if (m10 === 1 && m100 !== 11) return 0; if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return 1; return 2; }
   function plural(n, forms) { return forms[pluralIndex(n)]; }
-  function specialists(n, acc) { return n >= 1000 ? '1 000+ фахівців' : nbsp(n) + ' ' + plural(n, acc ? ['фахівця', 'фахівці', 'фахівців'] : ['фахівець', 'фахівці', 'фахівців']); }
+  function specialists(n, acc) { return n >= 1000 ? '1 000+ фахівців' : nbsp(n) + ' ' + plural(n, acc ? ['фахівця', 'фахівці', 'фахівців'] : ['фахівець', 'фахівці', 'фахівців']); }
   function stepText(n, m) { return L.step ? L.step(n, m) : 'Крок ' + n + ' із ' + m; }
   function money(n) { return L.money ? L.money(n) : nbsp(n) + '\u00a0₴'; }
   function track(ev, extra) {
@@ -899,7 +900,7 @@
     function open() { pop.hidden = false; void pop.offsetWidth; pop.classList.add('is-open'); input.setAttribute('aria-expanded', 'true'); }
     function pick(i) {
       var s = items[i]; if (!s) return;
-      state.settlement = { name: s[0], region: s[1], count: s[2] };
+      state.settlement = { name: s[0], region: s[1], count: s[2], lat: s[3], lon: s[4] };
       input.value = s[0] + ', ' + s[1];
       clear.hidden = false;
       close();
@@ -951,7 +952,7 @@
     var fs = $('#s4-options'), err = $('#s4-err');
     fs.insertAdjacentHTML('beforeend', CATEGORIES.map(function (c) {
       return '<label class="q-option q-option--tile"><input class="q-option__input" type="checkbox" name="practice_areas" value="' + c[0] + '">' +
-        '<span class="q-option__label"><svg class="funnel__tile-icon icon" aria-hidden="true"><use href="#' + c[3] + '"></use></svg>' + esc(c[1]) + '</span></label>';
+        '<span class="q-option__label"><svg class="funnel__tile-icon icon" aria-hidden="true"><use href="#' + c[3] + '"></use></svg><span class="funnel__tile-text"><span>' + esc(c[1]) + '</span><small class="funnel__tile-count funnel__hide-short">' + (c[2] ? specialists(c[2]) : 'будь-яке питання') + '</small></span></span></label>';
     }).join(''));
     fs.addEventListener('change', function () { if ($$('input:checked', fs).length) showError(fs, err, false); });
     $('#s4').addEventListener('submit', function (e) {
@@ -1133,6 +1134,11 @@
   }
   function reveal(el, on) { if (el) el.classList.toggle('is-visible', on !== false); }
 
+  (function initGeo() {
+    if (!GEO) return; var land = $('[data-geo-land]'), dots = $('[data-geo-dots]'); if (!land) return;
+    land.setAttribute('d', GEO.path);
+    dots.innerHTML = GEO.cities.map(function (c) { var xy = geoXY(c[0], c[1]); return '<circle cx="' + xy[0].toFixed(1) + '" cy="' + xy[1].toFixed(1) + '" r="7"/>'; }).join('');
+  })();
   // S1: два ряди фахівців з рейтингом під «3 500+» — 28 фото, кожен ряд подвоєний для безшовного циклу
   (function buildMarquee() {
     var host = $('[data-marquee]'); if (!host) return;
@@ -1165,6 +1171,11 @@
       title.textContent = name + ': підбираємо фахівців…';
       cap.textContent = name; sub.textContent = region;
       $('[data-s3-loadmap]', el).hidden = !s;
+      var pin = $('[data-geo-pin]', el), dots = $('[data-geo-dots]', el);
+      if (GEO && s && typeof s.lat === 'number') {
+        var xy = geoXY(s.lat, s.lon), inside = xy[0] > 0 && xy[0] < 800 && xy[1] > 0 && xy[1] < 450;
+        pin.style.display = inside ? '' : 'none'; pin.setAttribute('transform', 'translate(' + xy[0].toFixed(1) + ' ' + xy[1].toFixed(1) + ')'); dots.style.display = 'none';
+      } else { pin.style.display = 'none'; dots.style.display = GEO ? '' : 'none'; }
       var iframe = $('iframe', media); if (iframe) { iframe.remove(); $('[data-s3-svg]', el).hidden = false; }
       people.innerHTML = PEOPLE.map(function (p) {
         return '<div class="funnel__person funnel__reveal" role="listitem">' +
@@ -1213,9 +1224,7 @@
         '<div class="appframe__skel funnel__hide-short"><span class="q-skel"></span><span class="q-skel"></span><span class="q-skel"></span></div>';
       runList($('#s7-list'), 800, null);
       later(function () {
-        answers.innerHTML = '<article class="appframe__ans"><div class="appframe__band"><span class="chip chip--sm">AI</span><span class="q-score"><span class="q-score__value num">' + '35,7' + '</span><span class="q-score__scale">' + 'зі 100' + '</span></span></div>' +
-          '<div class="appframe__who"><span class="avatar avatar--dark" aria-hidden="true">AI</span><span class="appframe__meta"><span class="appframe__name">' + 'Асистент Андрій' + '</span><span class="appframe__role">' + 'Штучний інтелект' + '</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>' + 'Україна' + '</span></span></div>' +
-          '<p class="appframe__ts">' + 'щойно' + '</p><p class="appframe__txt">' + 'Готуємо попередній розбір ситуації…' + '</p></article>' +
+        answers.innerHTML = $('#s7-card').innerHTML.replace('{{ts}}', 'щойно').replace('{{txt}}', 'Взяв запит у роботу — готує розбір ситуації…') +
           '<div class="appframe__skel funnel__hide-short"><span class="q-skel"></span><span class="q-skel"></span><span class="q-skel"></span></div>';
       }, 1500);
       later(function () { doneAnimating(); go('s8'); }, 3400);

@@ -25,16 +25,16 @@
   step: function (n, m) { return 'Step ' + n + ' of ' + m; },
   money: function (n) { return '$' + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); },
   calcBase: 3000,
-  settlements: [['New York', 'NY', 1000], ['Los Angeles', 'CA', 640], ['Chicago', 'IL', 480], ['Houston', 'TX', 380], ['Phoenix', 'AZ', 210],
-    ['Philadelphia', 'PA', 190], ['San Antonio', 'TX', 120], ['San Diego', 'CA', 170], ['Dallas', 'TX', 160], ['Austin', 'TX', 150],
-    ['Jacksonville', 'FL', 140], ['Fort Worth', 'TX', 90], ['Columbus', 'OH', 130], ['Charlotte', 'NC', 120], ['Indianapolis', 'IN', 110],
-    ['Seattle', 'WA', 130], ['Denver', 'CO', 110], ['Boston', 'MA', 140], ['Nashville', 'TN', 90], ['Detroit', 'MI', 85],
-    ['Portland', 'OR', 80], ['Las Vegas', 'NV', 70], ['Memphis', 'TN', 60], ['Baltimore', 'MD', 60], ['Milwaukee', 'WI', 45],
-    ['Miami', 'FL', 47], ['Miami Beach', 'FL', 12], ['Orlando', 'FL', 90], ['Tampa', 'FL', 85], ['Sacramento', 'CA', 60],
-    ['Atlanta', 'GA', 150], ['Kansas City', 'MO', 40], ['Omaha', 'NE', 26], ['Raleigh', 'NC', 41], ['Oakland', 'CA', 35],
-    ['Minneapolis', 'MN', 70], ['Tulsa', 'OK', 24], ['Arlington', 'TX', 20], ['New Orleans', 'LA', 30], ['Wichita', 'KS', 18],
-    ['Cleveland', 'OH', 32], ['Aurora', 'CO', 12], ['Anaheim', 'CA', 15], ['Honolulu', 'HI', 22], ['Key West', 'FL', 2], ['Naples', 'FL', 6], ['Boca Raton', 'FL', 4]],
-  regionTotal: { 'FL': 260, 'NY': 1000, 'CA': 900, 'TX': 700, 'CO': 120, 'OH': 160 } };</script>
+  settlements: [['New York', 'NY', 1000, 40.71, -74.01], ['Los Angeles', 'CA', 640, 34.05, -118.24], ['Chicago', 'IL', 480, 41.88, -87.63], ['Houston', 'TX', 380, 29.76, -95.37], ['Phoenix', 'AZ', 210, 33.45, -112.07],
+    ['Philadelphia', 'PA', 190, 39.95, -75.17], ['San Antonio', 'TX', 120, 29.42, -98.49], ['San Diego', 'CA', 170, 32.72, -117.16], ['Dallas', 'TX', 160, 32.78, -96.8], ['Austin', 'TX', 150, 30.27, -97.74],
+    ['Jacksonville', 'FL', 140, 30.33, -81.66], ['Fort Worth', 'TX', 90, 32.75, -97.33], ['Columbus', 'OH', 130, 39.96, -83.0], ['Charlotte', 'NC', 120, 35.23, -80.84], ['Indianapolis', 'IN', 110, 39.77, -86.16],
+    ['Seattle', 'WA', 130, 47.61, -122.33], ['Denver', 'CO', 110, 39.74, -104.99], ['Boston', 'MA', 140, 42.36, -71.06], ['Nashville', 'TN', 90, 36.16, -86.78], ['Detroit', 'MI', 85, 42.33, -83.05],
+    ['Portland', 'OR', 80, 45.52, -122.68], ['Las Vegas', 'NV', 70, 36.17, -115.14], ['Memphis', 'TN', 60, 35.15, -90.05], ['Baltimore', 'MD', 60, 39.29, -76.61], ['Milwaukee', 'WI', 45, 43.04, -87.91],
+    ['Miami', 'FL', 47, 25.76, -80.19], ['Miami Beach', 'FL', 12, 25.79, -80.13], ['Orlando', 'FL', 90, 28.54, -81.38], ['Tampa', 'FL', 85, 27.95, -82.46], ['Sacramento', 'CA', 60, 38.58, -121.49],
+    ['Atlanta', 'GA', 150, 33.75, -84.39], ['Kansas City', 'MO', 40, 39.1, -94.58], ['Omaha', 'NE', 26, 41.26, -95.94], ['Raleigh', 'NC', 41, 35.78, -78.64], ['Oakland', 'CA', 35, 37.8, -122.27],
+    ['Minneapolis', 'MN', 70, 44.98, -93.27], ['Tulsa', 'OK', 24, 36.15, -95.99], ['Arlington', 'TX', 20, 32.74, -97.11], ['New Orleans', 'LA', 30, 29.95, -90.07], ['Wichita', 'KS', 18, 37.69, -97.34],
+    ['Cleveland', 'OH', 32, 41.5, -81.69], ['Aurora', 'CO', 12, 39.73, -104.83], ['Anaheim', 'CA', 15, 33.84, -117.91], ['Honolulu', 'HI', 22, 21.31, -157.86], ['Key West', 'FL', 2, 24.56, -81.78], ['Naples', 'FL', 6, 26.14, -81.79], ['Boca Raton', 'FL', 4, 26.37, -80.1]],
+  regionTotal: { 'FL': 260, 'NY': 1000, 'CA': 900, 'TX': 700, 'CO': 120, 'OH': 160 } , geo: {"path":"M412.3 38.8L414.5 47.2L418.3 49.8L426.8 50.8L439.2 53.2L451.1 57.9L460.9 56L475.9 59.9L479.9 59.8L490.8 55.4L502.3 61L514.2 66.9L524.1 72L533.5 76.9L534.7 81L537.6 82.5L536.9 84L540.1 84.5L542.5 82.9L543.1 86.5L545.6 88.9L548.9 88.9L550.7 90.8L549.2 93.5L561.9 100.7L564.5 114.6L566.9 127.9L563.4 137L557.6 145.4L555 150.8L554.7 152.4L556.1 154.6L560.2 157L563.3 157L577.4 148.8L590 146.4L606 138.8L606.2 137.2L605.1 132.5L603.1 129.5L608.6 127.1L620.6 127L631.8 127L635.7 121.1L637.2 119.9L650.1 108.9L655.6 106L674.1 105.9L696.6 105.9L697.8 102.1L701.7 101.4L706.9 99L711.3 92L715 80.1L724.3 68.5L728.3 72.6L736.5 70L741.9 74.4L741.9 95.3L749.9 103.9L752 109L739 116.4L726.4 121.7L713.6 126.2L707.1 135.3L705 138.7L704.9 146.9L708.9 155L714 155.4L712.7 149.8L716.4 153.2L715.4 157.6L707.2 160L701.3 159.7L692.3 162.4L687 163.2L679.9 163.9L669.7 168.4L687.6 165.5L691.3 168.4L674.2 173L666.4 173L666.8 171.1L663.1 175.4L666.7 176.1L664 187.1L655.1 198.9L654.2 194.9L651.6 194.1L647.6 190.3L650.1 198.6L653.1 201.3L653.3 207.1L649.4 213L642.5 225.3L641.4 224.7L645.2 214.2L639 208.4L637.5 195.7L635.2 202.3L637.8 212L629.7 209.6L638.1 214.5L638.6 229.1L642.1 230.2L643.4 235.5L645.1 250.8L637.4 262.2L624.8 266.7L616.7 275.7L610.6 276.7L604.5 282.3L602.7 287.4L589.3 297.4L582.5 304.7L576.7 313.8L574.8 324.6L577 335.3L581.1 348.4L586.5 359.2L586.6 365.8L592.3 383.6L591.9 393.9L591.4 399.9L588.4 409.3L584.7 411.2L578.7 409.3L576.8 402.6L572.2 399.1L565.7 385.9L560 374.2L558.2 368.2L560.7 358L557.3 349.6L547.8 336.8L543 334.4L530.7 341.4L528.5 340.6L522.6 333.5L515 329.7L501.2 331.6L490.4 329.9L481 331L476 333.4L478.2 337.4L478 343.7L480.6 346.7L478.3 348.7L473.7 346.4L469.2 349.3L460.3 348.9L451.2 340.8L440.6 342.7L431.7 339.1L424.1 340.2L413.9 343.8L402.8 355.1L390.6 361.8L384 369.1L381.2 376L381 386.5L381.7 393.9L384 399.1L379.2 399.6L370.6 396.2L361 391.4L357.6 384.2L354.9 373.5L347.8 364.8L343.5 355.8L337.4 345.3L328.8 339.2L318.8 339.5L311.2 351.6L301 347L294.7 342.4L291.7 334L287.7 326L280.4 319.2L274.2 314.4L269.7 308.9L248.6 308.9L248.6 315.3L238.9 315.3L214.6 315.4L186.8 304.6L168.4 297.1L169.5 294.1L154.1 295.8L140.2 297L138.1 289.2L130.2 280.4L124.6 278.5L123.2 274.1L116.4 273.4L112 269.2L100.7 267.7L97.6 265.2L96.1 256.8L84.3 241.4L74.1 220.1L74.5 216.6L69.1 211.5L59.7 198.7L58 186.2L51.5 177.8L54.2 165.1L53.8 152L49.9 140.3L54.6 125.8L56.1 111.9L57.6 98L55.4 77.5L51.6 64.4L48 57.3L49.5 54.3L67.1 59.5L73.6 73.9L76.6 69.9L74.7 57.3L70.5 44.8L105.2 44.8L141.4 44.8L153.4 44.8L190.5 44.8L226.5 44.8L263.1 44.8L299.7 44.8L341.2 44.8L382.9 44.8L408.1 44.8L408.2 38.9L412.3 38.8Z","proj":[-124.6872,49.389,12.1963,15.3188,48.0,38.8],"cities":[[40.71,-74.01],[34.05,-118.24],[41.88,-87.63],[29.76,-95.37],[33.45,-112.07],[25.76,-80.19],[47.61,-122.33],[39.74,-104.99],[33.75,-84.39],[42.36,-71.06],[32.78,-96.8],[44.98,-93.27]]} };</script>
 <!-- CONSULTANT design system v1.0 · квиз-воронка «Безкоштовний аналіз вашої ситуації» (ТЗ v2) · локаль en · build.py -->
 </head>
 <body class="funnel-page">
@@ -199,14 +199,11 @@
       </div>
       <div class="funnel__media funnel__reveal" data-s3-map>
         <div class="q-media" data-s3-media>
-          <svg class="funnel__map" viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="s3-map-title" focusable="false" data-s3-svg>
-            <title id="s3-map-title">Schematic map of the city</title>
-            <rect x="0" y="0" width="800" height="450" fill="currentColor"/>
-            <path class="funnel__map-water" d="M0 340 C120 300 220 380 330 330 S540 260 640 320 S760 360 800 330 L800 450 L0 450 Z"/>
-            <g class="funnel__map-roads" stroke-width="12"><path d="M-20 250 C140 200 260 320 420 270 S680 180 830 230"/></g>
-            <g class="funnel__map-roads" stroke-width="9"><path d="M110 -20 C150 120 60 250 150 470"/><path d="M590 -20 C540 140 660 280 610 470"/></g>
-            <g class="funnel__map-roads" stroke-width="6"><path d="M-20 90 C200 120 330 40 520 70 S760 130 830 80"/><path d="M330 -20 C350 150 280 260 360 470"/><path d="M-20 390 C160 350 300 410 470 370 S700 330 830 380"/></g>
-            <g class="funnel__map-pin" stroke-width="4" transform="translate(400 215)">
+          <svg class="funnel__geo" viewBox="0 0 800 450" role="img" aria-labelledby="s3-map-title" focusable="false" data-s3-svg>
+            <title id="s3-map-title">Country map with the selected place marked</title>
+            <path class="funnel__geo-land" data-geo-land d=""/>
+            <g class="funnel__geo-dots" data-geo-dots style="display:none"></g>
+            <g class="funnel__geo-pin" data-geo-pin stroke-width="4" transform="translate(400 215)">
               <path d="M0 -44 a24 24 0 0 1 24 24 c0 18 -24 44 -24 44 s-24 -26 -24 -44 a24 24 0 0 1 24 -24 z"/>
               <circle cx="0" cy="-20" r="8" fill="currentColor" stroke="none"/>
             </g>
@@ -295,9 +292,10 @@
         <li class="q-steps__item" data-state="upcoming"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">Area identified</p></div></li>
         <li class="q-steps__item" data-state="upcoming"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">Matching relevant specialists</p><p class="q-steps__status" data-status hidden>In progress…</p></div></li>
       </ol>
-      <div class="appframe appframe--compact" role="img" aria-label="The question page in the app: your question, with answer cards appearing below it">
+      <div class="appframe appframe--compact" role="img" aria-label="Question page in the app: your question, and below it the card of the lawyer who took your request">
         <div class="appframe__bar">Question #14238</div>
         <article class="appframe__card"><p class="appframe__date"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>07/01/2026, 18:04</p><p class="appframe__qt" data-s7-question>Your description</p></article>
+        <template id="s7-card"><article class="appframe__ans"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="pro"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PRO</span><span class="q-score"><span class="q-score__value num">75.8</span><span class="q-score__scale">of 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="../assets/people/ko.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">BC</span><span class="appframe__meta"><span class="appframe__name">Basil Chochla</span><span class="appframe__role">Attorney</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>New York</span></span></div><p class="appframe__ts">{{ts}}</p><p class="appframe__txt">{{txt}}</p></article></template>
         <div class="appframe__list" id="s7-answers">
           <div class="appframe__skel appframe__skel--short"><span class="q-skel"></span><span class="q-skel"></span><span class="q-skel"></span></div>
           <div class="appframe__skel funnel__hide-short"><span class="q-skel"></span><span class="q-skel"></span><span class="q-skel"></span></div>
@@ -311,13 +309,13 @@
         <h2 class="funnel__title" id="s8-title" tabindex="-1">One situation. Several professional opinions.</h2>
         <p class="funnel__hint funnel__hint--sm funnel__hide-short">Several relevant specialists can analyze your situation — you compare approaches, not a single opinion.</p>
       </div>
-      <div class="appframe appframe--compact" role="img" aria-label="The question page in the app: your question, the AI assistant’s answer and lawyers’ answers with ratings">
+      <div class="appframe appframe--compact" role="img" aria-label="Question page in the app: your question and rated answers from lawyers">
         <div class="appframe__bar">Question #14238</div>
         <article class="appframe__card"><p class="appframe__date"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>07/01/2026, 18:04</p><p class="appframe__qt" data-s8-question>Your description</p></article>
         <div class="appframe__list">
-          <article class="appframe__ans"><div class="appframe__band"><span class="chip chip--sm">AI</span><span class="q-score"><span class="q-score__value num">35.7</span><span class="q-score__scale">of 100</span></span></div><div class="appframe__who"><span class="avatar avatar--dark" aria-hidden="true">AI</span><span class="appframe__meta"><span class="appframe__name">Assistant Andrey</span><span class="appframe__role">Artificial Intelligence</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>USA</span></span></div><p class="appframe__ts">just now</p><p class="appframe__txt">Preliminary breakdown: which rules apply, which documents you will need and what to do first.</p></article>
+          
           <article class="appframe__ans"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="pro"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PRO</span><span class="q-score"><span class="q-score__value num">75.8</span><span class="q-score__scale">of 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="../assets/people/ko.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">BC</span><span class="appframe__meta"><span class="appframe__name">Basil Chochla</span><span class="appframe__role">Attorney</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>New York</span></span></div><p class="appframe__ts">14 min later</p><p class="appframe__txt">Suggests an out-of-court route and explains why it is faster in your case.</p></article>
-          <article class="appframe__ans funnel__hide-short funnel__hide-mid"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="premium"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PREMIUM</span><span class="q-score"><span class="q-score__value num">82.4</span><span class="q-score__scale">of 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="../assets/people/tm.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">DD</span><span class="appframe__meta"><span class="appframe__name">Dmitry Dubograev</span><span class="appframe__role">Attorney</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Miami</span></span></div><p class="appframe__ts">26 min later</p><p class="appframe__txt">Advises preparing a claim right away and shows which evidence strengthens your position.</p></article>
+          <article class="appframe__ans"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="premium"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PREMIUM</span><span class="q-score"><span class="q-score__value num">82.4</span><span class="q-score__scale">of 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="../assets/people/tm.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">DD</span><span class="appframe__meta"><span class="appframe__name">Dmitry Dubograev</span><span class="appframe__role">Attorney</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Miami</span></span></div><p class="appframe__ts">26 min later</p><p class="appframe__txt">Advises preparing a claim right away and shows which evidence strengthens your position.</p></article><article class="appframe__ans funnel__hide-short funnel__hide-mid"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="pro"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PRO</span><span class="q-score"><span class="q-score__value num">71.2</span><span class="q-score__scale">of 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="../assets/people/md.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">VI</span><span class="appframe__meta"><span class="appframe__name">Viktor Ivanov</span><span class="appframe__role">Lawyer</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Houston</span></span></div><p class="appframe__ts">14 min later</p><p class="appframe__txt">Advises putting the arrangements in writing and filing for child support right away, which saves time in court.</p></article>
         </div>
       </div>
       <ul class="funnel__chips funnel__hide-short funnel__hide-mid" aria-label="What it gives you">
@@ -628,23 +626,26 @@
 
   /* ── данные-заглушки (в продукте — база сайта); населённые пункты — из локали ── */
   var SETTLEMENTS = L.settlements || [
-    ['New York', 'NY', 1000], ['Miami', 'FL', 640], ['Los Angeles', 'CA', 520],
-    ['Chicago', 'IL', 480], ['Houston', 'TX', 450], ['Phoenix', 'AZ', 1000],
-    ['Philadelphia', 'PA', 210], ['San Antonio', 'TX', 190], ['San Diego', 'CA', 170],
-    ['Dallas', 'TX', 160], ['Austin', 'TX', 150], ['Jacksonville', 'FL', 140],
-    ['Fort Worth', 'TX', 140], ['Columbus', 'OH', 130], ['Charlotte', 'NC', 120],
-    ['Indianapolis', 'IN', 120], ['Seattle', 'WA', 110], ['Denver', 'CO', 100],
-    ['Boston', 'MA', 90], ['Nashville', 'TN', 90], ['Detroit', 'MI', 85],
-    ['Portland', 'OR', 80], ['Las Vegas', 'AZ', 70], ['Memphis', 'TN', 60],
-    ['Baltimore', 'MD', 60], ['Milwaukee', 'MD', 45], ['Miami Beach', 'OH', 41],
-    ['Orlando', 'MD', 40], ['Tampa', 'MA', 35], ['Sacramento', 'TX', 32],
-    ['Atlanta', 'TX', 30], ['Kansas City', 'MD', 30], ['Omaha', 'FL', 28],
-    ['Raleigh', 'TX', 26], ['Oakland', 'FL', 25], ['Minneapolis', 'NC', 24],
-    ['Tulsa', 'TN', 22], ['Arlington', 'MD', 20], ['New Orleans', 'FL', 20],
-    ['Wichita', 'MD', 18], ['Cleveland', 'CA', 18], ['Tampa Bay', 'MD', 15],
-    ['Aurora', 'FL', 12], ['Anaheim', 'MD', 6], ['Honolulu', 'MD', 4],
-    ['Miami Beach', 'MD', 3], ['Key West', 'MD', 2], ['Naples', 'MD', 1]
+    ['New York', 'NY', 1000, 50.45, 30.52], ['Miami', 'FL', 640, 49.84, 24.03], ['Los Angeles', 'CA', 520, 46.48, 30.73],
+    ['Chicago', 'IL', 480, 49.99, 36.23], ['Houston', 'TX', 450, 48.46, 35.05], ['Phoenix', 'AZ', 1000, 49.59, 34.55],
+    ['Philadelphia', 'PA', 210, 47.84, 35.14], ['San Antonio', 'TX', 190, 49.23, 28.47], ['San Diego', 'CA', 170, 48.92, 24.71],
+    ['Dallas', 'TX', 160, 49.44, 32.06], ['Austin', 'TX', 150, 49.42, 26.98], ['Jacksonville', 'FL', 140, 50.25, 28.66],
+    ['Fort Worth', 'TX', 140, 47.91, 33.39], ['Columbus', 'OH', 130, 50.62, 26.25], ['Charlotte', 'NC', 120, 50.75, 25.33],
+    ['Indianapolis', 'IN', 120, 46.97, 32.0], ['Seattle', 'WA', 110, 49.55, 25.59], ['Denver', 'CO', 100, 48.29, 25.94],
+    ['Boston', 'MA', 90, 48.62, 22.29], ['Nashville', 'TN', 90, 51.5, 31.29], ['Detroit', 'MI', 85, 48.51, 32.26],
+    ['Portland', 'OR', 80, 50.91, 34.8], ['Las Vegas', 'AZ', 70, 49.07, 33.42], ['Memphis', 'TN', 60, 46.64, 32.61],
+    ['Baltimore', 'MD', 60, 49.8, 30.11], ['Milwaukee', 'MD', 45, 50.51, 30.79], ['Miami Beach', 'OH', 41, 50.42, 25.75],
+    ['Orlando', 'MD', 40, 50.52, 30.25], ['Tampa', 'MA', 35, 48.44, 22.72], ['Sacramento', 'TX', 32, 48.68, 26.58],
+    ['Atlanta', 'TX', 30, 48.75, 30.22], ['Kansas City', 'MD', 30, 50.54, 30.21], ['Omaha', 'FL', 28, 49.35, 23.51],
+    ['Raleigh', 'TX', 26, 48.52, 35.87], ['Oakland', 'FL', 25, 49.9, 28.58], ['Minneapolis', 'NC', 24, 51.22, 24.71],
+    ['Tulsa', 'TN', 22, 51.05, 31.89], ['Arlington', 'MD', 20, 50.18, 30.31], ['New Orleans', 'FL', 20, 49.26, 23.85],
+    ['Wichita', 'MD', 18, 50.11, 30.63], ['Cleveland', 'CA', 18, 48.53, 25.04], ['Tampa Bay', 'MD', 15, 50.08, 29.92],
+    ['Aurora', 'FL', 12, 50.59, 27.62], ['Anaheim', 'MD', 6, 51.52, 30.76], ['Honolulu', 'MD', 4, 49.37, 29.68],
+    ['Miami Beach', 'MD', 3, 49.9, 30.3], ['Key West', 'MD', 2, 49.52, 29.92], ['Naples', 'MD', 1, 49.39, 30.19]
   ];
+  /* карта країни на S3: контур і проекція приходять з QUIZ_LOCALE.geo (tools/make-geo.py) */
+  var GEO = L.geo || null;
+  function geoXY(lat, lon) { var p = GEO.proj; return [p[4] + (lon - p[0]) * p[2], p[5] + (p[1] - lat) * p[3]]; }
   var REGION_TOTAL = L.regionTotal || { 'MD': 1000, 'OH': 130, 'FL': 140 };
   var CATEGORIES = [
     ['family', 'Family', 312, 'i-family'], ['general', 'General', 240, 'i-file'], ['debtor', 'Debt defense', 198, 'i-shield'],
@@ -909,7 +910,7 @@
     function open() { pop.hidden = false; void pop.offsetWidth; pop.classList.add('is-open'); input.setAttribute('aria-expanded', 'true'); }
     function pick(i) {
       var s = items[i]; if (!s) return;
-      state.settlement = { name: s[0], region: s[1], count: s[2] };
+      state.settlement = { name: s[0], region: s[1], count: s[2], lat: s[3], lon: s[4] };
       input.value = s[0] + ', ' + s[1];
       clear.hidden = false;
       close();
@@ -961,7 +962,7 @@
     var fs = $('#s4-options'), err = $('#s4-err');
     fs.insertAdjacentHTML('beforeend', CATEGORIES.map(function (c) {
       return '<label class="q-option q-option--tile"><input class="q-option__input" type="checkbox" name="practice_areas" value="' + c[0] + '">' +
-        '<span class="q-option__label"><svg class="funnel__tile-icon icon" aria-hidden="true"><use href="#' + c[3] + '"></use></svg>' + esc(c[1]) + '</span></label>';
+        '<span class="q-option__label"><svg class="funnel__tile-icon icon" aria-hidden="true"><use href="#' + c[3] + '"></use></svg><span class="funnel__tile-text"><span>' + esc(c[1]) + '</span><small class="funnel__tile-count funnel__hide-short">' + (c[2] ? specialists(c[2]) : 'any other matter') + '</small></span></span></label>';
     }).join(''));
     fs.addEventListener('change', function () { if ($$('input:checked', fs).length) showError(fs, err, false); });
     $('#s4').addEventListener('submit', function (e) {
@@ -1143,6 +1144,11 @@
   }
   function reveal(el, on) { if (el) el.classList.toggle('is-visible', on !== false); }
 
+  (function initGeo() {
+    if (!GEO) return; var land = $('[data-geo-land]'), dots = $('[data-geo-dots]'); if (!land) return;
+    land.setAttribute('d', GEO.path);
+    dots.innerHTML = GEO.cities.map(function (c) { var xy = geoXY(c[0], c[1]); return '<circle cx="' + xy[0].toFixed(1) + '" cy="' + xy[1].toFixed(1) + '" r="7"/>'; }).join('');
+  })();
   // S1: два ряди фахівців з рейтингом під «3 500+» — 28 фото, кожен ряд подвоєний для безшовного циклу
   (function buildMarquee() {
     var host = $('[data-marquee]'); if (!host) return;
@@ -1175,6 +1181,11 @@
       title.textContent = name + ': matching specialists…';
       cap.textContent = name; sub.textContent = region;
       $('[data-s3-loadmap]', el).hidden = !s;
+      var pin = $('[data-geo-pin]', el), dots = $('[data-geo-dots]', el);
+      if (GEO && s && typeof s.lat === 'number') {
+        var xy = geoXY(s.lat, s.lon), inside = xy[0] > 0 && xy[0] < 800 && xy[1] > 0 && xy[1] < 450;
+        pin.style.display = inside ? '' : 'none'; pin.setAttribute('transform', 'translate(' + xy[0].toFixed(1) + ' ' + xy[1].toFixed(1) + ')'); dots.style.display = 'none';
+      } else { pin.style.display = 'none'; dots.style.display = GEO ? '' : 'none'; }
       var iframe = $('iframe', media); if (iframe) { iframe.remove(); $('[data-s3-svg]', el).hidden = false; }
       people.innerHTML = PEOPLE.map(function (p) {
         return '<div class="funnel__person funnel__reveal" role="listitem">' +
@@ -1223,9 +1234,7 @@
         '<div class="appframe__skel funnel__hide-short"><span class="q-skel"></span><span class="q-skel"></span><span class="q-skel"></span></div>';
       runList($('#s7-list'), 800, null);
       later(function () {
-        answers.innerHTML = '<article class="appframe__ans"><div class="appframe__band"><span class="chip chip--sm">AI</span><span class="q-score"><span class="q-score__value num">' + '35.7' + '</span><span class="q-score__scale">' + 'of 100' + '</span></span></div>' +
-          '<div class="appframe__who"><span class="avatar avatar--dark" aria-hidden="true">AI</span><span class="appframe__meta"><span class="appframe__name">' + 'Assistant Andrey' + '</span><span class="appframe__role">' + 'Artificial Intelligence' + '</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>' + 'USA' + '</span></span></div>' +
-          '<p class="appframe__ts">' + 'just now' + '</p><p class="appframe__txt">' + 'Preparing a preliminary breakdown…' + '</p></article>' +
+        answers.innerHTML = $('#s7-card').innerHTML.replace('{{ts}}', 'just now').replace('{{txt}}', 'Took your request — preparing a case review…') +
           '<div class="appframe__skel funnel__hide-short"><span class="q-skel"></span><span class="q-skel"></span><span class="q-skel"></span></div>';
       }, 1500);
       later(function () { doneAnimating(); go('s8'); }, 3400);
