@@ -1,0 +1,870 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Підбір юриста за 1–2 хвилини — динамічний квіз | CONSULTANT</title>
+<meta name="description" content="Дайте відповіді на кілька запитань — квіз підлаштовується під вашу ситуацію і підбирає юриста: напрям, терміновість, комфортний діапазон вартості та зручний спосіб зв’язку.">
+<!-- Макет: данные, фахівці и кейсы — заглушки до подключения базы сайта; индексирование запрещено явно -->
+<meta name="robots" content="noindex,nofollow">
+<link rel="canonical" href="https://consultant.net.ua/pidbir-yurysta">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="icon" href="design-system/assets/logo/logo-icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Onest:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="design-system/tokens.css">
+<link rel="stylesheet" href="design-system/styles.css">
+<link rel="stylesheet" href="quiz.css">
+<!-- CONSULTANT design system v1.0 · динамический квиз «Підбір юриста» (голосовое ТЗ 18.09) · 2026-09-23 -->
+</head>
+<body class="funnel-page">
+
+<a class="q-skip-link" href="#main">Перейти до основного вмісту</a>
+
+<!-- Спрайт иконок (§8.3.4): первый узел body, скрыт. Базовый набор — из quiz.html, ниже — добавленные для этого квиза -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-map-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4 4L19 7"/></symbol>
+  <symbol id="i-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></symbol>
+  <symbol id="i-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/><path d="M8 21h8"/></symbol>
+  <symbol id="i-stop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 21a8 8 0 0 0-16 0"/><circle cx="10" cy="8" r="5"/><path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/></symbol>
+  <symbol id="i-family" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M14.5 20a4.5 4.5 0 0 1 6.5-4"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 12h6M9 16h6"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.5 8.5 8 9 4.5-.5 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18"/><path d="M12 3a14 14 0 0 0 0 18"/></symbol>
+  <symbol id="i-car" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l1.6-4.5h10.8L19 11"/><rect x="3" y="11" width="18" height="6" rx="1.5"/><circle cx="7.5" cy="17.5" r="1.5"/><circle cx="16.5" cy="17.5" r="1.5"/></symbol>
+  <symbol id="i-briefcase" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></symbol>
+  <symbol id="i-shield-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.5 8.5 8 9 4.5-.5 8-4 8-9V6z"/><path d="M12 9v4"/><path d="M12 16h.01"/></symbol>
+  <symbol id="i-scale" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M5 7h14"/><path d="m5 7-3 7a3 3 0 0 0 6 0z"/><path d="m19 7-3 7a3 3 0 0 0 6 0z"/><path d="M8 21h8"/></symbol>
+  <symbol id="i-coins" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="5"/><path d="M14.5 10.5a5 5 0 1 1-6 6"/></symbol>
+  <symbol id="i-dots" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="18" cy="12" r="1.5"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3 5 14h6l-1 7 8-11h-6z"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/><path d="M8 7h7"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="i-message" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"/></symbol>
+  <!-- знаки магазинов — Simple Icons 16.31.0 (CC0), монохром: цвет задаёт страница, как у logo-wall (08-visual §8.6.3) -->
+  <symbol id="i-appstore" viewBox="0 0 24 24" fill="currentColor"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></symbol>
+  <symbol id="i-googleplay" viewBox="0 0 24 24" fill="currentColor"><path d="M22.018 13.298l-3.919 2.218-3.515-3.493 3.543-3.521 3.891 2.202a1.49 1.49 0 0 1 0 2.594zM1.337.924a1.486 1.486 0 0 0-.112.568v21.017c0 .217.045.419.124.6l11.155-11.087L1.337.924zm12.207 10.065l3.258-3.238L3.45.195a1.466 1.466 0 0 0-.946-.179l11.04 10.973zm0 2.067l-11 10.933c.298.036.612-.016.906-.183l13.324-7.54-3.23-3.21z"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></symbol>
+  <!-- добавлено для динамического квиза (ADR-040): контур 1.75, как у базового набора -->
+  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
+  <symbol id="i-phone-call" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></symbol>
+  <symbol id="i-question" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7"/><path d="M12 17h.01"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></symbol>
+</svg>
+
+<!-- Живой регион: перед main, пустой, создаётся заранее -->
+<p id="ds-status" role="status" class="sr-only"></p>
+
+<main id="main" tabindex="-1">
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     quiz@sunken — динамический квиз «Підбір юриста» (ADR-040) в оболочке экрана приложения (ADR-039):
+     верхняя панель (локап · «Крок N із M» · выход), прогресс — ProgressBar по доле маршрута,
+     тело с одним видимым экраном, нижняя панель действий, закреплённая у края экрана.
+     Экраны-вопросы генерируются скриптом из FLOW; статичные экраны размечены ниже.
+     Маршрут: start → (worry) → category → (topic | describe) → stage → urgency → price →
+     channel → (calltime) → match → contacts → thanks; «Ні» → exit → bye; «×» → exit.
+     ═══════════════════════════════════════════════════════════════════════ -->
+<section class="funnel" aria-labelledby="quiz-title" id="funnel" data-step="start" data-branch="yes">
+
+  <header class="funnel__top">
+    <div class="funnel__topin">
+      <a class="funnel__brand" href="https://consultant.net.ua/" aria-label="Консультант — на головну">
+        <img class="funnel__brand-img--light" src="design-system/assets/logo/logo-on-light.svg" width="562" height="122" alt="" decoding="async">
+        <img class="funnel__brand-img--dark"  src="design-system/assets/logo/logo-on-dark.svg" width="562" height="122" alt="" decoding="async">
+      </a>
+      <span class="funnel__step" id="funnel-where" hidden>Крок 1 із 8</span>
+      <button class="btn btn--icon funnel__close" type="button" id="funnel-exit" data-nav="exit" aria-label="Вийти з квізу">
+        <svg class="icon" width="24" height="24" aria-hidden="true"><use href="#i-x"></use></svg>
+      </button>
+    </div>
+    <div class="funnel__progress" id="funnel-progress" hidden>
+      <div class="progress" id="funnel-bars" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="Крок 1 із 8">
+        <div class="progress__track"><div class="progress__fill"></div></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="funnel__body" id="funnel-body">
+
+    <!-- ── start · Крок 1: квалификатор — «Так / Не впевнений(-на) / Ні» (голосовое ТЗ: «вам треба допомога?») ── -->
+    <form class="funnel__screen" id="start" data-screen="start" aria-labelledby="quiz-title" novalidate>
+      <div class="funnel__head">
+        <h1 class="funnel__title funnel__title--hero" id="quiz-title" tabindex="-1">Вам потрібна юридична допомога?</h1>
+        <p class="funnel__hint funnel__hint--sm" data-hint>Кілька запитань — і ми підберемо юриста під вашу ситуацію. Безкоштовно і без зобов’язань.</p>
+      </div>
+      <fieldset class="funnel__options" id="start-options" aria-describedby="start-err">
+        <legend class="sr-only">Оберіть один варіант</legend>
+        <label class="q-option">
+          <input class="q-option__input" type="radio" name="need" value="yes" data-label="Так, потрібна">
+          <span class="funnel__opt-icon" aria-hidden="true"><svg class="icon"><use href="#i-check"></use></svg></span>
+          <span class="q-option__label">Так, потрібна<span class="q-option__note">Підберемо фахівця за 1–2 хвилини</span></span>
+        </label>
+        <label class="q-option">
+          <input class="q-option__input" type="radio" name="need" value="unsure" data-label="Поки не впевнений(-на)">
+          <span class="funnel__opt-icon" aria-hidden="true"><svg class="icon"><use href="#i-question"></use></svg></span>
+          <span class="q-option__label">Поки не впевнений(-на)<span class="q-option__note">Допоможемо зрозуміти, чи потрібен юрист</span></span>
+        </label>
+        <label class="q-option">
+          <input class="q-option__input" type="radio" name="need" value="no" data-label="Ні, просто дивлюся">
+          <span class="funnel__opt-icon" aria-hidden="true"><svg class="icon"><use href="#i-eye"></use></svg></span>
+          <span class="q-option__label">Ні, просто дивлюся<span class="q-option__note">Можна вийти або роздивитися платформу</span></span>
+        </label>
+      </fieldset>
+      <p class="funnel__error" id="start-err" role="alert" hidden>Оберіть один варіант, щоб продовжити</p>
+    </form>
+
+    <!-- Остальные экраны-вопросы (worry, category, topic, stage, urgency, channel, calltime) вставляются сюда скриптом из FLOW -->
+
+    <!-- ── exit · «Ні» и «×»: заперечення → відповідь, два рівноправні дії ─── -->
+    <form class="funnel__screen" id="exit" data-screen="exit" aria-labelledby="exit-title" novalidate hidden>
+      <div class="funnel__head">
+        <h2 class="funnel__title" id="exit-title" tabindex="-1">Ви впевнені, що хочете вийти?</h2>
+        <p class="funnel__hint funnel__hint--sm funnel__hide-short">Підкажіть, що зупиняє — можливо, ми зможемо допомогти.</p>
+      </div>
+      <fieldset class="dq__objections" id="exit-options">
+        <legend class="sr-only">Що вас зупиняє?</legend>
+        <label class="q-option q-option--row">
+          <input class="q-option__input" type="radio" name="objection" value="cost" data-reply="Перша консультація безкоштовна. Вартість послуг видно заздалегідь — по етапах, до початку роботи.">
+          <span class="q-option__label">Боюся, що це дорого</span>
+        </label>
+        <label class="q-option q-option--row">
+          <input class="q-option__input" type="radio" name="objection" value="trust" data-reply="Кожен фахівець на платформі перевірений. У профілі — рейтинг «N зі 100», відгуки клієнтів і досвід у схожих справах.">
+          <span class="q-option__label">Не знаю, чи можна довіряти</span>
+        </label>
+        <label class="q-option q-option--row">
+          <input class="q-option__input" type="radio" name="objection" value="time" data-reply="Це займе 1–2 хвилини. Питання можна поставити зараз, а відповідь фахівця прочитати, коли буде зручно.">
+          <span class="q-option__label">Немає часу зараз</span>
+        </label>
+        <label class="q-option q-option--row">
+          <input class="q-option__input" type="radio" name="objection" value="browse" data-reply="Каталог фахівців відкритий без реєстрації. Квіз лише допомагає звузити вибір до тих, хто підходить саме вам.">
+          <span class="q-option__label">Просто дивлюся</span>
+        </label>
+      </fieldset>
+      <div class="dq__stay" id="exit-reply" role="status" aria-live="polite" hidden>
+        <p class="funnel__key" data-exit-reply></p>
+        <p class="dq__lead funnel__hide-short">Продовжити можна з того ж місця — відповіді збережені до кінця сесії.</p>
+      </div>
+    </form>
+
+    <!-- ── bye · вихід підтверджено ─────────────────────────────────────────── -->
+    <section class="funnel__screen funnel__center" id="bye" data-screen="bye" aria-labelledby="bye-title" hidden>
+      <span class="funnel__icon" aria-hidden="true"><svg class="icon"><use href="#i-heart"></use></svg></span>
+      <h2 class="funnel__title" id="bye-title" tabindex="-1">Дякуємо, що зазирнули.</h2>
+      <p class="funnel__hint">Якщо питання з’явиться — квіз тут, а фахівці працюють щодня. Перша консультація безкоштовна.</p>
+    </section>
+
+    <!-- ── describe · вільний опис (категорія «Інше» або за бажанням) ───────── -->
+    <form class="funnel__screen" id="describe" data-screen="describe" aria-labelledby="describe-title" novalidate hidden>
+      <div class="funnel__head">
+        <h2 class="funnel__title" id="describe-title" tabindex="-1">Опишіть коротко, що сталося.</h2>
+        <p class="funnel__hint funnel__hint--sm">Кількох речень достатньо, щоб підібрати профільного юриста. Деталі можна додати пізніше.</p>
+      </div>
+      <div class="field funnel__field funnel__textarea">
+        <label class="field__label" for="story">Ситуація <span class="q-req">(необов’язково)</span></label>
+        <div class="q-textarea">
+          <textarea class="input input--soft q-textarea__field" id="story" name="case_description" rows="4" maxlength="600"
+                    placeholder="Наприклад: сусід затопив квартиру, страхова відмовила у виплаті…"
+                    aria-describedby="story-count"></textarea>
+          <p class="q-textarea__count caption" id="story-count" aria-live="polite"><span class="q-textarea__count-num num">0</span> / 600</p>
+        </div>
+      </div>
+    </form>
+
+    <!-- ── price · комфортний діапазон вартості (голосове ТЗ 18.09; OQ-085) ─── -->
+    <form class="funnel__screen" id="price" data-screen="price" aria-labelledby="price-title" novalidate hidden>
+      <div class="funnel__head">
+        <h2 class="funnel__title" id="price-title" tabindex="-1">Який діапазон вартості вам комфортний?</h2>
+        <p class="funnel__hint funnel__hint--sm funnel__hide-short">Відповідь допоможе підібрати формат послуги — консультація безкоштовна в будь-якому разі.</p>
+      </div>
+      <fieldset class="funnel__options" id="price-options" aria-describedby="price-err"
+                data-gate-allow="G10 3.1: діапазон вартості послуги, який обирає клієнт у квізі (голосове ТЗ 18.09, ADR-040) — не ціна консультанта; ціни етапів показує послуга">
+        <legend class="sr-only">Оберіть один варіант</legend>
+        <label class="q-option">
+          <input class="q-option__input" type="radio" name="price_range" value="free" data-label="Лише безкоштовна консультація">
+          <span class="q-option__label">Лише безкоштовна консультація<span class="q-option__note">Спершу хочу зрозуміти ситуацію</span></span>
+        </label>
+        <label class="q-option">
+          <input class="q-option__input" type="radio" name="price_range" value="low" data-label="До 2 000 ₴">
+          <span class="q-option__label"><span class="num">До 2&nbsp;000&nbsp;₴</span><span class="q-option__note">Консультація або один документ</span></span>
+        </label>
+        <label class="q-option">
+          <input class="q-option__input" type="radio" name="price_range" value="mid" data-label="2 000 – 10 000 ₴">
+          <span class="q-option__label"><span class="num">2&nbsp;000 – 10&nbsp;000&nbsp;₴</span><span class="q-option__note">Супровід окремого етапу</span></span>
+        </label>
+        <label class="q-option">
+          <input class="q-option__input" type="radio" name="price_range" value="high" data-label="Від 10 000 ₴">
+          <span class="q-option__label"><span class="num">Від 10&nbsp;000&nbsp;₴</span><span class="q-option__note">Ведення справи від початку до рішення</span></span>
+        </label>
+        <label class="q-option">
+          <input class="q-option__input" type="radio" name="price_range" value="unknown" data-label="Ще не знаю">
+          <span class="q-option__label">Ще не знаю<span class="q-option__note">Покажемо варіанти з вартістю етапів</span></span>
+        </label>
+      </fieldset>
+      <p class="funnel__error" id="price-err" role="alert" hidden>Оберіть один варіант, щоб продовжити</p>
+    </form>
+
+    <!-- ── match · підбір перед контактами (цінність до запиту даних, 07-pages A-06) ── -->
+    <section class="funnel__screen" id="match" data-screen="match" aria-labelledby="match-title" hidden>
+      <div class="funnel__head">
+        <h2 class="funnel__title" id="match-title" tabindex="-1" data-match-title>Підібрали фахівців під вашу ситуацію</h2>
+        <p class="funnel__hint funnel__hint--sm">Ваші відповіді — натисніть, щоб змінити будь-яку.</p>
+      </div>
+      <div class="dq__chips" id="match-summary" role="list" aria-label="Ваші відповіді"></div>
+      <div class="dq__people" id="match-people" role="list" aria-label="Підібрані фахівці"></div>
+      <p class="funnel__trigger funnel__hide-short"><svg class="icon" width="20" height="20" aria-hidden="true"><use href="#i-check"></use></svg>Перша консультація — безкоштовно. Далі ви самі обираєте, з ким працювати.</p>
+    </section>
+
+    <!-- ── contacts · куди надіслати підбір ────────────────────────────────── -->
+    <form class="funnel__screen funnel__screen--tight" id="contacts" data-screen="contacts" aria-labelledby="contacts-title" novalidate hidden data-ds-event="quiz_contact_submit">
+      <div class="funnel__head">
+        <h2 class="funnel__title" id="contacts-title" tabindex="-1" data-contacts-title>Куди надіслати підбір?</h2>
+        <p class="funnel__hint funnel__hint--sm funnel__hide-short" data-contacts-hint>Фахівець напише вам у Telegram на цей номер.</p>
+      </div>
+      <div class="funnel__form">
+        <div class="field" id="phone-field">
+          <label class="field__label" id="phone-label" for="phone">
+            Телефон <span class="q-req-star" aria-hidden="true">*</span>
+            <span class="q-req">(обов’язково)</span>
+          </label>
+          <div class="q-phone funnel__phone" id="phone-box" role="group" aria-labelledby="phone-label">
+            <span class="q-phone__country" aria-hidden="true"><span class="q-phone__code">+380</span></span>
+            <input class="q-phone__input" id="phone" name="phone" type="tel" inputmode="tel"
+                   autocomplete="tel-national" placeholder="67 123 45 67" required aria-describedby="phone-hint phone-err">
+          </div>
+          <div class="field__msg">
+            <p class="caption sr-only" id="phone-hint">Формат: +380 67 123 45 67</p>
+            <p class="q-error" id="phone-err" role="alert" hidden>
+              <svg class="q-error__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg>
+              Номер має бути у форматі +380 XX XXX XX XX
+            </p>
+          </div>
+        </div>
+        <div class="field" id="email-field" hidden>
+          <label class="field__label" for="email">
+            E-mail <span class="q-req-star" aria-hidden="true">*</span>
+            <span class="q-req">(обов’язково)</span>
+          </label>
+          <input class="input input--soft" id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="imya@example.com" aria-describedby="email-err">
+          <div class="field__msg">
+            <p class="q-error" id="email-err" role="alert" hidden>
+              <svg class="q-error__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg>
+              Введіть коректну адресу, наприклад imya@example.com
+            </p>
+          </div>
+        </div>
+        <details class="funnel__more" id="contacts-more">
+          <summary>Додати ім’я <span class="q-req">(необов’язково)</span><svg class="icon" width="20" height="20" aria-hidden="true"><use href="#i-chevron-down"></use></svg></summary>
+          <div class="field">
+            <label class="field__label" for="name">Ім’я</label>
+            <input class="input input--soft" id="name" name="name" type="text" autocomplete="given-name" placeholder="Олена" aria-describedby="name-hint">
+            <div class="field__msg"><p class="caption" id="name-hint">Так до вас звертатиметься фахівець</p></div>
+          </div>
+        </details>
+        <div class="field funnel__consent">
+          <label class="q-check">
+            <input class="q-option__input" type="checkbox" id="consent" name="consent" required aria-describedby="consent-err">
+            <span class="q-option__label funnel__hint--sm">Погоджуюсь з <a href="https://consultant.net.ua/pryvatnist">політикою конфіденційності</a><span class="sr-only"> (обов’язково)</span></span>
+          </label>
+          <div class="field__msg">
+            <p class="q-error" id="consent-err" role="alert" hidden>
+              <svg class="q-error__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg>
+              Щоб продовжити, підтвердіть згоду з політикою конфіденційності
+            </p>
+          </div>
+        </div>
+      </div>
+      <p class="caption q-disclaimer funnel__hint--sm">Ваші дані бачить лише консультант, якого ви оберете. Ми не передаємо їх третім особам.</p>
+    </form>
+
+    <!-- ── thanks · запит надіслано ─────────────────────────────────────────── -->
+    <section class="funnel__screen" id="thanks" data-screen="thanks" aria-labelledby="thanks-title" data-ds-event="quiz_result_view" hidden>
+      <div class="funnel__head">
+        <h2 class="funnel__title" id="thanks-title" tabindex="-1" data-thanks-title>Дякуємо, запит надіслано.</h2>
+        <p class="funnel__hint funnel__hint--sm" data-thanks-hint>Фахівець напише вам у Telegram.</p>
+      </div>
+      <div class="dq__thanks-card">
+        <span class="funnel__icon" aria-hidden="true"><svg class="icon"><use href="#i-check"></use></svg></span>
+        <p class="funnel__key" data-thanks-who>Ковальчук Олександр вивчає ваші відповіді</p>
+        <p class="dq__lead" data-thanks-when>Зв’яжеться у робочий час 9:00–20:00</p>
+      </div>
+      <ol class="q-steps dq__next" aria-label="Що далі">
+        <li class="q-steps__item" data-state="done"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">Запит створено</p></div></li>
+        <li class="q-steps__item" data-state="current" aria-current="step"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">Фахівець готує відповідь</p></div></li>
+        <li class="q-steps__item" data-state="upcoming"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">Безкоштовна перша консультація</p></div></li>
+      </ol>
+      <p class="funnel__key funnel__hide-short">У застосунку ConsultantLM відповіді всіх фахівців зібрані в одному місці.</p>
+    </section>
+
+    <p class="sr-only" id="funnel-live" role="status" aria-live="polite"></p>
+  </div>
+
+  <!-- ── Панель действий: одна на все экраны, всегда у нижнего края (ADR-039) ── -->
+  <footer class="funnel__bottom" id="funnel-bar" aria-label="Дії кроку">
+    <div class="funnel__botin">
+      <p class="funnel__note" id="funnel-note">Безкоштовно · 1–2 хвилини · Без зобов’язань</p>
+      <div class="funnel__row">
+        <button class="btn btn--ghost funnel__back" type="button" id="funnel-back" data-nav="back" aria-label="Назад" hidden>
+          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+          <span class="funnel__back-text" aria-hidden="true">Назад</span>
+        </button>
+        <button class="btn btn--ghost funnel__skip" type="button" id="funnel-skip" data-nav="skip" hidden>Пропустити</button>
+        <button class="btn btn--primary funnel__next" type="submit" form="start" id="funnel-next" data-ds-event="quiz_start">
+          <span class="btn__label"><span class="funnel__lbl--full" data-lbl-full>Далі</span><span class="funnel__lbl--short" data-lbl-short></span></span>
+          <span class="btn__spinner" aria-hidden="true"></span>
+        </button>
+        <a class="btn btn--primary funnel__next" id="funnel-link" href="https://consultantlm.com/app?src=quiz-dynamic" rel="noopener" data-ds-event="quiz_result_view" hidden>Відкрити застосунок</a>
+      </div>
+      <div class="funnel__row" id="funnel-altrow" hidden>
+        <button class="btn btn--outline btn--block funnel__alt" type="button" id="funnel-alt" data-nav="leave">Так, вийти</button>
+      </div>
+    </div>
+  </footer>
+
+</section>
+</main>
+
+<script>
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ДИНАМИЧЕСКИЙ КВИЗ «Підбір юриста» (голосовое ТЗ 18.09.2026; ADR-040; оболочка — ADR-039)
+   · маршрут строится по ответам: FLOW[id].next(answers) — «питання підставляється під відповідь»
+   · «Ні» и «×» → экран возражений (exit) → bye; «Не впевнений(-на)» → своя ветка (worry)
+   · назад — по следу (trail); из резюме можно вернуться к любому шагу и продолжить с того же места
+   · экран = #id в URL (аналитика по шагам) · состояние — только в памяти: повторный вход — сначала
+   · UTM / источник — с первого экрана до лида · события — dataLayer + CustomEvent «ds:quiz», quiz_id: dynamic
+   ═══════════════════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+  var root = document.getElementById('funnel');
+  if (!root) return;
+  var APP_URL = 'https://consultantlm.com/app?src=quiz-dynamic';
+
+  /* ── данные-заглушки (фикстуры 11-datamodel.md §11; в продукте — база сайта) ── */
+  var CATEGORIES = [
+    ['family', 'Сім’я', 'i-family'], ['military', 'Військові питання', 'i-shield-alert'], ['auto', 'Авто та ДТП', 'i-car'],
+    ['business', 'Бізнес', 'i-briefcase'], ['criminal', 'Кримінал', 'i-scale'], ['debt', 'Борги та кредити', 'i-coins'],
+    ['property', 'Нерухомість і спадщина', 'i-home'], ['labor', 'Праця', 'i-users'], ['migration', 'Міграція', 'i-globe'],
+    ['other', 'Інше', 'i-dots']
+  ];
+  var TOPICS = {
+    family:    [['divorce', 'Розлучення'], ['alimony', 'Аліменти'], ['property', 'Поділ майна'], ['custody', 'Місце проживання дитини'], ['other', 'Інше в сімейних питаннях']],
+    military:  [['summons', 'Повістка або мобілізація'], ['fine', 'Штраф ТЦК'], ['deferment', 'Відстрочка чи бронювання'], ['payments', 'Виплати військовим'], ['other', 'Інше у військових питаннях']],
+    auto:      [['accident', 'ДТП'], ['license', 'Позбавлення прав'], ['insurance', 'Страхова не платить'], ['fine', 'Штраф або постанова'], ['other', 'Інше щодо авто']],
+    business:  [['contract', 'Договір або контрагент'], ['registration', 'Реєстрація чи зміни в компанії'], ['tax', 'Податкова перевірка'], ['dispute', 'Спір з партнером'], ['other', 'Інше в бізнесі']],
+    criminal:  [['suspect', 'Підозра або обвинувачення'], ['search', 'Обшук чи затримання'], ['victim', 'Я потерпілий(-а)'], ['witness', 'Викликають свідком'], ['other', 'Інше у кримінальній справі']],
+    debt:      [['collectors', 'Колектори або МФО'], ['bank', 'Кредит у банку'], ['enforcement', 'Виконавче провадження'], ['owed', 'Мені винні гроші'], ['other', 'Інше щодо боргів']],
+    property:  [['inheritance', 'Спадщина'], ['deal', 'Купівля або продаж'], ['rent', 'Оренда'], ['neighbors', 'Сусіди або ОСББ'], ['other', 'Інше щодо нерухомості']],
+    labor:     [['dismissal', 'Звільнення'], ['salary', 'Невиплата зарплати'], ['contract', 'Трудовий договір'], ['injury', 'Травма на роботі'], ['other', 'Інше щодо роботи']],
+    migration: [['residence', 'Посвідка на проживання'], ['citizenship', 'Громадянство'], ['visa', 'Візи та виїзд'], ['deportation', 'Загроза видворення'], ['other', 'Інше з міграції']]
+  };
+  /* прізвище, ім’я, професія, ініціали, статус, місто, рівень, бал «зі 100», напрями — лише дозволені поля (11-datamodel §2) */
+  var PEOPLE = [
+    ['Ковальчук', 'Олександр', 'Юрист', 'КО', 'online', 'Київ', 'PREMIUM', '75,8', ['family', 'property', 'debt']],
+    ['Тарасенко', 'Марія', 'Адвокат', 'ТМ', 'online', 'Львів', 'PRO', '82,4', ['criminal', 'military', 'auto']],
+    ['Мар’яненко', 'Дар’я', 'Юрист', 'МД', 'online', 'Дніпро', 'PRO', '71,2', ['labor', 'business', 'family']],
+    ['Гнатюк', 'Ольга', 'Юрист', 'ГО', 'offline', 'Одеса', 'START', '64,9', ['migration', 'property', 'business']],
+    ['Савченко', 'Ігор', 'Адвокат', 'СІ', 'online', 'Харків', 'PREMIUM', '79,3', ['debt', 'auto', 'labor']],
+    ['Литвин', 'Андрій', 'Юрист', 'ЛА', 'online', 'Київ', 'PRO', '68,7', ['military', 'criminal', 'migration']]
+  ];
+
+  /* ── FLOW: экраны и переходы. kind: single (радио-карточки), text, form, info, exit, end.
+        static — разметка в HTML; остальные генерируются. next — id или функция от ответов. ── */
+  var FLOW = {
+    start: { kind: 'single', static: true, name: 'need', /* разметка в HTML: единственный заголовок первого уровня */
+      next: function (a) { return a.start === 'no' ? 'exit' : a.start === 'unsure' ? 'worry' : 'category'; },
+      bar: { label: 'Далі', event: 'quiz_start', back: false, note: 'Безкоштовно · 1–2 хвилини · Без зобов’язань' } },
+    worry: { kind: 'single', name: 'worry', title: 'Що вас турбує?',
+      hint: 'Оберіть найближче — юрист підкаже, чи потрібна допомога. Це безкоштовно.',
+      options: [
+        ['document', 'Отримав(-ла) документ або лист', 'Повістка, позов, претензія, постанова', 'i-file'],
+        ['conflict', 'Конфлікт, який не вирішується', 'Роботодавець, банк, сусіди, партнер', 'i-users'],
+        ['plan', 'Планую важливий крок', 'Угода, спадщина, бізнес, переїзд', 'i-briefcase'],
+        ['rights', 'Хочу зрозуміти свої права', 'Просто розібратися в ситуації', 'i-book']
+      ],
+      next: 'category' },
+    category: { kind: 'single', name: 'category', grid: true, title: 'В чому потрібна допомога?',
+      hint: 'Оберіть напрям — наступне запитання підлаштується під нього.',
+      options: CATEGORIES.map(function (c) { return [c[0], c[1], '', c[2]]; }),
+      next: function (a) { return a.category === 'other' ? 'describe' : 'topic'; } },
+    topic: { kind: 'single', name: 'topic', title: 'Уточніть ситуацію.',
+      hintOf: function (a) { return catName(a.category) + ': оберіть найближче.'; },
+      optionsOf: function (a) { return (TOPICS[a.category] || []).map(function (t) { return [t[0], t[1], '', null]; }); },
+      next: function (a) { return a.topic === 'other' ? 'describe' : 'stage'; } },
+    describe: { kind: 'text', name: 'describe', static: true, next: 'stage' },
+    stage: { kind: 'single', name: 'stage', title: 'На якому етапі справа?',
+      hint: 'Від цього залежить, який фахівець і формат роботи підійдуть.',
+      options: [
+        ['thinking', 'Тільки обмірковую', 'Хочу підготуватися заздалегідь', 'i-eye'],
+        ['documents', 'Є документи або листи', 'Договір, претензія, повістка, постанова', 'i-file'],
+        ['court', 'Справа вже в суді', 'Є позов, засідання або ухвала', 'i-scale'],
+        ['decision', 'Є рішення — треба діяти', 'Оскарження, виконання, стягнення', 'i-shield']
+      ],
+      next: 'urgency' },
+    urgency: { kind: 'single', name: 'urgency', title: 'Як терміново потрібна допомога?',
+      hint: 'Терміновим запитам показуємо фахівців, які онлайн зараз.',
+      options: [
+        ['today', 'Сьогодні', 'Є строк або подія найближчими годинами', 'i-bolt'],
+        ['week', 'Цього тижня', 'Хочу вирішити найближчими днями', 'i-clock'],
+        ['month', 'Протягом місяця', 'Час є, але питання важливе', 'i-calendar'],
+        ['later', 'Поки збираю інформацію', 'Без конкретних строків', 'i-book']
+      ],
+      next: 'price' },
+    price: { kind: 'single', name: 'price', static: true, next: 'channel', bar: { label: 'Далі', note: 'Перша консультація безкоштовна' } },
+    channel: { kind: 'single', name: 'channel', title: 'Як вам зручніше зв’язатися?',
+      hint: 'Фахівець напише або зателефонує лише обраним способом.', hintShort: true,
+      options: [
+        ['call', 'Дзвінок', 'Передзвонимо у зручний час', 'i-phone-call'],
+        ['telegram', 'Telegram', 'Напишемо на ваш номер', 'i-message'],
+        ['viber', 'Viber', 'Напишемо на ваш номер', 'i-message'],
+        ['whatsapp', 'WhatsApp', 'Напишемо на ваш номер', 'i-message'],
+        ['email', 'E-mail', 'Надішлемо підбір на пошту', 'i-mail']
+      ],
+      next: function (a) { return a.channel === 'call' && a.urgency !== 'today' ? 'calltime' : 'match'; } },
+    calltime: { kind: 'single', name: 'calltime', title: 'Коли зручно прийняти дзвінок?',
+      hint: 'Дзвонимо лише в обраний проміжок.',
+      options: [
+        ['asap', 'Якнайшвидше', 'У робочий час 9:00–20:00', 'i-bolt'],
+        ['evening', 'Сьогодні після 18:00', 'До 20:00', 'i-clock'],
+        ['tomorrow', 'Завтра зранку', '9:00–12:00', 'i-calendar'],
+        ['any', 'Будь-коли в робочий час', 'Оберу, коли зателефонують', 'i-check']
+      ],
+      next: 'match' },
+    match: { kind: 'info', static: true, next: 'contacts', bar: { label: 'Отримати підбір', short: 'Отримати' } },
+    contacts: { kind: 'form', static: true, name: 'contacts', next: 'thanks',
+      bar: { label: 'Надіслати запит', short: 'Надіслати', event: 'quiz_contact_submit' } },
+    thanks: { kind: 'end', static: true, bar: { link: true, back: false, alt: { label: 'Пройти квіз ще раз', nav: 'restart' },
+      note: 'Відкриється App Store або Google Play залежно від пристрою. Увійдіть за номером, який ви вказали.' } },
+    exit: { kind: 'exit', static: true, bar: { label: 'Повернутися до квізу', short: 'Повернутися', alt: { label: 'Так, вийти', nav: 'leave' } } },
+    bye: { kind: 'end', static: true, bar: { link: { href: 'https://consultant.net.ua/', label: 'На головну' }, back: false, alt: { label: 'Пройти квіз спочатку', nav: 'restart' } } }
+  };
+  var QUESTION = { single: true, text: true, form: true };
+
+  var state = { answers: {}, labels: {}, trail: [], editing: false, exitFrom: null, lead: null, attribution: {} };
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  var timers = [];
+  /* модальность ввода: после мыши/касания фокус уходит на main без кольца, с клавиатуры — на заголовок с кольцом */
+  var modality = 'pointer';
+  addEventListener('pointerdown', function () { modality = 'pointer'; }, true);
+  addEventListener('keydown', function (e) { if (e.key === 'Tab' || e.key === 'Enter' || e.key === ' ' || e.key.indexOf('Arrow') === 0) modality = 'keyboard'; }, true);
+
+  /* ── служебное ── */
+  var $ = function (sel, ctx) { return (ctx || document).querySelector(sel); };
+  var $$ = function (sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); };
+  var live = $('#funnel-live'), exitBtn = $('#funnel-exit');
+  var bar = { back: $('#funnel-back'), skip: $('#funnel-skip'), next: $('#funnel-next'), link: $('#funnel-link'),
+    altrow: $('#funnel-altrow'), alt: $('#funnel-alt'), note: $('#funnel-note'),
+    full: $('[data-lbl-full]'), short: $('[data-lbl-short]') };
+  function later(fn, ms) { var t = setTimeout(fn, reduce.matches ? Math.min(ms, 80) : ms); timers.push(t); return t; }
+  function clearTimers() { timers.forEach(clearTimeout); timers = []; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function catName(id) { var c = CATEGORIES.filter(function (x) { return x[0] === id; })[0]; return c ? c[1] : 'Ваша ситуація'; }
+  function track(ev, extra) {
+    var d = { event: ev, quiz_id: 'dynamic', quiz_branch: state.answers.start || 'yes', quiz_lead: state.lead ? state.lead.lead_id : null };
+    if (extra) for (var k in extra) d[k] = extra[k];
+    for (var a in state.attribution) d[a] = state.attribution[a];
+    (window.dataLayer = window.dataLayer || []).push(d);
+    document.dispatchEvent(new CustomEvent('ds:quiz', { detail: d }));
+  }
+  function say(text) { if (live) { live.textContent = ''; setTimeout(function () { live.textContent = text; }, 40); } }
+  function setBusy(btn, on) { if (!btn) return; btn.setAttribute('aria-busy', on ? 'true' : 'false'); btn.disabled = !!on; }
+  function showError(box, err, on, focusEl) {
+    if (box) box.setAttribute('data-invalid', on ? 'true' : 'false');
+    if (err) err.hidden = !on;
+    if (on && focusEl) focusEl.focus();
+  }
+
+  /* атрибуция — с первого экрана до лида */
+  (function () {
+    var p = new URLSearchParams(location.search);
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'source', 'campaign', 'creative', 'landing', 'ref'].forEach(function (k) {
+      if (p.get(k)) state.attribution[k] = p.get(k);
+    });
+    if (document.referrer) state.attribution.referrer = document.referrer;
+    state.attribution.entry_url = location.href.split('#')[0];
+    state.attribution.entered_at = new Date().toISOString();
+  })();
+
+  /* ── генерация экранов-вопросов из FLOW ── */
+  function optionHTML(name, o, grid) {
+    var icon = '', note = '';
+    if (o[3] && grid) icon = '<svg class="funnel__tile-icon" aria-hidden="true"><use href="#' + o[3] + '"></use></svg>';
+    else if (o[3]) icon = '<span class="funnel__opt-icon" aria-hidden="true"><svg class="icon"><use href="#' + o[3] + '"></use></svg></span>';
+    if (o[2] && !grid) note = '<span class="q-option__note">' + esc(o[2]) + '</span>';
+    return '<label class="q-option">' +
+      '<input class="q-option__input" type="radio" name="' + esc(name) + '" value="' + esc(o[0]) + '" data-label="' + esc(o[1]) + '">' +
+      (grid ? '' : icon) +
+      '<span class="q-option__label">' + (grid ? icon : '') + esc(o[1]) + note + '</span></label>';
+  }
+  function optionsHTML(f, a) {
+    var opts = f.optionsOf ? f.optionsOf(a) : f.options;
+    return opts.map(function (o) { return optionHTML(f.name, o, f.grid); }).join('');
+  }
+  function screenHTML(id, f) {
+    var H = f.h1 ? 'h1' : 'h2', titleId = f.h1 ? 'quiz-title' : id + '-title';
+    return '<form class="funnel__screen" id="' + id + '" data-screen="' + id + '" aria-labelledby="' + titleId + '" novalidate hidden>' +
+      '<div class="funnel__head">' +
+        '<' + H + ' class="funnel__title' + (f.h1 ? ' funnel__title--hero' : '') + '" id="' + titleId + '" tabindex="-1">' + esc(f.title) + '</' + H + '>' +
+        '<p class="funnel__hint funnel__hint--sm' + (f.hintShort ? ' funnel__hide-short' : '') + '" data-hint>' + esc(f.hint || '') + '</p>' +
+      '</div>' +
+      '<fieldset class="funnel__options' + (f.grid ? ' funnel__options--grid' : '') + '" id="' + id + '-options" aria-describedby="' + id + '-err">' +
+        '<legend class="sr-only">Оберіть один варіант</legend>' + (f.optionsOf ? '' : optionsHTML(f, state.answers)) +
+      '</fieldset>' +
+      '<p class="funnel__error" id="' + id + '-err" role="alert" hidden>Оберіть один варіант, щоб продовжити</p>' +
+    '</form>';
+  }
+  (function () {
+    var html = '';
+    for (var id in FLOW) if (FLOW[id].kind === 'single' && !FLOW[id].static) html += screenHTML(id, FLOW[id]);
+    $('#exit').insertAdjacentHTML('beforebegin', html); /* после статичного start */
+  })();
+  var topicKey = null;
+  function fillOptions(el, f) {
+    var key = state.answers.category || '';
+    if (topicKey === key) return;
+    var fs = $('fieldset', el);
+    $$('label', fs).forEach(function (l) { l.remove(); });
+    fs.insertAdjacentHTML('beforeend', optionsHTML(f, state.answers));
+    topicKey = key;
+    var v = state.answers[el.dataset.screen];
+    if (v) { var r = $('input[value="' + v + '"]', fs); if (r) r.checked = true; }
+  }
+
+  /* ── маршрут по ответам; неотвеченному — ветка по умолчанию («так», без уточнений) ── */
+  function nextOf(id, a) { var n = FLOW[id].next; return typeof n === 'function' ? n(a) : n; }
+  function route(a) {
+    var ids = [], id = 'start', guard = 0;
+    while (id && FLOW[id] && guard++ < 24) {
+      ids.push(id);
+      if (id === 'exit' || id === 'bye' || id === 'thanks') break;
+      id = nextOf(id, a);
+    }
+    return ids;
+  }
+  function answered(id) {
+    var f = FLOW[id];
+    if (f.kind === 'single') return state.answers[id] != null;
+    if (f.kind === 'text') return state.answers.describe != null;
+    return false;
+  }
+  function stepsOf(a) { return route(a).filter(function (id) { return QUESTION[FLOW[id].kind]; }); }
+
+  /* ── доступность экрана по состоянию (повторный вход — сначала) ── */
+  function allowed(id) {
+    if (!FLOW[id]) return false;
+    if (id === 'start' || id === 'exit' || id === 'bye') return true;
+    if (id === 'thanks') return !!state.lead;
+    if (state.trail.indexOf(id) !== -1) return true;
+    var r = route(state.answers), i = r.indexOf(id);
+    if (i === -1) return false;
+    for (var k = 0; k < i; k++) { var q = r[k]; if (QUESTION[FLOW[q].kind] && q !== 'contacts' && !answered(q)) return false; }
+    return true;
+  }
+
+  /* ── прогресс в верхней панели: доля маршрута, «Крок N із M» пересчитывается по ответам ── */
+  var progress = $('#funnel-progress'), bars = $('#funnel-bars'), where = $('#funnel-where');
+  function updateProgress(id) {
+    var isQ = QUESTION[FLOW[id].kind] && id !== 'exit';
+    progress.hidden = !isQ; where.hidden = !isQ;
+    if (!isQ) return;
+    var steps = stepsOf(state.answers), n = steps.indexOf(id) + 1, m = steps.length;
+    if (n < 1) { n = Math.min(state.trail.length + 1, m); }
+    var pct = Math.round(n / m * 100);
+    bars.style.setProperty('--progress-value', String(n / m));
+    bars.setAttribute('aria-valuenow', String(pct));
+    bars.setAttribute('aria-valuetext', 'Крок ' + n + ' із ' + m);
+    where.textContent = 'Крок ' + n + ' із ' + m;
+    return [n, m];
+  }
+
+  /* ── нижняя панель действий ── */
+  function renderBar(id) {
+    var f = FLOW[id], c = f.bar || {};
+    var isForm = QUESTION[f.kind] || f.kind === 'exit';
+    bar.back.hidden = c.back === false;
+    bar.skip.hidden = true;
+    bar.note.hidden = !c.note; bar.note.textContent = c.note || '';
+    bar.altrow.hidden = !c.alt;
+    if (c.alt) { bar.alt.textContent = c.alt.label; bar.alt.dataset.nav = c.alt.nav; }
+    if (c.link) {
+      bar.next.hidden = true; bar.link.hidden = false;
+      if (typeof c.link === 'object') { bar.link.href = c.link.href; bar.link.textContent = c.link.label; bar.link.removeAttribute('rel'); }
+      else { bar.link.href = APP_URL; bar.link.textContent = 'Відкрити застосунок'; bar.link.rel = 'noopener'; }
+      return;
+    }
+    bar.link.hidden = true; bar.next.hidden = false;
+    var label = c.label || 'Далі', short = c.short || '';
+    if (id === 'describe') label = 'Далі';
+    bar.full.textContent = label; bar.short.textContent = short;
+    bar.next.dataset.hasShort = short ? 'true' : 'false';
+    if (isForm) { bar.next.type = 'submit'; bar.next.setAttribute('form', id); delete bar.next.dataset.nav; }
+    else { bar.next.type = 'button'; bar.next.removeAttribute('form'); bar.next.dataset.nav = 'next'; }
+    bar.next.setAttribute('data-ds-event', c.event || (isForm ? 'quiz_step_complete' : 'quiz_step_view'));
+    setBusy(bar.next, false);
+  }
+
+  /* ── показ экрана ── */
+  var current = null;
+  function render(id, dir, initial) {
+    clearTimers();
+    var f = FLOW[id];
+    $$('.funnel__screen', root).forEach(function (s) { if (s.dataset.screen !== id) { s.hidden = true; s.removeAttribute('data-anim'); } });
+    var el = $('#' + id);
+    el.hidden = false;
+    el.setAttribute('data-anim', dir === 'back' ? 'back' : 'forward');
+    root.dataset.step = id; root.dataset.branch = state.answers.start || 'yes'; document.body.classList.toggle('is-dark', id === 'thanks');
+    if (f.optionsOf) fillOptions(el, f);
+    if (f.hintOf) $('[data-hint]', el).textContent = f.hintOf(state.answers);
+    var nm = updateProgress(id);
+    renderBar(id);
+    exitBtn.hidden = (id === 'exit' || id === 'bye' || id === 'thanks');
+    if (ENTER[id]) ENTER[id](el, dir);
+    window.scrollTo(0, 0);
+    var title = $('.funnel__title', el);
+    if (!initial) setTimeout(function () { (modality === 'keyboard' && title ? title : $('#main')).focus({ preventScroll: true }); }, 60);
+    say((nm ? 'Крок ' + nm[0] + ' із ' + nm[1] + '. ' : '') + (title ? title.textContent.trim() : ''));
+    if (current !== id) {
+      track('quiz_step_view', { quiz_step: id, quiz_step_index: nm ? nm[0] : null, quiz_step_total: nm ? nm[1] : null });
+      if (state.trail[state.trail.length - 1] !== id) state.trail.push(id);
+    }
+    current = id;
+  }
+  function targetFromHash() {
+    var h = (location.hash || '#start').replace('#', '');
+    return FLOW[h] ? h : 'start';
+  }
+  var pendingDir = 'forward';
+  function go(id, dir) {
+    dir = dir || (state.trail.indexOf(id) !== -1 && id !== current ? 'back' : 'forward');
+    if (dir === 'back') { var i = state.trail.indexOf(id); if (i !== -1) state.trail.length = i; }
+    if (('#' + id) === location.hash) { render(id, dir); return; }
+    pendingDir = dir;
+    location.hash = id;
+  }
+  addEventListener('hashchange', function () {
+    var id = targetFromHash();
+    if (!allowed(id)) { history.replaceState(null, '', '#start'); id = 'start'; }
+    var dir = pendingDir || 'forward';
+    pendingDir = null;
+    render(id, dir);
+  });
+
+  /* ── ответы: запись, инвалидация зависимых, переход по маршруту ── */
+  function setAnswer(id, value, label) {
+    var a = state.answers, prev = a[id];
+    a[id] = value; state.labels[id] = label;
+    if (id === 'start' && value !== 'unsure') { delete a.worry; delete state.labels.worry; }
+    if (id === 'category' && prev !== value) { delete a.topic; delete state.labels.topic; if (value !== 'other' && prev === 'other') { delete a.describe; } }
+    if (id === 'topic' && prev !== value && prev === 'other') { delete a.describe; }
+    if (id === 'channel' && value !== 'call') { delete a.calltime; delete state.labels.calltime; }
+    if (id === 'urgency' && value === 'today') { delete a.calltime; delete state.labels.calltime; }
+  }
+  function advance(from) {
+    var next = nextOf(from, state.answers);
+    if (next === 'exit') { state.exitFrom = from; track('quiz_exit_intent', { quiz_step: from, reason: 'answer_no' }); go('exit'); return; }
+    if (state.editing) {
+      var guard = 0;
+      while (next && FLOW[next] && QUESTION[FLOW[next].kind] && next !== 'contacts' && answered(next) && guard++ < 12) next = nextOf(next, state.answers);
+      if (!next || next === 'match' || next === 'contacts' || !QUESTION[FLOW[next].kind]) { state.editing = false; next = 'match'; }
+    }
+    go(next);
+  }
+  function resetAll() {
+    state.answers = {}; state.labels = {}; state.trail = []; state.editing = false; state.exitFrom = null; state.lead = null;
+    $$('form', root).forEach(function (f) { f.reset(); });
+    $$('[data-invalid]', root).forEach(function (n) { n.removeAttribute('data-invalid'); });
+    $$('.funnel__error, .q-error', root).forEach(function (n) { n.hidden = true; });
+    $('#exit-reply').hidden = true;
+    topicKey = null;
+    track('quiz_restart');
+  }
+
+  /* ── отправка форм-экранов ── */
+  root.addEventListener('submit', function (e) {
+    var form = e.target;
+    if (!form.classList.contains('funnel__screen')) return;
+    e.preventDefault();
+    var id = form.dataset.screen, f = FLOW[id];
+    if (f.kind === 'single') {
+      var fs = $('fieldset', form), err = $('.funnel__error', form), r = $('input:checked', fs);
+      if (!r) { showError(fs, err, true, $('input', fs)); say(err.textContent.trim()); return; }
+      showError(fs, err, false);
+      setAnswer(id, r.value, r.dataset.label || r.value);
+      var extra = { quiz_step: id }; extra['quiz_' + f.name] = r.value;
+      track('quiz_step_complete', extra);
+      if (id === 'start' && r.value !== 'no') track('quiz_start', { quiz_need: r.value });
+      advance(id);
+      return;
+    }
+    if (f.kind === 'text') {
+      var text = $('#story').value.trim();
+      setAnswer('describe', text, text ? text : 'Без опису');
+      track('quiz_step_complete', { quiz_step: id, has_text: !!text, text_length: text.length });
+      advance(id);
+      return;
+    }
+    if (f.kind === 'exit') { stay(); return; }
+    if (id === 'contacts') { submitContacts(form); }
+  });
+  root.addEventListener('change', function (e) {
+    var fs = e.target.closest('fieldset.funnel__options');
+    if (fs) { var form = fs.closest('form'); showError(fs, $('.funnel__error', form), false); }
+  });
+
+  /* ── навигация панели и резюме ── */
+  function stay() {
+    track('quiz_exit_stay', { objection: state.answers.objection || null });
+    var to = state.exitFrom || 'start';
+    if (to === 'start' && state.answers.start === 'no') { delete state.answers.start; delete state.labels.start; var r = $('#start input:checked'); if (r) r.checked = false; }
+    state.exitFrom = null;
+    go(to, 'back');
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-nav], [data-goto]');
+    if (!btn || !root.contains(btn)) return;
+    if (btn.dataset.goto) {
+      e.preventDefault();
+      state.editing = true;
+      track('quiz_edit', { quiz_step: btn.dataset.goto });
+      go(btn.dataset.goto, 'back');
+      return;
+    }
+    var nav = btn.dataset.nav;
+    e.preventDefault();
+    if (nav === 'back') {
+      if (current === 'exit') { stay(); return; }
+      if (state.trail.length > 1) { state.trail.pop(); go(state.trail[state.trail.length - 1], 'back'); }
+      else go('start', 'back');
+    }
+    else if (nav === 'next') { go(nextOf(current, state.answers)); }
+    else if (nav === 'exit') { if (current === 'exit') return; state.exitFrom = current; track('quiz_exit_intent', { quiz_step: current, reason: 'close' }); go('exit'); }
+    else if (nav === 'leave') { track('quiz_exit_leave', { objection: state.answers.objection || null }); go('bye'); }
+    else if (nav === 'restart') { resetAll(); go('start', 'back'); }
+  });
+
+  /* exit · возражение → ответ */
+  (function () {
+    var fs = $('#exit-options'), reply = $('#exit-reply'), text = $('[data-exit-reply]');
+    fs.addEventListener('change', function (e) {
+      var r = e.target;
+      state.answers.objection = r.value;
+      text.textContent = r.dataset.reply;
+      reply.hidden = false;
+      track('quiz_objection', { objection: r.value });
+    });
+  })();
+
+  /* describe · счётчик */
+  (function () {
+    var ta = $('#story'), count = $('.q-textarea__count-num', $('#describe'));
+    ta.addEventListener('input', function () { count.textContent = String(ta.value.length); });
+  })();
+
+  /* contacts · валидация и лид */
+  var phone = $('#phone'), phoneBox = $('#phone-box'), perr = $('#phone-err');
+  var email = $('#email'), emailField = $('#email-field'), eerr = $('#email-err'), consent = $('#consent'), cerr = $('#consent-err');
+  phone.addEventListener('input', function () {
+    var d = phone.value.replace(/\D/g, '').replace(/^380/, '').slice(0, 9);
+    phone.value = d.replace(/(\d{2})(\d{0,3})(\d{0,2})(\d{0,2})/, function (m, a, b, c, e) { return [a, b, c, e].filter(Boolean).join(' '); });
+    if (d.length === 9) { phoneBox.dataset.state = 'success'; perr.hidden = true; } else phoneBox.removeAttribute('data-state');
+  });
+  consent.addEventListener('change', function () { if (consent.checked) cerr.hidden = true; });
+  function submitContacts(form) {
+    var digits = phone.value.replace(/\D/g, ''), ok = true, first = null, needEmail = state.answers.channel === 'email';
+    if (digits.length !== 9) { phoneBox.dataset.state = 'invalid'; phone.setAttribute('aria-invalid', 'true'); perr.hidden = false; ok = false; first = first || phone; }
+    else { phoneBox.dataset.state = 'success'; phone.removeAttribute('aria-invalid'); perr.hidden = true; }
+    if (needEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) { email.setAttribute('aria-invalid', 'true'); eerr.hidden = false; ok = false; first = first || email; }
+    else { email.removeAttribute('aria-invalid'); eerr.hidden = true; }
+    if (!consent.checked) { consent.setAttribute('aria-invalid', 'true'); cerr.hidden = false; ok = false; first = first || consent; }
+    else { consent.removeAttribute('aria-invalid'); cerr.hidden = true; }
+    if (!ok) { first.focus(); say('Перевірте поля форми'); return; }
+    var a = state.answers;
+    setBusy(bar.next, true);
+    later(function () {
+      var id = '2026-' + String(Math.floor(10000 + Math.random() * 89999));
+      state.lead = { lead_id: id, quiz_id: 'dynamic', phone: '+380' + digits, name: $('#name').value.trim() || null, email: needEmail ? email.value.trim() : null,
+        need: a.start, worry: a.worry || null, practice_area: a.category, topic: a.topic || null, case_description: a.describe || null,
+        stage: a.stage, urgency: a.urgency, price_range: a.price, preferred_channel: a.channel, call_time: a.calltime || null,
+        matched: matched().map(function (p) { return p[0] + ' ' + p[1]; }), attribution: state.attribution, created_at: new Date().toISOString() };
+      try { console.info('[quiz-dynamic] lead created', state.lead); } catch (err) {}
+      track('quiz_contact_submit', { quiz_step: 'contacts', preferred_channel: a.channel, price_range: a.price, urgency: a.urgency });
+      setBusy(bar.next, false);
+      go('thanks');
+    }, 900);
+  }
+
+  /* ── подбор фахівців по ответам ── */
+  function matched() {
+    var a = state.answers, cat = a.category;
+    var pool = PEOPLE.filter(function (p) { return p[8].indexOf(cat) !== -1; });
+    if (a.urgency === 'today') pool = pool.filter(function (p) { return p[4] === 'online'; }).concat(pool.filter(function (p) { return p[4] !== 'online'; }));
+    PEOPLE.forEach(function (p) { if (pool.indexOf(p) === -1) pool.push(p); });
+    return pool.slice(0, 3);
+  }
+  var CHANNEL_TEXT = {
+    call: ['Зателефонує', 'зателефонує вам', 'На цей номер зателефонує фахівець.'],
+    telegram: ['Напише в Telegram', 'напише вам у Telegram', 'Фахівець напише вам у Telegram на цей номер.'],
+    viber: ['Напише у Viber', 'напише вам у Viber', 'Фахівець напише вам у Viber на цей номер.'],
+    whatsapp: ['Напише у WhatsApp', 'напише вам у WhatsApp', 'Фахівець напише вам у WhatsApp на цей номер.'],
+    email: ['Надішле на e-mail', 'надішле відповідь на e-mail', 'Підбір і відповідь надійдуть на e-mail. Номер потрібен для входу в застосунок.']
+  };
+  var WHEN = { asap: 'у робочий час 9:00–20:00, якнайшвидше', evening: 'сьогодні після 18:00', tomorrow: 'завтра з 9:00 до 12:00', any: 'будь-коли в робочий час' };
+  var ENTER = {
+    match: function (el) {
+      var a = state.answers, L = state.labels, rows = [];
+      if (a.worry) rows.push(['Що турбує', L.worry, 'worry']);
+      rows.push(['Напрям', L.category, 'category']);
+      if (a.topic) rows.push(['Ситуація', L.topic, 'topic']);
+      if (a.describe != null) rows.push(['Опис', a.describe ? (a.describe.length > 48 ? a.describe.slice(0, 48) + '…' : a.describe) : 'Без опису', 'describe']);
+      rows.push(['Етап', L.stage, 'stage'], ['Терміновість', L.urgency, 'urgency'], ['Вартість', L.price, 'price'],
+        ['Зв’язок', L.channel + (L.calltime ? ' · ' + L.calltime : ''), 'channel']);
+      $('#match-summary').innerHTML = rows.map(function (r) {
+        return '<button class="chip dq__chip" type="button" role="listitem" data-goto="' + r[2] + '" aria-label="' + esc(r[0]) + ': ' + esc(r[1] || '—') + '. Змінити">' +
+          '<span class="q-chip__label">' + esc(r[1] || '—') + '</span><svg class="icon" aria-hidden="true"><use href="#i-pen"></use></svg></button>';
+      }).join('');
+      var people = matched();
+      $('#match-people').innerHTML = people.map(function (p, i) {
+        return '<div class="dq__person' + (i === 2 ? ' funnel__hide-short' : '') + '" role="listitem">' +
+          '<span class="avatar" data-status="' + p[4] + '" aria-hidden="true">' + esc(p[3]) + '<span class="dot q-online' + (p[4] === 'offline' ? ' q-online--off' : '') + '"></span></span>' +
+          '<span><span class="dq__person-name">' + esc(p[0]) + ' ' + esc(p[1]) + '</span>' +
+          '<span class="dq__person-meta">' + esc(p[2]) + ' · ' + esc(p[5]) + ' · ' + esc(p[6]) + (p[4] === 'online' ? ' · онлайн' : '') + '</span></span>' +
+          '<span class="q-score" aria-label="Рейтинг ' + esc(p[7]) + ' зі 100"><span class="q-score__value num">' + esc(p[7]) + '</span><span class="q-score__scale">зі 100</span></span></div>';
+      }).join('');
+      var words = ['одного фахівця', 'двох фахівців', 'трьох фахівців'];
+      $('[data-match-title]').textContent = 'Підібрали ' + words[people.length - 1] + ': ' + catName(a.category).toLowerCase() + '.';
+      track('quiz_match_view', { practice_area: a.category, matched: people.length });
+    },
+    contacts: function () {
+      var a = state.answers, t = CHANNEL_TEXT[a.channel] || CHANNEL_TEXT.telegram;
+      emailField.hidden = a.channel !== 'email';
+      $('[data-contacts-hint]').textContent = t[2];
+    },
+    thanks: function () {
+      var a = state.answers, lead = state.lead || {}, t = CHANNEL_TEXT[a.channel] || CHANNEL_TEXT.telegram, p = matched()[0];
+      $('[data-thanks-title]').textContent = lead.name ? 'Дякуємо, ' + lead.name + '. Запит надіслано.' : 'Дякуємо, запит надіслано.';
+      $('[data-thanks-hint]').textContent = 'Фахівець ' + t[1] + (a.urgency === 'today' ? ' — запит позначено як терміновий.' : '.');
+      $('[data-thanks-who]').textContent = p[0] + ' ' + p[1] + ' вивчає ваші відповіді';
+      $('[data-thanks-when]').textContent = a.channel === 'call' ? 'Дзвінок ' + (WHEN[a.calltime] || 'якнайшвидше у робочий час') : (t[0] + ' у робочий час 9:00–20:00');
+      track('quiz_result_view', { preferred_channel: a.channel });
+    }
+  };
+
+  /* ── старт: всегда с первого экрана, если состояние не подтверждает шаг ── */
+  var start = targetFromHash();
+  if (!allowed(start)) { start = 'start'; if (location.hash && location.hash !== '#start') history.replaceState(null, '', '#start'); }
+  render(start, 'forward', true);
+})();
+</script>
+
+</body>
+</html>
