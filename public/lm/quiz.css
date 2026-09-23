@@ -247,11 +247,12 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 .funnel__flow-chip .funnel__lbl--full { display: none; }
 .funnel__flow-chip .funnel__lbl--short { display: inline; }
 .funnel__flow-arrow { width: 14px; height: 14px; margin-left: 10px; color: var(--color-gray-600); }
-.funnel__device { position: relative; z-index: 1; margin-top: 12px; padding: 5px 5px 0; background: var(--color-text); border-radius: 30px 30px 0 0; min-width: 0; }
+.funnel__device { position: relative; z-index: 1; margin-top: 6px; padding: 5px 5px 0; background: var(--color-text); border-radius: 30px 30px 0 0; min-width: 0; }
 .funnel__device .appframe { border-radius: 25px 25px 0 0; overflow: hidden; }
 @media (max-width: 599px) { .funnel__screen--entry .funnel__title--hero { font-size: 26px; line-height: 1.1; } }
+@media (min-height: 700px) { .funnel__stage { height: min(34vh, 300px); } }
 @media (min-width: 600px) {
-  .funnel__stage { height: 260px; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); padding: 24px 24px 0; column-gap: 24px; }
+  .funnel__stage { height: 320px; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); padding: 24px 24px 0; column-gap: 24px; }
   .funnel__flow { gap: 4px; }
   .funnel__flow-chip { height: 32px; font-size: 13px; }
   .funnel__flow-chip .funnel__lbl--full { display: inline; }
@@ -437,3 +438,44 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 .dq__thanks-card { display: grid; grid-template-columns: auto 1fr; align-items: center; column-gap: 12px; row-gap: 2px; padding: 12px 14px; border-radius: var(--radius-card-dark); background: var(--color-dark-surface); }
 .dq__thanks-card .funnel__icon { grid-row: 1 / span 2; }
 .dq__thanks-card p { margin: 0; }
+
+/* ---------- S0 · the real product screen inside the phone ----------
+   A picture of the app's question page («Question #14237»), rebuilt from the product demo
+   (ask-question-demo.html): the app's own colours, radii and type are reproduced on purpose,
+   like a screenshot would be. Scales with the phone width: 1em = phone width / 20 (design width 320). */
+.funnel__stage { container-type: inline-size; }
+.funnel__device--real { padding: 1.6cqw 1.6cqw 0; background: #0a0a0c; border-radius: clamp(24px, 9cqw, 44px) clamp(24px, 9cqw, 44px) 0 0; }
+.funnel__device--real .app { container-type: inline-size; position: relative; overflow: hidden; border-radius: clamp(20px, 7.4cqw, 36px) clamp(20px, 7.4cqw, 36px) 0 0; background: #f4f6f8; color: #12161b; }
+.app__screen { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: calc(100cqw / 20); line-height: 1.4; text-align: left; }
+.app__notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 34%; height: 1.4em; background: #000; border-radius: 0 0 .9em .9em; z-index: 2; }
+.app__status { display: flex; align-items: center; justify-content: space-between; height: 2.4em; padding: .55em 1.25em 0; background: #fff; }
+.app__time { font-size: .875em; font-weight: 700; letter-spacing: .01em; color: #000; }
+.app__sig { display: flex; align-items: center; gap: .4em; }
+.app__sig svg { display: block; height: .75em; width: auto; fill: #000; }
+.app__bar { display: flex; align-items: center; justify-content: center; height: 2.75em; background: #fff; border-bottom: 1px solid #ececec; font-size: 1em; font-weight: 700; color: #0b0d12; }
+.app__scroll { display: grid; gap: .875em; padding: .875em 1em 0; }
+.app__card { padding: .875em; background: #fff; border: 1px solid #ececec; border-radius: .75em; }
+.app__date { display: flex; align-items: center; gap: .45em; margin-bottom: .55em; color: #9aa3ad; font-size: .75em; }
+.app__date svg { width: 1.25em; height: 1.25em; fill: none; stroke: #1397d6; stroke-width: 2; stroke-linecap: round; }
+.app__qt { font-size: 1em; font-weight: 600; line-height: 1.35; color: #12161b; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.app__body { margin-top: .55em; font-size: .8125em; line-height: 1.5; color: #aeb4bb; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+@media (min-height: 700px) { .app__qt { -webkit-line-clamp: 3; } .app__body { -webkit-line-clamp: 2; } }
+.app__ans { overflow: hidden; border-radius: .75em; background: #eef5fb; }
+.app__hd { display: flex; align-items: center; justify-content: space-between; padding: .375em .75em; background: #dcebf7; }
+.app__base { font-size: .75em; font-weight: 700; color: #e08a2e; }
+.app__score { display: flex; align-items: center; gap: .3em; font-size: .8125em; font-weight: 700; color: #12161b; }
+.app__score svg { width: 1.15em; height: 1.15em; fill: #f5c518; }
+.app__who { position: relative; display: flex; align-items: center; gap: .75em; padding: .875em .875em .625em; }
+.app__av { flex: none; width: 3.5em; height: 3.5em; overflow: hidden; border-radius: 50%; border: .19em solid #1397d6; background: #000; }
+.app__av img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.app__name b { display: block; font-size: 1em; font-weight: 700; color: #12161b; }
+.app__name i { display: block; font-size: .8125em; font-style: italic; color: #9aa3ad; }
+.app__loc { display: flex; align-items: center; gap: .3em; margin-top: .25em; font-size: .8125em; color: #12161b; }
+.app__loc svg { width: 1em; height: 1em; fill: none; stroke: #4a5560; stroke-width: 2; }
+.app__i { position: absolute; right: .875em; top: .875em; display: grid; place-items: center; width: 1.375em; height: 1.375em; border-radius: .3125em; background: #1397d6; color: #fff; font-size: 1em; }
+.app__i span { font-size: .75em; font-weight: 700; font-style: italic; }
+.app__ts { padding: 0 .875em; font-size: .75em; color: #7b828a; }
+.app__txt { padding: .5em .875em .75em; font-size: .8125em; line-height: 1.5; color: #3a4149; }
+.app__btns { display: grid; gap: .625em; padding: 0 .875em .875em; }
+.app__btn { display: flex; align-items: center; justify-content: center; gap: .5em; height: 2.875em; border-radius: 1.5em; background: #1397d6; color: #fff; font-size: .9375em; font-weight: 700; }
+.app__btn svg { width: 1.2em; height: 1.2em; fill: #fff; }
