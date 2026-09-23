@@ -111,17 +111,13 @@
     <!-- ── S0 · Вхід у квіз — сцена «як це працює» + текст (правка владельца 21.09: формат скрина 3, интерфейс — как в застосунку) ── -->
     <section class="funnel__screen funnel__screen--entry" id="s0" data-screen="s0" aria-labelledby="quiz-title">
       <div class="funnel__stage" role="img" aria-label="This is how it works in the app: your question, the AI assistant’s answer and answers from several lawyers">
-        <ol class="funnel__flow">
-          <li><span class="funnel__flow-chip funnel__flow-chip--ai"><svg class="icon" aria-hidden="true"><use href="#i-bolt"></use></svg><span class="funnel__lbl--full">ConsultantLM AI</span><span class="funnel__lbl--short">AI assistant</span></span><svg class="icon funnel__flow-arrow" aria-hidden="true"><use href="#i-arrow-down"></use></svg></li>
-          <li><span class="funnel__flow-chip">Lawyer A</span><svg class="icon funnel__flow-arrow" aria-hidden="true"><use href="#i-arrow-down"></use></svg></li>
-          <li><span class="funnel__flow-chip">Lawyer B</span><svg class="icon funnel__flow-arrow" aria-hidden="true"><use href="#i-arrow-down"></use></svg></li>
-          <li><span class="funnel__flow-chip">Lawyer C</span></li>
-        </ol>
         <div class="funnel__device funnel__device--real">
-          <picture class="funnel__device-screen">
-            <source srcset="../assets/app/question-en.webp" type="image/webp">
-            <img src="../assets/app/question-en.jpg" alt="" width="844" height="1912" decoding="async" fetchpriority="high">
-          </picture>
+          <div class="funnel__device-screen">
+            <video class="funnel__device-video" id="s0-video" autoplay muted loop playsinline preload="metadata" poster="../assets/app/flow-en.jpg" width="720" height="1638" aria-hidden="true" tabindex="-1">
+              <source src="../assets/app/flow-en.webm" type="video/webm">
+              <source src="../assets/app/flow-en.mp4" type="video/mp4">
+            </video>
+          </div>
         </div>
       </div>
       <div class="funnel__head">
@@ -139,6 +135,7 @@
     <section class="funnel__screen" id="s1" data-screen="s1" aria-labelledby="s1-title" hidden>
       <div class="funnel__head">
         <h2 class="funnel__title" id="s1-title" tabindex="-1">We don’t just show a list of specialists.</h2>
+        <p class="funnel__hint funnel__hint--sm funnel__hide-short">ConsultantLM matches specialists to your specific situation.</p>
       </div>
       <div class="funnel__card funnel__card--stat funnel__reveal" data-s1-step="1">
         <div class="funnel__stat">
@@ -194,7 +191,7 @@
       </label>
     </form>
 
-    <!-- ── S3 · Proof №2 — фахівці у вашій локації ───────────────────────── -->
+    <!-- ── S3 · Proof №2 — фахівці у Вашій локації ───────────────────────── -->
     <section class="funnel__screen" id="s3" data-screen="s3" aria-labelledby="s3-title" hidden>
       <div class="funnel__head">
         <h2 class="funnel__title" id="s3-title" tabindex="-1" aria-live="polite" data-s3-title>Matching specialists…</h2>
@@ -845,6 +842,7 @@
     updateProgress(id);
     renderBar(id);
     if (ENTER[id]) ENTER[id](el, dir);
+    var v0 = $('#s0-video'); if (v0) { if (id === 's0' && !reduce.matches) { var pr = v0.play(); if (pr && pr.catch) pr.catch(function () {}); } else { v0.pause(); } }
     window.scrollTo(0, 0);
     var title = $('.funnel__title', el);
     if (!initial) setTimeout(function () { (modality === 'keyboard' && title ? title : $('#main')).focus({ preventScroll: true }); }, 60);
