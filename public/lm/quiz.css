@@ -46,12 +46,12 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 .funnel__screen { display: flex; flex-direction: column; gap: 12px; flex: 1 1 auto; }
 .funnel__screen > * { margin: 0; }
 .funnel__head { display: flex; flex-direction: column; gap: 8px; }
-.funnel__title { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 26px; line-height: 1.15; letter-spacing: -0.02em; text-wrap: pretty; }
-.funnel__title--hero { font-size: 30px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
-.funnel__hint { margin: 0; font-size: 17px; line-height: 1.5; color: var(--color-gray-600); text-wrap: pretty; }
-.funnel__hint--sm { font-size: 15px; }
+.funnel__title { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(22px, 5.6vw + 4px, 32px); line-height: 1.15; letter-spacing: -0.02em; text-wrap: pretty; overflow-wrap: anywhere; }
+.funnel__title--hero { font-size: clamp(24px, 6vw + 4px, 44px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
+.funnel__hint { margin: 0; font-size: clamp(15px, 3.6vw + 2px, 17px); line-height: 1.5; color: var(--color-gray-600); text-wrap: pretty; }
+.funnel__hint--sm { font-size: clamp(14px, 3.4vw + 1px, 15px); }
 .is-dark .funnel__hint, .is-dark .caption { color: var(--color-gray-400); }
-.funnel__key { margin: 0; font-size: 17px; font-weight: 600; text-wrap: balance; }
+.funnel__key { margin: 0; font-size: clamp(15px, 3.6vw + 2px, 17px); font-weight: 600; text-wrap: balance; }
 .funnel__spacer { flex: 1 1 auto; }
 .funnel__center { justify-content: center; align-items: center; text-align: center; }
 .funnel__screen--tight { gap: 8px; }
@@ -63,14 +63,14 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 .is-dark .funnel__bottom { background: var(--color-black); border-color: var(--color-dark-border); }
 .funnel__botin { display: flex; flex-direction: column; gap: 8px; width: min(600px, 100% - 2 * var(--gutter)); margin-inline: auto; padding: 12px 0 calc(12px + env(safe-area-inset-bottom, 0px)); }
 .funnel__row { display: flex; align-items: center; gap: 8px; }
-.funnel__next { flex: 1 1 auto; min-width: 0; padding: 0 20px; overflow: hidden; text-overflow: ellipsis; }
+.funnel__next { flex: 1 1 auto; min-width: 0; padding: 0 clamp(14px, 4vw, 24px); overflow: hidden; text-overflow: ellipsis; }
 .funnel__next .btn__label { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .funnel__back { flex: none; width: 56px; padding: 0; gap: 6px; }
 .funnel__back-text { display: none; }
 .funnel__skip { flex: none; }
-.funnel__note { margin: 0; text-align: center; font-size: 13px; line-height: 1.5; color: var(--color-gray-600); text-wrap: pretty; }
+.funnel__note { margin: 0; text-align: center; font-size: clamp(12px, 3vw + 1px, 13px); line-height: 1.5; color: var(--color-gray-600); text-wrap: pretty; }
 .is-dark .funnel__note { color: var(--color-gray-400); }
-.btn--ghost { height: 56px; padding: 0 12px; background: transparent; color: var(--color-text); font-size: 15px; }
+.btn--ghost { height: 56px; padding: 0 12px; background: transparent; color: var(--color-text); font-size: clamp(14px, 3.4vw + 1px, 15px); }
 .btn--ghost:hover { background: var(--color-gray-100); }
 .is-dark .btn--ghost { color: var(--color-white); }
 .is-dark .btn--ghost:hover { background: var(--color-dark-surface); }
@@ -85,6 +85,23 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 @media (max-width: 599px) {
   .funnel__next[data-has-short="true"] .funnel__lbl--full { display: none; }
   .funnel__next[data-has-short="true"] .funnel__lbl--short { display: inline; }
+}
+@media (max-width: 359px) {
+  .funnel__grid, .funnel__options--grid, .q-options--grid { grid-template-columns: 1fr; }
+  .funnel__brand img { height: 24px; }
+  .funnel__topin { height: 52px; }
+}
+@media (max-height: 37.5em) {
+  .funnel__body { padding: 8px 0 16px; }
+  .funnel__screen { gap: 6px; }
+  .funnel__head { gap: 4px; }
+  .funnel__botin { gap: 6px; padding-top: 8px; }
+  .btn--primary.funnel__next, .funnel__back, .btn--ghost { height: 52px; }
+  .q-option { min-height: 48px; padding: 8px 14px; }
+  .q-option__icon { width: 32px; height: 32px; }
+  .funnel__stage { height: 160px; }
+  .funnel__screen:not(.funnel__screen--entry) .funnel__head .funnel__hint { display: none; }
+  .q-disclaimer { font-size: 12px; }
 }
 @media (min-width: 600px) {
   .funnel__back { width: auto; padding: 0 20px 0 16px; }
@@ -109,13 +126,13 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 .q-option__input { position: absolute; width: 1px; height: 1px; margin: 0; opacity: 0; pointer-events: none; }
 .q-option__icon { display: grid; place-items: center; flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; background: var(--color-gray-100); color: var(--color-text); }
 .q-option__icon .icon { width: 20px; height: 20px; }
-.q-option__label { display: flex; flex-direction: column; gap: 1px; min-width: 0; font-size: 16px; line-height: 1.3; font-weight: 500; }
-.q-option__note { display: block; font-size: 12px; line-height: 1.4; font-weight: 400; color: var(--color-gray-600); }
+.q-option__label { display: flex; flex-direction: column; gap: 1px; min-width: 0; font-size: clamp(15px, 3.5vw + 2px, 17px); line-height: 1.3; font-weight: 500; overflow-wrap: anywhere; }
+.q-option__note { display: block; font-size: clamp(12px, 3vw + 1px, 13px); line-height: 1.4; font-weight: 400; color: var(--color-gray-600); }
 /* grid tiles (categories): compact, soft radius, icon inline */
 .funnel__grid { display: grid; gap: 8px; margin: 0; padding: 0; border: 0; min-width: 0; }
 .funnel__grid, .funnel__options--grid, .q-options--grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .q-option--tile, .funnel__options--grid .q-option { min-height: 48px; padding: 8px 12px; border-radius: var(--radius-input-soft); gap: 8px; }
-.q-option--tile .q-option__label, .funnel__options--grid .q-option__label { flex-direction: row; align-items: center; gap: 8px; font-size: 15px; line-height: 1.3; }
+.q-option--tile .q-option__label, .funnel__options--grid .q-option__label { flex-direction: row; align-items: center; gap: 8px; font-size: clamp(14px, 3.4vw + 1px, 16px); line-height: 1.3; }
 .q-option--tile::after, .funnel__options--grid .q-option::after { width: 20px; height: 20px; background-size: 12px; }
 .funnel__tile-icon { width: 20px; height: 20px; flex-shrink: 0; }
 .funnel__options--grid .q-option__note { display: none; }
@@ -188,6 +205,9 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 .q-online { position: absolute; right: -1px; bottom: -1px; box-shadow: 0 0 0 2px var(--color-white); }
 .q-online--off { background: var(--color-gray-400); }
 .avatar { position: relative; }
+.avatar--photo { overflow: visible; background: var(--color-gray-100); }
+.avatar--photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.funnel__avatars .avatar--photo { overflow: visible; }
 
 /* ---------- cards & lists ---------- */
 .q-card, .funnel__card { display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: var(--radius-card); background: var(--color-gray-100); }
@@ -204,7 +224,7 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 .funnel__avatars { display: flex; margin: 0; padding: 0; list-style: none; }
 .funnel__avatars li + li { margin-left: -10px; }
 .funnel__avatars .avatar { width: 40px; height: 40px; font-size: 14px; box-shadow: 0 0 0 2px var(--color-gray-100); background: var(--color-white); }
-.funnel__points { display: flex; flex-direction: column; gap: 10px; margin: 0; padding: 0; list-style: none; font-size: 16px; font-weight: 500; }
+.funnel__points { display: flex; flex-direction: column; gap: 10px; margin: 0; padding: 0; list-style: none; font-size: clamp(15px, 3.6vw + 2px, 17px); font-weight: 500; }
 .funnel__points li { display: flex; align-items: flex-start; gap: 10px; }
 .funnel__points-mark { display: grid; place-items: center; flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: var(--color-text); color: var(--color-white); }
 .funnel__points-mark .icon { width: 14px; height: 14px; }
@@ -215,6 +235,7 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 @keyframes q-in-fwd { from { opacity: 0; transform: translateX(12px); } }
 @keyframes q-in-back { from { opacity: 0; transform: translateX(-12px); } }
 @media (prefers-reduced-motion: reduce) { .funnel__screen[data-anim], .funnel__reveal { animation: none; transition: none; } .funnel__reveal { opacity: 1; transform: none; } }
+@media (max-height: 56.1875em) { .funnel .funnel__hide-mid { display: none !important; } }
 @media (max-height: 43.6875em) {
   .funnel .funnel__hide-short { display: none !important; }
   .funnel__screen { gap: 8px; }
@@ -250,9 +271,19 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 .funnel__device { position: relative; z-index: 1; margin-top: 6px; padding: 5px 5px 0; background: var(--color-text); border-radius: 30px 30px 0 0; min-width: 0; }
 .funnel__device .appframe { border-radius: 25px 25px 0 0; overflow: hidden; }
 @media (max-width: 599px) { .funnel__screen--entry .funnel__title--hero { font-size: 26px; line-height: 1.1; } }
-@media (min-height: 700px) { .funnel__stage { height: min(34vh, 300px); } }
+/* на высоких телефонах сцена занимает свободную высоту, телефон в ней виден целиком (aspect 9:19.5) */
+@media (min-height: 760px) {
+  .funnel__screen--entry { flex: 1 1 auto; }
+  .funnel__stage { flex: 1 1 0; min-height: 300px; height: auto; grid-template-columns: minmax(0, 1fr) auto; align-items: center; padding: 12px; }
+  .funnel__flow { align-self: center; }
+  .funnel__device--real { margin-top: 0; align-self: center; justify-self: end; width: min(66cqw, calc((100cqh - 24px) * 9 / 19.5)); aspect-ratio: 9 / 19.5; padding: 2.4% 2.4% 2.4%; border-radius: clamp(24px, 12cqw, 44px); }
+  .funnel__device--real .app { height: 100%; border-radius: clamp(18px, 9.6cqw, 36px); }
+  .funnel__device--real .app__screen { height: 100%; display: flex; flex-direction: column; }
+  .funnel__device--real .app__scroll { flex: 1 1 auto; min-height: 0; overflow: hidden; }
+  .app__tabbar { display: flex; }
+}
 @media (min-width: 600px) {
-  .funnel__stage { height: 300px; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); padding: 24px 24px 0; column-gap: 24px; }
+  .funnel__stage { height: 300px; min-height: 300px; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); padding: 24px 24px 0; column-gap: 24px; }
   .funnel__flow { gap: 4px; }
   .funnel__flow-chip { height: 32px; font-size: 13px; }
   .funnel__flow-chip .funnel__lbl--full { display: inline; }
@@ -443,7 +474,7 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
    A picture of the app's question page («Question #14237»), rebuilt from the product demo
    (ask-question-demo.html): the app's own colours, radii and type are reproduced on purpose,
    like a screenshot would be. Scales with the phone width: 1em = phone width / 20 (design width 320). */
-.funnel__stage { container-type: inline-size; }
+.funnel__stage { container-type: size; }
 .funnel__device--real { padding: 1.6cqw 1.6cqw 0; background: #0a0a0c; border-radius: clamp(24px, 9cqw, 44px) clamp(24px, 9cqw, 44px) 0 0; }
 .funnel__device--real .app { container-type: inline-size; position: relative; overflow: hidden; border-radius: clamp(20px, 7.4cqw, 36px) clamp(20px, 7.4cqw, 36px) 0 0; background: #f4f6f8; color: #12161b; }
 .app__screen { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: calc(100cqw / 20); line-height: 1.4; text-align: left; }
@@ -479,3 +510,11 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 .app__btns { display: grid; gap: .625em; padding: 0 .875em .875em; }
 .app__btn { display: flex; align-items: center; justify-content: center; gap: .5em; height: 2.875em; border-radius: 1.5em; background: #1397d6; color: #fff; font-size: .9375em; font-weight: 700; }
 .app__btn svg { width: 1.2em; height: 1.2em; fill: #fff; }
+.app__tabbar { display: none; flex: none; align-items: center; justify-content: space-around; height: 4.4em; padding: .5em 1em 1.2em; background: #fff; border-top: 1px solid #ececec; }
+.app__tab { position: relative; display: grid; place-items: center; width: 2.2em; height: 2.2em; }
+.app__tab svg { width: 1.6em; height: 1.6em; fill: #c3c7cc; }
+.app__tab--on svg { fill: #1397d6; }
+.app__tab--logo { width: 3em; height: 3em; margin-top: -1.2em; }
+.app__tab--logo img { width: 3em; height: auto; display: block; }
+.app__badge { position: absolute; top: -.2em; right: -.5em; min-width: 1.1em; height: 1.1em; padding: 0 .25em; border-radius: .6em; background: #e8433a; color: #fff; font-size: .65em; font-weight: 700; line-height: 1.1em; text-align: center; box-shadow: 0 0 0 .12em #fff; }
+.app__home { position: absolute; left: 50%; bottom: .35em; width: 34%; height: .3em; border-radius: .2em; background: #0b0d12; transform: translateX(-50%); }

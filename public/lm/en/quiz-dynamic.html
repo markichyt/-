@@ -1,35 +1,45 @@
 <!doctype html>
-<html lang="uk">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Підбір юриста за 1–2 хвилини — динамічний квіз | CONSULTANT</title>
-<meta name="description" content="Дайте відповіді на кілька запитань — квіз підлаштовується під вашу ситуацію і підбирає юриста: напрям, терміновість, комфортний діапазон вартості та зручний спосіб зв’язку.">
+<title>Find a lawyer in 1–2 minutes — dynamic quiz | CONSULTANT</title>
+<meta name="description" content="Answer a few questions — the quiz adapts to your situation and matches a lawyer: area of law, urgency, a comfortable price range and a convenient way to get in touch.">
 <!-- Макет: данные, фахівці и кейсы — заглушки до подключения базы сайта; индексирование запрещено явно -->
 <meta name="robots" content="noindex,nofollow">
-<link rel="canonical" href="https://consultant.net.ua/pidbir-yurysta">
+<link rel="canonical" href="https://consultantlm.com/find-a-lawyer">
 <link rel="alternate" hreflang="uk" href="https://consultant.net.ua/pidbir-yurysta">
 <link rel="alternate" hreflang="en" href="https://consultantlm.com/find-a-lawyer">
 <link rel="alternate" hreflang="x-default" href="https://consultantlm.com/find-a-lawyer">
 <meta name="theme-color" content="#FFFFFF">
-<link rel="icon" href="design-system/assets/logo/logo-icon.svg" type="image/svg+xml">
+<link rel="icon" href="../design-system/assets/logo/logo-icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Onest:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="design-system/tokens.css">
-<link rel="stylesheet" href="design-system/styles.css">
-<link rel="stylesheet" href="quiz.css">
-<script>window.QUIZ_LOCALE = { lang: 'uk', country: 'UA',
-  phone: { code: '+380', digits: 9, groups: [2, 3, 2, 2] },
-  plural: function (n) { var m10 = n % 10, m100 = n % 100; return (m10 === 1 && m100 !== 11) ? 0 : (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) ? 1 : 2; },
-  step: function (n, m) { return 'Крок ' + n + ' із ' + m; },
-  money: function (n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '\u00a0') + '\u00a0₴'; },
-  calcBase: 40000 };</script>
-<!-- CONSULTANT design system v1.0 · динамический квиз «Підбір юриста» (голосовое ТЗ 18.09) · локаль uk · build.py -->
+<link rel="stylesheet" href="../design-system/tokens.css">
+<link rel="stylesheet" href="../design-system/styles.css">
+<link rel="stylesheet" href="../quiz.css">
+<script>window.QUIZ_LOCALE = { lang: 'en', country: 'US',
+  phone: { code: '+1', digits: 10, groups: [3, 3, 4] },
+  plural: function (n) { return n === 1 ? 0 : 1; },
+  step: function (n, m) { return 'Step ' + n + ' of ' + m; },
+  money: function (n) { return '$' + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); },
+  calcBase: 3000,
+  settlements: [['New York', 'NY', 1000], ['Los Angeles', 'CA', 640], ['Chicago', 'IL', 480], ['Houston', 'TX', 380], ['Phoenix', 'AZ', 210],
+    ['Philadelphia', 'PA', 190], ['San Antonio', 'TX', 120], ['San Diego', 'CA', 170], ['Dallas', 'TX', 160], ['Austin', 'TX', 150],
+    ['Jacksonville', 'FL', 140], ['Fort Worth', 'TX', 90], ['Columbus', 'OH', 130], ['Charlotte', 'NC', 120], ['Indianapolis', 'IN', 110],
+    ['Seattle', 'WA', 130], ['Denver', 'CO', 110], ['Boston', 'MA', 140], ['Nashville', 'TN', 90], ['Detroit', 'MI', 85],
+    ['Portland', 'OR', 80], ['Las Vegas', 'NV', 70], ['Memphis', 'TN', 60], ['Baltimore', 'MD', 60], ['Milwaukee', 'WI', 45],
+    ['Miami', 'FL', 47], ['Miami Beach', 'FL', 12], ['Orlando', 'FL', 90], ['Tampa', 'FL', 85], ['Sacramento', 'CA', 60],
+    ['Atlanta', 'GA', 150], ['Kansas City', 'MO', 40], ['Omaha', 'NE', 26], ['Raleigh', 'NC', 41], ['Oakland', 'CA', 35],
+    ['Minneapolis', 'MN', 70], ['Tulsa', 'OK', 24], ['Arlington', 'TX', 20], ['New Orleans', 'LA', 30], ['Wichita', 'KS', 18],
+    ['Cleveland', 'OH', 32], ['Aurora', 'CO', 12], ['Anaheim', 'CA', 15], ['Honolulu', 'HI', 22], ['Key West', 'FL', 2], ['Naples', 'FL', 6], ['Boca Raton', 'FL', 4]],
+  regionTotal: { 'FL': 260, 'NY': 1000, 'CA': 900, 'TX': 700, 'CO': 120, 'OH': 160 } };</script>
+<!-- CONSULTANT design system v1.0 · динамический квиз «Підбір юриста» (голосовое ТЗ 18.09) · локаль en · build.py -->
 </head>
 <body class="funnel-page">
 
-<a class="q-skip-link" href="#main">Перейти до основного вмісту</a>
+<a class="q-skip-link" href="#main">Skip to main content</a>
 
 <!-- Спрайт иконок (§8.3.4): первый узел body, скрыт. Базовый набор — из quiz.html, ниже — добавленные для этого квиза -->
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
@@ -88,17 +98,17 @@
 
   <header class="funnel__top">
     <div class="funnel__topin">
-      <a class="funnel__brand" href="https://consultant.net.ua/" aria-label="Консультант — на головну">
-        <img class="funnel__brand-img--light" src="design-system/assets/logo/logo-on-light.svg" width="562" height="122" alt="" decoding="async">
-        <img class="funnel__brand-img--dark"  src="design-system/assets/logo/logo-on-dark.svg" width="562" height="122" alt="" decoding="async">
+      <a class="funnel__brand" href="https://consultant.net.ua/" aria-label="CONSULTANT — home">
+        <img class="funnel__brand-img--light" src="../design-system/assets/logo/logo-on-light.svg" width="562" height="122" alt="" decoding="async">
+        <img class="funnel__brand-img--dark"  src="../design-system/assets/logo/logo-on-dark.svg" width="562" height="122" alt="" decoding="async">
       </a>
-      <span class="funnel__step" id="funnel-where" hidden>Крок 1 із 8</span>
-      <button class="btn btn--icon funnel__close" type="button" id="funnel-exit" data-nav="exit" aria-label="Вийти з квізу">
+      <span class="funnel__step" id="funnel-where" hidden>Step 1 of 8</span>
+      <button class="btn btn--icon funnel__close" type="button" id="funnel-exit" data-nav="exit" aria-label="Exit the quiz">
         <svg class="icon" width="24" height="24" aria-hidden="true"><use href="#i-x"></use></svg>
       </button>
     </div>
     <div class="funnel__progress" id="funnel-progress" hidden>
-      <div class="progress" id="funnel-bars" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="Крок 1 із 8">
+      <div class="progress" id="funnel-bars" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="Step 1 of 8">
         <div class="progress__track"><div class="progress__fill"></div></div>
       </div>
     </div>
@@ -109,28 +119,28 @@
     <!-- ── start · Крок 1: квалификатор — «Так / Не впевнений(-на) / Ні» (голосовое ТЗ: «вам треба допомога?») ── -->
     <form class="funnel__screen" id="start" data-screen="start" aria-labelledby="quiz-title" novalidate>
       <div class="funnel__head">
-        <h1 class="funnel__title funnel__title--hero" id="quiz-title" tabindex="-1">Вам потрібна юридична допомога?</h1>
-        <p class="funnel__hint funnel__hint--sm" data-hint>Кілька запитань — і ми підберемо юриста під вашу ситуацію. Безкоштовно і без зобов’язань.</p>
+        <h1 class="funnel__title funnel__title--hero" id="quiz-title" tabindex="-1">Do you need legal help?</h1>
+        <p class="funnel__hint funnel__hint--sm" data-hint>A few questions and we match you with a lawyer for your situation. Free and with no obligation.</p>
       </div>
       <fieldset class="funnel__options" id="start-options" aria-describedby="start-err">
-        <legend class="sr-only">Оберіть один варіант</legend>
+        <legend class="sr-only">Pick one option</legend>
         <label class="q-option">
-          <input class="q-option__input" type="radio" name="need" value="yes" data-label="Так, потрібна">
+          <input class="q-option__input" type="radio" name="need" value="yes" data-label="Yes, I do">
           <span class="q-option__icon" aria-hidden="true"><svg class="icon"><use href="#i-check"></use></svg></span>
-          <span class="q-option__label">Так, потрібна<span class="q-option__note">Підберемо фахівця за 1–2 хвилини</span></span>
+          <span class="q-option__label">Yes, I do<span class="q-option__note">We match a specialist in 1–2 minutes</span></span>
         </label>
         <label class="q-option">
-          <input class="q-option__input" type="radio" name="need" value="unsure" data-label="Поки не впевнений(-на)">
+          <input class="q-option__input" type="radio" name="need" value="unsure" data-label="Not sure yet">
           <span class="q-option__icon" aria-hidden="true"><svg class="icon"><use href="#i-question"></use></svg></span>
-          <span class="q-option__label">Поки не впевнений(-на)<span class="q-option__note">Допоможемо зрозуміти, чи потрібен юрист</span></span>
+          <span class="q-option__label">Not sure yet<span class="q-option__note">We help you figure out whether you need a lawyer</span></span>
         </label>
         <label class="q-option">
-          <input class="q-option__input" type="radio" name="need" value="no" data-label="Ні, просто дивлюся">
+          <input class="q-option__input" type="radio" name="need" value="no" data-label="No, just looking">
           <span class="q-option__icon" aria-hidden="true"><svg class="icon"><use href="#i-eye"></use></svg></span>
-          <span class="q-option__label">Ні, просто дивлюся<span class="q-option__note">Можна вийти або роздивитися платформу</span></span>
+          <span class="q-option__label">No, just looking<span class="q-option__note">You can leave or look around the platform</span></span>
         </label>
       </fieldset>
-      <p class="funnel__error" id="start-err" role="alert" hidden>Оберіть один варіант, щоб продовжити</p>
+      <p class="funnel__error" id="start-err" role="alert" hidden>Pick one option to continue</p>
     </form>
 
     <!-- Остальные экраны-вопросы (worry, category, topic, stage, urgency, channel, calltime) вставляются сюда скриптом из FLOW -->
@@ -138,52 +148,52 @@
     <!-- ── exit · «Ні» и «×»: заперечення → відповідь, два рівноправні дії ─── -->
     <form class="funnel__screen" id="exit" data-screen="exit" aria-labelledby="exit-title" novalidate hidden>
       <div class="funnel__head">
-        <h2 class="funnel__title" id="exit-title" tabindex="-1">Ви впевнені, що хочете вийти?</h2>
-        <p class="funnel__hint funnel__hint--sm funnel__hide-short">Підкажіть, що зупиняє — можливо, ми зможемо допомогти.</p>
+        <h2 class="funnel__title" id="exit-title" tabindex="-1">Are you sure you want to leave?</h2>
+        <p class="funnel__hint funnel__hint--sm funnel__hide-short">Tell us what is stopping you — maybe we can help.</p>
       </div>
       <fieldset class="dq__objections" id="exit-options">
-        <legend class="sr-only">Що вас зупиняє?</legend>
+        <legend class="sr-only">What is stopping you?</legend>
         <label class="q-option q-option--row">
-          <input class="q-option__input" type="radio" name="objection" value="cost" data-reply="Перша консультація безкоштовна. Вартість послуг видно заздалегідь — по етапах, до початку роботи.">
-          <span class="q-option__label">Боюся, що це дорого</span>
+          <input class="q-option__input" type="radio" name="objection" value="cost" data-reply="The first consultation is free. Service prices are visible in advance — by stage, before the work starts.">
+          <span class="q-option__label">I’m afraid it’s expensive</span>
         </label>
         <label class="q-option q-option--row">
-          <input class="q-option__input" type="radio" name="objection" value="trust" data-reply="Кожен фахівець на платформі перевірений. У профілі — рейтинг «N зі 100», відгуки клієнтів і досвід у схожих справах.">
-          <span class="q-option__label">Не знаю, чи можна довіряти</span>
+          <input class="q-option__input" type="radio" name="objection" value="trust" data-reply="Every specialist on the platform is verified. The profile shows a rating out of 100, client reviews and experience in similar cases.">
+          <span class="q-option__label">I’m not sure I can trust it</span>
         </label>
         <label class="q-option q-option--row">
-          <input class="q-option__input" type="radio" name="objection" value="time" data-reply="Це займе 1–2 хвилини. Питання можна поставити зараз, а відповідь фахівця прочитати, коли буде зручно.">
-          <span class="q-option__label">Немає часу зараз</span>
+          <input class="q-option__input" type="radio" name="objection" value="time" data-reply="It takes 1–2 minutes. You can ask now and read the specialist’s answer whenever it suits you.">
+          <span class="q-option__label">No time right now</span>
         </label>
         <label class="q-option q-option--row">
-          <input class="q-option__input" type="radio" name="objection" value="browse" data-reply="Каталог фахівців відкритий без реєстрації. Квіз лише допомагає звузити вибір до тих, хто підходить саме вам.">
-          <span class="q-option__label">Просто дивлюся</span>
+          <input class="q-option__input" type="radio" name="objection" value="browse" data-reply="The directory of specialists is open without registration. The quiz only narrows it down to those who fit you.">
+          <span class="q-option__label">Just looking</span>
         </label>
       </fieldset>
       <div class="dq__stay" id="exit-reply" role="status" aria-live="polite" hidden>
         <p class="funnel__key" data-exit-reply></p>
-        <p class="dq__lead funnel__hide-short">Продовжити можна з того ж місця — відповіді збережені до кінця сесії.</p>
+        <p class="dq__lead funnel__hide-short">You can continue from the same place — your answers are kept until the end of the session.</p>
       </div>
     </form>
 
     <!-- ── bye · вихід підтверджено ─────────────────────────────────────────── -->
     <section class="funnel__screen funnel__center" id="bye" data-screen="bye" aria-labelledby="bye-title" hidden>
       <span class="funnel__icon" aria-hidden="true"><svg class="icon"><use href="#i-heart"></use></svg></span>
-      <h2 class="funnel__title" id="bye-title" tabindex="-1">Дякуємо, що зазирнули.</h2>
-      <p class="funnel__hint">Якщо питання з’явиться — квіз тут, а фахівці працюють щодня. Перша консультація безкоштовна.</p>
+      <h2 class="funnel__title" id="bye-title" tabindex="-1">Thanks for stopping by.</h2>
+      <p class="funnel__hint">If a question comes up, the quiz is here and specialists work every day. The first consultation is free.</p>
     </section>
 
     <!-- ── describe · вільний опис (категорія «Інше» або за бажанням) ───────── -->
     <form class="funnel__screen" id="describe" data-screen="describe" aria-labelledby="describe-title" novalidate hidden>
       <div class="funnel__head">
-        <h2 class="funnel__title" id="describe-title" tabindex="-1">Опишіть коротко, що сталося.</h2>
-        <p class="funnel__hint funnel__hint--sm">Кількох речень достатньо, щоб підібрати профільного юриста. Деталі можна додати пізніше.</p>
+        <h2 class="funnel__title" id="describe-title" tabindex="-1">Briefly describe what happened.</h2>
+        <p class="funnel__hint funnel__hint--sm">A few sentences are enough to match a specialized lawyer. You can add details later.</p>
       </div>
       <div class="field funnel__field funnel__textarea">
-        <label class="field__label" for="story">Ситуація <span class="q-req">(необов’язково)</span></label>
+        <label class="field__label" for="story">Situation <span class="q-req">(optional)</span></label>
         <div class="q-textarea">
           <textarea class="input input--soft q-textarea__field" id="story" name="case_description" rows="4" maxlength="600"
-                    placeholder="Наприклад: сусід затопив квартиру, страхова відмовила у виплаті…"
+                    placeholder="For example: a neighbor flooded my apartment and the insurer refused to pay…"
                     aria-describedby="story-count"></textarea>
           <p class="q-textarea__count caption" id="story-count" aria-live="polite"><span class="q-textarea__count-num num">0</span> / 600</p>
         </div>
@@ -193,149 +203,149 @@
     <!-- ── price · комфортний діапазон вартості (голосове ТЗ 18.09; OQ-085) ─── -->
     <form class="funnel__screen" id="price" data-screen="price" aria-labelledby="price-title" novalidate hidden>
       <div class="funnel__head">
-        <h2 class="funnel__title" id="price-title" tabindex="-1">Який діапазон вартості вам комфортний?</h2>
-        <p class="funnel__hint funnel__hint--sm funnel__hide-short">Відповідь допоможе підібрати формат послуги — консультація безкоштовна в будь-якому разі.</p>
+        <h2 class="funnel__title" id="price-title" tabindex="-1">What price range is comfortable for you?</h2>
+        <p class="funnel__hint funnel__hint--sm funnel__hide-short">Your answer helps us pick the service format — the consultation is free either way.</p>
       </div>
       <fieldset class="funnel__options" id="price-options" aria-describedby="price-err"
                 data-gate-allow="G10 3.1: діапазон вартості послуги, який обирає клієнт у квізі (голосове ТЗ 18.09, ADR-040) — не ціна консультанта; ціни етапів показує послуга">
-        <legend class="sr-only">Оберіть один варіант</legend>
+        <legend class="sr-only">Pick one option</legend>
         <label class="q-option">
-          <input class="q-option__input" type="radio" name="price_range" value="free" data-label="Лише безкоштовна консультація">
-          <span class="q-option__label">Лише безкоштовна консультація<span class="q-option__note">Спершу хочу зрозуміти ситуацію</span></span>
+          <input class="q-option__input" type="radio" name="price_range" value="free" data-label="Only the free consultation">
+          <span class="q-option__label">Only the free consultation<span class="q-option__note">I want to understand the situation first</span></span>
         </label>
         <label class="q-option">
-          <input class="q-option__input" type="radio" name="price_range" value="low" data-label="До 2 000 ₴">
-          <span class="q-option__label"><span class="num">До 2&nbsp;000&nbsp;₴</span><span class="q-option__note">Консультація або один документ</span></span>
+          <input class="q-option__input" type="radio" name="price_range" value="low" data-label="Up to $150">
+          <span class="q-option__label"><span class="num">Up to $150</span><span class="q-option__note">A consultation or one document</span></span>
         </label>
         <label class="q-option">
-          <input class="q-option__input" type="radio" name="price_range" value="mid" data-label="2 000 – 10 000 ₴">
-          <span class="q-option__label"><span class="num">2&nbsp;000 – 10&nbsp;000&nbsp;₴</span><span class="q-option__note">Супровід окремого етапу</span></span>
+          <input class="q-option__input" type="radio" name="price_range" value="mid" data-label="$150 – $750">
+          <span class="q-option__label"><span class="num">$150 – $750</span><span class="q-option__note">Support for one stage</span></span>
         </label>
         <label class="q-option">
-          <input class="q-option__input" type="radio" name="price_range" value="high" data-label="Від 10 000 ₴">
-          <span class="q-option__label"><span class="num">Від 10&nbsp;000&nbsp;₴</span><span class="q-option__note">Ведення справи від початку до рішення</span></span>
+          <input class="q-option__input" type="radio" name="price_range" value="high" data-label="From $750">
+          <span class="q-option__label"><span class="num">From $750</span><span class="q-option__note">Handling the case from start to decision</span></span>
         </label>
         <label class="q-option">
-          <input class="q-option__input" type="radio" name="price_range" value="unknown" data-label="Ще не знаю">
-          <span class="q-option__label">Ще не знаю<span class="q-option__note">Покажемо варіанти з вартістю етапів</span></span>
+          <input class="q-option__input" type="radio" name="price_range" value="unknown" data-label="Not sure yet">
+          <span class="q-option__label">Not sure yet<span class="q-option__note">We will show options with stage prices</span></span>
         </label>
       </fieldset>
-      <p class="funnel__error" id="price-err" role="alert" hidden>Оберіть один варіант, щоб продовжити</p>
+      <p class="funnel__error" id="price-err" role="alert" hidden>Pick one option to continue</p>
     </form>
 
     <!-- ── match · підбір перед контактами (цінність до запиту даних, 07-pages A-06) ── -->
     <section class="funnel__screen" id="match" data-screen="match" aria-labelledby="match-title" hidden>
       <div class="funnel__head">
-        <h2 class="funnel__title" id="match-title" tabindex="-1" data-match-title>Підібрали фахівців під вашу ситуацію</h2>
-        <p class="funnel__hint funnel__hint--sm">Ваші відповіді — натисніть, щоб змінити будь-яку.</p>
+        <h2 class="funnel__title" id="match-title" tabindex="-1" data-match-title>We matched specialists to your situation</h2>
+        <p class="funnel__hint funnel__hint--sm">Your answers — tap any of them to change it.</p>
       </div>
-      <div class="dq__chips" id="match-summary" role="list" aria-label="Ваші відповіді"></div>
-      <div class="dq__people" id="match-people" role="list" aria-label="Підібрані фахівці"></div>
-      <p class="funnel__trigger funnel__hide-short"><svg class="icon" width="20" height="20" aria-hidden="true"><use href="#i-check"></use></svg>Перша консультація — безкоштовно. Далі ви самі обираєте, з ким працювати.</p>
+      <div class="dq__chips" id="match-summary" role="list" aria-label="Your answers"></div>
+      <div class="dq__people" id="match-people" role="list" aria-label="Matched specialists"></div>
+      <p class="funnel__trigger funnel__hide-short"><svg class="icon" width="20" height="20" aria-hidden="true"><use href="#i-check"></use></svg>The first consultation is free. Then you choose whom to work with.</p>
     </section>
 
     <!-- ── contacts · куди надіслати підбір ────────────────────────────────── -->
     <form class="funnel__screen funnel__screen--tight" id="contacts" data-screen="contacts" aria-labelledby="contacts-title" novalidate hidden data-ds-event="quiz_contact_submit">
       <div class="funnel__head">
-        <h2 class="funnel__title" id="contacts-title" tabindex="-1" data-contacts-title>Куди надіслати підбір?</h2>
-        <p class="funnel__hint funnel__hint--sm funnel__hide-short" data-contacts-hint>Фахівець напише вам у Telegram на цей номер.</p>
+        <h2 class="funnel__title" id="contacts-title" tabindex="-1" data-contacts-title>Where should we send the matches?</h2>
+        <p class="funnel__hint funnel__hint--sm funnel__hide-short" data-contacts-hint>The specialist will message you on Telegram at this number.</p>
       </div>
       <div class="funnel__form">
         <div class="field" id="phone-field">
           <label class="field__label" id="phone-label" for="phone">
-            Телефон <span class="q-req-star" aria-hidden="true">*</span>
-            <span class="q-req">(обов’язково)</span>
+            Phone <span class="q-req-star" aria-hidden="true">*</span>
+            <span class="q-req">(required)</span>
           </label>
           <div class="q-phone funnel__phone" id="phone-box" role="group" aria-labelledby="phone-label">
-            <span class="q-phone__country" aria-hidden="true"><span class="q-phone__code" data-locale-phone-code>+380</span></span>
+            <span class="q-phone__country" aria-hidden="true"><span class="q-phone__code" data-locale-phone-code>+1</span></span>
             <input class="q-phone__input" id="phone" name="phone" type="tel" inputmode="tel"
-                   autocomplete="tel-national" placeholder="67 123 45 67" data-locale-phone-placeholder required aria-describedby="phone-hint phone-err">
+                   autocomplete="tel-national" placeholder="305 555 0134" data-locale-phone-placeholder required aria-describedby="phone-hint phone-err">
           </div>
           <div class="field__msg">
-            <p class="caption sr-only" id="phone-hint">Формат: +380 67 123 45 67</p>
+            <p class="caption sr-only" id="phone-hint">Format: +1 305 555 0134</p>
             <p class="q-error" id="phone-err" role="alert" hidden>
               <svg class="q-error__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg>
-              Номер має бути у форматі +380 XX XXX XX XX
+              Enter the number as +1 XXX XXX XXXX
             </p>
           </div>
         </div>
         <div class="field" id="email-field" hidden>
           <label class="field__label" for="email">
             E-mail <span class="q-req-star" aria-hidden="true">*</span>
-            <span class="q-req">(обов’язково)</span>
+            <span class="q-req">(required)</span>
           </label>
           <input class="input input--soft" id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="imya@example.com" aria-describedby="email-err">
           <div class="field__msg">
             <p class="q-error" id="email-err" role="alert" hidden>
               <svg class="q-error__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg>
-              Введіть коректну адресу, наприклад imya@example.com
+              Enter a valid address, for example name@example.com
             </p>
           </div>
         </div>
         <details class="funnel__more" id="contacts-more">
-          <summary>Додати ім’я <span class="q-req">(необов’язково)</span><svg class="icon" width="20" height="20" aria-hidden="true"><use href="#i-chevron-down"></use></svg></summary>
+          <summary>Add name <span class="q-req">(optional)</span><svg class="icon" width="20" height="20" aria-hidden="true"><use href="#i-chevron-down"></use></svg></summary>
           <div class="field">
-            <label class="field__label" for="name">Ім’я</label>
-            <input class="input input--soft" id="name" name="name" type="text" autocomplete="given-name" placeholder="Олена" aria-describedby="name-hint">
-            <div class="field__msg"><p class="caption" id="name-hint">Так до вас звертатиметься фахівець</p></div>
+            <label class="field__label" for="name">Name</label>
+            <input class="input input--soft" id="name" name="name" type="text" autocomplete="given-name" placeholder="Emily" aria-describedby="name-hint">
+            <div class="field__msg"><p class="caption" id="name-hint">This is how the specialist will address you</p></div>
           </div>
         </details>
         <div class="field funnel__consent">
           <label class="q-check">
             <input class="q-option__input" type="checkbox" id="consent" name="consent" required aria-describedby="consent-err">
-            <span class="q-option__label funnel__hint--sm">Погоджуюсь з <a href="https://consultant.net.ua/pryvatnist">політикою конфіденційності</a><span class="sr-only"> (обов’язково)</span></span>
+            <span class="q-option__label funnel__hint--sm">I agree to the <a href="https://consultant.net.ua/pryvatnist">privacy policy</a><span class="sr-only"> (required)</span></span>
           </label>
           <div class="field__msg">
             <p class="q-error" id="consent-err" role="alert" hidden>
               <svg class="q-error__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg>
-              Щоб продовжити, підтвердіть згоду з політикою конфіденційності
+              To continue, confirm that you agree to the privacy policy
             </p>
           </div>
         </div>
       </div>
-      <p class="caption q-disclaimer funnel__hint--sm">Ваші дані бачить лише консультант, якого ви оберете. Ми не передаємо їх третім особам.</p>
+      <p class="caption q-disclaimer funnel__hint--sm">Only the consultant you choose sees your details. We do not share them with third parties.</p>
     </form>
 
     <!-- ── thanks · запит надіслано ─────────────────────────────────────────── -->
     <section class="funnel__screen" id="thanks" data-screen="thanks" aria-labelledby="thanks-title" data-ds-event="quiz_result_view" hidden>
       <div class="funnel__head">
-        <h2 class="funnel__title" id="thanks-title" tabindex="-1" data-thanks-title>Дякуємо, запит надіслано.</h2>
-        <p class="funnel__hint funnel__hint--sm" data-thanks-hint>Фахівець напише вам у Telegram.</p>
+        <h2 class="funnel__title" id="thanks-title" tabindex="-1" data-thanks-title>Thank you, your request has been sent.</h2>
+        <p class="funnel__hint funnel__hint--sm" data-thanks-hint>The specialist will message you on Telegram.</p>
       </div>
       <div class="dq__thanks-card">
         <span class="funnel__icon" aria-hidden="true"><svg class="icon"><use href="#i-check"></use></svg></span>
-        <p class="funnel__key" data-thanks-who>Ковальчук Олександр вивчає ваші відповіді</p>
-        <p class="dq__lead" data-thanks-when>Зв’яжеться у робочий час 9:00–20:00</p>
+        <p class="funnel__key" data-thanks-who>Basil Chochla is reviewing your answers</p>
+        <p class="dq__lead" data-thanks-when>Will get in touch during working hours, 9 AM–8 PM</p>
       </div>
-      <ol class="q-steps dq__next" aria-label="Що далі">
-        <li class="q-steps__item" data-state="done"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">Запит створено</p></div></li>
-        <li class="q-steps__item" data-state="current" aria-current="step"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">Фахівець готує відповідь</p></div></li>
-        <li class="q-steps__item" data-state="upcoming"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">Безкоштовна перша консультація</p></div></li>
+      <ol class="q-steps dq__next" aria-label="What’s next">
+        <li class="q-steps__item" data-state="done"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">Request created</p></div></li>
+        <li class="q-steps__item" data-state="current" aria-current="step"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">The specialist is preparing an answer</p></div></li>
+        <li class="q-steps__item" data-state="upcoming"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">Free first consultation</p></div></li>
       </ol>
-      <p class="funnel__key funnel__hide-short">У застосунку ConsultantLM відповіді всіх фахівців зібрані в одному місці.</p>
+      <p class="funnel__key funnel__hide-short">In the ConsultantLM app, all specialists’ answers are gathered in one place.</p>
     </section>
 
     <p class="sr-only" id="funnel-live" role="status" aria-live="polite"></p>
   </div>
 
   <!-- ── Панель действий: одна на все экраны, всегда у нижнего края (ADR-039) ── -->
-  <footer class="funnel__bottom" id="funnel-bar" aria-label="Дії кроку">
+  <footer class="funnel__bottom" id="funnel-bar" aria-label="Step actions">
     <div class="funnel__botin">
-      <p class="funnel__note" id="funnel-note">Безкоштовно · 1–2 хвилини · Без зобов’язань</p>
+      <p class="funnel__note" id="funnel-note">Free · 1–2 minutes · No obligation</p>
       <div class="funnel__row">
-        <button class="btn btn--ghost funnel__back" type="button" id="funnel-back" data-nav="back" aria-label="Назад" hidden>
+        <button class="btn btn--ghost funnel__back" type="button" id="funnel-back" data-nav="back" aria-label="Back" hidden>
           <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
-          <span class="funnel__back-text" aria-hidden="true">Назад</span>
+          <span class="funnel__back-text" aria-hidden="true">Back</span>
         </button>
-        <button class="btn btn--ghost funnel__skip" type="button" id="funnel-skip" data-nav="skip" hidden>Пропустити</button>
+        <button class="btn btn--ghost funnel__skip" type="button" id="funnel-skip" data-nav="skip" hidden>Skip</button>
         <button class="btn btn--primary funnel__next" type="submit" form="start" id="funnel-next" data-ds-event="quiz_start">
-          <span class="btn__label"><span class="funnel__lbl--full" data-lbl-full>Далі</span><span class="funnel__lbl--short" data-lbl-short></span></span>
+          <span class="btn__label"><span class="funnel__lbl--full" data-lbl-full>Next</span><span class="funnel__lbl--short" data-lbl-short></span></span>
           <span class="btn__spinner" aria-hidden="true"></span>
         </button>
-        <a class="btn btn--primary funnel__next" id="funnel-link" href="https://consultantlm.com/app?src=quiz-dynamic" rel="noopener" data-ds-event="quiz_result_view" hidden>Відкрити застосунок</a>
+        <a class="btn btn--primary funnel__next" id="funnel-link" href="https://consultantlm.com/app?src=quiz-dynamic" rel="noopener" data-ds-event="quiz_result_view" hidden>Open the app</a>
       </div>
       <div class="funnel__row" id="funnel-altrow" hidden>
-        <button class="btn btn--outline btn--block funnel__alt" type="button" id="funnel-alt" data-nav="leave">Так, вийти</button>
+        <button class="btn btn--outline btn--block funnel__alt" type="button" id="funnel-alt" data-nav="leave">Yes, leave</button>
       </div>
     </div>
   </footer>
@@ -359,34 +369,34 @@
   if (!root) return;
   var L = window.QUIZ_LOCALE || {};
   var APP_URL = 'https://consultantlm.com/app?src=quiz-dynamic';
-  function stepText(n, m) { return L.step ? L.step(n, m) : 'Крок ' + n + ' із ' + m; }
+  function stepText(n, m) { return L.step ? L.step(n, m) : 'Step ' + n + ' of ' + m; }
 
   /* ── данные-заглушки (фикстуры 11-datamodel.md §11; в продукте — база сайта) ── */
   var CATEGORIES = [
-    ['family', 'Сім’я', 'i-family'], ['military', 'Військові питання', 'i-shield-alert'], ['auto', 'Авто та ДТП', 'i-car'],
-    ['business', 'Бізнес', 'i-briefcase'], ['criminal', 'Кримінал', 'i-scale'], ['debt', 'Борги та кредити', 'i-coins'],
-    ['property', 'Нерухомість і спадщина', 'i-home'], ['labor', 'Праця', 'i-users'], ['migration', 'Міграція', 'i-globe'],
-    ['other', 'Інше', 'i-dots']
+    ['family', 'Family', 'i-family'], ['military', 'Military', 'i-shield-alert'], ['auto', 'Auto & accidents', 'i-car'],
+    ['business', 'Business', 'i-briefcase'], ['criminal', 'Criminal', 'i-scale'], ['debt', 'Debts & loans', 'i-coins'],
+    ['property', 'Real estate & inheritance', 'i-home'], ['labor', 'Employment', 'i-users'], ['migration', 'Immigration', 'i-globe'],
+    ['other', 'Other', 'i-dots']
   ];
   var TOPICS = {
-    family:    [['divorce', 'Розлучення'], ['alimony', 'Аліменти'], ['property', 'Поділ майна'], ['custody', 'Місце проживання дитини'], ['other', 'Інше в сімейних питаннях']],
-    military:  [['summons', 'Повістка або мобілізація'], ['fine', 'Штраф ТЦК'], ['deferment', 'Відстрочка чи бронювання'], ['payments', 'Виплати військовим'], ['other', 'Інше у військових питаннях']],
-    auto:      [['accident', 'ДТП'], ['license', 'Позбавлення прав'], ['insurance', 'Страхова не платить'], ['fine', 'Штраф або постанова'], ['other', 'Інше щодо авто']],
-    business:  [['contract', 'Договір або контрагент'], ['registration', 'Реєстрація чи зміни в компанії'], ['tax', 'Податкова перевірка'], ['dispute', 'Спір з партнером'], ['other', 'Інше в бізнесі']],
-    criminal:  [['suspect', 'Підозра або обвинувачення'], ['search', 'Обшук чи затримання'], ['victim', 'Я потерпілий(-а)'], ['witness', 'Викликають свідком'], ['other', 'Інше у кримінальній справі']],
-    debt:      [['collectors', 'Колектори або МФО'], ['bank', 'Кредит у банку'], ['enforcement', 'Виконавче провадження'], ['owed', 'Мені винні гроші'], ['other', 'Інше щодо боргів']],
-    property:  [['inheritance', 'Спадщина'], ['deal', 'Купівля або продаж'], ['rent', 'Оренда'], ['neighbors', 'Сусіди або ОСББ'], ['other', 'Інше щодо нерухомості']],
-    labor:     [['dismissal', 'Звільнення'], ['salary', 'Невиплата зарплати'], ['contract', 'Трудовий договір'], ['injury', 'Травма на роботі'], ['other', 'Інше щодо роботи']],
-    migration: [['residence', 'Посвідка на проживання'], ['citizenship', 'Громадянство'], ['visa', 'Візи та виїзд'], ['deportation', 'Загроза видворення'], ['other', 'Інше з міграції']]
+    family:    [['divorce', 'Divorce'], ['alimony', 'Child support'], ['property', 'Property division'], ['custody', 'Child custody'], ['other', 'Other family matters']],
+    military:  [['summons', 'Draft notice or mobilization'], ['fine', 'Draft office fine'], ['deferment', 'Deferment or exemption'], ['payments', 'Military payments'], ['other', 'Other military matters']],
+    auto:      [['accident', 'Car accident'], ['license', 'License suspension'], ['insurance', 'The insurer won’t pay'], ['fine', 'A fine or a ticket'], ['other', 'Other auto matters']],
+    business:  [['contract', 'Contract or counterparty'], ['registration', 'Company registration or changes'], ['tax', 'Tax audit'], ['dispute', 'Dispute with a partner'], ['other', 'Other business matters']],
+    criminal:  [['suspect', 'Suspicion or charges'], ['search', 'Search or detention'], ['victim', 'I am the victim'], ['witness', 'Called as a witness'], ['other', 'Other criminal matters']],
+    debt:      [['collectors', 'Collectors or payday lenders'], ['bank', 'Bank loan'], ['enforcement', 'Enforcement proceedings'], ['owed', 'I am owed money'], ['other', 'Other debt matters']],
+    property:  [['inheritance', 'Inheritance'], ['deal', 'Buying or selling'], ['rent', 'Rental'], ['neighbors', 'Neighbors or HOA'], ['other', 'Other real estate matters']],
+    labor:     [['dismissal', 'Dismissal'], ['salary', 'Unpaid wages'], ['contract', 'Employment contract'], ['injury', 'Injury at work'], ['other', 'Other employment matters']],
+    migration: [['residence', 'Residence permit'], ['citizenship', 'Citizenship'], ['visa', 'Visas and travel'], ['deportation', 'Deportation risk'], ['other', 'Other immigration matters']]
   };
   /* прізвище, ім’я, професія, ініціали, статус, місто, рівень, бал «зі 100», напрями — лише дозволені поля (11-datamodel §2) */
   var PEOPLE = [
-    ['Ковальчук', 'Олександр', 'Юрист', 'КО', 'online', 'Київ', 'PREMIUM', '75,8', ['family', 'property', 'debt'], 'ko'],
-    ['Тарасенко', 'Михайло', 'Адвокат', 'ТМ', 'online', 'Львів', 'PRO', '82,4', ['criminal', 'military', 'auto'], 'tm'],
-    ['Мар’яненко', 'Денис', 'Юрист', 'МД', 'online', 'Дніпро', 'PRO', '71,2', ['labor', 'business', 'family'], 'md'],
-    ['Гнатюк', 'Ольга', 'Юрист', 'ГО', 'offline', 'Одеса', 'START', '64,9', ['migration', 'property', 'business'], ''],
-    ['Савченко', 'Ігор', 'Адвокат', 'СІ', 'online', 'Харків', 'PREMIUM', '79,3', ['debt', 'auto', 'labor'], ''],
-    ['Литвин', 'Андрій', 'Юрист', 'ЛА', 'online', 'Київ', 'PRO', '68,7', ['military', 'criminal', 'migration'], '']
+    ['Basil', 'Chochla', 'Lawyer', 'BC', 'online', 'New York', 'PREMIUM', '75.8', ['family', 'property', 'debt'], 'ko'],
+    ['Dmitry', 'Dubograev', 'Attorney', 'DD', 'online', 'Miami', 'PRO', '82.4', ['criminal', 'military', 'auto'], 'tm'],
+    ['Viktor', 'Ivanov', 'Lawyer', 'VI', 'online', 'Houston', 'PRO', '71.2', ['labor', 'business', 'family'], 'md'],
+    ['Nataliia', 'Artemieva', 'Lawyer', 'NA', 'offline', 'Los Angeles', 'START', '64.9', ['migration', 'property', 'business'], ''],
+    ['Lina', 'Kora', 'Attorney', 'LK', 'online', 'Chicago', 'PREMIUM', '79.3', ['debt', 'auto', 'labor'], ''],
+    ['Yulianna', 'Bukovskaya', 'Lawyer', 'YB', 'online', 'New York', 'PRO', '68.7', ['military', 'criminal', 'migration'], '']
   ];
 
   /* ── FLOW: экраны и переходы. kind: single (радио-карточки), text, form, info, exit, end.
@@ -394,70 +404,70 @@
   var FLOW = {
     start: { kind: 'single', static: true, name: 'need', /* разметка в HTML: единственный заголовок первого уровня */
       next: function (a) { return a.start === 'no' ? 'exit' : a.start === 'unsure' ? 'worry' : 'category'; },
-      bar: { label: 'Далі', event: 'quiz_start', back: false, note: 'Безкоштовно · 1–2 хвилини · Без зобов’язань' } },
-    worry: { kind: 'single', name: 'worry', title: 'Що вас турбує?',
-      hint: 'Оберіть найближче — юрист підкаже, чи потрібна допомога. Це безкоштовно.',
+      bar: { label: 'Next', event: 'quiz_start', back: false, note: 'Free · 1–2 minutes · No obligation' } },
+    worry: { kind: 'single', name: 'worry', title: 'What is worrying you?',
+      hint: 'Pick the closest option — a lawyer will tell you whether you need help. It’s free.',
       options: [
-        ['document', 'Отримав(-ла) документ або лист', 'Повістка, позов, претензія, постанова', 'i-file'],
-        ['conflict', 'Конфлікт, який не вирішується', 'Роботодавець, банк, сусіди, партнер', 'i-users'],
-        ['plan', 'Планую важливий крок', 'Угода, спадщина, бізнес, переїзд', 'i-briefcase'],
-        ['rights', 'Хочу зрозуміти свої права', 'Просто розібратися в ситуації', 'i-book']
+        ['document', 'I received a document or a letter', 'A summons, a claim, a demand letter, an order', 'i-file'],
+        ['conflict', 'A conflict that won’t resolve', 'Employer, bank, neighbors, partner', 'i-users'],
+        ['plan', 'I am planning an important step', 'A deal, inheritance, business, relocation', 'i-briefcase'],
+        ['rights', 'I want to understand my rights', 'Just to make sense of the situation', 'i-book']
       ],
       next: 'category' },
-    category: { kind: 'single', name: 'category', grid: true, title: 'В чому потрібна допомога?',
-      hint: 'Оберіть напрям — наступне запитання підлаштується під нього.',
+    category: { kind: 'single', name: 'category', grid: true, title: 'What do you need help with?',
+      hint: 'Pick an area — the next question adapts to it.',
       options: CATEGORIES.map(function (c) { return [c[0], c[1], '', c[2]]; }),
       next: function (a) { return a.category === 'other' ? 'describe' : 'topic'; } },
-    topic: { kind: 'single', name: 'topic', title: 'Уточніть ситуацію.',
-      hintOf: function (a) { return catName(a.category) + ': оберіть найближче.'; },
+    topic: { kind: 'single', name: 'topic', title: 'Tell us more.',
+      hintOf: function (a) { return catName(a.category) + ': pick the closest option.'; },
       optionsOf: function (a) { return (TOPICS[a.category] || []).map(function (t) { return [t[0], t[1], '', null]; }); },
       next: function (a) { return a.topic === 'other' ? 'describe' : 'stage'; } },
     describe: { kind: 'text', name: 'describe', static: true, next: 'stage' },
-    stage: { kind: 'single', name: 'stage', title: 'На якому етапі справа?',
-      hint: 'Від цього залежить, який фахівець і формат роботи підійдуть.',
+    stage: { kind: 'single', name: 'stage', title: 'What stage is the matter at?',
+      hint: 'This determines which specialist and format of work will fit.',
       options: [
-        ['thinking', 'Тільки обмірковую', 'Хочу підготуватися заздалегідь', 'i-eye'],
-        ['documents', 'Є документи або листи', 'Договір, претензія, повістка, постанова', 'i-file'],
-        ['court', 'Справа вже в суді', 'Є позов, засідання або ухвала', 'i-scale'],
-        ['decision', 'Є рішення — треба діяти', 'Оскарження, виконання, стягнення', 'i-shield']
+        ['thinking', 'Just thinking about it', 'I want to prepare in advance', 'i-eye'],
+        ['documents', 'I have documents or letters', 'A contract, a demand letter, a summons, an order', 'i-file'],
+        ['court', 'The case is already in court', 'There is a claim, a hearing or a ruling', 'i-scale'],
+        ['decision', 'There is a decision — I need to act', 'Appeal, enforcement, recovery', 'i-shield']
       ],
       next: 'urgency' },
-    urgency: { kind: 'single', name: 'urgency', title: 'Як терміново потрібна допомога?',
-      hint: 'Терміновим запитам показуємо фахівців, які онлайн зараз.',
+    urgency: { kind: 'single', name: 'urgency', title: 'How urgently do you need help?',
+      hint: 'For urgent requests we show specialists who are online now.',
       options: [
-        ['today', 'Сьогодні', 'Є строк або подія найближчими годинами', 'i-bolt'],
-        ['week', 'Цього тижня', 'Хочу вирішити найближчими днями', 'i-clock'],
-        ['month', 'Протягом місяця', 'Час є, але питання важливе', 'i-calendar'],
-        ['later', 'Поки збираю інформацію', 'Без конкретних строків', 'i-book']
+        ['today', 'Today', 'There is a deadline or an event in the next few hours', 'i-bolt'],
+        ['week', 'This week', 'I want to resolve it in the next few days', 'i-clock'],
+        ['month', 'Within a month', 'There is time, but the matter is important', 'i-calendar'],
+        ['later', 'Still gathering information', 'No specific deadline', 'i-book']
       ],
       next: 'price' },
-    price: { kind: 'single', name: 'price', static: true, next: 'channel', bar: { label: 'Далі', note: 'Перша консультація безкоштовна' } },
-    channel: { kind: 'single', name: 'channel', title: 'Як вам зручніше зв’язатися?',
-      hint: 'Фахівець напише або зателефонує лише обраним способом.', hintShort: true,
+    price: { kind: 'single', name: 'price', static: true, next: 'channel', bar: { label: 'Next', note: 'The first consultation is free' } },
+    channel: { kind: 'single', name: 'channel', title: 'How would you like to be contacted?',
+      hint: 'The specialist will only write or call the way you choose.', hintShort: true,
       options: [
-        ['call', 'Дзвінок', 'Передзвонимо у зручний час', 'i-phone-call'],
-        ['telegram', 'Telegram', 'Напишемо на ваш номер', 'i-message'],
-        ['viber', 'Viber', 'Напишемо на ваш номер', 'i-message'],
-        ['whatsapp', 'WhatsApp', 'Напишемо на ваш номер', 'i-message'],
-        ['email', 'E-mail', 'Надішлемо підбір на пошту', 'i-mail']
+        ['call', 'Phone call', 'We call back at a convenient time', 'i-phone-call'],
+        ['telegram', 'Telegram', 'We message your number', 'i-message'],
+        ['viber', 'Viber', 'We message your number', 'i-message'],
+        ['whatsapp', 'WhatsApp', 'We message your number', 'i-message'],
+        ['email', 'E-mail', 'We email you the matches', 'i-mail']
       ],
       next: function (a) { return a.channel === 'call' && a.urgency !== 'today' ? 'calltime' : 'match'; } },
-    calltime: { kind: 'single', name: 'calltime', title: 'Коли зручно прийняти дзвінок?',
-      hint: 'Дзвонимо лише в обраний проміжок.',
+    calltime: { kind: 'single', name: 'calltime', title: 'When is a good time for a call?',
+      hint: 'We only call within the chosen window.',
       options: [
-        ['asap', 'Якнайшвидше', 'У робочий час 9:00–20:00', 'i-bolt'],
-        ['evening', 'Сьогодні після 18:00', 'До 20:00', 'i-clock'],
-        ['tomorrow', 'Завтра зранку', '9:00–12:00', 'i-calendar'],
-        ['any', 'Будь-коли в робочий час', 'Оберу, коли зателефонують', 'i-check']
+        ['asap', 'As soon as possible', 'During working hours, 9 AM–8 PM', 'i-bolt'],
+        ['evening', 'Today after 6 PM', 'Until 8 PM', 'i-clock'],
+        ['tomorrow', 'Tomorrow morning', '9:00–12:00', 'i-calendar'],
+        ['any', 'Any time during working hours', 'I’ll decide when they call', 'i-check']
       ],
       next: 'match' },
-    match: { kind: 'info', static: true, next: 'contacts', bar: { label: 'Отримати підбір', short: 'Отримати' } },
+    match: { kind: 'info', static: true, next: 'contacts', bar: { label: 'Get the matches', short: 'Get them' } },
     contacts: { kind: 'form', static: true, name: 'contacts', next: 'thanks',
-      bar: { label: 'Надіслати запит', short: 'Надіслати', event: 'quiz_contact_submit' } },
-    thanks: { kind: 'end', static: true, bar: { link: true, back: false, alt: { label: 'Пройти квіз ще раз', nav: 'restart' },
-      note: 'Відкриється App Store або Google Play залежно від пристрою. Увійдіть за номером, який ви вказали.' } },
-    exit: { kind: 'exit', static: true, bar: { label: 'Повернутися до квізу', short: 'Повернутися', alt: { label: 'Так, вийти', nav: 'leave' } } },
-    bye: { kind: 'end', static: true, bar: { link: { href: 'https://consultant.net.ua/', label: 'На головну' }, back: false, alt: { label: 'Пройти квіз спочатку', nav: 'restart' } } }
+      bar: { label: 'Send the request', short: 'Send', event: 'quiz_contact_submit' } },
+    thanks: { kind: 'end', static: true, bar: { link: true, back: false, alt: { label: 'Take the quiz again', nav: 'restart' },
+      note: 'The App Store or Google Play opens depending on your device. Sign in with the number you provided.' } },
+    exit: { kind: 'exit', static: true, bar: { label: 'Back to the quiz', short: 'Back', alt: { label: 'Yes, leave', nav: 'leave' } } },
+    bye: { kind: 'end', static: true, bar: { link: { href: 'https://consultantlm.com/', label: 'Home' }, back: false, alt: { label: 'Start the quiz over', nav: 'restart' } } }
   };
   var QUESTION = { single: true, text: true, form: true };
 
@@ -479,7 +489,7 @@
   function later(fn, ms) { var t = setTimeout(fn, reduce.matches ? Math.min(ms, 80) : ms); timers.push(t); return t; }
   function clearTimers() { timers.forEach(clearTimeout); timers = []; }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
-  function catName(id) { var c = CATEGORIES.filter(function (x) { return x[0] === id; })[0]; return c ? c[1] : 'Ваша ситуація'; }
+  function catName(id) { var c = CATEGORIES.filter(function (x) { return x[0] === id; })[0]; return c ? c[1] : 'Your situation'; }
   function track(ev, extra) {
     var d = { event: ev, quiz_id: 'dynamic', quiz_branch: state.answers.start || 'yes', quiz_lead: state.lead ? state.lead.lead_id : null };
     if (extra) for (var k in extra) d[k] = extra[k];
@@ -529,9 +539,9 @@
         '<p class="funnel__hint funnel__hint--sm' + (f.hintShort ? ' funnel__hide-short' : '') + '" data-hint>' + esc(f.hint || '') + '</p>' +
       '</div>' +
       '<fieldset class="funnel__options' + (f.grid ? ' funnel__options--grid' : '') + '" id="' + id + '-options" aria-describedby="' + id + '-err">' +
-        '<legend class="sr-only">Оберіть один варіант</legend>' + (f.optionsOf ? '' : optionsHTML(f, state.answers)) +
+        '<legend class="sr-only">Pick one option</legend>' + (f.optionsOf ? '' : optionsHTML(f, state.answers)) +
       '</fieldset>' +
-      '<p class="funnel__error" id="' + id + '-err" role="alert" hidden>Оберіть один варіант, щоб продовжити</p>' +
+      '<p class="funnel__error" id="' + id + '-err" role="alert" hidden>Pick one option to continue</p>' +
     '</form>';
   }
   (function () {
@@ -610,12 +620,12 @@
     if (c.link) {
       bar.next.hidden = true; bar.link.hidden = false;
       if (typeof c.link === 'object') { bar.link.href = c.link.href; bar.link.textContent = c.link.label; bar.link.removeAttribute('rel'); }
-      else { bar.link.href = APP_URL; bar.link.textContent = 'Відкрити застосунок'; bar.link.rel = 'noopener'; }
+      else { bar.link.href = APP_URL; bar.link.textContent = 'Open the app'; bar.link.rel = 'noopener'; }
       return;
     }
     bar.link.hidden = true; bar.next.hidden = false;
-    var label = c.label || 'Далі', short = c.short || '';
-    if (id === 'describe') label = 'Далі';
+    var label = c.label || 'Next', short = c.short || '';
+    if (id === 'describe') label = 'Next';
     bar.full.textContent = label; bar.short.textContent = short;
     bar.next.dataset.hasShort = short ? 'true' : 'false';
     if (isForm) { bar.next.type = 'submit'; bar.next.setAttribute('form', id); delete bar.next.dataset.nav; }
@@ -719,7 +729,7 @@
     }
     if (f.kind === 'text') {
       var text = $('#story').value.trim();
-      setAnswer('describe', text, text ? text : 'Без опису');
+      setAnswer('describe', text, text ? text : 'No description');
       track('quiz_step_complete', { quiz_step: id, has_text: !!text, text_length: text.length });
       advance(id);
       return;
@@ -800,7 +810,7 @@
     else { email.removeAttribute('aria-invalid'); eerr.hidden = true; }
     if (!consent.checked) { consent.setAttribute('aria-invalid', 'true'); cerr.hidden = false; ok = false; first = first || consent; }
     else { consent.removeAttribute('aria-invalid'); cerr.hidden = true; }
-    if (!ok) { first.focus(); say('Перевірте поля форми'); return; }
+    if (!ok) { first.focus(); say('Check the form fields'); return; }
     var a = state.answers;
     setBusy(bar.next, true);
     later(function () {
@@ -825,36 +835,36 @@
     return pool.slice(0, 3);
   }
   var CHANNEL_TEXT = {
-    call: ['Зателефонує', 'зателефонує вам', 'На цей номер зателефонує фахівець.'],
-    telegram: ['Напише в Telegram', 'напише вам у Telegram', 'Фахівець напише вам у Telegram на цей номер.'],
-    viber: ['Напише у Viber', 'напише вам у Viber', 'Фахівець напише вам у Viber на цей номер.'],
-    whatsapp: ['Напише у WhatsApp', 'напише вам у WhatsApp', 'Фахівець напише вам у WhatsApp на цей номер.'],
-    email: ['Надішле на e-mail', 'надішле відповідь на e-mail', 'Підбір і відповідь надійдуть на e-mail. Номер потрібен для входу в застосунок.']
+    call: ['Will call', 'will call you', 'The specialist will call this number.'],
+    telegram: ['Will message on Telegram', 'will message you on Telegram', 'The specialist will message you on Telegram at this number.'],
+    viber: ['Will message on Viber', 'will message you on Viber', 'The specialist will message you on Viber at this number.'],
+    whatsapp: ['Will message on WhatsApp', 'will message you on WhatsApp', 'The specialist will message you on WhatsApp at this number.'],
+    email: ['Will send by email', 'will send the answer by email', 'The matches and the answer arrive by email. The number is needed to sign in to the app.']
   };
-  var WHEN = { asap: 'у робочий час 9:00–20:00, якнайшвидше', evening: 'сьогодні після 18:00', tomorrow: 'завтра з 9:00 до 12:00', any: 'будь-коли в робочий час' };
+  var WHEN = { asap: 'during working hours, 9 AM–8 PM, as soon as possible', evening: 'today after 6 PM', tomorrow: 'tomorrow between 9 AM and 12 PM', any: 'any time during working hours' };
   var ENTER = {
     match: function (el) {
       var a = state.answers, L = state.labels, rows = [];
-      if (a.worry) rows.push(['Що турбує', L.worry, 'worry']);
-      rows.push(['Напрям', L.category, 'category']);
-      if (a.topic) rows.push(['Ситуація', L.topic, 'topic']);
-      if (a.describe != null) rows.push(['Опис', a.describe ? (a.describe.length > 48 ? a.describe.slice(0, 48) + '…' : a.describe) : 'Без опису', 'describe']);
-      rows.push(['Етап', L.stage, 'stage'], ['Терміновість', L.urgency, 'urgency'], ['Вартість', L.price, 'price'],
-        ['Зв’язок', L.channel + (L.calltime ? ' · ' + L.calltime : ''), 'channel']);
+      if (a.worry) rows.push(['Concern', L.worry, 'worry']);
+      rows.push(['Area', L.category, 'category']);
+      if (a.topic) rows.push(['Situation', L.topic, 'topic']);
+      if (a.describe != null) rows.push(['Description', a.describe ? (a.describe.length > 48 ? a.describe.slice(0, 48) + '…' : a.describe) : 'No description', 'describe']);
+      rows.push(['Stage', L.stage, 'stage'], ['Urgency', L.urgency, 'urgency'], ['Price', L.price, 'price'],
+        ['Contact', L.channel + (L.calltime ? ' · ' + L.calltime : ''), 'channel']);
       $('#match-summary').innerHTML = rows.map(function (r) {
-        return '<button class="chip dq__chip" type="button" role="listitem" data-goto="' + r[2] + '" aria-label="' + esc(r[0]) + ': ' + esc(r[1] || '—') + '. Змінити">' +
+        return '<button class="chip dq__chip" type="button" role="listitem" data-goto="' + r[2] + '" aria-label="' + esc(r[0]) + ': ' + esc(r[1] || '—') + '. Change">' +
           '<span class="q-chip__label">' + esc(r[1] || '—') + '</span><svg class="icon" aria-hidden="true"><use href="#i-pen"></use></svg></button>';
       }).join('');
       var people = matched();
       $('#match-people').innerHTML = people.map(function (p, i) {
         return '<div class="dq__person' + (i === 2 ? ' funnel__hide-short' : '') + '" role="listitem">' +
-          '<span class="avatar' + (p[9] ? ' avatar--photo' : '') + '" data-status="' + p[4] + '" aria-hidden="true">' + (p[9] ? '<img src="assets/people/' + p[9] + '.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">' : '') + esc(p[3]) + '<span class="dot q-online' + (p[4] === 'offline' ? ' q-online--off' : '') + '"></span></span>' +
+          '<span class="avatar' + (p[9] ? ' avatar--photo' : '') + '" data-status="' + p[4] + '" aria-hidden="true">' + (p[9] ? '<img src="../assets/people/' + p[9] + '.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">' : '') + esc(p[3]) + '<span class="dot q-online' + (p[4] === 'offline' ? ' q-online--off' : '') + '"></span></span>' +
           '<span><span class="dq__person-name">' + esc(p[0]) + ' ' + esc(p[1]) + '</span>' +
-          '<span class="dq__person-meta">' + esc(p[2]) + ' · ' + esc(p[5]) + ' · ' + esc(p[6]) + (p[4] === 'online' ? ' · онлайн' : '') + '</span></span>' +
-          '<span class="q-score" aria-label="Рейтинг ' + esc(p[7]) + ' зі 100"><span class="q-score__value num">' + esc(p[7]) + '</span><span class="q-score__scale">зі 100</span></span></div>';
+          '<span class="dq__person-meta">' + esc(p[2]) + ' · ' + esc(p[5]) + ' · ' + esc(p[6]) + (p[4] === 'online' ? ' · online' : '') + '</span></span>' +
+          '<span class="q-score" aria-label="Rating ' + esc(p[7]) + ' of 100"><span class="q-score__value num">' + esc(p[7]) + '</span><span class="q-score__scale">of 100</span></span></div>';
       }).join('');
-      var words = ['одного фахівця', 'двох фахівців', 'трьох фахівців'];
-      $('[data-match-title]').textContent = 'Підібрали ' + words[people.length - 1] + ': ' + catName(a.category).toLowerCase() + '.';
+      var words = ['one specialist', 'two specialists', 'three specialists'];
+      $('[data-match-title]').textContent = 'We matched ' + words[people.length - 1] + ': ' + catName(a.category).toLowerCase() + '.';
       track('quiz_match_view', { practice_area: a.category, matched: people.length });
     },
     contacts: function () {
@@ -864,10 +874,10 @@
     },
     thanks: function () {
       var a = state.answers, lead = state.lead || {}, t = CHANNEL_TEXT[a.channel] || CHANNEL_TEXT.telegram, p = matched()[0];
-      $('[data-thanks-title]').textContent = lead.name ? 'Дякуємо, ' + lead.name + '. Запит надіслано.' : 'Дякуємо, запит надіслано.';
-      $('[data-thanks-hint]').textContent = 'Фахівець ' + t[1] + (a.urgency === 'today' ? ' — запит позначено як терміновий.' : '.');
-      $('[data-thanks-who]').textContent = p[0] + ' ' + p[1] + ' вивчає ваші відповіді';
-      $('[data-thanks-when]').textContent = a.channel === 'call' ? 'Дзвінок ' + (WHEN[a.calltime] || 'якнайшвидше у робочий час') : (t[0] + ' у робочий час 9:00–20:00');
+      $('[data-thanks-title]').textContent = lead.name ? 'Thank you, ' + lead.name + '. Your request has been sent.' : 'Thank you, your request has been sent.';
+      $('[data-thanks-hint]').textContent = 'The specialist ' + t[1] + (a.urgency === 'today' ? ' — the request is marked as urgent.' : '.');
+      $('[data-thanks-who]').textContent = p[0] + ' ' + p[1] + ' is reviewing your answers';
+      $('[data-thanks-when]').textContent = a.channel === 'call' ? 'A call ' + (WHEN[a.calltime] || 'as soon as possible during working hours') : (t[0] + ' during working hours, 9 AM–8 PM');
       track('quiz_result_view', { preferred_channel: a.channel });
     }
   };
