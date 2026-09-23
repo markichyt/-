@@ -497,21 +497,21 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
    like a screenshot would be. Scales with the phone width: 1em = phone width / 20 (design width 320). */
 .funnel__stage { container-type: size; }
 
-/* ---------- S1: looped rows of specialists with ratings under «3 500+» ---------- */
+/* ---------- S1: looped rows of specialists with ratings under «3 500+» (rounded tiles — owner's decision 23.09) ---------- */
 .funnel__card--stat { gap: 0; padding-bottom: 0; overflow: hidden; container-type: inline-size; }
 .funnel__stat { display: flex; align-items: center; gap: 16px; }
 .funnel__stat .funnel__hint--sm { font-size: 13px; line-height: 1.4; }
-.mq { --mq-size: 56px; --mq-gap: 12px; --mq-drift: 2.8cqw; --color-star: #f5b301; position: relative; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; margin: 8px -20px 0; padding: calc(4px + var(--mq-drift)) 0 calc(10px + var(--mq-drift)); overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+.mq { --mq-size: 64px; --mq-gap: 16px; --mq-radius: 14px; --mq-drift: 2.8cqw; --color-star: #f5b301; position: relative; display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; margin: 14px -20px 0; padding: calc(6px + var(--mq-drift)) 0 calc(12px + var(--mq-drift)); overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
 .mq__tilt { min-width: 0; transform: rotate(-3deg); }
-.mq__row { display: flex; width: max-content; will-change: transform; animation: mq-left 32s linear infinite; }
-.mq__row--b { animation: mq-right 38s linear infinite; }
+.mq__row { display: flex; width: max-content; will-change: transform; animation: mq-left 36s linear infinite; }
+.mq__row--b { animation: mq-right 42s linear infinite; }
 .mq__set { display: flex; gap: var(--mq-gap); padding-right: var(--mq-gap); }
-.mq__tile { position: relative; flex: none; width: var(--mq-size); height: var(--mq-size); background: var(--color-gray-300); }
-.mq__tile img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.mq__badge { position: absolute; right: -6px; bottom: -7px; display: inline-flex; align-items: center; gap: 3px; height: 20px; padding: 0 7px 0 5px; border-radius: var(--radius-pill); background: var(--color-black); color: var(--color-white); font-size: 11px; font-weight: 600; line-height: 1; white-space: nowrap; font-variant-numeric: tabular-nums; box-shadow: 0 0 0 2px var(--color-gray-100); }
-.mq__badge svg { width: 10px; height: 10px; fill: var(--color-star); }
+.mq__tile { position: relative; flex: none; width: var(--mq-size); height: var(--mq-size); }
+.mq__tile img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: var(--mq-radius); background: var(--color-gray-300); }
+.mq__badge { position: absolute; right: -4px; bottom: -5px; display: inline-flex; align-items: center; gap: 2px; height: 17px; padding: 0 6px 0 5px; border-radius: var(--radius-pill); background: var(--color-black); color: var(--color-white); font-size: 10px; font-weight: 600; line-height: 1; white-space: nowrap; font-variant-numeric: tabular-nums; box-shadow: 0 0 0 2px var(--color-gray-100); }
+.mq__badge svg { width: 8px; height: 8px; fill: var(--color-star); }
 @keyframes mq-left { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @keyframes mq-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
-@media (max-height: 699px) { .mq { --mq-size: 44px; --mq-drift: 1.9cqw; margin-top: 4px; padding: calc(2px + var(--mq-drift)) 0 calc(8px + var(--mq-drift)); } .mq__tilt { transform: rotate(-2deg); } .mq__tilt + .mq__tilt { display: none; } }
-@media (max-height: 37.5em) { .mq { display: none; } .funnel__card--stat { padding-bottom: 14px; } }
+@media (max-height: 699px) { .mq { --mq-size: 52px; --mq-radius: 12px; gap: 14px; margin-top: 10px; padding: calc(4px + var(--mq-drift)) 0 calc(10px + var(--mq-drift)); } }
+@media (max-height: 37.5em) { .mq { --mq-size: 44px; --mq-radius: 10px; --mq-drift: 1.9cqw; margin-top: 6px; padding: calc(2px + var(--mq-drift)) 0 calc(8px + var(--mq-drift)); } .mq__tilt { transform: rotate(-2deg); } .mq__tilt + .mq__tilt { display: none; } }
 @media (prefers-reduced-motion: reduce) { .mq__row { animation: none; } }

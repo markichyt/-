@@ -157,14 +157,6 @@
           <li class="funnel__chip"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Results</li>
         </ul>
       </div>
-      <div class="funnel__card funnel__card--row funnel__reveal" data-s1-step="3">
-        <ul class="funnel__avatars" aria-label="Best matches">
-          <li><span class="avatar avatar--photo" aria-hidden="true"><img src="../assets/people/ko.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">BC</span></li>
-          <li><span class="avatar avatar--photo" aria-hidden="true"><img src="../assets/people/tm.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">DD</span></li>
-          <li><span class="avatar avatar--photo" aria-hidden="true"><img src="../assets/people/md.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">VI</span></li>
-        </ul>
-        <p class="funnel__key">The best matches for your situation, not an alphabetical directory</p>
-      </div>
     </section>
 
     <!-- ── S2 · Q1 · Локація — Крок 1 із 5 ──────────────────────────────── -->
@@ -1178,7 +1170,6 @@
       later(function () { reveal(cards[0]); }, 150);
       later(function () { reveal(cards[1]); }, 650);
       chips.forEach(function (c, i) { later(function () { c.dataset.state = 'done'; }, 1000 + i * 320); });
-      later(function () { reveal(cards[2]); }, 1000 + chips.length * 320 + 200);
       later(doneAnimating, 1000 + chips.length * 320 + 600);
     },
     s3: function (el) {
