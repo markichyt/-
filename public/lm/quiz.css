@@ -252,7 +252,7 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 @media (max-width: 599px) { .funnel__screen--entry .funnel__title--hero { font-size: 26px; line-height: 1.1; } }
 @media (min-height: 700px) { .funnel__stage { height: min(34vh, 300px); } }
 @media (min-width: 600px) {
-  .funnel__stage { height: 320px; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); padding: 24px 24px 0; column-gap: 24px; }
+  .funnel__stage { height: 300px; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); padding: 24px 24px 0; column-gap: 24px; }
   .funnel__flow { gap: 4px; }
   .funnel__flow-chip { height: 32px; font-size: 13px; }
   .funnel__flow-chip .funnel__lbl--full { display: inline; }
