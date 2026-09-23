@@ -1,5 +1,6 @@
 // Ролик для телефона на S0: список вопросов → тап → вопрос с ответами → пролистывание → назад (цикл), uk и en.
 // Снимается покадрово из демо реального интерфейса (экраны 9 и 10), 30 к/с, экран 420×955 CSS при DPR 2.
+// Таб-бар — полная картинка владельца assets/app/tabbar@2x.png (без флага), поверх контента, с индикатором «домой».
 // Запуск: node tools/render-app-video.mjs [путь к ask-question-demo.html]  → assets/app/flow-<loc>.mp4|webm|jpg
 import { chromium } from '/Users/mac/cabinetUR/video/node_modules/playwright/index.mjs';
 import fs from 'node:fs'; import path from 'node:path'; import { execSync } from 'node:child_process';
@@ -42,7 +43,11 @@ for (const loc of Object.keys(TEXT)) {
   await p.addStyleTag({ content: `*, *::before, *::after { transition: none !important; animation: none !important; }
     .s9__list { position:absolute; top:128px; left:20px; right:20px; bottom:74px; display:grid; gap:12px; align-content:start; }
     .s9__list .s9__card { position:static; }
-    .ua-flag { position:absolute; left:223.5px; top:27px; width:19.5px; height:14.5px; border-radius:2px; background:linear-gradient(#005bbb 0 50%, #ffd500 50% 100%); box-shadow:0 0 0 1px #fff; }
+    .tabbar { height: 108.6px !important; background: #fff url(file:///Users/mac/consultantlm-quiz/assets/app/tabbar@2x.png) top center / 100% auto no-repeat !important; }
+    .tabbar .badge, .tabbar__home, .ua-flag { display: none !important; }
+    .s10__scroll { bottom: 108px !important; }
+    .s9__list { bottom: 112px !important; }
+    .ua-flag-unused { position:absolute; left:223.5px; top:27px; width:19.5px; height:14.5px; border-radius:2px; background:linear-gradient(#005bbb 0 50%, #ffd500 50% 100%); box-shadow:0 0 0 1px #fff; }
     .dim { position:absolute; inset:0; background:#000; opacity:0; z-index:60; pointer-events:none; }
     .tapdot { position:absolute; z-index:80; width:54px; height:54px; margin:-27px 0 0 -27px; border-radius:50%; background:radial-gradient(circle, rgba(41,163,224,.55) 0%, rgba(41,163,224,0) 70%); opacity:0; pointer-events:none; }` });
   const geo = await p.evaluate(({ T, loc }) => {
@@ -64,7 +69,6 @@ for (const loc of Object.keys(TEXT)) {
       q(el, '.ans__av').innerHTML = '<img src="' + a.photo + '" alt="" style="width:100%;height:100%;object-fit:cover">';
       const b = el.querySelectorAll('.ans__btn'); b[0].lastChild.textContent = T.order; b[1].lastChild.textContent = T.best; inner.appendChild(el); });
     proto.remove(); inner.style.transform = 'translateY(0)';
-    if (loc === 'uk') vp.querySelectorAll('.tabbar').forEach(tb => { const f = document.createElement('div'); f.className = 'ua-flag'; tb.appendChild(f); });
     const tap = document.createElement('div'); tap.className = 'tapdot'; s9.appendChild(tap);
     const first = list.firstElementChild.getBoundingClientRect(), scr = document.querySelector('.phone__screen').getBoundingClientRect();
     return { tapX: first.left + first.width * .5 - scr.left, tapY: first.top + first.height * .5 - scr.top, maxY: inner.scrollHeight - q(s10, '.s10__scroll').clientHeight, listH: list.scrollHeight };
