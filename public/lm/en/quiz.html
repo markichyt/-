@@ -24,7 +24,7 @@
   plural: function (n) { return n === 1 ? 0 : 1; },
   step: function (n, m) { return 'Step ' + n + ' of ' + m; },
   money: function (n) { return '$' + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); },
-  calcBase: 3000,
+  plans: [{"id":"base","name":"BASE","price":12,"year":120,"discount":5,"features":["Individual consultations: 3","Document templates: unlimited","Advanced AI assistant 24/7"],"pill":"Up to 5% off all services","savings":{"total":"Total savings from $260","items":["Individual consultations — save up to $75","Unlimited document templates — save from $90","Up to 5% off services — save from $100"]}},{"id":"pro","name":"PRO","price":39,"year":390,"discount":10,"recommended":true,"features":["Individual consultations: 12","Document templates: unlimited","Personal manager"],"pill":"Up to 10% off all services","savings":{"total":"Total savings from $600","items":["Individual consultations — save up to $300","Unlimited document templates — save from $90","Up to 10% off services — save from $200"]}},{"id":"premium","name":"PREMIUM","price":199,"year":1990,"discount":20,"features":["Individual consultations: unlimited","Document templates: unlimited","Personal VIP manager"],"pill":"Up to 20% off all services","savings":{"total":"Total savings from $1,100","items":["Individual consultations — save from $600","Unlimited document templates — save from $90","Maximum 20% off services — save from $400"]}}],
   settlements: [['New York', 'NY', 1000, 40.71, -74.01], ['Los Angeles', 'CA', 640, 34.05, -118.24], ['Chicago', 'IL', 480, 41.88, -87.63], ['Houston', 'TX', 380, 29.76, -95.37], ['Phoenix', 'AZ', 210, 33.45, -112.07],
     ['Philadelphia', 'PA', 190, 39.95, -75.17], ['San Antonio', 'TX', 120, 29.42, -98.49], ['San Diego', 'CA', 170, 32.72, -117.16], ['Dallas', 'TX', 160, 32.78, -96.8], ['Austin', 'TX', 150, 30.27, -97.74],
     ['Jacksonville', 'FL', 140, 30.33, -81.66], ['Fort Worth', 'TX', 90, 32.75, -97.33], ['Columbus', 'OH', 130, 39.96, -83.0], ['Charlotte', 'NC', 120, 35.23, -80.84], ['Indianapolis', 'IN', 110, 39.77, -86.16],
@@ -380,48 +380,27 @@
       <p class="caption q-disclaimer funnel__hint--sm">The estimate is indicative and not a public offer. The consultant confirms the final price before the work starts.</p>
     </section>
 
-    <!-- ── S11 · Membership offer — 3 плани ──────────────────────────────── -->
+    <!-- ── S11 · Пакети послуг — слайдер 3 пакетів застосунку ──────────────────────────────── -->
     <form class="funnel__screen" id="s11" data-screen="s11" aria-labelledby="s11-title" novalidate hidden>
       <div class="funnel__head">
-        <h2 class="funnel__title" id="s11-title" tabindex="-1">A discount on services with Membership.</h2>
-        <p class="funnel__hint funnel__hint--sm funnel__hide-short">A discount on the services you order next. Membership does not affect the free analysis.</p>
+        <h2 class="funnel__title" id="s11-title" tabindex="-1">Choose a service package.</h2>
+        <p class="funnel__hint funnel__hint--sm funnel__hide-short funnel__hide-mid">A discount on the services you order next. The package does not affect the free analysis.</p>
       </div>
-      <fieldset class="funnel__options funnel__plans" id="s11-plans">
-        <legend class="sr-only">Subscription plans</legend>
-        <label class="q-option q-plan">
-          <input class="q-option__input" type="radio" name="membership_plan" value="basic" data-plan-name="Basic" data-plan-price="9" data-plan-discount="10">
-          <span class="q-option__label">
-            <span class="funnel__plan-head">Basic</span>
-            <span class="q-price"><span class="q-price__value num">$9</span><span class="q-price__period">/mo</span></span>
-            <span class="q-option__note">−10% on services · 1 consultation per month</span>
-          </span>
-        </label>
-        <label class="q-option q-plan">
-          <input class="q-option__input" type="radio" name="membership_plan" value="standard" data-plan-name="Standard" data-plan-price="19" data-plan-discount="20" checked>
-          <span class="q-option__label">
-            <span class="funnel__plan-head">Standard <span class="chip chip--sm">Recommended</span></span>
-            <span class="q-price"><span class="q-price__value num">$19</span><span class="q-price__period">/mo</span></span>
-            <span class="q-option__note">−20% on services · 3 consultations · manager</span>
-          </span>
-        </label>
-        <label class="q-option q-plan">
-          <input class="q-option__input" type="radio" name="membership_plan" value="premium" data-plan-name="Premium" data-plan-price="39" data-plan-discount="30">
-          <span class="q-option__label">
-            <span class="funnel__plan-head">Premium</span>
-            <span class="q-price"><span class="q-price__value num">$39</span><span class="q-price__period">/mo</span></span>
-            <span class="q-option__note">−30% on services · unlimited · PREMIUM</span>
-          </span>
-        </label>
-      </fieldset>
-      <article class="funnel__card funnel__hide-short funnel__hide-mid" aria-labelledby="s11-calc-title">
-        <p class="funnel__card-label" id="s11-calc-title">Savings example on a $3,000 service</p>
-        <dl class="funnel__calc" id="s11-calc">
-          <dt>Member discount</dt><dd class="num" data-calc-discount>−20&nbsp;%</dd>
-          <dt>Member price</dt><dd class="num" data-calc-price>$2,400</dd>
-          <dt>Membership</dt><dd class="num" data-calc-fee>$19/mo</dd>
-          <dt>Potential savings</dt><dd class="num funnel__calc-saving" data-calc-saving>$600</dd>
-        </dl>
-      </article>
+      <div class="plans" id="s11-plans">
+        <div class="plans__toggle funnel__hide-short" role="group" aria-label="Billing period">
+          <button class="plans__tab is-on" type="button" data-period="month" aria-pressed="true">1 month</button>
+          <button class="plans__tab" type="button" data-period="year" aria-pressed="false">1 year</button>
+        </div>
+        <div class="plans__track" data-plans-track role="radiogroup" aria-label="Service packages">
+          <!-- картки рендерить скрипт з QUIZ_LOCALE.plans (дані пакетів застосунку) -->
+        </div>
+        <div class="plans__nav">
+          <button class="btn btn--icon plans__arrow" type="button" data-plans-prev aria-label="Previous package"><svg class="icon" width="24" height="24" aria-hidden="true"><use href="#i-arrow-left"></use></svg></button>
+          <div class="plans__dots" data-plans-dots role="tablist" aria-label="Packages"></div>
+          <button class="btn btn--icon plans__arrow plans__arrow--next" type="button" data-plans-next aria-label="Next package"><svg class="icon" width="24" height="24" aria-hidden="true"><use href="#i-arrow-left"></use></svg></button>
+        </div>
+        <p class="caption plans__cancel">Cancel anytime.</p>
+      </div>
       <p class="caption q-disclaimer funnel__hint--sm">The estimate is indicative and not a public offer. The consultant confirms the final price before the work starts.</p>
     </form>
 
@@ -498,28 +477,28 @@
       <p class="caption q-disclaimer funnel__hint--sm">Only the consultant you choose sees your details. We do not share them with third parties.</p>
     </form>
 
-    <!-- ── S13 · Оплата Membership (тільки гілка Member) ─────────────────── -->
+    <!-- ── S13 · Оплата пакета (тільки гілка з пакетом) ─────────────────── -->
     <form class="funnel__screen" id="s13" data-screen="s13" aria-labelledby="s13-title" novalidate hidden>
       <div class="funnel__head">
-        <h2 class="funnel__title" id="s13-title" tabindex="-1">Membership payment</h2>
+        <h2 class="funnel__title" id="s13-title" tabindex="-1">Package payment</h2>
         <p class="funnel__hint funnel__hint--sm funnel__hide-short">Your question is already created — the payment does not affect the free analysis.</p>
       </div>
       <div class="q-alert" role="alert" tabindex="-1" id="s13-error" hidden>
         <svg class="q-alert__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg>
         <div class="q-alert__body">
           <p class="q-alert__title"><span class="sr-only">Error. </span>Payment not completed</p>
-          <p class="q-alert__text">The bank declined the payment. Try again or continue without Membership — your question is already created.</p>
+          <p class="q-alert__text">The bank declined the payment. Try again or continue without a package — your question has already been created.</p>
           <div class="q-alert__actions">
             <button class="q-alert__action" type="button" data-pay="retry">Try again</button>
           </div>
         </div>
       </div>
       <article class="funnel__card funnel__summary" aria-labelledby="s13-summary-title">
-        <p class="funnel__card-label" id="s13-summary-title">Your plan</p>
+        <p class="funnel__card-label" id="s13-summary-title">Your package</p>
         <dl>
-          <dt>Plan</dt><dd><span data-s13-plan>Standard</span> · <span class="num" data-s13-discount>20&nbsp;%</span></dd>
+          <dt>Package</dt><dd><span data-s13-plan>PRO</span> · <span class="num" data-s13-discount>10&nbsp;%</span></dd>
           <dt>Account number</dt><dd class="num" data-s13-phone>+380 67 123 45 67</dd>
-          <dt>Due today</dt><dd class="num" data-s13-total>$19</dd>
+          <dt>Due today</dt><dd class="num" data-s13-total>$39</dd>
         </dl>
       </article>
       <fieldset class="funnel__methods">
@@ -540,11 +519,11 @@
       <p class="caption q-disclaimer funnel__hint--sm">The estimate is indicative and not a public offer. The consultant confirms the final price before the work starts.</p>
     </form>
 
-    <!-- ── S14 · Membership success ──────────────────────────────────────── -->
+    <!-- ── S14 · Пакет активовано ──────────────────────────────────────── -->
     <section class="funnel__screen funnel__center" id="s14" data-screen="s14" aria-labelledby="s14-title" hidden>
-      <span class="chip chip--sm">Prepaid member</span>
-      <h2 class="funnel__title" id="s14-title" tabindex="-1">Membership activated.</h2>
-      <p class="funnel__hint">Your status is applied to your request. The <strong data-s14-plan>Standard</strong> plan is active from this minute.</p>
+      <span class="chip chip--sm">Package paid</span>
+      <h2 class="funnel__title" id="s14-title" tabindex="-1">Package activated.</h2>
+      <p class="funnel__hint">Your status has been taken into account. The <strong data-s14-plan>PRO</strong> package is active from this minute.</p>
     </section>
 
     <!-- ── S15 · Final processing ────────────────────────────────────────── -->
@@ -601,7 +580,7 @@
         <a class="btn btn--primary funnel__next" id="funnel-link" href="https://consultantlm.com/app?src=quiz" rel="noopener" data-ds-event="quiz_result_view" hidden>View the answers</a>
       </div>
       <div class="funnel__row" id="funnel-altrow" hidden>
-        <button class="btn btn--outline btn--block funnel__alt" type="button" id="funnel-alt" data-nav="free">Continue without Membership</button>
+        <button class="btn btn--outline btn--block funnel__alt" type="button" id="funnel-alt" data-nav="free">Continue without a package</button>
       </div>
     </div>
   </footer>
@@ -721,14 +700,15 @@
     s8:  { label:'Continue' },
     s9:  { label:'Next', submit:true },
     s10: { label:'Continue' },
-    s11: { label:'Become a ConsultantLM Member', short:'Become a Member', submit:true, alt:{ label:'Continue without Membership', nav:'free' } },
+    s11: { label:'Buy package', submit:true, alt:{ label:'Continue without a package', nav:'free' } },
     s12: { label:'Get the free analysis', short:'Get the analysis', submit:true, event:'quiz_contact_submit' },
-    s13: { label:'Pay', submit:true, alt:{ label:'Continue without Membership', nav:'free-after-fail' } },
+    s13: { label:'Pay', submit:true, alt:{ label:'Continue without a package', nav:'free-after-fail' } },
     s14: { label:'Continue', back:false },
     s15: { label:'Continue' },
     s16: { link:true, back:false, note:'The App Store or Google Play opens depending on your device. Sign in with the number you provided.' }
   };
 
+  var PLANS_ENTER = null;
   var state = { branch:'free', settlement:null, remote:false, categories:[], description:'', voice:null,
     intent:null, plan:null, phone:'', name:'', email:'', channels:[], leadId:null, paid:false,
     payFail:false, attribution:{}, trail:[] };
@@ -823,7 +803,7 @@
     bar.link.hidden = true; bar.next.hidden = false;
     var label = c.label;
     if (id === 's12' && state.branch === 'member') label = 'Go to payment';
-    if (id === 's13') label = 'Pay ' + money(state.plan ? state.plan.price : 19);
+    if (id === 's13') label = 'Pay ' + money(state.plan ? state.plan.price : (L.plans && L.plans[1] ? L.plans[1].price : 0));
     bar.full.textContent = label;
     var short = (id === 's12' && state.branch === 'member') ? '' : (c.short || '');
     bar.short.textContent = short;
@@ -1055,23 +1035,48 @@
 
   /* S11 · membership: план и пример экономии */
   (function () {
-    var fs = $('#s11-plans');
-    function calc() {
-      var r = $('input:checked', fs); if (!r) return;
-      var d = +r.dataset.planDiscount, fee = +r.dataset.planPrice, base = L.calcBase || 40000;
-      $('[data-calc-discount]').textContent = '−' + d + ' %';
-      $('[data-calc-price]').textContent = money(base - base * d / 100);
-      $('[data-calc-fee]').textContent = money(fee) + '/mo';
-      $('[data-calc-saving]').textContent = money(base * d / 100);
-    }
-    fs.addEventListener('change', calc);
-    calc();
+    var PLANS = L.plans || [], rail = $('[data-plans-track]'), dots = $('[data-plans-dots]'), toggle = $('#s11-plans .plans__toggle');
+    if (!rail || !PLANS.length) return;
+    var period = 'month';
+    function amount(p) { return money(period === 'year' ? p.year : p.price); }
+    function perLabel() { return period === 'year' ? '/ 1 year' : '/ 1 month'; }
+    rail.insertAdjacentHTML('beforeend', PLANS.map(function (p) {
+      var icons = ['i-message', 'i-file', 'i-coins'];
+      return '<label class="plan" data-tone="' + p.id + '">' +
+        '<input class="q-option__input" type="radio" name="membership_plan" value="' + p.id + '"' + (p.recommended ? ' checked' : '') + '>' +
+        '<span class="plan__head"><span class="plan__name">' + esc(p.name) + '</span>' + (p.recommended ? '<span class="chip chip--sm plan__rec">' + 'Recommended' + '</span>' : '') + '</span>' +
+        '<span class="plan__price"><span class="plan__amount num" data-plan-amount>' + amount(p) + '</span><span class="plan__period" data-plan-period>' + perLabel() + '</span></span>' +
+        '<ul class="plan__features">' + p.features.map(function (f) { return '<li><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg><span>' + esc(f) + '</span></li>'; }).join('') + '</ul>' +
+        '<span class="plan__pill"><span>' + esc(p.pill) + '</span></span>' +
+        '<ul class="plan__savings"><li class="plan__savings-total"><svg class="icon" aria-hidden="true"><use href="#i-coins"></use></svg><span>' + esc(p.savings.total) + '</span></li>' +
+          p.savings.items.map(function (t, k) { return '<li class="funnel__hide-mid"><svg class="icon" aria-hidden="true"><use href="#' + icons[k] + '"></use></svg><span>' + esc(t) + '</span></li>'; }).join('') + '</ul>' +
+        '<span class="btn btn--outline plan__btn" aria-hidden="true"><span class="plan__btn-off">' + 'Choose package' + '</span><span class="plan__btn-on">' + 'Selected' + '</span></span>' +
+        '</label>';
+    }).join(''));
+    var cards = $$('.plan', rail);
+    dots.innerHTML = PLANS.map(function (p, i) { return '<button class="plans__dot" type="button" role="tab" aria-label="' + esc(p.name) + '" data-i="' + i + '"></button>'; }).join('');
+    var dotEls = $$('.plans__dot', dots);
+    function rel(c) { return rail.scrollLeft + c.getBoundingClientRect().left - rail.getBoundingClientRect().left; }
+    function center(i, smooth) { var c = cards[i]; if (!c) return; var left = rel(c) - (rail.clientWidth - c.clientWidth) / 2; if (smooth && rail.scrollTo && !reduce.matches) rail.scrollTo({ left: left, behavior: 'smooth' }); else rail.scrollLeft = left; }
+    function current() { var mid = rail.scrollLeft + rail.clientWidth / 2, best = 0, d = Infinity; cards.forEach(function (c, i) { var dd = Math.abs(rel(c) + c.clientWidth / 2 - mid); if (dd < d) { d = dd; best = i; } }); return best; }
+    function mark() { var i = current(); dotEls.forEach(function (d, k) { d.classList.toggle('is-on', k === i); d.setAttribute('aria-selected', k === i ? 'true' : 'false'); }); }
+    var raf = 0; rail.addEventListener('scroll', function () { if (raf) return; raf = requestAnimationFrame(function () { raf = 0; mark(); }); }, { passive: true });
+    dotEls.forEach(function (d) { d.addEventListener('click', function () { center(+d.dataset.i, true); }); });
+    $('[data-plans-prev]').addEventListener('click', function () { center(Math.max(0, current() - 1), true); });
+    $('[data-plans-next]').addEventListener('click', function () { center(Math.min(cards.length - 1, current() + 1), true); });
+    rail.addEventListener('change', function (e) { var c = e.target.closest('.plan'), i = cards.indexOf(c); if (i >= 0) center(i, true); });
+    $$('.plans__tab', toggle).forEach(function (b) { b.addEventListener('click', function () {
+      period = b.dataset.period;
+      $$('.plans__tab', toggle).forEach(function (x) { x.classList.toggle('is-on', x === b); x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      cards.forEach(function (c, i) { $('[data-plan-amount]', c).textContent = amount(PLANS[i]); $('[data-plan-period]', c).textContent = perLabel(); });
+    }); });
+    PLANS_ENTER = function () { var i = -1; cards.forEach(function (c, k) { if ($('input', c).checked) i = k; }); center(i < 0 ? 0 : i, false); mark(); };
     $('#s11').addEventListener('submit', function (e) {
       e.preventDefault();
-      var r = $('input:checked', fs);
-      state.branch = 'member';
-      state.plan = { id: r.value, name: r.dataset.planName, price: +r.dataset.planPrice, discount: +r.dataset.planDiscount };
-      track('membership_select', { membership_plan: r.value });
+      var r = $('input[name="membership_plan"]:checked', rail); if (!r) return;
+      var p = PLANS.filter(function (x) { return x.id === r.value; })[0];
+      state.branch = 'member'; state.plan = { id: p.id, name: p.name, price: period === 'year' ? p.year : p.price, discount: p.discount, period: period };
+      track('membership_select', { membership_plan: p.id, period: period });
       go('s12');
     });
   })();
@@ -1259,16 +1264,17 @@
       var q = $('[data-s8-question]', el);
       q.textContent = state.description ? state.description : 'Your situation (voice message)';
     },
+    s11: function () { if (PLANS_ENTER) PLANS_ENTER(); },
     s12: function () { track('membership_offer_result', { membership_choice: state.branch }); },
     s13: function (el) {
-      var p = state.plan || { name: 'Standard', price: 19, discount: 20 };
+      var p = state.plan || (L.plans && L.plans[1]) || { name: 'PRO', price: 410, discount: 10 };
       $('[data-s13-plan]', el).textContent = p.name;
       $('[data-s13-discount]', el).textContent = p.discount + ' %';
       $('[data-s13-total]', el).textContent = money(p.price);
       $('#s13-error').hidden = !state.payFail;
       track('checkout_view', { membership_plan: p.id || 'standard' });
     },
-    s14: function (el) { $('[data-s14-plan]', el).textContent = state.plan ? state.plan.name : 'Standard'; },
+    s14: function (el) { $('[data-s14-plan]', el).textContent = state.plan ? state.plan.name : 'PRO'; },
     s15: function () {
       runList($('#s15-list'), 700, null);
       later(function () { doneAnimating(); go('s16'); }, 3600);
