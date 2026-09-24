@@ -141,7 +141,15 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 .q-option--tile, .funnel__options--grid .q-option { min-height: 48px; padding: 8px 12px; border-radius: var(--radius-input-soft); gap: 8px; }
 .q-option--tile .q-option__label, .funnel__options--grid .q-option__label { flex-direction: row; align-items: center; gap: 8px; font-size: clamp(14px, 3.4vw + 1px, 16px); line-height: 1.3; }
 .q-option--tile::after, .funnel__options--grid .q-option::after { width: 20px; height: 20px; background-size: 12px; }
-.funnel__tile-icon { width: 20px; height: 20px; flex-shrink: 0; }
+/* плитки категорий S4: иконка в кружке акцентного цвета (решение владельца 24.09 — «ярче») */
+.funnel__tile-icon { box-sizing: border-box; display: block; flex-shrink: 0; width: 36px; height: 36px; padding: 9px; border-radius: 50%; background: var(--color-gray-100); color: var(--color-accent); transition: background .15s ease, color .15s ease; }
+.q-option--tile:has(:checked) { border-color: var(--color-accent); box-shadow: inset 0 0 0 1px var(--color-accent); }
+.q-option--tile:has(:checked)::after { border-color: var(--color-accent); background-color: var(--color-accent); }
+.q-option--tile:has(:checked) .funnel__tile-icon { background: var(--color-accent); color: var(--color-white); }
+.q-option--tile .q-option__label > span:not(.funnel__tile-text), .funnel__tile-text > span:first-child { font-weight: 600; font-size: 15px; line-height: 1.25; }
+.q-option--tile { min-height: 56px; }
+.q-option--tile::after, .funnel__options--grid .q-option::after { display: none; }
+.q-option--tile .q-option__label, .funnel__tile-text { overflow-wrap: normal; word-break: normal; }
 .funnel__options--grid .q-option__note { display: none; }
 @media (min-width: 600px) { .funnel__grid, .funnel__options--grid, .q-options--grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 /* plain rows inside one card (payment methods, objections) */
@@ -514,7 +522,8 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 /* ---------- S4: плитки категорий с числом фахівців ---------- */
 .funnel__tile-text { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
 .funnel__tile-count { font-size: 12px; line-height: 1.3; font-weight: 400; color: var(--color-gray-600); }
-@media (min-height: 700px) { .q-option--tile { min-height: 60px; padding: 8px 12px; } }
+@media (min-width: 600px) { .q-option--tile { min-height: 64px; padding: 10px 12px; } .funnel__tile-icon { width: 44px; height: 44px; padding: 11px; } .funnel__tile-text > span:first-child { font-size: 16px; } }
+@media (max-height: 699px) { .q-option--tile { min-height: 44px; } .funnel__tile-icon { width: 30px; height: 30px; padding: 7px; } }
 
 /* ---------- S11: пакети послуг — слайдер карток у стилі екрана підписок застосунку (сині акценти — рішення власника) ---------- */
 .plans { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
