@@ -569,19 +569,36 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 @media (max-height: 699px) { .plan { gap: 8px; padding: 14px; } .plan__amount { font-size: 26px; } .plan__features { font-size: 14px; } }
 .funnel__alt { height: 48px; }
 
-/* ---------- S5: кейсы — лента карток «ситуація → результат» (акцент на кейсах, решение владельца 24.09) ---------- */
-.cases { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
-.cases__track { position: relative; display: flex; gap: 12px; margin: 0 calc(-1 * var(--gutter)); padding: 2px var(--gutter) 6px; min-width: 0; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-.cases__track::-webkit-scrollbar { display: none; }
-.case { display: flex; flex-direction: column; gap: 10px; flex: 0 0 min(86%, 420px); scroll-snap-align: center; padding: 18px; border-radius: var(--radius-card); background: var(--color-gray-100); }
-.case__cat { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; margin: 0; padding: 5px 10px 5px 8px; border-radius: var(--radius-pill); background: var(--color-white); font-size: 12px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-gray-600); }
-.case__cat .icon { width: 14px; height: 14px; color: var(--color-accent); }
-.case__label { margin: 0; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-gray-600); }
-.case__text { margin: 0; font-size: clamp(15px, 3.6vw + 2px, 17px); line-height: 1.35; font-weight: 500; text-wrap: pretty; }
-.case__result { display: flex; align-items: flex-start; gap: 10px; margin-top: 2px; padding: 12px 14px; border-radius: 16px; background: var(--color-white); }
-.case__mark { display: grid; place-items: center; flex-shrink: 0; width: 24px; height: 24px; margin-top: 2px; border-radius: 50%; background: var(--color-accent); color: var(--color-white); }
-.case__mark .icon { width: 14px; height: 14px; }
-.case__result-text { margin: 2px 0 0; font-size: 15px; line-height: 1.35; font-weight: 600; text-wrap: pretty; }
-.plans__dots:empty { display: none; }
-@media (min-width: 600px) { .case { flex-basis: 420px; } }
-@media (max-height: 699px) { .case { gap: 8px; padding: 14px; } .case__result { padding: 10px 12px; } }
+/* ---------- S5: кейсы по макету владельца 24.09 — крупне число, счётчики по категориям, список «ситуація → результат», рейтинги ---------- */
+.cases-head { gap: 6px; }
+.cases-hero { display: flex; align-items: baseline; flex-wrap: wrap; gap: 2px 10px; margin: 0; }
+.cases-hero__num { font-family: var(--font-display); font-size: clamp(36px, 10vw, 48px); font-weight: 800; line-height: 1; letter-spacing: -0.03em; color: var(--color-accent); }
+.cases-hero__label { font-family: var(--font-display); font-size: clamp(18px, 4.6vw, 24px); font-weight: 700; letter-spacing: -0.01em; line-height: 1.2; }
+.funnel__title.cases-hero__title { font-family: var(--font-text); font-size: clamp(15px, 3.6vw + 2px, 17px); font-weight: 400; line-height: 1.5; letter-spacing: 0; color: var(--color-gray-600); }
+.cases-stats { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 8px; margin: 0; padding: 0; list-style: none; }
+.cases-stats[hidden] { display: none; }
+.cases-stat { display: flex; flex-direction: column; gap: 2px; min-width: 0; padding: 10px 12px 10px 14px; border: 1px solid var(--color-gray-300); border-left: 3px solid var(--color-text); border-radius: 14px; background: var(--color-white); }
+.cases-stat strong { font-family: var(--font-display); font-size: 24px; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; }
+.cases-stat span { font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-gray-600); }
+.cases-stat--accent { border-left-color: var(--color-accent); }
+.cases-stat--accent strong { color: var(--color-accent); }
+.cases-sub { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.cases-sub__title { margin: 0; font-family: var(--font-display); font-size: 18px; font-weight: 700; letter-spacing: -0.01em; }
+.cases-list { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.case-row { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; border-radius: var(--radius-card); background: var(--color-gray-100); }
+.case-row__icon { display: grid; place-items: center; flex-shrink: 0; width: 44px; height: 44px; border-radius: 12px; background: var(--color-white); color: var(--color-accent); }
+.case-row__icon .icon { width: 22px; height: 22px; }
+.case-row__body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.case-row__cat { margin: 0; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-accent); }
+.case-row__text { margin: 0; font-size: 15px; font-weight: 600; line-height: 1.3; text-wrap: pretty; }
+.case-row__result { display: inline-flex; align-items: flex-start; gap: 6px; align-self: flex-start; margin: 1px 0 0; padding: 4px 9px 4px 5px; border-radius: 12px; background: var(--color-white); font-size: 12px; font-weight: 600; line-height: 1.3; }
+.case-row__result .icon { box-sizing: border-box; flex-shrink: 0; width: 16px; height: 16px; padding: 3px; border-radius: 50%; background: var(--color-accent); color: var(--color-white); }
+.cases-rating { display: flex; flex-direction: column; gap: 6px; padding: 10px 14px; border-radius: var(--radius-card-dark); background: var(--color-black); color: var(--color-white); }
+.cases-rating__label { margin: 0; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-gray-400); }
+.cases-rating__row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 12px; }
+.cases-rating__item { display: flex; align-items: baseline; gap: 8px; margin: 0; min-width: 0; font-size: 12px; line-height: 1.3; color: var(--color-gray-400); }
+.cases-rating__item .icon { align-self: center; width: 16px; height: 16px; color: var(--color-white); }
+.cases-rating__item strong { font-family: var(--font-display); font-size: 22px; font-weight: 700; letter-spacing: -0.02em; color: var(--color-white); }
+@media (max-height: 899px) { #s5 .q-disclaimer { display: none; } }
+@media (max-height: 699px) { .cases-sub { display: none; } .case-row { padding: 8px 10px; } .case-row__icon { width: 40px; height: 40px; } .case-row__icon .icon { width: 20px; height: 20px; } .case-row__text { font-size: 14px; } .cases-hero__num { font-size: 34px; } .cases-stat { padding: 8px 10px 8px 12px; } .cases-stat strong { font-size: 20px; } .cases-list { gap: 6px; } }
+@media (min-width: 600px) { .cases-list { gap: 8px; } .cases-rating { flex-direction: row; align-items: center; gap: 0 24px; } .cases-rating__row { display: flex; gap: 0 28px; } }

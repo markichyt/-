@@ -234,19 +234,21 @@
     </form>
 
     <!-- ── S5 · Proof №3 — досвід саме в цій категорії (динамічний) ─────── -->
-    <section class="funnel__screen" id="s5" data-screen="s5" aria-labelledby="s5-title" hidden>
-      <div class="funnel__head">
-        <h2 class="funnel__title" id="s5-title" tabindex="-1">Our specialists already handle cases like yours.</h2>
+    <section class="funnel__screen funnel__screen--tight" id="s5" data-screen="s5" aria-labelledby="s5-title" hidden>
+      <div class="funnel__head cases-head">
+        <p class="cases-hero"><strong class="cases-hero__num num" data-s5-total>523</strong><span class="cases-hero__label" data-s5-total-label>cases in the last 12 months</span></p>
+        <h2 class="funnel__title cases-hero__title" id="s5-title" tabindex="-1">Our specialists have already resolved similar cases.</h2>
       </div>
       <!-- число кейсів — показник платформи з бази кейсів сайту за категорією (ТЗ S5), не поле консультанта -->
-      <ul class="funnel__counts" id="s5-counts" data-gate-allow="G10 3.4: число кейсів за категорією з бази кейсів сайту — показник платформи (ТЗ квіза S5), не число справ консультанта"></ul>
-      <div class="cases">
-        <div class="cases__track" id="s5-cases" role="list" aria-label="Case examples"></div>
-        <div class="plans__dots" id="s5-dots" role="tablist" aria-label="Cases"></div>
-      </div>
-      <div class="funnel__stores funnel__hide-short" role="group" aria-label="App ratings in the stores">
-        <p class="funnel__store" data-gate-allow="G10 3.3: кількість відгуків застосунку в App Store — реальні дані магазину (ТЗ S5), не лічильник відгуків консультанта"><svg class="icon" aria-hidden="true"><use href="#i-appstore"></use></svg><strong class="num">4,8</strong> App Store · 592 reviews</p>
-        <p class="funnel__store" data-gate-allow="G10 3.3: кількість відгуків застосунку в Google Play — реальні дані магазину (ТЗ S5), не лічильник відгуків консультанта"><svg class="icon" aria-hidden="true"><use href="#i-googleplay"></use></svg><strong class="num">4,7</strong> Google Play · 1,240 reviews</p>
+      <ul class="cases-stats" id="s5-counts" data-gate-allow="G10 3.4: число кейсів за категорією з бази кейсів сайту — показник платформи (ТЗ квіза S5), не число справ консультанта"></ul>
+      <div class="cases-sub"><h3 class="cases-sub__title">Real results</h3><span class="caption funnel__hide-short">Three examples from practice</span></div>
+      <ul class="cases-list" id="s5-cases" aria-label="Case examples"></ul>
+      <div class="cases-rating funnel__hide-short" role="group" aria-label="App ratings in the stores">
+        <p class="cases-rating__label">User rating</p>
+        <div class="cases-rating__row">
+          <p class="cases-rating__item" data-gate-allow="G10 3.3: кількість відгуків застосунку в App Store — реальні дані магазину (ТЗ S5), не лічильник відгуків консультанта"><svg class="icon" aria-hidden="true"><use href="#i-appstore"></use></svg><strong class="num">4,8</strong><span>App Store · 592 reviews</span></p>
+          <p class="cases-rating__item" data-gate-allow="G10 3.3: кількість відгуків застосунку в Google Play — реальні дані магазину (ТЗ S5), не лічильник відгуків консультанта"><svg class="icon" aria-hidden="true"><use href="#i-googleplay"></use></svg><strong class="num">4,7</strong><span>Google Play · 1,240 reviews</span></p>
+        </div>
       </div>
       <p class="caption q-disclaimer funnel__hint--sm funnel__hide-short">Reviews are left by platform clients. Another person’s experience does not guarantee the same outcome in your case.</p>
     </section>
@@ -644,37 +646,17 @@
     ['business', 'Business', 220, 'i-briefcase'], ['military', 'Military', 275, 'i-shield-alert'], ['criminal', 'Criminal', 130, 'i-scale'],
     ['debt', 'Debt recovery', 118, 'i-coins'], ['other', 'Other', 0, 'i-dots']
   ];
-  var CASES = {
-    family: [['Divorce with property division and child residence', 'Settlement reached on property division and a visitation schedule'],
-             ['Child support recovery after the father moved abroad', 'The court ordered child support in a fixed amount'],
-             ['Grandmother’s guardianship over a grandchild', 'Guardianship granted, benefits received']],
-    general: [['A neighbor flooded the apartment, the insurer refused to pay', 'Compensation recovered out of court'],
-              ['Dispute with the management company over service charges', 'Charges recalculated, debt cancelled'],
-              ['Refusal to provide public information', 'Information provided after a complaint to the ombudsman']],
-    debtor: [['Collectors pressing over an overdue payday loan', 'Late fees ruled unlawful, the amount reduced'],
-             ['The bank sued over a ten-year-old loan', 'The court applied the statute of limitations and dismissed the claim'],
-             ['Enforcement proceedings froze the payroll card', 'The account freeze lifted, a repayment schedule set']],
-    social: [['Pension denied over an uncounted period of work', 'The period counted, pension granted from the application date'],
-             ['Displacement benefits stopped after a change of address', 'Payments resumed together with the arrears'],
-             ['Disability status denied', 'The commission’s decision reviewed, status granted']],
-    migration: [['Residence permit extension after changing employers', 'Permit extended without leaving the country'],
-                ['Family reunification: spouse abroad, husband in the country', 'Long-stay visa and residence permit obtained'],
-                ['Deportation risk over an expired registration', 'The removal order cancelled']],
-    auto: [['Car accident, the at-fault driver has no insurance', 'Damages recovered from the at-fault driver in court'],
-           ['The insurer underpaid after a car accident', 'The payout topped up after an independent appraisal'],
-           ['License suspension for refusing a test', 'The order overturned, the driver’s license kept']],
-    business: [['A counterparty is not paying for delivered goods', 'Debt recovered with penalties and court costs'],
-               ['Tax audit with additional assessments', 'Assessments appealed, the amount reduced'],
-               ['LLC registration with a foreign founder', 'Company registered, bank account opened']],
-    military: [['Draft notice served improperly, a fine from the draft office', 'The fine overturned'],
-               ['Deferment for a caregiver of a person with a disability', 'Deferment granted, the registry updated'],
-               ['Unpaid service allowance after an injury', 'Allowance granted, arrears paid']],
-    criminal: [['Search without a court warrant', 'Evidence ruled inadmissible'],
-               ['Fraud suspicion without proof of intent', 'Case closed for lack of a crime'],
-               ['Detention without notifying counsel', 'Pre-trial detention replaced with a personal undertaking']],
-    debt: [['A loan by IOU, the debtor is not responding', 'Debt recovered, the debtor’s car seized'],
-           ['A tenant is not paying and not vacating', 'Premises returned, debt recovered'],
-           ['Repair deposit not refunded', 'Money refunded with interest']]
+  var CASES = {  // кейси — заголовками, як у макеті власника 24.09 (фікстури до бази кейсів сайту)
+    family: [['Divorce and child residence', 'Settlement and visitation schedule'], ['Child support from a parent abroad', 'Fixed child support awarded'], ['Grandmother’s guardianship of a grandchild', 'Guardianship granted, benefits received']],
+    general: [['Flooded by a neighbour, insurer refused', 'Compensation paid without court'], ['Disputed charges from the building manager', 'Recalculated, debt cancelled'], ['Public information request refused', 'Information provided after a complaint']],
+    debtor: [['Debt collector pressure over a microloan', 'Penalty ruled unlawful, amount reduced'], ['Bank lawsuit over a 10-year-old loan', 'Time-barred, claim dismissed'], ['Salary card frozen by enforcement', 'Freeze lifted, payment schedule set']],
+    social: [['Pension refused over uncounted service', 'Service counted, pension granted'], ['IDP allowance stopped', 'Payments resumed with arrears'], ['Disability status refused', 'Decision reviewed, status granted']],
+    migration: [['Residence permit after changing employer', 'Permit extended without leaving'], ['Family reunification from abroad', 'D visa and residence permit obtained'], ['Deportation risk over registration', 'Removal order cancelled']],
+    auto: [['Accident, the driver at fault had no insurance', 'Damages recovered in court'], ['Insurer underpaid after an accident', 'Topped up after an independent appraisal'], ['Licence suspension for refusing a test', 'Ruling overturned, licence kept']],
+    business: [['Counterparty not paying for goods', 'Debt recovered with penalty and costs'], ['Tax authority assessed extra tax', 'Assessment challenged, amount reduced'], ['LLC with a foreign founder', 'Company registered, account opened']],
+    military: [['Draft office fine without proper service', 'Fine ruling cancelled'], ['Deferment for a carer of a disabled person', 'Deferment granted, registry updated'], ['Unpaid allowance after an injury', 'Payment granted, arrears settled']],
+    criminal: [['Search without a court order', 'Evidence ruled inadmissible'], ['Fraud suspicion without evidence', 'Proceedings closed'], ['Detention without a lawyer', 'Pre-trial measure eased']],
+    debt: [['Debtor went silent', 'Debt recovered, car seized'], ['Tenant not paying or leaving', 'Premises returned, debt recovered'], ['Repair prepayment not returned', 'Money returned with interest']]
   };
   var PEOPLE = [
     ['Basil', 'Chochla', 'Lawyer', 'BC', 'online', 'ko'], ['Dmitry', 'Dubograev', 'Lawyer', 'DD', 'online', 'tm'],
@@ -1246,22 +1228,24 @@
     s5: function (el) {
       var picked = state.categories.filter(function (c) { return c !== 'other'; });
       if (!picked.length) picked = ['general'];
+      picked = picked.slice().sort(function (a, b) { return catOf(b)[2] - catOf(a)[2]; });
+      var total = picked.reduce(function (n, id) { return n + catOf(id)[2]; }, 0);
+      $('[data-s5-total]', el).textContent = nbsp(total);
+      $('[data-s5-total-label]', el).textContent = plural(total, ['case', 'cases', 'cases']) + ' ' + 'in the last 12 months' + (picked.length === 1 ? ' · ' + catOf(picked[0])[1] : '');
       var counts = $('#s5-counts'), cases = $('#s5-cases');
-      counts.innerHTML = picked.map(function (id) {
+      counts.hidden = picked.length < 2;
+      counts.innerHTML = picked.map(function (id, k) {
         var c = catOf(id);
-        return '<li><strong class="num">' + nbsp(c[2]) + '</strong><span>' + plural(c[2], ['case', 'cases', 'cases']) + ' · ' + esc(c[1]) + ' · 12 months' + '</span></li>';
+        return '<li class="cases-stat' + (k === 0 ? ' cases-stat--accent' : '') + '"><strong class="num">' + nbsp(c[2]) + '</strong><span>' + esc(c[1]) + '</span></li>';
       }).join('');
       var pool = [], i = 0;
       while (pool.length < 3 && i < 3) { picked.forEach(function (id) { if (pool.length < 3 && CASES[id][i]) pool.push([id, CASES[id][i]]); }); i++; }
       cases.innerHTML = pool.map(function (x) {
         var c = catOf(x[0]);
-        return '<article class="case" role="listitem">' +
-          '<p class="case__cat"><svg class="icon" aria-hidden="true"><use href="#' + c[3] + '"></use></svg>' + esc(c[1]) + '</p>' +
-          '<p class="case__label">' + 'Situation' + '</p><p class="case__text">' + esc(x[1][0]) + '</p>' +
-          '<div class="case__result"><span class="case__mark" aria-hidden="true"><svg class="icon"><use href="#i-check"></use></svg></span>' +
-          '<div><p class="case__label">' + 'Result' + '</p><p class="case__result-text">' + esc(x[1][1]) + '</p></div></div></article>';
+        return '<li class="case-row"><span class="case-row__icon" aria-hidden="true"><svg class="icon"><use href="#' + c[3] + '"></use></svg></span>' +
+          '<div class="case-row__body"><p class="case-row__cat">' + esc(c[1]) + '</p><p class="case-row__text">' + esc(x[1][0]) + '</p>' +
+          '<p class="case-row__result"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg><span>' + esc(x[1][1]) + '</span></p></div></li>';
       }).join('');
-      railDots(cases, $('#s5-dots'));
     },
     s7: function (el) {
       var q = $('[data-s7-question]', el);
