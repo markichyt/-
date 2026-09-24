@@ -229,12 +229,15 @@
       </div>
       <!-- число кейсів — показник платформи з бази кейсів сайту за категорією (ТЗ S5), не поле консультанта -->
       <ul class="funnel__counts" id="s5-counts" data-gate-allow="G10 3.4: число кейсів за категорією з бази кейсів сайту — показник платформи (ТЗ квіза S5), не число справ консультанта"></ul>
-      <div class="funnel__cases" id="s5-cases"></div>
-      <div class="funnel__stores" role="group" aria-label="Оцінки застосунку в магазинах">
+      <div class="cases">
+        <div class="cases__track" id="s5-cases" role="list" aria-label="Приклади кейсів"></div>
+        <div class="plans__dots" id="s5-dots" role="tablist" aria-label="Кейси"></div>
+      </div>
+      <div class="funnel__stores funnel__hide-short" role="group" aria-label="Оцінки застосунку в магазинах">
         <p class="funnel__store" data-gate-allow="G10 3.3: кількість відгуків застосунку в App Store — реальні дані магазину (ТЗ S5), не лічильник відгуків консультанта"><svg class="icon" aria-hidden="true"><use href="#i-appstore"></use></svg><strong class="num">4,8</strong> App Store · 592 відгуки</p>
         <p class="funnel__store" data-gate-allow="G10 3.3: кількість відгуків застосунку в Google Play — реальні дані магазину (ТЗ S5), не лічильник відгуків консультанта"><svg class="icon" aria-hidden="true"><use href="#i-googleplay"></use></svg><strong class="num">4,7</strong> Google Play · 1&nbsp;240 відгуків</p>
       </div>
-      <p class="caption q-disclaimer funnel__hint--sm">Відгуки залишають клієнти платформи. Досвід іншої людини не гарантує такого самого результату у Вашій справі.</p>
+      <p class="caption q-disclaimer funnel__hint--sm funnel__hide-short">Відгуки залишають клієнти платформи. Досвід іншої людини не гарантує такого самого результату у Вашій справі.</p>
     </section>
 
     <!-- ── S6 · Q3 · Опис ситуації — Крок 3 із 5 ────────────────────────── -->
@@ -1147,6 +1150,18 @@
     later(function () { if (onDone) onDone(items); }, stepMs * items.length);
   }
   function reveal(el, on) { if (el) el.classList.toggle('is-visible', on !== false); }
+  /* горизонтальная лента карточек: точки-пагинация, активная — ближайшая к центру */
+  function railDots(rail, dots) {
+    var cards = [].slice.call(rail.children);
+    dots.innerHTML = cards.length > 1 ? cards.map(function (c, i) { return '<button class="plans__dot" type="button" role="tab" aria-label="' + (i + 1) + '" data-i="' + i + '"></button>'; }).join('') : '';
+    var ds = [].slice.call(dots.children);
+    function rel(c) { return rail.scrollLeft + c.getBoundingClientRect().left - rail.getBoundingClientRect().left; }
+    function current() { var mid = rail.scrollLeft + rail.clientWidth / 2, best = 0, d = Infinity; cards.forEach(function (c, i) { var dd = Math.abs(rel(c) + c.clientWidth / 2 - mid); if (dd < d) { d = dd; best = i; } }); return best; }
+    function mark() { var i = current(); ds.forEach(function (x, k) { x.classList.toggle('is-on', k === i); x.setAttribute('aria-selected', k === i ? 'true' : 'false'); }); }
+    ds.forEach(function (x) { x.addEventListener('click', function () { var c = cards[+x.dataset.i], left = rel(c) - (rail.clientWidth - c.clientWidth) / 2; if (rail.scrollTo && !reduce.matches) rail.scrollTo({ left: left, behavior: 'smooth' }); else rail.scrollLeft = left; }); });
+    if (!rail.dataset.railBound) { rail.dataset.railBound = '1'; var raf = 0; rail.addEventListener('scroll', function () { if (raf) return; raf = requestAnimationFrame(function () { raf = 0; if (rail._mark) rail._mark(); }); }, { passive: true }); }
+    rail._mark = mark; rail.scrollLeft = 0; mark();
+  }
 
   (function initGeo() {
     if (!GEO) return; var land = $('[data-geo-land]'), dots = $('[data-geo-dots]'); if (!land) return;
@@ -1227,14 +1242,15 @@
       }).join('');
       var pool = [], i = 0;
       while (pool.length < 3 && i < 3) { picked.forEach(function (id) { if (pool.length < 3 && CASES[id][i]) pool.push([id, CASES[id][i]]); }); i++; }
-      cases.innerHTML = pool.map(function (x, k) {
+      cases.innerHTML = pool.map(function (x) {
         var c = catOf(x[0]);
-        return '<article class="funnel__case' + (k >= 1 ? ' funnel__hide-short' : '') + (k >= 2 ? ' funnel__hide-mid' : '') + '">' +
-          '<span class="funnel__icon" aria-hidden="true"><svg class="icon"><use href="#' + c[3] + '"></use></svg></span>' +
-          '<p class="funnel__case-cat">' + esc(c[1]) + '</p>' +
-          '<p class="funnel__case-text">' + esc(x[1][0]) + '</p>' +
-          '<p class="funnel__case-result">' + 'Результат: ' + esc(x[1][1]) + '</p></article>';
+        return '<article class="case" role="listitem">' +
+          '<p class="case__cat"><svg class="icon" aria-hidden="true"><use href="#' + c[3] + '"></use></svg>' + esc(c[1]) + '</p>' +
+          '<p class="case__label">' + 'Ситуація' + '</p><p class="case__text">' + esc(x[1][0]) + '</p>' +
+          '<div class="case__result"><span class="case__mark" aria-hidden="true"><svg class="icon"><use href="#i-check"></use></svg></span>' +
+          '<div><p class="case__label">' + 'Результат' + '</p><p class="case__result-text">' + esc(x[1][1]) + '</p></div></div></article>';
       }).join('');
+      railDots(cases, $('#s5-dots'));
     },
     s7: function (el) {
       var q = $('[data-s7-question]', el);

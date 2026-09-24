@@ -568,3 +568,20 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 @media (max-height: 899px) { .plans__cancel, #s11 .q-disclaimer { display: none; } .plans { gap: 8px; } }
 @media (max-height: 699px) { .plan { gap: 8px; padding: 14px; } .plan__amount { font-size: 26px; } .plan__features { font-size: 14px; } }
 .funnel__alt { height: 48px; }
+
+/* ---------- S5: кейсы — лента карток «ситуація → результат» (акцент на кейсах, решение владельца 24.09) ---------- */
+.cases { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.cases__track { position: relative; display: flex; gap: 12px; margin: 0 calc(-1 * var(--gutter)); padding: 2px var(--gutter) 6px; min-width: 0; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.cases__track::-webkit-scrollbar { display: none; }
+.case { display: flex; flex-direction: column; gap: 10px; flex: 0 0 min(86%, 420px); scroll-snap-align: center; padding: 18px; border-radius: var(--radius-card); background: var(--color-gray-100); }
+.case__cat { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; margin: 0; padding: 5px 10px 5px 8px; border-radius: var(--radius-pill); background: var(--color-white); font-size: 12px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-gray-600); }
+.case__cat .icon { width: 14px; height: 14px; color: var(--color-accent); }
+.case__label { margin: 0; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-gray-600); }
+.case__text { margin: 0; font-size: clamp(15px, 3.6vw + 2px, 17px); line-height: 1.35; font-weight: 500; text-wrap: pretty; }
+.case__result { display: flex; align-items: flex-start; gap: 10px; margin-top: 2px; padding: 12px 14px; border-radius: 16px; background: var(--color-white); }
+.case__mark { display: grid; place-items: center; flex-shrink: 0; width: 24px; height: 24px; margin-top: 2px; border-radius: 50%; background: var(--color-accent); color: var(--color-white); }
+.case__mark .icon { width: 14px; height: 14px; }
+.case__result-text { margin: 2px 0 0; font-size: 15px; line-height: 1.35; font-weight: 600; text-wrap: pretty; }
+.plans__dots:empty { display: none; }
+@media (min-width: 600px) { .case { flex-basis: 420px; } }
+@media (max-height: 699px) { .case { gap: 8px; padding: 14px; } .case__result { padding: 10px 12px; } }
