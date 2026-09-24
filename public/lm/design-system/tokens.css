@@ -18,7 +18,7 @@
   /* type */
   --font-display: 'Manrope', system-ui, -apple-system, sans-serif;
   --font-text: 'Onest', system-ui, -apple-system, sans-serif;
-  --font-brand: 'Consultant Display', 'Bicubik', sans-serif;   /* optional logo face, see DESIGN-SYSTEM.md §4 */
+  --font-brand: 'Consultant Display', 'Bicubik', sans-serif;   /* brand face: tier chips, caps labels, big figures — DESIGN-SYSTEM.md §4 */
 
   /* radius — images are always sharp */
   --radius-image: 0;
@@ -42,3 +42,4 @@
 }
 @font-face { font-family: 'Consultant Display'; font-weight: 400; font-style: normal; font-display: swap; src: url(assets/fonts/ConsultantDisplay-Regular.woff2) format('woff2'); }
 @font-face { font-family: 'Consultant Display'; font-weight: 700; font-style: normal; font-display: swap; src: url(assets/fonts/ConsultantDisplay-Bold.woff2) format('woff2'); }
+@font-face { font-family: 'Bicubik'; font-weight: 400; font-style: normal; font-display: swap; src: url(assets/fonts/Bicubik.woff2) format('woff2'); }

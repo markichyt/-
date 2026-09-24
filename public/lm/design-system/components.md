@@ -156,6 +156,11 @@
 ## Чипы, лейблы, live-точка, картинка
 ```html
 <span class="chip"><span class="dot"></span>Manager online</span>
+<span class="chip chip--tier">PRO</span>
+<span class="chip chip--tier" data-tier="premium">PREMIUM</span>
 <span class="label">Services</span>
+<span class="t-brand-num" style="font-size:44px">3 500+</span>
 <figure class="image image--bw" style="aspect-ratio:16/9"><img src="assets/images/hero-lawyer-bw.png" alt="A lawyer reviewing documents"></figure>
 ```
+
+Метки уровней (`.chip--tier`), лейблы капсом (`.label`) и крупные цифры (`.stat`, `.t-brand-num`) набираются фирменным шрифтом `--font-brand` — правило §4 дизайн-системы; в тексте, кнопках и заголовках-предложениях он не используется.

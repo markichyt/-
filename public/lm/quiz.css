@@ -602,3 +602,9 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 @media (max-height: 899px) { #s5 .q-disclaimer { display: none; } }
 @media (max-height: 699px) { .cases-sub { display: none; } .case-row { padding: 8px 10px; } .case-row__icon { width: 40px; height: 40px; } .case-row__icon .icon { width: 20px; height: 20px; } .case-row__text { font-size: 14px; } .cases-hero__num { font-size: 34px; } .cases-stat { padding: 8px 10px 8px 12px; } .cases-stat strong { font-size: 20px; } .cases-list { gap: 6px; } }
 @media (min-width: 600px) { .cases-list { gap: 8px; } .cases-rating { flex-direction: row; align-items: center; gap: 0 24px; } .cases-rating__row { display: flex; gap: 0 28px; } }
+
+/* ---------- фирменный шрифт микроэлементов (дизайн-система v1.1 §4) ---------- */
+.q-tier, .plan__name, .funnel__card-label, .cases-rating__label, .cases-stat span, .case-row__cat, .funnel__stage-num { font-family: var(--font-brand); font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase; }
+.plan__name { font-size: 18px; }
+.funnel__bignum, .cases-hero__num, .cases-stat strong, .cases-rating__item strong, .plan__amount, .mq__badge { font-family: var(--font-brand); font-weight: 700; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+.mq__badge { font-size: 10px; letter-spacing: 0; }
