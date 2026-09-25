@@ -608,6 +608,7 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 .plan__name { font-size: 18px; }
 .funnel__bignum, .cases-hero__num, .cases-stat strong, .cases-rating__item strong, .plan__amount, .mq__badge { font-family: var(--font-brand); font-weight: 700; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
 .mq__badge { font-size: 10px; letter-spacing: 0; }
-.cases-rating__store { font-weight: 600; color: var(--color-white); }
-.cases-rating__meta { display: flex; flex-direction: column; gap: 1px; line-height: 1.25; }
-.cases-rating__meta small { font-size: 12px; white-space: nowrap; }
+.cases-rating__store { font-size: 15px; font-weight: 600; color: var(--color-white); }
+.cases-rating__meta { display: flex; flex-direction: column; gap: 2px; line-height: 1.25; }
+.cases-rating__meta small { font-size: 13px; color: var(--color-gray-300); white-space: nowrap; }
+@media (min-width: 600px) { .cases-rating__meta { display: block; } .cases-rating__meta small { margin-left: 6px; } .cases-rating__meta small::before { content: "· "; } }
