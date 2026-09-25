@@ -608,3 +608,4 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 .plan__name { font-size: 18px; }
 .funnel__bignum, .cases-hero__num, .cases-stat strong, .cases-rating__item strong, .plan__amount, .mq__badge { font-family: var(--font-brand); font-weight: 700; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
 .mq__badge { font-size: 10px; letter-spacing: 0; }
+.cases-rating__store { font-weight: 600; color: var(--color-white); }
