@@ -1,4 +1,4 @@
-// Відеотуторіал для фінального екрана S16: домашній екран → App Store → встановлення → перший екран застосунку →
+// Відеотуторіал для фінального екрана S16: сторінка в App Store → встановлення → перший екран застосунку →
 // авторизація за номером (клавіатура) → код із SMS → «Мої замовлення» → своє питання з відповідями (цикл). uk і en.
 // Екрани 1, 2, 3, 9, 10 — з демо реального інтерфейсу; App Store, авторизація і код — накладки за реальними скринами застосунку (29.09.2026).
 // Логотип скрізь латиницею: consultant-lm_logo_en_on-dark_R.svg (uk) / _TM (en). Запуск: node tools/render-install-video.mjs → assets/app/install-<loc>.mp4|webm|jpg
@@ -12,7 +12,7 @@ const LOGO = (f) => 'file://' + path.join(ROOT, 'design-system/assets/logo', f);
 const TEXT = {
   uk: {
     lockup: LOGO('consultant-lm_logo_en_on-dark_R.svg'), sign: LOGO('consultant-lm_logo_sign_on-dark_clean.svg'),
-    orders: 'Мої замовлення', chips: ['Консультації', 'Документи', 'Послуги', 'Перевірки'], status: 'Статус:', order: 'Замовити послугу', best: 'Найкраща відповідь', fresh: 'Нове',
+    yourQ: 'Ваше питання', orders: 'Мої замовлення', chips: ['Консультації', 'Документи', 'Послуги', 'Перевірки'], status: 'Статус:', order: 'Замовити послугу', best: 'Найкраща відповідь', fresh: 'Нове',
     store: { back: 'Пошук', title: 'ConsultantLM', sub: 'Юридичний маркетплейс', get: 'ОТРИМАТИ', open: 'ВІДКРИТИ', meta: [['4,8', '592 оцінки'], ['4+', 'Вік'], ['Юридичні', 'Категорія']],
       preview: 'Попередній перегляд', desc: 'Безкоштовний AI-аналіз ситуації, відповіді кількох юристів, послуги з етапами та точною ціною.', tabs: ['Сьогодні', 'Ігри', 'Застосунки', 'Arcade', 'Пошук'] },
     hero: { tag: 'Юрист завжди поруч!', pills: ['Індивідуальні консультації', 'Завантажити документ', 'Замовити послугу', 'Обрати фахівця'] },
@@ -31,7 +31,7 @@ const TEXT = {
       { band: 'PREMIUM', score: '42.28', name: 'Молчанов Олег', role: 'Адвокат', loc: 'Київ, Україна', ts: '01.07.2026, 19:10', photo: RP('mo'), text: 'Радив би одразу готувати позов: зафіксуйте доходи та майно, зберіть докази участі у вихованні — це посилить позицію.' } ] },
   en: {
     lockup: LOGO('consultant-lm_logo_en_on-dark_TM.svg'), sign: LOGO('consultant-lm_logo_sign_on-dark_clean.svg'),
-    orders: 'My orders', chips: ['Consultations', 'Documents', 'Services', 'Checks'], status: 'Status:', order: 'Order the service', best: 'Best answer', fresh: 'New',
+    yourQ: 'Your question', orders: 'My orders', chips: ['Consultations', 'Documents', 'Services', 'Checks'], status: 'Status:', order: 'Order the service', best: 'Best answer', fresh: 'New',
     store: { back: 'Search', title: 'ConsultantLM', sub: 'Legal marketplace', get: 'GET', open: 'OPEN', meta: [['4.8', '592 ratings'], ['4+', 'Age'], ['Legal', 'Category']],
       preview: 'Preview', desc: 'Free AI analysis of your situation, answers from several lawyers, services with stages and exact prices.', tabs: ['Today', 'Games', 'Apps', 'Arcade', 'Search'] },
     hero: { tag: 'A lawyer is always there for you!', pills: ['Individual consultations', 'Download document', 'Order the service', 'Select specialist'] },
@@ -50,12 +50,14 @@ const TEXT = {
       { band: 'PREMIUM', score: '42.28', name: 'Oleh Molchanov', role: 'Attorney', loc: 'Kyiv, Ukraine', ts: '07/01/2026, 19:10', photo: RP('mo'), text: 'I would prepare a claim right away: document income and assets and collect proof of your role in raising the children.' } ] }
 };
 const FPS = 30;
-const PLAN = [['home', 24], ['tapstore', 15], ['storein', 12], ['store', 30], ['tapget', 12], ['progress', 42], ['open', 15], ['tapopen', 12], ['splash', 15], ['heroin', 12], ['hero', 33], ['taptab', 15],
-  ['authin', 12], ['typing', 42], ['tapcode', 12], ['codein', 12], ['code', 36], ['tapauth', 12], ['listin', 15], ['list', 27], ['tap', 15], ['in', 15], ['hold', 24], ['scroll', 84], ['hold2', 30], ['fadeout', 15]];
-const STAGE = { home: 0, tapstore: 0, storein: 1, store: 1, tapget: 1, progress: 1, open: 1, tapopen: 1, splash: 2, heroin: 3, hero: 3, taptab: 3, authin: 4, typing: 4, tapcode: 4, codein: 5, code: 5, tapauth: 5, listin: 6, list: 6, tap: 6, in: 7, hold: 7, scroll: 7, hold2: 7, fadeout: 7 };
+const PLAN = [['store', 36], ['tapget', 12], ['progress', 42], ['open', 15], ['tapopen', 12], ['splash', 15], ['heroin', 12], ['hero', 33], ['taptab', 15],
+  ['authin', 12], ['typing', 42], ['tapcode', 12], ['codein', 12], ['code', 36], ['tapauth', 12], ['listin', 15], ['list', 48], ['tap', 15], ['in', 15], ['hold', 24], ['scroll', 84], ['hold2', 30], ['fadeout', 15]];
+const STAGE = { store: 1, tapget: 1, progress: 1, open: 1, tapopen: 1, splash: 2, heroin: 3, hero: 3, taptab: 3, authin: 4, typing: 4, tapcode: 4, codein: 5, code: 5, tapauth: 5, listin: 6, list: 6, tap: 6, in: 7, hold: 7, scroll: 7, hold2: 7, fadeout: 7 };
 const CSS = `*, *::before, *::after { transition: none !important; animation: none !important; }
 .s9__list { position:absolute; top:128px; left:20px; right:20px; bottom:112px; display:grid; gap:12px; align-content:start; }
 .s9__list .s9__card { position:relative; top:auto; left:auto; right:auto; bottom:auto; }
+.s9__spot { position:absolute; border-radius:16px; box-shadow: 0 0 0 9999px rgba(0,0,0,.6); z-index:50; opacity:0; pointer-events:none; }
+.s9__label { position:absolute; left:0; right:0; z-index:51; display:grid; justify-items:center; gap:6px; color:#fff; font-size:30px; font-weight:800; letter-spacing:-.3px; text-align:center; opacity:0; pointer-events:none; } .s9__label svg { width:34px; height:34px; }
 .s9__fresh { position:absolute; right:14px; bottom:14px; padding:3px 9px; border-radius:999px; background:#1097D8; color:#fff; font-size:11px; font-weight:700; letter-spacing:.3px; }
 .tabbar { height: 108.6px !important; background: #fff url(file:///Users/mac/consultantlm-quiz/assets/app/tabbar@2x.png) top center / 100% auto no-repeat !important; }
 .tabbar .badge, .tabbar__home, .ua-flag { display: none !important; }
@@ -176,7 +178,11 @@ for (const loc of (process.env.ONLY ? [process.env.ONLY] : Object.keys(TEXT))) {
     on(st); const getXY = rel(q(st, '[data-get]').getBoundingClientRect()); off(st);
     on(au); const codeXY = rel(q(au, '[data-btn]').getBoundingClientRect()); off(au);
     on(cd); const authXY = rel(q(cd, '[data-btn]').getBoundingClientRect()); off(cd);
-    on(s9); const cardXY = rel(list.firstElementChild.getBoundingClientRect()); off(s9);
+    on(s9); const cr = list.firstElementChild.getBoundingClientRect(), cardXY = rel(cr);
+    const spot = document.createElement('div'); spot.className = 's9__spot'; Object.assign(spot.style, { left: (cr.left - R.left) + 'px', top: (cr.top - R.top) + 'px', width: cr.width + 'px', height: cr.height + 'px' }); s9.appendChild(spot);
+    const lab = document.createElement('div'); lab.className = 's9__label'; lab.style.top = (cr.bottom - R.top + 22) + 'px';
+    lab.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V5M5 12l7-7 7 7"/></svg><span>' + T.yourQ + '</span>'; s9.appendChild(lab);
+    off(s9);
     on(s10); const maxY = inner.scrollHeight - q(s10, '.s10__scroll').clientHeight; off(s10);
     return { storeXY, getXY, codeXY, authXY, cardXY, tabXY: [R.width * 0.14, R.height - 108.6 * 0.62], maxY, W: R.width };
   }, T);
@@ -197,16 +203,15 @@ for (const loc of (process.env.ONLY ? [process.env.ONLY] : Object.keys(TEXT))) {
       const fmt = (d) => { const out = []; let i = 0; for (const gs of T.auth.groups) { if (i >= d.length) break; out.push(d.slice(i, i + gs)); i += gs; } return out.join(' '); };
       const getBtn = q(st, '[data-get]'), ring = q(st, '[data-ring]'), arc = q(st, '[data-arc]');
       tap.style.opacity = '0'; dim2.style.opacity = '0';
-      show(s1, stage <= 1); show(st, stage >= 1 && stage <= 2, 40); show(s2, stage === 2, 45); show(s3, stage >= 3 && stage <= 4, 46); show(au, stage >= 4 && stage <= 5, 47); show(cd, stage >= 5 && stage <= 6, 48); show(s9, stage >= 6, 50); show(s10, stage >= 7, 55);
+      show(s1, false); show(st, stage >= 1 && stage <= 2, 40); show(s2, stage === 2, 45); show(s3, stage >= 3 && stage <= 4, 46); show(au, stage >= 4 && stage <= 5, 47); show(cd, stage >= 5 && stage <= 6, 48); show(s9, stage >= 6, 50); show(s10, stage >= 7, 55);
       // скидання трансформацій
       st.style.transform = 'none'; st.style.borderRadius = '0'; tx(s3, 0); tx(au, 0); tx(cd, 0); if (stage < 7) { push(0); inner.style.transform = 'translateY(0)'; } if (stage < 6) tx(s9, 0);
-      if (ph === 'tapstore') tapAt(g.storeXY, t);
-      if (ph === 'storein') { st.style.transform = 'scale(' + (0.86 + 0.14 * eo(t)) + ')'; st.style.opacity = String(eo(t)); st.style.borderRadius = (38 * (1 - eo(t))) + 'px'; }
       const installed = ['open', 'tapopen', 'splash'].includes(ph); getBtn.textContent = installed ? T.store.open : T.store.get;
       if (ph === 'progress') { getBtn.style.display = 'none'; ring.style.display = 'block'; arc.setAttribute('stroke-dashoffset', String(84.8 * (1 - eio(t)))); } else { getBtn.style.display = 'grid'; ring.style.display = 'none'; }
       if (ph === 'tapget' || ph === 'tapopen') tapAt(g.getXY, t);
       if (ph === 'splash') { s2.style.opacity = String(Math.min(1, t * 3)); const m = q(s2, '.mark'); m.style.transform = 'translate(-50%,-50%) scale(' + (0.92 + 0.08 * eo(t)) + ')'; }
-      if (ph === 'heroin') { show(s2, true, 45); s3.style.opacity = String(eo(t)); }
+      const mark = q(s2, '.mark'); mark.style.opacity = '1';
+      if (ph === 'heroin') { show(s2, true, 45); mark.style.opacity = String(1 - Math.min(1, t * 2)); s3.style.opacity = String(eo(t)); }  /* заставка гасне раніше, ніж проявиться перший екран */
       if (ph === 'taptab') tapAt(g.tabXY, t);
       const kbA = q(au, '[data-kb]'), kbC = q(cd, '[data-kb]');
       if (ph === 'authin') { const k = eo(t); tx(au, W * (1 - k)); tx(s3, -0.28 * W * k); kbA.style.transform = 'translateY(330px)'; }
@@ -217,6 +222,8 @@ for (const loc of (process.env.ONLY ? [process.env.ONLY] : Object.keys(TEXT))) {
       if (stage === 5) { kbC.style.transform = 'translateY(0)'; const cells = cd.querySelectorAll('[data-cell]'); const nC = ph === 'code' ? Math.min(4, Math.floor(t * 5)) : (ph === 'codein' ? 0 : 4); cells.forEach((c, i) => { c.textContent = i < nC ? T.auth.code[i] : ''; c.classList.toggle('on', i === nC); }); }
       if (ph === 'tapauth') tapAt(g.authXY, t);
       if (ph === 'listin') { const k = eo(t); tx(s9, W * (1 - k)); tx(cd, -0.28 * W * k); }
+      const spot = q(s9, '.s9__spot'), lab = q(s9, '.s9__label'); let sp = 0; if (ph === 'list') sp = eo(Math.min(1, t * 2.2)); else if (ph === 'tap') sp = 1;
+      spot.style.opacity = String(sp); lab.style.opacity = String(sp); lab.style.transform = 'translateY(' + (12 * (1 - sp)) + 'px)';
       if (ph === 'tap') tapAt(g.cardXY, t);
       if (ph === 'in') push(eo(t));
       if (ph === 'hold') push(1);
