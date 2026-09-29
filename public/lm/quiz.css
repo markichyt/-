@@ -306,9 +306,8 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
   .funnel__screen--entry .funnel__stage { grid-column: 2; grid-row: 1 / -1; align-self: stretch; height: auto; min-height: 360px; }
   .funnel__screen--entry .funnel__head { grid-column: 1; grid-row: 2; }
   .funnel__screen--entry .funnel__points { grid-column: 1; grid-row: 3; }
-  .is-entry .funnel__row { justify-content: flex-start; }
+  .is-entry .funnel__row { justify-content: center; }  /* десктоп: кнопка і підпис по центру (побажання власника 29.09) */
   .is-entry .funnel__next { flex: 0 1 auto; min-width: 320px; }
-  .is-entry .funnel__note { text-align: left; }
 }
 @media (min-width: 900px) and (min-height: 700px) {
   .funnel__screen:not(.funnel__screen--entry) > :first-child { margin-top: auto; }
