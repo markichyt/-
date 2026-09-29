@@ -690,3 +690,24 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 .funnel__terms { display: grid; gap: 6px; }
 .funnel__terms p { margin: 0; font-size: 12px; line-height: 1.45; color: var(--color-gray-600); text-wrap: pretty; }
 .funnel__terms a { color: inherit; font-weight: 500; text-decoration: underline; text-underline-offset: 2px; }
+
+/* S13 — картка пакета в стилі VIP-картки: тёмна, золота рамка, велика ціна, яскраві пункти (побажання власника 29.09) */
+.funnel__pay { gap: 10px; padding: 18px 20px; border: 1px solid var(--color-star); background: var(--color-text); color: var(--color-white); }
+.funnel__pay-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.funnel__pay .funnel__card-label { color: var(--color-gray-300); }
+.funnel__pay .q-tier { background: transparent; border-color: var(--color-dark-border-strong); color: var(--color-white); }
+.funnel__pay .q-tier[data-tier="premium"] { background: var(--color-white); border-color: var(--color-white); color: var(--color-text); }
+.funnel__pay-price { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 10px; margin: 0; }
+.funnel__pay-price strong { font-family: var(--font-brand); font-weight: 700; font-size: clamp(40px, 11vw, 52px); line-height: 1; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+.funnel__pay-price span { font-size: 15px; color: var(--color-gray-300); }
+.funnel__pay-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 6px 16px; }
+.funnel__pay-row .funnel__pay-price { flex: 1 1 auto; min-width: 0; }
+.funnel__pay-disc { flex: 0 0 auto; }
+.funnel__pay-disc { display: grid; justify-items: end; gap: 2px; margin: 0; text-align: right; }
+.funnel__pay-disc strong { font-family: var(--font-brand); font-weight: 700; font-size: clamp(34px, 9vw, 44px); line-height: 1; letter-spacing: -0.01em; color: var(--color-star); font-variant-numeric: tabular-nums; }
+.funnel__pay-disc small { font-size: 12px; line-height: 1.3; color: var(--color-gray-300); }
+.funnel__pay-points { list-style: none; margin: 0; padding: 12px 0 0; border-top: 1px solid var(--color-dark-border-strong); display: grid; gap: 8px; font-size: 14px; line-height: 1.4; }
+.funnel__pay-points li { display: flex; align-items: flex-start; gap: 10px; }
+.funnel__pay-points .icon { flex-shrink: 0; width: 18px; height: 18px; margin-top: 1px; color: var(--color-star); }
+.funnel__pay-points li:first-child { font-weight: 600; }
+@media (max-height: 699px) { .funnel__pay { gap: 8px; padding: 14px 16px; } .funnel__pay-price strong { font-size: 36px; } .funnel__pay-disc strong { font-size: 30px; } .funnel__pay-points { gap: 5px; padding-top: 8px; font-size: 13px; } }

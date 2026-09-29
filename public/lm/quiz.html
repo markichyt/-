@@ -466,15 +466,21 @@
           </div>
         </div>
       </div>
-      <article class="funnel__card funnel__summary" aria-labelledby="s13-summary-title">
-        <p class="funnel__card-label" id="s13-summary-title">Ваш пакет</p>
-        <dl>
-          <dt>Пакет</dt><dd><span data-s13-plan>PRO</span> · <span class="num" data-s13-discount>10&nbsp;%</span></dd>
-          <dt>Номер для акаунта</dt><dd class="num" data-s13-phone>+380 67 123 45 67</dd>
-          <dt>Період</dt><dd data-s13-period>1 місяць</dd>
-          <dt>До сплати сьогодні</dt><dd class="num" data-s13-total>410&nbsp;₴</dd>
-          <dt>Наступне списання</dt><dd class="num" data-s13-next>29.10.2026</dd>
-        </dl>
+      <article class="funnel__card funnel__pay" aria-labelledby="s13-summary-title">
+        <div class="funnel__pay-top">
+          <p class="funnel__card-label" id="s13-summary-title">Ваш пакет</p>
+          <span class="chip chip--sm q-tier" data-tier="pro" data-s13-chip><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="14" width="4" height="7" rx="1"/><rect x="10" y="9" width="4" height="12" rx="1"/><rect x="17" y="4" width="4" height="17" rx="1"/></svg><span data-s13-plan>PRO</span></span>
+        </div>
+        <div class="funnel__pay-row">
+          <p class="funnel__pay-price"><strong class="num" data-s13-total>410&nbsp;₴</strong><span data-s13-period>/ 1 місяць</span></p>
+          <p class="funnel__pay-disc"><strong class="num"><span data-s13-disc>−10&nbsp;%</span></strong><small>знижка на всі послуги</small></p>
+        </div>
+        <ul class="funnel__pay-points">
+          <li><svg class="icon" aria-hidden="true"><use href="#i-coins"></use></svg><span data-s13-save>Загальна економія від 5&nbsp;972&nbsp;₴</span></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Скасувати можна будь-коли — без пояснень і штрафів</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-shield"></use></svg>Безпечна оплата — дані картки не зберігаються</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-bolt"></use></svg>Пакет активується одразу після оплати</li>
+        </ul>
       </article>
       <fieldset class="funnel__methods">
         <legend class="sr-only sr-only">Спосіб оплати</legend>
@@ -1275,16 +1281,15 @@
     s11: function () { if (PLANS_ENTER) PLANS_ENTER(); },
     s12: function () { track('membership_offer_result', { membership_choice: state.branch }); },
     s13: function (el) {
-      var p = state.plan || (L.plans && L.plans[1]) || { name: 'PRO', price: 410, discount: 10 };
-      $('[data-s13-plan]', el).textContent = p.name;
-      $('[data-s13-discount]', el).textContent = p.discount + ' %';
-      var yearly = p.period === 'year', fee = yearly && p.year ? p.year : p.price, next = new Date();
+      var p = state.plan || (L.plans && L.plans[1]) || { id: 'pro', name: 'PRO', price: 410, discount: 10 };
+      var full = (L.plans || []).filter(function (x) { return x.id === p.id; })[0] || {};
+      var yearly = p.period === 'year', fee = p.price, next = new Date();
       if (yearly) next.setFullYear(next.getFullYear() + 1); else next.setMonth(next.getMonth() + 1);
-      function dd(n) { return (n < 10 ? '0' : '') + n; }
-      var nextTxt = L.lang === 'en' ? dd(next.getMonth() + 1) + '/' + dd(next.getDate()) + '/' + next.getFullYear() : dd(next.getDate()) + '.' + dd(next.getMonth() + 1) + '.' + next.getFullYear();
-      $('[data-s13-total]', el).textContent = money(fee);
-      $('[data-s13-period]', el).textContent = yearly ? '1 рік' : '1 місяць'; $('[data-s13-period2]', el).textContent = yearly ? '1 рік' : '1 місяць';
-      $('[data-s13-next]', el).textContent = nextTxt; $('[data-s13-plan2]', el).textContent = p.name; $('[data-s13-price2]', el).textContent = money(fee);
+      $('[data-s13-plan]', el).textContent = p.name; $('[data-s13-chip]', el).setAttribute('data-tier', p.id || 'pro');
+      $('[data-s13-total]', el).textContent = money(fee); $('[data-s13-period]', el).textContent = yearly ? '/ 1 рік' : '/ 1 місяць';
+      $('[data-s13-disc]', el).textContent = '−' + p.discount + ' %';
+      var save = $('[data-s13-save]', el); save.parentNode.hidden = !(full.savings && full.savings.total); if (full.savings && full.savings.total) save.textContent = full.savings.total;
+      $('[data-s13-period2]', el).textContent = yearly ? '1 рік' : '1 місяць'; $('[data-s13-plan2]', el).textContent = p.name; $('[data-s13-price2]', el).textContent = money(fee);
       $('[data-s13-cadence]', el).textContent = yearly ? 'щороку' : 'щомісяця';
       $('#s13-error').hidden = !state.payFail;
       track('checkout_view', { membership_plan: p.id || 'standard' });
