@@ -684,3 +684,9 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
   .is-final .funnel__row { justify-content: center; }
   .is-final .funnel__next { flex: 0 1 auto; min-width: 320px; }
 }
+
+/* S13 — рядки способів оплати без синьої рамки (лише позначка), дрібний друк умов підписки */
+.funnel__methods .q-option:has(:checked), .dq__objections .q-option:has(:checked) { border-color: var(--color-gray-300); box-shadow: none; }
+.funnel__terms { display: grid; gap: 6px; }
+.funnel__terms p { margin: 0; font-size: 12px; line-height: 1.45; color: var(--color-gray-600); text-wrap: pretty; }
+.funnel__terms a { color: inherit; font-weight: 500; text-decoration: underline; text-underline-offset: 2px; }

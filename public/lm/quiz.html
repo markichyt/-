@@ -454,7 +454,7 @@
     <form class="funnel__screen" id="s13" data-screen="s13" aria-labelledby="s13-title" novalidate hidden>
       <div class="funnel__head">
         <h2 class="funnel__title" id="s13-title" tabindex="-1">Оплата пакета послуг</h2>
-        <p class="funnel__hint funnel__hint--sm funnel__hide-short">Ваше питання вже створено — оплата не впливає на безкоштовний аналіз.</p>
+        <p class="funnel__hint funnel__hint--sm funnel__hide-short funnel__hide-mid">Ваше питання вже створено — оплата не впливає на безкоштовний аналіз.</p>
       </div>
       <div class="q-alert" role="alert" tabindex="-1" id="s13-error" hidden>
         <svg class="q-alert__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg>
@@ -471,7 +471,9 @@
         <dl>
           <dt>Пакет</dt><dd><span data-s13-plan>PRO</span> · <span class="num" data-s13-discount>10&nbsp;%</span></dd>
           <dt>Номер для акаунта</dt><dd class="num" data-s13-phone>+380 67 123 45 67</dd>
+          <dt>Період</dt><dd data-s13-period>1 місяць</dd>
           <dt>До сплати сьогодні</dt><dd class="num" data-s13-total>410&nbsp;₴</dd>
+          <dt>Наступне списання</dt><dd class="num" data-s13-next>29.10.2026</dd>
         </dl>
       </article>
       <fieldset class="funnel__methods">
@@ -489,7 +491,12 @@
           <span class="q-option__label">Google Pay</span>
         </label>
       </fieldset>
-      <p class="caption q-disclaimer funnel__hint--sm">Розрахунок є орієнтовним і не є публічною офертою. Остаточну вартість консультант називає до початку роботи.</p>
+      <div class="funnel__terms" aria-label="Умови підписки">
+        <p class="caption">Підписка: пакет <strong data-s13-plan2>PRO</strong> на <span data-s13-period2>1 місяць</span> — <strong class="num" data-s13-price2>410&nbsp;₴</strong>. Подовжується автоматично <span data-s13-cadence>щомісяця</span> за тією ж ціною, поки Ви її не скасуєте.</p>
+        <p class="caption">Скасувати підписку можна будь-коли в налаштуваннях застосунку або через підтримку. Після скасування пакет діє до кінця оплаченого періоду, нові списання не відбуваються.</p>
+        <p class="caption">Дані картки ми не зберігаємо — платіж обробляє сертифікований платіжний провайдер.</p>
+        <p class="caption">Натискаючи «Оплатити», Ви погоджуєтесь з <a href="https://consultant.net.ua/umovy-pidpysky">Умовами підписки</a>, <a href="https://consultant.net.ua/ugoda-korystuvacha">Угодою користувача</a> та <a href="https://consultant.net.ua/pryvatnist">Політикою конфіденційності</a>.</p>
+      </div>
     </form>
 
     <!-- ── S14 · Пакет активовано ──────────────────────────────────────── -->
@@ -1271,7 +1278,14 @@
       var p = state.plan || (L.plans && L.plans[1]) || { name: 'PRO', price: 410, discount: 10 };
       $('[data-s13-plan]', el).textContent = p.name;
       $('[data-s13-discount]', el).textContent = p.discount + ' %';
-      $('[data-s13-total]', el).textContent = money(p.price);
+      var yearly = p.period === 'year', fee = yearly && p.year ? p.year : p.price, next = new Date();
+      if (yearly) next.setFullYear(next.getFullYear() + 1); else next.setMonth(next.getMonth() + 1);
+      function dd(n) { return (n < 10 ? '0' : '') + n; }
+      var nextTxt = L.lang === 'en' ? dd(next.getMonth() + 1) + '/' + dd(next.getDate()) + '/' + next.getFullYear() : dd(next.getDate()) + '.' + dd(next.getMonth() + 1) + '.' + next.getFullYear();
+      $('[data-s13-total]', el).textContent = money(fee);
+      $('[data-s13-period]', el).textContent = yearly ? '1 рік' : '1 місяць'; $('[data-s13-period2]', el).textContent = yearly ? '1 рік' : '1 місяць';
+      $('[data-s13-next]', el).textContent = nextTxt; $('[data-s13-plan2]', el).textContent = p.name; $('[data-s13-price2]', el).textContent = money(fee);
+      $('[data-s13-cadence]', el).textContent = yearly ? 'щороку' : 'щомісяця';
       $('#s13-error').hidden = !state.payFail;
       track('checkout_view', { membership_plan: p.id || 'standard' });
     },
