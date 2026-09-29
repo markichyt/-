@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CONSULTANT — components</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Onest:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="styles.css">
+<style>
+.ds-section { padding: 64px 0; border-bottom: 1px solid var(--color-gray-300); }
+.ds-h { display: flex; align-items: baseline; gap: 16px; margin: 0 0 24px; }
+.ds-h code { font: 13px ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--color-gray-600); }
+.swatches { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
+.sw { display: flex; flex-direction: column; gap: 8px; }
+.sw .b { height: 72px; border: 1px solid var(--color-gray-300); }
+.budget { display: flex; height: 40px; margin-top: 24px; overflow: hidden; }
+.demo { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; padding: 32px; border: 1px solid var(--color-gray-300); }
+.demo--dark { background: #000; color: #fff; border: 0; }
+.toc { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 32px; font-size: 14px; }
+.toc a { text-decoration: none; color: var(--color-gray-600); }
+.toc a:hover { color: var(--color-text); }
+@media (max-width: 768px) { .swatches { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="Main">
+  <div class="container">
+    <a class="nav__logo" href="#top"><img src="assets/logo/logo-on-light.svg" alt="CONSULTANT Legal Marketplace"></a>
+    <div class="nav__links"><a href="#services">Services</a><a href="#lawyers">Lawyers</a><a href="#documents">Documents</a><a href="#how">How it works</a><a href="#reviews">Reviews</a></div>
+    <div class="nav__actions"><a href="#login">Log in</a><a class="btn btn--sm" href="#help">Get help</a></div>
+  </div>
+</nav>
+
+<header class="section" id="top"><div class="container">
+  <span class="label">CONSULTANT · design system · v1.0</span>
+  <h1 class="display-2" style="margin-top: 12px;">Components</h1>
+  <p class="sub" style="margin-top: 16px; max-width: 720px;">Every element on this page is built from tokens.css and styles.css. Copy the markup from components.md. Approved combination: layout A, sharp images, rounded cards, Manrope + Onest.</p>
+  <div class="toc"><a href="#colors">Colors</a><a href="#type">Type</a><a href="#buttons">Buttons</a><a href="#forms">Forms</a><a href="#cards">Cards</a><a href="#chips">Chips &amp; labels</a><a href="#images">Images</a><a href="#steps">Dark band</a><a href="#cta">CTA</a><a href="#footer">Footer</a></div>
+</div></header>
+
+<section class="ds-section" id="colors"><div class="container">
+  <h2 class="ds-h display-3">Colors <code>--color-*</code></h2>
+  <div class="swatches">
+    <div class="sw"><div class="b" style="background: #000000;"></div><div class="small" style="font-weight: 600;">black</div><div class="caption">#000000 · dark bands</div></div>
+    <div class="sw"><div class="b" style="background: #FFFFFF;"></div><div class="small" style="font-weight: 600;">white</div><div class="caption">#FFFFFF · ground</div></div>
+    <div class="sw"><div class="b" style="background: #F5F5F7;"></div><div class="small" style="font-weight: 600;">gray-100</div><div class="caption">#F5F5F7 · surfaces</div></div>
+    <div class="sw"><div class="b" style="background: #E5E5EA;"></div><div class="small" style="font-weight: 600;">gray-300</div><div class="caption">#E5E5EA · borders</div></div>
+    <div class="sw"><div class="b" style="background: #6E6E73;"></div><div class="small" style="font-weight: 600;">gray-600</div><div class="caption">#6E6E73 · text on light</div></div>
+    <div class="sw"><div class="b" style="background: #0095D4;"></div><div class="small" style="font-weight: 600;">accent</div><div class="caption">#0095D4 · primary action only</div></div>
+  </div>
+  <div class="budget"><div style="width: 58%; background: #fff; border: 1px solid #E5E5EA; border-right: 0;"></div><div style="width: 30%; background: #000;"></div><div style="width: 9%; background: #E5E5EA;"></div><div style="width: 3%; background: #0095D4;"></div></div>
+  <p class="caption" style="margin-top: 10px;">Area budget of a typical page: white ~58% · black ~30% · gray ~9% · accent ~3%. The accent never gets a tint, a hover shade, a background role or a text role.</p>
+</div></section>
+
+<section class="ds-section" id="type"><div class="container">
+  <h2 class="ds-h display-3">Type <code>Manrope + Onest</code></h2>
+  <div class="stack" style="gap: 28px;">
+    <div><div class="display-1">A lawyer is always there for you.</div><div class="caption" style="margin-top: 8px;">display-1 · Manrope 800 · 96 → 44 px · −0.04em</div></div>
+    <div><div class="display-2">Everything legal, in one app.</div><div class="caption" style="margin-top: 8px;">display-2 · Manrope 700 · 56 → 34 px · −0.03em</div></div>
+    <div><div class="display-3">Legal services</div><div class="caption" style="margin-top: 8px;">display-3 · 32 px · title 26 px · title-sm 18 px</div></div>
+    <div><div class="stat">25 000+</div><div class="caption" style="margin-top: 8px;">stat · Manrope 700 · 64 → 44 px</div></div>
+    <div><p class="lead">Verified lawyers and consultants, around the clock. Order a consultation, a document or a legal service.</p><div class="caption" style="margin-top: 8px;">lead · Onest 400 · 24 px · gray-600</div></div>
+    <div><p class="sub">Legal services, documents and consultations from verified specialists — anywhere in the world.</p><div class="caption" style="margin-top: 8px;">sub · 21 px</div></div>
+    <div><p class="body">Order legal or financial services at any point in the world from verified performers, with a guaranteed result, 24/7.</p><div class="caption" style="margin-top: 8px;">body · 17 px · small 15 · caption 13</div></div>
+    <div><span class="label">Services</span> &nbsp; <span class="step-number">01</span><div class="caption" style="margin-top: 8px;">label · 12 px 600 caps 0.08em · step-number 14 px</div></div>
+    <div><div class="brand-display" style="font-size: 40px;">Consultant Display — optional brand face</div><div class="caption" style="margin-top: 8px;">brand-display · campaigns, covers, big numbers · never body text</div></div>
+  </div>
+</div></section>
+
+<section class="ds-section" id="buttons"><div class="container">
+  <h2 class="ds-h display-3">Buttons <code>.btn</code></h2>
+  <div class="demo"><a class="btn btn--primary" href="#">Get help</a><a class="btn" href="#">Log in</a><a class="btn btn--outline" href="#">All consultants</a><a class="btn btn--sm" href="#">Get help</a><a class="link" href="#">Download the app <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a></div>
+  <div class="demo demo--dark section--dark" style="margin-top: 12px;"><a class="btn btn--primary" href="#">Get help</a><a class="btn btn--white" href="#">Log in</a><a class="btn btn--outline" href="#">All consultants</a></div>
+  <p class="caption" style="margin-top: 12px;">Primary: one per screen, label 20 px / 700, hover underlines the label. Secondary: black (white on dark). Outline: 1 px border. Small: 40 px for the nav.</p>
+</div></section>
+
+<section class="ds-section" id="forms"><div class="container">
+  <h2 class="ds-h display-3">Forms <code>.input .form-card</code></h2>
+  <div class="grid grid-2">
+    <form class="form-card" onsubmit="return false">
+      <div class="form-row"><label class="sr-only" for="d-phone">Phone number</label><input class="input input--soft" id="d-phone" type="tel" placeholder="+1 Phone number"><button class="btn btn--primary" type="submit">Get help</button></div>
+      <div class="form-row"><label class="sr-only" for="d-first">First name</label><input class="input input--soft" id="d-first" type="text" placeholder="First name"><label class="sr-only" for="d-last">Last name</label><input class="input input--soft" id="d-last" type="text" placeholder="Last name"></div>
+      <p class="caption">A personal manager will contact you — in the app, in any messenger or by phone.</p>
+    </form>
+    <div class="demo demo--dark section--dark" style="align-items: stretch; flex-direction: column;">
+      <label class="label" for="d-phone2">Phone number</label>
+      <div class="form-row"><input class="input" id="d-phone2" type="tel" placeholder="+1 Phone number"><button class="btn btn--primary" type="button">Get help</button></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="ds-section" id="cards"><div class="container">
+  <h2 class="ds-h display-3">Cards <code>.tile .card .quote .card--dark</code></h2>
+  <div class="grid grid-3">
+    <article class="tile">
+      <h3 class="display-3">Legal services</h3>
+      <p class="body body--muted">Order legal or financial services at any point in the world from verified performers, with a guaranteed result, 24/7.</p>
+      <ul class="check-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Safe transaction</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Transparent pricing</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Verified performers</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Control 24/7</li>
+      </ul>
+      <a class="link" href="#" style="margin-top: auto;">Order a service <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    </article>
+    <div class="stack">
+      <article class="card">
+        <div class="row" style="justify-content: space-between;"><div class="avatar">BC</div><span class="caption" style="font-weight: 600;">Top 1</span></div>
+        <div class="stack" style="gap: 4px;"><div class="title-sm">Basil Chochla</div><div class="small body--muted">Lawyer · New York</div></div>
+        <div class="row" style="align-items: baseline; gap: 6px; margin-top: auto;"><span class="display-3" style="font-size: 28px;">22.62</span><span class="caption">rating</span></div>
+      </article>
+      <div class="grid grid-2" style="gap: 12px;"><div><div class="stat" style="font-size: 44px;">1000+</div><div class="stat-label">Specialists</div></div><div><div class="stat" style="font-size: 44px;">1200+</div><div class="stat-label">Positive reviews</div></div></div>
+    </div>
+    <div class="stack">
+      <div style="background: var(--color-gray-100); padding: 16px;"><blockquote class="quote"><p>“I liked that the service prices were clear and known in advance. There were no surprises.”</p><footer><div class="avatar avatar--sm">VI</div><div><div class="small" style="font-weight: 600;">Viktor</div><div class="caption">Feb 4, 2026</div></div></footer></blockquote></div>
+      <div class="section--dark" style="padding: 16px; background: #000;"><div class="card--dark"><div class="step-number">05</div><h3 class="title">Guaranteed results</h3><p class="body body--muted" style="font-size: 15px;">The specialist receives a reward only after you confirm a successful result.</p></div></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="ds-section" id="chips"><div class="container">
+  <h2 class="ds-h display-3">Chips &amp; labels <code>.chip .label .dot .store</code></h2>
+  <div class="demo"><span class="chip"><span class="dot"></span>Manager online</span><span class="chip chip--float"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Guaranteed result</span><span class="chip">5.0 <span class="body--muted" style="font-weight: 500;">App Store</span></span><span class="label">Marketplace</span><a class="store" href="#">App Store</a><a class="store" href="#">Google Play</a></div>
+</div></section>
+
+<section class="ds-section" id="images"><div class="container">
+  <h2 class="ds-h display-3">Images <code>.image · radius 0</code></h2>
+  <div class="grid grid-2" style="align-items: start;">
+    <figure class="image image--bw" style="margin: 0; aspect-ratio: 16 / 9;"><img src="assets/images/hero-lawyer-bw.png" alt="A lawyer reviewing documents at a desk"></figure>
+    <div class="stack" style="gap: 12px;"><p class="body">Photos are black-and-white or muted, documentary, with room for text. Corners are always sharp: the only sharp thing on a page next to rounded cards and pill buttons.</p><p class="body body--muted">Until real photos exist, use product mocks drawn in markup or the generated images in assets/images.</p></div>
+  </div>
+</div></section>
+
+<section class="section section--dark" id="steps"><div class="container">
+  <div class="section-head"><h2 class="display-2">How we work</h2><p class="sub">A professionally tuned process, from the first message to a confirmed result.</p></div>
+  <div class="grid grid-3" style="gap: 48px 40px;">
+    <div class="stack" style="gap: 14px;"><div class="step-number">01</div><h3 class="title">Reach out to us</h3><p class="body body--muted">CONSULTANT offers the widest range of services and unique solutions for the most complex situations.</p></div>
+    <div class="stack" style="gap: 14px;"><div class="step-number">02</div><h3 class="title">Personal manager 24/7</h3><p class="body body--muted">Our specialists are available around the clock: in the chat of the mobile app, in any convenient messenger and by phone.</p></div>
+    <div class="stack" style="gap: 14px;"><div class="step-number">03</div><h3 class="title">Guaranteed results</h3><p class="body body--muted">The specialist receives a reward only after you confirm a successful result. If the task is not completed, we refund your money.</p></div>
+  </div>
+</div></section>
+
+<section class="cta" id="cta"><div class="container">
+  <h2 class="display-1">Get help now.</h2>
+  <p class="sub">A personal manager is available 24/7 — in the app, in any messenger or by phone.</p>
+  <form class="cta__form" onsubmit="return false"><label class="sr-only" for="d-phone3">Phone number</label><input class="input" id="d-phone3" type="tel" placeholder="+1 Phone number"><button class="btn btn--primary" type="submit">Get help</button></form>
+</div></section>
+
+<footer class="footer" id="footer"><div class="container">
+  <div class="footer__grid">
+    <div class="stack" style="gap: 16px;"><img src="assets/logo/logo-icon.svg" alt="CONSULTANT" style="width: 46px;"><p class="small body--muted" style="max-width: 280px;">The largest ranking of lawyers and attorneys. Legal services, documents and consultations, 24/7.</p></div>
+    <div class="footer__col"><span class="label">Services</span><a href="#">Legal services</a><a href="#">Documents</a><a href="#">Consultations</a></div>
+    <div class="footer__col"><span class="label">Marketplace</span><a href="#">Consultants</a><a href="#">Reviews</a><a href="#">How we work</a></div>
+    <div class="footer__col"><span class="label">Company</span><a href="#">Log in</a><a href="#">Terms</a><a href="#">Privacy policy</a></div>
+    <div class="footer__col"><span class="label">Follow</span><a href="#">Telegram</a><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">YouTube</a></div>
+  </div>
+  <div class="footer__bottom"><div>© 2026 CONSULTANT Legal Marketplace</div><div class="row" style="gap: 10px;"><a class="store" href="#">App Store</a><a class="store" href="#">Google Play</a></div></div>
+</div></footer>
+</body>
+</html>

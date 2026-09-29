@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Безкоштовний аналіз Вашої ситуації — квіз | CONSULTANT</title>
+<title>Безкоштовний аналіз Вашої ситуації — квіз | ConsultantLM</title>
 <meta name="description" content="Опишіть ситуацію за 2–3 хвилини: ConsultantLM проаналізує її, підбере релевантних фахівців і покаже вартість послуг до того, як Ви приймете рішення.">
 <!-- Макет: данные, фахівці и кейсы — заглушки до подключения базы сайта; индексирование запрещено явно -->
 <meta name="robots" content="noindex,nofollow">
@@ -24,7 +24,7 @@
   plural: function (n) { var m10 = n % 10, m100 = n % 100; return (m10 === 1 && m100 !== 11) ? 0 : (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) ? 1 : 2; },
   step: function (n, m) { return 'Крок ' + n + ' із ' + m; },
   money: function (n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '\u00a0') + '\u00a0₴'; },
-  plans: [{"id":"base","name":"BASE","price":125,"year":1250,"discount":5,"features":["Індивідуальні консультації: 3","Шаблони документів: без обмежень","Розширений AI-помічник 24/7"],"pill":"Знижка до 5 % на всі послуги","savings":{"total":"Загальна економія від 2 668 ₴","items":["Індивідуальні консультації — економія до 768 ₴","Необмежений доступ до шаблонів документів — економія від 900 ₴","Знижка до 5 % на послуги — економія від 1 000 ₴"]}},{"id":"pro","name":"PRO","price":410,"year":4100,"discount":10,"recommended":true,"features":["Індивідуальні консультації: 12","Шаблони документів: без обмежень","Персональний менеджер"],"pill":"Знижка до 10 % на всі послуги","savings":{"total":"Загальна економія від 5 972 ₴","items":["Індивідуальні консультації — економія до 3 072 ₴","Необмежений доступ до шаблонів документів — економія від 900 ₴","Знижка до 10 % на послуги — економія від 2 000 ₴"]}},{"id":"premium","name":"PREMIUM","price":2100,"year":21000,"discount":20,"features":["Індивідуальні консультації: без обмежень","Шаблони документів: без обмежень","Персональний VIP-менеджер"],"pill":"Знижка до 20 % на всі послуги","savings":{"total":"Загальна економія від 11 020 ₴","items":["Індивідуальні консультації — економія від 6 120 ₴","Необмежений доступ до шаблонів документів — економія від 900 ₴","Максимальна знижка до 20 % на послуги — економія від 4 000 ₴"]}}] , assets: 'assets/', geo: {"code":"UA","path":"M423.2 38.6L435.5 40.6L443.9 29.3L453.9 31.8L488.1 27L509.2 55.1L501 65.2L503.7 80.6L530 83L541.8 104.5L541 114.3L583 131.8L608.3 123.9L628.7 147.2L647.9 146.6L696.6 162.8L697 177.4L683.6 203.4L690.9 230.8L685.7 247.3L653.7 251L636.7 264.8L635.7 286.9L609.3 290.9L587.4 306.9L556.5 309.5L528 328.1L530 358.9L546.1 370.9L579.8 367.9L573.3 385.7L537.2 394.3L492.4 423L474 412.9L481.3 389.6L445.3 375L451.1 365.5L482.7 349L473.1 337.6L421.8 325.1L419.5 306.5L389 312.7L376.7 340L351.2 376.7L336.2 368.2L320.7 376.2L305.9 367L314.3 361.6L320 344.6L329.1 328.8L326.7 319.9L333.6 315.9L336.9 322.8L356.3 324.2L365.1 320.6L358.9 315.5L361.2 308.1L349.7 295.5L344.9 274.7L332.9 266.6L335.3 249.8L320.4 236.4L306.8 234.6L282.5 219.1L260.5 224L252.7 231.3L238.7 231.3L230.4 242.9L206.1 247.7L194.8 255.3L179.5 243.2L158.3 243L137.9 237.5L123.6 248.1L121.3 234.8L103 221.3L109.5 201.3L118.6 188.4L125.8 191.3L117.3 169L147.3 127.6L163.7 121.9L167.2 107.9L150.6 64.6L166.4 62.6L184.5 49.2L210 48.1L243.4 52L280.2 63.9L306.2 64.9L318.6 72.1L331 63.4L339.7 75L369.4 72.6L382.6 77.4L384.7 52.4L394.9 41.5L423.2 38.6Z","proj":[22.0856,52.3351,33.0067,49.6639,103.0,27.0],"cities":[[50.45,30.52],[49.84,24.03],[46.48,30.73],[49.99,36.23],[48.46,35.05],[49.23,28.47],[51.5,31.29],[48.62,22.29],[49.59,34.55],[48.92,24.71],[47.84,35.14],[46.97,32.0]]} };</script>
+  plans: [{"id":"base","name":"BASE","price":125,"year":1250,"discount":5,"example":{"service":"Виїзд адвоката на затримання","price":20000},"features":["Індивідуальні консультації: 3","Шаблони документів: без обмежень","Розширений AI-помічник 24/7"],"pill":"Знижка до 5 % на всі послуги","savings":{"total":"Загальна економія від 2 668 ₴","items":["Індивідуальні консультації — економія до 768 ₴","Необмежений доступ до шаблонів документів — економія від 900 ₴","Знижка до 5 % на послуги — економія від 1 000 ₴"]}},{"id":"pro","name":"PRO","price":410,"year":4100,"discount":10,"recommended":true,"example":{"service":"Виїзд адвоката на затримання","price":20000},"features":["Індивідуальні консультації: 12","Шаблони документів: без обмежень","Персональний менеджер"],"pill":"Знижка до 10 % на всі послуги","savings":{"total":"Загальна економія від 5 972 ₴","items":["Індивідуальні консультації — економія до 3 072 ₴","Необмежений доступ до шаблонів документів — економія від 900 ₴","Знижка до 10 % на послуги — економія від 2 000 ₴"]}},{"id":"premium","name":"PREMIUM","price":2100,"year":21000,"discount":20,"example":{"service":"Оскарження рішення ВЛК","price":60000},"features":["Індивідуальні консультації: без обмежень","Шаблони документів: без обмежень","Персональний VIP-менеджер"],"pill":"Знижка до 20 % на всі послуги","savings":{"total":"Загальна економія від 11 020 ₴","items":["Індивідуальні консультації — економія від 6 120 ₴","Необмежений доступ до шаблонів документів — економія від 900 ₴","Максимальна знижка до 20 % на послуги — економія від 4 000 ₴"]}}] , assets: 'assets/', geo: {"code":"UA","path":"M423.2 38.6L435.5 40.6L443.9 29.3L453.9 31.8L488.1 27L509.2 55.1L501 65.2L503.7 80.6L530 83L541.8 104.5L541 114.3L583 131.8L608.3 123.9L628.7 147.2L647.9 146.6L696.6 162.8L697 177.4L683.6 203.4L690.9 230.8L685.7 247.3L653.7 251L636.7 264.8L635.7 286.9L609.3 290.9L587.4 306.9L556.5 309.5L528 328.1L530 358.9L546.1 370.9L579.8 367.9L573.3 385.7L537.2 394.3L492.4 423L474 412.9L481.3 389.6L445.3 375L451.1 365.5L482.7 349L473.1 337.6L421.8 325.1L419.5 306.5L389 312.7L376.7 340L351.2 376.7L336.2 368.2L320.7 376.2L305.9 367L314.3 361.6L320 344.6L329.1 328.8L326.7 319.9L333.6 315.9L336.9 322.8L356.3 324.2L365.1 320.6L358.9 315.5L361.2 308.1L349.7 295.5L344.9 274.7L332.9 266.6L335.3 249.8L320.4 236.4L306.8 234.6L282.5 219.1L260.5 224L252.7 231.3L238.7 231.3L230.4 242.9L206.1 247.7L194.8 255.3L179.5 243.2L158.3 243L137.9 237.5L123.6 248.1L121.3 234.8L103 221.3L109.5 201.3L118.6 188.4L125.8 191.3L117.3 169L147.3 127.6L163.7 121.9L167.2 107.9L150.6 64.6L166.4 62.6L184.5 49.2L210 48.1L243.4 52L280.2 63.9L306.2 64.9L318.6 72.1L331 63.4L339.7 75L369.4 72.6L382.6 77.4L384.7 52.4L394.9 41.5L423.2 38.6Z","proj":[22.0856,52.3351,33.0067,49.6639,103.0,27.0],"cities":[[50.45,30.52],[49.84,24.03],[46.48,30.73],[49.99,36.23],[48.46,35.05],[49.23,28.47],[51.5,31.29],[48.62,22.29],[49.59,34.55],[48.92,24.71],[47.84,35.14],[46.97,32.0]]} };</script>
 <!-- CONSULTANT design system v1.0 · квиз-воронка «Безкоштовний аналіз вашої ситуації» (ТЗ v2) · локаль uk · build.py -->
 </head>
 <body class="funnel-page">
@@ -79,9 +79,9 @@
 
   <header class="funnel__top">
     <div class="funnel__topin">
-      <a class="funnel__brand" href="https://consultant.net.ua/" aria-label="Консультант — на головну">
-        <img class="funnel__brand-img--light" src="design-system/assets/logo/logo-on-light.svg" width="562" height="122" alt="" decoding="async">
-        <img class="funnel__brand-img--dark"  src="design-system/assets/logo/logo-on-dark.svg" width="562" height="122" alt="" decoding="async">
+      <a class="funnel__brand" href="https://consultant.net.ua/" aria-label="ConsultantLM — на головну">
+        <img class="funnel__brand-img--light" src="design-system/assets/logo/consultant-lm_logo_en_on-light_R.svg" width="580" height="122" alt="" decoding="async">
+        <img class="funnel__brand-img--dark"  src="design-system/assets/logo/consultant-lm_logo_en_on-dark_R.svg" width="580" height="122" alt="" decoding="async">
       </a>
       <span class="funnel__step" id="funnel-where" hidden>Крок 1 із 5</span>
     </div>
@@ -125,11 +125,11 @@
     <section class="funnel__screen" id="s1" data-screen="s1" aria-labelledby="s1-title" hidden>
       <div class="funnel__head">
         <h2 class="funnel__title" id="s1-title" tabindex="-1">Ми не просто показуємо список фахівців.</h2>
-        <p class="funnel__hint funnel__hint--sm funnel__hide-short">ConsultantLM підбирає фахівців саме під Вашу ситуацію.</p>
+        <p class="funnel__hint funnel__hint--sm funnel__hide-short">ConsultantLM® підбирає фахівців саме під Вашу ситуацію.</p>
       </div>
       <div class="funnel__card funnel__card--stat funnel__reveal" data-s1-step="1">
         <div class="funnel__stat">
-          <p class="funnel__bignum num">3&nbsp;500+</p>
+          <p class="funnel__bignum num">3&nbsp;500<span class="funnel__bignum-plus">+</span></p>
           <p class="funnel__hint funnel__hint--sm">фахівців на платформі — з них ми відбираємо тих, хто підходить саме Вам</p>
         </div>
         <div class="mq" data-marquee aria-hidden="true"></div>
@@ -197,6 +197,7 @@
               <path d="M0 -44 a24 24 0 0 1 24 24 c0 18 -24 44 -24 44 s-24 -26 -24 -44 a24 24 0 0 1 24 -24 z"/>
               <circle cx="0" cy="-20" r="8" fill="currentColor" stroke="none"/>
             </g>
+            <text class="funnel__geo-label" data-geo-label x="400" y="240" text-anchor="middle">Населений пункт</text>
           </svg>
           <p class="q-media__caption"><strong data-s3-caption>Населений пункт</strong><small data-s3-caption-sub>обл.</small></p>
           <button class="btn btn--sm funnel__mapbtn" type="button" data-s3-loadmap>Показати на карті</button>
@@ -268,7 +269,7 @@
           <svg class="icon" width="20" height="20" aria-hidden="true" data-voice-icon><use href="#i-mic"></use></svg>
           <span data-voice-label>Розповісти голосом</span>
         </button>
-        <p class="funnel__voice-status" id="voice-status" role="status" aria-live="polite"><span class="funnel__voice-dot" aria-hidden="true"></span><span data-voice-text>Голосом зручно розповісти більше деталей.</span></p>
+        <p class="funnel__voice-status" id="voice-status" role="status" aria-live="polite"><span class="funnel__voice-dot" aria-hidden="true"></span><span data-voice-text></span></p>
         <button class="link" type="button" data-voice="reset" hidden>Записати ще раз</button>
         <p class="q-error" role="alert" data-voice-error hidden>
           <svg class="q-error__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg>
@@ -290,7 +291,7 @@
       <div class="appframe appframe--compact" role="img" aria-label="Сторінка питання в застосунку: Ваше питання, під ним з’являється картка юриста, який узяв запит у роботу">
         <div class="appframe__bar">Питання №14238</div>
         <article class="appframe__card"><p class="appframe__date"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>01.07.2026, 18:04</p><p class="appframe__qt" data-s7-question>Опис Вашої ситуації</p></article>
-        <template id="s7-card"><article class="appframe__ans"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="pro"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PRO</span><span class="q-score"><span class="q-score__value num">75,8</span><span class="q-score__scale">зі 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="assets/people/ko.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">КО</span><span class="appframe__meta"><span class="appframe__name">Ковальчук Олександр</span><span class="appframe__role">Адвокат</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Київ</span></span></div><p class="appframe__ts">{{ts}}</p><p class="appframe__txt">{{txt}}</p></article></template>
+        <template id="s7-card"><article class="appframe__ans" data-tier="premium"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="premium"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PREMIUM</span><span class="q-score"><span class="q-score__value num">76,37</span><span class="q-score__scale">/ 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="assets/people/st.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">СО</span><span class="appframe__meta"><span class="appframe__name">Студенцов Олександр</span><span class="appframe__role">Юрист</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Київ</span></span></div><p class="appframe__ts">{{ts}}</p><p class="appframe__txt">{{txt}}</p></article></template>
         <div class="appframe__list" id="s7-answers">
           <div class="appframe__skel appframe__skel--short"><span class="q-skel"></span><span class="q-skel"></span><span class="q-skel"></span></div>
           <div class="appframe__skel funnel__hide-short"><span class="q-skel"></span><span class="q-skel"></span><span class="q-skel"></span></div>
@@ -308,9 +309,8 @@
         <div class="appframe__bar">Питання №14238</div>
         <article class="appframe__card"><p class="appframe__date"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>01.07.2026, 18:04</p><p class="appframe__qt" data-s8-question>Опис Вашої ситуації</p></article>
         <div class="appframe__list">
-          
-          <article class="appframe__ans"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="pro"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PRO</span><span class="q-score"><span class="q-score__value num">75,8</span><span class="q-score__scale">зі 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="assets/people/ko.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">КО</span><span class="appframe__meta"><span class="appframe__name">Ковальчук Олександр</span><span class="appframe__role">Адвокат</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Київ</span></span></div><p class="appframe__ts">через 14 хв</p><p class="appframe__txt">Пропонує позасудовий шлях і пояснює, чому він швидший у Вашому випадку.</p></article>
-          <article class="appframe__ans"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="premium"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PREMIUM</span><span class="q-score"><span class="q-score__value num">82,4</span><span class="q-score__scale">зі 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="assets/people/tm.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">ТМ</span><span class="appframe__meta"><span class="appframe__name">Тарасенко Михайло</span><span class="appframe__role">Адвокат</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Львів</span></span></div><p class="appframe__ts">через 26 хв</p><p class="appframe__txt">Радить одразу готувати позов і показує, які докази посилять позицію.</p></article><article class="appframe__ans funnel__hide-short funnel__hide-mid"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="pro"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PRO</span><span class="q-score"><span class="q-score__value num">71,2</span><span class="q-score__scale">зі 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="assets/people/md.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">МД</span><span class="appframe__meta"><span class="appframe__name">Мар’яненко Денис</span><span class="appframe__role">Юрист</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Дніпро</span></span></div><p class="appframe__ts">через 14 хв</p><p class="appframe__txt">Радить закріпити домовленості письмово й одразу подати на аліменти — це зекономить час у суді.</p></article>
+          <article class="appframe__ans" data-tier="premium"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="premium"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PREMIUM</span><span class="q-score"><span class="q-score__value num">76,37</span><span class="q-score__scale">/ 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="assets/people/st.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">СО</span><span class="appframe__meta"><span class="appframe__name">Студенцов Олександр</span><span class="appframe__role">Юрист</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Київ</span></span></div><p class="appframe__ts">через 14 хв</p><p class="appframe__txt">Пропонує позасудовий шлях і пояснює, чому він швидший у Вашому випадку.</p></article>
+          <article class="appframe__ans" data-tier="premium"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="premium"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PREMIUM</span><span class="q-score"><span class="q-score__value num">42,28</span><span class="q-score__scale">/ 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="assets/people/mo.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">МО</span><span class="appframe__meta"><span class="appframe__name">Молчанов Олег</span><span class="appframe__role">Адвокат</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Київ</span></span></div><p class="appframe__ts">через 26 хв</p><p class="appframe__txt">Радить одразу готувати позов і показує, які докази посилять позицію.</p></article><article class="appframe__ans funnel__hide-short funnel__hide-mid" data-tier="premium"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="premium"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PREMIUM</span><span class="q-score"><span class="q-score__value num">42,37</span><span class="q-score__scale">/ 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="assets/people/po.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">ПВ</span><span class="appframe__meta"><span class="appframe__name">Подлінєва Віолета</span><span class="appframe__role">Юрист</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Київ</span></span></div><p class="appframe__ts">через 41 хв</p><p class="appframe__txt">Радить закріпити домовленості письмово й одразу подати на аліменти — це зекономить час у суді.</p></article>
         </div>
       </div>
       <ul class="funnel__chips funnel__hide-short funnel__hide-mid" aria-label="Що це дає">
@@ -327,59 +327,42 @@
     <form class="funnel__screen" id="s9" data-screen="s9" aria-labelledby="s9-title" novalidate hidden>
       <div class="funnel__head">
         <h2 class="funnel__title" id="s9-title" tabindex="-1">Що Ви хочете зробити далі?</h2>
-        <p class="funnel__hint funnel__hint--sm">Оберіть один варіант.</p>
       </div>
       <fieldset class="funnel__options" id="s9-options" aria-describedby="s9-err">
         <legend class="sr-only">Оберіть один варіант</legend>
         <label class="q-option">
           <input class="q-option__input" type="radio" name="client_intent" value="high">
           <span class="q-option__icon" aria-hidden="true"><svg class="icon"><use href="#i-bolt"></use></svg></span>
-          <span class="q-option__label">Отримати допомогу якнайшвидше<span class="q-option__note">Готовий(-а) обговорити роботу з фахівцем уже зараз</span></span>
+          <span class="q-option__label">Отримати допомогу якнайшвидше</span>
         </label>
         <label class="q-option">
           <input class="q-option__input" type="radio" name="client_intent" value="medium">
           <span class="q-option__icon" aria-hidden="true"><svg class="icon"><use href="#i-eye"></use></svg></span>
-          <span class="q-option__label">Зрозуміти рішення та вартість<span class="q-option__note">Готовий(-а) обрати фахівця після того, як побачу варіанти</span></span>
+          <span class="q-option__label">Зрозуміти рішення та вартість</span>
         </label>
         <label class="q-option">
           <input class="q-option__input" type="radio" name="client_intent" value="low">
           <span class="q-option__icon" aria-hidden="true"><svg class="icon"><use href="#i-book"></use></svg></span>
-          <span class="q-option__label">Зібрати інформацію без поспіху<span class="q-option__note">Готовий(-а) отримати аналіз, рішення щодо фахівця поки не приймаю</span></span>
+          <span class="q-option__label">Зібрати інформацію без поспіху</span>
         </label>
       </fieldset>
       <p class="funnel__error" id="s9-err" role="alert" hidden>Оберіть один із варіантів, щоб продовжити</p>
     </form>
 
-    <!-- ── S10 · Proof №5 — прозора ціна ────────────────────────────────── -->
-    <section class="funnel__screen" id="s10" data-screen="s10" aria-labelledby="s10-title" hidden>
-      <div class="funnel__head">
-        <h2 class="funnel__title" id="s10-title" tabindex="-1">Ви бачите вартість до того, як приймаєте рішення.</h2>
-        <p class="funnel__hint funnel__hint--sm funnel__hide-short">Кожен фахівець прикріплює до відповіді послугу з етапами та точною ціною.</p>
-      </div>
-      <article class="funnel__card" aria-labelledby="s10-service">
-        <h3 class="title-sm" id="s10-service">Розлучення та визначення місця проживання дитини</h3>
-        <ol class="funnel__stages" aria-label="Етапи послуги та їх вартість">
-          <li><span><span class="funnel__stage-num">Етап 1</span>Аналіз ситуації та документів</span><span class="funnel__stage-price num">2&nbsp;000&nbsp;₴</span></li>
-          <li><span><span class="funnel__stage-num">Етап 2</span>Підготовка позову та доказів</span><span class="funnel__stage-price num">8&nbsp;000&nbsp;₴</span></li>
-          <li><span><span class="funnel__stage-num">Етап 3</span>Представництво в суді</span><span class="funnel__stage-price num">30&nbsp;000&nbsp;₴</span></li>
-          <li class="funnel__stage--total"><span>Разом за послугу</span><span class="funnel__stage-price num">40&nbsp;000&nbsp;₴</span></li>
-        </ol>
-        <ul class="funnel__chips funnel__hide-short funnel__hide-mid" aria-label="Умови ціни">
-          <li class="funnel__chip funnel__chip--static"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Фіксована ціна</li>
-          <li class="funnel__chip funnel__chip--static"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Відома наперед</li>
-          <li class="funnel__chip funnel__chip--static"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Етапи включено</li>
-        </ul>
-      </article>
-      <p class="funnel__hint funnel__hint--sm funnel__hide-short">Без несподіваних погодинних рахунків — якщо для конкретної послуги фахівець запропонував модель фіксованої ціни.</p>
-      <p class="caption q-disclaimer funnel__hint--sm">Розрахунок є орієнтовним і не є публічною офертою. Остаточну вартість консультант називає до початку роботи.</p>
-    </section>
+    
 
     <!-- ── S11 · Пакети послуг — слайдер 3 пакетів застосунку ──────────────────────────────── -->
     <form class="funnel__screen" id="s11" data-screen="s11" aria-labelledby="s11-title" novalidate hidden>
       <div class="funnel__head">
-        <h2 class="funnel__title" id="s11-title" tabindex="-1">Оберіть пакет послуг.</h2>
-        <p class="funnel__hint funnel__hint--sm funnel__hide-short funnel__hide-mid">Знижка на послуги, які Ви замовлятимете далі. Пакет не впливає на безкоштовний аналіз.</p>
+        <h2 class="funnel__title" id="s11-title" tabindex="-1">Оберіть пакет, який найбільше Вам підходить.</h2>
+        <p class="funnel__hint funnel__hint--sm funnel__hide-short funnel__hide-mid">Знижка на послуги, консультації без обмежень, персональний менеджер і доступ до преміальних адвокатів.</p>
       </div>
+      <article class="funnel__card funnel__example" aria-live="polite">
+        <p class="funnel__card-label">Приклад вигоди</p>
+        <p class="funnel__example-service"><span data-ex-service>Виїзд адвоката на затримання</span> — <strong class="num" data-ex-price>20&nbsp;000&nbsp;₴</strong></p>
+        <p class="funnel__example-line">З пакетом <strong data-ex-plan>PRO</strong> (−<span class="num" data-ex-discount>10</span>&nbsp;%) — <strong class="num" data-ex-new>18&nbsp;000&nbsp;₴</strong></p>
+        <p class="funnel__example-total">Сплатіть <strong class="num" data-ex-fee>410&nbsp;₴</strong> за пакет і заощадьте <strong class="num funnel__example-save" data-ex-save>2&nbsp;000&nbsp;₴</strong> на цій послузі.</p>
+      </article>
       <div class="plans" id="s11-plans">
         <div class="plans__toggle funnel__hide-short" role="group" aria-label="Період оплати">
           <button class="plans__tab is-on" type="button" data-period="month" aria-pressed="true">1 місяць</button>
@@ -401,15 +384,12 @@
     <!-- ── S12 · Q5 · Контакти — Крок 5 із 5 (спільна для обох гілок) ───── -->
     <form class="funnel__screen funnel__screen--tight" id="s12" data-screen="s12" aria-labelledby="s12-title" novalidate hidden data-ds-event="quiz_contact_submit">
       <div class="funnel__head">
-        <h2 class="funnel__title" id="s12-title" tabindex="-1">Куди надіслати результати?</h2>
+        <h2 class="funnel__title" id="s12-title" tabindex="-1">Куди надіслати результат безкоштовного аналізу Вашої ситуації?</h2>
         <p class="funnel__hint funnel__hint--sm funnel__hide-short">На цей номер ми створимо Ваше питання в застосунку та надішлемо відповіді фахівців.</p>
       </div>
       <div class="funnel__form">
         <div class="field">
-          <label class="field__label" id="phone-label" for="phone">
-            Телефон <span class="q-req-star" aria-hidden="true">*</span>
-            <span class="q-req">(обов’язково)</span>
-          </label>
+          <label class="field__label sr-only" id="phone-label" for="phone">Телефон (обов’язково)</label>
           <div class="q-phone funnel__phone" id="phone-box" role="group" aria-labelledby="phone-label">
             <span class="q-phone__country" aria-hidden="true"><span class="q-phone__code" data-locale-phone-code>+380</span></span>
             <input class="q-phone__input" id="phone" name="phone" type="tel" inputmode="tel"
@@ -468,7 +448,6 @@
           </div>
         </div>
       </div>
-      <p class="caption q-disclaimer funnel__hint--sm">Ваші дані бачить лише консультант, якого Ви оберете. Ми не передаємо їх третім особам.</p>
     </form>
 
     <!-- ── S13 · Оплата пакета (тільки гілка з пакетом) ─────────────────── -->
@@ -523,15 +502,21 @@
     <!-- ── S15 · Final processing ────────────────────────────────────────── -->
     <section class="funnel__screen" id="s15" data-screen="s15" aria-labelledby="s15-title" hidden>
       <div class="funnel__head">
-        <h2 class="funnel__title" id="s15-title" tabindex="-1">Ваш кейс уже аналізується.</h2>
-        <p class="funnel__hint funnel__hint--sm">Питання створено на номер <span class="num" data-s15-phone>+380 67 123 45 67</span>.</p>
+        <h2 class="funnel__title" id="s15-title" tabindex="-1">Дякуємо!</h2>
+        <p class="funnel__hint">З результатами аналізу Ви можете ознайомитися в мобільному застосунку ConsultantLM.</p>
+        <p class="funnel__hint funnel__hint--sm funnel__hide-short">Питання створено на номер <span class="num" data-s15-phone>+380 67 123 45 67</span>.</p>
       </div>
-      <ol class="q-steps funnel__checklist" id="s15-list" aria-label="Стан обробки запиту" aria-busy="true">
-        <li class="q-steps__item" data-state="upcoming"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">Запит створено</p></div></li>
-        <li class="q-steps__item" data-state="upcoming"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">Категорію визначено</p></div></li>
-        <li class="q-steps__item" data-state="upcoming"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">AI-аналіз запущено</p></div></li>
-        <li class="q-steps__item" data-state="upcoming"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">Підбираємо релевантних фахівців</p><p class="q-steps__status" data-status hidden>Триває…</p></div></li>
-      </ol>
+      <article class="funnel__card funnel__vip" aria-labelledby="s15-vip-title">
+        <p class="funnel__card-label">VIP-пакет</p>
+        <p class="funnel__vip-title" id="s15-vip-title">Знижка до <strong class="num">20&nbsp;%</strong> на послуги адвокатів і юристів.</p>
+        <ul class="funnel__vip-list">
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Консультації без обмежень</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Персональний менеджер</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Доступ до преміальних адвокатів</li>
+        </ul>
+        <p class="funnel__vip-from">Від <strong class="num" data-s15-from>125&nbsp;₴</strong> на місяць</p>
+      </article>
+      <p class="funnel__key funnel__hide-short funnel__hide-mid">Безкоштовний аналіз уже Ваш — пакет на нього не впливає.</p>
     </section>
 
     <!-- ── S16 · Final App CTA — останній екран ─────────────────────────── -->
@@ -574,7 +559,7 @@
         <a class="btn btn--primary funnel__next" id="funnel-link" href="https://consultantlm.com/app?src=quiz" rel="noopener" data-ds-event="quiz_result_view" hidden>Переглянути відповіді</a>
       </div>
       <div class="funnel__row" id="funnel-altrow" hidden>
-        <button class="btn btn--outline btn--block funnel__alt" type="button" id="funnel-alt" data-nav="free">Продовжити без пакета</button>
+        <button class="btn btn--outline btn--block funnel__alt" type="button" id="funnel-alt" data-nav="free">Продовжити без VIP</button>
       </div>
     </div>
   </footer>
@@ -615,7 +600,7 @@
     ['Ніжин', 'Чернігівська обл.', 22, 51.05, 31.89], ['Васильків', 'Київська обл.', 20, 50.18, 30.31], ['Стрий', 'Львівська обл.', 20, 49.26, 23.85],
     ['Обухів', 'Київська обл.', 18, 50.11, 30.63], ['Коломия', 'Івано-Франківська обл.', 18, 48.53, 25.04], ['Фастів', 'Київська обл.', 15, 50.08, 29.92],
     ['Новоград-Волинський', 'Житомирська обл.', 12, 50.59, 27.62], ['Славутич', 'Київська обл.', 6, 51.52, 30.76], ['Тетіїв', 'Київська обл.', 4, 49.37, 29.68],
-    ['Дубно', 'Київська обл.', 3, 49.9, 30.3], ['Володарка', 'Київська обл.', 2, 49.52, 29.92], ['Ставище', 'Київська обл.', 1, 49.39, 30.19],
+    ['Кагарлик', 'Київська обл.', 3, 49.87, 30.82], ['Володарка', 'Київська обл.', 2, 49.52, 29.92], ['Ставище', 'Київська обл.', 1, 49.39, 30.19],
     ['Варшава', 'Польща', 38, 52.23, 21.01, 'PL'], ['Краків', 'Польща', 21, 50.06, 19.94, 'PL'], ['Берлін', 'Німеччина', 17, 52.52, 13.4, 'DE'], ['Прага', 'Чехія', 12, 50.08, 14.44, 'CZ']
   ];
   /* карта країни на S3: контур і проекція приходять з QUIZ_LOCALE.geo (tools/make-geo.py) */
@@ -648,20 +633,20 @@
     debt: [['Боржник не виходив на зв’язок', 'Борг стягнуто, авто арештовано'], ['Орендар не платить і не звільняє приміщення', 'Приміщення повернуто, борг стягнуто'], ['Неповернення передоплати за ремонт', 'Кошти повернуто з відсотками']]
   };
   var PEOPLE = [
-    ['Ковальчук', 'Олександр', 'Юрист', 'КО', 'online', 'ko'], ['Тарасенко', 'Михайло', 'Юрист', 'ТМ', 'online', 'tm'],
-    ['Мар’яненко', 'Денис', 'Юрист', 'МД', 'online', 'md'], ['Гнатюк', 'Ольга', 'Патентний повірений', 'ГО', 'offline', 'go']
+    ['Студенцов', 'Олександр', 'Юрист', 'СО', 'online', 'st'], ['Молчанов', 'Олег', 'Адвокат', 'МО', 'online', 'mo'],
+    ['Подлінєва', 'Віолета', 'Юрист', 'ПВ', 'online', 'po'], ['Грицай', 'Микола', 'Юрист', 'ГМ', 'offline', 'hr']
   ];
 
   /* ── порядок экранов, вопросы, панель действий ── */
-  var STEPS = ['s0','s1','s2','s3','s4','s5','s6','s7','s8','s9','s10','s11','s12','s13','s14','s15','s16'];
+  var STEPS = ['s0','s1','s2','s3','s4','s5','s6','s7','s8','s9','s12','s15','s11','s13','s14','s16'];
   var NAMES = { s0:'entry', s1:'proof_matching', s2:'q_location', s3:'proof_local', s4:'q_category',
     s5:'proof_cases', s6:'q_description', s7:'processing', s8:'proof_opinions', s9:'q_intent',
-    s10:'proof_price', s11:'membership', s12:'q_contacts', s13:'checkout', s14:'membership_success',
+    s11:'membership', s12:'q_contacts', s13:'checkout', s14:'membership_success',
     s15:'final_processing', s16:'app_cta' };
   var QUESTION = { s2:[1,'Локація'], s4:[2,'Категорія'], s6:[3,'Опис'], s9:[4,'Наміри'], s12:[5,'Контакти'] };
-  var NEXT = { s0:'s1', s1:'s2', s2:'s3', s3:'s4', s4:'s5', s5:'s6', s6:'s7', s7:'s8', s8:'s9', s9:'s10',
-    s10:'s11', s13:'s14', s14:'s16', s15:'s16' };
-  var ANIMATED = { s1:true, s3:true, s7:true, s15:true };
+  var NEXT = { s0:'s1', s1:'s2', s2:'s3', s3:'s4', s4:'s5', s5:'s6', s6:'s7', s7:'s8', s8:'s9', s9:'s12',
+    s15:'s11', s13:'s14', s14:'s16' };
+  var ANIMATED = { s1:true, s3:true, s7:true };
   var BAR = {
     s0:  { label:'Почати безкоштовний аналіз', short:'Почати аналіз', shortAt:'narrow', event:'quiz_start', back:false, note:'2–3 хвилини' },
     s1:  { label:'Продовжити' },
@@ -673,12 +658,11 @@
     s7:  { label:'Продовжити' },
     s8:  { label:'Продовжити' },
     s9:  { label:'Далі', submit:true },
-    s10: { label:'Продовжити' },
-    s11: { label:'Купити пакет', submit:true, alt:{ label:'Продовжити без пакета', nav:'free' } },
+    s11: { label:'Купити пакет', submit:true, alt:{ label:'Продовжити без VIP', nav:'free' } },
     s12: { label:'Отримати безкоштовний аналіз', short:'Отримати аналіз', submit:true, event:'quiz_contact_submit' },
-    s13: { label:'Оплатити', submit:true, alt:{ label:'Продовжити без пакета', nav:'free-after-fail' } },
+    s13: { label:'Оплатити', submit:true, alt:{ label:'Продовжити без VIP', nav:'free-after-fail' } },
     s14: { label:'Продовжити', back:false },
-    s15: { label:'Продовжити' },
+    s15: { label:'Дізнатися деталі', back:false, alt:{ label:'Продовжити без VIP', nav:'free' } },
     s16: { link:true, back:false, note:'Відкриється App Store або Google Play залежно від пристрою. Увійдіть за номером, який Ви вказали.' }
   };
 
@@ -740,8 +724,9 @@
       case 's3': case 's4': return !!(state.settlement || state.remote);
       case 's5': case 's6': return state.categories.length > 0;
       case 's7': case 's8': case 's9': return !!(state.description || state.voice);
-      case 's10': case 's11': case 's12': return !!state.intent;
-      case 's13': return !!state.leadId && state.branch === 'member' && !state.paid;
+      case 's12': return !!state.intent;
+      case 's11': return !!state.leadId;
+      case 's13': return !!state.leadId && !!state.plan && !state.paid;
       case 's14': return !!state.paid;
       case 's15': case 's16': return !!state.leadId;
     }
@@ -776,10 +761,9 @@
     if (c.link) { bar.next.hidden = true; bar.link.hidden = false; return; }
     bar.link.hidden = true; bar.next.hidden = false;
     var label = c.label;
-    if (id === 's12' && state.branch === 'member') label = 'Перейти до оплати';
     if (id === 's13') label = 'Оплатити ' + money(state.plan ? state.plan.price : (L.plans && L.plans[1] ? L.plans[1].price : 0));
     bar.full.textContent = label;
-    var short = (id === 's12' && state.branch === 'member') ? '' : (c.short || '');
+    var short = c.short || '';
     bar.short.textContent = short;
     bar.next.dataset.hasShort = short ? 'true' : 'false';
     if (c.shortAt) bar.next.dataset.shortAt = c.shortAt; else delete bar.next.dataset.shortAt;
@@ -853,8 +837,8 @@
       go(NEXT[current]);
       return;
     }
-    if (nav === 'free') { e.preventDefault(); state.branch = 'free'; state.plan = null; track('membership_skip'); go('s12'); return; }
-    if (nav === 'free-after-fail') { e.preventDefault(); state.branch = 'free'; track('membership_skip_after_fail'); go('s15'); return; }
+    if (nav === 'free') { e.preventDefault(); state.branch = 'free'; state.plan = null; track('membership_skip'); go('s16'); return; }
+    if (nav === 'free-after-fail') { e.preventDefault(); state.branch = 'free'; track('membership_skip_after_fail'); go('s16'); return; }
   });
 
   function showError(box, err, on, focusEl) {
@@ -981,7 +965,7 @@
     toggle.addEventListener('click', function () { box.dataset.state === 'recording' ? stop() : start(); });
     reset.addEventListener('click', function () {
       state.voice = null; setState('idle'); toggle.hidden = false; reset.hidden = true;
-      text.textContent = 'Голосом зручно розповісти більше деталей.'; toggle.focus();
+      text.textContent = ''; toggle.focus();
     });
     $('#s6').addEventListener('submit', function (e) {
       e.preventDefault();
@@ -1003,7 +987,7 @@
       if (!r) { showError(fs, err, true, $('input', fs)); say(err.textContent.trim()); return; }
       state.intent = r.value;
       track('quiz_step_complete', { quiz_step: 's9', client_intent: r.value });
-      go('s10');
+      go(NEXT.s9);
     });
   })();
 
@@ -1043,15 +1027,24 @@
       period = b.dataset.period;
       $$('.plans__tab', toggle).forEach(function (x) { x.classList.toggle('is-on', x === b); x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
       cards.forEach(function (c, i) { $('[data-plan-amount]', c).textContent = amount(PLANS[i]); $('[data-plan-period]', c).textContent = perLabel(); });
+      example();
     }); });
-    PLANS_ENTER = function () { var i = -1; cards.forEach(function (c, k) { if ($('input', c).checked) i = k; }); center(i < 0 ? 0 : i, false); mark(); };
+    function example() {
+      var r = $('input[name="membership_plan"]:checked', rail); if (!r) return;
+      var p = PLANS.filter(function (x) { return x.id === r.value; })[0]; if (!p || !p.example) return;
+      var price = p.example.price, save = Math.round(price * p.discount / 100), fee = period === 'year' ? p.year : p.price;
+      $('[data-ex-service]').textContent = p.example.service; $('[data-ex-price]').textContent = money(price); $('[data-ex-plan]').textContent = p.name;
+      $('[data-ex-discount]').textContent = p.discount; $('[data-ex-new]').textContent = money(price - save); $('[data-ex-fee]').textContent = money(fee); $('[data-ex-save]').textContent = money(save);
+    }
+    rail.addEventListener('change', example);
+    PLANS_ENTER = function () { var i = -1; cards.forEach(function (c, k) { if ($('input', c).checked) i = k; }); center(i < 0 ? 0 : i, false); mark(); example(); };
     $('#s11').addEventListener('submit', function (e) {
       e.preventDefault();
       var r = $('input[name="membership_plan"]:checked', rail); if (!r) return;
       var p = PLANS.filter(function (x) { return x.id === r.value; })[0];
       state.branch = 'member'; state.plan = { id: p.id, name: p.name, price: period === 'year' ? p.year : p.price, discount: p.discount, period: period };
       track('membership_select', { membership_plan: p.id, period: period });
-      go('s12');
+      go('s13');
     });
   })();
 
@@ -1094,7 +1087,7 @@
         track('quiz_contact_submit', { quiz_step: 's12', client_intent: state.intent, has_email: !!state.email, channels: state.channels.join(',') });
         setBusy(bar.next, false);
         $$('[data-s13-phone], [data-s15-phone]').forEach(function (n) { n.textContent = state.phone; });
-        go(state.branch === 'member' ? 's13' : 's15');
+        go('s15');
       }, 900);
     });
   })();
@@ -1153,11 +1146,12 @@
   // S1: два ряди фахівців з рейтингом під «3 500+» — 28 фото, кожен ряд подвоєний для безшовного циклу
   (function buildMarquee() {
     var host = $('[data-marquee]'); if (!host) return;
-    var SCORES = [73, 80, 86, 86, 90, 73, 77, 89, 89, 87, 83, 88, 87, 85, 88, 84, 77, 70, 89, 72, 73, 79, 73, 84, 70, 91, 85, 91];  // 70–92, випадковий набір із фіксованим зерном (рішення власника 24.09)
+    // 28 реальних фахівців платформи (усі — рівень PREMIUM у каталозі consultant.net.ua, вересень 2026); бейдж показує рівень, а не вигадану оцінку
+    var REAL = ['787','828','523','444','379','780','2267','301','1455','754','567','1','1256','1598','1059','2240','1132','2251','1251','1561','1380','870','1459','1221','1249','2349','1640','2249'];
     var STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.6L12 17.5l-5.9 3.2 1.2-6.6L2.5 9.5l6.6-.9z"/></svg>';
     function set(from, to) {
       var h = '<div class="mq__set">';
-      for (var i = from; i <= to; i++) h += '<span class="mq__tile"><img src="assets/people/m/' + (i < 10 ? '0' + i : i) + '.jpg" alt="" width="176" height="176" decoding="async" fetchpriority="low"><span class="mq__badge">' + STAR + SCORES[i - 1] + '/100</span></span>';
+      for (var i = from; i <= to; i++) h += '<span class="mq__tile"><img src="assets/people/real/' + REAL[i - 1] + '.jpg" alt="" width="176" height="176" decoding="async" fetchpriority="low"><span class="mq__badge">' + STAR + 'PREMIUM</span></span>';
       return h + '</div>';
     }
     host.innerHTML = '<div class="mq__tilt"><div class="mq__row mq__row--a">' + set(1, 14) + set(1, 14) + '</div></div>' +
@@ -1191,6 +1185,7 @@
           land.setAttribute('d', g.path);
           var xy = geoXY(g, s.lat, s.lon), inside = xy[0] > 0 && xy[0] < 800 && xy[1] > 0 && xy[1] < 450;
           pin.setAttribute('transform', 'translate(' + xy[0].toFixed(1) + ' ' + xy[1].toFixed(1) + ')'); pin.style.display = inside ? '' : 'none';
+          var lbl = $('[data-geo-label]', el); if (lbl) { lbl.textContent = s.name; lbl.setAttribute('x', xy[0].toFixed(1)); lbl.setAttribute('y', (xy[1] + 26).toFixed(1)); lbl.style.display = inside ? '' : 'none'; }
         }).catch(function () { land.setAttribute('d', ''); });
       } else if (GEO) { land.setAttribute('d', GEO.path); dots.style.display = ''; }
       var iframe = $('iframe', media); if (iframe) { iframe.remove(); $('[data-s3-svg]', el).hidden = false; }
@@ -1264,12 +1259,8 @@
       track('checkout_view', { membership_plan: p.id || 'standard' });
     },
     s14: function (el) { $('[data-s14-plan]', el).textContent = state.plan ? state.plan.name : 'PRO'; },
-    s15: function () {
-      runList($('#s15-list'), 700, null);
-      later(function () { doneAnimating(); go('s16'); }, 3600);
-    },
+    s15: function (el) { var from = $('[data-s15-from]', el); if (from && L.plans && L.plans[0]) from.textContent = money(L.plans[0].price); track('membership_offer_view'); },
     s16: function () {
-      $('#s15-list').setAttribute('aria-busy', 'false');
       track('quiz_result_view', { membership_status: state.paid ? 'paid' : 'none' });
     }
   };

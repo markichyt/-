@@ -24,7 +24,7 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 .is-dark .funnel__top { background: var(--color-black); }
 .funnel__topin { display: flex; align-items: center; gap: 12px; width: min(600px, 100% - 2 * var(--gutter)); margin-inline: auto; height: 56px; }
 .funnel__brand { display: inline-flex; align-items: center; margin-right: auto; }
-.funnel__brand img { height: 28px; width: auto; }
+.funnel__brand img { height: 34px; width: auto; }  /* повний логотип ≥ 160 px завширшки (правила бренду) */
 .funnel__brand .funnel__brand-img--dark { display: none; }
 .is-dark .funnel__brand .funnel__brand-img--light { display: none; }
 .is-dark .funnel__brand .funnel__brand-img--dark { display: block; }
@@ -94,7 +94,7 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
   .funnel__screen--entry .funnel__title--hero { font-size: 24px; }
   .funnel__next[data-short-at="narrow"] .funnel__lbl--full { display: none; }
   .funnel__next[data-short-at="narrow"] .funnel__lbl--short { display: inline; }
-  .funnel__brand img { height: 24px; }
+  .funnel__brand img { height: 34px; }
   .funnel__topin { height: 52px; }
 }
 @media (max-height: 37.5em) {
@@ -119,7 +119,7 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
   .funnel__title { font-size: 32px; line-height: 1.1; }
   .funnel__title--hero { font-size: 44px; letter-spacing: -0.04em; line-height: 1; }
   .funnel__topin { height: 64px; }
-  .funnel__brand img { height: 32px; }
+  .funnel__brand img { height: 38px; }
 }
 
 /* ---------- selectable options: one card per answer, check on the right ---------- */
@@ -613,3 +613,48 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 .cases-rating__meta { display: block; white-space: nowrap; line-height: 1.3; }
 .cases-rating__meta small { margin-left: 6px; font-size: 13px; color: var(--color-gray-300); }
 .cases-rating__meta small::before { content: "· "; }
+
+/* ── Зауваження власника (29.09.2026): сині акценти на всіх екранах ─────────── */
+.funnel__bignum-plus { color: var(--color-accent); }
+.funnel__chip[data-state="done"] .icon, .funnel__chip--static .icon, .funnel__trigger .icon, .funnel__vip-list .icon { color: var(--color-accent); }
+.q-search__icon { color: var(--color-accent); }
+.funnel__geo-pin { fill: var(--color-accent); }
+.funnel__geo-label { font-family: var(--font-body); font-size: 22px; font-weight: 600; fill: var(--color-text); paint-order: stroke; stroke: var(--color-white); stroke-width: 6px; stroke-linejoin: round; }
+.funnel__voice .btn .icon { color: var(--color-accent); }
+.funnel__voice[data-state="recording"] .funnel__voice-dot { background: var(--color-accent); }
+.q-option__icon { color: var(--color-accent); }
+.q-option:has(:checked) .q-option__icon { background: var(--color-accent); color: var(--color-white); }
+.q-option:has(:checked), .q-check--card:has(:checked), .plan:has(:checked) { border-color: var(--color-accent); box-shadow: inset 0 0 0 1px var(--color-accent); }
+.q-option:has(:checked)::after, .q-check:has(:checked)::before { border-color: var(--color-accent); background-color: var(--color-accent); }
+.q-chip:has(:checked), button.chip[aria-pressed="true"] { background: var(--color-accent); border-color: var(--color-accent); color: var(--color-white); }
+.q-steps__item[data-state="done"] .q-steps__dot { border-color: var(--color-accent); background-color: var(--color-accent); }
+.q-steps__item[data-state="current"] .q-steps__dot { border-color: var(--color-accent); background-image: radial-gradient(circle, var(--color-accent) 4px, transparent 4.5px); }
+.plan:has(:checked) .plan__btn { background: var(--color-accent); }
+.plans__toggle [aria-pressed="true"] { background: var(--color-accent); color: var(--color-white); }
+.q-option:has(:focus-visible), .q-check:has(:focus-visible), .q-chip:has(:focus-visible) { outline-color: var(--color-accent); }
+
+/* PREMIUM-відповіді — темна картка, як у застосунку */
+.appframe__ans[data-tier="premium"] { border-color: var(--color-text); background: var(--color-text); color: var(--color-white); }
+.appframe__ans[data-tier="premium"] .appframe__band { background: var(--color-dark-surface); border-bottom-color: var(--color-dark-border-strong); }
+.appframe__ans[data-tier="premium"] .q-tier[data-tier="premium"] { background: var(--color-white); border-color: var(--color-white); color: var(--color-text); }
+.appframe__ans[data-tier="premium"] .appframe__role, .appframe__ans[data-tier="premium"] .appframe__geo, .appframe__ans[data-tier="premium"] .appframe__ts, .appframe__ans[data-tier="premium"] .q-score__scale { color: var(--color-gray-300); }
+.appframe__ans[data-tier="premium"] .avatar { background: var(--color-dark-surface); color: var(--color-white); }
+
+/* S15 — подяка з VIP-тизером; S11 — приклад вигоди */
+.funnel__vip { gap: 10px; }
+.funnel__vip-title { margin: 0; font-size: clamp(16px, 4vw, 19px); line-height: 1.3; font-weight: 600; }
+.funnel__vip-title strong { color: var(--color-accent); }
+.funnel__vip-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: 15px; line-height: 1.4; }
+.funnel__vip-list li { display: flex; align-items: center; gap: 8px; }
+.funnel__vip-list .icon { flex-shrink: 0; width: 18px; height: 18px; }
+.funnel__vip-from { margin: 0; font-size: 14px; color: var(--color-gray-600); }
+.funnel__vip-from strong { color: var(--color-text); }
+.funnel__example { gap: 4px; }
+.funnel__example p { margin: 0; font-size: 14px; line-height: 1.45; }
+.funnel__example .funnel__card-label { margin-bottom: 4px; }
+.funnel__example-total { padding-top: 6px; margin-top: 4px; border-top: 1px solid var(--color-gray-300); }
+.funnel__example-save { color: var(--color-accent); }
+.mq__badge { font-size: 9px; letter-spacing: .04em; }
+@media (max-height: 899px) { .funnel__example-line { display: none; } .funnel__example p { font-size: 13px; } .plan { gap: 8px; padding: 14px 16px 12px; } .plan__savings { display: none; } .plan__features { font-size: 14px; gap: 4px; } .plan__btn { height: 40px; } .plans__toggle { margin-bottom: 0; } }
+@media (max-height: 699px) { .funnel__vip-list { gap: 4px; font-size: 14px; } .funnel__example .funnel__card-label { display: none; } .plan { padding: 12px 14px 10px; gap: 6px; } .plan__amount { font-size: 28px; } .plan__features { font-size: 13px; gap: 3px; } .plan__pill { font-size: 12px; } }
+@media (max-height: 599px) { .funnel__example-service { display: none; } }

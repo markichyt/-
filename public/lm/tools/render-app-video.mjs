@@ -7,31 +7,32 @@ import fs from 'node:fs'; import path from 'node:path'; import { execSync } from
 const DEMO = process.argv[2] || '/Users/mac/VOPROS/consultant-demo/ask-question-demo.html';
 const HERE = path.dirname(new URL(import.meta.url).pathname), ROOT = path.dirname(HERE), OUT = path.join(ROOT, 'assets/app');
 const PH = (n) => 'file://' + path.join(ROOT, 'assets/people/m', n + '.jpg');
+const RP = (n) => 'file://' + path.join(ROOT, 'assets/people', n + '.jpg');  // реальні адвокати платформи
 const TEXT = {
   uk: { orders: 'Мої замовлення', chips: ['Консультації', 'Документи', 'Послуги', 'Чеки'], status: 'Статус:', order: 'Замовити послугу', best: 'Найкраща відповідь',
     list: [
-      { date: '01.07.2026 18:04', q: 'Чи можу я отримати компенсацію за неправомірне затримання через помилку в базі даних?', st: 'Відкрито', avatars: [PH('11'), PH('23'), PH('03')] },
-      { date: '28.06.2026 11:20', q: 'Як оскаржити штраф за паркування, виписаний помилково?', st: 'Є відповіді', avatars: [PH('09')] },
-      { date: '19.06.2026 09:45', q: 'Чи можна повернути передоплату за неякісний ремонт квартири?', st: 'Закрито', closed: true, avatars: [PH('16'), PH('20')] },
-      { date: '03.06.2026 16:10', q: 'Що робити, якщо орендодавець не повертає депозит?', st: 'Закрито', closed: true, avatars: [PH('12')] } ],
+      { date: '01.07.2026 18:04', q: 'Чи можу я отримати компенсацію за неправомірне затримання через помилку в базі даних?', st: 'Відкрито', avatars: [RP('st'), RP('mo'), RP('po')] },
+      { date: '28.06.2026 11:20', q: 'Як оскаржити штраф за паркування, виписаний помилково?', st: 'Є відповіді', avatars: [RP('hr')] },
+      { date: '19.06.2026 09:45', q: 'Чи можна повернути передоплату за неякісний ремонт квартири?', st: 'Закрито', closed: true, avatars: [RP('od'), RP('bo')] },
+      { date: '03.06.2026 16:10', q: 'Що робити, якщо орендодавець не повертає депозит?', st: 'Закрито', closed: true, avatars: [RP('st')] } ],
     qnum: 'Питання №14237', qdate: '01 липня 2026, 18:04', qtitle: 'Чи можу я отримати компенсацію за неправомірне затримання через помилку в базі даних?',
     qbody: 'Мене зупинили під час планової перевірки й затримали, бо в базі поліції я помилково значився як розшукуваний.',
     answers: [
       { band: 'BASE (Base)', score: '35.68', name: 'Асистент Андрій', role: 'Штучний інтелект', loc: 'Україна', ts: '01.07.2026, 18:05', photo: 'file:///Users/mac/VOPROS/consultant-demo/assets/andrey.jpg', text: 'Компенсацію за незаконне затримання можна вимагати за нормами про відшкодування шкоди, завданої органами влади.' },
-      { band: 'PREMIUM', score: '92.4', name: 'Олена Коваль', role: 'Адвокат', loc: 'Київ, Україна', ts: '01.07.2026, 18:32', photo: PH('23'), text: 'Так, підстави є. Готова підготувати позов про відшкодування моральної шкоди та втраченого заробітку.' },
-      { band: 'PRO', score: '88.7', name: 'Максим Ткаченко', role: 'Юрист', loc: 'Львів, Україна', ts: '01.07.2026, 19:10', photo: PH('03'), text: 'Спершу зафіксуйте факт помилки в базі: запросіть довідку з поліції та підтвердження звільнення.' } ] },
+      { band: 'PREMIUM', score: '76.37', name: 'Студенцов Олександр', role: 'Юрист', loc: 'Київ, Україна', ts: '01.07.2026, 18:32', photo: RP('st'), text: 'Так, підстави є. Готова підготувати позов про відшкодування моральної шкоди та втраченого заробітку.' },
+      { band: 'PREMIUM', score: '42.28', name: 'Молчанов Олег', role: 'Адвокат', loc: 'Київ, Україна', ts: '01.07.2026, 19:10', photo: RP('mo'), text: 'Спершу зафіксуйте факт помилки в базі: запросіть довідку з поліції та підтвердження звільнення.' } ] },
   en: { orders: 'My orders', chips: ['Consultations', 'Documents', 'Services', 'Checks'], status: 'Status:', order: 'Order the service', best: 'Best answer',
     list: [
-      { date: '07/01/2026 18:04', q: 'Can I claim compensation for being wrongfully arrested due to a database error?', st: 'Opened', avatars: [PH('11'), PH('23'), PH('03')] },
-      { date: '06/28/2026 11:20', q: 'How do I appeal a parking fine that was issued by mistake?', st: 'Answered', avatars: [PH('09')] },
-      { date: '06/19/2026 09:45', q: 'Can I get a prepayment back for poor-quality apartment repairs?', st: 'Closed', closed: true, avatars: [PH('16'), PH('20')] },
-      { date: '06/03/2026 16:10', q: 'What can I do if my landlord will not return the deposit?', st: 'Closed', closed: true, avatars: [PH('12')] } ],
+      { date: '07/01/2026 18:04', q: 'Can I claim compensation for being wrongfully arrested due to a database error?', st: 'Opened', avatars: [RP('st'), RP('mo'), RP('po')] },
+      { date: '06/28/2026 11:20', q: 'How do I appeal a parking fine that was issued by mistake?', st: 'Answered', avatars: [RP('hr')] },
+      { date: '06/19/2026 09:45', q: 'Can I get a prepayment back for poor-quality apartment repairs?', st: 'Closed', closed: true, avatars: [RP('od'), RP('bo')] },
+      { date: '06/03/2026 16:10', q: 'What can I do if my landlord will not return the deposit?', st: 'Closed', closed: true, avatars: [RP('st')] } ],
     qnum: 'Question #14237', qdate: '01 July, 2026 18:04', qtitle: 'Can I claim compensation for being wrongfully arrested and held in custody due to a database error?',
     qbody: 'I was stopped during a routine police check and arrested because a police database wrongly listed me as wanted.',
     answers: [
       { band: 'BASE (Base)', score: '35.68', name: 'Assistant Andrey', role: 'Artificial Intelligence', loc: 'USA', ts: '07/01/2026, 18:05', photo: 'file:///Users/mac/VOPROS/consultant-demo/assets/andrey.jpg', text: 'Compensation for wrongful detention can be claimed under the rules on damages caused by public authorities.' },
-      { band: 'PREMIUM', score: '92.4', name: 'Sarah Mitchell', role: 'Attorney', loc: 'New York, USA', ts: '07/01/2026, 18:32', photo: PH('23'), text: 'Yes, you have grounds. I can prepare a claim for moral damages and lost earnings.' },
-      { band: 'PRO', score: '88.7', name: 'James Cooper', role: 'Attorney', loc: 'Chicago, USA', ts: '07/01/2026, 19:10', photo: PH('03'), text: 'First, document the database error: request the police record and confirmation of your release.' } ] }
+      { band: 'PREMIUM', score: '76.37', name: 'Oleksandr Studentsov', role: 'Lawyer', loc: 'Kyiv, Ukraine', ts: '07/01/2026, 18:32', photo: RP('st'), text: 'Yes, you have grounds. I can prepare a claim for moral damages and lost earnings.' },
+      { band: 'PREMIUM', score: '42.28', name: 'Oleh Molchanov', role: 'Attorney', loc: 'Kyiv, Ukraine', ts: '07/01/2026, 19:10', photo: RP('mo'), text: 'First, document the database error: request the police record and confirmation of your release.' } ] }
 };
 const FPS = 30, PLAN = [['list', 48], ['tap', 15], ['in', 15], ['hold', 30], ['scroll', 150], ['hold', 30], ['out', 15], ['list', 36]];
 const ease = { out: p => 1 - Math.pow(1 - p, 3), inout: p => p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2, in: p => p * p * p };

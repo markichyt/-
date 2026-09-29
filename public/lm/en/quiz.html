@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Free analysis of your situation — quiz | CONSULTANT</title>
+<title>Free analysis of your situation — quiz | ConsultantLM</title>
 <meta name="description" content="Describe your situation in 2–3 minutes: ConsultantLM analyzes it, matches relevant specialists and shows service prices before you decide.">
 <!-- Макет: данные, фахівці и кейсы — заглушки до подключения базы сайта; индексирование запрещено явно -->
 <meta name="robots" content="noindex,nofollow">
@@ -24,7 +24,7 @@
   plural: function (n) { return n === 1 ? 0 : 1; },
   step: function (n, m) { return 'Step ' + n + ' of ' + m; },
   money: function (n) { return '$' + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); },
-  plans: [{"id":"base","name":"BASE","price":12,"year":120,"discount":5,"features":["Individual consultations: 3","Document templates: unlimited","Advanced AI assistant 24/7"],"pill":"Up to 5% off all services","savings":{"total":"Total savings from $260","items":["Individual consultations — save up to $75","Unlimited document templates — save from $90","Up to 5% off services — save from $100"]}},{"id":"pro","name":"PRO","price":39,"year":390,"discount":10,"recommended":true,"features":["Individual consultations: 12","Document templates: unlimited","Personal manager"],"pill":"Up to 10% off all services","savings":{"total":"Total savings from $600","items":["Individual consultations — save up to $300","Unlimited document templates — save from $90","Up to 10% off services — save from $200"]}},{"id":"premium","name":"PREMIUM","price":199,"year":1990,"discount":20,"features":["Individual consultations: unlimited","Document templates: unlimited","Personal VIP manager"],"pill":"Up to 20% off all services","savings":{"total":"Total savings from $1,100","items":["Individual consultations — save from $600","Unlimited document templates — save from $90","Maximum 20% off services — save from $400"]}}],
+  plans: [{"id":"base","name":"BASE","price":12,"year":120,"discount":5,"example":{"service":"Attorney visit upon detention","price":800},"features":["Individual consultations: 3","Document templates: unlimited","Advanced AI assistant 24/7"],"pill":"Up to 5% off all services","savings":{"total":"Total savings from $260","items":["Individual consultations — save up to $75","Unlimited document templates — save from $90","Up to 5% off services — save from $100"]}},{"id":"pro","name":"PRO","price":39,"year":390,"discount":10,"recommended":true,"example":{"service":"Attorney visit upon detention","price":800},"features":["Individual consultations: 12","Document templates: unlimited","Personal manager"],"pill":"Up to 10% off all services","savings":{"total":"Total savings from $600","items":["Individual consultations — save up to $300","Unlimited document templates — save from $90","Up to 10% off services — save from $200"]}},{"id":"premium","name":"PREMIUM","price":199,"year":1990,"discount":20,"example":{"service":"Court representation","price":2400},"features":["Individual consultations: unlimited","Document templates: unlimited","Personal VIP manager"],"pill":"Up to 20% off all services","savings":{"total":"Total savings from $1,100","items":["Individual consultations — save from $600","Unlimited document templates — save from $90","Maximum 20% off services — save from $400"]}}],
   settlements: [['New York', 'NY', 1000, 40.71, -74.01], ['Los Angeles', 'CA', 640, 34.05, -118.24], ['Chicago', 'IL', 480, 41.88, -87.63], ['Houston', 'TX', 380, 29.76, -95.37], ['Phoenix', 'AZ', 210, 33.45, -112.07],
     ['Philadelphia', 'PA', 190, 39.95, -75.17], ['San Antonio', 'TX', 120, 29.42, -98.49], ['San Diego', 'CA', 170, 32.72, -117.16], ['Dallas', 'TX', 160, 32.78, -96.8], ['Austin', 'TX', 150, 30.27, -97.74],
     ['Jacksonville', 'FL', 140, 30.33, -81.66], ['Fort Worth', 'TX', 90, 32.75, -97.33], ['Columbus', 'OH', 130, 39.96, -83.0], ['Charlotte', 'NC', 120, 35.23, -80.84], ['Indianapolis', 'IN', 110, 39.77, -86.16],
@@ -90,9 +90,9 @@
 
   <header class="funnel__top">
     <div class="funnel__topin">
-      <a class="funnel__brand" href="https://consultant.net.ua/" aria-label="CONSULTANT — home">
-        <img class="funnel__brand-img--light" src="../design-system/assets/logo/logo-on-light.svg" width="562" height="122" alt="" decoding="async">
-        <img class="funnel__brand-img--dark"  src="../design-system/assets/logo/logo-on-dark.svg" width="562" height="122" alt="" decoding="async">
+      <a class="funnel__brand" href="https://consultant.net.ua/" aria-label="ConsultantLM — home">
+        <img class="funnel__brand-img--light" src="../design-system/assets/logo/consultant-lm_logo_en_on-light_TM.svg" width="580" height="122" alt="" decoding="async">
+        <img class="funnel__brand-img--dark"  src="../design-system/assets/logo/consultant-lm_logo_en_on-dark_TM.svg" width="580" height="122" alt="" decoding="async">
       </a>
       <span class="funnel__step" id="funnel-where" hidden>Step 1 of 5</span>
     </div>
@@ -136,11 +136,11 @@
     <section class="funnel__screen" id="s1" data-screen="s1" aria-labelledby="s1-title" hidden>
       <div class="funnel__head">
         <h2 class="funnel__title" id="s1-title" tabindex="-1">We don’t just show a list of specialists.</h2>
-        <p class="funnel__hint funnel__hint--sm funnel__hide-short">ConsultantLM matches specialists to your specific situation.</p>
+        <p class="funnel__hint funnel__hint--sm funnel__hide-short">ConsultantLM™ matches specialists to your specific situation.</p>
       </div>
       <div class="funnel__card funnel__card--stat funnel__reveal" data-s1-step="1">
         <div class="funnel__stat">
-          <p class="funnel__bignum num">3&nbsp;500+</p>
+          <p class="funnel__bignum num">3&nbsp;500<span class="funnel__bignum-plus">+</span></p>
           <p class="funnel__hint funnel__hint--sm">specialists on the platform — we select the ones who fit your case</p>
         </div>
         <div class="mq" data-marquee aria-hidden="true"></div>
@@ -208,6 +208,7 @@
               <path d="M0 -44 a24 24 0 0 1 24 24 c0 18 -24 44 -24 44 s-24 -26 -24 -44 a24 24 0 0 1 24 -24 z"/>
               <circle cx="0" cy="-20" r="8" fill="currentColor" stroke="none"/>
             </g>
+            <text class="funnel__geo-label" data-geo-label x="400" y="240" text-anchor="middle">City or town</text>
           </svg>
           <p class="q-media__caption"><strong data-s3-caption>City or town</strong><small data-s3-caption-sub>state</small></p>
           <button class="btn btn--sm funnel__mapbtn" type="button" data-s3-loadmap>Show on map</button>
@@ -279,7 +280,7 @@
           <svg class="icon" width="20" height="20" aria-hidden="true" data-voice-icon><use href="#i-mic"></use></svg>
           <span data-voice-label>Tell it by voice</span>
         </button>
-        <p class="funnel__voice-status" id="voice-status" role="status" aria-live="polite"><span class="funnel__voice-dot" aria-hidden="true"></span><span data-voice-text>Voice makes it easy to share more details.</span></p>
+        <p class="funnel__voice-status" id="voice-status" role="status" aria-live="polite"><span class="funnel__voice-dot" aria-hidden="true"></span><span data-voice-text></span></p>
         <button class="link" type="button" data-voice="reset" hidden>Record again</button>
         <p class="q-error" role="alert" data-voice-error hidden>
           <svg class="q-error__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg>
@@ -301,7 +302,7 @@
       <div class="appframe appframe--compact" role="img" aria-label="Question page in the app: your question, and below it the card of the lawyer who took your request">
         <div class="appframe__bar">Question #14238</div>
         <article class="appframe__card"><p class="appframe__date"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>07/01/2026, 18:04</p><p class="appframe__qt" data-s7-question>Your description</p></article>
-        <template id="s7-card"><article class="appframe__ans"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="pro"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PRO</span><span class="q-score"><span class="q-score__value num">75.8</span><span class="q-score__scale">of 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="../assets/people/ko.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">BC</span><span class="appframe__meta"><span class="appframe__name">Basil Chochla</span><span class="appframe__role">Attorney</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>New York</span></span></div><p class="appframe__ts">{{ts}}</p><p class="appframe__txt">{{txt}}</p></article></template>
+        <template id="s7-card"><article class="appframe__ans" data-tier="premium"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="premium"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PREMIUM</span><span class="q-score"><span class="q-score__value num">76,37</span><span class="q-score__scale">/ 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="../assets/people/st.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">OS</span><span class="appframe__meta"><span class="appframe__name">Oleksandr Studentsov</span><span class="appframe__role">Lawyer</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Kyiv</span></span></div><p class="appframe__ts">{{ts}}</p><p class="appframe__txt">{{txt}}</p></article></template>
         <div class="appframe__list" id="s7-answers">
           <div class="appframe__skel appframe__skel--short"><span class="q-skel"></span><span class="q-skel"></span><span class="q-skel"></span></div>
           <div class="appframe__skel funnel__hide-short"><span class="q-skel"></span><span class="q-skel"></span><span class="q-skel"></span></div>
@@ -319,9 +320,8 @@
         <div class="appframe__bar">Question #14238</div>
         <article class="appframe__card"><p class="appframe__date"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>07/01/2026, 18:04</p><p class="appframe__qt" data-s8-question>Your description</p></article>
         <div class="appframe__list">
-          
-          <article class="appframe__ans"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="pro"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PRO</span><span class="q-score"><span class="q-score__value num">75.8</span><span class="q-score__scale">of 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="../assets/people/ko.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">BC</span><span class="appframe__meta"><span class="appframe__name">Basil Chochla</span><span class="appframe__role">Attorney</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>New York</span></span></div><p class="appframe__ts">14 min later</p><p class="appframe__txt">Suggests an out-of-court route and explains why it is faster in your case.</p></article>
-          <article class="appframe__ans"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="premium"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PREMIUM</span><span class="q-score"><span class="q-score__value num">82.4</span><span class="q-score__scale">of 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="../assets/people/tm.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">DD</span><span class="appframe__meta"><span class="appframe__name">Dmitry Dubograev</span><span class="appframe__role">Attorney</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Miami</span></span></div><p class="appframe__ts">26 min later</p><p class="appframe__txt">Advises preparing a claim right away and shows which evidence strengthens your position.</p></article><article class="appframe__ans funnel__hide-short funnel__hide-mid"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="pro"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PRO</span><span class="q-score"><span class="q-score__value num">71.2</span><span class="q-score__scale">of 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="../assets/people/md.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">VI</span><span class="appframe__meta"><span class="appframe__name">Viktor Ivanov</span><span class="appframe__role">Lawyer</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Houston</span></span></div><p class="appframe__ts">14 min later</p><p class="appframe__txt">Advises putting the arrangements in writing and filing for child support right away, which saves time in court.</p></article>
+          <article class="appframe__ans" data-tier="premium"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="premium"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PREMIUM</span><span class="q-score"><span class="q-score__value num">76,37</span><span class="q-score__scale">/ 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="../assets/people/st.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">OS</span><span class="appframe__meta"><span class="appframe__name">Oleksandr Studentsov</span><span class="appframe__role">Lawyer</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Kyiv</span></span></div><p class="appframe__ts">14 min later</p><p class="appframe__txt">Suggests an out-of-court route and explains why it is faster in your case.</p></article>
+          <article class="appframe__ans" data-tier="premium"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="premium"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PREMIUM</span><span class="q-score"><span class="q-score__value num">42,28</span><span class="q-score__scale">/ 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="../assets/people/mo.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">OM</span><span class="appframe__meta"><span class="appframe__name">Oleh Molchanov</span><span class="appframe__role">Attorney</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Kyiv</span></span></div><p class="appframe__ts">26 min later</p><p class="appframe__txt">Advises preparing a claim right away and shows which evidence strengthens your position.</p></article><article class="appframe__ans funnel__hide-short funnel__hide-mid" data-tier="premium"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="premium"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PREMIUM</span><span class="q-score"><span class="q-score__value num">42,37</span><span class="q-score__scale">/ 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="../assets/people/po.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">VP</span><span class="appframe__meta"><span class="appframe__name">Violeta Podlinieva</span><span class="appframe__role">Lawyer</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Kyiv</span></span></div><p class="appframe__ts">41 min later</p><p class="appframe__txt">Advises putting the arrangements in writing and filing for child support right away, which saves time in court.</p></article>
         </div>
       </div>
       <ul class="funnel__chips funnel__hide-short funnel__hide-mid" aria-label="What it gives you">
@@ -338,59 +338,42 @@
     <form class="funnel__screen" id="s9" data-screen="s9" aria-labelledby="s9-title" novalidate hidden>
       <div class="funnel__head">
         <h2 class="funnel__title" id="s9-title" tabindex="-1">What would you like to do next?</h2>
-        <p class="funnel__hint funnel__hint--sm">Pick one option.</p>
       </div>
       <fieldset class="funnel__options" id="s9-options" aria-describedby="s9-err">
         <legend class="sr-only">Pick one option</legend>
         <label class="q-option">
           <input class="q-option__input" type="radio" name="client_intent" value="high">
           <span class="q-option__icon" aria-hidden="true"><svg class="icon"><use href="#i-bolt"></use></svg></span>
-          <span class="q-option__label">Get help as soon as possible<span class="q-option__note">Ready to discuss the work with a specialist right now</span></span>
+          <span class="q-option__label">Get help as soon as possible</span>
         </label>
         <label class="q-option">
           <input class="q-option__input" type="radio" name="client_intent" value="medium">
           <span class="q-option__icon" aria-hidden="true"><svg class="icon"><use href="#i-eye"></use></svg></span>
-          <span class="q-option__label">Understand the solution and the cost<span class="q-option__note">Ready to choose a specialist after seeing the options</span></span>
+          <span class="q-option__label">Understand the solution and the cost</span>
         </label>
         <label class="q-option">
           <input class="q-option__input" type="radio" name="client_intent" value="low">
           <span class="q-option__icon" aria-hidden="true"><svg class="icon"><use href="#i-book"></use></svg></span>
-          <span class="q-option__label">Gather information at my own pace<span class="q-option__note">Ready for the analysis, not deciding on a specialist yet</span></span>
+          <span class="q-option__label">Gather information at my own pace</span>
         </label>
       </fieldset>
       <p class="funnel__error" id="s9-err" role="alert" hidden>Pick one of the options to continue</p>
     </form>
 
-    <!-- ── S10 · Proof №5 — прозора ціна ────────────────────────────────── -->
-    <section class="funnel__screen" id="s10" data-screen="s10" aria-labelledby="s10-title" hidden>
-      <div class="funnel__head">
-        <h2 class="funnel__title" id="s10-title" tabindex="-1">You see the cost before you decide.</h2>
-        <p class="funnel__hint funnel__hint--sm funnel__hide-short">Each specialist attaches a service with stages and an exact price to their answer.</p>
-      </div>
-      <article class="funnel__card" aria-labelledby="s10-service">
-        <h3 class="title-sm" id="s10-service">Divorce and child residence determination</h3>
-        <ol class="funnel__stages" aria-label="Service stages and their cost">
-          <li><span><span class="funnel__stage-num">Stage 1</span>Analysis of the situation and documents</span><span class="funnel__stage-price num">$150</span></li>
-          <li><span><span class="funnel__stage-num">Stage 2</span>Preparing the claim and evidence</span><span class="funnel__stage-price num">$600</span></li>
-          <li><span><span class="funnel__stage-num">Stage 3</span>Court representation</span><span class="funnel__stage-price num">$2,250</span></li>
-          <li class="funnel__stage--total"><span>Total for the service</span><span class="funnel__stage-price num">$3,000</span></li>
-        </ol>
-        <ul class="funnel__chips funnel__hide-short funnel__hide-mid" aria-label="Price terms">
-          <li class="funnel__chip funnel__chip--static"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Fixed price</li>
-          <li class="funnel__chip funnel__chip--static"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Known in advance</li>
-          <li class="funnel__chip funnel__chip--static"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Stages included</li>
-        </ul>
-      </article>
-      <p class="funnel__hint funnel__hint--sm funnel__hide-short">No surprise hourly bills — when the specialist offers a fixed-price model for the service.</p>
-      <p class="caption q-disclaimer funnel__hint--sm">The estimate is indicative and not a public offer. The consultant confirms the final price before the work starts.</p>
-    </section>
+    
 
     <!-- ── S11 · Пакети послуг — слайдер 3 пакетів застосунку ──────────────────────────────── -->
     <form class="funnel__screen" id="s11" data-screen="s11" aria-labelledby="s11-title" novalidate hidden>
       <div class="funnel__head">
-        <h2 class="funnel__title" id="s11-title" tabindex="-1">Choose a service package.</h2>
-        <p class="funnel__hint funnel__hint--sm funnel__hide-short funnel__hide-mid">A discount on the services you order next. The package does not affect the free analysis.</p>
+        <h2 class="funnel__title" id="s11-title" tabindex="-1">Choose the plan that suits you best.</h2>
+        <p class="funnel__hint funnel__hint--sm funnel__hide-short funnel__hide-mid">Discounts on services, unlimited consultations, a personal manager and access to premium attorneys.</p>
       </div>
+      <article class="funnel__card funnel__example" aria-live="polite">
+        <p class="funnel__card-label">Savings example</p>
+        <p class="funnel__example-service"><span data-ex-service>Attorney visit upon detention</span> — <strong class="num" data-ex-price>$800</strong></p>
+        <p class="funnel__example-line">With <strong data-ex-plan>PRO</strong> (−<span class="num" data-ex-discount>10</span>&nbsp;%) — <strong class="num" data-ex-new>$720</strong></p>
+        <p class="funnel__example-total">Pay <strong class="num" data-ex-fee>$39</strong> for the plan and save <strong class="num funnel__example-save" data-ex-save>$150</strong> on this service.</p>
+      </article>
       <div class="plans" id="s11-plans">
         <div class="plans__toggle funnel__hide-short" role="group" aria-label="Billing period">
           <button class="plans__tab is-on" type="button" data-period="month" aria-pressed="true">1 month</button>
@@ -412,15 +395,12 @@
     <!-- ── S12 · Q5 · Контакти — Крок 5 із 5 (спільна для обох гілок) ───── -->
     <form class="funnel__screen funnel__screen--tight" id="s12" data-screen="s12" aria-labelledby="s12-title" novalidate hidden data-ds-event="quiz_contact_submit">
       <div class="funnel__head">
-        <h2 class="funnel__title" id="s12-title" tabindex="-1">Where should we send the results?</h2>
+        <h2 class="funnel__title" id="s12-title" tabindex="-1">Where should we send the result of the free analysis of your situation?</h2>
         <p class="funnel__hint funnel__hint--sm funnel__hide-short">We will create your question in the app for this number and send the specialists’ answers.</p>
       </div>
       <div class="funnel__form">
         <div class="field">
-          <label class="field__label" id="phone-label" for="phone">
-            Phone <span class="q-req-star" aria-hidden="true">*</span>
-            <span class="q-req">(required)</span>
-          </label>
+          <label class="field__label sr-only" id="phone-label" for="phone">Phone (required)</label>
           <div class="q-phone funnel__phone" id="phone-box" role="group" aria-labelledby="phone-label">
             <span class="q-phone__country" aria-hidden="true"><span class="q-phone__code" data-locale-phone-code>+1</span></span>
             <input class="q-phone__input" id="phone" name="phone" type="tel" inputmode="tel"
@@ -479,7 +459,6 @@
           </div>
         </div>
       </div>
-      <p class="caption q-disclaimer funnel__hint--sm">Only the consultant you choose sees your details. We do not share them with third parties.</p>
     </form>
 
     <!-- ── S13 · Оплата пакета (тільки гілка з пакетом) ─────────────────── -->
@@ -534,15 +513,21 @@
     <!-- ── S15 · Final processing ────────────────────────────────────────── -->
     <section class="funnel__screen" id="s15" data-screen="s15" aria-labelledby="s15-title" hidden>
       <div class="funnel__head">
-        <h2 class="funnel__title" id="s15-title" tabindex="-1">Your case is already being analyzed.</h2>
-        <p class="funnel__hint funnel__hint--sm">The question was created for <span class="num" data-s15-phone>+380 67 123 45 67</span>.</p>
+        <h2 class="funnel__title" id="s15-title" tabindex="-1">Thank you!</h2>
+        <p class="funnel__hint">You can see the results of the analysis in the ConsultantLM mobile app.</p>
+        <p class="funnel__hint funnel__hint--sm funnel__hide-short">The question was created for <span class="num" data-s15-phone>+380 67 123 45 67</span>.</p>
       </div>
-      <ol class="q-steps funnel__checklist" id="s15-list" aria-label="Request processing status" aria-busy="true">
-        <li class="q-steps__item" data-state="upcoming"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">Request created</p></div></li>
-        <li class="q-steps__item" data-state="upcoming"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">Area identified</p></div></li>
-        <li class="q-steps__item" data-state="upcoming"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">AI analysis started</p></div></li>
-        <li class="q-steps__item" data-state="upcoming"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">Matching relevant specialists</p><p class="q-steps__status" data-status hidden>In progress…</p></div></li>
-      </ol>
+      <article class="funnel__card funnel__vip" aria-labelledby="s15-vip-title">
+        <p class="funnel__card-label">VIP plan</p>
+        <p class="funnel__vip-title" id="s15-vip-title">Save up to <strong class="num">20&nbsp;%</strong> on attorney and lawyer services.</p>
+        <ul class="funnel__vip-list">
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Unlimited consultations</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Personal manager</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Access to premium attorneys</li>
+        </ul>
+        <p class="funnel__vip-from">From <strong class="num" data-s15-from>$12</strong> per month</p>
+      </article>
+      <p class="funnel__key funnel__hide-short funnel__hide-mid">The free analysis is already yours — a plan does not affect it.</p>
     </section>
 
     <!-- ── S16 · Final App CTA — останній екран ─────────────────────────── -->
@@ -585,7 +570,7 @@
         <a class="btn btn--primary funnel__next" id="funnel-link" href="https://consultantlm.com/app?src=quiz" rel="noopener" data-ds-event="quiz_result_view" hidden>View the answers</a>
       </div>
       <div class="funnel__row" id="funnel-altrow" hidden>
-        <button class="btn btn--outline btn--block funnel__alt" type="button" id="funnel-alt" data-nav="free">Continue without a package</button>
+        <button class="btn btn--outline btn--block funnel__alt" type="button" id="funnel-alt" data-nav="free">Continue without VIP</button>
       </div>
     </div>
   </footer>
@@ -611,7 +596,7 @@
 
   /* ── данные-заглушки (в продукте — база сайта); населённые пункты — из локали ── */
   var SETTLEMENTS = L.settlements || [
-    ['New York', 'NY', 1000, 50.45, 30.52], ['Miami', 'FL', 640, 49.84, 24.03], ['Los Angeles', 'CA', 520, 46.48, 30.73],
+    ['Kyiv', 'NY', 1000, 50.45, 30.52], ['Miami', 'FL', 640, 49.84, 24.03], ['Los Angeles', 'CA', 520, 46.48, 30.73],
     ['Chicago', 'IL', 480, 49.99, 36.23], ['Houston', 'TX', 450, 48.46, 35.05], ['Phoenix', 'AZ', 1000, 49.59, 34.55],
     ['Philadelphia', 'PA', 210, 47.84, 35.14], ['San Antonio', 'TX', 190, 49.23, 28.47], ['San Diego', 'CA', 170, 48.92, 24.71],
     ['Dallas', 'TX', 160, 49.44, 32.06], ['Austin', 'TX', 150, 49.42, 26.98], ['Jacksonville', 'FL', 140, 50.25, 28.66],
@@ -626,7 +611,7 @@
     ['Tulsa', 'TN', 22, 51.05, 31.89], ['Arlington', 'MD', 20, 50.18, 30.31], ['New Orleans', 'FL', 20, 49.26, 23.85],
     ['Wichita', 'MD', 18, 50.11, 30.63], ['Cleveland', 'CA', 18, 48.53, 25.04], ['Tampa Bay', 'MD', 15, 50.08, 29.92],
     ['Aurora', 'FL', 12, 50.59, 27.62], ['Anaheim', 'MD', 6, 51.52, 30.76], ['Honolulu', 'MD', 4, 49.37, 29.68],
-    ['Miami Beach', 'MD', 3, 49.9, 30.3], ['Key West', 'MD', 2, 49.52, 29.92], ['Naples', 'MD', 1, 49.39, 30.19],
+    ['Kaharlyk', 'MD', 3, 49.87, 30.82], ['Key West', 'MD', 2, 49.52, 29.92], ['Naples', 'MD', 1, 49.39, 30.19],
     ['Warsaw', 'Poland', 38, 52.23, 21.01, 'PL'], ['Kraków', 'Poland', 21, 50.06, 19.94, 'PL'], ['Berlin', 'Germany', 17, 52.52, 13.4, 'DE'], ['Prague', 'Czechia', 12, 50.08, 14.44, 'CZ']
   ];
   /* карта країни на S3: контур і проекція приходять з QUIZ_LOCALE.geo (tools/make-geo.py) */
@@ -659,20 +644,20 @@
     debt: [['Debtor went silent', 'Debt recovered, car seized'], ['Tenant not paying or leaving', 'Premises returned, debt recovered'], ['Repair prepayment not returned', 'Money returned with interest']]
   };
   var PEOPLE = [
-    ['Basil', 'Chochla', 'Lawyer', 'BC', 'online', 'ko'], ['Dmitry', 'Dubograev', 'Lawyer', 'DD', 'online', 'tm'],
-    ['Viktor', 'Ivanov', 'Lawyer', 'VI', 'online', 'md'], ['Nataliia', 'Artemieva', 'Patent attorney', 'NA', 'offline', 'go']
+    ['Oleksandr', 'Studentsov', 'Lawyer', 'OS', 'online', 'st'], ['Oleh', 'Molchanov', 'Attorney', 'OM', 'online', 'mo'],
+    ['Violeta', 'Podlinieva', 'Lawyer', 'VP', 'online', 'po'], ['Mykola', 'Hrytsai', 'Lawyer', 'MH', 'offline', 'hr']
   ];
 
   /* ── порядок экранов, вопросы, панель действий ── */
-  var STEPS = ['s0','s1','s2','s3','s4','s5','s6','s7','s8','s9','s10','s11','s12','s13','s14','s15','s16'];
+  var STEPS = ['s0','s1','s2','s3','s4','s5','s6','s7','s8','s9','s12','s15','s11','s13','s14','s16'];
   var NAMES = { s0:'entry', s1:'proof_matching', s2:'q_location', s3:'proof_local', s4:'q_category',
     s5:'proof_cases', s6:'q_description', s7:'processing', s8:'proof_opinions', s9:'q_intent',
-    s10:'proof_price', s11:'membership', s12:'q_contacts', s13:'checkout', s14:'membership_success',
+    s11:'membership', s12:'q_contacts', s13:'checkout', s14:'membership_success',
     s15:'final_processing', s16:'app_cta' };
   var QUESTION = { s2:[1,'Location'], s4:[2,'Area'], s6:[3,'Description'], s9:[4,'Intent'], s12:[5,'Contacts'] };
-  var NEXT = { s0:'s1', s1:'s2', s2:'s3', s3:'s4', s4:'s5', s5:'s6', s6:'s7', s7:'s8', s8:'s9', s9:'s10',
-    s10:'s11', s13:'s14', s14:'s16', s15:'s16' };
-  var ANIMATED = { s1:true, s3:true, s7:true, s15:true };
+  var NEXT = { s0:'s1', s1:'s2', s2:'s3', s3:'s4', s4:'s5', s5:'s6', s6:'s7', s7:'s8', s8:'s9', s9:'s12',
+    s15:'s11', s13:'s14', s14:'s16' };
+  var ANIMATED = { s1:true, s3:true, s7:true };
   var BAR = {
     s0:  { label:'Start the free analysis', short:'Start analysis', shortAt:'narrow', event:'quiz_start', back:false, note:'2–3 minutes' },
     s1:  { label:'Continue' },
@@ -684,12 +669,11 @@
     s7:  { label:'Continue' },
     s8:  { label:'Continue' },
     s9:  { label:'Next', submit:true },
-    s10: { label:'Continue' },
-    s11: { label:'Buy package', submit:true, alt:{ label:'Continue without a package', nav:'free' } },
+    s11: { label:'Buy package', submit:true, alt:{ label:'Continue without VIP', nav:'free' } },
     s12: { label:'Get the free analysis', short:'Get the analysis', submit:true, event:'quiz_contact_submit' },
-    s13: { label:'Pay', submit:true, alt:{ label:'Continue without a package', nav:'free-after-fail' } },
+    s13: { label:'Pay', submit:true, alt:{ label:'Continue without VIP', nav:'free-after-fail' } },
     s14: { label:'Continue', back:false },
-    s15: { label:'Continue' },
+    s15: { label:'See details', back:false, alt:{ label:'Continue without VIP', nav:'free' } },
     s16: { link:true, back:false, note:'The App Store or Google Play opens depending on your device. Sign in with the number you provided.' }
   };
 
@@ -751,8 +735,9 @@
       case 's3': case 's4': return !!(state.settlement || state.remote);
       case 's5': case 's6': return state.categories.length > 0;
       case 's7': case 's8': case 's9': return !!(state.description || state.voice);
-      case 's10': case 's11': case 's12': return !!state.intent;
-      case 's13': return !!state.leadId && state.branch === 'member' && !state.paid;
+      case 's12': return !!state.intent;
+      case 's11': return !!state.leadId;
+      case 's13': return !!state.leadId && !!state.plan && !state.paid;
       case 's14': return !!state.paid;
       case 's15': case 's16': return !!state.leadId;
     }
@@ -787,10 +772,9 @@
     if (c.link) { bar.next.hidden = true; bar.link.hidden = false; return; }
     bar.link.hidden = true; bar.next.hidden = false;
     var label = c.label;
-    if (id === 's12' && state.branch === 'member') label = 'Go to payment';
     if (id === 's13') label = 'Pay ' + money(state.plan ? state.plan.price : (L.plans && L.plans[1] ? L.plans[1].price : 0));
     bar.full.textContent = label;
-    var short = (id === 's12' && state.branch === 'member') ? '' : (c.short || '');
+    var short = c.short || '';
     bar.short.textContent = short;
     bar.next.dataset.hasShort = short ? 'true' : 'false';
     if (c.shortAt) bar.next.dataset.shortAt = c.shortAt; else delete bar.next.dataset.shortAt;
@@ -864,8 +848,8 @@
       go(NEXT[current]);
       return;
     }
-    if (nav === 'free') { e.preventDefault(); state.branch = 'free'; state.plan = null; track('membership_skip'); go('s12'); return; }
-    if (nav === 'free-after-fail') { e.preventDefault(); state.branch = 'free'; track('membership_skip_after_fail'); go('s15'); return; }
+    if (nav === 'free') { e.preventDefault(); state.branch = 'free'; state.plan = null; track('membership_skip'); go('s16'); return; }
+    if (nav === 'free-after-fail') { e.preventDefault(); state.branch = 'free'; track('membership_skip_after_fail'); go('s16'); return; }
   });
 
   function showError(box, err, on, focusEl) {
@@ -992,7 +976,7 @@
     toggle.addEventListener('click', function () { box.dataset.state === 'recording' ? stop() : start(); });
     reset.addEventListener('click', function () {
       state.voice = null; setState('idle'); toggle.hidden = false; reset.hidden = true;
-      text.textContent = 'Voice makes it easy to share more details.'; toggle.focus();
+      text.textContent = ''; toggle.focus();
     });
     $('#s6').addEventListener('submit', function (e) {
       e.preventDefault();
@@ -1014,7 +998,7 @@
       if (!r) { showError(fs, err, true, $('input', fs)); say(err.textContent.trim()); return; }
       state.intent = r.value;
       track('quiz_step_complete', { quiz_step: 's9', client_intent: r.value });
-      go('s10');
+      go(NEXT.s9);
     });
   })();
 
@@ -1054,15 +1038,24 @@
       period = b.dataset.period;
       $$('.plans__tab', toggle).forEach(function (x) { x.classList.toggle('is-on', x === b); x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
       cards.forEach(function (c, i) { $('[data-plan-amount]', c).textContent = amount(PLANS[i]); $('[data-plan-period]', c).textContent = perLabel(); });
+      example();
     }); });
-    PLANS_ENTER = function () { var i = -1; cards.forEach(function (c, k) { if ($('input', c).checked) i = k; }); center(i < 0 ? 0 : i, false); mark(); };
+    function example() {
+      var r = $('input[name="membership_plan"]:checked', rail); if (!r) return;
+      var p = PLANS.filter(function (x) { return x.id === r.value; })[0]; if (!p || !p.example) return;
+      var price = p.example.price, save = Math.round(price * p.discount / 100), fee = period === 'year' ? p.year : p.price;
+      $('[data-ex-service]').textContent = p.example.service; $('[data-ex-price]').textContent = money(price); $('[data-ex-plan]').textContent = p.name;
+      $('[data-ex-discount]').textContent = p.discount; $('[data-ex-new]').textContent = money(price - save); $('[data-ex-fee]').textContent = money(fee); $('[data-ex-save]').textContent = money(save);
+    }
+    rail.addEventListener('change', example);
+    PLANS_ENTER = function () { var i = -1; cards.forEach(function (c, k) { if ($('input', c).checked) i = k; }); center(i < 0 ? 0 : i, false); mark(); example(); };
     $('#s11').addEventListener('submit', function (e) {
       e.preventDefault();
       var r = $('input[name="membership_plan"]:checked', rail); if (!r) return;
       var p = PLANS.filter(function (x) { return x.id === r.value; })[0];
       state.branch = 'member'; state.plan = { id: p.id, name: p.name, price: period === 'year' ? p.year : p.price, discount: p.discount, period: period };
       track('membership_select', { membership_plan: p.id, period: period });
-      go('s12');
+      go('s13');
     });
   })();
 
@@ -1105,7 +1098,7 @@
         track('quiz_contact_submit', { quiz_step: 's12', client_intent: state.intent, has_email: !!state.email, channels: state.channels.join(',') });
         setBusy(bar.next, false);
         $$('[data-s13-phone], [data-s15-phone]').forEach(function (n) { n.textContent = state.phone; });
-        go(state.branch === 'member' ? 's13' : 's15');
+        go('s15');
       }, 900);
     });
   })();
@@ -1164,11 +1157,12 @@
   // S1: два ряди фахівців з рейтингом під «3 500+» — 28 фото, кожен ряд подвоєний для безшовного циклу
   (function buildMarquee() {
     var host = $('[data-marquee]'); if (!host) return;
-    var SCORES = [73, 80, 86, 86, 90, 73, 77, 89, 89, 87, 83, 88, 87, 85, 88, 84, 77, 70, 89, 72, 73, 79, 73, 84, 70, 91, 85, 91];  // 70–92, випадковий набір із фіксованим зерном (рішення власника 24.09)
+    // 28 реальних фахівців платформи (усі — рівень PREMIUM у каталозі consultant.net.ua, вересень 2026); бейдж показує рівень, а не вигадану оцінку
+    var REAL = ['787','828','523','444','379','780','2267','301','1455','754','567','1','1256','1598','1059','2240','1132','2251','1251','1561','1380','870','1459','1221','1249','2349','1640','2249'];
     var STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.6L12 17.5l-5.9 3.2 1.2-6.6L2.5 9.5l6.6-.9z"/></svg>';
     function set(from, to) {
       var h = '<div class="mq__set">';
-      for (var i = from; i <= to; i++) h += '<span class="mq__tile"><img src="../assets/people/m/' + (i < 10 ? '0' + i : i) + '.jpg" alt="" width="176" height="176" decoding="async" fetchpriority="low"><span class="mq__badge">' + STAR + SCORES[i - 1] + '/100</span></span>';
+      for (var i = from; i <= to; i++) h += '<span class="mq__tile"><img src="../assets/people/real/' + REAL[i - 1] + '.jpg" alt="" width="176" height="176" decoding="async" fetchpriority="low"><span class="mq__badge">' + STAR + 'PREMIUM</span></span>';
       return h + '</div>';
     }
     host.innerHTML = '<div class="mq__tilt"><div class="mq__row mq__row--a">' + set(1, 14) + set(1, 14) + '</div></div>' +
@@ -1202,6 +1196,7 @@
           land.setAttribute('d', g.path);
           var xy = geoXY(g, s.lat, s.lon), inside = xy[0] > 0 && xy[0] < 800 && xy[1] > 0 && xy[1] < 450;
           pin.setAttribute('transform', 'translate(' + xy[0].toFixed(1) + ' ' + xy[1].toFixed(1) + ')'); pin.style.display = inside ? '' : 'none';
+          var lbl = $('[data-geo-label]', el); if (lbl) { lbl.textContent = s.name; lbl.setAttribute('x', xy[0].toFixed(1)); lbl.setAttribute('y', (xy[1] + 26).toFixed(1)); lbl.style.display = inside ? '' : 'none'; }
         }).catch(function () { land.setAttribute('d', ''); });
       } else if (GEO) { land.setAttribute('d', GEO.path); dots.style.display = ''; }
       var iframe = $('iframe', media); if (iframe) { iframe.remove(); $('[data-s3-svg]', el).hidden = false; }
@@ -1275,12 +1270,8 @@
       track('checkout_view', { membership_plan: p.id || 'standard' });
     },
     s14: function (el) { $('[data-s14-plan]', el).textContent = state.plan ? state.plan.name : 'PRO'; },
-    s15: function () {
-      runList($('#s15-list'), 700, null);
-      later(function () { doneAnimating(); go('s16'); }, 3600);
-    },
+    s15: function (el) { var from = $('[data-s15-from]', el); if (from && L.plans && L.plans[0]) from.textContent = money(L.plans[0].price); track('membership_offer_view'); },
     s16: function () {
-      $('#s15-list').setAttribute('aria-busy', 'false');
       track('quiz_result_view', { membership_status: state.paid ? 'paid' : 'none' });
     }
   };
