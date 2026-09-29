@@ -64,7 +64,7 @@ const CSS = `*, *::before, *::after { transition: none !important; animation: no
 .s10__scroll { bottom: 108px !important; }
 .premium { display:none !important; }
 .hero__logo img { display:block; margin:0 auto; width:250px; height:auto; }
-.s2 .mark { opacity:1 !important; } .s2 .mark img { width:230px; height:auto; display:block; }
+.s2 .mark img { width:230px; height:auto; display:block; }
 .ov { position:absolute; inset:0; background:#fff; opacity:0; visibility:hidden; z-index:40; color:#111; font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif; -webkit-font-smoothing:antialiased; overflow:hidden; }
 .homebar2 { position:absolute; left:50%; bottom:9px; width:140px; height:5px; margin-left:-70px; border-radius:3px; background:#111; z-index:3; }
 .ov--dark { background:#0B0B0D; color:#fff; } .ov--dark .homebar2 { background:#fff; }
@@ -127,7 +127,7 @@ for (const loc of (process.env.ONLY ? [process.env.ONLY] : Object.keys(TEXT))) {
     const off = el => { el.style.opacity = '0'; el.style.visibility = 'hidden'; }, on = el => { el.style.opacity = '1'; el.style.visibility = 'visible'; };
     [s1, s2, s3, s9, s10].forEach(off); [s1, s2, s3].forEach(e => { e.style.transform = 'none'; });
     const pre = [...s1.querySelectorAll('.grid > *')].find(e => /Consultant/.test(e.textContent) && !/App Store/.test(e.textContent)); if (pre) pre.style.visibility = 'hidden';
-    q(s2, '.mark').innerHTML = '<img src="' + T.lockup + '" alt="">';
+    q(s2, '.mark').innerHTML = '<img src="' + T.lockup + '" alt="">'; q(s2, '.mark').style.opacity = '1';
     q(s3, '.hero__logo').innerHTML = '<img src="' + T.lockup + '" alt=""><div class="hero__tag">' + T.hero.tag + '</div>';
     [...s3.querySelectorAll('.pill')].forEach((el, i) => { el.lastChild.textContent = T.hero.pills[i]; });
     q(s9, '.s9__hd b').textContent = T.orders; [...s9.querySelectorAll('.s9__chip')].forEach((c, i) => c.textContent = T.chips[i]);
