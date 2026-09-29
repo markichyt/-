@@ -1,3 +1,4 @@
+:root { --color-star: #f5b301; }  /* золота зірка рейтингів і VIP (тон затверджено власником 24.09) */
 /* CONSULTANT quiz funnels · quiz.css v1.0 · 2026-09-23
    Requires design-system/tokens.css + design-system/styles.css (Manrope + Onest from Google Fonts).
    Extends the system with quiz-only classes; every value comes from the tokens or the type scale.
@@ -639,15 +640,19 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 .appframe__ans[data-tier="premium"] .appframe__role, .appframe__ans[data-tier="premium"] .appframe__geo, .appframe__ans[data-tier="premium"] .appframe__ts, .appframe__ans[data-tier="premium"] .q-score__scale { color: var(--color-gray-300); }
 .appframe__ans[data-tier="premium"] .avatar { background: var(--color-dark-surface); color: var(--color-white); }
 
-/* S15 — VIP-картка: темна, як PREMIUM у застосунку; S11 — приклад вигоди */
-.funnel__vip { gap: 12px; padding: 20px; border: 1px solid var(--color-dark-border-strong); background: var(--color-text); color: var(--color-white); }
-.funnel__vip-label { display: flex; align-items: center; gap: 8px; color: var(--color-gray-300); }
-.funnel__vip-star { flex-shrink: 0; width: 16px; height: 16px; fill: var(--color-star); }
-.funnel__vip-title { margin: 0; font-family: var(--font-display); font-size: clamp(19px, 4.6vw, 23px); line-height: 1.25; font-weight: 700; letter-spacing: -0.01em; }
-.funnel__vip-title strong { color: var(--color-star); }
-.funnel__vip-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: 15px; line-height: 1.4; }
+/* S15 — VIP-картка в дусі чорної клубної карти: золота рамка, знак логотипа, велика цифра фірмовим шрифтом; S11 — приклад вигоди */
+.funnel__vip { gap: 14px; padding: 20px; border: 1px solid var(--color-star); background: var(--color-text); color: var(--color-white); }
+.funnel__vip-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.funnel__vip-sign { flex-shrink: 0; height: 24px; width: auto; }
+.funnel__vip-tag { font-family: var(--font-brand); font-weight: 400; font-size: 14px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-star); }
+.funnel__vip-title { display: grid; gap: 4px; margin: 0; }
+.funnel__vip-num { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 10px; font-family: var(--font-brand); font-weight: 700; font-size: clamp(46px, 13vw, 60px); line-height: 0.95; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+.funnel__vip-upto { align-self: center; font-size: 13px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-gray-300); }
+.funnel__vip-pct { margin-left: -4px; font-size: 0.5em; color: var(--color-star); }
+.funnel__vip-sub { font-size: 15px; line-height: 1.4; color: var(--color-gray-300); }
+.funnel__vip-list { list-style: none; margin: 0; padding: 12px 0 0; border-top: 1px solid var(--color-dark-border-strong); display: grid; gap: 8px; font-size: 15px; line-height: 1.4; }
 .funnel__vip-list li { display: flex; align-items: center; gap: 10px; }
-.funnel__vip-list .icon { flex-shrink: 0; width: 18px; height: 18px; }
+.funnel__vip-list .icon { flex-shrink: 0; width: 18px; height: 18px; color: var(--color-star); }
 .funnel__vip-foot { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px 12px; padding-top: 12px; border-top: 1px solid var(--color-dark-border-strong); }
 .funnel__vip-from { margin: 0; font-size: 14px; color: var(--color-gray-300); }
 .funnel__vip-from strong { font-size: 18px; color: var(--color-white); }
@@ -661,5 +666,5 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 .funnel__example-save { color: var(--color-accent); }
 .mq__badge { font-size: 9px; letter-spacing: .04em; }
 @media (max-height: 899px) { .funnel__example-line { display: none; } .funnel__example p { font-size: 13px; } .plan { gap: 8px; padding: 14px 16px 12px; } .plan__savings { display: none; } .plan__features { font-size: 14px; gap: 4px; } .plan__btn { height: 40px; } .plans__toggle { margin-bottom: 0; } }
-@media (max-height: 699px) { .funnel__vip { gap: 8px; padding: 14px 16px; } .funnel__vip-list { gap: 4px; font-size: 14px; } .funnel__vip-tiers { display: none; } .funnel__example .funnel__card-label { display: none; } .plan { padding: 12px 14px 10px; gap: 6px; } .plan__amount { font-size: 28px; } .plan__features { font-size: 13px; gap: 3px; } .plan__pill { font-size: 12px; } }
+@media (max-height: 699px) { .funnel__vip { gap: 8px; padding: 14px 16px; } .funnel__vip-num { font-size: 40px; } .funnel__vip-list { padding-top: 8px; gap: 4px; } .funnel__vip-list { gap: 4px; font-size: 14px; } .funnel__vip-tiers { display: none; } .funnel__example .funnel__card-label { display: none; } .plan { padding: 12px 14px 10px; gap: 6px; } .plan__amount { font-size: 28px; } .plan__features { font-size: 13px; gap: 3px; } .plan__pill { font-size: 12px; } }
 @media (max-height: 599px) { .funnel__example-service { display: none; } }
