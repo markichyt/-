@@ -9,7 +9,7 @@ const require = createRequire(import.meta.url);
 const { chromium } = require('/Users/mac/cabinetUR/video/node_modules/playwright');
 
 const [file, W, H, out, ...flags] = process.argv.slice(2);
-const alt = flags.includes('--alt'), en = flags.includes('--en');
+const alt = flags.includes('--alt'), en = flags.includes('--en'), remote = flags.includes('--remote');  // --remote: на S2 обрати «дистанційно» замість населеного пункту
 fs.mkdirSync(out, { recursive: true });
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: +W, height: +H }, deviceScaleFactor: 2, colorScheme: 'dark' });
@@ -35,7 +35,8 @@ for (let guard = 0; guard < 24; guard++) {
   const id = await cur(); visited.push(id);
   if (id === 's1' || id === 's3' || id === 's7') { await page.waitForFunction(() => { const b = document.getElementById('funnel-next'); return b && !b.disabled; }, null, { timeout: 20000 }); await page.waitForTimeout(900); }
   if (id === 's16') { await page.waitForTimeout(3600); await shot(); break; }  // дочекатися чек-листа стану
-  if (id === 's2') {
+  if (id === 's2' && remote) { await page.$eval('#remote', el => { if (!el.checked) el.click(); }); await page.waitForTimeout(200); }
+  else if (id === 's2') {
     await page.fill('#settlement', en ? 'New' : 'Дубно');
     await page.waitForSelector('#settlement-list [role="option"]', { timeout: 5000 });
     await page.click('#settlement-list [role="option"]');

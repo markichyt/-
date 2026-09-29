@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Контуры стран для карты на S3.
-Вход: tools/geo/countries.geo.json (johan/world.geo.json, Natural Earth 1:110m, id = ISO3).
+Вход: tools/geo/ne_10m_admin_0_countries_ukr.geojson (Natural Earth 1:10m, точка зрения Украины — Крым в составе Украины; ADM0_A3 = ISO3),
+запасной — tools/geo/countries.geo.json (johan/world.geo.json, Natural Earth 1:110m). Контур упрощается (Дуглас — Пекер, допуск ≈ 0,2 % диагонали страны),
+мелкие острова отбрасываются, поэтому файл страны остаётся в единицах килобайт. Карта мира — из 1:110m.
 Выход: assets/geo/<ISO2>.json — контур страны в viewBox 800×450 (path, проекция для JS, для домашних стран — точки крупных
 городов) и assets/geo/world.json — карта мира (упрощённая) для стран, контура которых нет. build.py кладёт UA/US в QUIZ_LOCALE.geo,
 остальные страницы подгружают по требованию."""
@@ -28,11 +30,36 @@ def rings_of(geom):
 def centroid(r): return sum(x for x, y in r) / len(r), sum(y for x, y in r) / len(r)
 def bbox_area(r):
     xs = [x for x, y in r]; ys = [y for x, y in r]; return (max(xs) - min(xs)) * (max(ys) - min(ys))
+def simplify(points, tol):
+    """Дуглас — Пекер без рекурсии; концы кольца сохраняются."""
+    n = len(points)
+    if n < 4: return points
+    keep = [False] * n; keep[0] = keep[-1] = True; stack = [(0, n - 1)]
+    while stack:
+        a, b = stack.pop(); ax, ay = points[a]; bx, by = points[b]; dx, dy = bx - ax, by - ay; l2 = dx * dx + dy * dy
+        maxd, idx = -1.0, -1
+        for i in range(a + 1, b):
+            px, py = points[i]
+            if l2 == 0: d = math.hypot(px - ax, py - ay)
+            else:
+                t = max(0.0, min(1.0, ((px - ax) * dx + (py - ay) * dy) / l2)); d = math.hypot(px - (ax + t * dx), py - (ay + t * dy))
+            if d > maxd: maxd, idx = d, i
+        if maxd > tol: keep[idx] = True; stack.append((a, idx)); stack.append((idx, b))
+    return [p for p, k in zip(points, keep) if k]
 def country_rings(iso3, geom):
-    rings = rings_of(geom)
-    if iso3 in KEEP_ALL or len(rings) == 1: return rings
-    main = max(rings, key=bbox_area); cx, cy = centroid(main)
-    return [r for r in rings if abs(centroid(r)[0] - cx) <= 8 and abs(centroid(r)[1] - cy) <= 10]
+    rings = [r for r in rings_of(geom) if len(r) >= 4]
+    if not rings: return []
+    if iso3 in KEEP_ALL or len(rings) == 1: pass
+    else:
+        main = max(rings, key=bbox_area); cx, cy = centroid(main)
+        rings = [r for r in rings if abs(centroid(r)[0] - cx) <= 8 and abs(centroid(r)[1] - cy) <= 10] or [main]
+    big = max(bbox_area(r) for r in rings); rings = [r for r in rings if bbox_area(r) >= big * (0.0005 if iso3 in KEEP_ALL else 0.002)]
+    lons = [x for r in rings for x, y in r]; lats = [y for r in rings for x, y in r]
+    diag = math.hypot((max(lons) - min(lons)) * math.cos(math.radians((min(lats) + max(lats)) / 2)), max(lats) - min(lats))
+    tol = max(0.008, 0.002 * diag)
+    out = [simplify(r, tol) for r in rings]
+    out = [o if len(o) >= 4 else r for o, r in zip(out, rings)]
+    return out
 def fit(rings):
     lons = [x for r in rings for x, y in r]; lats = [y for r in rings for x, y in r]
     minLon, maxLon, minLat, maxLat = min(lons), max(lons), min(lats), max(lats)
@@ -43,11 +70,19 @@ def fit(rings):
 def to_path(rings, xy):
     return "".join("M" + "L".join("%g %g" % xy(x, y) for x, y in r) + "Z" for r in rings)
 feats = json.load(open(os.path.join(HERE, "geo", "countries.geo.json")))["features"]
+HI = os.path.join(HERE, "geo", "ne_10m_admin_0_countries_ukr.geojson"); hi = {}
+if os.path.exists(HI):
+    for f in json.load(open(HI))["features"]:
+        p = f["properties"]; hi[p.get("ADM0_A3") or p.get("ISO_A3")] = f["geometry"]
+    print("подробные контуры 1:10m:", len(hi))
 made = 0
 for f in feats:
     iso3 = f.get("id"); iso2 = ISO.get(iso3)
     if not iso2: continue
-    rings = country_rings(iso3, f["geometry"]); xy, proj = fit(rings)
+    geom = hi.get(iso3) or hi.get({"KOS": "KOS", "XKX": "KOS"}.get(iso3, "")) or f["geometry"]
+    rings = country_rings(iso3, geom) or country_rings(iso3, f["geometry"])
+    if not rings: print("пропуск, нет контура:", iso3); continue
+    xy, proj = fit(rings)
     out = {"code": iso2, "path": to_path(rings, xy), "proj": proj}
     if iso2 in CITIES: out["cities"] = CITIES[iso2]
     json.dump(out, open(os.path.join(OUT, iso2 + ".json"), "w"), ensure_ascii=False, separators=(",", ":")); made += 1
