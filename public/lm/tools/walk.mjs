@@ -14,7 +14,7 @@ fs.mkdirSync(out, { recursive: true });
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: +W, height: +H }, deviceScaleFactor: 2, colorScheme: 'dark' });
 page.on('pageerror', e => console.log('PAGE ERROR', e.message));
-await page.goto('file://' + path.resolve(file));
+await page.goto(/^https?:/.test(file) ? file : 'file://' + path.resolve(file));
 await page.waitForSelector('#funnel');
 const cur = () => page.evaluate(() => { const el = document.querySelector('.funnel__screen:not([hidden])'); return el ? el.id : ''; });
 const shot = async (tag) => { const id = await cur(); await page.screenshot({ path: path.join(out, `${W}x${H}-${id}${tag || ''}.png`) }); return id; };
