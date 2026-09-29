@@ -540,16 +540,25 @@
     <section class="funnel__screen" id="s16" data-screen="s16" aria-labelledby="s16-title" data-ds-event="quiz_result_view" hidden>
       <div class="funnel__head">
         <h2 class="funnel__title" id="s16-title" tabindex="-1">Answers will appear in the ConsultantLM app.</h2>
-        <p class="funnel__hint funnel__hint--sm">In the app you will see every analysis of your situation in one place.</p>
+        <p class="funnel__hint funnel__hint--sm funnel__hide-short">In the app you will see every analysis of your situation in one place.</p>
       </div>
       <p class="funnel__trigger"><svg class="icon" width="20" height="20" aria-hidden="true"><use href="#i-check"></use></svg>Your first free consultation is already available.</p>
       <ol class="funnel__benefits" aria-label="What is in the app">
         <li>AI analysis of your situation</li>
         <li>Answers from several relevant specialists</li>
-        <li>Rating, reviews and profile of each one</li>
-        <li>Services with stages and exact prices</li>
+        <li class="funnel__hide-short">Rating, reviews and profile of each one</li>
+        <li class="funnel__hide-short">Services with stages and exact prices</li>
       </ol>
       <p class="funnel__key">Compare approaches and choose the specialist yourself.</p>
+      <section class="funnel__status" aria-labelledby="s16-status-title">
+        <p class="funnel__card-label" id="s16-status-title">Status of your request</p>
+        <ol class="q-steps funnel__checklist" id="s16-list" aria-busy="true">
+          <li class="q-steps__item" data-state="upcoming"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">Request created</p></div></li>
+          <li class="q-steps__item" data-state="upcoming"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">Area identified</p></div></li>
+          <li class="q-steps__item" data-state="upcoming"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">AI analysis started</p></div></li>
+          <li class="q-steps__item" data-state="upcoming"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">Matching relevant specialists</p><p class="q-steps__status" data-status hidden>In progress…</p></div></li>
+        </ol>
+      </section>
       <figure class="funnel__qr" aria-label="QR code to open the app">
         <div class="funnel__qr-code" aria-hidden="true"><svg role="img" aria-label="QR code: link to the ConsultantLM app" focusable="false" viewBox="0 0 132 132" class="segno"><path transform="scale(4)" class="qrline" stroke="currentColor" d="M2 2.5h7m1 0h1m1 0h3m5 0h1m3 0h7m-29 1h1m5 0h1m4 0h3m2 0h3m1 0h1m1 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m1 0h2m2 0h6m2 0h1m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h4m2 0h1m1 0h2m3 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m4 0h1m1 0h2m3 0h1m3 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h1m1 0h1m1 0h1m3 0h1m1 0h1m3 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-19 1h2m4 0h1m1 0h3m-21 1h1m1 0h1m3 0h2m3 0h5m2 0h1m1 0h1m2 0h1m2 0h1m1 0h1m-29 1h1m1 0h2m3 0h1m2 0h1m1 0h2m1 0h3m1 0h1m1 0h3m3 0h2m-29 1h1m2 0h2m1 0h1m1 0h2m1 0h1m3 0h1m3 0h1m2 0h1m2 0h2m1 0h1m-28 1h2m1 0h2m1 0h2m1 0h1m1 0h2m4 0h1m1 0h2m3 0h1m-25 1h2m1 0h3m2 0h3m1 0h1m1 0h1m4 0h1m1 0h1m5 0h1m-28 1h1m2 0h1m3 0h2m5 0h2m2 0h2m1 0h2m3 0h2m-29 1h1m1 0h1m2 0h5m3 0h3m1 0h4m2 0h1m4 0h1m-29 1h1m1 0h1m2 0h1m1 0h3m1 0h2m1 0h1m1 0h1m1 0h1m1 0h1m2 0h2m-23 1h1m3 0h1m1 0h3m1 0h3m5 0h1m1 0h2m4 0h1m-27 1h2m1 0h1m2 0h2m3 0h3m2 0h6m2 0h3m-29 1h3m3 0h1m5 0h1m2 0h1m1 0h4m1 0h1m2 0h1m2 0h1m-26 1h2m5 0h2m1 0h1m1 0h1m4 0h1m2 0h2m-25 1h2m3 0h2m1 0h1m2 0h3m1 0h2m2 0h7m1 0h1m-20 1h1m2 0h2m2 0h2m1 0h3m3 0h3m1 0h1m-29 1h7m1 0h3m1 0h7m1 0h1m1 0h1m1 0h1m3 0h1m-29 1h1m5 0h1m3 0h2m2 0h2m3 0h2m3 0h1m2 0h1m-28 1h1m1 0h3m1 0h1m2 0h1m2 0h4m2 0h8m2 0h1m-29 1h1m1 0h3m1 0h1m3 0h2m2 0h5m1 0h2m2 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h1m2 0h2m2 0h1m5 0h1m2 0h1m2 0h2m-29 1h1m5 0h1m2 0h2m1 0h1m2 0h1m2 0h1m1 0h1m2 0h3m-26 1h7m1 0h1m5 0h2m4 0h1m1 0h4m2 0h1"/></svg></div>
         <figcaption class="caption">Scan to open the app on your phone</figcaption>
@@ -1278,6 +1287,7 @@
     s14: function (el) { $('[data-s14-plan]', el).textContent = state.plan ? state.plan.name : 'PRO'; },
     s15: function (el) { var from = $('[data-s15-from]', el); if (from && L.plans && L.plans[0]) from.textContent = money(L.plans[0].price); track('membership_offer_view'); },
     s16: function () {
+      var list = $('#s16-list'); if (list) runList(list, 700, function () { list.setAttribute('aria-busy', 'false'); });  /* стан запиту — анімований чек-лист, кнопка доступна одразу */
       track('quiz_result_view', { membership_status: state.paid ? 'paid' : 'none' });
     }
   };

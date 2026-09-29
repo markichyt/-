@@ -34,7 +34,7 @@ const visited = [];
 for (let guard = 0; guard < 24; guard++) {
   const id = await cur(); visited.push(id);
   if (id === 's1' || id === 's3' || id === 's7') { await page.waitForFunction(() => { const b = document.getElementById('funnel-next'); return b && !b.disabled; }, null, { timeout: 20000 }); await page.waitForTimeout(900); }
-  if (id === 's16') { await shot(); break; }
+  if (id === 's16') { await page.waitForTimeout(3600); await shot(); break; }  // дочекатися чек-листа стану
   if (id === 's2') {
     await page.fill('#settlement', en ? 'New' : 'Дубно');
     await page.waitForSelector('#settlement-list [role="option"]', { timeout: 5000 });

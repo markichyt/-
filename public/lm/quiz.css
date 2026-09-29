@@ -668,3 +668,10 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 @media (max-height: 899px) { .funnel__example-line { display: none; } .funnel__example p { font-size: 13px; } .plan { gap: 8px; padding: 14px 16px 12px; } .plan__savings { display: none; } .plan__features { font-size: 14px; gap: 4px; } .plan__btn { height: 40px; } .plans__toggle { margin-bottom: 0; } }
 @media (max-height: 699px) { .funnel__vip { gap: 8px; padding: 14px 16px; } .funnel__vip-num { font-size: 40px; } .funnel__vip-list { padding-top: 8px; gap: 4px; } .funnel__vip-list { gap: 4px; font-size: 14px; } .funnel__vip-tiers { display: none; } .funnel__example .funnel__card-label { display: none; } .plan { padding: 12px 14px 10px; gap: 6px; } .plan__amount { font-size: 28px; } .plan__features { font-size: 13px; gap: 3px; } .plan__pill { font-size: 12px; } }
 @media (max-height: 599px) { .funnel__example-service { display: none; } }
+
+/* S16 — стан запиту: анімований чек-лист у тёмній картці (повернуто за побажанням власника 29.09) */
+.funnel__status { display: grid; gap: 10px; margin: 0; padding: 16px; border-radius: var(--radius-card-dark); background: var(--color-dark-surface); }
+.is-dark .funnel__status .funnel__card-label { color: var(--color-gray-400); }
+.is-dark .q-steps__item[data-state="done"] .q-steps__dot { border-color: var(--color-accent); background-color: var(--color-accent); }
+.is-dark .q-steps__item[data-state="current"] .q-steps__dot { border-color: var(--color-accent); background-image: radial-gradient(circle, var(--color-accent) 4px, transparent 4.5px); }
+@media (max-height: 699px) { .funnel__status { gap: 6px; padding: 12px 14px; } .funnel__status .q-steps { gap: 4px; } }
