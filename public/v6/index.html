@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
-<meta name="description" content="ТЗ на вкладку сквозной аналитики в CRM: воронка от рекламного расхода до оплаты, отвалы и дожим колл-центра.">
+<meta name="description" content="Единое техническое задание на доработку CRM Consultant: сквозная аналитика от рекламного расхода до платежа, маршруты лидов (продажа / колл-центр), подписки, деньги и профит. Сводная редакция 2.0, объединяет Google Docs, TZ-1, страницу v6 и дополнения заказчика.">
 <meta name="robots" content="noindex, nofollow">
-<title>Сквозная аналитика Consultant</title>
+<title>Единое ТЗ · CRM Consultant</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@500;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
@@ -19,6 +19,7 @@
   --accent:#0F6E5C; --accent-soft:#DCEBE5; --accent-line:#8FC3B5;
   --clay:#A8451F; --clay-soft:#F7E4DB; --clay-line:#DFAF97;
   --gold:#836409; --gold-soft:#F3EBD2; --gold-line:#D6BE7C;
+  --ink-soft:#E3E7E5;
   --code-bg:#EBEFED;
   --shadow:0 1px 2px rgba(20,24,26,.05), 0 8px 24px -16px rgba(20,24,26,.25);
 }
@@ -30,6 +31,7 @@
     --accent:#54C1A4; --accent-soft:#12302A; --accent-line:#2A5F53;
     --clay:#E0906A; --clay-soft:#33211A; --clay-line:#6A4231;
     --gold:#D8B45C; --gold-soft:#2E2716; --gold-line:#5C4E24;
+    --ink-soft:#232B29;
     --code-bg:#1A211F;
     --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
   }
@@ -41,11 +43,14 @@
   --accent:#54C1A4; --accent-soft:#12302A; --accent-line:#2A5F53;
   --clay:#E0906A; --clay-soft:#33211A; --clay-line:#6A4231;
   --gold:#D8B45C; --gold-soft:#2E2716; --gold-line:#5C4E24;
+  --ink-soft:#232B29;
   --code-bg:#1A211F;
   --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
 }
 
-*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+*,*::before,*::after{box-sizing:border-box}
+img,svg,video{max-width:100%;height:auto}
 body{
   margin:0; background:var(--paper); color:var(--ink);
   font-family:"Spectral","Georgia",serif; font-size:16.5px; line-height:1.68;
@@ -54,20 +59,20 @@ body{
 h1,h2,h3,h4,.ui{font-family:"Golos Text","Helvetica Neue",Arial,sans-serif}
 code,kbd,.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace}
 
-.page{max-width:1240px; margin:0 auto; padding:0 clamp(18px,4vw,40px) 96px}
+.page{max-width:1240px; margin:0 auto; padding:0 clamp(16px,4vw,40px) 96px}
 
 /* ---------- header ---------- */
-.masthead{padding:clamp(44px,7vw,84px) 0 clamp(28px,4vw,44px); border-bottom:1px solid var(--line)}
+.masthead{padding:clamp(40px,7vw,84px) 0 clamp(26px,4vw,44px); border-bottom:1px solid var(--line)}
 .kicker{
   font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.16em;
-  text-transform:uppercase; color:var(--accent); display:flex; flex-wrap:wrap; gap:10px 18px; align-items:center;
+  text-transform:uppercase; color:var(--accent); display:flex; flex-wrap:wrap; gap:8px 18px; align-items:center;
 }
 .kicker span:not(:first-child){color:var(--ink-3)}
 h1{
-  font-size:clamp(2.05rem,1.3rem+2.9vw,3.35rem); line-height:1.06; font-weight:700;
-  letter-spacing:-.028em; margin:.5em 0 .28em; text-wrap:balance; max-width:20ch;
+  font-size:clamp(1.9rem,1.2rem+2.9vw,3.2rem); line-height:1.08; font-weight:700;
+  letter-spacing:-.028em; margin:.5em 0 .3em; text-wrap:balance; max-width:22ch;
 }
-.dek{font-size:clamp(1.02rem,.96rem+.3vw,1.2rem); color:var(--ink-2); max-width:64ch; margin:0}
+.dek{font-size:clamp(1.02rem,.96rem+.3vw,1.2rem); color:var(--ink-2); max-width:66ch; margin:0}
 .meta{
   display:flex; flex-wrap:wrap; gap:8px 10px; margin-top:26px;
   font-family:"IBM Plex Mono",monospace; font-size:.74rem;
@@ -76,41 +81,63 @@ h1{
   font-weight:500; background:var(--surface); border:1px solid var(--line);
   padding:5px 10px; border-radius:2px; color:var(--ink-2);
 }
+.meta b em{font-style:normal; color:var(--ink-3)}
 
 /* ---------- layout ---------- */
 .shell{display:block}
 @media (min-width:1080px){
-  .shell{display:grid; grid-template-columns:212px minmax(0,1fr); gap:56px; align-items:start}
-  .toc{position:sticky; top:28px; max-height:calc(100vh - 56px); overflow-y:auto}
+  .shell{display:grid; grid-template-columns:228px minmax(0,1fr); gap:56px; align-items:start}
+  .toc{position:sticky; top:20px; max-height:calc(100vh - 40px); overflow-y:auto; scrollbar-width:thin}
 }
 .toc{padding-top:40px; font-family:"Golos Text",sans-serif}
 .toc-title{
   font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.16em;
   text-transform:uppercase; color:var(--ink-3); margin-bottom:12px;
 }
-.toc ol{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:2px}
+.toc ol{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:1px}
 .toc a{
   display:grid; grid-template-columns:26px 1fr; gap:6px; align-items:baseline;
-  color:var(--ink-2); text-decoration:none; font-size:.83rem; line-height:1.35;
-  padding:5px 6px; border-radius:3px; border-left:2px solid transparent;
+  color:var(--ink-2); text-decoration:none; font-size:.8rem; line-height:1.3;
+  padding:4px 6px; border-radius:3px; border-left:2px solid transparent;
 }
-.toc a em{font-family:"IBM Plex Mono",monospace; font-style:normal; color:var(--ink-3); font-size:.72rem}
+.toc a em{font-family:"IBM Plex Mono",monospace; font-style:normal; color:var(--ink-3); font-size:.7rem}
 .toc a:hover{background:var(--surface); color:var(--ink); border-left-color:var(--accent-line)}
+.toc a.active{background:var(--surface); color:var(--ink); border-left-color:var(--accent)}
+.toc a.active em{color:var(--accent)}
 .toc a:focus-visible{outline:2px solid var(--accent); outline-offset:1px}
+.toc-group{
+  font-family:"IBM Plex Mono",monospace; font-size:.62rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--ink-3); margin:12px 0 4px 6px;
+}
+.toc-group:first-of-type{margin-top:0}
 @media (max-width:1079px){.toc{display:none}}
+
+/* mobile TOC (details) */
+.toc-m{margin:26px 0 0; font-family:"Golos Text",sans-serif}
+.toc-m summary{
+  cursor:pointer; list-style:none; display:flex; align-items:center; gap:10px;
+  font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--ink-2); padding:10px 12px; border:1px solid var(--line); border-radius:3px; background:var(--surface);
+}
+.toc-m summary::-webkit-details-marker{display:none}
+.toc-m summary::after{content:"+"; margin-left:auto; color:var(--ink-3)}
+.toc-m[open] summary::after{content:"−"}
+.toc-m ol{list-style:none; margin:0; padding:8px 4px 0; display:grid; gap:2px; grid-template-columns:1fr 1fr; max-width:none}
+.toc-m a{display:flex; gap:8px; align-items:baseline; color:var(--ink-2); text-decoration:none; font-size:.82rem; padding:4px 6px; border-radius:3px}
+.toc-m a em{font-family:"IBM Plex Mono",monospace; font-style:normal; color:var(--ink-3); font-size:.7rem}
+.toc-m a:hover{background:var(--surface); color:var(--ink)}
+@media (max-width:520px){.toc-m ol{grid-template-columns:1fr}}
+@media (min-width:1080px){.toc-m{display:none}}
 
 main{min-width:0; padding-top:12px}
 section{padding-top:52px; scroll-margin-top:20px}
 .sec-head{display:flex; gap:14px; align-items:baseline; border-top:1px solid var(--line); padding-top:14px; margin-bottom:6px}
-.sec-num{font-family:"IBM Plex Mono",monospace; font-size:.78rem; color:var(--accent); font-weight:500; padding-top:.35em}
-h2{font-size:clamp(1.38rem,1.2rem+.7vw,1.72rem); line-height:1.2; letter-spacing:-.018em; font-weight:600; margin:0}
-h3{
-  font-size:1.02rem; font-weight:600; letter-spacing:-.005em; margin:34px 0 8px;
-  color:var(--ink);
-}
+.sec-num{font-family:"IBM Plex Mono",monospace; font-size:.78rem; color:var(--accent); font-weight:500; padding-top:.35em; white-space:nowrap}
+h2{font-size:clamp(1.34rem,1.18rem+.7vw,1.7rem); line-height:1.2; letter-spacing:-.018em; font-weight:600; margin:0}
+h3{font-size:1.02rem; font-weight:600; letter-spacing:-.005em; margin:34px 0 8px; color:var(--ink)}
 h4{font-size:.8rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3); margin:24px 0 8px}
-p{margin:0 0 14px; max-width:70ch}
-ul,ol{margin:0 0 14px; padding-left:1.15em; max-width:70ch}
+p{margin:0 0 14px; max-width:72ch}
+ul,ol{margin:0 0 14px; padding-left:1.15em; max-width:72ch}
 li{margin-bottom:6px}
 li::marker{color:var(--ink-3)}
 strong{font-weight:600}
@@ -119,6 +146,29 @@ code{
   background:var(--code-bg); border:1px solid var(--line); border-radius:3px;
   padding:.08em .34em; font-size:.83em; color:var(--ink);
 }
+small{font-size:.86em; color:var(--ink-3)}
+
+/* ---------- tags (источник / предложение / подтвердить) ---------- */
+.tag{
+  display:inline-block; font-family:"IBM Plex Mono",monospace; font-style:normal; font-weight:500;
+  font-size:.66rem; line-height:1; letter-spacing:.02em; padding:3px 6px 3px; border-radius:2px;
+  border:1px solid var(--line-2); color:var(--ink-3); background:var(--surface);
+  vertical-align:.12em; margin-left:2px; white-space:nowrap;
+}
+.tag.src{color:var(--ink-2); border-color:var(--line-2)}
+.tag.prop{color:var(--gold); border-color:var(--gold-line); background:var(--gold-soft)}
+.tag.conf{color:var(--clay); border-color:var(--clay-line); background:var(--clay-soft)}
+.tag.ok{color:var(--accent); border-color:var(--accent-line); background:var(--accent-soft)}
+td .tag, li .tag{margin-left:0}
+.tags{display:inline-flex; flex-wrap:wrap; gap:4px; vertical-align:.12em}
+
+/* legend */
+.legend{display:grid; gap:10px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); margin:16px 0 22px}
+.legend > div{
+  background:var(--surface); border:1px solid var(--line); border-radius:4px; padding:12px 14px;
+  font-size:.9rem; color:var(--ink-2); box-shadow:var(--shadow);
+}
+.legend .tag{margin:0 6px 6px 0}
 
 /* ---------- callout ---------- */
 .note{
@@ -136,7 +186,7 @@ code{
   padding:20px clamp(14px,2.4vw,24px); margin:22px 0; box-shadow:var(--shadow);
 }
 .f-row{
-  display:grid; grid-template-columns:minmax(120px,1.15fr) minmax(90px,2.6fr) 62px 62px;
+  display:grid; grid-template-columns:24px minmax(120px,1.15fr) minmax(90px,2.4fr) 62px 96px;
   gap:10px 14px; align-items:center; padding:7px 0; border-bottom:1px dashed var(--line);
 }
 .f-row:last-child{border-bottom:0}
@@ -144,24 +194,25 @@ code{
   font-family:"IBM Plex Mono",monospace; font-size:.66rem; letter-spacing:.11em;
   text-transform:uppercase; color:var(--ink-3); border-bottom:1px solid var(--line-2); padding-bottom:8px;
 }
+.f-idx{font-family:"IBM Plex Mono",monospace; font-size:.7rem; color:var(--ink-3); text-align:right}
 .f-name{font-family:"Golos Text",sans-serif; font-size:.87rem; line-height:1.25}
 .f-name small{display:block; font-family:"IBM Plex Mono",monospace; font-size:.66rem; color:var(--ink-3)}
 .f-bar{height:22px; background:var(--surface-2); border-radius:2px; overflow:hidden}
 .f-bar i{display:block; height:100%; background:var(--accent); opacity:.82}
-.f-bar.paid i{background:var(--accent)}
 .f-bar.lost i{background:var(--clay); opacity:.7}
 .f-bar.cc i{background:var(--gold); opacity:.8}
 .f-num{font-family:"IBM Plex Mono",monospace; font-size:.83rem; text-align:right; font-variant-numeric:tabular-nums}
-.f-pct{font-family:"IBM Plex Mono",monospace; font-size:.75rem; text-align:right; color:var(--ink-3); font-variant-numeric:tabular-nums}
-@media (max-width:620px){
-  .f-row{grid-template-columns:1fr 56px 56px; }
+.f-pct{font-family:"IBM Plex Mono",monospace; font-size:.72rem; text-align:right; color:var(--ink-3); font-variant-numeric:tabular-nums; line-height:1.3}
+@media (max-width:640px){
+  .f-row{grid-template-columns:22px 1fr 52px 84px}
   .f-bar{grid-column:1 / -1; order:9}
   .f-head .f-bar{display:none}
 }
 
 /* ---------- tables ---------- */
-.tw{overflow-x:auto; margin:18px 0; border:1px solid var(--line); border-radius:4px; background:var(--surface)}
+.tw{overflow-x:auto; margin:18px 0; border:1px solid var(--line); border-radius:4px; background:var(--surface); -webkit-overflow-scrolling:touch}
 table{border-collapse:collapse; width:100%; min-width:560px; font-size:.86rem}
+.tw.wide table{min-width:820px}
 th,td{text-align:left; padding:9px 13px; border-bottom:1px solid var(--line); vertical-align:top}
 th{
   font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.1em; text-transform:uppercase;
@@ -169,7 +220,12 @@ th{
 }
 tr:last-child td{border-bottom:0}
 td.mono, td code{font-size:.8rem}
-td.num{text-align:right; font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+td.num, th.num{text-align:right; font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+td.c, th.c{text-align:center}
+td.total, tr.total td{font-weight:600; background:var(--surface-2)}
+td.new{box-shadow:inset 3px 0 0 var(--gold)}
+.tw p{margin:0}
+.tw td ul{margin:0}
 
 /* ---------- chips / statuses ---------- */
 .chips{display:flex; flex-wrap:wrap; gap:7px; margin:12px 0 18px}
@@ -180,6 +236,7 @@ td.num{text-align:right; font-family:"IBM Plex Mono",monospace; font-variant-num
 .chip.ok{background:var(--accent-soft); border-color:var(--accent-line); color:var(--accent)}
 .chip.bad{background:var(--clay-soft); border-color:var(--clay-line); color:var(--clay)}
 .chip.cc{background:var(--gold-soft); border-color:var(--gold-line); color:var(--gold)}
+.chip.new{border-style:dashed}
 
 /* ---------- flow ---------- */
 .flow{
@@ -193,16 +250,24 @@ td.num{text-align:right; font-family:"IBM Plex Mono",monospace; font-variant-num
 .node.key{border-color:var(--accent); background:var(--accent-soft); color:var(--accent); font-weight:600}
 .node.lost{border-color:var(--clay-line); background:var(--clay-soft); color:var(--clay)}
 .node.cc{border-color:var(--gold-line); background:var(--gold-soft); color:var(--gold)}
+.node.dim{border-style:dashed; color:var(--ink-3)}
 .arrow{color:var(--ink-3); font-family:"IBM Plex Mono",monospace}
+.flow.stack{flex-direction:column; align-items:flex-start; gap:6px}
+.flow.stack .arrow{padding-left:14px}
+.flow.stack .branch{display:flex; flex-wrap:wrap; gap:8px; align-items:center; padding-left:22px; border-left:1px dashed var(--line-2); margin-left:14px}
 
 /* ---------- cards ---------- */
-.cards{display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); margin:18px 0}
+.cards{display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); margin:18px 0}
 .card{
   background:var(--surface); border:1px solid var(--line); border-radius:4px; padding:14px 16px;
   box-shadow:var(--shadow);
 }
 .card h4{margin:0 0 6px}
 .card p{font-size:.87rem; margin:0; color:var(--ink-2)}
+.card p + p{margin-top:8px}
+.card.accent{border-top:3px solid var(--accent)}
+.card.clay{border-top:3px solid var(--clay)}
+.card.gold{border-top:3px solid var(--gold)}
 
 /* ---------- formula list ---------- */
 .formulas{list-style:none; padding:0; max-width:none}
@@ -226,22 +291,65 @@ td.num{text-align:right; font-family:"IBM Plex Mono",monospace; font-variant-num
 .wgrid{display:grid; gap:10px; grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
 .wbox{
   border:1px solid var(--line); border-radius:3px; padding:11px 12px; background:var(--paper);
-  min-height:64px;
+  min-height:64px; position:relative;
 }
 .wbox b{display:block; font-family:"Golos Text",sans-serif; font-size:.8rem; font-weight:600; margin-bottom:3px}
 .wbox small{font-family:"IBM Plex Mono",monospace; font-size:.68rem; color:var(--ink-3); line-height:1.45; display:block}
+.wbox.new{border-color:var(--gold-line); background:var(--gold-soft)}
+.wbox.new b::after{content:"новое"; font-family:"IBM Plex Mono",monospace; font-weight:500; font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); margin-left:8px}
+
+/* ---------- two-axis / split diagram ---------- */
+.split{display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); margin:18px 0}
+.split .card h4{display:flex; gap:8px; align-items:center}
+.kv{list-style:none; padding:0; margin:0; max-width:none}
+.kv li{display:flex; justify-content:space-between; gap:12px; padding:6px 0; border-bottom:1px dashed var(--line); margin:0; font-size:.86rem}
+.kv li:last-child{border-bottom:0}
+.kv li span:last-child{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; text-align:right; white-space:nowrap}
+.kv li.total{font-weight:600}
+
+/* ---------- stages ---------- */
+.stages{list-style:none; padding:0; margin:18px 0; max-width:none; display:grid; gap:10px}
+.stage{
+  display:grid; grid-template-columns:56px 1fr; gap:14px; background:var(--surface); border:1px solid var(--line);
+  border-radius:4px; padding:14px 16px; box-shadow:var(--shadow);
+}
+.stage .n{font-family:"IBM Plex Mono",monospace; font-size:1.3rem; color:var(--accent); line-height:1}
+.stage .n small{display:block; font-size:.6rem; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-3); margin-top:6px}
+.stage h4{margin:0 0 4px; text-transform:none; letter-spacing:0; font-size:.95rem; color:var(--ink)}
+.stage p{font-size:.88rem; margin:0 0 6px; color:var(--ink-2)}
+.stage p:last-child{margin:0}
+.stage.block{border-left:3px solid var(--clay)}
+.stage.new{border-left:3px solid var(--gold)}
+.stage.later{border-style:dashed}
+@media (max-width:520px){.stage{grid-template-columns:1fr}}
+
+/* ---------- acceptance ---------- */
+.acc{counter-reset:acc; list-style:none; padding:0; max-width:none}
+.acc li{
+  counter-increment:acc; display:grid; grid-template-columns:34px 1fr; gap:10px; padding:9px 0;
+  border-bottom:1px dashed var(--line); margin:0; align-items:baseline;
+}
+.acc li::before{content:counter(acc); font-family:"IBM Plex Mono",monospace; font-size:.78rem; color:var(--accent)}
+
+/* ---------- matrix ---------- */
+.matrix td, .matrix th{text-align:center; font-size:.8rem}
+.matrix td:first-child, .matrix th:first-child{text-align:left; white-space:nowrap}
+.matrix .y{color:var(--accent); font-weight:600}
+.matrix .n{color:var(--ink-3)}
 
 footer{
   margin-top:64px; padding-top:20px; border-top:1px solid var(--line);
-  font-family:"IBM Plex Mono",monospace; font-size:.72rem; color:var(--ink-3);
+  font-family:"IBM Plex Mono",monospace; font-size:.72rem; color:var(--ink-3); line-height:1.6;
 }
-</style>
-<style>
-/* reset для standalone-страницы (в артефакте его даёт рантайм) */
-html{-webkit-text-size-adjust:100%}
-*,*::before,*::after{box-sizing:border-box}
-img,svg,video{max-width:100%;height:auto}
-table{border-collapse:collapse}
+
+@media print{
+  .toc,.toc-m{display:none}
+  .shell{display:block}
+  body{font-size:11.5pt; background:#fff; color:#000}
+  .tw,.card,.note,.funnel,.wire,.stage{box-shadow:none; break-inside:avoid}
+  section{padding-top:28px}
+  a{color:inherit; text-decoration:none}
+}
 </style>
 </head>
 <body>
@@ -249,15 +357,46 @@ table{border-collapse:collapse}
 <div class="page">
 
 <header class="masthead">
-  <div class="kicker"><span>Техническое задание</span><span>CRM · вкладка аналитики</span><span>v1.0 · черновик</span></div>
-  <h1>Сквозная аналитика воронки Consultant</h1>
-  <p class="dek">От рекламного бюджета до оплаченного тарифа — с раздельным учётом продаж, которые случились сами, и продаж, которые дожал колл-центр.</p>
+  <div class="kicker"><span>Техническое задание</span><span>CRM · сводная редакция 2.0</span><span>черновик на согласование</span><span>30.09.2026</span></div>
+  <h1>Единое ТЗ: сквозная аналитика, маршруты лидов и подписки в CRM Consultant</h1>
+  <p class="dek">От рекламного бюджета до каждого платежа: расход → лид → маршрут (продажа или колл-центр) → оплата → подписка → результат после затрат. Один документ вместо четырёх источников.</p>
   <div class="meta">
-    <b>Источник: расшифровка обсуждения</b>
-    <b>Продукт: consultant.net.ua</b>
-    <b>Приоритет: этапы 0–3</b>
-    <b>Статус: на оценку</b>
+    <b><em>Продукт:</em> consultant.net.ua</b>
+    <b><em>Заменяет:</em> страницу v6 (внутри — v1.0 · черновик)</b>
+    <b><em>Объединяет:</em> Google Docs 08.08.2026 · TZ-1 · v6 · дополнения 30.09.2026</b>
+    <b><em>Статус:</em> на согласование — § 22, § 23</b>
   </div>
+
+  <details class="toc-m">
+    <summary>Разделы</summary>
+    <ol>
+      <li><a href="#s0"><em>00</em>О документе</a></li>
+      <li><a href="#s1"><em>01</em>Задача и границы</a></li>
+      <li><a href="#s2"><em>02</em>Словарь</a></li>
+      <li><a href="#s3"><em>03</em>Принципы</a></li>
+      <li><a href="#s4"><em>04</em>Путь клиента</a></li>
+      <li><a href="#s5"><em>05</em>Два ключа</a></li>
+      <li><a href="#s6"><em>06</em>События трекинга</a></li>
+      <li><a href="#s7"><em>07</em>Идентификация и склейка</a></li>
+      <li><a href="#s8"><em>08</em>Модель данных</a></li>
+      <li><a href="#s9"><em>09</em>Статусы и маршруты</a></li>
+      <li><a href="#s10"><em>10</em>Колл-центр и дозвон</a></li>
+      <li><a href="#s11"><em>11</em>Атрибуция</a></li>
+      <li><a href="#s12"><em>12</em>Подписки</a></li>
+      <li><a href="#s13"><em>13</em>Деньги</a></li>
+      <li><a href="#s14"><em>14</em>Метрики и формулы</a></li>
+      <li><a href="#s15"><em>15</em>Контрольные примеры</a></li>
+      <li><a href="#s16"><em>16</em>Экраны CRM</a></li>
+      <li><a href="#s17"><em>17</em>Фильтры, роли и доступ</a></li>
+      <li><a href="#s18"><em>18</em>Интерфейс и производительность</a></li>
+      <li><a href="#s19"><em>19</em>Интеграции</a></li>
+      <li><a href="#s20"><em>20</em>Этапы работ</a></li>
+      <li><a href="#s21"><em>21</em>Критерии приёмки</a></li>
+      <li><a href="#s22"><em>22</em>Решения по расхождениям</a></li>
+      <li><a href="#s23"><em>23</em>Открытые вопросы</a></li>
+      <li><a href="#appendix-a"><em>A</em>Матрица соответствия</a></li>
+    </ol>
+  </details>
 </header>
 
 <div class="shell">
@@ -265,50 +404,135 @@ table{border-collapse:collapse}
   <nav class="toc" aria-label="Разделы">
     <div class="toc-title">Разделы</div>
     <ol>
-      <li><a href="#s1"><em>01</em><span>Задача</span></a></li>
+      <li><a href="#s0"><em>00</em><span>О документе</span></a></li>
+      <li><a href="#s1"><em>01</em><span>Задача и границы</span></a></li>
       <li><a href="#s2"><em>02</em><span>Словарь</span></a></li>
-      <li><a href="#s3"><em>03</em><span>Путь клиента</span></a></li>
-      <li><a href="#s4"><em>04</em><span>Два ключа</span></a></li>
-      <li><a href="#s5"><em>05</em><span>События трекинга</span></a></li>
-      <li><a href="#s6"><em>06</em><span>Идентификация и склейка</span></a></li>
-      <li><a href="#s7"><em>07</em><span>Модель данных</span></a></li>
-      <li><a href="#s8"><em>08</em><span>Статусы лида</span></a></li>
-      <li><a href="#s9"><em>09</em><span>Атрибуция</span></a></li>
-      <li><a href="#s10"><em>10</em><span>Экран в CRM</span></a></li>
-      <li><a href="#s11"><em>11</em><span>Метрики и формулы</span></a></li>
-      <li><a href="#s12"><em>12</em><span>Интеграции</span></a></li>
-      <li><a href="#s13"><em>13</em><span>Этапы работ</span></a></li>
-      <li><a href="#s14"><em>14</em><span>Критерии приёмки</span></a></li>
-      <li><a href="#s15"><em>15</em><span>Открытые вопросы</span></a></li>
+      <li><a href="#s3"><em>03</em><span>Принципы</span></a></li>
+      <li class="toc-group">Данные</li>
+      <li><a href="#s4"><em>04</em><span>Путь клиента</span></a></li>
+      <li><a href="#s5"><em>05</em><span>Два ключа</span></a></li>
+      <li><a href="#s6"><em>06</em><span>События трекинга</span></a></li>
+      <li><a href="#s7"><em>07</em><span>Идентификация и склейка</span></a></li>
+      <li><a href="#s8"><em>08</em><span>Модель данных</span></a></li>
+      <li class="toc-group">Логика</li>
+      <li><a href="#s9"><em>09</em><span>Статусы и маршруты</span></a></li>
+      <li><a href="#s10"><em>10</em><span>Колл-центр и дозвон</span></a></li>
+      <li><a href="#s11"><em>11</em><span>Атрибуция</span></a></li>
+      <li><a href="#s12"><em>12</em><span>Подписки</span></a></li>
+      <li><a href="#s13"><em>13</em><span>Деньги</span></a></li>
+      <li><a href="#s14"><em>14</em><span>Метрики и формулы</span></a></li>
+      <li><a href="#s15"><em>15</em><span>Контрольные примеры</span></a></li>
+      <li class="toc-group">Продукт</li>
+      <li><a href="#s16"><em>16</em><span>Экраны CRM</span></a></li>
+      <li><a href="#s17"><em>17</em><span>Фильтры, роли и доступ</span></a></li>
+      <li><a href="#s18"><em>18</em><span>Интерфейс и производительность</span></a></li>
+      <li><a href="#s19"><em>19</em><span>Интеграции</span></a></li>
+      <li class="toc-group">Поставка</li>
+      <li><a href="#s20"><em>20</em><span>Этапы работ</span></a></li>
+      <li><a href="#s21"><em>21</em><span>Критерии приёмки</span></a></li>
+      <li><a href="#s22"><em>22</em><span>Решения по расхождениям</span></a></li>
+      <li><a href="#s23"><em>23</em><span>Открытые вопросы</span></a></li>
+      <li><a href="#appendix-a"><em>A</em><span>Матрица соответствия</span></a></li>
     </ol>
   </nav>
 
   <main>
 
+  <!-- 00 -->
+  <section id="s0">
+    <div class="sec-head"><div class="sec-num">§ 00</div><h2>О документе</h2></div>
+
+    <h3>Источники и их порядок</h3>
+    <p>Порядок установлен со слов заказчика. Это последовательность версий одного задания, а не даты согласования.</p>
+    <div class="tw">
+    <table>
+      <thead><tr><th>Этап</th><th>Источник</th><th>Что даёт</th><th>Пометка</th></tr></thead>
+      <tbody>
+        <tr><td class="c">1</td><td>ТЗ в Google Docs «Так» (08.08.2026)</td><td>Полная бизнес-логика CRM: сущности, расходы, лид, воронка, дозвон, конверсии, KPI, прогноз, валюты, фильтры, главный дашборд</td><td><span class="tag src">GD §N</span></td></tr>
+        <tr><td class="c">2</td><td>Архив Metriki-handoff (08.08.2026): HTML-прототип, TZ-1, TZ-2, README</td><td>TZ-1 — правки дашборда: фильтры, рекламный баланс, роли, история операций, оформление таблиц. TZ-2 совпадает с Google Docs. README — открытые вопросы прототипа</td><td><span class="tag src">TZ-1 §N</span> <span class="tag src">README</span></td></tr>
+        <tr><td class="c">3</td><td>Страница v6 «Сквозная аналитика воронки Consultant»</td><td>Конкретная воронка: лендинг, SPA-квиз, два серверных ключа, отвалы, авто-продажи и продажи КЦ, модель данных, этапы</td><td><span class="tag src">v6 §N</span></td></tr>
+        <tr><td class="c">4</td><td>Дополнения заказчика (30.09.2026): просьба считать подписки и транскрибация</td><td>Подписки клиента / юристов, лиды «на продаж» и в колл-центр, разбивка лидов и денег по направлениям, отложенная конверсия КЦ, общий профит</td><td><span class="tag src">Доп.</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p>Обобщение ChatGPT от 30.09.2026 использовано как список расхождений и предложений; оно не является требованием заказчика и в тексте обозначается <span class="tag prop">Предл.</span> вместе с предложениями настоящей редакции.</p>
+
+    <h3>Правила приоритета</h3>
+    <ol>
+      <li>Более позднее прямое дополнение заказчика имеет приоритет в той части, которую оно меняет.</li>
+      <li>v6 уточняет более раннюю базу Google Docs, но не отменяет её: отсутствие пункта в поздней странице не означает его удаление.</li>
+      <li>Противоречия источников разрешены явно в <a href="#s22">§ 22</a>. Ни одна формула, роль или параметр не выбраны «по умолчанию молча».</li>
+      <li>Числа, которые в источниках названы предложениями (2 часа до отвала, 5 попыток за 7 дней, 14 дней атрибуции, тарифы Base / Pro / Premium), остаются предложениями до подтверждения.</li>
+    </ol>
+
+    <h3>Как читать пометки</h3>
+    <div class="legend">
+      <div><span class="tag src">GD §16</span><span class="tag src">TZ-1 §2.3</span><span class="tag src">v6 §9</span><span class="tag src">Доп.</span><br>Требование взято из источника; смысл сохранён.</div>
+      <div><span class="tag prop">Предл.</span><br>Предложение редакции для обсуждения; не согласовано с заказчиком.</div>
+      <div><span class="tag conf">Подтвердить</span><br>Параметр или решение, которое нужно утвердить до старта соответствующего этапа (сведено в <a href="#s23">§ 23</a>).</div>
+    </div>
+
+    <div class="note warn">
+      <h4>Ограничение редакции</h4>
+      <p>Состояние действующей CRM, её код, база данных и интеграции для этой редакции не предоставлены. Объём уже реализованного функционала неизвестен; наличие функции в HTML-прототипе не означает её наличие в рабочей CRM.</p>
+    </div>
+  </section>
+
   <!-- 01 -->
   <section id="s1">
-    <div class="sec-head"><div class="sec-num">§ 01</div><h2>Задача</h2></div>
-    <p>Сделать в существующей CRM новую вкладку <strong>«Сквозная аналитика»</strong>, которая отвечает на один вопрос владельца: <em>мы потратили N денег на рекламу — что из этого вышло и сколько мы вернули</em>.</p>
-    <p>Сегодня данные обрываются: UTM-метки на лендинге есть, но квиз — это SPA, URL в нём не меняется, поэтому после клика по кнопке регистрации источник теряется. Из-за этого нельзя связать расход на кампанию с оплатой тарифа и нельзя понять, что стало с теми, кто ушёл, не заплатив.</p>
+    <div class="sec-head"><div class="sec-num">§ 01</div><h2>Задача и границы</h2></div>
 
-    <h3>Что должна показывать вкладка</h3>
+    <h3>Один вопрос владельца</h3>
+    <p>CRM должна в любой момент отвечать: <strong>сколько мы потратили, откуда пришли лиды, куда они пошли, сколько из них заплатили, когда и сколько денег они принесли, и что осталось после затрат.</strong> <span class="tag src">GD §1</span> <span class="tag src">v6 §1</span> <span class="tag src">Доп.</span></p>
+
+    <div class="flow">
+      <div class="node">Расход</div><div class="arrow">→</div>
+      <div class="node">Источник</div><div class="arrow">→</div>
+      <div class="node">Кампания</div><div class="arrow">→</div>
+      <div class="node">Креатив / UTM</div><div class="arrow">→</div>
+      <div class="node key">Лид</div><div class="arrow">→</div>
+      <div class="node cc">Маршрут: продажа / КЦ</div><div class="arrow">→</div>
+      <div class="node">Контакт</div><div class="arrow">→</div>
+      <div class="node">Покупатель</div><div class="arrow">→</div>
+      <div class="node key">Платёж</div><div class="arrow">→</div>
+      <div class="node">Подписка и продления</div><div class="arrow">→</div>
+      <div class="node">Выручка</div><div class="arrow">→</div>
+      <div class="node">Маржа</div><div class="arrow">→</div>
+      <div class="node">ROAS / ROMI / ROI</div>
+    </div>
+    <p>Любая цифра должна раскрываться до конкретного источника, кампании, креатива, лида, покупателя и платежа. <span class="tag src">GD §1</span> <span class="tag src">GD §24</span> <span class="tag src">v6 §10</span></p>
+
+    <h3>Что должна показывать система</h3>
     <ol>
-      <li>Сколько потрачено на рекламу (по источнику, кампании, объявлению, маркетологу).</li>
-      <li>Сколько лидов эти деньги принесли и по какой цене.</li>
-      <li>Сколько лидов купили <strong>сами</strong>, без участия людей — и на какую сумму, по тарифам.</li>
-      <li>Сколько лидов <strong>отвалилось</strong> и на каком именно шаге квиза.</li>
-      <li>Сколько отвалившихся лидов <strong>передано в колл-центр</strong>, сколько реально прозвонено и с каким результатом.</li>
-      <li>Сколько продаж и денег принёс <strong>дожим колл-центра</strong> — отдельно от «автоматических» продаж.</li>
-      <li>Итог по деньгам: выручка, ROMI, стоимость привлечения клиента.</li>
+      <li>Сколько потрачено на рекламу — по источнику, кампании, объявлению / креативу, маркетологу, команде, GEO, оферу и домену; чистый Ad Spend и полная стоимость с налогами и комиссиями. <span class="tag src">GD §3–4</span> <span class="tag src">v6 §1</span></li>
+      <li>Сколько лидов эти деньги принесли и по какой цене; сколько потерь до захвата контакта. <span class="tag src">GD §10</span> <span class="tag src">v6 §1</span></li>
+      <li>Сколько лидов <strong>купили сами</strong>, без участия людей — на какую сумму и по каким тарифам. <span class="tag src">v6 §1</span></li>
+      <li>Сколько лидов <strong>отвалилось</strong> и на каком именно экране квиза. <span class="tag src">v6 §1</span></li>
+      <li>Сколько лидов направлено <strong>в контур продаж</strong> и сколько <strong>в колл-центр</strong>; общее число лидов и разбивка по направлениям. <span class="tag src">Доп.</span></li>
+      <li>Сколько передано в колл-центр, сколько реально прозвонено, с какими исходами, сколько продаж и денег принёс <strong>дожим</strong> — отдельно от авто-продаж. <span class="tag src">GD §7</span> <span class="tag src">v6 §1</span> <span class="tag src">Доп.</span></li>
+      <li>Деньги по каждому направлению и общая сумма, включая оплаты, пришедшие с задержкой (колл-центр может принести оплату спустя неделю и в следующем месяце). <span class="tag src">Доп.</span></li>
+      <li><strong>Подписки</strong> клиента / юристов: новые, действующие, продления, отмены; деньги от первых покупок и продлений, с сохранением связи с исходной рекламой. <span class="tag src">Доп.</span></li>
+      <li>Итог по деньгам: факт и прогноз выручки, средний чек, CAC, ROAS, ROMI, маржа и <strong>профит</strong> с явно названным составом вычитаемых затрат. <span class="tag src">GD §9</span> <span class="tag src">GD §17</span> <span class="tag src">v6 §1</span> <span class="tag src">Доп.</span></li>
     </ol>
 
     <div class="note">
-      <h4>Принцип разделения</h4>
-      <p>Каждый лид в CRM живёт в одной из двух траекторий: <strong>закрыт автоматически</strong> (за ним закреплён маркетолог, который завёл кампанию — человек дошёл и оплатил сам) или <strong>передан в колл-центр</strong> (маркетолог привёл, менеджер дожал, оплата состоялась после звонка). Обе траектории считаются раздельно, без двойного зачёта выручки.</p>
+      <h4>Принцип разделения траекторий</h4>
+      <p>Каждый лид живёт в одной из двух траекторий: <strong>закрыт автоматически</strong> (маркетолог привёл — человек дошёл и оплатил сам) или <strong>передан в колл-центр</strong> (маркетолог привёл, менеджер дожал, оплата после звонка). Траектории считаются раздельно, без двойного зачёта выручки, а маркетолог остаётся закреплённым за лидом в обоих случаях. <span class="tag src">v6 §1</span> <span class="tag src">v6 §9</span></p>
+      <p>Дополнение заказчика вводит второе измерение — <strong>направление (маршрут)</strong> лида: «на продаж» или в колл-центр, с количеством лидов и деньгами по каждому. Как связаны маршрут и канал продажи, описано в <a href="#s9">§ 09</a> и <a href="#s11">§ 11</a>. <span class="tag src">Доп.</span></p>
     </div>
 
-    <h3>Вне скоупа первой очереди</h3>
-    <p>PPL-начисления, история повторных покупок в личном кабинете и LTV юриста по источнику — <strong>вторая очередь</strong>. Модель данных проектируется так, чтобы это добавилось без переделки (см. §7).</p>
+    <h3>Очереди</h3>
+    <div class="cards">
+      <div class="card accent">
+        <h4>Первая очередь</h4>
+        <p>Сбор событий и ключей, модель данных, вкладка сквозной аналитики, маршруты лидов, колл-центр, базовый учёт подписок (новые, активные, продления как деньги), правки дашборда из TZ-1. <span class="tag src">v6 §13</span> <span class="tag src">TZ-1</span> <span class="tag src">Доп.</span></p>
+      </div>
+      <div class="card">
+        <h4>Вторая очередь</h4>
+        <p>API рекламных кабинетов вместо ручного ввода, телефония, PPL-начисления, история повторных покупок в личном кабинете, LTV по источнику, MRR. <span class="tag src">v6 §1</span> <span class="tag src">v6 §13</span> <span class="tag prop">Предл.</span></p>
+      </div>
+    </div>
+    <p>Состав первой поставки по подпискам — <span class="tag conf">Подтвердить</span> (<a href="#s23">§ 23</a>, вопрос 3).</p>
   </section>
 
   <!-- 02 -->
@@ -316,93 +540,139 @@ table{border-collapse:collapse}
     <div class="sec-head"><div class="sec-num">§ 02</div><h2>Словарь</h2></div>
     <div class="tw">
     <table>
-      <thead><tr><th>Термин</th><th>Определение</th></tr></thead>
+      <thead><tr><th>Термин</th><th>Определение</th><th>Источник</th></tr></thead>
       <tbody>
-        <tr><td><strong>Визит</strong></td><td>Загрузка лендинга <code>consultant.net.ua/registratsiya</code> с сохранением UTM.</td></tr>
-        <tr><td><strong>Регистрация</strong></td><td>Клик по кнопке начала регистрации на лендинге и вход в квиз.</td></tr>
-        <tr><td><strong>Лид</strong></td><td>Пользователь, чьи контактные данные <strong>дошли до сервера</strong> (это происходит после 3-го вопроса квиза, где загружается фото). До этого момента — только анонимная сессия, звонить некому.</td></tr>
-        <tr><td><strong>Квиз</strong></td><td>SPA-анкета из ~20 экранов между регистрацией и экраном тарифов. URL не меняется.</td></tr>
-        <tr><td><strong>Отвал</strong></td><td>Лид, который зарегистрировался, но не оплатил в течение установленного окна.</td></tr>
-        <tr><td><strong>Дожим</strong></td><td>Работа колл-центра с отвалом: звонки, отработка возражений, доведение до оплаты подписки.</td></tr>
-        <tr><td><strong>Авто-продажа</strong></td><td>Оплата без участия менеджера.</td></tr>
-        <tr><td><strong>Продажа КЦ</strong></td><td>Оплата после первого результативного контакта колл-центра в окне атрибуции.</td></tr>
-        <tr><td><strong>Маркетолог</strong></td><td>Сотрудник, заведший рекламную кампанию. Закрепляется за лидом автоматически по <code>utm_campaign</code>.</td></tr>
+        <tr><td><strong>Визит</strong></td><td>Загрузка лендинга <code>consultant.net.ua/registratsiya</code> с сохранением UTM.</td><td><span class="tag src">v6 §2</span></td></tr>
+        <tr><td><strong>Сессия</strong></td><td>Анонимный посетитель с <code>session_id</code>; живёт от первого визита до захвата контакта и дальше.</td><td><span class="tag src">v6 §6</span></td></tr>
+        <tr><td><strong>Регистрация</strong></td><td>Клик по кнопке начала регистрации на лендинге и вход в квиз.</td><td><span class="tag src">v6 §2</span></td></tr>
+        <tr><td><strong>Квиз</strong></td><td>SPA-анкета из ~20 экранов между регистрацией и экраном тарифов. URL не меняется.</td><td><span class="tag src">v6 §2</span></td></tr>
+        <tr><td><strong>Лид</strong></td><td>Пользователь с уникальным <code>Lead ID</code>, чьи контактные данные <strong>дошли до сервера</strong> (после 3-го вопроса квиза). До этого — только анонимная сессия, звонить некому. К лиду навсегда привязан источник: GEO → команда → маркетолог → домен → офер → source → кампания → креатив → UTM.</td><td><span class="tag src">GD §5</span> <span class="tag src">v6 §2</span></td></tr>
+        <tr><td><strong>Отвал</strong></td><td>Лид, который зарегистрировался, но не оплатил в течение установленного окна.</td><td><span class="tag src">v6 §2</span></td></tr>
+        <tr><td><strong>Дожим</strong></td><td>Работа колл-центра с отвалом: звонки, отработка возражений, доведение до оплаты.</td><td><span class="tag src">v6 §2</span></td></tr>
+        <tr><td class="new"><strong>Маршрут лида</strong></td><td>Направление, в которое лид передан после захвата контакта: <code>sale</code> («на продаж» — контур продаж) или <code>call_center</code>. Хранится с историей передач.</td><td><span class="tag src">Доп.</span> <span class="tag prop">Предл.</span></td></tr>
+        <tr><td><strong>Канал продажи</strong></td><td>Признак конкретного платежа: <code>auto</code> (без участия менеджера) или <code>call_center</code> (после результативного контакта КЦ в окне атрибуции).</td><td><span class="tag src">v6 §2</span> <span class="tag src">v6 §9</span></td></tr>
+        <tr><td><strong>Авто-продажа</strong></td><td>Оплата без участия менеджера.</td><td><span class="tag src">v6 §2</span></td></tr>
+        <tr><td><strong>Продажа КЦ</strong></td><td>Оплата после первого результативного контакта колл-центра в окне атрибуции.</td><td><span class="tag src">v6 §2</span></td></tr>
+        <tr><td><strong>Маркетолог</strong></td><td>Сотрудник, заведший рекламную кампанию. Закрепляется за лидом автоматически по <code>utm_campaign</code> и не теряет лид при передаче в КЦ.</td><td><span class="tag src">GD §5</span> <span class="tag src">v6 §2</span> <span class="tag src">v6 §9</span></td></tr>
+        <tr><td><strong>Аудитория рекламы</strong></td><td>На кого была запущена кампания: <code>lawyer</code> (юристы) или <code>client</code> (клиенты); поле <code>destination</code>. Это не статус подписки и не канал продажи.</td><td><span class="tag src">TZ-1 §1.7</span></td></tr>
+        <tr><td class="new"><strong>Покупатель</strong></td><td>Тот, кто платит: клиент или юрист; связан с <code>user_id</code> личного кабинета. Покупатель может отличаться от лида, если подтвердится продажа лидов юристам.</td><td><span class="tag src">Доп.</span> <span class="tag prop">Предл.</span></td></tr>
+        <tr><td><strong>Платёж</strong></td><td>Одна фактически проведённая денежная операция, подтверждённая вебхуком платёжной системы. Попадает в итог ровно один раз.</td><td><span class="tag src">v6 §4</span> <span class="tag src">GD §14</span></td></tr>
+        <tr><td class="new"><strong>Подписка</strong></td><td>Отношение с покупателем на оплаченный период с продлениями. У одной подписки может быть много платежей.</td><td><span class="tag src">Доп.</span> <span class="tag prop">Предл.</span></td></tr>
+        <tr><td><strong>Продление</strong></td><td>Повторный платёж по существующей подписке (<code>is_renewal = true</code>). Не создаёт нового покупателя и новой подписки.</td><td><span class="tag src">v6 §7</span> <span class="tag prop">Предл.</span></td></tr>
+        <tr><td><strong>Офер</strong></td><td>Юридическая категория (например, «Військове право»), объединяющая 10–15 доменов. Офер и домен — разные уровни аналитики.</td><td><span class="tag src">GD §18</span></td></tr>
+        <tr><td><strong>Ad Spend</strong></td><td>Чистые расходы на рекламу.</td><td><span class="tag src">GD §4</span></td></tr>
+        <tr><td><strong>Total Marketing Cost</strong></td><td>Реальная стоимость рекламы с налогами (VAT / ПДВ), комиссиями и прочими затратами рекламного аккаунта.</td><td><span class="tag src">GD §4</span></td></tr>
+        <tr><td><strong>Факт / прогноз</strong></td><td>Факт — реально полученные оплаты. Прогноз — ожидаемая сумма (обещание клиента или расчёт по историческим коэффициентам).</td><td><span class="tag src">GD §13–14</span></td></tr>
+        <tr><td><strong>Профит</strong></td><td>Результат после затрат. Уровень вычитаемых затрат (только реклама / полная стоимость маркетинга / плюс себестоимость и КЦ) выбирается явно и подписывается на экране.</td><td><span class="tag src">GD §17</span> <span class="tag src">Доп.</span> <span class="tag prop">Предл.</span></td></tr>
       </tbody>
     </table>
     </div>
+    <p><small>Строки с золотой отметкой слева — понятия, добавленные дополнениями заказчика и настоящей редакцией.</small></p>
   </section>
 
   <!-- 03 -->
   <section id="s3">
-    <div class="sec-head"><div class="sec-num">§ 03</div><h2>Путь клиента и точки съёма данных</h2></div>
-    <p>Ниже — эталонная воронка с числами из обсуждения. Это одновременно и структура отчёта, и тест-кейс для приёмки (§14).</p>
+    <div class="sec-head"><div class="sec-num">§ 03</div><h2>Принципы</h2></div>
+    <ol>
+      <li><strong>Единая цепочка первичных данных.</strong> Ad Spend → Lead → Contact → Client → Payment считаются из одних записей. Дашборд не строится отдельно от CRM; маркетолог не вносит вручную число лидов, а финансист — кассу. <span class="tag src">GD §25</span></li>
+      <li><strong>Серверные ключи.</strong> Создание лида и успешная оплата фиксируются только на сервере (данные квиза дошли; вебхук платёжной системы). Фронтовые события не считаются истиной по лидам и деньгам. <span class="tag src">v6 §4–5</span></li>
+      <li><strong>Нет двойного учёта.</strong> Каждый платёж относится к одному каналу продажи и одному маршруту; каждый расход учитывается один раз; подписочный разрез — срез общей выручки, а не добавка к ней. <span class="tag src">v6 §9</span> <span class="tag prop">Предл.</span></li>
+      <li><strong>Атрибуция не перезаписывается.</strong> Первичные UTM и <code>first_touch</code> хранятся навсегда; <code>last_touch</code> ведётся отдельно. <span class="tag src">GD §20</span> <span class="tag src">v6 §6</span></li>
+      <li><strong>Оригинальная валюта.</strong> Для каждого расхода и платежа хранятся исходная сумма, исходная валюта, курс на дату операции и конвертированная сумма. <span class="tag src">GD §3</span> <span class="tag src">GD §23</span> <span class="tag src">v6 §9</span></li>
+      <li><strong>Факт отделён от прогноза.</strong> До поступления денег ожидаемая сумма показывается как прогноз, а не как выручка. <span class="tag src">GD §14</span> <span class="tag src">Доп.</span></li>
+      <li><strong>Любая цифра раскрывается</strong> до списка лидов, сессий или платежей, которые за ней стоят; число строк совпадает с цифрой. <span class="tag src">GD §24</span> <span class="tag src">v6 §10</span></li>
+      <li><strong>Настройки — в админке, не в коде.</strong> Окна ожидания, окно атрибуции, исходы звонков, правила распределения, пороги рекомендаций, ставки налогов. <span class="tag src">v6 §8</span> <span class="tag src">README</span> <span class="tag src">GD §4</span></li>
+      <li><strong>Историчность.</strong> Тарифы, курсы, владельцы кампаний, статусы подписок хранятся с датами действия; старые отчёты не переоцениваются текущими условиями. <span class="tag src">v6 §7</span> <span class="tag prop">Предл.</span></li>
+      <li><strong>Два языка, пять валют.</strong> Смена языка не меняет данные; валюта отображения не меняет хранимые суммы. <span class="tag src">GD §22–23</span></li>
+    </ol>
+  </section>
+
+  <!-- 04 -->
+  <section id="s4">
+    <div class="sec-head"><div class="sec-num">§ 04</div><h2>Путь клиента и точки съёма данных</h2></div>
+    <p>Эталонная воронка v6 — одновременно структура отчёта и тест-кейс приёмки (<a href="#s21">§ 21</a>). Расход и клики — из обсуждения; числа шагов 5, 9 и 10 иллюстративные. <span class="tag src">v6 §3</span></p>
 
     <div class="funnel">
       <div class="f-row f-head">
-        <div>Шаг</div><div class="f-bar"></div><div class="f-num">Кол-во</div><div class="f-pct">CR</div>
+        <div></div><div>Шаг</div><div class="f-bar"></div><div class="f-num">Кол-во</div><div class="f-pct">CR</div>
       </div>
       <div class="f-row">
-        <div class="f-name">Клики по рекламе<small>расход $100</small></div>
+        <div class="f-idx">1</div>
+        <div class="f-name">Клики по рекламе<small>расход $100 · данные кабинета</small></div>
         <div class="f-bar"><i style="width:100%"></i></div>
         <div class="f-num">1 000</div><div class="f-pct">—</div>
       </div>
       <div class="f-row">
+        <div class="f-idx">2</div>
         <div class="f-name">Визит лендинга<small>page_view</small></div>
         <div class="f-bar"><i style="width:90%"></i></div>
         <div class="f-num">900</div><div class="f-pct">90%</div>
       </div>
       <div class="f-row">
+        <div class="f-idx">3</div>
         <div class="f-name">Клик «Регистрация»<small>cta_registration_click</small></div>
         <div class="f-bar"><i style="width:50%"></i></div>
         <div class="f-num">500</div><div class="f-pct">56%</div>
       </div>
       <div class="f-row">
+        <div class="f-idx">4</div>
         <div class="f-name">Лид создан<small>lead_captured · ключ №1</small></div>
         <div class="f-bar"><i style="width:20%"></i></div>
         <div class="f-num">200</div><div class="f-pct">40%</div>
       </div>
       <div class="f-row">
+        <div class="f-idx">5</div>
         <div class="f-name">Экраны квиза 4→20<small>quiz_step_submit</small></div>
         <div class="f-bar"><i style="width:12%"></i></div>
         <div class="f-num">≈120</div><div class="f-pct">60%</div>
       </div>
       <div class="f-row">
+        <div class="f-idx">6</div>
         <div class="f-name">Экран тарифов<small>pricing_view</small></div>
         <div class="f-bar"><i style="width:10%"></i></div>
         <div class="f-num">100</div><div class="f-pct">50%</div>
       </div>
       <div class="f-row">
+        <div class="f-idx">7</div>
         <div class="f-name">Оплата (авто)<small>payment_succeeded · ключ №2</small></div>
-        <div class="f-bar paid"><i style="width:2.4%"></i></div>
-        <div class="f-num">5</div><div class="f-pct">5%</div>
+        <div class="f-bar"><i style="width:2.4%"></i></div>
+        <div class="f-num">5</div><div class="f-pct">5%<br><small>от шага 6</small></div>
       </div>
       <div class="f-row">
+        <div class="f-idx">8</div>
         <div class="f-name">Отвал → колл-центр<small>status = dropped</small></div>
         <div class="f-bar lost"><i style="width:19.5%"></i></div>
-        <div class="f-num">195</div><div class="f-pct">97,5%</div>
+        <div class="f-num">195</div><div class="f-pct">97,5%<br><small>от шага 4</small></div>
       </div>
       <div class="f-row">
-        <div class="f-name">Прозвонено КЦ<small>дозвон состоялся</small></div>
+        <div class="f-idx">9</div>
+        <div class="f-name">Прозвонено КЦ<small>результативный контакт</small></div>
         <div class="f-bar cc"><i style="width:14%"></i></div>
-        <div class="f-num">140</div><div class="f-pct">72%</div>
+        <div class="f-num">140</div><div class="f-pct">72%<br><small>от шага 8</small></div>
       </div>
       <div class="f-row">
-        <div class="f-name">Продажа КЦ<small>payment после звонка</small></div>
+        <div class="f-idx">10</div>
+        <div class="f-name">Продажа КЦ<small>payment_succeeded после контакта</small></div>
         <div class="f-bar cc"><i style="width:3.2%"></i></div>
-        <div class="f-num">12</div><div class="f-pct">8,6%</div>
+        <div class="f-num">12</div><div class="f-pct">8,6%<br><small>от шага 9</small></div>
       </div>
     </div>
-
-    <p class="mono" style="font-size:.78rem;color:var(--ink-3)">Числа шагов 5, 9, 10 — иллюстративные; шаги 1–4, 6, 7 взяты из обсуждения дословно.</p>
+    <p>Знаменатель каждой конверсии в отчёте подписывается явно: проценты в таблице относятся к разным базам. <span class="tag prop">Предл.</span></p>
 
     <h3>Детализация внутри квиза</h3>
-    <p>Экраны квиза нумеруются <code>1…20</code> и в отчёте показываются построчно: сколько человек увидело шаг, сколько отправило, сколько отвалилось. Это нужно, чтобы находить конкретный экран, который «съедает» воронку. Требуется устойчивый <code>step_key</code> у каждого экрана — переупорядочивание вопросов не должно ломать историю.</p>
+    <p>Экраны квиза нумеруются <code>1…20</code> и показываются в отчёте построчно: сколько человек увидело шаг, сколько отправило, сколько отвалилось. Нужен устойчивый <code>step_key</code> у каждого экрана — переупорядочивание вопросов не должно ломать историю. <span class="tag src">v6 §3</span></p>
+
+    <h3>Потери до захвата контакта</h3>
+    <p>Человек, ушедший до 3-го вопроса, в CRM как лид не попадает: контакта нет. Такие потери видны только в агрегате воронки по <code>session_id</code>, как «потери до захвата контакта». Ловить их раньше — отдельное продуктовое решение (<a href="#s23">§ 23</a>, вопрос 10). <span class="tag src">v6 §4</span></p>
+
+    <h3>Соответствие воронке Google Docs</h3>
+    <p>Google Docs описывает воронку менеджерской работы с лидом; v6 добавляет самостоятельный путь через квиз. Оба пути сведены в единый список статусов в <a href="#s9">§ 09</a>. <span class="tag src">GD §6</span> <span class="tag src">v6 §8</span></p>
   </section>
 
-  <!-- 04 -->
-  <section id="s4">
-    <div class="sec-head"><div class="sec-num">§ 04</div><h2>Два ключа: как понять, что произошло с человеком</h2></div>
-    <p>В квизе нет URL-переходов, поэтому опираемся не на фронтенд-метки, а на <strong>два серверных факта</strong>. Это те самые «два ключа» из обсуждения — они определяют, в какую траекторию уходит лид.</p>
+  <!-- 05 -->
+  <section id="s5">
+    <div class="sec-head"><div class="sec-num">§ 05</div><h2>Два ключа</h2></div>
+    <p>В квизе нет URL-переходов, поэтому опора — не фронтовые метки, а <strong>два серверных факта</strong>. Они определяют, в какую траекторию уходит лид. <span class="tag src">v6 §4</span></p>
 
     <div class="flow">
       <div class="node">Реклама</div><div class="arrow">→</div>
@@ -413,45 +683,41 @@ table{border-collapse:collapse}
     </div>
 
     <div class="cards">
-      <div class="card">
+      <div class="card accent">
         <h4>Ключ №1 — регистрация</h4>
-        <p>После 3-го вопроса квиза (загрузка фото) фронт отправляет данные на бэкенд. Приём этих данных = <strong>лид создан</strong>. Появляется контакт, появляется строка в CRM, стартует окно ожидания оплаты.</p>
+        <p>После 3-го вопроса квиза (загрузка фото) фронт отправляет данные на бэкенд. Приём данных = <strong>лид создан</strong>: появляется контакт, строка в CRM, стартует окно ожидания оплаты. <span class="tag src">v6 §4</span></p>
       </div>
-      <div class="card">
+      <div class="card accent">
         <h4>Ключ №2 — оплата</h4>
-        <p>Вебхук платёжной системы об успешном списании. Фиксирует тариф, сумму, валюту, момент. Это единственный источник истины по деньгам — фронтовый «спасибо за оплату» не считается.</p>
+        <p>Вебхук платёжной системы об успешном списании: тариф, сумма, валюта, момент. Единственный источник истины по деньгам; фронтовое «спасибо за оплату» не считается. <span class="tag src">v6 §4</span></p>
       </div>
     </div>
 
-    <div class="note warn">
-      <h4>Следствие, которое нужно принять как ограничение</h4>
-      <p>Человек, ушедший <strong>до 3-го вопроса</strong>, в CRM не попадает: контакта нет, звонить некому. Такие отвалы видны только в агрегате воронки (по <code>session_id</code>), как «потери до захвата контакта». Если нужно ловить и их — контакт надо спрашивать раньше, это отдельное продуктовое решение (§15, вопрос 5).</p>
-    </div>
-
-    <p>Комбинация двух ключей даёт четыре состояния, и именно она разводит лида по траекториям:</p>
+    <p>Комбинация ключей даёт четыре состояния:</p>
     <div class="tw">
     <table>
       <thead><tr><th>Ключ №1</th><th>Ключ №2</th><th>Что это значит</th><th>Куда идёт лид</th></tr></thead>
       <tbody>
         <tr><td>нет</td><td>нет</td><td>Анонимный отвал до захвата контакта</td><td>Только в статистику воронки</td></tr>
-        <tr><td>есть</td><td>нет</td><td>Зарегистрировался, не оплатил</td><td><strong>Очередь колл-центра</strong></td></tr>
-        <tr><td>есть</td><td>есть, до контакта КЦ</td><td>Купил сам</td><td>Закрыт · авто · маркетолог</td></tr>
-        <tr><td>есть</td><td>есть, после контакта КЦ</td><td>Дожали</td><td>Закрыт · КЦ · менеджер</td></tr>
+        <tr><td>есть</td><td>нет</td><td>Зарегистрировался, не оплатил</td><td><span class="chip cc">очередь колл-центра</span> после окна ожидания</td></tr>
+        <tr><td>есть</td><td>есть, до контакта КЦ</td><td>Купил сам</td><td><span class="chip ok">закрыт · auto · маркетолог</span></td></tr>
+        <tr><td>есть</td><td>есть, после контакта КЦ</td><td>Дожали</td><td><span class="chip cc">закрыт · call_center · менеджер</span></td></tr>
       </tbody>
     </table>
     </div>
+    <p>Момент 3-го вопроса как точка захвата контакта — утверждение v6; проверить на действующем квизе на этапе 0. <span class="tag conf">Подтвердить</span></p>
   </section>
 
-  <!-- 05 -->
-  <section id="s5">
-    <div class="sec-head"><div class="sec-num">§ 05</div><h2>События трекинга</h2></div>
-    <p>Все события пишутся в одну таблицу <code>funnel_events</code>. Клиентские события отправляются на собственный эндпоинт <code>POST /api/track</code> (не полагаемся на сторонние аналитики), серверные пишутся напрямую.</p>
+  <!-- 06 -->
+  <section id="s6">
+    <div class="sec-head"><div class="sec-num">§ 06</div><h2>События трекинга</h2></div>
+    <p>Все события пишутся в одну таблицу <code>funnel_events</code>. Клиентские события отправляются на собственный эндпоинт <code>POST /api/track</code> (без зависимости от сторонних аналитик); серверные пишутся напрямую. <span class="tag src">v6 §5</span></p>
 
     <div class="tw">
     <table>
       <thead><tr><th>Событие</th><th>Где</th><th>Payload</th><th>Назначение</th></tr></thead>
       <tbody>
-        <tr><td><code>page_view</code></td><td>лендинг</td><td><code>page, referrer, utm_*</code></td><td>Верх воронки, фиксация источника</td></tr>
+        <tr><td><code>page_view</code></td><td>лендинг</td><td class="mono"><code>page, referrer, utm_*</code></td><td>Верх воронки, фиксация источника</td></tr>
         <tr><td><code>cta_registration_click</code></td><td>лендинг</td><td><code>cta_id</code></td><td>Переход на квиз</td></tr>
         <tr><td><code>quiz_started</code></td><td>квиз</td><td>—</td><td>Экран 1 показан</td></tr>
         <tr><td><code>quiz_step_view</code></td><td>квиз</td><td><code>step_index, step_key</code></td><td>Показ шага 1…20</td></tr>
@@ -462,17 +728,21 @@ table{border-collapse:collapse}
         <tr><td><code>checkout_started</code></td><td>квиз</td><td><code>tariff, amount</code></td><td>Тариф выбран, ушёл в оплату</td></tr>
         <tr><td><code>payment_succeeded</code></td><td><strong>сервер</strong></td><td><code>payment_id, tariff, amount, currency</code></td><td><strong>Ключ №2.</strong> Деньги получены</td></tr>
         <tr><td><code>payment_failed</code></td><td><strong>сервер</strong></td><td><code>reason_code</code></td><td>Отдельный сценарий дожима</td></tr>
+        <tr><td class="new"><code>payment_refunded</code></td><td><strong>сервер</strong></td><td><code>payment_id, amount, reason</code></td><td>Возврат; уменьшает выручку периода возврата <span class="tag prop">Предл.</span></td></tr>
+        <tr><td class="new"><code>subscription_renewed</code></td><td><strong>сервер</strong></td><td><code>subscription_id, payment_id, period_end</code></td><td>Продление подписки <span class="tag prop">Предл.</span></td></tr>
+        <tr><td class="new"><code>subscription_cancelled</code></td><td><strong>сервер</strong></td><td><code>subscription_id, reason</code></td><td>Отмена подписки <span class="tag prop">Предл.</span></td></tr>
+        <tr><td class="new"><code>lead_routed</code></td><td><strong>сервер</strong></td><td><code>lead_id, route, reason, assigned_by</code></td><td>Передача лида в маршрут <code>sale</code> / <code>call_center</code> <span class="tag prop">Предл.</span></td></tr>
       </tbody>
     </table>
     </div>
 
-    <h4>Общий конверт любого события</h4>
+    <h3>Общий конверт события</h3>
     <div class="tw">
     <table>
       <thead><tr><th>Поле</th><th>Тип</th><th>Комментарий</th></tr></thead>
       <tbody>
         <tr><td><code>event_id</code></td><td>uuid</td><td>Генерируется клиентом, обеспечивает идемпотентность при ретраях</td></tr>
-        <tr><td><code>session_id</code></td><td>uuid</td><td>Живёт от первого визита, см. §6</td></tr>
+        <tr><td><code>session_id</code></td><td>uuid</td><td>Живёт от первого визита (<a href="#s7">§ 07</a>)</td></tr>
         <tr><td><code>lead_id</code></td><td>uuid · null</td><td>Проставляется после ключа №1, ретроспективно склеивается с сессией</td></tr>
         <tr><td><code>event_name</code></td><td>string</td><td>Из таблицы выше</td></tr>
         <tr><td><code>occurred_at</code></td><td>timestamptz</td><td>Время события у клиента</td></tr>
@@ -484,345 +754,847 @@ table{border-collapse:collapse}
     </table>
     </div>
 
-    <div class="note">
-      <h4>Требования к надёжности</h4>
-      <ul>
-        <li>Отправка через <code>navigator.sendBeacon</code> с фолбэком на <code>fetch(keepalive)</code> — событие не должно теряться при закрытии вкладки.</li>
-        <li>Очередь в <code>localStorage</code> с повтором отправки: пользователь мог уйти в оффлайн посреди квиза.</li>
-        <li>Дедупликация по <code>event_id</code> на приёме.</li>
-        <li>Ключевые события (№1 и №2) <strong>никогда</strong> не считаются с фронта — только серверная запись.</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- 06 -->
-  <section id="s6">
-    <div class="sec-head"><div class="sec-num">§ 06</div><h2>Идентификация и склейка источника</h2></div>
-    <p>Задача: провести UTM с лендинга через SPA-квиз до оплаты, не потеряв по дороге.</p>
-    <ol>
-      <li>На первом визите лендинга генерируется <code>session_id</code> (uuid v4).</li>
-      <li>Он кладётся в <strong>first-party cookie</strong> <code>cs_sid</code> (срок 180 дней, <code>SameSite=Lax</code>, <code>Secure</code>) <em>и</em> в <code>localStorage</code>. Cookie — основной носитель, localStorage — страховка.</li>
-      <li>Туда же пишется объект атрибуции: <code>first_touch</code> (не перезаписывается никогда) и <code>last_touch</code> (обновляется при каждом заходе с непустыми UTM).</li>
-      <li>Квиз <strong>каждый</strong> свой запрос к бэкенду сопровождает <code>session_id</code>. Это и есть замена «меток в URL», о которой шла речь.</li>
-      <li>При срабатывании ключа №1 создаётся <code>lead_id</code>, и все прошлые события этой сессии проставляются задним числом (<code>UPDATE funnel_events SET lead_id … WHERE session_id = …</code>).</li>
-      <li>При оплате <code>lead_id</code> связывается с <code>user_id</code> личного кабинета — это точка входа для будущего LTV и PPL.</li>
-    </ol>
-    <p>Что фиксируем в UTM: <code>utm_source, utm_medium, utm_campaign, utm_content, utm_term</code>, плюс клик-идентификаторы <code>fbclid</code>, <code>gclid</code>, <code>ttclid</code> — они нужны для сверки с рекламными кабинетами.</p>
-    <div class="note warn">
-      <h4>Обязательная проверка перед разработкой отчётов</h4>
-      <p>До начала работы над UI нужно совместно с фронтендом квиза убедиться, что <code>session_id</code> реально доезжает до бэкенда на каждом шаге и не теряется при переходе лендинг → квиз (разные домены/поддомены, iframe, редиректы). Это блокирующая проверка: без неё вся дальнейшая аналитика — мусор.</p>
-    </div>
+    <h3>Надёжность</h3>
+    <ul>
+      <li>Отправка через <code>navigator.sendBeacon</code> с фолбэком на <code>fetch(keepalive)</code>: событие не должно теряться при закрытии вкладки. <span class="tag src">v6 §5</span></li>
+      <li>Очередь в <code>localStorage</code> с повтором отправки: пользователь мог уйти в оффлайн посреди квиза. <span class="tag src">v6 §5</span></li>
+      <li>Дедупликация по <code>event_id</code> на приёме; повторный вебхук об одном платеже не создаёт второй платёж (дедупликация по <code>provider_ref</code>). <span class="tag src">v6 §5</span> <span class="tag prop">Предл.</span></li>
+      <li>Ключевые события (№1, №2, возвраты, продления) <strong>никогда</strong> не считаются с фронта — только серверная запись. <span class="tag src">v6 §5</span></li>
+    </ul>
   </section>
 
   <!-- 07 -->
   <section id="s7">
-    <div class="sec-head"><div class="sec-num">§ 07</div><h2>Модель данных</h2></div>
-    <div class="tw">
-    <table>
-      <thead><tr><th>Таблица</th><th>Ключевые поля</th><th>Зачем</th></tr></thead>
-      <tbody>
-        <tr>
-          <td><code>ad_spend</code></td>
-          <td><code>date, source, campaign, adset, ad, spend, currency, clicks, impressions, marketer_id</code></td>
-          <td>Расход. Ключ склейки с воронкой — нормализованный <code>utm_campaign</code></td>
-        </tr>
-        <tr>
-          <td><code>sessions</code></td>
-          <td><code>session_id, first_touch jsonb, last_touch jsonb, landing_url, started_at, device, geo</code></td>
-          <td>Анонимный верх воронки</td>
-        </tr>
-        <tr>
-          <td><code>funnel_events</code></td>
-          <td><code>event_id, session_id, lead_id, event_name, step_index, step_key, occurred_at, payload</code></td>
-          <td>Сырьё для всей воронки. Партиционировать по дате</td>
-        </tr>
-        <tr>
-          <td><code>leads</code></td>
-          <td><code>lead_id, session_id, user_id, phone, email, name, status, utm jsonb, marketer_id, registered_at, last_step_index, dropped_at</code></td>
-          <td>Карточка лида в CRM</td>
-        </tr>
-        <tr>
-          <td><code>payments</code></td>
-          <td><code>payment_id, lead_id, user_id, tariff_code, amount, currency, paid_at, provider_ref, attribution_channel, manager_id, is_renewal</code></td>
-          <td>Деньги. <code>attribution_channel ∈ {auto, call_center}</code></td>
-        </tr>
-        <tr>
-          <td><code>callcenter_tasks</code></td>
-          <td><code>task_id, lead_id, manager_id, assigned_at, first_contact_at, attempts, last_call_at, call_result, status, closed_at, result_payment_id</code></td>
-          <td>Работа с отвалами и её результат</td>
-        </tr>
-        <tr>
-          <td><code>call_attempts</code></td>
-          <td><code>attempt_id, task_id, manager_id, started_at, duration_sec, outcome, recording_url</code></td>
-          <td>Каждая попытка звонка отдельно — иначе не посчитать дозвон</td>
-        </tr>
-        <tr>
-          <td><code>tariffs</code></td>
-          <td><code>tariff_code, title, price, currency, is_active, valid_from</code></td>
-          <td>Справочник с историей цен: старые оплаты не должны переоцениваться</td>
-        </tr>
-        <tr>
-          <td><code>fx_rates</code></td>
-          <td><code>date, base, quote, rate</code></td>
-          <td>Курс НБУ: расход в USD, выручка в UAH</td>
-        </tr>
-        <tr>
-          <td><code>campaign_owners</code></td>
-          <td><code>campaign_pattern, marketer_id, valid_from, valid_to</code></td>
-          <td>Автозакрепление маркетолога за лидом по UTM</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="sec-head"><div class="sec-num">§ 07</div><h2>Идентификация и склейка источника</h2></div>
+    <p>Задача — провести UTM с лендинга через SPA-квиз до оплаты и дальше до продлений, не потеряв по дороге. <span class="tag src">v6 §6</span> <span class="tag src">Доп.</span></p>
+    <ol>
+      <li>На первом визите лендинга генерируется <code>session_id</code> (uuid v4).</li>
+      <li>Он кладётся в first-party cookie <code>cs_sid</code> (180 дней, <code>SameSite=Lax</code>, <code>Secure</code>) и в <code>localStorage</code>. Cookie — основной носитель, localStorage — страховка.</li>
+      <li>Туда же пишется объект атрибуции: <code>first_touch</code> (не перезаписывается никогда) и <code>last_touch</code> (обновляется при каждом заходе с непустыми UTM).</li>
+      <li>Квиз <strong>каждый</strong> свой запрос к бэкенду сопровождает <code>session_id</code>. Это замена «меткам в URL».</li>
+      <li>При ключе №1 создаётся <code>lead_id</code>, и все прошлые события сессии проставляются задним числом (<code>UPDATE funnel_events SET lead_id … WHERE session_id = …</code>).</li>
+      <li>При оплате <code>lead_id</code> связывается с <code>user_id</code> личного кабинета — точка входа для подписок, продлений, LTV и PPL.</li>
+    </ol>
+
+    <h3>Что фиксируем в атрибуции</h3>
+    <ul>
+      <li>UTM: <code>utm_source, utm_medium, utm_campaign, utm_content, utm_term</code>. <span class="tag src">GD §20</span> <span class="tag src">v6 §6</span></li>
+      <li>Идентификаторы рекламных систем, когда доступны: <code>campaign_id, adset_id, ad_id, placement</code>, клик-идентификаторы <code>gclid, fbclid, ttclid</code> и другие — для сверки с кабинетами. <span class="tag src">GD §20</span> <span class="tag src">v6 §6</span></li>
+      <li>Страна <code>utm_country</code> для фильтра по GEO. <span class="tag src">TZ-1 §1.5</span></li>
+      <li>UTM не перезаписываются; для каждого лида хранятся первичные attribution data. <span class="tag src">GD §20</span></li>
+    </ul>
+
+    <div class="note warn">
+      <h4>Блокирующая проверка перед разработкой отчётов</h4>
+      <p>Совместно с фронтендом квиза убедиться, что <code>session_id</code> реально доезжает до бэкенда на каждом шаге и не теряется при переходе лендинг → квиз (разные домены / поддомены, iframe, редиректы). Без этого вся аналитика — мусор. <span class="tag src">v6 §6</span></p>
     </div>
-    <h4>Задел под вторую очередь</h4>
-    <p><code>payments.is_renewal</code> и связь <code>lead_id → user_id</code> уже позволяют посчитать повторные списания и LTV по источнику, когда до этого дойдут руки. Отдельная таблица <code>ppl_transactions</code> добавляется тем же ключом <code>user_id</code>.</p>
-    <h4>Витрина</h4>
-    <p>Отчёты строятся не по сырым событиям, а по материализованному представлению <code>mv_funnel_daily</code> в разрезе <code>дата × источник × кампания × объявление</code> с обновлением раз в 15 минут. Иначе вкладка будет открываться минутами.</p>
   </section>
 
   <!-- 08 -->
   <section id="s8">
-    <div class="sec-head"><div class="sec-num">§ 08</div><h2>Статусы лида</h2></div>
-    <div class="chips">
-      <span class="chip">new</span>
-      <span class="chip">quiz_in_progress</span>
-      <span class="chip">reached_pricing</span>
-      <span class="chip ok">paid_auto</span>
-      <span class="chip bad">dropped</span>
-      <span class="chip cc">cc_queued</span>
-      <span class="chip cc">cc_in_progress</span>
-      <span class="chip ok">paid_by_manager</span>
-      <span class="chip bad">refused</span>
-      <span class="chip bad">unreachable</span>
-      <span class="chip bad">invalid</span>
+    <div class="sec-head"><div class="sec-num">§ 08</div><h2>Модель данных</h2></div>
+
+    <h3>Сущности</h3>
+    <div class="cards">
+      <div class="card"><h4>Marketing</h4><p>GEO, команда, маркетолог, домен, офер, source, кампания, ad set / ad group, креатив, UTM. <span class="tag src">GD §2</span></p></div>
+      <div class="card"><h4>Lead</h4><p>Lead ID, дата и время, источник, UTM, GEO, офер, домен, маркетолог, команда, статус, ответственный менеджер. <span class="tag src">GD §2</span></p></div>
+      <div class="card"><h4>Sales</h4><p>Дозвон, число попыток, контакт установлен / нет, квалификация, статус продажи, клиент, дата продажи. <span class="tag src">GD §2</span></p></div>
+      <div class="card"><h4>Finance</h4><p>Сумма, валюта, дата оплаты, прогнозная и фактическая сумма, расходы, себестоимость, маржа. <span class="tag src">GD §2</span></p></div>
+    </div>
+    <p>Из v6 — таблицы событий, лидов, платежей, задач КЦ, тарифов, курсов, владельцев кампаний. <span class="tag src">v6 §7</span> Дополнение вводит маршруты, подписки, покупателей. <span class="tag src">Доп.</span> <span class="tag prop">Предл.</span></p>
+
+    <h3>Таблицы</h3>
+    <div class="tw wide">
+    <table>
+      <thead><tr><th>Таблица</th><th>Ключевые поля</th><th>Зачем</th><th>Источник</th></tr></thead>
+      <tbody>
+        <tr><td><code>ad_accounts</code></td><td class="mono"><code>account_id, platform, currency, geo, team_id, marketer_id, vat_rate, commission_rate, other_fees</code></td><td>Настройки налога, комиссии и прочих затрат — основа Total Marketing Cost</td><td><span class="tag src">GD §4</span></td></tr>
+        <tr><td><code>ad_spend</code></td><td class="mono"><code>date, account_id, geo, team_id, marketer_id, domain_id, offer_id, source, campaign_id, adset, creative_id, amount_original, currency_original, fx_rate, amount_converted, clicks, impressions, is_manual, import_batch_id</code></td><td>Расход по дням. Ключ склейки с воронкой — нормализованный <code>utm_campaign</code>. <code>is_manual</code> отличает ручной ввод от импорта</td><td><span class="tag src">GD §3</span> <span class="tag src">v6 §7</span> <span class="tag prop">Предл.</span></td></tr>
+        <tr><td><code>campaigns</code></td><td class="mono"><code>campaign_id, name, source, marketer_id, head_id, team_id, utm_country, destination (lawyer / client), offer_id, domain_id, status (active / completed), created_at</code></td><td>Реестр кампаний, аудитория рекламы, статус</td><td><span class="tag src">TZ-1 §1</span></td></tr>
+        <tr><td><code>campaign_owners</code></td><td class="mono"><code>campaign_pattern, marketer_id, valid_from, valid_to</code></td><td>Автозакрепление маркетолога за лидом по UTM, с историей</td><td><span class="tag src">v6 §7</span></td></tr>
+        <tr><td><code>creatives</code></td><td class="mono"><code>creative_id, campaign_id, adset, name, utm_content</code></td><td>Сравнение креативов</td><td><span class="tag src">GD §21</span></td></tr>
+        <tr><td><code>offers</code>, <code>domains</code></td><td class="mono"><code>offer_id, name</code> · <code>domain_id, host, offer_id</code></td><td>Офер объединяет домены; разные уровни аналитики</td><td><span class="tag src">GD §18</span></td></tr>
+        <tr><td><code>teams</code>, <code>users</code></td><td class="mono"><code>team_id, head_id</code> · <code>user_id, role, team_id</code></td><td>Команды, роли (<a href="#s17">§ 17</a>)</td><td><span class="tag src">GD §2</span> <span class="tag src">TZ-1 §2</span></td></tr>
+        <tr><td><code>sessions</code></td><td class="mono"><code>session_id, first_touch jsonb, last_touch jsonb, landing_url, started_at, device, geo</code></td><td>Анонимный верх воронки</td><td><span class="tag src">v6 §7</span></td></tr>
+        <tr><td><code>funnel_events</code></td><td class="mono"><code>event_id, session_id, lead_id, event_name, step_index, step_key, occurred_at, payload</code></td><td>Сырьё воронки. Партиционировать по дате</td><td><span class="tag src">v6 §7</span></td></tr>
+        <tr><td><code>leads</code></td><td class="mono"><code>lead_id, session_id, user_id, phone, email, name, status, route, utm jsonb, first_touch, last_touch, marketer_id, team_id, geo, offer_id, domain_id, manager_id, registered_at, last_step_index, dropped_at</code></td><td>Карточка лида. <code>route</code> — текущий маршрут, история — в <code>lead_routes</code></td><td><span class="tag src">GD §5</span> <span class="tag src">v6 §7</span> <span class="tag src">Доп.</span></td></tr>
+        <tr><td class="new"><code>lead_routes</code></td><td class="mono"><code>route_id, lead_id, route (sale / call_center), assigned_at, ended_at, reason, assigned_by</code></td><td>История передач лида между направлениями; основа разбивки 70 / 30 без задвоения</td><td><span class="tag src">Доп.</span> <span class="tag prop">Предл.</span></td></tr>
+        <tr><td><code>payments</code></td><td class="mono"><code>payment_id, lead_id, user_id, subscription_id, deal_id, tariff_code, amount_original, currency_original, fx_rate, amount_converted, paid_at, provider_ref, attribution_channel (auto / call_center), manager_id, is_renewal, revenue_type, refunded_amount, refunded_at</code></td><td>Деньги. Один платёж — одна строка</td><td><span class="tag src">GD §23</span> <span class="tag src">v6 §7</span> <span class="tag prop">Предл.</span></td></tr>
+        <tr><td class="new"><code>payment_forecasts</code></td><td class="mono"><code>lead_id, expected_amount, currency, expected_at, basis (promise / model), created_by</code></td><td>Прогноз выручки отдельно от факта</td><td><span class="tag src">GD §13–14</span> <span class="tag prop">Предл.</span></td></tr>
+        <tr><td class="new"><code>subscriptions</code></td><td class="mono"><code>subscription_id, user_id, buyer_type (client / lawyer), lead_id, tariff_code, price, currency, period, started_at, current_period_start, current_period_end, status, cancelled_at, first_payment_id, attribution jsonb</code></td><td>Подписка как отдельная сущность с периодами и статусами (<a href="#s12">§ 12</a>)</td><td><span class="tag src">Доп.</span> <span class="tag prop">Предл.</span></td></tr>
+        <tr><td class="new"><code>deals</code></td><td class="mono"><code>deal_id, lead_id, route, product_type, buyer_user_id, buyer_type, amount, currency, created_at, closed_at, payment_id</code></td><td>Сделка по лиду, если покупатель отличается от лида (продажа лида юристу). Создаётся, если подтвердится вопрос 2 <a href="#s23">§ 23</a></td><td><span class="tag src">Доп.</span> <span class="tag prop">Предл.</span></td></tr>
+        <tr><td><code>callcenter_tasks</code></td><td class="mono"><code>task_id, lead_id, manager_id, assigned_at, first_contact_at, attempts, last_call_at, call_result, status, closed_at, result_payment_id</code></td><td>Работа с отвалами и её результат</td><td><span class="tag src">v6 §7</span></td></tr>
+        <tr><td><code>call_attempts</code></td><td class="mono"><code>attempt_id, task_id, manager_id, started_at, duration_sec, outcome, recording_url</code></td><td>Каждая попытка отдельно — иначе не посчитать дозвон</td><td><span class="tag src">GD §7</span> <span class="tag src">v6 §7</span></td></tr>
+        <tr><td><code>ad_balance_operations</code></td><td class="mono"><code>op_id, occurred_at, user_id, marketer_id, campaign_id, type (spend / topup / cancel), amount, currency, attachment_id, comment, basis, cancelled_op_id, cancelled_by</code></td><td>Рекламный баланс маркетолога и история операций (<a href="#s13">§ 13</a>)</td><td><span class="tag src">TZ-1 §2</span></td></tr>
+        <tr><td><code>attachments</code></td><td class="mono"><code>attachment_id, file_url, uploaded_by, uploaded_at</code></td><td>Файл-подтверждение хранится, а не только его имя</td><td><span class="tag src">TZ-1 §2.3</span> <span class="tag prop">Предл.</span></td></tr>
+        <tr><td><code>tariffs</code></td><td class="mono"><code>tariff_code, title, price, currency, period, buyer_type, is_active, valid_from, valid_to</code></td><td>Справочник с историей цен</td><td><span class="tag src">v6 §7</span></td></tr>
+        <tr><td><code>fx_rates</code></td><td class="mono"><code>date, base, quote, rate</code></td><td>Курс НБУ на дату операции</td><td><span class="tag src">GD §23</span> <span class="tag src">v6 §7</span></td></tr>
+        <tr><td><code>call_outcomes</code>, <code>settings</code></td><td>справочники</td><td>Исходы звонков, окна ожидания и атрибуции, правила распределения, пороги рекомендаций</td><td><span class="tag src">v6 §8</span> <span class="tag src">README</span></td></tr>
+      </tbody>
+    </table>
     </div>
 
-    <div class="flow">
-      <div class="node">new</div><div class="arrow">→</div>
-      <div class="node">quiz_in_progress</div><div class="arrow">→</div>
-      <div class="node">reached_pricing</div><div class="arrow">→</div>
-      <div class="node key">paid_auto</div>
-    </div>
-    <div class="flow">
-      <div class="arrow" style="padding-left:2px">└ нет оплаты за N часов →</div>
-      <div class="node lost">dropped</div><div class="arrow">→</div>
-      <div class="node cc">cc_queued</div><div class="arrow">→</div>
-      <div class="node cc">cc_in_progress</div><div class="arrow">→</div>
-      <div class="node key">paid_by_manager</div>
-      <div class="arrow">/</div>
-      <div class="node lost">refused · unreachable · invalid</div>
-    </div>
+    <h3>Витрины</h3>
+    <p>Отчёты строятся не по сырым событиям, а по материализованным представлениям <code>mv_funnel_daily</code> (дата × источник × кампания × объявление × маркетолог) и <code>mv_finance_daily</code> (дата × маршрут × канал × тип выручки × тариф) с обновлением раз в 15 минут. <span class="tag src">v6 §7</span> <span class="tag prop">Предл.</span></p>
 
-    <h4>Правила перехода</h4>
-    <ul>
-      <li>В <code>dropped</code> лид уходит автоматически, если оплаты нет через <strong>N часов</strong> после <code>lead_captured</code> (значение выносится в настройку; предложение — 2 часа).</li>
-      <li>Из <code>dropped</code> лид сразу создаёт задачу в <code>callcenter_tasks</code> и переходит в <code>cc_queued</code>. Распределение по менеджерам — по правилу из настроек (равномерно / по источнику / вручную).</li>
-      <li>Оплата в любой момент переводит лид в оплаченный статус и закрывает открытую задачу КЦ с пометкой результата.</li>
-      <li><code>unreachable</code> ставится автоматически после X безуспешных попыток дозвона (предложение — 5 попыток за 7 дней).</li>
-    </ul>
-
-    <h4>Результаты обработки колл-центром</h4>
-    <p>Менеджер обязан закрыть контакт одним из фиксированных исходов — это то, что попадёт в отчёт «как обработали»:</p>
-    <div class="chips">
-      <span class="chip ok">оплатил</span>
-      <span class="chip">взял паузу / думает</span>
-      <span class="chip">перезвонить (с датой)</span>
-      <span class="chip bad">отказ — дорого</span>
-      <span class="chip bad">отказ — не актуально</span>
-      <span class="chip bad">нецелевой</span>
-      <span class="chip bad">неверный номер</span>
-      <span class="chip bad">не дозвонились</span>
-    </div>
-    <p>Список исходов — справочник в админке, а не константы в коде: он точно будет меняться.</p>
+    <h3>Задел под вторую очередь</h3>
+    <p><code>payments.is_renewal</code>, <code>subscriptions</code> и связь <code>lead_id → user_id</code> позволяют посчитать повторные списания и LTV по источнику. Таблица <code>ppl_transactions</code> добавляется тем же ключом <code>user_id</code>. <span class="tag src">v6 §7</span></p>
   </section>
 
   <!-- 09 -->
   <section id="s9">
-    <div class="sec-head"><div class="sec-num">§ 09</div><h2>Правила атрибуции</h2></div>
-    <h3>Канал продажи</h3>
+    <div class="sec-head"><div class="sec-num">§ 09</div><h2>Статусы и маршруты лида</h2></div>
+    <h3>Единый список статусов</h3>
+    <p>Статусы v6 описывают самостоятельный путь через квиз и путь через колл-центр; воронка Google Docs описывает работу менеджера с лидом. Ниже — объединённый список; добавленные статусы отмечены. <span class="tag src">GD §6</span> <span class="tag src">v6 §8</span> <span class="tag prop">Предл.</span></p>
+    <div class="chips">
+      <span class="chip">new</span><span class="chip">quiz_in_progress</span><span class="chip">reached_pricing</span><span class="chip ok">paid_auto</span>
+      <span class="chip bad">dropped</span><span class="chip cc">cc_queued</span><span class="chip cc">cc_in_progress</span><span class="chip cc new">cc_contacted</span><span class="chip ok">paid_by_manager</span>
+      <span class="chip bad">refused</span><span class="chip bad">unreachable</span><span class="chip bad">invalid</span><span class="chip bad new">duplicate</span><span class="chip new">closed</span>
+    </div>
+    <div class="tw">
+    <table>
+      <thead><tr><th>Статус</th><th>Значение</th><th>Соответствие GD §6</th></tr></thead>
+      <tbody>
+        <tr><td><code>new</code></td><td>Лид создан (ключ №1)</td><td>New Lead</td></tr>
+        <tr><td><code>quiz_in_progress</code></td><td>Проходит квиз после захвата контакта</td><td>—</td></tr>
+        <tr><td><code>reached_pricing</code></td><td>Дошёл до экрана тарифов</td><td>—</td></tr>
+        <tr><td><code>paid_auto</code></td><td>Оплатил сам</td><td>Client → Paid</td></tr>
+        <tr><td><code>dropped</code></td><td>Нет оплаты за N часов — отвал</td><td>Втрачений (до передачи)</td></tr>
+        <tr><td><code>cc_queued</code></td><td>Задача КЦ создана, ждёт менеджера</td><td>In Work</td></tr>
+        <tr><td><code>cc_in_progress</code></td><td>Менеджер взял в работу, идут попытки</td><td>Contact Attempt</td></tr>
+        <tr><td class="new"><code>cc_contacted</code> <span class="tag prop">Предл.</span></td><td>Первый результативный контакт состоялся</td><td>Contacted / Дозвон, Qualified, Potential Client</td></tr>
+        <tr><td><code>paid_by_manager</code></td><td>Оплата после контакта КЦ</td><td>Client → Paid</td></tr>
+        <tr><td><code>refused</code></td><td>Отказ (исход «дорого» / «не актуально»)</td><td>Відмова</td></tr>
+        <tr><td><code>unreachable</code></td><td>X безуспешных попыток</td><td>Не відповідає</td></tr>
+        <tr><td><code>invalid</code></td><td>Неверный номер, нецелевой</td><td>Неправильний номер, нецільовий</td></tr>
+        <tr><td class="new"><code>duplicate</code> <span class="tag prop">Предл.</span></td><td>Дубль другого лида; исключается из базы CPL и конверсий</td><td>Дубль</td></tr>
+        <tr><td class="new"><code>closed</code> <span class="tag prop">Предл.</span></td><td>Терминальное закрытие после оплаты или отказа (<code>closed_at</code>)</td><td>Closed</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p>Возврат в работу («повернення в роботу», GD §6) — не отдельный статус, а повторный переход <code>refused / unreachable → cc_queued</code> с сохранением истории. <span class="tag prop">Предл.</span></p>
+
+    <h3>Переходы</h3>
+    <div class="flow stack">
+      <div class="branch" style="border:0;padding-left:0;margin-left:0">
+        <div class="node">new</div><div class="arrow">→</div><div class="node">quiz_in_progress</div><div class="arrow">→</div><div class="node">reached_pricing</div><div class="arrow">→</div><div class="node key">paid_auto</div>
+      </div>
+      <div class="branch">
+        <div class="arrow">нет оплаты за N часов →</div><div class="node lost">dropped</div><div class="arrow">→</div><div class="node cc">cc_queued</div><div class="arrow">→</div><div class="node cc">cc_in_progress</div><div class="arrow">→</div><div class="node cc">cc_contacted</div><div class="arrow">→</div><div class="node key">paid_by_manager</div><div class="arrow">/</div><div class="node lost">refused · unreachable · invalid</div>
+      </div>
+    </div>
     <ul>
-      <li>Оплата, произошедшая <strong>до</strong> первого результативного контакта колл-центра (или при отсутствии задачи КЦ), — <code>attribution_channel = auto</code>.</li>
-      <li>Оплата <strong>после</strong> первого результативного контакта и в пределах окна атрибуции — <code>attribution_channel = call_center</code>, с проставлением <code>manager_id</code>.</li>
-      <li>Окно атрибуции КЦ — настраиваемое, предложение по умолчанию: <strong>14 дней</strong> с последнего результативного контакта.</li>
-      <li>Выручка не задваивается: <code>Выручка = Выручка_auto + Выручка_call_center</code>. Это должно проверяться тестом.</li>
+      <li>В <code>dropped</code> лид уходит автоматически, если оплаты нет через <strong>N часов</strong> после <code>lead_captured</code>; значение — настройка, предложение 2 часа. <span class="tag src">v6 §8</span> <span class="tag conf">Подтвердить</span></li>
+      <li>Из <code>dropped</code> сразу создаётся задача в <code>callcenter_tasks</code>, лид переходит в <code>cc_queued</code>. Распределение по менеджерам — по правилу из настроек (равномерно / по источнику / вручную). <span class="tag src">v6 §8</span></li>
+      <li>Оплата в любой момент переводит лид в оплаченный статус и закрывает открытую задачу КЦ с пометкой результата. <span class="tag src">v6 §8</span></li>
+      <li><code>unreachable</code> ставится автоматически после X безуспешных попыток (предложение — 5 попыток за 7 дней). <span class="tag src">v6 §8</span> <span class="tag conf">Подтвердить</span></li>
+      <li>Смена статуса пишется в историю с датой и автором; отчёт по дате создания лида не меняется от последующих переходов. <span class="tag prop">Предл.</span></li>
     </ul>
-    <h3>Маркетолог</h3>
-    <p>Маркетолог закрепляется за лидом <strong>всегда</strong> — независимо от того, кто закрыл продажу. Он не «теряет» лид при передаче в колл-центр: в его отчёте лид виден как приведённый, но продажа отнесена к каналу КЦ. Так видно и качество трафика, и вклад дожима.</p>
-    <h3>Модель касаний</h3>
-    <p>Хранятся оба касания. По умолчанию отчёты строятся по <strong>last non-direct</strong>; переключатель first/last touch — в фильтрах вкладки. Причина: без него будут вечные споры, чья это была продажа.</p>
-    <h3>Валюта</h3>
-    <p>Расход приходит в USD, выручка — в UAH. Хранить обе величины в исходной валюте, а в отчёт приводить по курсу НБУ на дату операции из <code>fx_rates</code>. Переключатель валюты отображения — в шапке вкладки.</p>
+
+    <h3>Маршруты лида</h3>
+    <p>Заказчик просит показывать: всего лидов, лиды «на продаж», лиды в колл-центр, деньги по каждому направлению и общую сумму. <span class="tag src">Доп.</span></p>
+    <div class="split">
+      <div class="card gold">
+        <h4>Маршрут <code>sale</code> — «на продаж»</h4>
+        <p>Лид остаётся в контуре продаж: самостоятельная покупка тарифа через квиз либо, если подтвердится (<a href="#s23">§ 23</a>, вопрос 2), продажа лида юристу через <code>deals</code>. <span class="tag src">Доп.</span> <span class="tag prop">Предл.</span></p>
+      </div>
+      <div class="card gold">
+        <h4>Маршрут <code>call_center</code></h4>
+        <p>Лид передан на дожим — автоматически из <code>dropped</code> или вручную. <span class="tag src">v6 §8</span> <span class="tag src">Доп.</span></p>
+      </div>
+    </div>
+    <ul>
+      <li>Маршрут фиксируется при захвате контакта и при каждой передаче; история — в <code>lead_routes</code>. <span class="tag prop">Предл.</span></li>
+      <li>Для аддитивной разбивки (70 + 30 = 100) по умолчанию используется <strong>первоначальный маршрут</strong> лида; переключатель «текущий маршрут на конец периода» — в фильтрах. Показатели «когда-либо был в КЦ» и «когда-либо был на продаже» могут пересекаться и не складываются. <span class="tag prop">Предл.</span></li>
+      <li>Переход между маршрутами не увеличивает число уникальных лидов и не переносит уже проведённые платежи. <span class="tag prop">Предл.</span></li>
+    </ul>
+    <div class="note">
+      <h4>Маршрут ≠ канал</h4>
+      <p>Маршрут отвечает, <strong>куда направили лида</strong>; канал продажи (<a href="#s11">§ 11</a>) отвечает, <strong>кто закрыл конкретный платёж</strong>. Лид на маршруте <code>call_center</code>, оплативший до первого контакта, даёт платёж с каналом <code>auto</code>. Обе разбивки сходятся к одному итогу выручки. <span class="tag prop">Предл.</span></p>
+    </div>
   </section>
 
   <!-- 10 -->
   <section id="s10">
-    <div class="sec-head"><div class="sec-num">§ 10</div><h2>Экран в CRM</h2></div>
-    <p>Одна вкладка, семь блоков сверху вниз: от общей цифры к детализации. Всё подчиняется единой панели фильтров.</p>
+    <div class="sec-head"><div class="sec-num">§ 10</div><h2>Колл-центр и дозвон</h2></div>
+    <h3>Что считаем</h3>
+    <p>Общее число лидов; лиды в работе; число попыток дозвона; лиды, по которым был дозвон; контактированные; недозвоны; Contact Rate. <span class="tag src">GD §7</span></p>
+    <ul class="formulas">
+      <li><b>Contact Rate (общий)</b><span>контактированные лиды / все лиды × 100% <span class="tag src">GD §7</span></span></li>
+      <li><b>Покрытие КЦ</b><span>лиды с состоявшимся контактом / переданные в КЦ <span class="tag src">v6 §11</span></span></li>
+      <li><b>Конверсия дожима</b><span>оплаты КЦ / переданные в КЦ <span class="tag src">v6 §11</span></span></li>
+    </ul>
+    <p>Это три разных знаменателя; на экране показываются под своими названиями. <span class="tag prop">Предл.</span></p>
 
-    <div class="wire" role="img" aria-label="Схема расположения блоков вкладки">
-      <div class="wbar">Фильтры: период · источник · кампания · объявление · маркетолог · тариф · менеджер КЦ · модель атрибуции · валюта</div>
-      <div class="wgrid">
-        <div class="wbox"><b>Расход</b><small>$100 · CPC $0,10</small></div>
-        <div class="wbox"><b>Лиды</b><small>200 · CPL $0,50</small></div>
-        <div class="wbox"><b>Продажи</b><small>17 · CAC $5,88</small></div>
-        <div class="wbox"><b>Выручка</b><small>₴7 800 + КЦ</small></div>
-        <div class="wbox"><b>ROMI</b><small>+94%</small></div>
-      </div>
-      <div class="wbox" style="min-height:96px"><b>Воронка по шагам</b><small>1000 → 900 → 500 → 200 → …20 экранов квиза… → 100 → 5<br>с абсолютом, конверсией шага и конверсией от верха</small></div>
-      <div class="wgrid">
-        <div class="wbox"><b>Авто-продажи</b><small>кол-во · сумма · средний чек · доля</small></div>
-        <div class="wbox"><b>Продажи колл-центра</b><small>кол-во · сумма · средний чек · доля</small></div>
-      </div>
-      <div class="wbox"><b>Тарифы</b><small>Base / Pro / Premium — штуки, сумма, доля, раздельно по каналам</small></div>
-      <div class="wbox" style="min-height:88px"><b>Обработка отвалов колл-центром</b><small>отвалов · передано · взято в работу · дозвон % · исходы по типам · продажи · выручка · разрез по менеджерам и источникам</small></div>
-      <div class="wbox" style="min-height:80px"><b>Таблица кампаний</b><small>строка = кампания: расход · лиды · CPL · продажи авто · продажи КЦ · выручка · ROMI · маркетолог</small></div>
-      <div class="wbox"><b>Детализация лидов</b><small>drill-down из любой цифры · экспорт CSV</small></div>
+    <h3>Задачи и попытки</h3>
+    <p>Каждый отвал создаёт задачу <code>callcenter_tasks</code>; каждая попытка звонка — строку <code>call_attempts</code> с исходом и длительностью. Телефония на старте отсутствует: факт и исход звонка ставит менеджер вручную, интеграция — вторая очередь. <span class="tag src">v6 §7</span> <span class="tag src">v6 §12</span></p>
+
+    <h3>Исходы обработки</h3>
+    <p>Менеджер обязан закрыть контакт одним из фиксированных исходов — это попадёт в отчёт «как обработали». Список — справочник в админке, а не константы в коде. <span class="tag src">v6 §8</span></p>
+    <div class="chips">
+      <span class="chip ok">оплатил</span><span class="chip">взял паузу / думает</span><span class="chip">перезвонить (с датой)</span><span class="chip bad">отказ — дорого</span><span class="chip bad">отказ — не актуально</span><span class="chip bad">нецелевой</span><span class="chip bad">неверный номер</span><span class="chip">не дозвонились</span>
     </div>
 
-    <h3>Требования к поведению</h3>
-    <ul>
-      <li><strong>Любая цифра кликабельна</strong> и раскрывается в список лидов, которые за ней стоят. Без этого отчёту не будут верить.</li>
-      <li>Сравнение с предыдущим периодом — дельта в процентах рядом с каждой метрикой сводки.</li>
-      <li>Экспорт в CSV на каждом блоке.</li>
-      <li>Роли: маркетолог видит только свои кампании; руководитель и владелец — всё; супервайзер КЦ — блок отвалов целиком.</li>
-      <li>Состояния пустых данных и загрузки прорисованы явно; «0» и «нет данных» — визуально разные вещи.</li>
-      <li>Отчёт за период до 90 дней открывается менее чем за 3 секунды.</li>
-    </ul>
+    <h3>Отложенная конверсия</h3>
+    <p>Колл-центр может привести к оплате спустя неделю и в следующем месяце. Платёж остаётся связан с исходным лидом, кампанией и маркетологом; окно атрибуции КЦ и правила поздней оплаты — <a href="#s11">§ 11</a>. <span class="tag src">Доп.</span> <span class="tag src">v6 §9</span></p>
   </section>
 
   <!-- 11 -->
   <section id="s11">
-    <div class="sec-head"><div class="sec-num">§ 11</div><h2>Метрики и формулы</h2></div>
-    <ul class="formulas">
-      <li><b>CPC</b><span>расход / клики</span></li>
-      <li><b>CPL</b><span>расход / лиды (lead_captured)</span></li>
-      <li><b>CR лендинг→рег</b><span>клики по «Регистрация» / визиты</span></li>
-      <li><b>CR рег→лид</b><span>лиды / клики по «Регистрация»</span></li>
-      <li><b>CR шага квиза</b><span>submit(step N) / view(step N)</span></li>
-      <li><b>CR лид→оплата</b><span>оплаты (все каналы) / лиды</span></li>
-      <li><b>Доля отвалов</b><span>dropped / лиды</span></li>
-      <li><b>Покрытие КЦ</b><span>лиды с состоявшимся контактом / передано в КЦ</span></li>
-      <li><b>Конверсия дожима</b><span>оплаты КЦ / передано в КЦ</span></li>
-      <li><b>CAC</b><span>расход / оплаты (все каналы)</span></li>
-      <li><b>ARPPU</b><span>выручка / кол-во оплат</span></li>
-      <li><b>ROAS</b><span>выручка / расход</span></li>
-      <li><b>ROMI</b><span>(выручка − расход) / расход × 100%</span></li>
-      <li><b>LTV <em>(2-я очередь)</em></b><span>выручка по user_id за всё время, включая продления и PPL</span></li>
+    <div class="sec-head"><div class="sec-num">§ 11</div><h2>Атрибуция</h2></div>
+    <h3>Канал продажи</h3>
+    <ul>
+      <li>Оплата <strong>до</strong> первого результативного контакта КЦ (или при отсутствии задачи КЦ) — <code>attribution_channel = auto</code>. <span class="tag src">v6 §9</span></li>
+      <li>Оплата <strong>после</strong> первого результативного контакта и в пределах окна атрибуции — <code>attribution_channel = call_center</code>, с <code>manager_id</code>. <span class="tag src">v6 §9</span></li>
+      <li>Окно атрибуции КЦ — настройка; предложение по умолчанию <strong>14 дней</strong> с последнего результативного контакта. <span class="tag src">v6 §9</span> <span class="tag conf">Подтвердить</span></li>
+      <li>Выручка = Выручка<sub>auto</sub> + Выручка<sub>call_center</sub>; проверяется тестом. <span class="tag src">v6 §9</span></li>
     </ul>
-    <div class="note">
-      <h4>Контрольный пример из обсуждения</h4>
-      <p>Расход $100 → 200 лидов → <strong>CPL $0,50</strong>. Пять авто-оплат: 2 × Base ₴400 = ₴800, 2 × Pro ₴1 500 = ₴3 000, 1 × Premium ₴4 000 = ₴4 000. <strong>Итого ₴7 800.</strong> Отчёт обязан воспроизвести эти числа один в один на тестовых данных.</p>
-      <p style="color:var(--ink-3);font-size:.86rem">Названия и цены тарифов зафиксированы со слуха — подтвердить перед разработкой (§15, вопрос 6).</p>
+
+    <h3>Пограничные случаи</h3>
+    <p>Источники не определяют эти правила; ниже — предложения. <span class="tag prop">Предл.</span> <span class="tag conf">Подтвердить</span></p>
+    <div class="tw">
+    <table>
+      <thead><tr><th>Случай</th><th>Предлагаемое правило</th></tr></thead>
+      <tbody>
+        <tr><td>Оплата после истечения окна атрибуции, новых контактов не было</td><td><code>auto</code>; задача КЦ закрывается с исходом «оплатил после окна» для статистики</td></tr>
+        <tr><td>Контакт и оплата в один момент (в пределах минут)</td><td>Считать по времени вебхука: если контакт зафиксирован раньше — <code>call_center</code></td></tr>
+        <tr><td>Возврат платежа</td><td>Отдельная запись <code>payment_refunded</code>; уменьшает выручку периода возврата, канал и маршрут наследуются от исходного платежа; новых лидов и покупателей не создаёт</td></tr>
+        <tr><td>Продление подписки</td><td><code>is_renewal = true</code>; канал <code>auto</code>, если в окне атрибуции перед продлением не было результативного контакта КЦ по этой подписке; иначе <code>call_center</code> («дожим продления»)</td></tr>
+        <tr><td>Лид переведён в КЦ вручную до истечения N часов</td><td>Маршрут <code>call_center</code> с <code>reason = manual</code>; канал платежа — по общему правилу</td></tr>
+      </tbody>
+    </table>
     </div>
+
+    <h3>Маркетолог</h3>
+    <p>Маркетолог закрепляется за лидом <strong>всегда</strong>, независимо от того, кто закрыл продажу. В его отчёте лид виден как приведённый, а продажа отнесена к каналу КЦ: видно и качество трафика, и вклад дожима. <span class="tag src">v6 §9</span></p>
+
+    <h3>Модель касаний</h3>
+    <p>Хранятся оба касания. По умолчанию отчёты строятся по <strong>last non-direct</strong>; переключатель first / last touch — в фильтрах. Первичные UTM не перезаписываются (GD §20) — совместимо: <code>first_touch</code> хранится вечно, <code>last_touch</code> ведётся отдельно. <span class="tag src">v6 §9</span> <span class="tag src">GD §20</span> <span class="tag conf">Подтвердить</span></p>
+
+    <h3>Валюта</h3>
+    <p>Расход приходит в USD, выручка — в UAH. Обе величины хранятся в исходной валюте; в отчёт приводятся по курсу НБУ на дату операции из <code>fx_rates</code>. Переключатель валюты отображения — в шапке (UAH / USD / EUR / PLN / AED). <span class="tag src">v6 §9</span> <span class="tag src">GD §23</span></p>
   </section>
 
   <!-- 12 -->
   <section id="s12">
-    <div class="sec-head"><div class="sec-num">§ 12</div><h2>Интеграции</h2></div>
+    <div class="sec-head"><div class="sec-num">§ 12</div><h2>Подписки</h2></div>
+    <div class="note q">
+      <h4>Требование заказчика</h4>
+      <p>«Также мне нужно считать подписки клиента»; в транскрибации — «підписку юристів». Кто покупатель, за что и как часто платит, один это продукт или разные — не определено (<a href="#s23">§ 23</a>, вопросы 1, 3). Модель ниже — предложение, нейтральное к ответу. <span class="tag src">Доп.</span> <span class="tag prop">Предл.</span></p>
+    </div>
+    <h3>Почему поля «подписка: да / нет» недостаточно</h3>
+    <p>Нужны количество действующих подписок на дату, продления, отмены и история денег. Это требует отдельной записи подписки и связи каждого платежа с ней. <span class="tag prop">Предл.</span></p>
+
+    <h3>Сущность</h3>
     <div class="tw">
     <table>
-      <thead><tr><th>Система</th><th>Направление</th><th>Что передаётся</th><th>Очередь</th></tr></thead>
+      <thead><tr><th>Что хранить</th><th>Для чего</th></tr></thead>
       <tbody>
-        <tr><td>Лендинг <code>consultant.net.ua</code></td><td>→ CRM</td><td>UTM, <code>page_view</code>, клик CTA, <code>session_id</code></td><td>1</td></tr>
-        <tr><td>Квиз (SPA)</td><td>→ CRM</td><td>События шагов + <code>session_id</code> в каждом запросе</td><td>1</td></tr>
-        <tr><td>Бэкенд квиза</td><td>→ CRM</td><td><strong>Ключ №1</strong>: создание лида с контактами</td><td>1</td></tr>
-        <tr><td>Платёжный провайдер</td><td>→ CRM</td><td><strong>Ключ №2</strong>: вебхук об оплате, тариф, сумма</td><td>1</td></tr>
-        <tr><td>Meta Ads / Google Ads</td><td>→ CRM</td><td>Расход, клики, показы по кампаниям</td><td>2 — на старте ручной ввод расхода</td></tr>
-        <tr><td>Телефония КЦ</td><td>→ CRM</td><td>Факт и длительность звонка, запись</td><td>2 — на старте исход ставит менеджер вручную</td></tr>
-        <tr><td>Личный кабинет</td><td>→ CRM</td><td>Продления, PPL, повторные покупки</td><td>3</td></tr>
+        <tr><td>ID подписки, <code>user_id</code>, тип покупателя (<code>client</code> / <code>lawyer</code>)</td><td>Различать человека, юриста и конкретную подписку</td></tr>
+        <tr><td>Тариф, согласованная цена, валюта, период (месяц / год / другой)</td><td>Что куплено и на какой срок</td></tr>
+        <tr><td>Начало, начало и конец текущего оплаченного периода, статус, дата отмены</td><td>Считать действующие, завершённые и отменённые</td></tr>
+        <tr><td>Ссылка на первый платёж; платежи продления через <code>payments.subscription_id</code></td><td>Разделять первую покупку и последующие поступления</td></tr>
+        <tr><td>Исходный <code>lead_id</code> и снимок атрибуции (UTM, маркетолог, канал первого платежа)</td><td>Считать результат привлечения и последующую выручку по источнику</td></tr>
+        <tr><td>История изменений тарифа и статуса</td><td>Не переписывать прошлые отчёты текущими условиями</td></tr>
       </tbody>
     </table>
     </div>
-    <p>Ручной ввод расхода на первом этапе — сознательное решение: он не блокирует запуск воронки и позволяет проверить всю логику на реальных цифрах, пока идёт интеграция с кабинетами.</p>
+
+    <h3>Статусы</h3>
+    <div class="flow">
+      <div class="node key">active</div><div class="arrow">→</div><div class="node cc">past_due</div><div class="arrow">→</div><div class="node lost">expired</div><div class="arrow">·</div><div class="node lost">cancelled</div><div class="arrow">·</div><div class="node dim">trial (если есть в продукте)</div>
+    </div>
+    <p><code>past_due</code> — платёж продления не прошёл (<code>payment_failed</code>); <code>expired</code> — период закончился без оплаты; <code>cancelled</code> — отмена по инициативе покупателя или админа, с датой. <span class="tag prop">Предл.</span> <span class="tag conf">Подтвердить</span></p>
+
+    <h3>Показатели</h3>
+    <ul>
+      <li>новые подписки за период (по дате первого платежа);</li>
+      <li>активные подписки на выбранную дату и уникальные активные подписчики — отдельно;</li>
+      <li>подписки, требовавшие продления в периоде; успешные продления; непродления (доля продлений = продлённые / требовавшие продления);</li>
+      <li>отменённые и истёкшие;</li>
+      <li>деньги от первых покупок и от продлений — отдельно;</li>
+      <li>подписочная выручка по источнику, кампании, маркетологу и типу покупателя;</li>
+      <li>накопленная выручка покупателя (LTV) и MRR — вторая очередь, после подтверждения периодичности тарифов. <span class="tag prop">Предл.</span></li>
+    </ul>
+
+    <h3>Правила без двойного учёта</h3>
+    <ul>
+      <li>Выручка от подписок — <strong>срез</strong> общей выручки. Если 100 000 грн уже состоят из оплат подписок, строка «подписки» не добавляет их второй раз.</li>
+      <li>Одна подписка с тремя платежами — одна подписка, три платежа, один покупатель.</li>
+      <li>Продление не создаёт нового покупателя, новой подписки и не повышает конверсию лид → покупатель.</li>
+      <li>Подписка юриста, купленная не через квиз (без лида), учитывается с <code>lead_id = null</code> и источником «прямая продажа / личный кабинет». <span class="tag prop">Предл.</span></li>
+    </ul>
+
+    <h3>Объём первой поставки</h3>
+    <p>Новые подписки, активные на дату, выручка первых платежей и продлений, отмены. MRR, LTV, PPL — вторая очередь. <span class="tag prop">Предл.</span> <span class="tag conf">Подтвердить</span> (<a href="#s23">§ 23</a>, вопрос 3)</p>
   </section>
 
   <!-- 13 -->
   <section id="s13">
-    <div class="sec-head"><div class="sec-num">§ 13</div><h2>Этапы работ</h2></div>
+    <div class="sec-head"><div class="sec-num">§ 13</div><h2>Деньги</h2></div>
+    <h3>Расходы на рекламу</h3>
+    <ul>
+      <li>Целевое состояние: расходы подтягиваются автоматически из Google Ads, Meta Ads, TikTok Ads и других систем, а не вводятся вручную. <span class="tag src">GD §3</span></li>
+      <li>Стартовое состояние: ручной ввод расхода через «Додати витрату» (рекламный баланс ниже); он не блокирует запуск воронки. <span class="tag src">v6 §12</span> <span class="tag src">TZ-1 §2.3</span></li>
+      <li>После подключения API ручные и импортированные строки по одной кампании и дате не суммируются: импорт заменяет ручную запись либо помечает расхождение для сверки. <span class="tag prop">Предл.</span></li>
+      <li>Для каждой строки расхода хранятся дата, рекламный аккаунт, GEO, команда, маркетолог, домен, офер, source, кампания, ad group / ad set, креатив, валюта, сумма. <span class="tag src">GD §3</span></li>
+      <li>Хранятся оригинальная валюта и сумма и отдельно эквивалент: Google Ads — $1 000 USD; эквивалент — 41 200 UAH. <span class="tag src">GD §3</span></li>
+    </ul>
+
+    <h3>Ad Spend и Total Marketing Cost</h3>
+    <p>Для каждого рекламного аккаунта задаются: наличие VAT / ПДВ, ставка налога, комиссия, иные дополнительные затраты. Отсюда два показателя: <strong>Ad Spend</strong> — чистые расходы; <strong>Total Marketing Cost</strong> — реальная стоимость с налогами и комиссиями. База расходов переключается в шапке и влияет на ROMI, CAC, маржу. <span class="tag src">GD §4</span> <span class="tag src">GD §16</span></p>
+    <p><code>Total Marketing Cost = Ad Spend + VAT + комиссия + прочие затраты аккаунта</code> (в валюте аккаунта, до конвертации). <span class="tag prop">Предл.</span></p>
+
+    <h3>Рекламный баланс маркетолога <span class="tag src">TZ-1 §2</span></h3>
+    <ul>
+      <li>Фильтры блока: страна (Україна, Польша, Англія, США, Дубаї), период расходов / начислений, маркетолог, команда (по руководителю). Фильтры располагаются выше блока «Історія балансу».</li>
+      <li>Кнопка «Додати кошти» заменяется на <strong>«Додати витрату»</strong>. Модалка: кампания (список ограничен ролью — <a href="#s17">§ 17</a>), дата, сумма, валюта из имеющихся, <strong>обязательный</strong> файл-подтверждение, комментарий, кнопки «Скасувати» / «Зберегти витрату».</li>
+      <li>Сохранение расхода создаёт строку <code>ad_spend</code> с <code>is_manual = true</code> по выбранной кампании и лог-запись в истории баланса.</li>
+      <li>Пополнение баланса выполняет бухгалтерия с основанием («реінвест / додаткове фінансування»); это не расход и не попадает в Ad Spend. <span class="tag src">TZ-1 §2.5</span> <span class="tag prop">Предл.</span> (<a href="#s22">§ 22</a>, п. 3)</li>
+      <li>Отмена — отмена последней операции руководителя отдела маркетинга или маркетолога; в лог пишется, кто отменил.</li>
+      <li>Баланс подчинённых: маркетолог — только свой; руководитель — свою команду; CMO, бухгалтерия, админ — всех.</li>
+      <li>История баланса: дата и время · пользователь · маркетолог · кампания («-» для пополнения) · тип операции (витрата / поповнення / відміна) с текстом вида «Маркетолог Виверець Злата внесла витрату 12.40 USD по кампанії «Злата | TikTok | UAE»». Подсказки на всех колонках, блок компактный и сворачивается, пагинация по 20 строк.</li>
+      <li>Файл-подтверждение хранится в системе хранения, а не только его имя. <span class="tag prop">Предл.</span></li>
+    </ul>
+
+    <h3>Выручка: факт и прогноз</h3>
+    <ul>
+      <li><strong>Фактическая касса</strong> = реально полученные оплаты по вебхуку. Если клиент обещал $1 000, а заплатил $700: Forecast Revenue = $1 000, Actual Revenue = $700. <span class="tag src">GD §14</span></li>
+      <li><strong>Прогнозная касса</strong> = Leads × прогнозная конверсия × прогнозный средний чек, коэффициенты — из истории соответствующих GEO, офера, канала, кампании, периода; не «лиды × средний чек». Пример: 1 000 лидов × 8% × $500 = $40 000. <span class="tag src">GD §13</span></li>
+      <li>Ожидаемые деньги КЦ до поступления показываются как прогноз, отдельно от факта. <span class="tag src">Доп.</span> <span class="tag prop">Предл.</span></li>
+    </ul>
+
+    <h3>Две оси дат</h3>
+    <p>Заказчик: колл-центр конвертирует «спустя неделю». Нужны два способа смотреть даты — оба уже есть как фильтры «Дата створення ліда» и «Дата оплати» в TZ-1. <span class="tag src">Доп.</span> <span class="tag src">TZ-1 §1</span></p>
+    <div class="split">
+      <div class="card accent">
+        <h4>По дате привлечения (когорта)</h4>
+        <p>Выбраны лиды, созданные в периоде; показаны все деньги, которые они принесли к выбранной дате, включая поздние оплаты КЦ. Это окупаемость привлечения.</p>
+      </div>
+      <div class="card accent">
+        <h4>По дате оплаты (касса)</h4>
+        <p>Показаны поступления того периода, когда они произошли; платёж через неделю остаётся связан с исходным лидом и кампанией.</p>
+      </div>
+    </div>
+    <p>Если неделя пересекает конец месяца, деньги попадают в кассу следующего месяца и одновременно в накопленную выручку когорты прошлого месяца. Это два отчёта об одной операции, а не две операции. Экран подписывает, какая ось выбрана. <span class="tag prop">Предл.</span></p>
+
+    <h3>Прибыль и маржа</h3>
+    <p>Система разделяет: Revenue − Marketing Cost − Cost of Service − прочие затраты = Gross / Contribution Profit; Margin % = Profit / Revenue × 100%. <span class="tag src">GD §17</span></p>
+    <p>Заказчик называет итог «профит» и в примере вычитает только рекламу. Предлагаются три подписанных уровня: <span class="tag src">Доп.</span> <span class="tag prop">Предл.</span> <span class="tag conf">Подтвердить</span></p>
     <div class="tw">
     <table>
-      <thead><tr><th>Этап</th><th>Содержание</th><th>Результат</th></tr></thead>
+      <thead><tr><th>Уровень</th><th>Формула</th><th>Когда показывать</th></tr></thead>
       <tbody>
-        <tr>
-          <td><strong>0. Разметка</strong><br><small>блокирующий</small></td>
-          <td>Совместно с разработчиком квиза: <code>session_id</code>, сквозная передача UTM, события шагов, серверные ключи №1 и №2</td>
-          <td>Данные доезжают и видны в сыром логе <code>funnel_events</code></td>
-        </tr>
-        <tr>
-          <td><strong>1. Данные</strong></td>
-          <td>Схема БД, эндпоинт <code>/api/track</code>, вебхук оплат, витрина <code>mv_funnel_daily</code>, ручной ввод расхода</td>
-          <td>Считается воронка и авто-продажи</td>
-        </tr>
-        <tr>
-          <td><strong>2. Вкладка</strong></td>
-          <td>UI: сводка, воронка по шагам, тарифы, таблица кампаний, drill-down, экспорт, роли</td>
-          <td>Отчёт открывается и сходится с контрольным примером</td>
-        </tr>
-        <tr>
-          <td><strong>3. Колл-центр</strong></td>
-          <td>Автосоздание задач из отвалов, распределение, исходы звонков, блок обработки отвалов, атрибуция КЦ</td>
-          <td>Видно вклад дожима отдельно от авто-продаж</td>
-        </tr>
-        <tr>
-          <td><strong>4. Деньги вдолгую</strong><br><small>2-я очередь</small></td>
-          <td>API рекламных кабинетов, телефония, продления, PPL, LTV по источнику</td>
-          <td>Полная экономика клиента</td>
-        </tr>
+        <tr><td><strong>Результат после рекламы</strong></td><td class="mono">Выручка − Ad Spend</td><td>Всегда; это «профит» из примера заказчика</td></tr>
+        <tr><td><strong>Результат после маркетинга</strong></td><td class="mono">Выручка − Total Marketing Cost</td><td>При включённой базе TMC</td></tr>
+        <tr><td><strong>Contribution Profit</strong></td><td class="mono">Выручка − TMC − себестоимость услуг − затраты КЦ − комиссии платёжной системы − возвраты</td><td>Когда бизнес утвердит состав и источник затрат (<a href="#s23">§ 23</a>, вопрос 4)</td></tr>
       </tbody>
     </table>
     </div>
-    <div class="note warn">
-      <h4>Этап 0 нельзя пропустить</h4>
-      <p>Дизайн вкладки можно рисовать параллельно, но разработку отчётов нет смысла начинать, пока не подтверждено, что квиз реально отдаёт <code>session_id</code> и оба ключа. Иначе получится красивый экран с недостоверными цифрами.</p>
-    </div>
+    <p>Распределение общих затрат между направлениями (реклама 20 000 грн на маршруты 70 / 30) требует явного правила; предложение по умолчанию — пропорционально числу лидов маршрута, с подписью на экране. <span class="tag prop">Предл.</span> <span class="tag conf">Подтвердить</span></p>
+
+    <h3>Валюты</h3>
+    <p>UAH, PLN, AED, EUR, USD. Для каждой транзакции и расхода: Original Amount + Original Currency + Exchange Rate + Converted Amount. Валюта отображения — в шапке; смена не меняет хранимые данные. <span class="tag src">GD §23</span></p>
   </section>
 
   <!-- 14 -->
   <section id="s14">
-    <div class="sec-head"><div class="sec-num">§ 14</div><h2>Критерии приёмки</h2></div>
-    <ol>
-      <li>Тестовый прогон: пользователь проходит путь реклама → лендинг → квиз → оплата, и в отчёте появляется ровно одна оплата с правильным источником, кампанией и маркетологом.</li>
-      <li>Пользователь бросает квиз на 7-м экране — через N часов он в статусе <code>dropped</code>, задача КЦ создана, лид виден в блоке отвалов с указанием шага 7.</li>
-      <li>Менеджер дожимает этот лид до оплаты — продажа попадает в канал <code>call_center</code> с этим менеджером и <strong>не</strong> попадает в авто-продажи.</li>
-      <li>Сумма выручки по каналам равна общей выручке (нет задвоения).</li>
-      <li>Контрольный пример из §11 воспроизводится один в один: CPL $0,50, выручка ₴7 800.</li>
-      <li>Каждая цифра сводки раскрывается в список лидов, и количество строк в списке совпадает с цифрой.</li>
-      <li>Отвал до 3-го вопроса не создаёт лида, но виден в воронке как потеря на соответствующем шаге.</li>
-      <li>Повторная отправка одного события (ретрай) не задваивает данные.</li>
-      <li>Отчёт за 90 дней открывается менее чем за 3 секунды.</li>
-      <li>Маркетолог, зайдя под своей ролью, не видит кампании других маркетологов.</li>
-    </ol>
+    <div class="sec-head"><div class="sec-num">§ 14</div><h2>Метрики и формулы</h2></div>
+    <p>Знаменатели названы явно; лиды со статусом <code>duplicate</code> и <code>invalid</code> исключаются из базы CPL и конверсий (правило — <span class="tag conf">Подтвердить</span>, <a href="#s23">§ 23</a>, вопрос 13). При нулевом знаменателе показывается «нет данных», а не 0.</p>
+
+    <h3>Маркетинг</h3>
+    <div class="tw wide">
+    <table>
+      <thead><tr><th>Метрика</th><th>Формула</th><th>Пример</th><th>Источник</th></tr></thead>
+      <tbody>
+        <tr><td><strong>CPC</strong></td><td class="mono">Ad Spend / клики</td><td class="mono">$100 / 1 000 = $0,10</td><td><span class="tag src">v6 §11</span></td></tr>
+        <tr><td><strong>CPL</strong></td><td class="mono">Ad Spend / лиды (lead_captured)</td><td class="mono">$10 000 / 1 000 = $10 · $100 / 200 = $0,50 · 20 000 грн / 100 = 200 грн</td><td><span class="tag src">GD §10</span> <span class="tag src">v6 §11</span> <span class="tag src">Доп.</span></td></tr>
+        <tr><td><strong>CR лендинг → регистрация</strong></td><td class="mono">клики «Регистрация» / визиты</td><td class="mono">500 / 900 = 56%</td><td><span class="tag src">v6 §11</span></td></tr>
+        <tr><td><strong>CR регистрация → лид</strong></td><td class="mono">лиды / клики «Регистрация»</td><td class="mono">200 / 500 = 40%</td><td><span class="tag src">v6 §11</span></td></tr>
+        <tr><td><strong>CR шага квиза</strong></td><td class="mono">submit (шаг N) / view (шаг N)</td><td>—</td><td><span class="tag src">v6 §11</span></td></tr>
+        <tr><td><strong>Доля отвалов</strong></td><td class="mono">dropped / лиды</td><td class="mono">195 / 200</td><td><span class="tag src">v6 §11</span></td></tr>
+        <tr><td><strong>Contact Rate</strong></td><td class="mono">контактированные / все лиды</td><td>—</td><td><span class="tag src">GD §7</span></td></tr>
+        <tr><td><strong>Покрытие КЦ</strong></td><td class="mono">состоявшиеся контакты / переданные в КЦ</td><td class="mono">140 / 195 = 72%</td><td><span class="tag src">v6 §11</span></td></tr>
+        <tr><td><strong>Конверсия дожима</strong></td><td class="mono">оплаты КЦ / переданные в КЦ</td><td class="mono">12 / 195 = 6,2%</td><td><span class="tag src">v6 §11</span></td></tr>
+        <tr><td><strong>Lead → Contact · Contact → Client · Lead → Client · Lead → Payment</strong></td><td class="mono">контактированные / лиды · клиенты / контактированные · клиенты / лиды · оплаты / лиды</td><td>—</td><td><span class="tag src">GD §8</span></td></tr>
+        <tr><td><strong>CAC</strong></td><td class="mono">Marketing Cost / новые уникальные платящие покупатели периода</td><td class="mono">$10 000 / 100 = $100</td><td><span class="tag src">GD §11</span> <span class="tag prop">Предл.</span> (<a href="#s22">§ 22</a>)</td></tr>
+        <tr><td><strong>Стоимость оплаты</strong></td><td class="mono">Marketing Cost / число оплат</td><td class="mono">$100 / 17 = $5,88</td><td><span class="tag src">v6 §11</span> (там названа CAC) <span class="tag prop">Предл.</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>Продажи и подписки</h3>
+    <div class="tw">
+    <table>
+      <thead><tr><th>Метрика</th><th>Формула</th><th>Источник</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Средний чек (AOV)</strong></td><td class="mono">Actual Revenue / число оплат</td><td><span class="tag src">v6 §11</span> (ARPPU) <span class="tag prop">Предл.</span></td></tr>
+        <tr><td><strong>ARPPU</strong></td><td class="mono">Actual Revenue / уникальные платящие покупатели</td><td><span class="tag src">GD §12</span> (Average Check) <span class="tag prop">Предл.</span></td></tr>
+        <tr><td><strong>Средний чек в разрезе</strong></td><td>по GEO, оферу, маркетологу, source, кампании, креативу, тарифу, каналу, маршруту</td><td><span class="tag src">GD §12</span> <span class="tag src">v6 §10</span></td></tr>
+        <tr><td><strong>Новые подписки</strong></td><td class="mono">подписки с первым платежом в периоде</td><td><span class="tag prop">Предл.</span></td></tr>
+        <tr><td><strong>Активные подписки</strong></td><td class="mono">status = active на дату</td><td><span class="tag prop">Предл.</span></td></tr>
+        <tr><td><strong>Доля продлений</strong></td><td class="mono">продлённые / требовавшие продления в периоде</td><td><span class="tag prop">Предл.</span></td></tr>
+        <tr><td><strong>Выручка первых покупок / продлений</strong></td><td class="mono">Σ платежей с is_renewal = false / true</td><td><span class="tag prop">Предл.</span></td></tr>
+        <tr><td><strong>LTV</strong> (2-я очередь)</td><td class="mono">выручка по user_id за всё время, включая продления и PPL</td><td><span class="tag src">v6 §11</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>Финансы</h3>
+    <div class="tw wide">
+    <table>
+      <thead><tr><th>Метрика</th><th>Формула</th><th>Пример</th><th>Источник</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Forecast Revenue</strong></td><td class="mono">Leads × прогнозная конверсия × прогнозный чек</td><td class="mono">1 000 × 8% × $500 = $40 000</td><td><span class="tag src">GD §13</span></td></tr>
+        <tr><td><strong>Actual Revenue</strong></td><td class="mono">Σ фактических оплат − возвраты</td><td>—</td><td><span class="tag src">GD §14</span> <span class="tag prop">Предл.</span></td></tr>
+        <tr><td><strong>Forecast ROAS</strong></td><td class="mono">Forecast Revenue / Ad Spend</td><td class="mono">$30 000 / $10 000 = 3,0 (300%)</td><td><span class="tag src">GD §15</span></td></tr>
+        <tr><td><strong>Actual ROAS</strong></td><td class="mono">Actual Revenue / Ad Spend</td><td class="mono">$24 000 / $10 000 = 2,4 (240%) · 130 000 / 20 000 = 6,5</td><td><span class="tag src">GD §15</span> <span class="tag src">Доп.</span></td></tr>
+        <tr><td><strong>ROMI</strong></td><td class="mono">(Revenue − Marketing Cost) / Marketing Cost × 100%; база — Ad Spend или TMC по переключателю</td><td class="mono">(130 000 − 20 000) / 20 000 = 550%</td><td><span class="tag src">GD §16</span> <span class="tag src">v6 §11</span></td></tr>
+        <tr><td><strong>Результат после рекламы</strong></td><td class="mono">Revenue − Ad Spend</td><td class="mono">130 000 − 20 000 = 110 000 грн</td><td><span class="tag src">Доп.</span></td></tr>
+        <tr><td><strong>Gross / Contribution Profit</strong></td><td class="mono">Revenue − Marketing Cost − Cost of Service − прочие</td><td>—</td><td><span class="tag src">GD §17</span></td></tr>
+        <tr><td><strong>Margin %</strong></td><td class="mono">Profit / Revenue × 100%</td><td>—</td><td><span class="tag src">GD §17</span></td></tr>
+        <tr><td><strong>ROI</strong></td><td class="mono">Profit / полные затраты × 100%</td><td>—</td><td><span class="tag src">GD §9</span> <span class="tag prop">Предл.</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="note warn">
+      <h4>Расхождение с рабочей таблицей</h4>
+      <p>ROMI рабочей таблицы не сходится с формулой (при ROAS 5,93× формула даёт ≈ 493%, в таблице 118,08%) — отмечено в README прототипа. В системе используется формула из ТЗ; цифры старой таблицы не берутся как контрольные. <span class="tag src">README</span> <span class="tag conf">Подтвердить</span> (<a href="#s23">§ 23</a>, вопрос 12)</p>
+    </div>
   </section>
 
   <!-- 15 -->
   <section id="s15">
-    <div class="sec-head"><div class="sec-num">§ 15</div><h2>Открытые вопросы</h2></div>
-    <p>Ответы нужны до старта этапа 1. Часть из них снимается на встрече с разработчиком квиза.</p>
+    <div class="sec-head"><div class="sec-num">§ 15</div><h2>Контрольные примеры</h2></div>
+    <p>Отчёт обязан воспроизвести эти числа один в один на тестовых данных (<a href="#s21">§ 21</a>).</p>
+
+    <h3>Пример A — воронка v6 <span class="tag src">v6 §11</span></h3>
+    <p>Расход $100 → 1 000 кликов → CPC $0,10 → 200 лидов → <strong>CPL $0,50</strong>. Пять авто-оплат: 2 × Base ₴400 = ₴800, 2 × Pro ₴1 500 = ₴3 000, 1 × Premium ₴4 000 = ₴4 000. <strong>Итого ₴7 800.</strong> Названия и цены тарифов зафиксированы со слуха — <span class="tag conf">Подтвердить</span>. Значение ROMI на схеме v6 («+94%») — иллюстративное и зависит от курса: при 41,2 UAH/USD расход равен ₴4 120 и ROMI = (7 800 − 4 120) / 4 120 ≈ 89%; контрольными являются CPL и ₴7 800.</p>
+
+    <h3>Пример B — пример заказчика 20 000 → 100 → 70 / 30 <span class="tag src">Доп.</span></h3>
+    <p>Допущение: обе суммы — фактически полученные оплаты по этим 100 лидам, без повторного учёта одного платежа.</p>
     <div class="tw">
     <table>
-      <thead><tr><th>#</th><th>Вопрос</th><th>Предложение по умолчанию</th></tr></thead>
+      <thead><tr><th>Показатель</th><th class="num">Маршрут «на продаж»</th><th class="num">Колл-центр</th><th class="num">Всего</th></tr></thead>
       <tbody>
-        <tr><td class="num">1</td><td>Гранулярность квиза: события на всех 20 экранах или только контрольные точки?</td><td>Все 20 — иначе не найти проблемный вопрос</td></tr>
-        <tr><td class="num">2</td><td>Что считаем лидом для CPL — клик по «Регистрация» или захват контакта?</td><td>Захват контакта (ключ №1)</td></tr>
-        <tr><td class="num">3</td><td>Через сколько часов без оплаты лид уходит в отвал?</td><td>2 часа</td></tr>
-        <tr><td class="num">4</td><td>Окно атрибуции колл-центра</td><td>14 дней от последнего контакта</td></tr>
-        <tr><td class="num">5</td><td>Ловим ли отвалы до 3-го вопроса? Это требует спрашивать телефон раньше</td><td>Первая очередь — нет, только агрегат</td></tr>
-        <tr><td class="num">6</td><td>Точные коды, названия и цены тарифов</td><td>Base ₴400, Pro ₴1 500, Premium ₴4 000 — подтвердить</td></tr>
-        <tr><td class="num">7</td><td>Модель атрибуции по умолчанию</td><td>Last non-direct, с переключателем</td></tr>
-        <tr><td class="num">8</td><td>Источник расхода на старте</td><td>Ручной ввод, API — этап 4</td></tr>
-        <tr><td class="num">9</td><td>Правило распределения отвалов между менеджерами</td><td>Равномерно, настройка в админке</td></tr>
-        <tr><td class="num">10</td><td>Считаем ли продления подписки в этой вкладке</td><td>Нет, вторая очередь (флаг <code>is_renewal</code> закладываем сразу)</td></tr>
+        <tr><td>Лиды (первоначальный маршрут)</td><td class="num">70</td><td class="num">30</td><td class="num total">100</td></tr>
+        <tr><td>Доля лидов</td><td class="num">70%</td><td class="num">30%</td><td class="num total">100%</td></tr>
+        <tr><td>Полученная выручка</td><td class="num">100 000 грн</td><td class="num">30 000 грн</td><td class="num total">130 000 грн</td></tr>
+        <tr><td>Выручка на лид маршрута</td><td class="num">1 428,57 грн</td><td class="num">1 000 грн</td><td class="num total">1 300 грн</td></tr>
+        <tr><td>Расход на рекламу</td><td class="num">не задан</td><td class="num">не задан</td><td class="num total">20 000 грн</td></tr>
+        <tr><td>CPL</td><td class="num">—</td><td class="num">—</td><td class="num total">200 грн</td></tr>
+        <tr><td>ROAS</td><td class="num">—</td><td class="num">—</td><td class="num total">6,5× (650%)</td></tr>
+        <tr><td>ROMI (база Ad Spend)</td><td class="num">—</td><td class="num">—</td><td class="num total">550%</td></tr>
+        <tr><td>Результат после рекламы</td><td class="num">требует правила распределения</td><td class="num">требует правила распределения</td><td class="num total">110 000 грн</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <ul>
+      <li>130 000 грн — выручка; 110 000 грн — результат после вычета рекламы, до себестоимости, затрат КЦ, комиссий и возвратов. Чистая прибыль по примеру неизвестна.</li>
+      <li>Количество направленных лидов не равно числу платежей и покупателей: CAC и конверсию в покупателя по примеру не рассчитать, пока не заданы платежи.</li>
+      <li>Оплата КЦ приходит через неделю: до поступления 30 000 грн факт равен 100 000 грн, ожидаемая сумма показывается как прогноз.</li>
+      <li>При пропорциональном распределении рекламы по лидам <span class="tag prop">Предл.</span>: 14 000 грн на «продаж» и 6 000 грн на КЦ → результат 86 000 и 24 000 грн. Показывается только с подписью правила.</li>
+    </ul>
+
+    <h3>Пример C — оплата в следующем месяце <span class="tag src">Доп.</span> <span class="tag prop">Предл.</span></h3>
+    <p>Лиды созданы 24–25 сентября; оплаты маршрута «на продаж» прошли в сентябре (100 000 грн); оплаты после дожима пришли 2 октября (30 000 грн).</p>
+    <div class="tw">
+    <table>
+      <thead><tr><th>Отчёт</th><th class="num">Сентябрь</th><th class="num">Октябрь</th></tr></thead>
+      <tbody>
+        <tr><td>По дате оплаты (касса)</td><td class="num">100 000 грн</td><td class="num">30 000 грн</td></tr>
+        <tr><td>По дате создания лида (когорта), на 3 октября</td><td class="num">130 000 грн</td><td class="num">—</td></tr>
+        <tr><td>По дате создания лида, на 30 сентября</td><td class="num">100 000 грн факт + 30 000 грн прогноз</td><td class="num">—</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>Пример D — формулы Google Docs <span class="tag src">GD §3, §10–15</span></h3>
+    <p>CPL: $10 000 / 1 000 = $10. CAC: $10 000 / 100 = $100. Прогноз: 1 000 × 8% × $500 = $40 000. ROAS: $30 000 / $10 000 = 3,0 и $24 000 / $10 000 = 2,4. Конвертация: $1 000 = 41 200 UAH при курсе 41,2.</p>
+  </section>
+
+  <!-- 16 -->
+  <section id="s16">
+    <div class="sec-head"><div class="sec-num">§ 16</div><h2>Экраны CRM</h2></div>
+    <h3>Вкладка «Сквозная аналитика»</h3>
+    <p>Одна вкладка, блоки сверху вниз — от общей цифры к детализации; всё подчиняется единой панели фильтров (<a href="#s17">§ 17</a>). <span class="tag src">v6 §10</span> Добавлены блоки маршрутов и подписок. <span class="tag src">Доп.</span></p>
+
+    <div class="wire" role="img" aria-label="Схема расположения блоков вкладки">
+      <div class="wbar">Фильтры: дата лида · дата оплаты · GEO · команда · маркетолог · домен · офер · источник · кампания · креатив · аудитория · тариф · менеджер КЦ · маршрут · канал · тип покупателя · атрибуция · база расходов · валюта</div>
+      <div class="wgrid">
+        <div class="wbox"><b>Расход</b><small>Ad Spend / TMC · CPC</small></div>
+        <div class="wbox"><b>Лиды</b><small>кол-во · CPL · потери до контакта</small></div>
+        <div class="wbox"><b>Продажи</b><small>кол-во · CAC · стоимость оплаты</small></div>
+        <div class="wbox"><b>Выручка</b><small>факт / прогноз · средний чек</small></div>
+        <div class="wbox"><b>ROAS · ROMI</b><small>база подписана · дельта к прошлому периоду</small></div>
+        <div class="wbox"><b>Результат</b><small>уровень затрат подписан</small></div>
+      </div>
+      <div class="wbox" style="min-height:88px"><b>Воронка по шагам</b><small>1 000 → 900 → 500 → 200 → 20 экранов квиза → 100 → 5: абсолют, конверсия шага, конверсия от верха; потери до захвата контакта отдельно</small></div>
+      <div class="wbox new" style="min-height:80px"><b>Направления (маршруты)</b><small>всего лидов · «на продаж» · колл-центр · выручка по направлению · общая · результат после рекламы · переключатель первоначальный / текущий маршрут</small></div>
+      <div class="wgrid">
+        <div class="wbox"><b>Авто-продажи</b><small>кол-во · сумма · средний чек · доля</small></div>
+        <div class="wbox"><b>Продажи колл-центра</b><small>кол-во · сумма · средний чек · доля</small></div>
+      </div>
+      <div class="wbox"><b>Тарифы</b><small>Base / Pro / Premium — штуки, сумма, доля, раздельно по каналам и маршрутам</small></div>
+      <div class="wbox new"><b>Подписки</b><small>новые · активные на дату · продления · отмены · выручка первых покупок / продлений · по типу покупателя</small></div>
+      <div class="wbox" style="min-height:88px"><b>Обработка отвалов колл-центром</b><small>отвалов · передано · взято в работу · дозвон % · исходы по типам · продажи · выручка · разрез по менеджерам и источникам</small></div>
+      <div class="wbox" style="min-height:80px"><b>Таблица кампаний</b><small>строка = кампания: расход · лиды · CPL · продажи авто · продажи КЦ · выручка · ROMI · маркетолог · решение</small></div>
+      <div class="wbox"><b>Детализация</b><small>drill-down из любой цифры до лидов / сессий / платежей · экспорт CSV</small></div>
+    </div>
+
+    <h3>Остальные экраны CRM</h3>
+    <p>Экраны из Google Docs и прототипа; наличие в прототипе не означает наличия в рабочей CRM. <span class="tag src">GD §24</span> <span class="tag src">README</span></p>
+    <div class="tw">
+    <table>
+      <thead><tr><th>Экран</th><th>Содержание</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Обзор (CEO)</strong></td><td>KPI тремя блоками Marketing / Sales / Finance (GD §9, §24): Ad Spend, Leads, CPL, Leads in Work, Contact Rate, Clients, Conversion, CAC, Forecast / Actual Revenue, Average Check, Forecast / Actual ROAS, Forecast / Actual ROMI, Margin, Profit. Клик по KPI — детализация GEO → маркетолог → source → офер → домен → кампания → креатив → лид → клиент → платёж</td></tr>
+        <tr><td><strong>Рекламные кампании</strong></td><td>Реестр с группировкой, подсумками в шапке, колонкой «Решение»; фильтры и оформление — TZ-1 §1, §3</td></tr>
+        <tr><td><strong>Маркетологи и команды</strong></td><td>Срез, который отдел ведёт в Google Sheets, считается автоматически</td></tr>
+        <tr><td><strong>Воронка и дозвон</strong></td><td>Lifecycle лида, конверсии между этапами, потерянные лиды по причинам (GD §6–8)</td></tr>
+        <tr><td><strong>Креативы</strong></td><td>Spend, Leads, CPL, Clients, CAC, Revenue, ROAS, ROMI по креативу (GD §21)</td></tr>
+        <tr><td><strong>Рекламный баланс</strong></td><td>Балансы, добавление расхода, история операций с ограничением по роли (TZ-1 §2)</td></tr>
+        <tr><td><strong>Методология</strong></td><td>Формулы, модель данных, матрица ролей, правила оформления — страница для CTO</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>Правки оформления таблиц <span class="tag src">TZ-1 §3</span></h3>
+    <ul>
+      <li>Факт / прогноз: факт <strong>жирным</strong>, прогноз обычным (Regular): <strong>$1,446.52</strong> / $972.05.</li>
+      <li>Синий цвет — только для кликабельных значений Ad Spend и для ROMI в диапазоне 0–20%.</li>
+      <li>Название кампании переносится на 2–3 строки, без обрезания троеточием; высота строки растёт; полное название видно без открытия карточки; выравнивание по левому краю.</li>
+      <li>Числовые значения (AdSpend, Каса, ROMI, ROAS, Margin, CPS, CPL, CVR, CAC, AOV) — по центру.</li>
+      <li>Шапка: название метрики жирным, подсумок под ним обычным, одинаковые отступы и вертикальное выравнивание.</li>
+      <li>Валюта перед числом: <code>$1,446.52</code>, а не <code>1,446.52 USD</code>.</li>
+      <li>Цветовая шкала ROMI: <span class="chip bad">&lt; −100% красный</span> <span class="chip">−100% … −50% оранжевый</span> <span class="chip cc">−50% … 0% жёлтый</span> <span class="chip">0% … 20% синий</span> <span class="chip ok">≥ 20% зелёный</span>. Цвет применяется только к значению или бейджу ROMI.</li>
+    </ul>
+
+    <h3>Поведение</h3>
+    <ul>
+      <li>Любая цифра кликабельна и раскрывается в список записей; число строк совпадает с цифрой. Для анонимных шагов раскрываются сессии, для денег — платежи с привязанными лидами. <span class="tag src">v6 §10</span> <span class="tag prop">Предл.</span></li>
+      <li>Сравнение с предыдущим периодом — дельта в процентах рядом с каждой метрикой сводки. <span class="tag src">v6 §10</span></li>
+      <li>Экспорт CSV на каждом блоке; экспорт XLSX / PDF — по согласованию. <span class="tag src">v6 §10</span> <span class="tag src">README</span></li>
+      <li>Состояния пустых данных и загрузки прорисованы; «0», «нет данных» и «неопределено (деление на ноль)» — визуально разные. <span class="tag src">v6 §10</span> <span class="tag prop">Предл.</span></li>
+      <li>Ось дат (когорта / касса), база расходов, модель атрибуции и уровень профита подписаны на экране. <span class="tag prop">Предл.</span></li>
+    </ul>
+  </section>
+
+  <!-- 17 -->
+  <section id="s17">
+    <div class="sec-head"><div class="sec-num">§ 17</div><h2>Фильтры, роли и доступ</h2></div>
+    <h3>Период по умолчанию</h3>
+    <p>При открытии — с 1 числа текущего месяца по текущую дату (21 мая → 1–21 мая). Фильтры свёрнуты; кнопка «Фільтри» открывает горизонтальную панель; после применения пересчитываются все блоки вкладки. <span class="tag src">TZ-1 §1</span></p>
+
+    <h3>Единый набор фильтров</h3>
+    <div class="tw">
+    <table>
+      <thead><tr><th>Фильтр</th><th>Значения / поле</th><th>Источник</th></tr></thead>
+      <tbody>
+        <tr><td>Дата создания лида</td><td>календарь <code>task_created_from – task_created_to</code></td><td><span class="tag src">TZ-1 §1.1</span></td></tr>
+        <tr><td>Дата оплаты</td><td>календарь <code>payment_from – payment_to</code></td><td><span class="tag src">TZ-1 §1.2</span></td></tr>
+        <tr><td>GEO / страна</td><td>Україна, Польша, Англія, США, Дубаї (по <code>utm_country</code>)</td><td><span class="tag src">GD §18</span> <span class="tag src">TZ-1 §1.5</span></td></tr>
+        <tr><td>Команда / руководитель</td><td>пользователи с ролью «Керівник відділу маркетингу» (<code>author_head_id</code>)</td><td><span class="tag src">GD §18</span> <span class="tag src">TZ-1 §1.4</span></td></tr>
+        <tr><td>Маркетолог</td><td>несколько; роль «маркетолог» (<code>author_id[]</code>)</td><td><span class="tag src">GD §18</span> <span class="tag src">TZ-1 §1.3</span></td></tr>
+        <tr><td>Домен</td><td>список доменов</td><td><span class="tag src">GD §18</span></td></tr>
+        <tr><td>Офер</td><td>например, «Військове право»</td><td><span class="tag src">GD §18</span></td></tr>
+        <tr><td>Источник / канал</td><td>Google, Meta, TikTok, SEO, Organic, Referral, Direct, Other (<code>utm_source</code>)</td><td><span class="tag src">GD §19</span> <span class="tag src">TZ-1 §1.6</span></td></tr>
+        <tr><td>Кампания, объявление / креатив</td><td>из реестра</td><td><span class="tag src">v6 §10</span> <span class="tag src">GD §21</span></td></tr>
+        <tr><td>Аудитория рекламы</td><td>юристы / клиенты (<code>destination</code>)</td><td><span class="tag src">TZ-1 §1.7</span></td></tr>
+        <tr><td>Статус кампании</td><td>Всі, В процесі, завершена</td><td><span class="tag src">TZ-1 §1.8</span></td></tr>
+        <tr><td>Тариф</td><td>из справочника</td><td><span class="tag src">v6 §10</span></td></tr>
+        <tr><td>Менеджер КЦ</td><td>пользователи с ролью менеджера КЦ</td><td><span class="tag src">v6 §10</span></td></tr>
+        <tr><td class="new">Маршрут лида</td><td>«на продаж» / колл-центр; первоначальный / текущий</td><td><span class="tag src">Доп.</span> <span class="tag prop">Предл.</span></td></tr>
+        <tr><td class="new">Канал продажи</td><td>auto / call_center</td><td><span class="tag src">v6 §9</span> <span class="tag prop">Предл.</span></td></tr>
+        <tr><td class="new">Тип покупателя</td><td>клиент / юрист</td><td><span class="tag src">Доп.</span> <span class="tag prop">Предл.</span></td></tr>
+        <tr><td>Модель атрибуции</td><td>last non-direct / first touch</td><td><span class="tag src">v6 §9</span></td></tr>
+        <tr><td>Переключатели шапки</td><td>база расходов (Ad Spend / TMC) · язык (UA / EN) · валюта отображения · роль</td><td><span class="tag src">GD §4, §22, §23</span> <span class="tag src">README</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>Роли</h3>
+    <p>Список ролей: Адмін, Владелец / CEO, CMO (операционный маркетолог), Керівник відділу маркетингу, Маркетолог, Бухгалтер, Супервайзер КЦ, Менеджер КЦ. <span class="tag src">TZ-1 §2</span> <span class="tag src">v6 §10</span> <span class="tag prop">Предл.</span></p>
+    <div class="tw wide">
+    <table class="matrix">
+      <thead><tr><th>Действие / данные</th><th>Маркетолог</th><th>Керівник відділу</th><th>CMO</th><th>Бухгалтер</th><th>Владелец / Адмін</th><th>Супервайзер КЦ</th><th>Менеджер КЦ</th></tr></thead>
+      <tbody>
+        <tr><td>Аналитика и кампании</td><td>свои</td><td>своя команда</td><td class="y">все</td><td class="y">все</td><td class="y">все</td><td>блок отвалов целиком</td><td>свои задачи</td></tr>
+        <tr><td>Кампании в модалке расхода</td><td>свои</td><td>свои и команды</td><td class="y">все</td><td class="y">все</td><td class="y">все</td><td class="n">—</td><td class="n">—</td></tr>
+        <tr><td>Добавить расход</td><td class="y">да</td><td class="y">да</td><td class="y">да</td><td class="y">да</td><td class="y">да</td><td class="n">—</td><td class="n">—</td></tr>
+        <tr><td>Пополнение баланса</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="y">да</td><td class="y">да</td><td class="n">—</td><td class="n">—</td></tr>
+        <tr><td>Отмена последней операции</td><td>своей</td><td>своей / маркетолога команды</td><td class="y">да</td><td class="y">да</td><td class="y">да</td><td class="n">—</td><td class="n">—</td></tr>
+        <tr><td>Балансы и история операций</td><td>свой</td><td>своя команда</td><td class="y">все</td><td class="y">все</td><td class="y">все</td><td class="n">—</td><td class="n">—</td></tr>
+        <tr><td>Подписки и деньги</td><td>свои лиды</td><td>своя команда</td><td class="y">все</td><td class="y">все</td><td class="y">все</td><td>по своим задачам</td><td class="n">—</td></tr>
+        <tr><td>Справочники и настройки</td><td class="n">—</td><td class="n">—</td><td>пороги рекомендаций</td><td>ставки налогов</td><td class="y">все</td><td>исходы звонков</td><td class="n">—</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="note warn">
+      <h4>Расхождение источников</h4>
+      <p>TZ-1 ограничивает руководителя отдела маркетинга своей командой, v6 говорит «руководитель и владелец — всё». Принято: «руководитель» в v6 читается как владелец / CEO; руководитель отдела видит свою команду. <span class="tag conf">Подтвердить</span> (<a href="#s22">§ 22</a>, <a href="#s23">§ 23</a>, вопрос 16)</p>
+    </div>
+    <p>Переключатель роли в прототипе демонстрирует ограничения интерфейса; в рабочей системе нужна серверная авторизация. <span class="tag src">README</span></p>
+  </section>
+
+  <!-- 18 -->
+  <section id="s18">
+    <div class="sec-head"><div class="sec-num">§ 18</div><h2>Интерфейс и производительность</h2></div>
+    <ul>
+      <li>Языки интерфейса: 🇺🇦 Українська, 🇬🇧 English. Смена языка меняет только интерфейс, названия полей, статусы и системные сообщения, но не данные. <span class="tag src">GD §22</span></li>
+      <li>Валюты: UAH, PLN, AED, EUR, USD; валюта отображения — в шапке. <span class="tag src">GD §23</span></li>
+      <li>Формат денег: символ валюты перед числом. Разделители — по языку интерфейса: EN <code>$1,446.52</code>, UA <code>₴7 800,00</code>. <span class="tag src">TZ-1 §3</span> <span class="tag prop">Предл.</span> (<a href="#s22">§ 22</a>)</li>
+      <li>Факт жирным, прогноз обычным; правила цвета и выравнивания — <a href="#s16">§ 16</a>. <span class="tag src">TZ-1 §3</span></li>
+      <li>Витрины обновляются раз в 15 минут; отчёт за период до 90 дней открывается менее чем за 3 секунды. <span class="tag src">v6 §7</span> <span class="tag src">v6 §10</span></li>
+      <li>История баланса — пагинация по 20 строк; таблицы кампаний — сворачиваемые группы. <span class="tag src">TZ-1 §2.5</span></li>
+      <li>Подсказки (tooltip) на всех колонках истории баланса; в остальных таблицах — на метриках с формулой. <span class="tag src">TZ-1 §2.5</span> <span class="tag prop">Предл.</span></li>
+    </ul>
+  </section>
+
+  <!-- 19 -->
+  <section id="s19">
+    <div class="sec-head"><div class="sec-num">§ 19</div><h2>Интеграции</h2></div>
+    <div class="tw wide">
+    <table>
+      <thead><tr><th>Система</th><th>Направление</th><th>Что передаётся</th><th>Очередь</th></tr></thead>
+      <tbody>
+        <tr><td>Лендинг <code>consultant.net.ua</code></td><td>→ CRM</td><td>UTM, <code>page_view</code>, клик CTA, <code>session_id</code></td><td class="c">1</td></tr>
+        <tr><td>Квиз (SPA)</td><td>→ CRM</td><td>События шагов + <code>session_id</code> в каждом запросе</td><td class="c">1</td></tr>
+        <tr><td>Бэкенд квиза</td><td>→ CRM</td><td><strong>Ключ №1</strong>: создание лида с контактами</td><td class="c">1</td></tr>
+        <tr><td>Платёжный провайдер</td><td>→ CRM</td><td><strong>Ключ №2</strong>: вебхук об оплате, тариф, сумма; отказ платежа; возврат; продление</td><td class="c">1 <small>возвраты и продления — <span class="tag prop">Предл.</span></small></td></tr>
+        <tr><td>Курсы НБУ</td><td>→ CRM</td><td>Курс на дату по валютам UAH / USD / EUR / PLN / AED</td><td class="c">1</td></tr>
+        <tr><td>Личный кабинет</td><td>↔ CRM</td><td><code>user_id</code>, тип покупателя, статус подписки, отмены; позже PPL и повторные покупки</td><td class="c">1 для подписок <span class="tag prop">Предл.</span> · 3 для PPL</td></tr>
+        <tr><td>Meta Ads / Google Ads / TikTok Ads</td><td>→ CRM</td><td>Расход, клики, показы по кампаниям, ad set, объявлениям; настройки VAT и комиссий — в <code>ad_accounts</code></td><td class="c">2 <small>на старте ручной ввод</small></td></tr>
+        <tr><td>Телефония КЦ</td><td>→ CRM</td><td>Факт и длительность звонка, запись</td><td class="c">2 <small>на старте исход ставит менеджер</small></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p>Ручной ввод расхода на первом этапе — сознательное решение: он не блокирует запуск воронки и позволяет проверить логику на реальных цифрах. <span class="tag src">v6 §12</span></p>
+  </section>
+
+  <!-- 20 -->
+  <section id="s20">
+    <div class="sec-head"><div class="sec-num">§ 20</div><h2>Этапы работ</h2></div>
+    <ol class="stages">
+      <li class="stage block"><div class="n">0<small>блокирующий</small></div><div><h4>Разметка <span class="tag src">v6 §13</span></h4><p>Совместно с разработчиком квиза: <code>session_id</code>, сквозная передача UTM, события шагов, серверные ключи №1 и №2; проверка момента захвата контакта.</p><p><strong>Результат:</strong> данные доезжают и видны в сыром логе <code>funnel_events</code>.</p></div></li>
+      <li class="stage"><div class="n">1</div><div><h4>Данные <span class="tag src">v6 §13</span> <span class="tag src">TZ-1</span> <span class="tag src">Доп.</span></h4><p>Схема БД (<a href="#s8">§ 08</a>), <code>/api/track</code>, вебхук оплат, витрины, курсы НБУ, ручной ввод расхода, рекламный баланс по TZ-1, маршруты лидов.</p><p><strong>Результат:</strong> считаются воронка, авто-продажи, разбивка по маршрутам.</p></div></li>
+      <li class="stage"><div class="n">2</div><div><h4>Вкладка <span class="tag src">v6 §13</span> <span class="tag src">TZ-1 §3</span></h4><p>UI: сводка, воронка по шагам, направления, тарифы, таблица кампаний, drill-down, экспорт, роли, правки оформления TZ-1.</p><p><strong>Результат:</strong> отчёт открывается и сходится с примерами A и B.</p></div></li>
+      <li class="stage"><div class="n">3</div><div><h4>Колл-центр <span class="tag src">v6 §13</span> <span class="tag src">Доп.</span></h4><p>Автосоздание задач из отвалов, распределение, исходы, блок обработки отвалов, атрибуция КЦ, поздние оплаты.</p><p><strong>Результат:</strong> виден вклад дожима отдельно от авто-продаж; пример C сходится.</p></div></li>
+      <li class="stage new"><div class="n">4<small>новое</small></div><div><h4>Подписки <span class="tag src">Доп.</span> <span class="tag prop">Предл.</span></h4><p>Сущность подписки, продления и отмены из личного кабинета / провайдера, блок подписок, разрез по типу покупателя, уровни профита.</p><p><strong>Результат:</strong> считаются новые и активные подписки, деньги первых покупок и продлений.</p></div></li>
+      <li class="stage later"><div class="n">5<small>2-я очередь</small></div><div><h4>Деньги вдолгую <span class="tag src">v6 §13</span></h4><p>API рекламных кабинетов и сверка с ручным вводом, телефония, PPL, LTV, MRR.</p><p><strong>Результат:</strong> полная экономика клиента.</p></div></li>
+    </ol>
+    <div class="note warn">
+      <h4>Этап 0 нельзя пропустить</h4>
+      <p>Дизайн можно рисовать параллельно, но разработку отчётов нет смысла начинать, пока квиз не отдаёт <code>session_id</code> и оба ключа. <span class="tag src">v6 §13</span> Место этапа 4 в очереди — <span class="tag conf">Подтвердить</span> (<a href="#s23">§ 23</a>, вопрос 3).</p>
+    </div>
+  </section>
+
+  <!-- 21 -->
+  <section id="s21">
+    <div class="sec-head"><div class="sec-num">§ 21</div><h2>Критерии приёмки</h2></div>
+    <ol class="acc">
+      <li><div><strong>Сбор данных и атрибуция.</strong> Тестовый прогон реклама → лендинг → квиз → оплата даёт ровно одну оплату с правильным источником, кампанией и маркетологом. <span class="tag src">v6 §14</span></div></li>
+      <li><div>Отвал до 3-го вопроса не создаёт лида и задачи КЦ, но виден в воронке как потеря на соответствующем шаге. <span class="tag src">v6 §14</span></div></li>
+      <li><div>Повторная отправка одного события и повторный вебхук об одном платеже не задваивают данные. <span class="tag src">v6 §14</span> <span class="tag prop">Предл.</span></div></li>
+      <li><div>Первичные UTM лида не меняются при повторных заходах; <code>last_touch</code> обновляется отдельно. <span class="tag src">GD §20</span></div></li>
+      <li><div><strong>Колл-центр.</strong> Лид бросает квиз на 7-м экране — через N часов он в статусе <code>dropped</code>, задача КЦ создана, лид виден в блоке отвалов с шагом 7. <span class="tag src">v6 §14</span></div></li>
+      <li><div>Менеджер дожимает лид до оплаты — продажа попадает в канал <code>call_center</code> с этим менеджером и не попадает в авто-продажи. <span class="tag src">v6 §14</span></div></li>
+      <li><div>Сумма выручки по каналам и по маршрутам равна общей выручке; нет задвоения. <span class="tag src">v6 §14</span> <span class="tag prop">Предл.</span></div></li>
+      <li><div><strong>Деньги и примеры.</strong> Пример A воспроизводится один в один: CPL $0,50, выручка ₴7 800. <span class="tag src">v6 §14</span></div></li>
+      <li><div>Пример B: 100 уникальных лидов, распределение 70 / 30, выручка 130 000 грн после поступления обеих сумм; реклама 20 000 грн вычтена один раз; подписано, что 110 000 грн не учитывает прочие затраты. <span class="tag src">Доп.</span> <span class="tag prop">Предл.</span></div></li>
+      <li><div>Пример C: оплата КЦ в следующем месяце видна по дате оплаты в октябре и в накопленной выручке сентябрьской когорты; до поступления денег факт не включает ожидаемые 30 000 грн. <span class="tag src">Доп.</span> <span class="tag prop">Предл.</span></div></li>
+      <li><div>Передача лида между направлениями сохраняет историю и не увеличивает число уникальных лидов. <span class="tag prop">Предл.</span></div></li>
+      <li><div>Один расход не дублируется после импорта из рекламного кабинета; пополнение баланса не увеличивает Ad Spend. <span class="tag prop">Предл.</span></div></li>
+      <li><div>Переключение базы расходов (Ad Spend / TMC) меняет ROMI, CAC и маржу согласно ставкам аккаунта. <span class="tag src">GD §4</span> <span class="tag src">GD §16</span></div></li>
+      <li><div><strong>Подписки.</strong> Первая покупка и продление одной подписки увеличивают нужные денежные показатели, но не создают второго покупателя или второй подписки. <span class="tag prop">Предл.</span></div></li>
+      <li><div>Для нового покупателя, действующей подписки и платежа доступны разные счётчики с понятным смыслом; подписочный разрез не добавляет платежи второй раз. <span class="tag prop">Предл.</span></div></li>
+      <li><div><strong>Интерфейс и доступ.</strong> Каждая цифра сводки раскрывается в список записей, число строк совпадает с цифрой; для нулевого знаменателя показано «нет данных». <span class="tag src">v6 §14</span> <span class="tag prop">Предл.</span></div></li>
+      <li><div>Маркетолог под своей ролью не видит кампании других маркетологов; руководитель отдела видит только свою команду; в модалке расхода список кампаний соответствует роли. <span class="tag src">v6 §14</span> <span class="tag src">TZ-1 §2</span></div></li>
+      <li><div>Таблица кампаний соответствует TZ-1 §3: факт жирным, прогноз обычным, валюта перед числом, числа по центру, название без обрезания, цветовая шкала ROMI по диапазонам. <span class="tag src">TZ-1 §3</span></div></li>
+      <li><div>История баланса содержит все поля TZ-1 §2.5, сворачивается и листается по 20 строк; расход без файла-подтверждения не сохраняется. <span class="tag src">TZ-1 §2</span></div></li>
+      <li><div>Смена языка не меняет данные; смена валюты отображения не меняет хранимые суммы. <span class="tag src">GD §22–23</span></div></li>
+      <li><div>Отчёт за 90 дней открывается менее чем за 3 секунды. <span class="tag src">v6 §14</span></div></li>
+    </ol>
+  </section>
+
+  <!-- 22 -->
+  <section id="s22">
+    <div class="sec-head"><div class="sec-num">§ 22</div><h2>Решения по расхождениям</h2></div>
+    <div class="tw wide">
+    <table>
+      <thead><tr><th>#</th><th>Вопрос</th><th>Что в источниках</th><th>Решение редакции</th><th>Статус</th></tr></thead>
+      <tbody>
+        <tr><td class="c">1</td><td>Очередь подписок</td><td>v6 откладывает продления, PPL и LTV во вторую очередь; заказчик просит считать подписки</td><td>Базовый учёт подписок — этап 4 первой очереди; MRR, LTV, PPL — вторая</td><td><span class="tag conf">Подтвердить</span></td></tr>
+        <tr><td class="c">2</td><td>Источник расходов</td><td>GD требует автоматическую загрузку; v6 допускает ручной ввод на старте</td><td>Ручной ввод — старт, API — целевое состояние; при импорте исключить двойной учёт</td><td><span class="tag ok">Принято</span></td></tr>
+        <tr><td class="c">3</td><td>«Додати витрату … поповнює кампанію»</td><td>TZ-1 называет действие пополнением</td><td>Расход уменьшает баланс маркетолога и создаёт строку <code>ad_spend</code>; пополнение — отдельная операция бухгалтерии, не расход</td><td><span class="tag conf">Подтвердить</span></td></tr>
+        <tr><td class="c">4</td><td>CAC</td><td>GD: Marketing Cost / клиенты; v6: расход / оплаты</td><td>CAC = Marketing Cost / новые уникальные платящие покупатели; «стоимость оплаты» — отдельная метрика</td><td><span class="tag conf">Подтвердить</span></td></tr>
+        <tr><td class="c">5</td><td>Средний чек / ARPPU</td><td>GD: выручка / клиенты; v6 ARPPU: выручка / оплаты</td><td>AOV = выручка / оплаты; ARPPU = выручка / уникальные покупатели; обе показываются</td><td><span class="tag conf">Подтвердить</span></td></tr>
+        <tr><td class="c">6</td><td>ROMI и «профит»</td><td>README: таблица расходится с формулой; заказчик вычитает только рекламу</td><td>Формула ТЗ с переключателем базы; три подписанных уровня результата</td><td><span class="tag conf">Подтвердить</span></td></tr>
+        <tr><td class="c">7</td><td>База конверсии (CVR)</td><td>README: неясно, какие лиды исключаются</td><td>Исключать <code>duplicate</code> и <code>invalid</code>; правило зафиксировать в настройке</td><td><span class="tag conf">Подтвердить</span></td></tr>
+        <tr><td class="c">8</td><td>Права руководителя</td><td>TZ-1: своя команда; v6: «руководитель и владелец — всё»</td><td>Руководитель отдела — своя команда; «руководитель» в v6 = владелец / CEO</td><td><span class="tag conf">Подтвердить</span></td></tr>
+        <tr><td class="c">9</td><td>Первое и последнее касание</td><td>GD запрещает перезапись UTM; v6 хранит first / last touch</td><td>Совместимо: <code>first_touch</code> навсегда, <code>last_touch</code> отдельно, переключатель в отчёте</td><td><span class="tag ok">Принято</span></td></tr>
+        <tr><td class="c">10</td><td>Оплата после КЦ</td><td>v6: окно 14 дней; пограничные случаи не описаны</td><td>Правила <a href="#s11">§ 11</a> для поздней оплаты, одновременности, возвратов, продлений</td><td><span class="tag conf">Подтвердить</span></td></tr>
+        <tr><td class="c">11</td><td>Детализация любой цифры</td><td>v6 требует список лидов; до захвата контакта есть только сессия</td><td>Анонимные шаги → сессии; деньги → платежи с лидами; число строк платежей ≠ числу лидов</td><td><span class="tag ok">Принято</span></td></tr>
+        <tr><td class="c">12</td><td>Маршрут и канал</td><td>Доп.: «на продаж» / КЦ; v6: <code>auto</code> / <code>call_center</code></td><td>Два измерения: маршрут лида и канал платежа; обе разбивки сходятся к общей выручке</td><td><span class="tag conf">Подтвердить</span></td></tr>
+        <tr><td class="c">13</td><td>Лиды «на продаж»</td><td>Может означать продажу лидов юристам, самостоятельную покупку или отдел продаж</td><td>Модель нейтральна (<code>route</code>, <code>revenue_type</code>, опциональные <code>deals</code>); смысл уточнить</td><td><span class="tag conf">Подтвердить</span></td></tr>
+        <tr><td class="c">14</td><td>Формат денег</td><td>TZ-1: <code>$1,446.52</code>; v6: <code>₴7 800</code></td><td>Символ перед числом всегда; разделители — по языку интерфейса</td><td><span class="tag conf">Подтвердить</span></td></tr>
+        <tr><td class="c">15</td><td>Версии страницы</td><td>Адрес <code>/v6/</code>, внутри «v1.0»</td><td>Настоящая редакция — 2.0; предыдущая упоминается как «страница v6 (v1.0)»</td><td><span class="tag ok">Принято</span></td></tr>
+        <tr><td class="c">16</td><td>Contact Rate</td><td>GD: контактированные / все лиды; v6: покрытие КЦ от переданных</td><td>Три метрики с разными знаменателями под своими названиями</td><td><span class="tag ok">Принято</span></td></tr>
+        <tr><td class="c">17</td><td>Экспорт</td><td>v6: CSV на каждом блоке; README: XLSX / CSV / PDF не реализованы в прототипе</td><td>CSV обязателен; XLSX / PDF — по согласованию</td><td><span class="tag conf">Подтвердить</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <!-- 23 -->
+  <section id="s23">
+    <div class="sec-head"><div class="sec-num">§ 23</div><h2>Открытые вопросы</h2></div>
+    <p>Ответы нужны до старта этапа 1; вопросы 1–5 — до этапа 4. Часть снимается на встрече с разработчиком квиза.</p>
+    <div class="tw wide">
+    <table>
+      <thead><tr><th>#</th><th>Вопрос</th><th>Предложение по умолчанию</th><th>Откуда</th></tr></thead>
+      <tbody>
+        <tr><td class="c">1</td><td>«Подписка клиента» и «подписка юристов» — один продукт или разные? Кто покупатель, кому платит, за что и как часто?</td><td>Две записи <code>buyer_type</code>; тарифы с <code>period</code>; одна модель подписки</td><td><span class="tag src">Доп.</span></td></tr>
+        <tr><td class="c">2</td><td>«Лиды на продаж» — продажа лидов юристам, самостоятельная покупка тарифа или передача в отдел продаж?</td><td>Маршрут <code>sale</code> нейтрален; при продаже лидов добавляется <code>deals</code></td><td><span class="tag src">Доп.</span></td></tr>
+        <tr><td class="c">3</td><td>Что входит в первую поставку по подпискам: только первые покупки или также активные, продления, отмены, просрочки?</td><td>Новые, активные, продления как деньги, отмены; MRR / LTV позже</td><td><span class="tag src">Доп.</span></td></tr>
+        <tr><td class="c">4</td><td>Какие затраты, кроме рекламы, входят в «профит», и как распределять общие затраты между направлениями?</td><td>Три уровня результата; распределение пропорционально лидам с подписью</td><td><span class="tag src">Доп.</span></td></tr>
+        <tr><td class="c">5</td><td>Может ли лид переходить между направлениями, и по какому правилу распределять лиды и выручку?</td><td>Первоначальный маршрут по умолчанию, переключатель на текущий</td><td><span class="tag src">Доп.</span></td></tr>
+        <tr><td class="c">6</td><td>Гранулярность квиза: события на всех 20 экранах или только контрольные точки?</td><td>Все 20 — иначе не найти проблемный вопрос</td><td><span class="tag src">v6</span></td></tr>
+        <tr><td class="c">7</td><td>Что считаем лидом для CPL — клик по «Регистрация» или захват контакта?</td><td>Захват контакта (ключ №1)</td><td><span class="tag src">v6</span></td></tr>
+        <tr><td class="c">8</td><td>Через сколько часов без оплаты лид уходит в отвал?</td><td>2 часа</td><td><span class="tag src">v6</span></td></tr>
+        <tr><td class="c">9</td><td>Окно атрибуции колл-центра</td><td>14 дней от последнего контакта</td><td><span class="tag src">v6</span></td></tr>
+        <tr><td class="c">10</td><td>Ловим ли отвалы до 3-го вопроса? Это требует спрашивать телефон раньше</td><td>Первая очередь — нет, только агрегат</td><td><span class="tag src">v6</span></td></tr>
+        <tr><td class="c">11</td><td>Точные коды, названия и цены тарифов, периодичность</td><td>Base ₴400, Pro ₴1 500, Premium ₴4 000 — подтвердить</td><td><span class="tag src">v6</span></td></tr>
+        <tr><td class="c">12</td><td>Единые формулы ROMI, CAC, среднего чека, конверсии; причина расхождения ROMI и кассы в рабочей таблице</td><td>Формулы <a href="#s14">§ 14</a>; таблица не является контрольной</td><td><span class="tag src">README</span> <span class="tag prop">Предл.</span></td></tr>
+        <tr><td class="c">13</td><td>Какие лиды исключаются из базы CPL и конверсий (дубли, невалидные, нецелевые)?</td><td><code>duplicate</code> и <code>invalid</code> исключаются</td><td><span class="tag src">README</span></td></tr>
+        <tr><td class="c">14</td><td>Модель атрибуции по умолчанию</td><td>Last non-direct, с переключателем</td><td><span class="tag src">v6</span></td></tr>
+        <tr><td class="c">15</td><td>Правило распределения отвалов между менеджерами</td><td>Равномерно, настройка в админке</td><td><span class="tag src">v6</span></td></tr>
+        <tr><td class="c">16</td><td>Права руководителя отдела маркетинга и владельца; роли супервайзера и менеджера КЦ</td><td>Матрица <a href="#s17">§ 17</a></td><td><span class="tag src">TZ-1</span> <span class="tag src">v6</span></td></tr>
+        <tr><td class="c">17</td><td>Пороги колонки «Решение» и правил рекомендаций по кампаниям</td><td>Текущие значения прототипа до утверждения</td><td><span class="tag src">README</span></td></tr>
+        <tr><td class="c">18</td><td>Правила поздней оплаты после окна, возвратов и продлений через КЦ</td><td>Таблица <a href="#s11">§ 11</a></td><td><span class="tag prop">Предл.</span></td></tr>
+        <tr><td class="c">19</td><td>Нужен ли экспорт XLSX / PDF помимо CSV</td><td>CSV обязателен</td><td><span class="tag src">README</span></td></tr>
+        <tr><td class="c">20</td><td>Есть ли пробный период у подписок и как считать его в активных</td><td>Не считать до первого платежа</td><td><span class="tag prop">Предл.</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <!-- A -->
+  <section id="appendix-a">
+    <div class="sec-head"><div class="sec-num">Прил. А</div><h2>Матрица соответствия источникам</h2></div>
+    <p>Каждый раздел источников имеет место в настоящей редакции. Пункты, отмеченные «изменено», разрешены в <a href="#s22">§ 22</a>.</p>
+
+    <h3>Google Docs (GD)</h3>
+    <div class="tw">
+    <table>
+      <thead><tr><th>GD</th><th>Тема</th><th>Где в редакции 2.0</th></tr></thead>
+      <tbody>
+        <tr><td>§1</td><td>Цель системы</td><td><a href="#s1">§ 01</a></td></tr>
+        <tr><td>§2</td><td>Сущности Marketing / Lead / Sales / Finance</td><td><a href="#s8">§ 08</a></td></tr>
+        <tr><td>§3</td><td>Рекламные расходы, оригинальная валюта</td><td><a href="#s13">§ 13</a>, <a href="#s8">§ 08</a> (<code>ad_spend</code>)</td></tr>
+        <tr><td>§4</td><td>Налоги, Ad Spend vs Total Marketing Cost</td><td><a href="#s13">§ 13</a>, <a href="#s8">§ 08</a> (<code>ad_accounts</code>)</td></tr>
+        <tr><td>§5</td><td>Lead ID и привязка источника</td><td><a href="#s2">§ 02</a>, <a href="#s8">§ 08</a> (<code>leads</code>)</td></tr>
+        <tr><td>§6</td><td>Воронка лида и статусы потерь</td><td><a href="#s9">§ 09</a></td></tr>
+        <tr><td>§7</td><td>Дозвон</td><td><a href="#s10">§ 10</a></td></tr>
+        <tr><td>§8</td><td>Конверсии между этапами</td><td><a href="#s14">§ 14</a></td></tr>
+        <tr><td>§9</td><td>Основные KPI</td><td><a href="#s14">§ 14</a>, <a href="#s16">§ 16</a> (Обзор CEO)</td></tr>
+        <tr><td>§10–11</td><td>CPL, CAC</td><td><a href="#s14">§ 14</a> (CAC — изменено, § 22 п. 4)</td></tr>
+        <tr><td>§12</td><td>Средний чек</td><td><a href="#s14">§ 14</a> (§ 22 п. 5)</td></tr>
+        <tr><td>§13–14</td><td>Прогнозная и фактическая касса</td><td><a href="#s13">§ 13</a></td></tr>
+        <tr><td>§15–16</td><td>ROAS, ROMI</td><td><a href="#s14">§ 14</a></td></tr>
+        <tr><td>§17</td><td>Маржа</td><td><a href="#s13">§ 13</a>, <a href="#s14">§ 14</a></td></tr>
+        <tr><td>§18–19</td><td>Фильтры, Source</td><td><a href="#s17">§ 17</a></td></tr>
+        <tr><td>§20</td><td>UTM</td><td><a href="#s7">§ 07</a></td></tr>
+        <tr><td>§21</td><td>Креатив</td><td><a href="#s8">§ 08</a>, <a href="#s16">§ 16</a></td></tr>
+        <tr><td>§22–23</td><td>Мультиязычность, валюты</td><td><a href="#s18">§ 18</a>, <a href="#s13">§ 13</a></td></tr>
+        <tr><td>§24</td><td>Главный дашборд и детализация</td><td><a href="#s16">§ 16</a></td></tr>
+        <tr><td>§25, финал</td><td>Единая цепочка данных, разрез GEO × Team × … × Date</td><td><a href="#s3">§ 03</a>, <a href="#s17">§ 17</a></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>TZ-1 (правки дашборда)</h3>
+    <div class="tw">
+    <table>
+      <thead><tr><th>TZ-1</th><th>Тема</th><th>Где</th></tr></thead>
+      <tbody>
+        <tr><td>§1</td><td>Период по умолчанию, кнопка «Фільтри», восемь фильтров кампаний</td><td><a href="#s17">§ 17</a></td></tr>
+        <tr><td>§2.1</td><td>Фильтры рекламного баланса</td><td><a href="#s13">§ 13</a></td></tr>
+        <tr><td>§2.2–2.3</td><td>«Додати витрату», модалка, список кампаний по роли</td><td><a href="#s13">§ 13</a>, <a href="#s17">§ 17</a> (§ 22 п. 3)</td></tr>
+        <tr><td>§2.4</td><td>Баланс подчинённых по ролям</td><td><a href="#s17">§ 17</a></td></tr>
+        <tr><td>§2.5</td><td>История баланса: поля, типы операций, сворачивание, пагинация</td><td><a href="#s13">§ 13</a>, <a href="#s18">§ 18</a></td></tr>
+        <tr><td>§3.1–3.8</td><td>Факт / прогноз, синий, перенос названий, выравнивание, шапка, валюта, шкала ROMI</td><td><a href="#s16">§ 16</a>, <a href="#s18">§ 18</a></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>Страница v6</h3>
+    <div class="tw">
+    <table>
+      <thead><tr><th>v6</th><th>Тема</th><th>Где</th></tr></thead>
+      <tbody>
+        <tr><td>§1</td><td>Задача, принцип разделения, вне скоупа</td><td><a href="#s1">§ 01</a></td></tr>
+        <tr><td>§2</td><td>Словарь</td><td><a href="#s2">§ 02</a></td></tr>
+        <tr><td>§3</td><td>Путь клиента, детализация квиза</td><td><a href="#s4">§ 04</a></td></tr>
+        <tr><td>§4</td><td>Два ключа</td><td><a href="#s5">§ 05</a></td></tr>
+        <tr><td>§5</td><td>События трекинга, конверт, надёжность</td><td><a href="#s6">§ 06</a></td></tr>
+        <tr><td>§6</td><td>Идентификация и склейка</td><td><a href="#s7">§ 07</a></td></tr>
+        <tr><td>§7</td><td>Модель данных, витрина, задел</td><td><a href="#s8">§ 08</a></td></tr>
+        <tr><td>§8</td><td>Статусы, переходы, исходы КЦ</td><td><a href="#s9">§ 09</a>, <a href="#s10">§ 10</a></td></tr>
+        <tr><td>§9</td><td>Атрибуция, маркетолог, касания, валюта</td><td><a href="#s11">§ 11</a></td></tr>
+        <tr><td>§10</td><td>Экран в CRM, поведение</td><td><a href="#s16">§ 16</a></td></tr>
+        <tr><td>§11</td><td>Метрики, контрольный пример</td><td><a href="#s14">§ 14</a>, <a href="#s15">§ 15</a></td></tr>
+        <tr><td>§12</td><td>Интеграции</td><td><a href="#s19">§ 19</a></td></tr>
+        <tr><td>§13</td><td>Этапы</td><td><a href="#s20">§ 20</a></td></tr>
+        <tr><td>§14</td><td>Критерии приёмки</td><td><a href="#s21">§ 21</a></td></tr>
+        <tr><td>§15</td><td>Открытые вопросы</td><td><a href="#s23">§ 23</a></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>Дополнения заказчика и README прототипа</h3>
+    <div class="tw">
+    <table>
+      <thead><tr><th>Источник</th><th>Пункт</th><th>Где</th></tr></thead>
+      <tbody>
+        <tr><td>Доп.</td><td>Считать подписки клиента / юристов</td><td><a href="#s12">§ 12</a>, <a href="#s16">§ 16</a>, <a href="#s20">§ 20</a> (этап 4)</td></tr>
+        <tr><td>Доп.</td><td>Лиды «на продаж» и в колл-центр; всего лидов и разбивка</td><td><a href="#s9">§ 09</a>, <a href="#s16">§ 16</a> (Направления)</td></tr>
+        <tr><td>Доп.</td><td>Деньги по направлениям и общая сумма</td><td><a href="#s13">§ 13</a>, <a href="#s15">§ 15</a> (пример B)</td></tr>
+        <tr><td>Доп.</td><td>Отложенная конверсия КЦ через неделю</td><td><a href="#s10">§ 10</a>, <a href="#s11">§ 11</a>, <a href="#s13">§ 13</a> (две оси дат), <a href="#s15">§ 15</a> (пример C)</td></tr>
+        <tr><td>Доп.</td><td>Общий профит</td><td><a href="#s13">§ 13</a> (уровни), <a href="#s14">§ 14</a></td></tr>
+        <tr><td>README</td><td>Формула ROMI, расхождение таблицы, база CVR, пороги, LTV</td><td><a href="#s14">§ 14</a>, <a href="#s22">§ 22</a>, <a href="#s23">§ 23</a></td></tr>
+        <tr><td>README</td><td>Ограничения прототипа: сохранение в памяти, имя файла, экспорт-уведомление, роль без сервера</td><td><a href="#s0">§ 00</a>, <a href="#s13">§ 13</a>, <a href="#s16">§ 16</a>, <a href="#s17">§ 17</a></td></tr>
       </tbody>
     </table>
     </div>
   </section>
 
   <footer>
-    Составлено по расшифровке обсуждения · черновик v1.0 · требует подтверждения по §15 перед оценкой сроков
+    Сводная редакция 2.0 · 30.09.2026 · объединяет ТЗ Google Docs, TZ-1, страницу v6 и дополнения заказчика · требует подтверждения по § 22–23 перед оценкой сроков<br>
+    Текстовая версия документа: <code>06_Единое_ТЗ.md</code> в той же папке.
   </footer>
 
   </main>
 </div>
 </div>
+
+<script>
+(function(){
+  var links = document.querySelectorAll('.toc a[href^="#"]');
+  if(!links.length || !('IntersectionObserver' in window)) return;
+  var map = {};
+  links.forEach(function(a){ map[a.getAttribute('href').slice(1)] = a; });
+  var current = null;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        if(current) current.classList.remove('active');
+        current = map[e.target.id]; if(current) current.classList.add('active');
+      }
+    });
+  }, {rootMargin:'-10% 0px -70% 0px', threshold:0});
+  document.querySelectorAll('main section[id]').forEach(function(s){ io.observe(s); });
+})();
+</script>
 </body>
 </html>
