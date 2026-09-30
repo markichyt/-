@@ -122,7 +122,7 @@
         </div>
       </div>
       <div class="funnel__head">
-        <h1 class="funnel__title funnel__title--hero" id="quiz-title" tabindex="-1">Get a <span class="q-title-tail">free</span> analysis of your situation.</h1>
+        <h1 class="funnel__title funnel__title--hero" id="quiz-title" tabindex="-1">Get an analysis of your situation.</h1>
         <p class="funnel__hint funnel__hint--sm">Describe the problem in 2–3 minutes — we will analyze it and match you with specialists.</p>
       </div>
       <ul class="funnel__points" aria-label="What you get">
@@ -146,13 +146,14 @@
         <div class="mq" data-marquee aria-hidden="true"></div>
       </div>
       <div class="funnel__card funnel__reveal" data-s1-step="2">
-        <p class="funnel__card-label">Your request passes five criteria</p>
+        <p class="funnel__card-label">How we select specialists for you</p>
+        <p class="funnel__hint funnel__hint--sm">We check every specialist against five criteria — you only see those who fit:</p>
         <ul class="funnel__chips" id="s1-chips" aria-label="Matching criteria">
-          <li class="funnel__chip"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Similar cases</li>
+          <li class="funnel__chip"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Experience in similar cases</li>
           <li class="funnel__chip"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Client reviews</li>
           <li class="funnel__chip"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Response speed</li>
-          <li class="funnel__chip"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Transparent price</li>
-          <li class="funnel__chip"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Results</li>
+          <li class="funnel__chip"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Transparent prices</li>
+          <li class="funnel__chip"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Proven results</li>
         </ul>
       </div>
     </section>
@@ -167,7 +168,7 @@
         <label class="field__label" for="settlement">City or town</label>
         <div class="q-search" id="settlement-box">
           <svg class="icon q-search__icon" width="20" height="20" aria-hidden="true"><use href="#i-map-pin"></use></svg>
-          <input class="input input--soft q-search__input" id="settlement" name="settlement" type="text"
+          <input class="input input--soft q-search__input" id="settlement" name="settlement" type="text" placeholder="Start typing"
                  role="combobox" aria-expanded="false" aria-controls="settlement-list" aria-autocomplete="list"
                  autocomplete="off" enterkeyhint="done" aria-describedby="settlement-hint settlement-err">
           <button class="q-search__clear" type="button" aria-label="Clear the field" hidden>
@@ -179,7 +180,7 @@
           </div>
         </div>
         <div class="field__msg">
-          <p class="caption" id="settlement-hint">For example: Miami, FL. Suggestions show the number of specialists.</p>
+          <p class="caption" id="settlement-hint">For example: Miami, FL</p>
           <p class="q-error" id="settlement-err" role="alert" hidden>
             <svg class="q-error__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg>
             Pick a city from the list or check “remotely”
@@ -225,7 +226,7 @@
     <form class="funnel__screen" id="s4" data-screen="s4" aria-labelledby="s4-title" novalidate hidden>
       <div class="funnel__head">
         <h2 class="funnel__title" id="s4-title" tabindex="-1">What do you need help with?</h2>
-        <p class="funnel__hint funnel__hint--sm">You can pick several.</p>
+        <p class="funnel__hint funnel__hint--sm">Pick up to three categories.</p>
       </div>
       <fieldset class="funnel__grid" id="s4-options" aria-describedby="s4-err">
         <legend class="sr-only">Areas of law — pick one or more</legend>
@@ -300,7 +301,7 @@
         <li class="q-steps__item" data-state="upcoming"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">Matching relevant specialists</p><p class="q-steps__status" data-status hidden>In progress…</p></div></li>
       </ol>
       <div class="appframe appframe--compact" role="img" aria-label="Question page in the app: your question, and below it the card of the lawyer who took your request">
-        <div class="appframe__bar">Question #14238</div>
+        <div class="appframe__bar">Your question</div>
         <article class="appframe__card"><p class="appframe__date"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>07/01/2026, 18:04</p><p class="appframe__qt" data-s7-question>Your description</p></article>
         <template id="s7-card"><article class="appframe__ans" data-tier="premium"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="premium"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PREMIUM</span><span class="q-score"><span class="q-score__value num">76,37</span><span class="q-score__scale">/ 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="../assets/people/st.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">OS</span><span class="appframe__meta"><span class="appframe__name">Oleksandr Studentsov</span><span class="appframe__role">Lawyer</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Kyiv</span></span></div><p class="appframe__ts">{{ts}}</p><p class="appframe__txt">{{txt}}</p></article></template>
         <div class="appframe__list" id="s7-answers">
@@ -317,7 +318,7 @@
         <p class="funnel__hint funnel__hint--sm funnel__hide-short">Several relevant specialists can analyze your situation — you compare approaches, not a single opinion.</p>
       </div>
       <div class="appframe appframe--compact" role="img" aria-label="Question page in the app: your question and rated answers from lawyers">
-        <div class="appframe__bar">Question #14238</div>
+        <div class="appframe__bar">Your question</div>
         <article class="appframe__card"><p class="appframe__date"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>07/01/2026, 18:04</p><p class="appframe__qt" data-s8-question>Your description</p></article>
         <div class="appframe__list">
           <article class="appframe__ans" data-tier="premium"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="premium"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PREMIUM</span><span class="q-score"><span class="q-score__value num">76,37</span><span class="q-score__scale">/ 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="../assets/people/st.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">OS</span><span class="appframe__meta"><span class="appframe__name">Oleksandr Studentsov</span><span class="appframe__role">Lawyer</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Kyiv</span></span></div><p class="appframe__ts">14 min later</p><p class="appframe__txt">Suggests an out-of-court route and explains why it is faster in your case.</p></article>
@@ -395,22 +396,22 @@
     <!-- ── S12 · Q5 · Контакти — Крок 5 із 5 (спільна для обох гілок) ───── -->
     <form class="funnel__screen funnel__screen--tight" id="s12" data-screen="s12" aria-labelledby="s12-title" novalidate hidden data-ds-event="quiz_contact_submit">
       <div class="funnel__head">
-        <h2 class="funnel__title" id="s12-title" tabindex="-1">Where should we send the result of the free analysis of your situation?</h2>
+        <h2 class="funnel__title" id="s12-title" tabindex="-1">Where should we send the result of the analysis of your situation?</h2>
         <p class="funnel__hint funnel__hint--sm funnel__hide-short">We will create your question in the app for this number and send the specialists’ answers.</p>
       </div>
       <div class="funnel__form">
         <div class="field">
           <label class="field__label sr-only" id="phone-label" for="phone">Phone (required)</label>
           <div class="q-phone funnel__phone" id="phone-box" role="group" aria-labelledby="phone-label">
-            <span class="q-phone__country" aria-hidden="true"><span class="q-phone__code" data-locale-phone-code>+1</span></span>
+            <label class="q-phone__country"><span class="sr-only">Country code</span><select class="q-phone__cc" id="phone-cc" data-phone-cc></select><span class="q-phone__code" data-locale-phone-code aria-hidden="true">+380</span><svg class="icon q-phone__chev" aria-hidden="true"><use href="#i-chevron-down"></use></svg></label>
             <input class="q-phone__input" id="phone" name="phone" type="tel" inputmode="tel"
                    autocomplete="tel-national" placeholder="305 555 0134" data-locale-phone-placeholder required aria-describedby="phone-hint phone-err">
           </div>
           <div class="field__msg">
-            <p class="caption sr-only" id="phone-hint">Format: +1 305 555 0134</p>
+            <p class="caption sr-only" id="phone-hint">The country code can be changed in the list on the left</p>
             <p class="q-error" id="phone-err" role="alert" hidden>
               <svg class="q-error__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg>
-              Enter the number as +1 XXX XXX XXXX
+              Enter the full phone number
             </p>
           </div>
         </div>
@@ -435,16 +436,6 @@
           </div>
         </details>
 
-        <fieldset class="q-chips funnel__channels">
-          <legend class="sr-only sr-only">How would you like to get the answer? You can pick several</legend>
-          <div class="q-chip-row">
-            <label class="chip q-chip"><input class="q-chip__input" type="checkbox" name="preferred_channels" value="telegram"><span class="q-chip__label">Telegram</span></label>
-            <label class="chip q-chip"><input class="q-chip__input" type="checkbox" name="preferred_channels" value="whatsapp"><span class="q-chip__label">WhatsApp</span></label>
-            <label class="chip q-chip"><input class="q-chip__input" type="checkbox" name="preferred_channels" value="sms"><span class="q-chip__label">SMS</span></label>
-            <label class="chip q-chip"><input class="q-chip__input" type="checkbox" name="preferred_channels" value="phone"><span class="q-chip__label">Phone call</span></label>
-            <label class="chip q-chip"><input class="q-chip__input" type="checkbox" name="preferred_channels" value="email"><span class="q-chip__label">E-mail</span></label>
-          </div>
-        </fieldset>
 
         <div class="field funnel__consent">
           <label class="q-check">
@@ -465,7 +456,7 @@
     <form class="funnel__screen" id="s13" data-screen="s13" aria-labelledby="s13-title" novalidate hidden>
       <div class="funnel__head">
         <h2 class="funnel__title" id="s13-title" tabindex="-1">Package payment</h2>
-        <p class="funnel__hint funnel__hint--sm funnel__hide-short funnel__hide-mid">Your question is already created — the payment does not affect the free analysis.</p>
+        <p class="funnel__hint funnel__hint--sm funnel__hide-short funnel__hide-mid">Your question is already created — the payment does not affect the analysis.</p>
       </div>
       <div class="q-alert" role="alert" tabindex="-1" id="s13-error" hidden>
         <svg class="q-alert__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg>
@@ -546,7 +537,7 @@
           <p class="funnel__vip-tiers" aria-label="Plans: BASE, PRO, PREMIUM"><span class="chip chip--sm q-tier" data-tier="base"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="14" width="4" height="7" rx="1"/><rect x="10" y="9" width="4" height="12" rx="1"/><rect x="17" y="4" width="4" height="17" rx="1"/></svg>BASE</span><span class="chip chip--sm q-tier" data-tier="pro"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="14" width="4" height="7" rx="1"/><rect x="10" y="9" width="4" height="12" rx="1"/><rect x="17" y="4" width="4" height="17" rx="1"/></svg>PRO</span><span class="chip chip--sm q-tier" data-tier="premium"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="14" width="4" height="7" rx="1"/><rect x="10" y="9" width="4" height="12" rx="1"/><rect x="17" y="4" width="4" height="17" rx="1"/></svg>PREMIUM</span></p>
         </div>
       </article>
-      <p class="funnel__key funnel__hide-short funnel__hide-mid">The free analysis is already yours — a plan does not affect it.</p>
+      <p class="funnel__key funnel__hide-short funnel__hide-mid">The analysis is already yours — a plan does not affect it.</p>
     </section>
 
     <!-- ── S16 · Final App CTA — останній екран ─────────────────────────── -->
@@ -555,7 +546,7 @@
         <h2 class="funnel__title" id="s16-title" tabindex="-1">Answers will appear in the ConsultantLM app.</h2>
         <p class="funnel__hint funnel__hint--sm funnel__hide-short">In the app you will see every analysis of your situation in one place.</p>
       </div>
-      <p class="funnel__trigger"><svg class="icon" width="20" height="20" aria-hidden="true"><use href="#i-check"></use></svg>Your first free consultation is already available.</p>
+      <p class="funnel__trigger"><svg class="icon" width="20" height="20" aria-hidden="true"><use href="#i-check"></use></svg>Your first consultation is already available.</p>
       <ol class="funnel__benefits funnel__hide-mid" aria-label="What is in the app">
         <li>AI analysis of your situation</li>
         <li>Answers from several relevant specialists</li>
@@ -585,7 +576,7 @@
   <!-- ── Панель действий: одна на все экраны, всегда у нижнего края (ТЗ §3) ── -->
   <footer class="funnel__bottom" id="funnel-bar" aria-label="Step actions">
     <div class="funnel__botin">
-      <p class="funnel__note" id="funnel-note">2–3 minutes · First consultation is free</p>
+      <p class="funnel__note" id="funnel-note">2–3 minutes</p>
       <div class="funnel__row">
         <button class="btn btn--ghost funnel__back" type="button" id="funnel-back" data-nav="back" aria-label="Back" hidden>
           <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
@@ -593,7 +584,7 @@
         </button>
         <button class="btn btn--ghost funnel__skip" type="button" id="funnel-skip" data-nav="skip" hidden>Skip</button>
         <button class="btn btn--primary funnel__next" type="button" id="funnel-next" data-nav="next" data-ds-event="quiz_start">
-          <span class="btn__label"><span class="funnel__lbl--full" data-lbl-full>Start the free analysis</span><span class="funnel__lbl--short" data-lbl-short></span></span>
+          <span class="btn__label"><span class="funnel__lbl--full" data-lbl-full>Start analysis</span><span class="funnel__lbl--short" data-lbl-short></span></span>
           <span class="btn__spinner" aria-hidden="true"></span>
         </button>
         <a class="btn btn--primary funnel__next" id="funnel-link" href="https://consultantlm.com/app?src=quiz" rel="noopener" data-ds-event="quiz_result_view" hidden>View the answers</a>
@@ -660,7 +651,9 @@
     ['business', 'Business', 220, 'i-briefcase'], ['military', 'Military', 275, 'i-shield-alert'], ['criminal', 'Criminal', 130, 'i-scale'],
     ['debt', 'Debt recovery', 118, 'i-coins'], ['other', 'Other', 0, 'i-dots']
   ];
-  var CASES = {  // кейси — заголовками, як у макеті власника 24.09 (фікстури до бази кейсів сайту)
+  var CASE_COUNT = L.caseCounts || null;  // реальна кількість кейсів за категорією (data/quiz-cases.json), інакше — показник з CATEGORIES
+  function caseCount(id) { var c = CATEGORIES.filter(function (x) { return x[0] === id; })[0]; return CASE_COUNT ? (CASE_COUNT[id] || 0) : (c ? c[2] : 0); }
+  var CASES = L.cases || {  // кейси — заголовками, як у макеті власника 24.09 (фікстури до бази кейсів сайту)
     family: [['Divorce and child residence', 'Settlement and visitation schedule'], ['Child support from a parent abroad', 'Fixed child support awarded'], ['Grandmother’s guardianship of a grandchild', 'Guardianship granted, benefits received']],
     general: [['Flooded by a neighbour, insurer refused', 'Compensation paid without court'], ['Disputed charges from the building manager', 'Recalculated, debt cancelled'], ['Public information request refused', 'Information provided after a complaint']],
     debtor: [['Debt collector pressure over a microloan', 'Penalty ruled unlawful, amount reduced'], ['Bank lawsuit over a 10-year-old loan', 'Time-barred, claim dismissed'], ['Salary card frozen by enforcement', 'Freeze lifted, payment schedule set']],
@@ -688,7 +681,7 @@
     s15:'s11', s13:'s14', s14:'s16' };
   var ANIMATED = { s1:true, s3:true, s7:true };
   var BAR = {
-    s0:  { label:'Start the free analysis', short:'Start analysis', shortAt:'narrow', event:'quiz_start', back:false, note:'2–3 minutes' },
+    s0:  { label:'Start analysis', event:'quiz_start', back:false, note:'2–3 minutes' },
     s1:  { label:'Continue' },
     s2:  { label:'Next', submit:true },
     s3:  { label:'Continue' },
@@ -699,7 +692,7 @@
     s8:  { label:'Continue' },
     s9:  { label:'Next', submit:true },
     s11: { label:'Buy package', submit:true, alt:{ label:'Continue without VIP', nav:'free' } },
-    s12: { label:'Get the free analysis', short:'Get the analysis', submit:true, event:'quiz_contact_submit' },
+    s12: { label:'Get the analysis', submit:true, event:'quiz_contact_submit' },
     s13: { label:'Pay', submit:true, alt:{ label:'Continue without VIP', nav:'free-after-fail' } },
     s14: { label:'Continue', back:false },
     s15: { label:'See details', back:false, alt:{ label:'Continue without VIP', nav:'free' } },
@@ -775,20 +768,32 @@
 
   /* ── прогресс в верхней панели ── */
   var progress = $('#funnel-progress'), bars = $('#funnel-bars'), where = $('#funnel-where');
+  var STEP_AT = { s1: 1, s2: 1, s3: 2, s4: 2, s5: 3, s6: 3, s7: 4, s8: 4, s9: 4, s12: 5 };  // крок видно й на проміжних екранах: номер наступного питання
   function updateProgress(id) {
-    var q = QUESTION[id];
-    progress.hidden = !q; where.hidden = !q;
-    if (!q) return;
+    var step = STEP_AT[id], q = QUESTION[id];
+    progress.hidden = !step; where.hidden = !step;
+    if (!step) return;
     $$('.progress__seg', bars).forEach(function (b, i) {
       var n = i + 1;
-      b.classList.toggle('is-done', n < q[0]);
-      b.classList.toggle('is-current', n === q[0]);
-      b.style.setProperty('--fill', n === q[0] ? '1' : '0');
+      b.classList.toggle('is-done', n < step);
+      b.classList.toggle('is-current', n === step);
+      b.style.setProperty('--fill', n === step ? (q ? '1' : '0.5') : '0');
     });
-    bars.setAttribute('aria-valuenow', String(q[0]));
-    bars.setAttribute('aria-valuetext', stepText(q[0], 5));
-    where.textContent = stepText(q[0], 5);
+    bars.setAttribute('aria-valuenow', String(step));
+    bars.setAttribute('aria-valuetext', stepText(step, 5));
+    where.textContent = stepText(step, 5);
   }
+
+  /* ── кнопка кроку неактивна, поки не виконано обов’язкове (побажання власника 30.09) ── */
+  var GATE = {
+    s2: function () { var r = $('#remote'); return !!(state.settlement || (r && r.checked)); },
+    s4: function () { return !!$('#s4-options input:checked'); },
+    s6: function () { var t = $('#story'); return !!((t && t.value.trim().length) || state.voice); },
+    s9: function () { return !!$('#s9 input:checked'); },
+    s12: function () { var ph = $('#phone'), d = ph ? ph.value.replace(/\D/g, '') : ''; return !!($('#consent').checked && d.length >= +(ph.dataset.min || 7) && d.length <= +(ph.dataset.max || 12)); }
+  };
+  function refreshGate() { var g = GATE[current]; if (!g) return; var off = !g(); bar.next.disabled = off; bar.next.setAttribute('aria-disabled', off ? 'true' : 'false'); }
+  root.addEventListener('input', refreshGate); root.addEventListener('change', refreshGate);
 
   /* ── нижняя панель действий ── */
   function renderBar(id) {
@@ -837,7 +842,7 @@
       track('quiz_step_view', { quiz_step: id, quiz_step_name: NAMES[id] });
       if (state.trail[state.trail.length - 1] !== id) state.trail.push(id);
     }
-    current = id;
+    current = id; refreshGate();
   }
   function targetFromHash() {
     var h = (location.hash || '#s0').replace('#', '');
@@ -898,7 +903,7 @@
     function open() { pop.hidden = false; void pop.offsetWidth; pop.classList.add('is-open'); input.setAttribute('aria-expanded', 'true'); }
     function pick(i) {
       var s = items[i]; if (!s) return;
-      state.settlement = { name: s[0], region: s[1], count: s[2], lat: s[3], lon: s[4], country: s[5] || L.country };
+      state.settlement = { name: s[0], region: s[1], count: s[2], lat: s[3], lon: s[4], country: s[5] || L.country }; refreshGate();
       if (state.settlement.country !== L.country) loadGeo(state.settlement.country).catch(function () {});
       input.value = s[0] + ', ' + s[1];
       clear.hidden = false;
@@ -911,13 +916,12 @@
       items = n.length ? SETTLEMENTS.filter(function (s) { var t = norm(s[0]); return t.indexOf(n) === 0 || t.indexOf(' ' + n) !== -1 || t.indexOf('-' + n) !== -1; }).slice(0, 8) : [];
       list.innerHTML = items.map(function (s, i) {
         return '<div class="q-search__opt" role="option" id="settlement-o' + i + '" aria-selected="false" data-i="' + i + '">' +
-          '<span class="q-search__opt-text">' + esc(s[0]) + ', ' + esc(s[1]) + '</span>' +
-          '<span class="q-search__opt-note num">' + esc(specialists(s[2])) + '</span></div>';
+          '<span class="q-search__opt-text">' + esc(s[0]) + ', ' + esc(s[1]) + '</span></div>';
       }).join('');
       empty.hidden = !(n.length && !items.length);
       if (n.length) open(); else close();
     }
-    input.addEventListener('input', function () { state.settlement = null; clear.hidden = !input.value; renderList(input.value); });
+    input.addEventListener('input', function () { state.settlement = null; refreshGate(); clear.hidden = !input.value; renderList(input.value); });
     input.addEventListener('focus', function () { if (input.value && !state.settlement) renderList(input.value); });
     input.addEventListener('keydown', function (e) {
       if (pop.hidden) return;
@@ -933,7 +937,7 @@
     list.addEventListener('mousedown', function (e) { e.preventDefault(); });
     list.addEventListener('click', function (e) { var o = e.target.closest('[data-i]'); if (o) pick(+o.dataset.i); });
     input.addEventListener('blur', function () { setTimeout(close, 120); });
-    clear.addEventListener('click', function () { input.value = ''; state.settlement = null; clear.hidden = true; close(); input.focus(); });
+    clear.addEventListener('click', function () { input.value = ''; state.settlement = null; refreshGate(); clear.hidden = true; close(); input.focus(); });
     remote.addEventListener('change', function () { state.remote = remote.checked; if (remote.checked) showError(null, err, false); });
     $('#s2').addEventListener('submit', function (e) {
       e.preventDefault();
@@ -953,7 +957,11 @@
       return '<label class="q-option q-option--tile"><input class="q-option__input" type="checkbox" name="practice_areas" value="' + c[0] + '">' +
         '<span class="q-option__label"><svg class="funnel__tile-icon icon" aria-hidden="true"><use href="#' + c[3] + '"></use></svg><span class="funnel__tile-text"><span>' + esc(c[1]) + '</span><small class="funnel__tile-count funnel__hide-short">' + (c[2] ? specialists(c[2]) : 'any other matter') + '</small></span></span></label>';
     }).join(''));
-    fs.addEventListener('change', function () { if ($$('input:checked', fs).length) showError(fs, err, false); });
+    var LIMIT = 3;
+    fs.addEventListener('change', function () {
+      var n = $$('input:checked', fs).length; if (n) showError(fs, err, false);
+      $$('input', fs).forEach(function (i) { if (!i.checked) { i.disabled = n >= LIMIT; i.closest('.q-option').classList.toggle('is-locked', n >= LIMIT); } });  /* не більше трьох категорій */
+    });
     $('#s4').addEventListener('submit', function (e) {
       e.preventDefault();
       var picked = $$('input:checked', fs).map(function (i) { return i.value; });
@@ -984,7 +992,7 @@
         rec.onstop = function () {
           var blob = new Blob(chunks, { type: rec.mimeType || 'audio/webm' });
           var dur = Date.now() - t0;
-          state.voice = { blob: blob, duration_ms: dur, size: blob.size, mime: blob.type };
+          state.voice = { blob: blob, duration_ms: dur, size: blob.size, mime: blob.type }; refreshGate();
           setState('saved');
           text.textContent = 'Recorded ' + fmt(dur) + ' · Saved';
           label.textContent = 'Tell it by voice'; icon.setAttribute('href', '#i-mic');
@@ -1093,18 +1101,32 @@
   (function () {
     var form = $('#s12'), phone = $('#phone'), phoneBox = $('#phone-box'), perr = $('#phone-err');
     var email = $('#email'), eerr = $('#email-err'), consent = $('#consent'), cerr = $('#consent-err'), more = $('#s12-more');
-    var PH = L.phone || { code: '+380', digits: 9, groups: [2, 3, 2, 2] };
-    function groupDigits(d) { var out = [], i = 0; PH.groups.forEach(function (g) { if (i < d.length) out.push(d.slice(i, i + g)); i += g; }); return out.join(' '); }
+    /* коди країн: [ISO, код, мін. цифр, макс. цифр, групи, приклад] — за замовчуванням країна локалі */
+    var CC = [['UA', '+380', 9, 9, [2, 3, 2, 2], '67 123 45 67'], ['US', '+1', 10, 10, [3, 3, 4], '212 555 0123'], ['CA', '+1', 10, 10, [3, 3, 4], '416 555 0123'], ['PL', '+48', 9, 9, [3, 3, 3], '512 345 678'],
+      ['DE', '+49', 10, 11, [3, 4, 4], '151 2345 6789'], ['CZ', '+420', 9, 9, [3, 3, 3], '601 123 456'], ['GB', '+44', 10, 10, [4, 6], '7400 123456'], ['IL', '+972', 9, 9, [2, 3, 4], '52 123 4567'],
+      ['IT', '+39', 9, 10, [3, 3, 4], '312 345 6789'], ['ES', '+34', 9, 9, [3, 3, 3], '612 345 678'], ['FR', '+33', 9, 9, [1, 2, 2, 2, 2], '6 12 34 56 78'], ['NL', '+31', 9, 9, [1, 4, 4], '6 1234 5678'],
+      ['AT', '+43', 10, 11, [3, 3, 4], '664 123 4567'], ['CH', '+41', 9, 9, [2, 3, 2, 2], '78 123 45 67'], ['PT', '+351', 9, 9, [3, 3, 3], '912 345 678'], ['LT', '+370', 8, 8, [3, 5], '612 34567'],
+      ['LV', '+371', 8, 8, [2, 3, 3], '21 234 567'], ['EE', '+372', 7, 8, [4, 4], '5123 4567'], ['SK', '+421', 9, 9, [3, 3, 3], '912 345 678'], ['HU', '+36', 9, 9, [2, 3, 4], '20 123 4567'],
+      ['MD', '+373', 8, 8, [3, 2, 3], '621 23 456'], ['RO', '+40', 9, 9, [3, 3, 3], '712 345 678'], ['BG', '+359', 8, 9, [2, 3, 4], '88 123 4567'], ['TR', '+90', 10, 10, [3, 3, 4], '532 123 4567'],
+      ['GE', '+995', 9, 9, [3, 2, 2, 2], '555 12 34 56'], ['KZ', '+7', 10, 10, [3, 3, 4], '701 123 4567'], ['AE', '+971', 9, 9, [2, 3, 4], '50 123 4567']];
+    var NAMES = { UA: 'USA', US: 'USA', CA: 'Canada', PL: 'Poland', DE: 'Germany', CZ: 'Czechia', GB: 'United Kingdom', IL: 'Israel', IT: 'Italy', ES: 'Spain', FR: 'France', NL: 'Netherlands', AT: 'Austria', CH: 'Switzerland', PT: 'Portugal', LT: 'Lithuania', LV: 'Latvia', EE: 'Estonia', SK: 'Slovakia', HU: 'Hungary', MD: 'Moldova', RO: 'Romania', BG: 'Bulgaria', TR: 'Türkiye', GE: 'Georgia', KZ: 'Kazakhstan', AE: 'UAE' };
+    var ccSel = $('#phone-cc'), ccCode = $('[data-locale-phone-code]', form), PH = null;
+    function ccRow(iso) { return CC.filter(function (r) { return r[0] === iso; })[0] || CC[0]; }
+    function setCountry(iso) { var r = ccRow(iso); PH = { iso: r[0], code: r[1], min: r[2], max: r[3], groups: r[4] }; ccCode.textContent = r[1]; phone.placeholder = r[5]; phone.dataset.min = r[2]; phone.dataset.max = r[3]; if (ccSel.value !== r[0]) ccSel.value = r[0]; }
+    ccSel.innerHTML = CC.map(function (r) { return '<option value="' + r[0] + '">' + (NAMES[r[0]] || r[0]) + ' ' + r[1] + '</option>'; }).join('');
+    setCountry((L.phone && L.phone.iso) || L.country || 'UA');
+    ccSel.addEventListener('change', function () { setCountry(ccSel.value); phone.value = groupDigits(phone.value.replace(/\D/g, '').slice(0, PH.max)); phoneBox.removeAttribute('data-state'); phone.focus(); });
+    function groupDigits(d) { var out = [], i = 0; PH.groups.forEach(function (g) { if (i < d.length) out.push(d.slice(i, i + g)); i += g; }); if (i < d.length) out.push(d.slice(i)); return out.join(' '); }
     phone.addEventListener('input', function () {
-      var d = phone.value.replace(/\D/g, '').replace(new RegExp('^' + PH.code.slice(1)), '').slice(0, PH.digits);
+      var d = phone.value.replace(/\D/g, '').replace(new RegExp('^' + PH.code.slice(1)), '').slice(0, PH.max);
       phone.value = groupDigits(d);
-      if (d.length === PH.digits) { phoneBox.dataset.state = 'success'; perr.hidden = true; } else phoneBox.removeAttribute('data-state');
+      if (d.length >= PH.min && d.length <= PH.max) { phoneBox.dataset.state = 'success'; perr.hidden = true; } else phoneBox.removeAttribute('data-state');
     });
     consent.addEventListener('change', function () { if (consent.checked) cerr.hidden = true; });
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var digits = phone.value.replace(/\D/g, ''), ok = true, first = null;
-      if (digits.length !== PH.digits) { phoneBox.dataset.state = 'invalid'; phone.setAttribute('aria-invalid', 'true'); perr.hidden = false; ok = false; first = first || phone; }
+      if (digits.length < PH.min || digits.length > PH.max) { phoneBox.dataset.state = 'invalid'; phone.setAttribute('aria-invalid', 'true'); perr.hidden = false; ok = false; first = first || phone; }
       else { phoneBox.dataset.state = 'success'; phone.removeAttribute('aria-invalid'); perr.hidden = true; }
       if (email.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) { more.open = true; email.setAttribute('aria-invalid', 'true'); eerr.hidden = false; ok = false; first = first || email; }
       else { email.removeAttribute('aria-invalid'); eerr.hidden = true; }
@@ -1119,13 +1141,13 @@
       later(function () {
         state.leadId = '2026-' + String(Math.floor(10000 + Math.random() * 89999));
         var lead = { lead_id: state.leadId, phone: state.phone.replace(/\s/g, ''), name: state.name || null, email: state.email || null,
-          preferred_channels: state.channels, settlement: state.settlement ? state.settlement.name : null,
+          settlement: state.settlement ? state.settlement.name : null,
           region: state.settlement ? state.settlement.region : null, remote_ok: state.remote, practice_areas: state.categories,
           case_description: state.description || null, voice_audio: state.voice ? { duration_ms: state.voice.duration_ms, size: state.voice.size, mime: state.voice.mime } : null,
           client_intent: state.intent, membership_intent: state.plan ? state.plan.id : null, attribution: state.attribution,
           last_step_reached: 's12', created_at: new Date().toISOString() };
         try { console.info('[quiz] lead + question created', lead); } catch (err) {}
-        track('quiz_contact_submit', { quiz_step: 's12', client_intent: state.intent, has_email: !!state.email, channels: state.channels.join(',') });
+        track('quiz_contact_submit', { quiz_step: 's12', client_intent: state.intent, has_email: !!state.email });
         setBusy(bar.next, false);
         $$('[data-s13-phone], [data-s15-phone]').forEach(function (n) { n.textContent = state.phone; });
         go('s15');
@@ -1165,6 +1187,8 @@
     });
     later(function () { if (onDone) onDone(items); }, stepMs * items.length);
   }
+  function fmtNow() { var d = new Date(), p = function (n) { return (n < 10 ? '0' : '') + n; }; return (L.lang === 'en' ? p(d.getMonth() + 1) + '/' + p(d.getDate()) + '/' + d.getFullYear() : p(d.getDate()) + '.' + p(d.getMonth() + 1) + '.' + d.getFullYear()) + ', ' + p(d.getHours()) + ':' + p(d.getMinutes()); }
+  function stampNow(el) { $$('.appframe__date', el).forEach(function (q) { q.lastChild.textContent = fmtNow(); }); }
   function reveal(el, on) { if (el) el.classList.toggle('is-visible', on !== false); }
   /* горизонтальная лента карточек: точки-пагинация, активная — ближайшая к центру */
   function railDots(rail, dots) {
@@ -1188,11 +1212,13 @@
   (function buildMarquee() {
     var host = $('[data-marquee]'); if (!host) return;
     // 28 реальних фахівців платформи (усі — рівень PREMIUM у каталозі consultant.net.ua, вересень 2026); бейдж показує рівень, а не вигадану оцінку
-    var REAL = ['787','523','280','301','2258','828','1380','941','2189','1132','444','870','2351','379', '754','233','2267','1640','1059','798','2178','1455','2233','2176','1256','725','2196','619'];  // кадри по обличчю на білому тлі (tools/photos)
+    // 28 реальних фахівців платформи з каталогу consultant.net.ua (знімок 30.09.2026): рівні PREMIUM / PRO / START упереміш, бейдж показує рівень
+    var REAL = [['787', 'PREMIUM'], ['2473', 'PRO'], ['523', 'PREMIUM'], ['1361', 'START'], ['280', 'PREMIUM'], ['2486', 'PRO'], ['301', 'PREMIUM'], ['2434', 'START'], ['2258', 'PREMIUM'], ['2528', 'PRO'], ['828', 'PREMIUM'], ['2488', 'START'], ['1380', 'PREMIUM'], ['2534', 'PRO'],
+      ['941', 'PREMIUM'], ['2705', 'START'], ['2189', 'PREMIUM'], ['2712', 'PRO'], ['1132', 'PREMIUM'], ['2792', 'START'], ['444', 'PREMIUM'], ['2714', 'PRO'], ['870', 'PREMIUM'], ['738', 'START'], ['2351', 'PREMIUM'], ['2634', 'PRO'], ['379', 'PREMIUM'], ['1606', 'PRO']];
     var STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.6L12 17.5l-5.9 3.2 1.2-6.6L2.5 9.5l6.6-.9z"/></svg>';
     function set(from, to) {
       var h = '<div class="mq__set">';
-      for (var i = from; i <= to; i++) h += '<span class="mq__tile"><img src="../assets/people/real/' + REAL[i - 1] + '.jpg" alt="" width="176" height="176" decoding="async" fetchpriority="low"><span class="mq__badge">' + STAR + 'PREMIUM</span></span>';
+      for (var i = from; i <= to; i++) h += '<span class="mq__tile"><img src="../assets/people/real/' + REAL[i - 1][0] + '.jpg" alt="" width="176" height="176" decoding="async" fetchpriority="low"><span class="mq__badge" data-level="' + REAL[i - 1][1].toLowerCase() + '">' + STAR + REAL[i - 1][1] + '</span></span>';
       return h + '</div>';
     }
     host.innerHTML = '<div class="mq__tilt"><div class="mq__row mq__row--a">' + set(1, 14) + set(1, 14) + '</div></div>' +
@@ -1244,7 +1270,7 @@
       later(function () { reveal($('[data-s3-people-wrap]', el)); }, 1100);
       $$('.funnel__person', people).forEach(function (n, i) { later(function () { reveal(n); }, 1300 + i * 220); });
       later(function () {
-        title.textContent = name + ': we found ' + specialists(count, true) + (fallback ? ' in your state' : '') + '.';
+        title.textContent = s ? name + ': specialists are ready to take your case.' : 'Remote: specialists across the country are ready to help.';
         reveal(note); reveal($('[data-s3-bottom]', el));
         say(title.textContent);
         doneAnimating();
@@ -1254,14 +1280,14 @@
       var picked = state.categories.filter(function (c) { return c !== 'other'; });
       if (!picked.length) picked = ['general'];
       picked = picked.slice().sort(function (a, b) { return catOf(b)[2] - catOf(a)[2]; });
-      var total = picked.reduce(function (n, id) { return n + catOf(id)[2]; }, 0);
+      var total = picked.reduce(function (n, id) { return n + caseCount(id); }, 0);
       $('[data-s5-total]', el).textContent = nbsp(total);
-      $('[data-s5-total-label]', el).textContent = plural(total, ['case', 'cases', 'cases']) + ' ' + 'in the last 12 months' + (picked.length === 1 ? ' · ' + catOf(picked[0])[1] : '');
+      $('[data-s5-total-label]', el).textContent = plural(total, ['case', 'cases', 'cases']) + ' on the platform' + (picked.length === 1 ? ' · ' + catOf(picked[0])[1] : '');
       var counts = $('#s5-counts'), cases = $('#s5-cases');
       counts.hidden = picked.length < 2;
       counts.innerHTML = picked.map(function (id, k) {
         var c = catOf(id);
-        return '<li class="cases-stat' + (k === 0 ? ' cases-stat--accent' : '') + '"><strong class="num">' + nbsp(c[2]) + '</strong><span>' + esc(c[1]) + '</span></li>';
+        return '<li class="cases-stat' + (k === 0 ? ' cases-stat--accent' : '') + '"><strong class="num">' + nbsp(caseCount(id)) + '</strong><span>' + esc(c[1]) + '</span></li>';
       }).join('');
       var pool = [], i = 0;
       while (pool.length < 3 && i < 3) { picked.forEach(function (id) { if (pool.length < 3 && CASES[id][i]) pool.push([id, CASES[id][i]]); }); i++; }
@@ -1273,7 +1299,7 @@
       }).join('');
     },
     s7: function (el) {
-      var q = $('[data-s7-question]', el);
+      stampNow(el); var q = $('[data-s7-question]', el);
       q.textContent = state.description ? state.description : 'Voice message · ' + (state.voice ? Math.round(state.voice.duration_ms / 1000) + ' s' : '');
       var answers = $('#s7-answers');
       answers.innerHTML = '<div class="appframe__skel"><span class="q-skel"></span><span class="q-skel"></span><span class="q-skel"></span></div>' +
@@ -1286,6 +1312,7 @@
       later(function () { doneAnimating(); go('s8'); }, 3400);
     },
     s8: function (el) {
+      stampNow(el);
       var q = $('[data-s8-question]', el);
       q.textContent = state.description ? state.description : 'Your situation (voice message)';
     },

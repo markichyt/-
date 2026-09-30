@@ -711,3 +711,12 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 .funnel__pay-points .icon { flex-shrink: 0; width: 18px; height: 18px; margin-top: 1px; color: var(--color-star); }
 .funnel__pay-points li:first-child { font-weight: 600; }
 @media (max-height: 699px) { .funnel__pay { gap: 8px; padding: 14px 16px; } .funnel__pay-price strong { font-size: 36px; } .funnel__pay-disc strong { font-size: 30px; } .funnel__pay-points { gap: 5px; padding-top: 8px; font-size: 13px; } }
+
+/* Зауваження 30.09: неактивна кнопка кроку, ліміт категорій, код країни, згода */
+.btn:disabled, .btn[aria-disabled="true"] { opacity: .38; cursor: default; }
+.q-option.is-locked { opacity: .45; }
+.q-phone__country { position: relative; display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
+.q-phone__cc { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; font-size: 16px; }
+.q-phone__chev { width: 14px; height: 14px; color: var(--color-gray-600); pointer-events: none; }
+.funnel__consent .q-check { align-items: center; }
+.funnel__consent .q-check::before { margin-top: 0; }
