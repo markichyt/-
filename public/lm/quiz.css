@@ -720,3 +720,7 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 .q-phone__chev { width: 14px; height: 14px; color: var(--color-gray-600); pointer-events: none; }
 .funnel__consent .q-check { align-items: center; }
 .funnel__consent .q-check::before { margin-top: 0; }
+
+/* S8 — три рівні відповідей: PREMIUM тёмна картка, PRO — акцентний чип, START — сірий */
+.q-tier[data-tier="pro"] { border-color: var(--color-accent); color: var(--color-accent); }
+.appframe__ans[data-tier="pro"] { border-color: var(--color-accent); }
