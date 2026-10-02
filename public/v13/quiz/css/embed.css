@@ -1,0 +1,38 @@
+/* ============================================================================
+   CONSULTANT Quiz v2 — вбудований режим (iframe на лендингу).
+   Лише доповнення: кнопка «Закрити» в панелі кроків. Решта — як у v2.
+   ========================================================================== */
+
+/* Власний display у класі перебиває атрибут hidden. */
+.lang-switcher[hidden],
+.qz-close[hidden] { display: none; }
+
+.qz-close {
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  margin-left: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-light, #94a3b8);
+  cursor: pointer;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.qz-close:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--accent, #00b4d8);
+  color: #fff;
+}
+.qz-close:focus-visible {
+  outline: 2px solid var(--accent, #00b4d8);
+  outline-offset: 2px;
+}
+
+/* На телефоні панель кроків — нижня смуга; кнопці потрібна зона натиску 40px. */
+@media (max-width: 430px) {
+  .qz-close { width: 36px; height: 36px; margin-left: 10px; }
+}

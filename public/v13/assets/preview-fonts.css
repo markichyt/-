@@ -1,0 +1,8 @@
+/* Лише для превʼю на GitHub Pages: шрифти з consultant.net.ua / consultantlm.com
+   блокуються CORS на чужому домені, тож підключаємо ті самі файли локально.
+   На продакшені цей файл не потрібен. */
+@font-face{font-display:swap;font-family:"Avenir Next Cyr";font-weight:400;src:url(fonts/AvenirNextCyr-Regular.woff2) format("woff2")}
+@font-face{font-display:swap;font-family:"Avenir Next Cyr";font-weight:500;src:url(fonts/AvenirNextCyr-Medium.woff2) format("woff2")}
+@font-face{font-display:swap;font-family:"Avenir Next Cyr";font-weight:600;src:url(fonts/AvenirNextCyr-Demi.woff2) format("woff2")}
+@font-face{font-display:swap;font-family:"Avenir Next Cyr";font-weight:700;src:url(fonts/AvenirNextCyr-Bold.woff2) format("woff2")}
+@font-face{font-display:swap;font-family:"Bicubik";font-weight:400;src:url(fonts/Bicubik.woff2) format("woff2")}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0b1425">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="robots" content="noindex">
+<meta name="description" content="CONSULTANT — за 2 хвилини дізнайтесь, скільки клієнтів Ви недоотримуєте, і отримайте план, який це виправить.">
+<title>CONSULTANT — більше клієнтів для Вашої практики</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/quiz.css">
+<link rel="stylesheet" href="css/v2.css">
+<link rel="stylesheet" href="css/embed.css">
+<script>
+  // Квіз вбудовано в лендинг (iframe ?embed=1&lang=uk|en). Мову задає
+  // сторінка-хост — це вимикає перемикач мов і демо-параметри прототипу.
+  // Endpoint заявок береться зі сторінки-хоста (window.QUIZ_SUBMIT_URL там),
+  // щоб налаштування було в одному місці.
+  (function () {
+    var params = new URLSearchParams(window.location.search)
+    if (params.get('embed') !== '1') return
+    document.documentElement.classList.add('is-embed')
+    window.QUIZ_LANG = params.get('lang') || 'uk'
+    try {
+      if (!window.QUIZ_SUBMIT_URL && window.parent !== window && window.parent.QUIZ_SUBMIT_URL) {
+        window.QUIZ_SUBMIT_URL = window.parent.QUIZ_SUBMIT_URL
+      }
+    } catch (e) { /* хост на іншому домені — endpoint задається тут */ }
+  })()
+</script>
+</head>
+<body>
+
+<div class="quiz-wrapper">
+  <div class="top-bar">
+    <span class="back-link visible" style="cursor:default;pointer-events:none" data-step-label>КРОК 1 / 9</span>
+    <div class="global-scale">
+      <div class="global-scale-bar">
+        <div class="global-scale-fill" data-progress-fill style="width:11%"></div>
+      </div>
+    </div>
+    <span class="global-scale-pct" data-progress-pct>11%</span>
+    <button class="qz-close" type="button" data-quiz-close hidden aria-label="Закрити">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+
+  <div class="logo-area">
+    <img src="assets/logo.svg" alt="CONSULTANT" class="logo">
+  </div>
+
+  <div class="lang-switcher" data-lang-switcher hidden></div>
+
+  <div class="card-stack">
+    <div class="stack-card active"><div class="card-content"></div></div>
+    <div class="stack-card behind-1"><div class="card-content"></div></div>
+    <div class="stack-card behind-2"><div class="card-content"></div></div>
+  </div>
+</div>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
