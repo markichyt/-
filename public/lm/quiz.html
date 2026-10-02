@@ -292,7 +292,7 @@
       <div class="appframe appframe--compact" role="img" aria-label="Сторінка питання в застосунку: Ваше питання, під ним з’являється картка юриста, який узяв запит у роботу">
         <div class="appframe__bar">Ваше питання</div>
         <article class="appframe__card"><p class="appframe__date"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>01.07.2026, 18:04</p><p class="appframe__qt" data-s7-question>Опис Вашої ситуації</p></article>
-        <template id="s7-card"><article class="appframe__ans" data-tier="premium"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="premium"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PREMIUM</span><span class="q-score"><span class="q-score__value num">76,37</span><span class="q-score__scale">/ 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="assets/people/st.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">СО</span><span class="appframe__meta"><span class="appframe__name">Студенцов Олександр</span><span class="appframe__role">Юрист</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Київ</span></span></div><p class="appframe__ts">{{ts}}</p><p class="appframe__txt">{{txt}}</p></article></template>
+        <template id="s7-card"></template>
         <div class="appframe__list" id="s7-answers">
           <div class="appframe__skel appframe__skel--short"><span class="q-skel"></span><span class="q-skel"></span><span class="q-skel"></span></div>
           <div class="appframe__skel funnel__hide-short"><span class="q-skel"></span><span class="q-skel"></span><span class="q-skel"></span></div>
@@ -309,10 +309,7 @@
       <div class="appframe appframe--compact" role="img" aria-label="Сторінка питання в застосунку: Ваше питання та відповіді юристів із рейтингом">
         <div class="appframe__bar">Ваше питання</div>
         <article class="appframe__card"><p class="appframe__date"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>01.07.2026, 18:04</p><p class="appframe__qt" data-s8-question>Опис Вашої ситуації</p></article>
-        <div class="appframe__list">
-          <article class="appframe__ans" data-tier="premium"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="premium"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PREMIUM</span><span class="q-score"><span class="q-score__value num">76,37</span><span class="q-score__scale">/ 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="assets/people/st.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">СО</span><span class="appframe__meta"><span class="appframe__name">Студенцов Олександр</span><span class="appframe__role">Юрист</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Київ</span></span></div><p class="appframe__ts">через 14 хв</p><p class="appframe__txt">Пропонує позасудовий шлях і пояснює, чому він швидший у Вашому випадку.</p></article>
-          <article class="appframe__ans" data-tier="pro"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="pro"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>PRO</span><span class="q-score"><span class="q-score__value num">68,26</span><span class="q-score__scale">/ 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="assets/people/so.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">СО</span><span class="appframe__meta"><span class="appframe__name">Собяніна Олена</span><span class="appframe__role">Юрист</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Одеса</span></span></div><p class="appframe__ts">через 26 хв</p><p class="appframe__txt">Радить одразу готувати позов і показує, які докази посилять позицію.</p></article><article class="appframe__ans funnel__hide-short" data-tier="start"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="start"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"> <rect x="3" y="14" width="4" height="7" rx="1"/> <rect x="10" y="9" width="4" height="12" rx="1"/> <rect x="17" y="4" width="4" height="17" rx="1"/> </svg>START</span><span class="q-score"><span class="q-score__value num">34,15</span><span class="q-score__scale">/ 100</span></span></div><div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="assets/people/vy.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">ВС</span><span class="appframe__meta"><span class="appframe__name">Висоцький Сергій</span><span class="appframe__role">Юрист</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>Одеса</span></span></div><p class="appframe__ts">через 41 хв</p><p class="appframe__txt">Радить закріпити домовленості письмово й одразу подати на аліменти — це зекономить час у суді.</p></article>
-        </div>
+        <div class="appframe__list" data-answers></div>
       </div>
       <ul class="funnel__chips funnel__hide-short funnel__hide-mid" aria-label="Що це дає">
         <li class="funnel__chip funnel__chip--static"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Різні підходи</li>
@@ -640,6 +637,12 @@
     ['business', 'Бізнес', 220, 'i-briefcase'], ['military', 'Військові питання', 275, 'i-shield-alert'], ['criminal', 'Кримінал', 130, 'i-scale'],
     ['debt', 'Повернення боргу', 118, 'i-coins'], ['other', 'Інше', 0, 'i-dots']
   ];
+  /* відповіді фахівців на S7/S8 — три рівні; для інших країн — з QUIZ_LOCALE.answers (build.py, data/cast-<loc>.json) */
+  var ANSWERS = L.answers || [
+    { tier: 'premium', score: '76,37', name: 'Студенцов Олександр', role: 'Юрист', city: 'Київ', photo: 'st', initials: 'СО', ts: 'через 14 хв', text: 'Пропонує позасудовий шлях і пояснює, чому він швидший у Вашому випадку.' },
+    { tier: 'pro', score: '68,26', name: 'Собяніна Олена', role: 'Юрист', city: 'Одеса', photo: 'so', initials: 'СО', ts: 'через 26 хв', text: 'Радить одразу готувати позов і показує, які докази посилять позицію.' },
+    { tier: 'start', score: '34,15', name: 'Висоцький Сергій', role: 'Юрист', city: 'Одеса', photo: 'vy', initials: 'ВС', ts: 'через 41 хв', hide: true, text: 'Радить закріпити домовленості письмово й одразу подати на аліменти — це зекономить час у суді.' }
+  ];
   var CASE_COUNT = L.caseCounts || null;  // реальна кількість кейсів за категорією (data/quiz-cases.json), інакше — показник з CATEGORIES
   function caseCount(id) { var c = CATEGORIES.filter(function (x) { return x[0] === id; })[0]; return CASE_COUNT ? (CASE_COUNT[id] || 0) : (c ? c[2] : 0); }
   var CASES = L.cases || {  // кейси — заголовками, як у макеті власника 24.09 (фікстури до бази кейсів сайту)
@@ -654,7 +657,7 @@
     criminal: [['Обшук без ухвали суду', 'Докази визнано недопустимими'], ['Підозра у шахрайстві без доказів', 'Провадження закрито'], ['Затримання без захисника', 'Запобіжний захід пом’якшено']],
     debt: [['Боржник не виходив на зв’язок', 'Борг стягнуто, авто арештовано'], ['Орендар не платить і не звільняє приміщення', 'Приміщення повернуто, борг стягнуто'], ['Неповернення передоплати за ремонт', 'Кошти повернуто з відсотками']]
   };
-  var PEOPLE = [
+  var PEOPLE = L.people || [
     ['Студенцов', 'Олександр', 'Юрист', 'СО', 'online', 'st'], ['Молчанов', 'Олег', 'Адвокат', 'МО', 'online', 'mo'],
     ['Подлінєва', 'Віолета', 'Юрист', 'ПВ', 'online', 'po'], ['Грицай', 'Микола', 'Юрист', 'ГМ', 'offline', 'hr']
   ];
@@ -1178,6 +1181,15 @@
   }
   function fmtNow() { var d = new Date(), p = function (n) { return (n < 10 ? '0' : '') + n; }; return (L.lang === 'en' ? p(d.getMonth() + 1) + '/' + p(d.getDate()) + '/' + d.getFullYear() : p(d.getDate()) + '.' + p(d.getMonth() + 1) + '.' + d.getFullYear()) + ', ' + p(d.getHours()) + ':' + p(d.getMinutes()); }
   function stampNow(el) { $$('.appframe__date', el).forEach(function (q) { q.lastChild.textContent = fmtNow(); }); }
+  var TIER_MARK = '<svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="14" width="4" height="7" rx="1"/><rect x="10" y="9" width="4" height="12" rx="1"/><rect x="17" y="4" width="4" height="17" rx="1"/></svg>';
+  function answerCard(a, ts, txt) {
+    return '<article class="appframe__ans' + (a.hide ? ' funnel__hide-short' : '') + '" data-tier="' + a.tier + '"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="' + a.tier + '">' + TIER_MARK + a.tier.toUpperCase() + '</span>' +
+      '<span class="q-score"><span class="q-score__value num">' + esc(a.score) + '</span><span class="q-score__scale">/ 100</span></span></div>' +
+      '<div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="assets/people/' + a.photo + '.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">' + esc(a.initials) + '</span>' +
+      '<span class="appframe__meta"><span class="appframe__name">' + esc(a.name) + '</span><span class="appframe__role">' + esc(a.role) + '</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>' + esc(a.city) + '</span></span></div>' +
+      '<p class="appframe__ts">' + ts + '</p><p class="appframe__txt">' + txt + '</p></article>';
+  }
+  (function () { var list = $('[data-answers]'); if (list) list.innerHTML = ANSWERS.map(function (a) { return answerCard(a, esc(a.ts), esc(a.text)); }).join(''); var t = $('#s7-card'); if (t) t.innerHTML = answerCard(ANSWERS[0], '{{ts}}', '{{txt}}'); })();
   function reveal(el, on) { if (el) el.classList.toggle('is-visible', on !== false); }
   /* горизонтальная лента карточек: точки-пагинация, активная — ближайшая к центру */
   function railDots(rail, dots) {
@@ -1202,12 +1214,12 @@
     var host = $('[data-marquee]'); if (!host) return;
     // 28 реальних фахівців платформи (усі — рівень PREMIUM у каталозі consultant.net.ua, вересень 2026); бейдж показує рівень, а не вигадану оцінку
     // 28 реальних фахівців платформи з каталогу consultant.net.ua (знімок 30.09.2026): рівні PREMIUM / PRO / START упереміш, бейдж показує рівень
-    var REAL = [['787', 'PREMIUM'], ['2473', 'PRO'], ['523', 'PREMIUM'], ['1361', 'START'], ['280', 'PREMIUM'], ['2486', 'PRO'], ['301', 'PREMIUM'], ['2434', 'START'], ['2258', 'PREMIUM'], ['2528', 'PRO'], ['828', 'PREMIUM'], ['2488', 'START'], ['1380', 'PREMIUM'], ['2534', 'PRO'],
-      ['941', 'PREMIUM'], ['2705', 'START'], ['2189', 'PREMIUM'], ['2712', 'PRO'], ['1132', 'PREMIUM'], ['2792', 'START'], ['444', 'PREMIUM'], ['2714', 'PRO'], ['870', 'PREMIUM'], ['738', 'START'], ['2351', 'PREMIUM'], ['2634', 'PRO'], ['379', 'PREMIUM'], ['1606', 'PRO']];
+    var REAL = L.marquee || [['real/787', 'PREMIUM'], ['real/2473', 'PRO'], ['real/523', 'PREMIUM'], ['real/1361', 'START'], ['real/280', 'PREMIUM'], ['real/2486', 'PRO'], ['real/301', 'PREMIUM'], ['real/2434', 'START'], ['real/2258', 'PREMIUM'], ['real/2528', 'PRO'], ['real/828', 'PREMIUM'], ['real/2488', 'START'], ['real/1380', 'PREMIUM'], ['real/2534', 'PRO'],
+      ['real/941', 'PREMIUM'], ['real/2705', 'START'], ['real/2189', 'PREMIUM'], ['real/2712', 'PRO'], ['real/1132', 'PREMIUM'], ['real/2792', 'START'], ['real/444', 'PREMIUM'], ['real/2714', 'PRO'], ['real/870', 'PREMIUM'], ['real/738', 'START'], ['real/2351', 'PREMIUM'], ['real/2634', 'PRO'], ['real/379', 'PREMIUM'], ['real/1606', 'PRO']];
     var STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.6L12 17.5l-5.9 3.2 1.2-6.6L2.5 9.5l6.6-.9z"/></svg>';
     function set(from, to) {
       var h = '<div class="mq__set">';
-      for (var i = from; i <= to; i++) h += '<span class="mq__tile"><img src="assets/people/real/' + REAL[i - 1][0] + '.jpg" alt="" width="176" height="176" decoding="async" fetchpriority="low"><span class="mq__badge" data-level="' + REAL[i - 1][1].toLowerCase() + '">' + STAR + REAL[i - 1][1] + '</span></span>';
+      for (var i = from; i <= to; i++) h += '<span class="mq__tile"><img src="assets/people/' + REAL[i - 1][0] + '.jpg" alt="" width="176" height="176" decoding="async" fetchpriority="low"><span class="mq__badge" data-level="' + REAL[i - 1][1].toLowerCase() + '">' + STAR + REAL[i - 1][1] + '</span></span>';
       return h + '</div>';
     }
     host.innerHTML = '<div class="mq__tilt"><div class="mq__row mq__row--a">' + set(1, 14) + set(1, 14) + '</div></div>' +

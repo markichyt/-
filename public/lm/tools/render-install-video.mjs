@@ -7,7 +7,8 @@ import fs from 'node:fs'; import path from 'node:path'; import { execSync } from
 const DEMO = process.argv[2] || '/Users/mac/VOPROS/consultant-demo/ask-question-demo.html';
 const HERE = path.dirname(new URL(import.meta.url).pathname), ROOT = path.dirname(HERE), OUT = path.join(ROOT, 'assets/app');
 const RP = (n) => 'file://' + path.join(ROOT, 'assets/people', n + '.jpg');
-const AI = 'file:///Users/mac/VOPROS/consultant-demo/assets/andrey.jpg';
+const AI = 'file:///Users/mac/VOPROS/consultant-demo/assets/andrey.jpg', AI_US = 'file:///Users/mac/VOPROS/consultant-demo/assets/emily.jpg';
+const USP = (slug) => 'file://' + path.join(ROOT, 'assets/people/us/av', slug + '.jpg');  // реальні фахівці consultantlm.com
 const LOGO = (f) => 'file://' + path.join(ROOT, 'design-system/assets/logo', f);
 const TEXT = {
   uk: {
@@ -38,16 +39,16 @@ const TEXT = {
     auth: { h: 'Authorization', p: 'of the client by phone number', pre: '+1', ph: '000 000 0000', digits: '2125550123', groups: [3, 3, 4], hint: 'We will send an authorization code to this number', btn: 'Get the code',
       legal: 'By continuing you accept the ', legalLink: 'User Agreement', done: 'Done', codeH: 'Enter the code from SMS', codeP: 'Code sent to ', codeNum: '+1 212 555 0123', code: '4812', resend: 'Resend the code in 0:59', authBtn: 'Authorize' },
     list: [
-      { date: '07/01/2026 18:04', q: 'We decided to divorce, we have two children and cannot agree on custody and the division of property', st: 'Opened', avatars: [RP('st'), RP('mo'), RP('po')], fresh: true },
-      { date: '06/28/2026 11:20', q: 'How do I appeal a parking fine that was issued by mistake?', st: 'Answered', avatars: [RP('hr')] },
-      { date: '06/19/2026 09:45', q: 'Can I get a prepayment back for poor-quality apartment repairs?', st: 'Closed', closed: true, avatars: [RP('od'), RP('bo')] },
-      { date: '06/03/2026 16:10', q: 'What can I do if my landlord will not return the deposit?', st: 'Closed', closed: true, avatars: [RP('st')] } ],
+      { date: '07/01/2026 18:04', q: 'We decided to divorce, we have two children and cannot agree on custody and the division of property', st: 'Opened', avatars: [USP('chochla-basil'), USP('mizrahi-karen'), USP('phylypchyk-svitlana')], fresh: true },
+      { date: '06/28/2026 11:20', q: 'How do I appeal a parking fine that was issued by mistake?', st: 'Answered', avatars: [USP('khidoyatov-miraziz')] },
+      { date: '06/19/2026 09:45', q: 'Can I get a prepayment back for poor-quality apartment repairs?', st: 'Closed', closed: true, avatars: [USP('bukovskaya-yulianna'), USP('artemieva-nataliia')] },
+      { date: '06/03/2026 16:10', q: 'What can I do if my landlord will not return the deposit?', st: 'Closed', closed: true, avatars: [USP('chochla-basil')] } ],
     qnum: 'Question #14238', qdate: '01 July, 2026 18:04', qtitle: 'Divorce with two children: custody and division of property',
     qbody: 'We decided to divorce, we have two children and cannot agree on custody and the division of property.',
     answers: [
-      { band: 'BASE (Base)', score: '35.68', name: 'Assistant Andrey', role: 'Artificial Intelligence', loc: 'USA', ts: '07/01/2026, 18:05', photo: AI, text: 'Custody is set by agreement of the parents or by the court. Property acquired during the marriage is divided equally unless proven otherwise.' },
-      { band: 'PREMIUM', score: '76.37', name: 'Oleksandr Studentsov', role: 'Lawyer', loc: 'Kyiv, Ukraine', ts: '07/01/2026, 18:32', photo: RP('st'), text: 'I suggest an out-of-court route: a notarised property agreement and a visitation schedule. It is faster and cheaper than court.' },
-      { band: 'PREMIUM', score: '42.28', name: 'Oleh Molchanov', role: 'Attorney', loc: 'Kyiv, Ukraine', ts: '07/01/2026, 19:10', photo: RP('mo'), text: 'I would prepare a claim right away: document income and assets and collect proof of your role in raising the children.' } ] }
+      { band: 'BASE (Base)', score: '35.68', name: 'Assistant Emily', role: 'Artificial Intelligence', loc: 'USA', ts: '07/01/2026, 18:05', photo: AI_US, text: 'Custody is set by agreement of the parents or by the court. Property acquired during the marriage is divided equally unless proven otherwise.' },
+      { band: 'PREMIUM', score: '22.38', name: 'Basil Chochla', role: 'Lawyer', loc: 'New York, USA', ts: '07/01/2026, 18:32', photo: USP('chochla-basil'), text: 'I suggest an out-of-court route: a notarised property agreement and a visitation schedule. It is faster and cheaper than court.' },
+      { band: 'PRO', score: '33.23', name: 'Oleksii Tarasenko', role: 'Consultant', loc: 'Henderson, USA', ts: '07/01/2026, 19:10', photo: USP('consultant-1160'), text: 'I would prepare a claim right away: document income and assets and collect proof of your role in raising the children.' } ] }
 };
 const FPS = 30;
 const PLAN = [['store', 36], ['tapget', 12], ['progress', 42], ['open', 15], ['tapopen', 12], ['splash', 15], ['heroin', 12], ['hero', 33], ['taptab', 15],
