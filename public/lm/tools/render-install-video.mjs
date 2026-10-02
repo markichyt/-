@@ -161,7 +161,7 @@ for (const loc of (process.env.ONLY ? [process.env.ONLY] : Object.keys(TEXT))) {
       '<div class="st__desc">' + T.store.desc + '</div>' +
       '<div class="st__tab">' + T.store.tabs.map((t, i) => '<span class="' + (i === 4 ? 'on' : '') + '"><i></i>' + t + '</span>').join('') + '</div><div class="homebar2"></div>';
     scr.appendChild(st);
-    [[9, s9], [10, s10]].forEach(([n, el]) => {  // без екрана з логотипом: у прев’ю він був би вужчий за 160 px const c = el.cloneNode(true); c.querySelectorAll('.dim, .tapdot').forEach(x => x.remove()); c.style.opacity = '1'; c.style.visibility = 'visible'; c.style.transform = 'scale(0.4524)'; q(st, '[data-shot="' + n + '"]').appendChild(c); });
+    /* прев’ю без екрана з логотипом: там він був би вужчий за 160 px */ [[9, s9], [10, s10]].forEach(([n, el]) => { const c = el.cloneNode(true); c.querySelectorAll('.dim, .tapdot').forEach(x => x.remove()); c.style.opacity = '1'; c.style.visibility = 'visible'; c.style.transform = 'scale(0.4524)'; q(st, '[data-shot="' + n + '"]').appendChild(c); });
     const au = document.createElement('div'); au.className = 'ov ov--dark ov--auth'; au.innerHTML = sbL + '<div class="au__back">' + chev + '</div><div class="au__logo"><img src="' + T.lockup + '" alt=""></div>' +
       '<div class="au__h">' + T.auth.h + '</div><div class="au__p">' + T.auth.p + '</div>' +
       '<div class="au__field"><span class="au__flag' + (T.auth.pre === '+1' ? ' au__flag--us' : '') + '"></span><span class="au__pre">' + T.auth.pre + '<i>&#8964;</i></span><span class="au__sep"></span><span class="au__val" data-val data-ph="' + T.auth.ph + '"></span><span class="au__caret" data-caret></span></div>' +
