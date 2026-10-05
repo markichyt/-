@@ -40,6 +40,8 @@
   .preview.light{background:#fff;border-bottom:1px solid var(--line)}
   .preview img{max-width:100%;max-height:92px;width:auto;height:auto}
   .preview.sign img{max-height:96px}
+  .preview .lottie{width:100%;height:92px}
+  .preview.sign .lottie{height:96px}
   .info{padding:12px 14px 14px;display:flex;flex-direction:column;gap:10px}
   .name{font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
   .tag{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:6px;background:#EEF0F3;color:var(--muted)}
@@ -63,7 +65,7 @@
 <header>
   <div class="wrap">
     <img src="SVG/consultant-lm_logo_en_on-dark_clean.svg" alt="ConsultantLM">
-    <div class="meta">Brand assets · оновлено 24.09.2026 · v1.3</div>
+    <div class="meta">Brand assets · оновлено 05.10.2026 · v1.4</div>
   </div>
 </header>
 
@@ -91,10 +93,15 @@
       <svg viewBox="0 0 24 24"><path d="M8 4h10a2 2 0 0 1 2 2v12h-2V6H8V4zm-4 4h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2zm0 2v10h10V10H4z"/></svg>
       Скопіювати «ConsultantLM»
     </button>
+    <a class="btn" href="ConsultantLM-logos-animated.zip" download>
+      <svg viewBox="0 0 24 24"><path d="M12 3v11.2l3.6-3.6 1.4 1.4-6 6-6-6 1.4-1.4 3.6 3.6V3h2zM4 19h16v2H4z"/></svg>
+      Анімовані логотипи (ZIP)
+    </a>
   </div>
 
   <section id="full"></section>
   <section id="sign"></section>
+  <section id="anim"></section>
 
   <div class="dont">
     <h3>Не можна</h3>
@@ -114,6 +121,7 @@
 
 <div class="toast" id="toast">Скопійовано: ConsultantLM</div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
 <script>
   var MARKS = [
     {key:'TM',    title:'™ — США',            tag:'us',    tagText:'США'},
@@ -150,6 +158,38 @@
   }
   section('full', 'Повний логотип', 'Знак + текст. Сайт, презентації, бланки, реклама, друк.', 'en');
   section('sign', 'Знак (іконка)', 'Тільки символ. Аватари, фавікони, іконки застосунку, водяні знаки на відео.', 'sign');
+
+  function animCard(type, theme, mark){
+    var base = 'consultant-lm_logo_' + type + '_' + theme.key + '_' + mark.key + '_animated';
+    var json = 'LOTTIE/' + base + '.json';
+    var mp4 = 'MP4/' + base + '.mp4';
+    return '<div class="card">' +
+      '<div class="preview ' + theme.cls + (type==='sign'?' sign':'') + '"><div class="lottie" data-src="' + json + '"></div></div>' +
+      '<div class="info">' +
+        '<div class="name">' + mark.title + ' <span class="tag ' + mark.tag + '">' + mark.tagText + '</span> <span class="tag">' + theme.label + '</span></div>' +
+        '<div class="file">' + base + '</div>' +
+        '<div class="dl">' +
+          '<a class="btn" href="' + json + '" download>' + ICON_SVG + 'Lottie</a>' +
+          '<a class="btn" href="' + mp4 + '" download>' + ICON_SVG + 'MP4</a>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }
+  (function(){
+    var html = '<h2>Анімований логотип</h2><p class="sub">Три точки «друкують», як у чаті — безшовний цикл 1,2 с, прозорий фон. ' +
+      'Lottie (.json) — для сайту та застосунків. MP4 — HEVC з прозорістю (iPhone, Mac, Safari, Final Cut, CapCut); у Chrome і на Windows прозорість не підтримується.</p>';
+    [['en','Повний логотип'],['sign','Знак (іконка)']].forEach(function(t){
+      html += '<p class="sub" style="margin-top:22px"><b>' + t[1] + '</b></p><div class="grid">';
+      THEMES.forEach(function(th){ MARKS.forEach(function(m){ html += animCard(t[0], th, m); }); });
+      html += '</div>';
+    });
+    document.getElementById('anim').innerHTML = html;
+    if (window.lottie) {
+      [].forEach.call(document.querySelectorAll('.lottie[data-src]'), function(el){
+        lottie.loadAnimation({container:el, renderer:'svg', loop:true, autoplay:true, path:el.getAttribute('data-src')});
+      });
+    }
+  })();
 
   function copyName(){
     var t = document.getElementById('toast');
