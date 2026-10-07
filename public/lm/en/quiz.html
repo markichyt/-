@@ -493,21 +493,6 @@
           <li><svg class="icon" aria-hidden="true"><use href="#i-bolt"></use></svg>The plan activates right after payment</li>
         </ul>
       </article>
-      <fieldset class="funnel__methods">
-        <legend class="sr-only sr-only">Payment method</legend>
-        <label class="q-option q-option--row">
-          <input class="q-option__input" type="radio" name="payment_method" value="card" checked>
-          <span class="q-option__label">Bank card</span>
-        </label>
-        <label class="q-option q-option--row">
-          <input class="q-option__input" type="radio" name="payment_method" value="apple">
-          <span class="q-option__label">Apple Pay</span>
-        </label>
-        <label class="q-option q-option--row">
-          <input class="q-option__input" type="radio" name="payment_method" value="google">
-          <span class="q-option__label">Google Pay</span>
-        </label>
-      </fieldset>
       <div class="funnel__terms" aria-label="Subscription terms">
         <p class="caption">Subscription: <strong data-s13-plan2>PRO</strong> plan for <span data-s13-period2>1 month</span> — <strong class="num" data-s13-price2>$39</strong>. Renews automatically <span data-s13-cadence>every month</span> at the same price until you cancel.</p>
         <p class="caption">You can cancel anytime in the app settings or via support. After cancellation the plan stays active until the end of the paid period and no further charges are made.</p>
@@ -1190,7 +1175,7 @@
       e.preventDefault();
       if (!state.plan) { go('s11'); return; }
       setBusy(bar.next, true);
-      track('checkout_submit', { membership_plan: state.plan.id, payment_method: ($('input[name="payment_method"]:checked', form) || {}).value });
+      track('checkout_submit', { membership_plan: state.plan.id });
       later(function () {
         setBusy(bar.next, false);
         if (state.payFail) { track('payment_failed', { membership_plan: state.plan.id }); alert.hidden = false; alert.focus(); return; }

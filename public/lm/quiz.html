@@ -482,21 +482,6 @@
           <li><svg class="icon" aria-hidden="true"><use href="#i-bolt"></use></svg>Пакет активується одразу після оплати</li>
         </ul>
       </article>
-      <fieldset class="funnel__methods">
-        <legend class="sr-only sr-only">Спосіб оплати</legend>
-        <label class="q-option q-option--row">
-          <input class="q-option__input" type="radio" name="payment_method" value="card" checked>
-          <span class="q-option__label">Банківська картка</span>
-        </label>
-        <label class="q-option q-option--row">
-          <input class="q-option__input" type="radio" name="payment_method" value="apple">
-          <span class="q-option__label">Apple Pay</span>
-        </label>
-        <label class="q-option q-option--row">
-          <input class="q-option__input" type="radio" name="payment_method" value="google">
-          <span class="q-option__label">Google Pay</span>
-        </label>
-      </fieldset>
       <div class="funnel__terms" aria-label="Умови підписки">
         <p class="caption">Підписка: пакет <strong data-s13-plan2>PRO</strong> на <span data-s13-period2>1 місяць</span> — <strong class="num" data-s13-price2>410&nbsp;₴</strong>. Подовжується автоматично <span data-s13-cadence>щомісяця</span> за тією ж ціною, поки Ви її не скасуєте.</p>
         <p class="caption">Скасувати підписку можна будь-коли в налаштуваннях застосунку або через підтримку. Після скасування пакет діє до кінця оплаченого періоду, нові списання не відбуваються.</p>
@@ -1179,7 +1164,7 @@
       e.preventDefault();
       if (!state.plan) { go('s11'); return; }
       setBusy(bar.next, true);
-      track('checkout_submit', { membership_plan: state.plan.id, payment_method: ($('input[name="payment_method"]:checked', form) || {}).value });
+      track('checkout_submit', { membership_plan: state.plan.id });
       later(function () {
         setBusy(bar.next, false);
         if (state.payFail) { track('payment_failed', { membership_plan: state.plan.id }); alert.hidden = false; alert.focus(); return; }
