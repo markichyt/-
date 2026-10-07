@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=540">
+<title>CONSULTANT — промо</title>
+<!-- Обзорный ролик 9:16: клиент задаёт вопрос → юристы отвечают с реальными кейсами.
+     Один непрерывный кадр. Всё состояние — чистая функция времени: seek(t). Без ?render — играет сам. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Onest:wght@400;500;600&display=swap">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
+html,body{background:#000;width:540px;height:960px;overflow:hidden}
+:root{--accent:#0095D4;--blue:#1397d6;--g400:#A1A1A6}
+#stage{position:relative;width:540px;height:960px;background:#000;overflow:hidden;font-family:'Onest',system-ui,sans-serif}
+
+/* ---------- титры ---------- */
+.cap{position:absolute;left:24px;right:24px;top:92px;text-align:center;color:#fff}
+.cap h2{font-family:'Manrope',sans-serif;font-weight:800;font-size:36px;line-height:1.12;letter-spacing:-.03em}
+.cap p{margin-top:14px;font-size:18px;line-height:1.4;color:var(--g400);font-weight:500}
+.w{display:inline-block;white-space:pre;will-change:transform}
+.cap .acc{color:var(--accent)}
+.logo{position:absolute;left:50%;top:44px;width:200px;margin-left:-100px;opacity:0}
+.cta{position:absolute;left:50%;top:858px;transform:translateX(-50%);height:58px;padding:0 34px;border-radius:980px;background:var(--accent);
+  color:#fff;font-family:'Onest',sans-serif;font-weight:600;font-size:19px;display:flex;align-items:center;gap:10px;white-space:nowrap;opacity:0}
+.cta svg{width:20px;height:20px}
+
+/* ---------- камера и телефон ---------- */
+#cam{position:absolute;left:50%;top:248px;width:336px;height:709px;margin-left:-168px;transform-origin:50% 0}
+.phone{position:absolute;inset:0;background:#0a0a0c;border-radius:52px;padding:8px;
+  box-shadow:0 0 0 1.5px #2a2d33,0 0 0 6px #111318,0 40px 90px rgba(0,149,212,.10)}
+.scr{position:relative;width:320px;height:693px;border-radius:44px;overflow:hidden;background:#fff;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",sans-serif}
+.notch{position:absolute;top:0;left:50%;width:104px;height:24px;margin-left:-52px;background:#000;border-radius:0 0 14px 14px;z-index:90}
+.dimph{position:absolute;inset:0;border-radius:52px;background:#000;opacity:0;pointer-events:none;z-index:95}
+.view{position:absolute;inset:0;overflow:hidden;background:#fff}
+.sb{position:absolute;top:0;left:0;right:0;height:30px;z-index:80;display:flex;align-items:center;justify-content:space-between;padding:6px 22px 0 26px;font-size:13.5px;font-weight:700}
+.sb svg{display:block;fill:currentColor}
+.sb .r{display:flex;gap:5px;align-items:center}
+.tabbar{position:absolute;left:0;right:0;bottom:0;height:83px;z-index:70;background:#fff url(tabbar@2x.png) top center/100% auto no-repeat}
+.tap{position:absolute;z-index:85;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;
+  background:radial-gradient(circle,rgba(41,163,224,.55) 0%,rgba(41,163,224,0) 70%);opacity:0;pointer-events:none}
+
+/* home */
+#home{background:#0b0d12}
+#home .bg{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,9,14,.35) 0%,rgba(6,9,14,.75) 55%,rgba(6,9,14,.96) 100%),url(hero-home.jpg) center 30%/cover}
+#home .lg{position:absolute;top:118px;left:0;right:0;text-align:center;color:#fff}
+#home .lg img{height:50px}
+#home .lg div{margin-top:14px;font-size:15px;font-weight:600}
+.pills{position:absolute;left:20px;right:20px;top:316px}
+.pill{display:flex;align-items:center;justify-content:center;gap:9px;height:50px;border-radius:28px;font-size:14.5px;font-weight:700;margin-bottom:13px;color:#fff;background:var(--blue)}
+.pill svg{width:19px;height:19px;fill:#fff}
+
+/* form */
+#form .top{position:absolute;top:30px;left:0;right:0;height:40px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;color:#0b0d12}
+#form .body{position:absolute;top:76px;left:20px;right:20px}
+.lbl{font-size:13px;font-weight:700;color:#333;margin-bottom:7px}
+.lbl i{color:#e0433a;font-style:normal}
+.val{font-size:14.5px;color:#12161b;line-height:1.42;min-height:21px}
+.val.ph{color:#9aa3ad}
+.cnt{text-align:right;font-size:11px;color:#9aa3ad;margin-top:6px}
+.div{height:1px;background:#ececec;margin:12px 0}
+.caret{display:inline-block;width:1.5px;height:17px;background:var(--blue);vertical-align:-3px;margin-left:1px}
+.panel{position:absolute;left:0;right:0;top:372px;bottom:83px;background:#000;color:#fff;padding:20px 20px 0;text-align:center}
+.panel h4{font-size:17px;font-weight:700}
+.panel p{font-size:12.5px;color:#9aa3ad;line-height:1.5;margin:10px 0 0}
+.panel .free{color:#29a3e0;font-size:14px;font-weight:600;margin:12px 0 16px}
+.send{position:relative;display:flex;align-items:center;justify-content:center;gap:8px;margin:0 auto;width:280px;height:48px;border-radius:26px;background:#fff;color:#0b0d12;font-size:16px;font-weight:700;overflow:hidden}
+.send .spin{width:18px;height:18px;border-radius:50%;border:2.5px solid #cfd6dd;border-top-color:var(--blue)}
+
+/* sent */
+#sent{background:#0b0d12;color:#fff}
+#sent .ring{position:absolute;top:214px;left:50%;width:86px;height:86px;margin-left:-43px;border-radius:50%;background:rgba(19,151,214,.16);display:grid;place-items:center}
+#sent .ring svg{width:44px;height:44px;stroke:#29a3e0;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+#sent h3{position:absolute;top:326px;left:20px;right:20px;text-align:center;font-size:24px;font-weight:800;line-height:1.15}
+#sent p{position:absolute;top:396px;left:30px;right:30px;text-align:center;font-size:13.5px;color:rgba(255,255,255,.66);line-height:1.5}
+#sent .avs{position:absolute;top:468px;left:0;right:0;display:flex;justify-content:center}
+#sent .avs span{width:44px;height:44px;border-radius:50%;overflow:hidden;border:2.5px solid #0b0d12;margin:0 -5px;position:relative}
+#sent .avs img{width:100%;height:100%;object-fit:cover}
+#sent .avs i{position:absolute;right:1px;bottom:1px;width:11px;height:11px;border-radius:50%;background:#2dbe78;border:2px solid #0b0d12}
+#sent .on{position:absolute;top:526px;left:0;right:0;text-align:center;font-size:12.5px;color:rgba(255,255,255,.6)}
+
+/* thread */
+#thread{background:#f4f6f8}
+#thread .bar{position:absolute;top:0;left:0;right:0;height:74px;padding-top:30px;background:#fff;z-index:20;display:flex;align-items:center;justify-content:center;border-bottom:1px solid #ececec;font-size:16px;font-weight:700;color:#0b0d12}
+#thread .sc{position:absolute;top:74px;left:0;right:0;bottom:83px;overflow:hidden}
+#inner{padding:12px 14px 40px}
+.qc{background:#fff;border:1px solid #ececec;border-radius:12px;padding:13px;margin-bottom:12px}
+.qc .d{display:flex;align-items:center;gap:6px;color:#9aa3ad;font-size:11.5px;margin-bottom:7px}
+.qc .d svg,.ans .ts svg{width:14px;height:14px;stroke:var(--blue);stroke-width:2;fill:none}
+.qc b{display:block;font-size:15px;font-weight:600;color:#12161b;line-height:1.35}
+.qc p{font-size:12.5px;color:#8f969e;line-height:1.5;margin-top:6px}
+.typing{overflow:hidden}
+.typing .in{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #ececec;border-radius:12px;padding:10px 12px;margin-bottom:12px}
+.typing img{width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid var(--blue)}
+.typing span{font-size:12.5px;color:#5b636c;flex:1}
+.typing span b{color:#12161b;font-weight:600}
+.dots{display:flex;gap:4px}
+.dots i{width:6px;height:6px;border-radius:50%;background:var(--blue)}
+.ans{overflow:hidden}
+.ans .in{background:#eef5fb;border-radius:12px;overflow:hidden;margin-bottom:12px}
+.ans .hd{display:flex;align-items:center;justify-content:space-between;background:#dcebf7;padding:6px 12px}
+.ans .hd .lv{color:#e08a2e;font-size:12px;font-weight:700}
+.ans .hd .sc2{display:flex;align-items:center;gap:5px;font-size:13px;font-weight:700;color:#12161b}
+.ans .hd svg{width:14px;height:14px;fill:#f5c518}
+.who{display:flex;align-items:center;gap:12px;padding:12px 12px 8px;position:relative}
+.who .av{width:52px;height:52px;border-radius:50%;border:3px solid var(--blue);overflow:hidden;flex:0 0 52px}
+.who .av img{width:100%;height:100%;object-fit:cover}
+.who b{display:block;font-size:15.5px;font-weight:700;color:#12161b}
+.who i{font-size:12.5px;color:#9aa3ad}
+.who .loc{display:flex;align-items:center;gap:4px;color:#12161b;font-size:12.5px;margin-top:3px}
+.who .loc svg{width:12px;height:12px;stroke:#4a5560;stroke-width:2;fill:none}
+.who .ii{position:absolute;right:12px;top:12px;width:21px;height:21px;border-radius:5px;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700;font-style:italic}
+.ans .ts{padding:0 12px;color:#7b828a;font-size:11.5px}
+.ans .tx{padding:7px 12px 10px;font-size:13px;color:#3a4149;line-height:1.5}
+.att{margin:0 12px 12px;background:#fff;border:1px solid #cfe2f1;border-radius:12px;padding:10px 11px;display:flex;gap:10px;align-items:flex-start;transform-origin:50% 0}
+.att .ic{flex:0 0 34px;width:34px;height:34px;border-radius:9px;background:var(--blue);display:grid;place-items:center}
+.att .ic svg{width:19px;height:19px}
+.att .k{font-size:9.5px;font-weight:700;letter-spacing:.06em;color:#8f969e;text-transform:uppercase}
+.att .t{font-size:12.5px;font-weight:650;font-weight:600;color:#12161b;line-height:1.32;margin-top:2px}
+.att .r{display:flex;align-items:center;gap:4px;margin-top:5px;font-size:11px;font-weight:600;color:#1f9d63}
+.att .r svg{width:12px;height:12px;stroke:#1f9d63;stroke-width:3;fill:none}
+.att .chev{flex:0 0 auto;align-self:center;width:8px;height:12px;stroke:#b5bcc4;stroke-width:2;fill:none}
+.att .more{overflow:hidden;height:0}
+.att .more div{padding-top:9px;font-size:11px;line-height:1.5;color:#4a5560}
+.att .more em{display:block;font-style:normal;font-weight:700;font-size:9.5px;letter-spacing:.06em;color:#8f969e;text-transform:uppercase;margin:8px 0 2px}
+.att .more u{display:inline-block;text-decoration:none;color:var(--blue);font-weight:600;margin-top:9px}
+.btns{padding:0 12px 12px}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;height:42px;border-radius:24px;background:var(--blue);color:#fff;font-size:14px;font-weight:700;margin-bottom:9px;position:relative;overflow:hidden}
+.btn svg{width:16px;height:16px;fill:#fff}
+.btn .ok{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:8px;background:#1f9d63;opacity:0}
+.btn .ok svg{fill:none;stroke:#fff;stroke-width:3}
+
+/* push-уведомление */
+.ntf{position:absolute;left:9px;right:9px;top:8px;z-index:88;background:rgba(245,245,247,.97);border-radius:20px;padding:11px 12px;display:flex;gap:10px;align-items:center;
+  box-shadow:0 10px 30px rgba(0,0,0,.18);transform:translateY(-120px)}
+.ntf .ap{width:36px;height:36px;border-radius:9px;background:#0e1620;display:grid;place-items:center;flex:0 0 36px}
+.ntf .ap img{width:26px}
+.ntf .tt{flex:1;min-width:0}
+.ntf .tt div{display:flex;justify-content:space-between;font-size:11px;color:#6e6e73;font-weight:600;letter-spacing:.02em}
+.ntf b{display:block;font-size:13px;color:#0a0a0a;margin-top:1px}
+.ntf span{display:block;font-size:12.5px;color:#3a3a3c;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* карточка кейса, «выпрыгивающая» из телефона */
+#pop{position:absolute;left:0;top:0;width:266px;transform-origin:0 0;z-index:200;opacity:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",sans-serif}
+#pop .att{margin:0;box-shadow:0 24px 60px rgba(0,0,0,.45)}
+
+/* ---------- квадрат 1:1: титры слева, телефон справа ---------- */
+html.sq,body.sq,body.sq #stage{height:540px}
+body.sq .cap{left:32px;right:auto;width:222px;top:170px;text-align:left}
+body.sq .cap h2{font-size:28px}
+body.sq .cap p{font-size:15px;margin-top:12px}
+body.sq #cam{left:auto;right:-22px;margin-left:0;top:20px}
+body.sq .logo{left:34px;margin-left:0;top:122px;width:168px}
+body.sq .cta{left:32px;top:392px;height:48px;padding:0 18px 0 16px;gap:8px;font-size:14.5px}
+body.sq .cta svg{width:18px;height:18px}
+</style>
+</head>
+<body>
+<div id="stage">
+  <img class="logo" id="logo" src="logo-on-dark.svg" alt="CONSULTANT">
+  <div id="caps"></div>
+
+  <div id="cam">
+    <div class="phone">
+      <div class="scr" id="scr">
+        <div class="notch"></div>
+        <div class="sb" id="sb"><span id="clock">18:04</span><span class="r">
+          <svg width="17" height="11" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+          <svg width="15" height="11" viewBox="0 0 16 12"><path d="M8 2.2c2.9 0 5.6 1.15 7.6 3.05a.5.5 0 0 1 0 .72l-1 .98a.5.5 0 0 1-.68.02A9 9 0 0 0 8 4.7a9 9 0 0 0-5.92 2.27.5.5 0 0 1-.68-.02l-1-.98a.5.5 0 0 1 0-.72A10.9 10.9 0 0 1 8 2.2Z"/><path d="M8 6.6c1.66 0 3.18.63 4.32 1.66a.5.5 0 0 1 .02.72l-.98.98a.5.5 0 0 1-.7 0A4 4 0 0 0 8 8.85c-.98 0-1.9.35-2.66.94a.5.5 0 0 1-.7-.02l-.98-.98a.5.5 0 0 1 .02-.72A6.4 6.4 0 0 1 8 6.6Z"/><circle cx="8" cy="11" r="1.35"/></svg>
+          <svg width="25" height="12" viewBox="0 0 27 13"><rect x=".7" y=".7" width="22.5" height="11.6" rx="3" fill="none" stroke="currentColor" stroke-opacity=".4" stroke-width="1.1"/><rect x="2.2" y="2.2" width="17.5" height="8.6" rx="1.8"/><rect x="24.6" y="4.2" width="1.7" height="4.6" rx=".85" fill-opacity=".5"/></svg></span></div>
+
+        <!-- 1. главная -->
+        <div class="view" id="home">
+          <div class="bg"></div>
+          <div class="lg"><img src="logo_en.svg" alt=""><div>{{tag}}</div></div>
+          <div class="pills">
+            <div class="pill" id="pillIC"><svg viewBox="0 0 24 24"><path d="M4 5h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H10l-5 4v-4H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"/></svg>{{p1}}</div>
+            <div class="pill"><svg viewBox="0 0 24 24"><path d="M6 2h8l4 4v16H6V2Z"/></svg>{{p2}}</div>
+            <div class="pill"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" fill="none" stroke="#fff" stroke-width="2"/></svg>{{p3}}</div>
+            <div class="pill"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.7-5.2 4.6 1.5 6.8L12 17.8 5.9 20.4l1.5-6.8L2.2 9l6.9-.7L12 2Z"/></svg>{{p4}}</div>
+          </div>
+        </div>
+
+        <!-- 2. форма вопроса -->
+        <div class="view" id="form">
+          <div class="top">{{formTop}}</div>
+          <div class="body">
+            <div class="lbl">{{lblT}}<i>*</i></div>
+            <div class="val" id="fT"></div>
+            <div class="cnt" id="fTc">0/100</div>
+            <div class="div"></div>
+            <div class="lbl">{{lblB}}<i>*</i></div>
+            <div class="val" id="fB" style="min-height:130px"></div>
+            <div class="cnt" id="fBc">0/500</div>
+          </div>
+          <div class="panel">
+            <h4>{{panelH}}</h4>
+            <p>{{panelP}}</p>
+            <div class="free">{{panelFree}}</div>
+            <div class="send" id="send"><span id="sendTx">{{send}}</span></div>
+          </div>
+        </div>
+
+        <!-- 3. отправлено -->
+        <div class="view" id="sent">
+          <div class="ring" id="ring"><svg viewBox="0 0 24 24"><path id="chk" d="M5 12.5l4.2 4.2L19 7" stroke-dasharray="22" stroke-dashoffset="22"/></svg></div>
+          <h3>{{sentH}}</h3>
+          <p>{{sentP}}</p>
+          <div class="avs" id="avs">
+            <span><img src="st.jpg"><i></i></span><span><img src="mo.jpg"><i></i></span><span><img src="po.jpg"><i></i></span><span><img src="hr.jpg"><i></i></span>
+          </div>
+          <div class="on" id="onl">{{sentOn}}</div>
+        </div>
+
+        <!-- 4. тред с ответами -->
+        <div class="view" id="thread">
+          <div class="bar">{{qnum}}</div>
+          <div class="sc"><div id="inner">
+            <div class="qc">
+              <div class="d"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>{{today04}}</div>
+              <b class="qT"></b>
+              <p class="qB"></p>
+            </div>
+            <div class="typing" id="typ"><div class="in"><img src="st.jpg"><span>{{typing}}</span><div class="dots"><i></i><i></i><i></i></div></div></div>
+            <div class="ans" id="a1"><div class="in">
+              <div class="hd"><span class="lv">PREMIUM</span><span class="sc2"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.7-5.2 4.6 1.5 6.8L12 17.8 5.9 20.4l1.5-6.8L2.2 9l6.9-.7L12 2Z"/></svg>76.35</span></div>
+              <div class="who"><div class="av"><img src="st.jpg"></div><div><b>{{n1}}</b><i>{{r1}}</i><div class="loc"><svg viewBox="0 0 24 24"><path d="M12 22s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg>{{loc}}</div></div><div class="ii">i</div></div>
+              <div class="ts">{{today09}}</div>
+              <div class="tx">{{tx1}}</div>
+              <div class="att" id="att1">
+                <div class="ic"><svg viewBox="0 0 24 24"><path d="M6 2h8l4 4v16H6V2Z" fill="#fff"/><path d="M9 13.5l2 2 4-4" fill="none" stroke="#1397d6" stroke-width="2" stroke-linecap="round"/></svg></div>
+                <div style="flex:1;min-width:0">
+                  <div class="k">{{caseK}} · 18.09.2026</div>
+                  <div class="t">{{t1}}</div>
+                  <div class="r"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7"/></svg>{{res1}}</div>
+                  <div class="more"><div>
+                    <em>{{sitK}}</em>{{sit1}}
+                    <em>{{decK}}</em>{{dec1}}
+                    <br><u>{{readAll}}</u></div></div>
+                </div>
+                <svg class="chev" viewBox="0 0 8 12"><path d="M1.5 1.5L6 6l-4.5 4.5"/></svg>
+              </div>
+              <div class="btns">
+                <div class="btn"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" fill="none" stroke="#fff" stroke-width="2"/></svg>{{order}}</div>
+                <div class="btn"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.7-5.2 4.6 1.5 6.8L12 17.8 5.9 20.4l1.5-6.8L2.2 9l6.9-.7L12 2Z"/></svg>{{best}}</div>
+              </div>
+            </div></div>
+            <div class="ans" id="a2"><div class="in">
+              <div class="hd"><span class="lv">PREMIUM</span><span class="sc2"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.7-5.2 4.6 1.5 6.8L12 17.8 5.9 20.4l1.5-6.8L2.2 9l6.9-.7L12 2Z"/></svg>42.25</span></div>
+              <div class="who"><div class="av"><img src="mo.jpg"></div><div><b>{{n2}}</b><i>{{r2}}</i><div class="loc"><svg viewBox="0 0 24 24"><path d="M12 22s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg>{{loc}}</div></div><div class="ii">i</div></div>
+              <div class="ts">{{today12}}</div>
+              <div class="tx">{{tx2}}</div>
+              <div class="att" id="att2">
+                <div class="ic"><svg viewBox="0 0 24 24"><path d="M6 2h8l4 4v16H6V2Z" fill="#fff"/><path d="M9 13.5l2 2 4-4" fill="none" stroke="#1397d6" stroke-width="2" stroke-linecap="round"/></svg></div>
+                <div style="flex:1;min-width:0">
+                  <div class="k">{{caseK}} · 01.08.2026</div>
+                  <div class="t">{{t2}}</div>
+                  <div class="r"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7"/></svg>{{res2}}</div>
+                </div>
+                <svg class="chev" viewBox="0 0 8 12"><path d="M1.5 1.5L6 6l-4.5 4.5"/></svg>
+              </div>
+              <div class="btns">
+                <div class="btn"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" fill="none" stroke="#fff" stroke-width="2"/></svg>{{order}}</div>
+                <div class="btn" id="best"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.7-5.2 4.6 1.5 6.8L12 17.8 5.9 20.4l1.5-6.8L2.2 9l6.9-.7L12 2Z"/></svg>{{best}}
+                  <span class="ok" id="bestOk"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7"/></svg>{{bestOk}}</span></div>
+              </div>
+            </div></div>
+          </div></div>
+        </div>
+
+        <div class="ntf" id="ntf"><div class="ap"><img src="logo-bubble.png"></div><div class="tt"><div><span style="color:#6e6e73">CONSULTANT</span><span style="color:#6e6e73">{{now}}</span></div><b>{{ntfB}}</b><span>{{ntfS}}</span></div></div>
+        <div class="tabbar" id="tabbar"></div>
+        <div class="tap" id="tap"></div>
+      </div>
+    </div>
+    <div class="dimph" id="dimph"></div>
+  </div>
+
+  <div id="pop"></div>
+
+  <div class="cta" id="cta"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg>{{cta}}</div>
+</div>
+
+<script src="i18n.js"></script>
+<script>
+/* ================= сценарий ================= */
+const PARAMS=new URLSearchParams(location.search), LANG=PARAMS.get('lang')||'uk', FMT=PARAMS.get('fmt')||'v';
+const L=I18N[LANG]; document.documentElement.lang=LANG;
+if(FMT==='sq'){ document.body.classList.add('sq'); document.documentElement.classList.add('sq'); }
+const SQ=FMT==='sq';
+// паузы под озвучку: ?holds=2:0.6,8.85:0.4 — в эти моменты сцена замирает (живёт только «дыхание» телефона)
+const HOLDS=(PARAMS.get('holds')||'').split(',').filter(Boolean).map(x=>x.split(':').map(Number)).sort((a,b)=>a[0]-b[0]);
+{ const st=document.getElementById('stage'); st.innerHTML=st.innerHTML.replace(/\{\{(\w+)\}\}/g,(m,k)=>L[k]??m); }
+const Q_TITLE = L.qT, Q_BODY = L.qB;
+const CAP_T = [[0.5,3.4],[3.8,9.5],[9.9,13.4],[13.8,19.9],[20.3,25.3],[26.0,999]];
+const CAPS = CAP_T.map(([a,b],i)=>[a,b,L.caps[i][0],L.caps[i][1]]);  // заголовок (слово в [] — акцент), подпись
+const DURATION = 31.5 + HOLDS.reduce((a,h)=>a+h[1],0);
+function sceneTime(r){ let sh=0; for(const [at,len] of HOLDS){ const a=at+sh; if(r<a) break; if(r<a+len) return at; sh+=len; } return r-sh; }
+
+/* ================= утилиты ================= */
+const clamp = (x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const seg = (t,a,b)=>clamp((t-a)/(b-a));
+const eo = p=>1-Math.pow(1-p,3);                         // ease-out cubic
+const eio = p=>p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2;      // ease-in-out cubic
+const eback = p=>{const c=1.5;return 1+(c+1)*Math.pow(p-1,3)+c*Math.pow(p-1,2);}; // лёгкий перелёт
+const lerp=(a,b,p)=>a+(b-a)*p;
+function kf(t,keys,ease=eio){ // [[t,v],...] — плавно между ключами
+  if(t<=keys[0][0]) return keys[0][1];
+  for(let i=1;i<keys.length;i++){ if(t<=keys[i][0]){ const [t0,v0]=keys[i-1],[t1,v1]=keys[i]; return lerp(v0,v1,ease(seg(t,t0,t1))); } }
+  return keys[keys.length-1][1];
+}
+const $=id=>document.getElementById(id);
+const css=(el,o)=>{ for(const k in o) el.style[k]=o[k]; };
+
+/* ================= титры: слова всплывают из размытия ================= */
+const capsEl=$('caps');
+const capNodes = CAPS.map(([a,b,h,s])=>{
+  const d=document.createElement('div'); d.className='cap';
+  const words=h.split(' ').map(w=>{ const acc=/^\[.*\]$/.test(w); return `<span class="w${acc?' acc':''}">${w.replace(/[\[\]]/g,'')}</span>`; }).join(' ');
+  d.innerHTML=`<h2>${words}</h2><p>${s.split(' ').map(w=>`<span class="w">${w}</span>`).join(' ')}</p>`;
+  capsEl.appendChild(d); return {d,a,b,h:[...d.querySelectorAll('h2 .w')],s:[...d.querySelectorAll('p .w')]};
+});
+function drawCaps(t){
+  for(const c of capNodes){
+    const on = t>c.a-.1 && t<c.b+.8; c.d.style.display=on?'':'none'; if(!on) continue;
+    const out=eio(seg(t,c.b,c.b+.55));
+    const all=[...c.h.map((w,i)=>[w,c.a+i*.075]),...c.s.map((w,i)=>[w,c.a+.32+i*.04])];
+    all.forEach(([w,st],i)=>{
+      const p=eo(seg(t,st,st+.7)), q=clamp(out*1.25-i*.015);
+      w.style.opacity=(p*(1-q)*CAPK).toFixed(3);
+      w.style.transform=`translateY(${((1-p)*22-q*16).toFixed(2)}px)`;
+      const bl=(1-p)*10+q*8; w.style.filter=bl>.05?`blur(${bl.toFixed(2)}px)`:'none';
+    });
+  }
+}
+
+/* ================= подготовка ================= */
+document.querySelector('.qT').textContent=Q_TITLE;
+document.querySelector('.qB').textContent=Q_BODY;
+const views={home:$('home'),form:$('form'),sent:$('sent'),thread:$('thread')};
+let H={}; // натуральные высоты
+function measure(){
+  const a1=$('a1'),a2=$('a2'),typ=$('typ'),m=document.querySelector('#att1 .more'),inner=$('inner');
+  [a1,a2,typ].forEach(e=>e.style.height='auto'); m.style.height='auto';
+  H.more=m.scrollHeight; m.style.height='0px';
+  H.a1=a1.offsetHeight; H.a2=a2.offsetHeight; H.typ=typ.offsetHeight; typ.style.height='0px';
+  const top=e=>e.getBoundingClientRect().top-inner.getBoundingClientRect().top;
+  H.y1=top(a1); H.y2=top(a2); H.att1=top($('att1')); H.att2=top($('att2')); H.best=top($('best'));
+  H.sc=document.querySelector('#thread .sc').clientHeight;
+}
+// пятиточечная «печать» с естественным ритмом
+function typed(str,t,a,b){ const n=Math.round(str.length*clamp((t-a)/(b-a))); return str.slice(0,n); }
+
+/* ================= кадр ================= */
+let CAPK=1;
+function seek(tr){
+  const t=sceneTime(tr);
+
+  /* --- камера: телефон выезжает, живое «дыхание», финальный отъезд --- */
+  const rise=eo(seg(t,0,1.4));
+  const outro=eio(seg(t,25.6,27.0));
+  const popP = eio(seg(t,15.9,16.6))*(1-eio(seg(t,18.7,19.4)));
+  const sc = SQ ? lerp(.76,.71,rise)*lerp(1,.965,popP) : lerp(.92,.86,rise) * lerp(1,.84,outro) * lerp(1,.965,popP);
+  const ty = (1-rise)*(SQ?90:140) + (SQ?0:outro*52) + Math.sin(tr*.9)*3;
+  CAPK = SQ ? 1-popP*.88 : 1;
+  css($('cam'),{transform:`translateY(${ty.toFixed(2)}px) scale(${sc.toFixed(4)})`,opacity:rise.toFixed(3)});
+  $('dimph').style.opacity=(popP*.62).toFixed(3);
+  drawCaps(t);
+
+  /* --- экраны внутри телефона --- */
+  const pushHF=eio(seg(t,2.75,3.4));   // главная → форма (iOS push)
+  const toSent=eio(seg(t,9.55,10.15)); // форма → «отправлено» (растворение + подъём)
+  const pushST=eio(seg(t,11.55,12.2)); // «отправлено» → тред
+  const W=320;
+  css(views.home,{display:t<3.5?'':'none',transform:`translateX(${-pushHF*W*.3}px)`,filter:`brightness(${1-pushHF*.35})`});
+  css(views.form,{display:(t>2.7&&t<10.3)?'':'none',transform:`translateX(${(1-pushHF)*W}px) scale(${1-toSent*.06})`,opacity:(1-toSent).toFixed(3),borderRadius:'0'});
+  css(views.sent,{display:(t>9.5&&t<12.3)?'':'none',opacity:toSent.toFixed(3),transform:`translateX(${-pushST*W*.3}px) translateY(${(1-toSent)*24}px)`});
+  css(views.thread,{display:t>11.5?'':'none',transform:`translateX(${(1-pushST)*W}px)`});
+  // статус-бар: светлый на тёмных экранах
+  const dark = t<3.05 || (t>9.85&&t<11.9);
+  $('sb').style.color=dark?'#fff':'#000';
+  $('clock').textContent = t<11.6?'18:04':(t<20?'18:09':'18:12');
+  $('tabbar').style.display=(t>2.9&&t<9.9)||t>11.8?'':'none';
+  $('tabbar').style.transform=`translateY(${t<3.4?(1-pushHF)*0:0}px)`;
+
+  /* --- тапы --- */
+  const taps=[[2.35,'pillIC'],[9.0,'send'],[24.35,'best']];
+  let tapOp=0,tapS=1,tx=0,ty2=0;
+  for(const [tt,id] of taps){ const p=seg(t,tt,tt+.55); if(p>0&&p<1){ const r=$(id).getBoundingClientRect(),s=$('scr').getBoundingClientRect(),k=s.width/320;
+    tx=(r.left+r.width/2-s.left)/k; ty2=(r.top+r.height/2-s.top)/k; tapOp=Math.sin(p*Math.PI)*.95; tapS=.4+p*1.1; } }
+  css($('tap'),{opacity:tapOp.toFixed(3),left:tx+'px',top:ty2+'px',transform:`scale(${tapS})`});
+  const press=(id,tt)=>{ const p=seg(t,tt,tt+.32); $(id).style.transform=`scale(${1-Math.sin(p*Math.PI)*.045})`; };
+  press('pillIC',2.35); press('send',9.0); press('best',24.35);
+
+  /* --- форма: набор текста --- */
+  const T1=typed(Q_TITLE,t,3.9,5.7), T2=typed(Q_BODY,t,5.95,8.6);
+  const blink = Math.floor(t*2.2)%2===0;
+  const caret='<span class="caret" style="opacity:'+(blink?1:0)+'"></span>';
+  const fT=$('fT'), fB=$('fB');
+  if(t<3.9){ fT.className='val ph'; fT.textContent=L.ph; } else { fT.className='val'; fT.innerHTML=T1+(t<5.85?caret:''); }
+  fB.innerHTML=T2+(t>5.85&&t<8.85?caret:'');
+  $('fTc').textContent=T1.length+'/100'; $('fBc').textContent=T2.length+'/500';
+  const sending=t>9.1;
+  $('sendTx').innerHTML = sending?'<span class="spin" style="transform:rotate('+(t*540)+'deg)"></span>'+L.sending:L.send;
+
+  /* --- «отправлено»: галочка рисуется, аватары юристов впрыгивают --- */
+  const ringP=eback(seg(t,9.9,10.45));
+  $('ring').style.transform=`scale(${ringP.toFixed(3)})`;
+  $('chk').setAttribute('stroke-dashoffset',(22*(1-eo(seg(t,10.15,10.6)))).toFixed(2));
+  [...$('avs').children].forEach((s,i)=>{ const p=eback(seg(t,10.45+i*.12,10.85+i*.12)); s.style.transform=`scale(${p.toFixed(3)})`; s.style.opacity=clamp(p*2).toFixed(2); });
+  $('onl').style.opacity=eo(seg(t,10.9,11.3)).toFixed(3);
+
+  /* --- тред: «печатает…» → ответ 1 → кейс → уведомление → ответ 2 --- */
+  const typIn=eo(seg(t,12.5,12.85)), typOut=eio(seg(t,13.55,14.1));
+  const typH=H.typ*typIn*(1-typOut);
+  css($('typ'),{height:typH+'px',opacity:(typIn*(1-typOut)).toFixed(3)});
+  [...document.querySelectorAll('#typ .dots i')].forEach((d,i)=>{ d.style.transform=`translateY(${-Math.max(0,Math.sin(t*9-i*.9))*3}px)`; d.style.opacity=.45+.55*Math.max(0,Math.sin(t*9-i*.9)); });
+
+  const a1=eio(seg(t,13.6,14.3)), a2=eio(seg(t,20.7,21.4));
+  const more=eio(seg(t,16.45,16.95))*(1-eio(seg(t,18.6,19.1)));
+  css($('a1'),{height:H.a1*a1+'px'});
+  css($('a2'),{height:H.a2*a2+'px'});
+  const a1c=$('a1').firstElementChild, a2c=$('a2').firstElementChild;
+  css(a1c,{opacity:eo(seg(t,13.75,14.35)).toFixed(3),transform:`translateY(${(1-eo(seg(t,13.7,14.4)))*26}px)`});
+  css(a2c,{opacity:eo(seg(t,20.85,21.45)).toFixed(3),transform:`translateY(${(1-eo(seg(t,20.8,21.5)))*26}px)`});
+  // кейсы «приклеиваются» к ответу с небольшим перелётом
+  const at1=seg(t,14.55,15.15), at2=seg(t,21.75,22.35);
+  css($('att1'),{opacity:clamp(at1*2.2).toFixed(3),transform:`scale(${lerp(.86,1,eback(at1)).toFixed(3)})`});
+  css($('att2'),{opacity:clamp(at2*2.2).toFixed(3),transform:`scale(${lerp(.86,1,eback(at2)).toFixed(3)})`});
+  // рамка-подсветка кейсов в момент появления
+  $('att1').style.borderColor= at1>0&&at1<1||t<16? (t>14.5?'#1397d6':'#cfe2f1') : '#cfe2f1';
+  $('att2').style.borderColor= t>21.7&&t<23.4 ? '#1397d6':'#cfe2f1';
+
+  // прокрутка треда
+  const y1 = H.y1 - 8, y2 = H.y2 - 8;          // ответ целиком: шапка юриста + текст + кейс
+  const showBest = Math.max(y2, H.best - (H.sc - 70));
+  const scroll = kf(t,[[13.7,0],[14.7,y1],[20.6,y1],[21.5,y2],[23.5,y2],[24.15,showBest],[26.5,showBest]]);
+  $('inner').style.transform=`translateY(${-scroll.toFixed(2)}px)`;
+
+  // кнопка «Найкраща відповідь» → «Обрано»
+  $('bestOk').style.opacity=eo(seg(t,24.5,24.85)).toFixed(3);
+
+  // push-уведомление о втором ответе
+  const nIn=eback(seg(t,19.75,20.3)), nOut=eio(seg(t,21.6,22.1));
+  $('ntf').style.transform=`translateY(${(-120*(1-nIn)-120*nOut).toFixed(2)}px)`;
+
+  /* --- кейс «выпрыгивает» из телефона и раскрывается --- */
+  const pop=$('pop');
+  if(popP>0.001){
+    const src=$('att1');
+    if(!pop.firstChild){ pop.appendChild(src.cloneNode(true)); pop.firstChild.removeAttribute('id'); }
+    const card=pop.firstChild; card.style.transform='none'; card.style.opacity='1'; card.style.borderColor='#1397d6';
+    card.querySelector('.more').style.height=(H.more*more)+'px';
+    const r=src.getBoundingClientRect(), st=$('stage').getBoundingClientRect();
+    const k0=r.width/266, k1=SQ?1.3:1.62;              // масштаб из телефона → крупный план
+    const k=lerp(k0,k1,popP);
+    const cw=266*k1, x1=(540-cw)/2, y1=SQ?(540-(card.offsetHeight-H.more*more+H.more)*k1)/2:300;
+    const x=lerp(r.left-st.left,x1,popP), y=lerp(r.top-st.top,y1,popP);
+    css(pop,{opacity:'1',transform:`translate(${x.toFixed(2)}px,${y.toFixed(2)}px) scale(${k.toFixed(4)})`});
+    src.style.visibility='hidden';
+  } else { pop.style.opacity='0'; $('att1').style.visibility=''; }
+
+  /* --- финал --- */
+  const lg=eo(seg(t,25.9,26.7));
+  css($('logo'),{opacity:lg.toFixed(3),transform:`translateY(${(1-lg)*-12}px)`});
+  const ct=eback(seg(t,26.9,27.6));
+  css($('cta'),{opacity:clamp(ct*1.5).toFixed(3),transform:`${SQ?'':'translateX(-50%) '}translateY(${(1-ct)*30}px) scale(${lerp(.9,1,ct)})`});
+}
+
+/* ================= запуск ================= */
+window.DURATION=DURATION; window.seek=seek;
+window.ready=(async()=>{
+  await document.fonts.ready;
+  await Promise.all([...document.images].map(i=>i.complete?0:new Promise(r=>{i.onload=i.onerror=r;})));
+  measure(); seek(0); return true;
+})();
+if(!/render/.test(location.search)){
+  window.ready.then(()=>{ const t0=performance.now(); (function f(now){ const t=((now-t0)/1000)%(DURATION+1); seek(t); requestAnimationFrame(f); })(t0); });
+}
+</script>
+</body>
+</html>

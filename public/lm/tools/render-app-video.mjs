@@ -2,14 +2,18 @@
 // Снимается покадрово из демо реального интерфейса (экраны 9 и 10), 30 к/с, экран 420×955 CSS при DPR 2.
 // Таб-бар — полная картинка владельца assets/app/tabbar@2x.png (без флага), поверх контента, с индикатором «домой».
 // Запуск: node tools/render-app-video.mjs [путь к ask-question-demo.html]  → assets/app/flow-<loc>.mp4|webm|jpg
-import { chromium } from '/Users/mac/cabinetUR/video/node_modules/playwright/index.mjs';
+import { createRequire } from 'node:module';
+const { chromium } = createRequire(import.meta.url)('playwright');  // npm i -D playwright && npx playwright install chromium (у корені проєкту)
 import fs from 'node:fs'; import path from 'node:path'; import { execSync } from 'node:child_process';
 const DEMO = process.argv[2] || '/Users/mac/VOPROS/consultant-demo/ask-question-demo.html';
-const HERE = path.dirname(new URL(import.meta.url).pathname), ROOT = path.dirname(HERE), OUT = path.join(ROOT, 'assets/app');
+// FRAME=1 — знімати телефон цілком (корпус + екран) на прозорому тлі для презентацій; OUT_DIR — куди класти файли
+const FRAME = !!process.env.FRAME, OUT_DIR = process.env.OUT_DIR || '';
+const HERE = path.dirname(new URL(import.meta.url).pathname), ROOT = path.dirname(HERE), OUT = OUT_DIR || path.join(ROOT, 'assets/app');
+if (OUT_DIR) fs.mkdirSync(OUT_DIR, { recursive: true });
 const PH = (n) => 'file://' + path.join(ROOT, 'assets/people/m', n + '.jpg');
 const RP = (n) => 'file://' + path.join(ROOT, 'assets/people', n + '.jpg');  // реальні адвокати платформи
 const TEXT = {
-  uk: { orders: 'Мої замовлення', chips: ['Консультації', 'Документи', 'Послуги', 'Чеки'], status: 'Статус:', order: 'Замовити послугу', best: 'Найкраща відповідь',
+  uk: { orders: 'Мої замовлення', chips: ['Консультації', 'Документи', 'Послуги', 'Кейси'], status: 'Статус:', order: 'Замовити послугу', best: 'Найкраща відповідь',
     list: [
       { date: '01.07.2026 18:04', q: 'Чи можу я отримати компенсацію за неправомірне затримання через помилку в базі даних?', st: 'Відкрито', avatars: [RP('st'), RP('mo'), RP('po')] },
       { date: '28.06.2026 11:20', q: 'Як оскаржити штраф за паркування, виписаний помилково?', st: 'Є відповіді', avatars: [RP('hr')] },
@@ -21,7 +25,7 @@ const TEXT = {
       { band: 'BASE (Base)', score: '35.68', name: 'Асистент Андрій', role: 'Штучний інтелект', loc: 'Україна', ts: '01.07.2026, 18:05', photo: 'file:///Users/mac/VOPROS/consultant-demo/assets/andrey.jpg', text: 'Компенсацію за незаконне затримання можна вимагати за нормами про відшкодування шкоди, завданої органами влади.' },
       { band: 'PREMIUM', score: '76.37', name: 'Студенцов Олександр', role: 'Юрист', loc: 'Київ, Україна', ts: '01.07.2026, 18:32', photo: RP('st'), text: 'Так, підстави є. Готова підготувати позов про відшкодування моральної шкоди та втраченого заробітку.' },
       { band: 'PREMIUM', score: '42.28', name: 'Молчанов Олег', role: 'Адвокат', loc: 'Київ, Україна', ts: '01.07.2026, 19:10', photo: RP('mo'), text: 'Спершу зафіксуйте факт помилки в базі: запросіть довідку з поліції та підтвердження звільнення.' } ] },
-  en: { orders: 'My orders', chips: ['Consultations', 'Documents', 'Services', 'Checks'], status: 'Status:', order: 'Order the service', best: 'Best answer',
+  en: { orders: 'My orders', chips: ['Consultations', 'Documents', 'Services', 'Cases'], status: 'Status:', order: 'Order the service', best: 'Best answer',
     list: [
       { date: '07/01/2026 18:04', q: 'Can I claim compensation for being wrongfully arrested due to a database error?', st: 'Opened', avatars: [RP('st'), RP('mo'), RP('po')] },
       { date: '06/28/2026 11:20', q: 'How do I appeal a parking fine that was issued by mistake?', st: 'Answered', avatars: [RP('hr')] },
@@ -41,6 +45,7 @@ for (const loc of Object.keys(TEXT)) {
   const dir = path.join(HERE, '_frames', loc); fs.rmSync(dir, { recursive: true, force: true }); fs.mkdirSync(dir, { recursive: true });
   const p = await browser.newPage({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 2 });
   await p.goto('file://' + DEMO, { waitUntil: 'networkidle' }); await p.waitForTimeout(1000);
+  if (FRAME) await p.addStyleTag({ content: `html, body, .stage, .wrap, .scene { background: transparent !important; } body::before, body::after { display: none !important; }` });
   await p.addStyleTag({ content: `*, *::before, *::after { transition: none !important; animation: none !important; }
     .s9__list { position:absolute; top:128px; left:20px; right:20px; bottom:74px; display:grid; gap:12px; align-content:start; }
     .s9__list .s9__card { position:static; }
@@ -76,7 +81,7 @@ for (const loc of Object.keys(TEXT)) {
   }, { T: TEXT[loc], loc });
   console.log(loc, 'geometry', JSON.stringify(geo));
   await p.waitForTimeout(600); // фото
-  const screen = p.locator('.phone__screen'); let n = 0;
+  const screen = p.locator(FRAME ? '.phone' : '.phone__screen'); let n = 0;
   for (const [ph, count] of PLAN) for (let i = 0; i < count; i++) {
     const t = count > 1 ? i / (count - 1) : 1;
     await p.evaluate(({ ph, t, g }) => {
@@ -91,10 +96,20 @@ for (const loc of Object.keys(TEXT)) {
       if (ph === 'scroll') { inner.style.transform = 'translateY(' + (-Math.max(0, g.maxY) * eio(t)) + 'px)'; }
       if (ph === 'out') { push(1 - ei(t)); }
     }, { ph, t, g: geo });
-    await screen.screenshot({ path: path.join(dir, `f${String(++n).padStart(4, '0')}.png`) });
+    await screen.screenshot({ path: path.join(dir, `f${String(++n).padStart(4, '0')}.png`), omitBackground: FRAME });
   }
   await p.close();
   const ff = '/opt/homebrew/bin/ffmpeg -y -loglevel error';
+  if (FRAME) {  // телефон у корпусі: прозоре тло (HEVC alpha .mov для Keynote/Final Cut, VP9 alpha .webm) + біле тло (.mp4) + постер .png
+    const base = `${OUT}/flow-${loc}-phone`;
+    try { execSync(`${ff} -framerate ${FPS} -i "${dir}/f%04d.png" -vf "scale=-2:1920:flags=lanczos,format=bgra" -c:v hevc_videotoolbox -alpha_quality 0.9 -q:v 65 -tag:v hvc1 -movflags +faststart "${base}.mov"`); }
+    catch (e) { console.log(loc, 'HEVC alpha недоступний, ProRes 4444'); execSync(`${ff} -framerate ${FPS} -i "${dir}/f%04d.png" -vf "scale=-2:1920:flags=lanczos" -c:v prores_ks -profile:v 4444 -pix_fmt yuva444p10le "${base}.mov"`); }
+    execSync(`${ff} -framerate ${FPS} -i "${dir}/f%04d.png" -vf "scale=-2:1920:flags=lanczos" -c:v libvpx-vp9 -pix_fmt yuva420p -crf 32 -b:v 0 -row-mt 1 "${base}.webm"`);
+    execSync(`${ff} -framerate ${FPS} -i "${dir}/f%04d.png" -filter_complex "[0:v]scale=-2:1920:flags=lanczos[v];color=white:s=1080x1920:r=${FPS}[bg];[bg][v]overlay=(W-w)/2:(H-h)/2:shortest=1,format=yuv420p" -c:v libx264 -profile:v main -crf 20 -movflags +faststart "${base}-white.mp4"`);
+    execSync(`${ff} -i "${dir}/f0001.png" -vf "scale=-2:1920:flags=lanczos" "${base}.png"`);
+    for (const ext of ['mov', 'webm', '-white.mp4', 'png']) { const f = ext.startsWith('-') || ext.startsWith('.') ? `${base}${ext}` : `${base}.${ext}`; console.log(loc, path.basename(f), Math.round(fs.statSync(f).size / 1024) + ' KB'); }
+    console.log(loc, 'frames', n, 'duration', (n / FPS).toFixed(1) + 's'); fs.rmSync(dir, { recursive: true, force: true }); continue;
+  }
   execSync(`${ff} -framerate ${FPS} -i "${dir}/f%04d.png" -vf "scale=720:-2,format=yuv420p" -c:v libx264 -profile:v main -crf 23 -movflags +faststart "${OUT}/flow-${loc}.mp4"`);
   execSync(`${ff} -framerate ${FPS} -i "${dir}/f%04d.png" -vf "scale=720:-2" -c:v libvpx-vp9 -crf 34 -b:v 0 -row-mt 1 -pix_fmt yuv420p "${OUT}/flow-${loc}.webm"`);
   execSync(`${ff} -i "${dir}/f0001.png" -vf "scale=720:-2" -q:v 4 "${OUT}/flow-${loc}.jpg"`);

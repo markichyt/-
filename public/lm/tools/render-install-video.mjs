@@ -2,7 +2,8 @@
 // авторизація за номером (клавіатура) → код із SMS → «Мої замовлення» → своє питання з відповідями (цикл). uk і en.
 // Екрани 1, 2, 3, 9, 10 — з демо реального інтерфейсу; App Store, авторизація і код — накладки за реальними скринами застосунку (29.09.2026).
 // Логотип скрізь латиницею: consultant-lm_logo_en_on-dark_R.svg (uk) / _TM (en). Запуск: node tools/render-install-video.mjs → assets/app/install-<loc>.mp4|webm|jpg
-import { chromium } from '/Users/mac/cabinetUR/video/node_modules/playwright/index.mjs';
+import { createRequire } from 'node:module';
+const { chromium } = createRequire(import.meta.url)('playwright');  // npm i -D playwright && npx playwright install chromium (у корені проєкту)
 import fs from 'node:fs'; import path from 'node:path'; import { execSync } from 'node:child_process';
 const DEMO = process.argv[2] || '/Users/mac/VOPROS/consultant-demo/ask-question-demo.html';
 const HERE = path.dirname(new URL(import.meta.url).pathname), ROOT = path.dirname(HERE), OUT = path.join(ROOT, 'assets/app');
@@ -13,7 +14,7 @@ const LOGO = (f) => 'file://' + path.join(ROOT, 'design-system/assets/logo', f);
 const TEXT = {
   uk: {
     lockup: LOGO('consultant-lm_logo_en_on-dark_R.svg'), sign: LOGO('consultant-lm_logo_sign_on-dark_clean.svg'),
-    yourQ: 'Ваше питання', orders: 'Мої замовлення', chips: ['Консультації', 'Документи', 'Послуги', 'Перевірки'], status: 'Статус:', order: 'Замовити послугу', best: 'Найкраща відповідь', fresh: 'Нове',
+    yourQ: 'Ваше питання', orders: 'Мої замовлення', chips: ['Консультації', 'Документи', 'Послуги', 'Кейси'], status: 'Статус:', order: 'Замовити послугу', best: 'Найкраща відповідь', fresh: 'Нове',
     store: { back: 'Пошук', title: 'ConsultantLM', sub: 'Юридичний маркетплейс', get: 'ОТРИМАТИ', open: 'ВІДКРИТИ', meta: [['4,8', '592 оцінки'], ['4+', 'Вік'], ['Юридичні', 'Категорія']],
       preview: 'Попередній перегляд', desc: 'Безкоштовний AI-аналіз ситуації, відповіді кількох юристів, послуги з етапами та точною ціною.', tabs: ['Сьогодні', 'Ігри', 'Застосунки', 'Arcade', 'Пошук'] },
     hero: { tag: 'Юрист завжди поруч!', pills: ['Індивідуальні консультації', 'Завантажити документ', 'Замовити послугу', 'Обрати фахівця'] },
@@ -32,7 +33,7 @@ const TEXT = {
       { band: 'PREMIUM', score: '42.28', name: 'Молчанов Олег', role: 'Адвокат', loc: 'Київ, Україна', ts: '01.07.2026, 19:10', photo: RP('mo'), text: 'Радив би одразу готувати позов: зафіксуйте доходи та майно, зберіть докази участі у вихованні — це посилить позицію.' } ] },
   en: {
     lockup: LOGO('consultant-lm_logo_en_on-dark_TM.svg'), sign: LOGO('consultant-lm_logo_sign_on-dark_clean.svg'),
-    yourQ: 'Your question', orders: 'My orders', chips: ['Consultations', 'Documents', 'Services', 'Checks'], status: 'Status:', order: 'Order the service', best: 'Best answer', fresh: 'New',
+    yourQ: 'Your question', orders: 'My orders', chips: ['Consultations', 'Documents', 'Services', 'Cases'], status: 'Status:', order: 'Order the service', best: 'Best answer', fresh: 'New',
     store: { back: 'Search', title: 'ConsultantLM', sub: 'Legal marketplace', get: 'GET', open: 'OPEN', meta: [['4.8', '592 ratings'], ['4+', 'Age'], ['Legal', 'Category']],
       preview: 'Preview', desc: 'Free AI analysis of your situation, answers from several lawyers, services with stages and exact prices.', tabs: ['Today', 'Games', 'Apps', 'Arcade', 'Search'] },
     hero: { tag: 'A lawyer is always there for you!', pills: ['Individual consultations', 'Download document', 'Order the service', 'Select specialist'] },

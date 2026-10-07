@@ -19,12 +19,12 @@
 <link rel="stylesheet" href="../design-system/tokens.css">
 <link rel="stylesheet" href="../design-system/styles.css">
 <link rel="stylesheet" href="../quiz.css">
-<script>window.QUIZ_LOCALE = { lang: 'en', country: 'US',
+<script>window.QUIZ_LOCALE = { lang: 'en', country: 'US', ai: { name: 'Assistant Emily', photo: 'ai-en' },
   phone: { code: '+1', digits: 10, groups: [3, 3, 4] },
   plural: function (n) { return n === 1 ? 0 : 1; },
   step: function (n, m) { return 'Step ' + n + ' of ' + m; },
   money: function (n) { return '$' + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); },
-  plans: [{"id":"base","name":"BASE","price":15,"year":162,"discount":5,"example":{"service":"Work visa immigration services","price":1331},"features":["Free brief consultations: 3","Document templates: unlimited","Enhanced 24/7 AI assistant"],"pill":"Up to 5% off all services","savings":{"total":"Total savings of up to $1,300","items":["Free consultations — save up to $150","Unlimited document templates — save up to $150","Up to 5% off services — save up to $1,000"]}},{"id":"pro","name":"PRO","price":50,"year":540,"discount":10,"recommended":true,"example":{"service":"Work visa immigration services","price":1331},"features":["Free brief consultations: 12","Document templates: unlimited","Dedicated customer success manager"],"pill":"Up to 10% off all services","savings":{"total":"Total savings of up to $4,200","items":["Free consultations — estimated savings of $600","Unlimited document templates — estimated savings of $600","Up to 10% off services — save up to $3,000"]}},{"id":"premium","name":"PREMIUM","price":300,"year":3240,"discount":20,"example":{"service":"Wrongful termination and employee discrimination defense","price":13310},"features":["Free brief consultations: unlimited","Document templates: unlimited","Dedicated VIP account manager"],"pill":"Up to 20% off all services","savings":{"total":"Total estimated savings of up to $20,000","items":["Free consultations — estimated savings of up to $2,000","Unlimited document templates — save up to $2,000","Maximum 20% off services — save up to $16,000"]}}],
+  plans: [{"id":"base","name":"BASE","price":15,"year":162,"discount":5,"example":{"service":"Work visa immigration services","price":1331},"features":["Free brief consultations: 3","Document templates: unlimited","Enhanced 24/7 AI assistant"],"pill":"Up to 5% off all services","savings":{"total":"Estimated savings — up to $1,300 a month","items":["3 consultations at $50 each instead of paying separately — up to $150","Unlimited document templates — up to $150","5% off services on $20,000 of orders — up to $1,000"]}},{"id":"pro","name":"PRO","price":50,"year":540,"discount":10,"recommended":true,"example":{"service":"Work visa immigration services","price":1331},"features":["Free brief consultations: 12","Document templates: unlimited","Dedicated customer success manager"],"pill":"Up to 10% off all services","savings":{"total":"Estimated savings — up to $4,200 a month","items":["12 consultations at $50 each instead of paying separately — $600","Unlimited document templates — $600","10% off services on $30,000 of orders — up to $3,000"]}},{"id":"premium","name":"PREMIUM","price":300,"year":3240,"discount":20,"example":{"service":"Wrongful termination and employee discrimination defense","price":13310},"features":["Free brief consultations: unlimited","Document templates: unlimited","Dedicated VIP account manager"],"pill":"Up to 20% off all services","savings":{"total":"Estimated savings — up to $20,000 a month","items":["Unlimited consultations — up to $2,000","Unlimited document templates — up to $2,000","20% off services on $80,000 of orders — up to $16,000"]}}],
   settlements: [['New York', 'NY', 1000, 40.71, -74.01], ['Los Angeles', 'CA', 640, 34.05, -118.24], ['Chicago', 'IL', 480, 41.88, -87.63], ['Houston', 'TX', 380, 29.76, -95.37], ['Phoenix', 'AZ', 210, 33.45, -112.07],
     ['Philadelphia', 'PA', 190, 39.95, -75.17], ['San Antonio', 'TX', 120, 29.42, -98.49], ['San Diego', 'CA', 170, 32.72, -117.16], ['Dallas', 'TX', 160, 32.78, -96.8], ['Austin', 'TX', 150, 30.27, -97.74],
     ['Jacksonville', 'FL', 140, 30.33, -81.66], ['Fort Worth', 'TX', 90, 32.75, -97.33], ['Columbus', 'OH', 130, 39.96, -83.0], ['Charlotte', 'NC', 120, 35.23, -80.84], ['Indianapolis', 'IN', 110, 39.77, -86.16],
@@ -261,25 +261,36 @@
         <h2 class="funnel__title" id="s6-title" tabindex="-1">Tell us what happened</h2>
         <p class="funnel__hint funnel__hint--sm">The more details you share, the more precise the analysis. You can combine text and voice.</p>
       </div>
+      <div class="field funnel__field">
+        <label class="field__label" for="story-title">Question title</label>
+        <input class="input input--soft" id="story-title" name="case_title" type="text" autocomplete="off" enterkeyhint="next" placeholder="For example: Divorce with two children — custody and division of property" aria-describedby="story-title-hint story-title-err" required>
+        <div class="field__msg">
+          <p class="caption" id="story-title-hint"><span class="num" data-title-words>0</span> words · 7 to 12 needed</p>
+          <p class="q-error" id="story-title-err" role="alert" hidden>
+            <svg class="q-error__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg>
+            The title must be 7 to 12 words
+          </p>
+        </div>
+      </div>
       <div class="field funnel__field funnel__textarea">
         <label class="field__label" for="story">Description</label>
         <div class="q-textarea">
           <textarea class="input input--soft q-textarea__field" id="story" name="case_description" rows="4" maxlength="1000"
                     placeholder="For example: we decided to divorce, we have two children and cannot agree on custody and property…"
                     aria-describedby="story-count story-err"></textarea>
-          <p class="q-textarea__count caption" id="story-count" aria-live="polite"><span class="q-textarea__count-num num">0</span> / 1&nbsp;000</p>
+          <p class="q-textarea__count caption" id="story-count" aria-live="polite"><span class="q-textarea__count-num num">0</span> / 1,000 · at least 50</p>
         </div>
         <div class="field__msg">
           <p class="q-error" id="story-err" role="alert" hidden>
             <svg class="q-error__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg>
-            Describe the situation in text or record a voice note
+            <span data-story-err-text>Describe the situation in text or record a voice note</span>
           </p>
         </div>
       </div>
       <div class="funnel__voice" id="voice" data-state="idle">
         <button class="btn btn--outline" type="button" data-voice="toggle" aria-describedby="voice-status">
           <svg class="icon" width="20" height="20" aria-hidden="true" data-voice-icon><use href="#i-mic"></use></svg>
-          <span data-voice-label>Tell it by voice</span>
+          <span data-voice-label>Tell it by voice · up to 1 min</span>
         </button>
         <p class="funnel__voice-status" id="voice-status" role="status" aria-live="polite"><span class="funnel__voice-dot" aria-hidden="true"></span><span data-voice-text></span></p>
         <button class="link" type="button" data-voice="reset" hidden>Record again</button>
@@ -296,13 +307,13 @@
         <h2 class="funnel__title" id="s7-title" tabindex="-1">We are already analyzing your situation.</h2>
       </div>
       <ol class="q-steps funnel__checklist" id="s7-list" aria-label="Request processing status" aria-busy="true">
-        <li class="q-steps__item" data-state="upcoming"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">Description received</p></div></li>
+        <li class="q-steps__item" data-state="upcoming"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">Question received</p></div></li>
         <li class="q-steps__item" data-state="upcoming"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">Area identified</p></div></li>
         <li class="q-steps__item" data-state="upcoming"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">Matching relevant specialists</p><p class="q-steps__status" data-status hidden>In progress…</p></div></li>
       </ol>
       <div class="appframe appframe--compact" role="img" aria-label="Question page in the app: your question, and below it the card of the lawyer who took your request">
         <div class="appframe__bar">Your question</div>
-        <article class="appframe__card"><p class="appframe__date"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>07/01/2026, 18:04</p><p class="appframe__qt" data-s7-question>Your description</p></article>
+        <article class="appframe__card"><p class="appframe__date"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>07/01/2026, 18:04</p><p class="appframe__qt" data-s7-question>Title of your question</p><p class="appframe__qtext" data-s7-desc>Description</p></article>
         <template id="s7-card"></template>
         <div class="appframe__list" id="s7-answers">
           <div class="appframe__skel appframe__skel--short"><span class="q-skel"></span><span class="q-skel"></span><span class="q-skel"></span></div>
@@ -319,7 +330,7 @@
       </div>
       <div class="appframe appframe--compact" role="img" aria-label="Question page in the app: your question and rated answers from lawyers">
         <div class="appframe__bar">Your question</div>
-        <article class="appframe__card"><p class="appframe__date"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>07/01/2026, 18:04</p><p class="appframe__qt" data-s8-question>Your description</p></article>
+        <article class="appframe__card"><p class="appframe__date"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>07/01/2026, 18:04</p><p class="appframe__qt" data-s8-question>Title of your question</p><p class="appframe__qtext" data-s8-desc>Description</p></article>
         <div class="appframe__list" data-answers></div>
       </div>
       <ul class="funnel__chips funnel__hide-short funnel__hide-mid" aria-label="What it gives you">
@@ -385,7 +396,7 @@
           <div class="plans__dots" data-plans-dots role="tablist" aria-label="Packages"></div>
           <button class="btn btn--icon plans__arrow plans__arrow--next" type="button" data-plans-next aria-label="Next package"><svg class="icon" width="24" height="24" aria-hidden="true"><use href="#i-arrow-left"></use></svg></button>
         </div>
-        <p class="caption plans__cancel">Cancel anytime.</p>
+        <p class="caption plans__cancel">Cancel anytime. By purchasing a package you accept the <a href="https://consultantlm.com/legal/terms-of-service">User Agreement</a>.</p>
       </div>
       <p class="caption q-disclaimer funnel__hint--sm">The estimate is indicative and not a public offer. The consultant confirms the final price before the work starts.</p>
     </form>
@@ -500,7 +511,7 @@
         <p class="caption">Subscription: <strong data-s13-plan2>PRO</strong> plan for <span data-s13-period2>1 month</span> — <strong class="num" data-s13-price2>$39</strong>. Renews automatically <span data-s13-cadence>every month</span> at the same price until you cancel.</p>
         <p class="caption">You can cancel anytime in the app settings or via support. After cancellation the plan stays active until the end of the paid period and no further charges are made.</p>
         <p class="caption">We do not store card details — the payment is processed by a certified payment provider.</p>
-        <p class="caption">By tapping “Pay” you agree to the <a href="https://consultantlm.com/legal/terms-of-service">Subscription Terms</a>, <a href="https://consultantlm.com/legal/terms-of-service">User Agreement</a> and <a href="https://consultantlm.com/legal/privacy-policy">Privacy Policy</a>.</p>
+        <p class="caption">By tapping “Pay” you agree to the <a href="https://consultantlm.com/legal/terms-of-service">User Agreement</a> and <a href="https://consultantlm.com/legal/privacy-policy">Privacy Policy</a>.</p>
       </div>
     </form>
 
@@ -704,7 +715,7 @@
 
   var PLANS_ENTER = null;
   var state = { branch:'free', settlement:null, remote:false, categories:[], description:'', voice:null,
-    intent:null, plan:null, phone:'', name:'', email:'', channels:[], leadId:null, paid:false,
+    intent:null, plan:null, phone:'', name:'', email:'', channels:[], leadId:null, paid:false, title:'',
     payFail:false, attribution:{}, trail:[] };
   var reduce = matchMedia('(prefers-reduced-motion: reduce)');
   var timers = [];
@@ -791,7 +802,7 @@
   var GATE = {
     s2: function () { var r = $('#remote'); return !!(state.settlement || (r && r.checked)); },
     s4: function () { return !!$('#s4-options input:checked'); },
-    s6: function () { var t = $('#story'); return !!((t && t.value.trim().length) || state.voice); },
+    s6: function () { var t = $('#story'), h = $('#story-title'), n = h ? h.value.trim().split(/\s+/).filter(Boolean).length : 0; return n >= 7 && n <= 12 && !!((t && t.value.trim().length >= 50) || state.voice); },
     s9: function () { return !!$('#s9 input:checked'); },
     s12: function () { var ph = $('#phone'), d = ph ? ph.value.replace(/\D/g, '') : ''; return !!($('#consent').checked && d.length >= +(ph.dataset.min || 7) && d.length <= +(ph.dataset.max || 12)); }
   };
@@ -977,11 +988,16 @@
 
   /* S6 · описание + голос */
   (function () {
-    var ta = $('#story'), count = $('.q-textarea__count-num', $('#s6')), err = $('#story-err');
+    var ta = $('#story'), count = $('.q-textarea__count-num', $('#s6')), err = $('#story-err'), errText = $('[data-story-err-text]', err);
+    var title = $('#story-title'), terr = $('#story-title-err'), twords = $('[data-title-words]');
+    var MIN_DESC = 50, VOICE_MAX = 60000;
+    function wordsOf(v) { return v.trim().split(/\s+/).filter(Boolean).length; }
+    function titleOk() { var n = wordsOf(title.value); return n >= 7 && n <= 12; }
+    title.addEventListener('input', function () { twords.textContent = wordsOf(title.value); if (titleOk()) { terr.hidden = true; title.removeAttribute('aria-invalid'); } });
     var box = $('#voice'), toggle = $('[data-voice="toggle"]', box), label = $('[data-voice-label]', box);
     var icon = $('use', $('[data-voice-icon]', box)), text = $('[data-voice-text]', box), reset = $('[data-voice="reset"]', box), verr = $('[data-voice-error]', box);
     var rec = null, chunks = [], t0 = 0, tick = 0, stream = null;
-    ta.addEventListener('input', function () { count.textContent = nbsp(ta.value.length); if (ta.value.trim().length) showError(null, err, false); });
+    ta.addEventListener('input', function () { count.textContent = nbsp(ta.value.length); if (ta.value.trim().length >= MIN_DESC) showError(null, err, false); });
     function fmt(ms) { var s = Math.round(ms / 1000); return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2); }
     function setState(s) { box.dataset.state = s; }
     function stopStream() { if (stream) { stream.getTracks().forEach(function (t) { t.stop(); }); stream = null; } }
@@ -994,7 +1010,7 @@
         rec.ondataavailable = function (e) { if (e.data && e.data.size) chunks.push(e.data); };
         rec.onstop = function () {
           var blob = new Blob(chunks, { type: rec.mimeType || 'audio/webm' });
-          var dur = Date.now() - t0;
+          var dur = Math.min(VOICE_MAX, Date.now() - t0);
           state.voice = { blob: blob, duration_ms: dur, size: blob.size, mime: blob.type }; refreshGate();
           setState('saved');
           text.textContent = 'Recorded ' + fmt(dur) + ' · Saved';
@@ -1008,8 +1024,8 @@
         t0 = Date.now();
         setState('recording');
         label.textContent = 'Stop recording'; icon.setAttribute('href', '#i-stop');
-        text.textContent = 'Recording… 0:00';
-        tick = setInterval(function () { text.textContent = 'Recording… ' + fmt(Date.now() - t0); }, 500);
+        text.textContent = 'Recording… left ' + fmt(VOICE_MAX);
+        tick = setInterval(function () { var left = VOICE_MAX - (Date.now() - t0); if (left <= 0) { stop(); return; } text.textContent = 'Recording… left ' + fmt(left); }, 250);  /* не довше хвилини, зворотний відлік */
         timers.push(tick);
       }).catch(function () { verr.hidden = false; setState('idle'); });
     }
@@ -1022,9 +1038,11 @@
     $('#s6').addEventListener('submit', function (e) {
       e.preventDefault();
       if (box.dataset.state === 'recording') stop();
-      state.description = ta.value.trim();
-      if (!state.description && !state.voice) { showError(null, err, true, ta); say(err.textContent.trim()); return; }
-      track('quiz_step_complete', { quiz_step: 's6', has_text: !!state.description, has_voice: !!state.voice, text_length: state.description.length });
+      state.description = ta.value.trim(); state.title = title.value.trim().replace(/\s+/g, ' ');
+      if (!titleOk()) { terr.hidden = false; title.setAttribute('aria-invalid', 'true'); title.focus(); say(terr.textContent.trim()); return; }
+      if (!state.description && !state.voice) { errText.textContent = 'Describe the situation in text or record a voice note'; showError(null, err, true, ta); say(err.textContent.trim()); return; }
+      if (state.description && state.description.length < MIN_DESC && !state.voice) { errText.textContent = 'Describe the situation in more detail — at least 50 characters'; showError(null, err, true, ta); say(err.textContent.trim()); return; }
+      track('quiz_step_complete', { quiz_step: 's6', has_text: !!state.description, has_voice: !!state.voice, text_length: state.description.length, title_words: wordsOf(state.title) });
       go('s7');
     });
   })();
@@ -1050,20 +1068,25 @@
     var period = 'month';
     function amount(p) { return money(period === 'year' ? p.year : p.price); }
     function perLabel() { return period === 'year' ? '/ 1 year' : '/ 1 month'; }
+    function yearPct(p) { return Math.round((1 - p.year / (p.price * 12)) * 100); }  // знижка річної оплати проти 12 місячних
+    function yearInfo(p) { var full = p.price * 12, save = full - p.year; return period === 'year' ? 'Instead of ' + money(full) + ' · you save ' + money(save) : 'Per year — ' + money(p.year) + ' (−' + yearPct(p) + ' %)'; }
     rail.insertAdjacentHTML('beforeend', PLANS.map(function (p) {
       var icons = ['i-message', 'i-file', 'i-coins'];
       return '<label class="plan" data-tone="' + p.id + '">' +
         '<input class="q-option__input" type="radio" name="membership_plan" value="' + p.id + '"' + (p.recommended ? ' checked' : '') + '>' +
-        '<span class="plan__head"><span class="plan__name">' + esc(p.name) + '</span>' + (p.recommended ? '<span class="chip chip--sm plan__rec">' + 'Recommended' + '</span>' : '') + '</span>' +
+        '<span class="plan__head"><span class="plan__name">' + esc(p.name) + '</span><span class="plan__head-right">' + (p.recommended ? '<span class="chip chip--sm plan__rec">' + 'Recommended' + '</span>' : '') + '<span class="chip chip--sm plan__disc" data-plan-disc hidden></span></span></span>' +
         '<span class="plan__price"><span class="plan__amount num" data-plan-amount>' + amount(p) + '</span><span class="plan__period" data-plan-period>' + perLabel() + '</span></span>' +
+        '<span class="plan__year num" data-plan-year>' + yearInfo(p) + '</span>' +
         '<ul class="plan__features">' + p.features.map(function (f) { return '<li><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg><span>' + esc(f) + '</span></li>'; }).join('') + '</ul>' +
         '<span class="plan__pill"><span>' + esc(p.pill) + '</span></span>' +
         '<ul class="plan__savings"><li class="plan__savings-total"><svg class="icon" aria-hidden="true"><use href="#i-coins"></use></svg><span>' + esc(p.savings.total) + '</span></li>' +
           p.savings.items.map(function (t, k) { return '<li class="funnel__hide-mid"><svg class="icon" aria-hidden="true"><use href="#' + icons[k] + '"></use></svg><span>' + esc(t) + '</span></li>'; }).join('') + '</ul>' +
+        '<span class="plan__note funnel__hide-mid">' + 'Compared with paying for the same consultations, templates and services without a plan.' + '</span>' +
         '<span class="btn btn--outline plan__btn" aria-hidden="true"><span class="plan__btn-off">' + 'Choose package' + '</span><span class="plan__btn-on">' + 'Selected' + '</span></span>' +
         '</label>';
     }).join(''));
     var cards = $$('.plan', rail);
+    var yt = $('.plans__tab[data-period="year"]', toggle); if (yt && PLANS[0]) yt.textContent = '1 year' + ' −' + yearPct(PLANS[1] || PLANS[0]) + ' %';  // вигода річної оплати видна одразу
     dots.innerHTML = PLANS.map(function (p, i) { return '<button class="plans__dot" type="button" role="tab" aria-label="' + esc(p.name) + '" data-i="' + i + '"></button>'; }).join('');
     var dotEls = $$('.plans__dot', dots);
     function rel(c) { return rail.scrollLeft + c.getBoundingClientRect().left - rail.getBoundingClientRect().left; }
@@ -1078,7 +1101,7 @@
     $$('.plans__tab', toggle).forEach(function (b) { b.addEventListener('click', function () {
       period = b.dataset.period;
       $$('.plans__tab', toggle).forEach(function (x) { x.classList.toggle('is-on', x === b); x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
-      cards.forEach(function (c, i) { $('[data-plan-amount]', c).textContent = amount(PLANS[i]); $('[data-plan-period]', c).textContent = perLabel(); });
+      cards.forEach(function (c, i) { $('[data-plan-amount]', c).textContent = amount(PLANS[i]); $('[data-plan-period]', c).textContent = perLabel(); $('[data-plan-year]', c).textContent = yearInfo(PLANS[i]); var d = $('[data-plan-disc]', c); d.hidden = period !== 'year'; d.textContent = '−' + yearPct(PLANS[i]) + ' %'; });
       example();
     }); });
     function example() {
@@ -1146,7 +1169,7 @@
         var lead = { lead_id: state.leadId, phone: state.phone.replace(/\s/g, ''), name: state.name || null, email: state.email || null,
           settlement: state.settlement ? state.settlement.name : null,
           region: state.settlement ? state.settlement.region : null, remote_ok: state.remote, practice_areas: state.categories,
-          case_description: state.description || null, voice_audio: state.voice ? { duration_ms: state.voice.duration_ms, size: state.voice.size, mime: state.voice.mime } : null,
+          case_title: state.title || null, case_description: state.description || null, voice_audio: state.voice ? { duration_ms: state.voice.duration_ms, size: state.voice.size, mime: state.voice.mime } : null,
           client_intent: state.intent, membership_intent: state.plan ? state.plan.id : null, attribution: state.attribution,
           last_step_reached: 's12', created_at: new Date().toISOString() };
         try { console.info('[quiz] lead + question created', lead); } catch (err) {}
@@ -1311,22 +1334,42 @@
       }).join('');
     },
     s7: function (el) {
-      stampNow(el); var q = $('[data-s7-question]', el);
-      q.textContent = state.description ? state.description : 'Voice message · ' + (state.voice ? Math.round(state.voice.duration_ms / 1000) + ' s' : '');
-      var answers = $('#s7-answers');
-      answers.innerHTML = '<div class="appframe__skel"><span class="q-skel"></span><span class="q-skel"></span><span class="q-skel"></span></div>' +
-        '<div class="appframe__skel funnel__hide-short"><span class="q-skel"></span><span class="q-skel"></span><span class="q-skel"></span></div>';
-      runList($('#s7-list'), 800, null);
+      stampNow(el);
+      var cat = CATEGORIES.filter(function (c) { return c[0] === state.categories[0]; })[0], catName = cat ? cat[1] : '';
+      var voiceLbl = 'Voice message · ' + (state.voice ? Math.round(state.voice.duration_ms / 1000) + ' s' : '');
+      $('[data-s7-question]', el).textContent = state.title || (state.description ? state.description : voiceLbl);
+      $('[data-s7-desc]', el).textContent = state.description || (state.voice ? voiceLbl : '');
+      var answers = $('#s7-answers'), list = $('#s7-list'), items = $$('.q-steps__item', list), st = $('[data-status]', list), short = matchMedia('(max-height: 699px)').matches;
+      var AIP = L.ai || { name: 'Assistant Andrey', photo: 'ai-uk' };
+      function step(i, state_) { items.forEach(function (li, k) { if (k < i) li.dataset.state = 'done'; }); if (items[i]) { items[i].dataset.state = state_; if (state_ === 'current') items[i].setAttribute('aria-current', 'step'); else items[i].removeAttribute('aria-current'); } }
+      function add(html) { var w = document.createElement('div'); w.innerHTML = html; var n = w.firstElementChild; n.classList.add('q-in'); answers.appendChild(n); return n; }
+      items.forEach(function (li) { li.dataset.state = 'upcoming'; li.removeAttribute('aria-current'); }); if (st) st.hidden = true;
+      answers.innerHTML = ''; step(0, 'current');
+      /* 1. питання отримано → 2. AI визначає категорію → 3. фахівці переглядають → перший бере в роботу; ~8 с, «Пропустити» доступне одразу */
+      later(function () { step(1, 'current'); add('<div class="appframe__typing" aria-label="AI assistant is analyzing"><span class="appframe__typing-dots" aria-hidden="true"><i></i><i></i><i></i></span>' + 'The AI assistant is analyzing the question…' + '</div>'); }, 900);
       later(function () {
-        answers.innerHTML = $('#s7-card').innerHTML.replace('{{ts}}', 'just now').replace('{{txt}}', 'Took your request — preparing a case review…') +
-          '<div class="appframe__skel funnel__hide-short"><span class="q-skel"></span><span class="q-skel"></span><span class="q-skel"></span></div>';
-      }, 1500);
-      later(function () { doneAnimating(); go('s8'); }, 3400);
+        var t = $('.appframe__typing', answers); if (t) t.remove();
+        add('<article class="appframe__ans appframe__ans--ai"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="ai">AI</span><span class="appframe__band-note">' + 'just now' + '</span></div>' +
+          '<div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="../assets/people/' + AIP.photo + '.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">AI</span><span class="appframe__meta"><span class="appframe__name">' + esc(AIP.name) + '</span><span class="appframe__role">' + 'Artificial Intelligence' + '</span></span></div>' +
+          '<p class="appframe__txt">' + (catName ? 'Category: ' + esc(catName) + '. ' : '') + 'Looking for specialists with experience in similar cases…' + '</p></article>');
+        step(2, 'current'); if (st) { st.hidden = false; st.textContent = 'Specialists are reviewing the question…'; }
+      }, 2600);
+      later(function () {
+        add('<div class="appframe__viewers"><span class="appframe__viewers-av" aria-hidden="true">' + ANSWERS.slice(0, 3).map(function (a) { return '<img src="../assets/people/' + a.photo + '.jpg" alt="" width="160" height="160" loading="lazy" decoding="async">'; }).join('') + '</span><span>' + ANSWERS.slice(0, 3).length + ' ' + 'specialists are viewing your question' + '</span></div>');
+      }, 4400);
+      later(function () {
+        var v = $('.appframe__viewers', answers); if (v) v.remove();
+        if (short) { var ai = $('.appframe__ans--ai', answers); if (ai) ai.remove(); }  /* на коротких екранах — лише остання картка */
+        add($('#s7-card').innerHTML.replace('{{ts}}', 'just now').replace('{{txt}}', 'Took your request — preparing a case review…'));
+        step(3, 'done'); if (st) st.textContent = 'The first specialist took the request';
+      }, 6200);
+      later(function () { doneAnimating(); go('s8'); }, 8400);
     },
     s8: function (el) {
       stampNow(el);
-      var q = $('[data-s8-question]', el);
-      q.textContent = state.description ? state.description : 'Your situation (voice message)';
+      var q = $('[data-s8-question]', el), d = $('[data-s8-desc]', el);
+      q.textContent = state.title || (state.description ? state.description : 'Your situation (voice message)');
+      d.textContent = state.description || (state.voice ? 'Voice message' : '');
     },
     s11: function () { if (PLANS_ENTER) PLANS_ENTER(); },
     s12: function () { track('membership_offer_result', { membership_choice: state.branch }); },

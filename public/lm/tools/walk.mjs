@@ -6,10 +6,10 @@ import { createRequire } from 'node:module';
 import path from 'node:path';
 import fs from 'node:fs';
 const require = createRequire(import.meta.url);
-const { chromium } = require('/Users/mac/cabinetUR/video/node_modules/playwright');
+const { chromium } = require('playwright');  // npm i -D playwright && npx playwright install chromium (у корені проєкту)
 
 const [file, W, H, out, ...flags] = process.argv.slice(2);
-const alt = flags.includes('--alt'), en = flags.includes('--en'), remote = flags.includes('--remote');  // --remote: на S2 обрати «дистанційно» замість населеного пункту
+const alt = flags.includes('--alt'), en = flags.includes('--en'), remote = flags.includes('--remote'), year = flags.includes('--year');  // --year: на S11 перемкнути на річну оплату  // --remote: на S2 обрати «дистанційно» замість населеного пункту
 fs.mkdirSync(out, { recursive: true });
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: +W, height: +H }, deviceScaleFactor: 2, colorScheme: 'dark' });
@@ -44,14 +44,15 @@ for (let guard = 0; guard < 24; guard++) {
     await page.waitForTimeout(300);
   }
   if (id === 's4') { const tiles = await page.$$('#s4 .q-option'); await tiles[0].click(); await tiles[6].click(); await page.waitForTimeout(200); }
-  if (id === 's6') { await page.fill('#story', en ? 'We decided to divorce, we have two children and cannot agree on custody and the division of property.' : 'Ми вирішили розлучитися, є двоє дітей, не можемо домовитися про опіку та поділ майна.'); }
+  if (id === 's6') { await shot('-empty'); await page.fill('#story-title', en ? 'Divorce with two children: custody and division of property' : 'Розлучення з двома дітьми: опіка та поділ спільного майна'); await page.fill('#story', en ? 'We decided to divorce, we have two children and cannot agree on custody and the division of property.' : 'Ми вирішили розлучитися, є двоє дітей, не можемо домовитися про опіку та поділ майна.'); }
+  if (id === 's7') { for (const t of [1200, 1800, 1800]) { await page.waitForTimeout(t); await shot('-t' + t); } }  // три проміжні кадри анімації, до автопереходу
   if (id === 's9') { await page.click('#s9 .q-option'); }
   if (id === 's12') {
     await page.click('#phone'); await page.keyboard.type(en ? '2125550123' : '671234567');
     await page.$eval('#consent', el => { if (!el.checked) el.click(); });
     await page.waitForTimeout(200);
   }
-  if (id === 's11') { await page.$eval('input[name="membership_plan"][value="pro"]', el => { if (!el.checked) el.click(); }); await page.waitForTimeout(400); }
+  if (id === 's11') { await page.$eval('input[name="membership_plan"][value="pro"]', el => { if (!el.checked) el.click(); }); if (year) await page.click('.plans__tab[data-period="year"]'); await page.waitForTimeout(400); }
   await shot();
   if (id === 's15' && alt) { await clickAlt(); continue; }
   await next();
