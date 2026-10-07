@@ -259,7 +259,7 @@
     <form class="funnel__screen" id="s6" data-screen="s6" aria-labelledby="s6-title" novalidate hidden>
       <div class="funnel__head">
         <h2 class="funnel__title" id="s6-title" tabindex="-1">Tell us what happened</h2>
-        <p class="funnel__hint funnel__hint--sm">The more details you share, the more precise the analysis. You can combine text and voice.</p>
+        <p class="funnel__hint funnel__hint--sm">Write the title yourself. Describe the situation in text or tell it by voice — the more details, the more precise the analysis.</p>
       </div>
       <div class="field funnel__field">
         <label class="field__label" for="story-title">Question title</label>
@@ -273,7 +273,7 @@
         </div>
       </div>
       <div class="field funnel__field funnel__textarea">
-        <label class="field__label" for="story">Description</label>
+        <label class="field__label" for="story">Description in text</label>
         <div class="q-textarea">
           <textarea class="input input--soft q-textarea__field" id="story" name="case_description" rows="4" maxlength="1000"
                     placeholder="For example: we decided to divorce, we have two children and cannot agree on custody and property…"
@@ -287,6 +287,7 @@
           </p>
         </div>
       </div>
+      <p class="funnel__or" aria-hidden="true"><span>or</span></p>
       <div class="funnel__voice" id="voice" data-state="idle">
         <button class="btn btn--outline" type="button" data-voice="toggle" aria-describedby="voice-status">
           <svg class="icon" width="20" height="20" aria-hidden="true" data-voice-icon><use href="#i-mic"></use></svg>

@@ -248,7 +248,7 @@
     <form class="funnel__screen" id="s6" data-screen="s6" aria-labelledby="s6-title" novalidate hidden>
       <div class="funnel__head">
         <h2 class="funnel__title" id="s6-title" tabindex="-1">Розкажіть, що сталося</h2>
-        <p class="funnel__hint funnel__hint--sm">Що більше деталей Ви дасте, то точнішим буде аналіз. Текст і голос можна поєднати.</p>
+        <p class="funnel__hint funnel__hint--sm">Заголовок напишіть самі. Ситуацію можна описати текстом або розповісти голосом — що більше деталей, то точніший аналіз.</p>
       </div>
       <div class="field funnel__field">
         <label class="field__label" for="story-title">Заголовок питання</label>
@@ -262,7 +262,7 @@
         </div>
       </div>
       <div class="field funnel__field funnel__textarea">
-        <label class="field__label" for="story">Опис ситуації</label>
+        <label class="field__label" for="story">Опис ситуації текстом</label>
         <div class="q-textarea">
           <textarea class="input input--soft q-textarea__field" id="story" name="case_description" rows="4" maxlength="1000"
                     placeholder="Наприклад: ми вирішили розлучитися, є двоє дітей, не можемо домовитися про опіку та поділ майна…"
@@ -276,6 +276,7 @@
           </p>
         </div>
       </div>
+      <p class="funnel__or" aria-hidden="true"><span>або</span></p>
       <div class="funnel__voice" id="voice" data-state="idle">
         <button class="btn btn--outline" type="button" data-voice="toggle" aria-describedby="voice-status">
           <svg class="icon" width="20" height="20" aria-hidden="true" data-voice-icon><use href="#i-mic"></use></svg>
