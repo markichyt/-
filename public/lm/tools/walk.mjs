@@ -48,6 +48,7 @@ for (let guard = 0; guard < 24; guard++) {
   if (id === 's7') { for (const t of [1200, 1800, 1800]) { await page.waitForTimeout(t); await shot('-t' + t); } }  // три проміжні кадри анімації, до автопереходу
   if (id === 's9') { await page.click('#s9 .q-option'); }
   if (id === 's12') {
+    await page.click('.js-selected-country'); await page.waitForTimeout(250); await shot('-dropdown'); await page.keyboard.press('Escape');
     await page.click('#phone'); await page.keyboard.type(en ? '2125550123' : '671234567');
     await page.$eval('#consent', el => { if (!el.checked) el.click(); });
     await page.waitForTimeout(200);

@@ -258,10 +258,20 @@
             Phone <span class="q-req-star" aria-hidden="true">*</span>
             <span class="q-req">(required)</span>
           </label>
-          <div class="q-phone funnel__phone" id="phone-box" role="group" aria-labelledby="phone-label">
-            <span class="q-phone__country" aria-hidden="true"><span class="q-phone__code" data-locale-phone-code>+44</span></span>
-            <input class="q-phone__input" id="phone" name="phone" type="tel" inputmode="tel"
-                   autocomplete="tel-national" placeholder="7400 123456" data-locale-phone-placeholder required aria-describedby="phone-hint phone-err">
+          <div class="call-trigger-modal__input-group js-call-trigger-modal__input-group funnel__phone" id="phone-box" role="group" aria-labelledby="phone-label">
+            <div class="country-select">
+              <button class="country-select__button js-selected-country" type="button" data-country="UA" aria-haspopup="listbox" aria-expanded="false" aria-label="Country code"><img width="24" height="17" src="../assets/flags/neutral.png" alt="" class="flag"><span class="dropdown-arrow" aria-hidden="true">&#9660;</span></button>
+              <ul class="country-select__dropdown" role="listbox" aria-label="Country">
+                <li data-value="+380" data-country-value="UA" data-mask="+380 (ZZ) ZZZ-ZZZZ" class="country-select__option"><img width="24" height="17" src="../assets/flags/ukraine.png" alt="" class="flag"><span class="country-name">Ukraine</span><span class="country-code">+380</span></li>
+                <li data-value="+48" data-country-value="PL" data-mask="+48 (ZZZ) ZZZ-ZZZ" class="country-select__option"><img width="24" height="17" src="../assets/flags/poland.png" alt="" class="flag"><span class="country-name">Poland</span><span class="country-code">+48</span></li>
+                <li data-value="+44" data-country-value="UK" data-mask="+44 (ZZZZ) ZZZZZZ" class="country-select__option"><img width="24" height="17" src="../assets/flags/england.png" alt="" class="flag"><span class="country-name">United Kingdom</span><span class="country-code">+44</span></li>
+                <li data-value="+1" data-country-value="USA" data-mask="+1 (ZZZ) ZZZ-ZZZZ" class="country-select__option"><img width="24" height="17" src="../assets/flags/usa.png" alt="" class="flag"><span class="country-name">USA</span><span class="country-code">+1</span></li>
+                <li data-value="+971" data-country-value="AE" data-mask="+971 (ZZ) ZZZ-ZZZZ" class="country-select__option"><img width="24" height="17" src="../assets/flags/ae.png" alt="" class="flag"><span class="country-name">UAE</span><span class="country-code">+971</span></li>
+                <li data-value="+" data-country-value="NEUTRAL" data-mask="+ZZZ (ZZ) ZZZ-ZZ-ZZ" class="country-select__option"><img width="24" height="17" src="../assets/flags/neutral.png" alt="" class="flag"><span class="country-name">Other country</span><span class="country-code">+</span></li>
+              </ul>
+            </div>
+            <input class="input input--soft q-phone__input" id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+380" required aria-describedby="phone-hint phone-err">
+            <input type="hidden" name="country_code" value="UA">
           </div>
           <div class="field__msg">
             <p class="caption sr-only" id="phone-hint">Format: +1 305 555 0134</p>
@@ -355,6 +365,7 @@
 </section>
 </main>
 
+<script src="../assets/js/phone-country-dropdown.js"></script>
 <script>
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -796,17 +807,14 @@
   /* contacts · валидация и лид */
   var phone = $('#phone'), phoneBox = $('#phone-box'), perr = $('#phone-err');
   var email = $('#email'), emailField = $('#email-field'), eerr = $('#email-err'), consent = $('#consent'), cerr = $('#consent-err');
-  var PH = L.phone || { code: '+380', digits: 9, groups: [2, 3, 2, 2] };
-  function groupDigits(d) { var out = [], i = 0; PH.groups.forEach(function (g) { if (i < d.length) out.push(d.slice(i, i + g)); i += g; }); return out.join(' '); }
-  phone.addEventListener('input', function () {
-    var d = phone.value.replace(/\D/g, '').replace(new RegExp('^' + PH.code.slice(1)), '').slice(0, PH.digits);
-    phone.value = groupDigits(d);
-    if (d.length === PH.digits) { phoneBox.dataset.state = 'success'; perr.hidden = true; } else phoneBox.removeAttribute('data-state');
-  });
+  /* поле телефону — спільний компонент assets/js/phone-country-dropdown.js; країна за замовчуванням — з локалі */
+  var PC = { UA: 'UA', US: 'USA', GB: 'UK', PL: 'PL', AE: 'AE' };
+  PhoneCountryDropdown.attach(phoneBox, { country: PC[L.country] || 'UA', onChange: function (st) { if (st.valid) { phoneBox.dataset.state = 'success'; perr.hidden = true; } else phoneBox.removeAttribute('data-state'); } });
+  function phoneState() { return PhoneCountryDropdown.getState(phoneBox) || { valid: false, value: '', e164: '', country: '' }; }
   consent.addEventListener('change', function () { if (consent.checked) cerr.hidden = true; });
   function submitContacts(form) {
     var digits = phone.value.replace(/\D/g, ''), ok = true, first = null, needEmail = state.answers.channel === 'email';
-    if (digits.length !== PH.digits) { phoneBox.dataset.state = 'invalid'; phone.setAttribute('aria-invalid', 'true'); perr.hidden = false; ok = false; first = first || phone; }
+    if (!phoneState().valid) { phoneBox.dataset.state = 'invalid'; phone.setAttribute('aria-invalid', 'true'); perr.hidden = false; ok = false; first = first || phone; }
     else { phoneBox.dataset.state = 'success'; phone.removeAttribute('aria-invalid'); perr.hidden = true; }
     if (needEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) { email.setAttribute('aria-invalid', 'true'); eerr.hidden = false; ok = false; first = first || email; }
     else { email.removeAttribute('aria-invalid'); eerr.hidden = true; }
@@ -817,7 +825,7 @@
     setBusy(bar.next, true);
     later(function () {
       var id = '2026-' + String(Math.floor(10000 + Math.random() * 89999));
-      state.lead = { lead_id: id, quiz_id: 'dynamic', phone: PH.code + digits, name: $('#name').value.trim() || null, email: needEmail ? email.value.trim() : null,
+      state.lead = { lead_id: id, quiz_id: 'dynamic', phone: phoneState().e164, phone_country: phoneState().country, name: $('#name').value.trim() || null, email: needEmail ? email.value.trim() : null,
         need: a.start, worry: a.worry || null, practice_area: a.category, topic: a.topic || null, case_description: a.describe || null,
         stage: a.stage, urgency: a.urgency, price_range: a.price, preferred_channel: a.channel, call_time: a.calltime || null,
         matched: matched().map(function (p) { return p[0] + ' ' + p[1]; }), attribution: state.attribution, created_at: new Date().toISOString() };

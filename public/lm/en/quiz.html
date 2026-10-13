@@ -413,10 +413,20 @@
       <div class="funnel__form">
         <div class="field">
           <label class="field__label sr-only" id="phone-label" for="phone">Phone Number (Required)</label>
-          <div class="q-phone funnel__phone" id="phone-box" role="group" aria-labelledby="phone-label">
-            <label class="q-phone__country"><span class="sr-only">Country code</span><select class="q-phone__cc" id="phone-cc" data-phone-cc></select><span class="q-phone__code" data-locale-phone-code aria-hidden="true">+380</span><svg class="icon q-phone__chev" aria-hidden="true"><use href="#i-chevron-down"></use></svg></label>
-            <input class="q-phone__input" id="phone" name="phone" type="tel" inputmode="tel"
-                   autocomplete="tel-national" placeholder="305 555 0134" data-locale-phone-placeholder required aria-describedby="phone-hint phone-err">
+          <div class="call-trigger-modal__input-group js-call-trigger-modal__input-group funnel__phone" id="phone-box" role="group" aria-labelledby="phone-label">
+            <div class="country-select">
+              <button class="country-select__button js-selected-country" type="button" data-country="UA" aria-haspopup="listbox" aria-expanded="false" aria-label="Country code"><img width="24" height="17" src="../assets/flags/neutral.png" alt="" class="flag"><span class="dropdown-arrow" aria-hidden="true">&#9660;</span></button>
+              <ul class="country-select__dropdown" role="listbox" aria-label="Country">
+                <li data-value="+380" data-country-value="UA" data-mask="+380 (ZZ) ZZZ-ZZZZ" class="country-select__option"><img width="24" height="17" src="../assets/flags/ukraine.png" alt="" class="flag"><span class="country-name">Ukraine</span><span class="country-code">+380</span></li>
+                <li data-value="+48" data-country-value="PL" data-mask="+48 (ZZZ) ZZZ-ZZZ" class="country-select__option"><img width="24" height="17" src="../assets/flags/poland.png" alt="" class="flag"><span class="country-name">Poland</span><span class="country-code">+48</span></li>
+                <li data-value="+44" data-country-value="UK" data-mask="+44 (ZZZZ) ZZZZZZ" class="country-select__option"><img width="24" height="17" src="../assets/flags/england.png" alt="" class="flag"><span class="country-name">United Kingdom</span><span class="country-code">+44</span></li>
+                <li data-value="+1" data-country-value="USA" data-mask="+1 (ZZZ) ZZZ-ZZZZ" class="country-select__option"><img width="24" height="17" src="../assets/flags/usa.png" alt="" class="flag"><span class="country-name">USA</span><span class="country-code">+1</span></li>
+                <li data-value="+971" data-country-value="AE" data-mask="+971 (ZZ) ZZZ-ZZZZ" class="country-select__option"><img width="24" height="17" src="../assets/flags/ae.png" alt="" class="flag"><span class="country-name">UAE</span><span class="country-code">+971</span></li>
+                <li data-value="+" data-country-value="NEUTRAL" data-mask="+ZZZ (ZZ) ZZZ-ZZ-ZZ" class="country-select__option"><img width="24" height="17" src="../assets/flags/neutral.png" alt="" class="flag"><span class="country-name">Other country</span><span class="country-code">+</span></li>
+              </ul>
+            </div>
+            <input class="input input--soft q-phone__input" id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+380" required aria-describedby="phone-hint phone-err">
+            <input type="hidden" name="country_code" value="UA">
           </div>
           <div class="field__msg">
             <p class="caption" data-locale-only="en,gb">We'll use your contact information to keep you updated about your request.</p>
@@ -595,6 +605,7 @@
 </section>
 </main>
 
+<script src="../assets/js/phone-country-dropdown.js"></script>
 <script>
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -794,7 +805,7 @@
     s4: function () { return !!$('#s4-options input:checked'); },
     s6: function () { var t = $('#story'); return !!(titleOkFn ? titleOkFn() : true) && !!((t && t.value.trim().length >= 50) || state.voice); },
     s9: function () { return !!$('#s9 input:checked'); },
-    s12: function () { var ph = $('#phone'), d = ph ? ph.value.replace(/\D/g, '') : ''; return !!($('#consent').checked && d.length >= +(ph.dataset.min || 7) && d.length <= +(ph.dataset.max || 12)); }
+    s12: function () { var st = window.PhoneCountryDropdown ? PhoneCountryDropdown.getState($('#phone-box')) : null; return !!($('#consent').checked && st && st.valid); }
   };
   function refreshGate() { var g = GATE[current]; if (!g) return; var off = !g(); bar.next.disabled = off; bar.next.setAttribute('aria-disabled', off ? 'true' : 'false'); }
   root.addEventListener('input', refreshGate); root.addEventListener('change', refreshGate);
@@ -1120,46 +1131,29 @@
   (function () {
     var form = $('#s12'), phone = $('#phone'), phoneBox = $('#phone-box'), perr = $('#phone-err');
     var email = $('#email'), eerr = $('#email-err'), consent = $('#consent'), cerr = $('#consent-err'), more = $('#s12-more');
-    /* коди країн: [ISO, код, мін. цифр, макс. цифр, групи, приклад] — за замовчуванням країна локалі */
-    var CC = [['UA', '+380', 9, 9, [2, 3, 2, 2], '67 123 45 67'], ['US', '+1', 10, 10, [3, 3, 4], '212 555 0123'], ['CA', '+1', 10, 10, [3, 3, 4], '416 555 0123'], ['PL', '+48', 9, 9, [3, 3, 3], '512 345 678'],
-      ['DE', '+49', 10, 11, [3, 4, 4], '151 2345 6789'], ['CZ', '+420', 9, 9, [3, 3, 3], '601 123 456'], ['GB', '+44', 10, 10, [4, 6], '7400 123456'], ['IL', '+972', 9, 9, [2, 3, 4], '52 123 4567'],
-      ['IT', '+39', 9, 10, [3, 3, 4], '312 345 6789'], ['ES', '+34', 9, 9, [3, 3, 3], '612 345 678'], ['FR', '+33', 9, 9, [1, 2, 2, 2, 2], '6 12 34 56 78'], ['NL', '+31', 9, 9, [1, 4, 4], '6 1234 5678'],
-      ['AT', '+43', 10, 11, [3, 3, 4], '664 123 4567'], ['CH', '+41', 9, 9, [2, 3, 2, 2], '78 123 45 67'], ['PT', '+351', 9, 9, [3, 3, 3], '912 345 678'], ['LT', '+370', 8, 8, [3, 5], '612 34567'],
-      ['LV', '+371', 8, 8, [2, 3, 3], '21 234 567'], ['EE', '+372', 7, 8, [4, 4], '5123 4567'], ['SK', '+421', 9, 9, [3, 3, 3], '912 345 678'], ['HU', '+36', 9, 9, [2, 3, 4], '20 123 4567'],
-      ['MD', '+373', 8, 8, [3, 2, 3], '621 23 456'], ['RO', '+40', 9, 9, [3, 3, 3], '712 345 678'], ['BG', '+359', 8, 9, [2, 3, 4], '88 123 4567'], ['TR', '+90', 10, 10, [3, 3, 4], '532 123 4567'],
-      ['GE', '+995', 9, 9, [3, 2, 2, 2], '555 12 34 56'], ['KZ', '+7', 10, 10, [3, 3, 4], '701 123 4567'], ['AE', '+971', 9, 9, [2, 3, 4], '50 123 4567']];
-    var NAMES = { UA: 'USA', US: 'USA', CA: 'Canada', PL: 'Poland', DE: 'Germany', CZ: 'Czechia', GB: 'United Kingdom', IL: 'Israel', IT: 'Italy', ES: 'Spain', FR: 'France', NL: 'Netherlands', AT: 'Austria', CH: 'Switzerland', PT: 'Portugal', LT: 'Lithuania', LV: 'Latvia', EE: 'Estonia', SK: 'Slovakia', HU: 'Hungary', MD: 'Moldova', RO: 'Romania', BG: 'Bulgaria', TR: 'Türkiye', GE: 'Georgia', KZ: 'Kazakhstan', AE: 'UAE' };
-    var ccSel = $('#phone-cc'), ccCode = $('[data-locale-phone-code]', form), PH = null;
-    function ccRow(iso) { return CC.filter(function (r) { return r[0] === iso; })[0] || CC[0]; }
-    function setCountry(iso) { var r = ccRow(iso); PH = { iso: r[0], code: r[1], min: r[2], max: r[3], groups: r[4] }; ccCode.textContent = r[1]; phone.placeholder = r[5]; phone.dataset.min = r[2]; phone.dataset.max = r[3]; if (ccSel.value !== r[0]) ccSel.value = r[0]; }
-    ccSel.innerHTML = CC.map(function (r) { return '<option value="' + r[0] + '">' + (NAMES[r[0]] || r[0]) + ' ' + r[1] + '</option>'; }).join('');
-    setCountry((L.phone && L.phone.iso) || L.country || 'UA');
-    ccSel.addEventListener('change', function () { setCountry(ccSel.value); phone.value = groupDigits(phone.value.replace(/\D/g, '').slice(0, PH.max)); phoneBox.removeAttribute('data-state'); phone.focus(); });
-    function groupDigits(d) { var out = [], i = 0; PH.groups.forEach(function (g) { if (i < d.length) out.push(d.slice(i, i + g)); i += g; }); if (i < d.length) out.push(d.slice(i)); return out.join(' '); }
-    phone.addEventListener('input', function () {
-      var d = phone.value.replace(/\D/g, '').replace(new RegExp('^' + PH.code.slice(1)), '').slice(0, PH.max);
-      phone.value = groupDigits(d);
-      if (d.length >= PH.min && d.length <= PH.max) { phoneBox.dataset.state = 'success'; perr.hidden = true; } else phoneBox.removeAttribute('data-state');
-    });
+    /* поле телефону — спільний компонент assets/js/phone-country-dropdown.js (той самий, що в проєктах компанії); країна за замовчуванням — з локалі */
+    var PC = { UA: 'UA', US: 'USA', GB: 'UK', PL: 'PL', AE: 'AE' };
+    PhoneCountryDropdown.attach(phoneBox, { country: PC[L.country] || 'UA', onChange: function (st) { if (st.valid) { phoneBox.dataset.state = 'success'; perr.hidden = true; } else phoneBox.removeAttribute('data-state'); } });
+    function phoneState() { return PhoneCountryDropdown.getState(phoneBox) || { valid: false, value: '', e164: '', country: '' }; }
     consent.addEventListener('change', function () { if (consent.checked) cerr.hidden = true; });
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var digits = phone.value.replace(/\D/g, ''), ok = true, first = null;
-      if (digits.length < PH.min || digits.length > PH.max) { phoneBox.dataset.state = 'invalid'; phone.setAttribute('aria-invalid', 'true'); perr.hidden = false; ok = false; first = first || phone; }
+      var ok = true, first = null;
+      if (!phoneState().valid) { phoneBox.dataset.state = 'invalid'; phone.setAttribute('aria-invalid', 'true'); perr.hidden = false; ok = false; first = first || phone; }
       else { phoneBox.dataset.state = 'success'; phone.removeAttribute('aria-invalid'); perr.hidden = true; }
       if (email.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) { more.open = true; email.setAttribute('aria-invalid', 'true'); eerr.hidden = false; ok = false; first = first || email; }
       else { email.removeAttribute('aria-invalid'); eerr.hidden = true; }
       if (!consent.checked) { consent.setAttribute('aria-invalid', 'true'); cerr.hidden = false; ok = false; first = first || consent; }
       else { consent.removeAttribute('aria-invalid'); cerr.hidden = true; }
       if (!ok) { first.focus(); say('Check the form fields'); return; }
-      state.phone = PH.code + ' ' + phone.value;
+      state.phone = phoneState().value; state.phoneE164 = phoneState().e164; state.phoneCountry = phoneState().country;
       state.name = $('#name').value.trim();
       state.email = email.value.trim();
       state.channels = $$('input[name="preferred_channels"]:checked', form).map(function (i) { return i.value; });
       setBusy(bar.next, true);
       later(function () {
         state.leadId = '2026-' + String(Math.floor(10000 + Math.random() * 89999));
-        var lead = { lead_id: state.leadId, phone: state.phone.replace(/\s/g, ''), name: state.name || null, email: state.email || null,
+        var lead = { lead_id: state.leadId, phone: state.phoneE164, phone_country: state.phoneCountry, name: state.name || null, email: state.email || null,
           settlement: state.settlement ? state.settlement.name : null,
           region: state.settlement ? state.settlement.region : null, remote_ok: state.remote, practice_areas: state.categories,
           case_title: state.title || null, case_description: state.description || null, voice_audio: state.voice ? { duration_ms: state.voice.duration_ms, size: state.voice.size, mime: state.voice.mime } : null,
@@ -1392,7 +1386,7 @@
     var s = state.settlement; if (!s) return;
     var media = $('[data-s3-media]'), svg = $('[data-s3-svg]');
     var f = document.createElement('iframe');
-    f.src = 'https://www.google.com/maps?q=' + encodeURIComponent(s.name + ', ' + s.region + (s.country === L.country ? ', ' + 'USA' : '')) + '&z=12&output=embed';
+    f.src = 'https://www.google.com/maps?q=' + encodeURIComponent(s.name + ', ' + s.region + (s.country === L.country ? ', ' + 'Ukraine' : '')) + '&z=12&output=embed';
     f.title = 'Map: ' + s.name + ', ' + s.region;
     f.loading = 'lazy'; f.referrerPolicy = 'no-referrer-when-downgrade';
     svg.hidden = true;
