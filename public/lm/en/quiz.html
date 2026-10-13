@@ -1145,7 +1145,7 @@
     phoneStateFn = phoneState;
     function phoneSync() { if (phoneState().valid) { phoneBox.dataset.state = 'success'; perr.hidden = true; } else phoneBox.removeAttribute('data-state'); }
     phone.addEventListener('input', phoneSync);
-    phoneBox.addEventListener('click', function (e) { if (e.target.closest('.country-select__option')) setTimeout(function () { phoneSync(); phone.dispatchEvent(new Event('input', { bubbles: true })); }, 0); });
+    phoneBox.addEventListener('click', function (e) { if (e.target.closest('.country-select__option')) setTimeout(function () { phoneSync(); refreshGate(); }, 0); /* без синтетичного input: його перехоплює jquery.mask і падає на зміні маски */ });
     consent.addEventListener('change', function () { if (consent.checked) cerr.hidden = true; });
     form.addEventListener('submit', function (e) {
       e.preventDefault();
