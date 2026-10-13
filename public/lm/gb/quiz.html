@@ -19,6 +19,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Onest:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="../design-system/tokens.css">
 <link rel="stylesheet" href="../design-system/styles.css">
+<link rel="stylesheet" href="../assets/vendor/phone-country-dropdown/phone-country-dropdown.css">
 <link rel="stylesheet" href="../quiz.css">
 <script>window.QUIZ_LOCALE = { lang: 'en-GB', country: 'GB', ai: { name: 'Assistant Emily', photo: 'ai-en' }, titleHint: 'Up to 100 characters.',
   date: function (d) { return d.getDate() + ' ' + ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][d.getMonth()] + ' ' + d.getFullYear(); },
@@ -417,17 +418,17 @@
           <label class="field__label sr-only" id="phone-label" for="phone">Phone Number (Required)</label>
           <div class="call-trigger-modal__input-group js-call-trigger-modal__input-group funnel__phone" id="phone-box" role="group" aria-labelledby="phone-label">
             <div class="country-select">
-              <button class="country-select__button js-selected-country" type="button" data-country="UA" aria-haspopup="listbox" aria-expanded="false" aria-label="Country code"><img width="24" height="17" src="../assets/flags/neutral.png" alt="" class="flag"><svg class="icon dropdown-arrow" width="16" height="16" aria-hidden="true"><use href="#i-chevron-down"></use></svg></button>
-              <ul class="country-select__dropdown" role="listbox" aria-label="Country">
-                <li data-value="+380" data-country-value="UA" data-mask="+380 (ZZ) ZZZ-ZZZZ" class="country-select__option"><img width="24" height="17" src="../assets/flags/ukraine.png" alt="" class="flag"><span class="country-name">Ukraine</span><span class="country-code">+380</span></li>
-                <li data-value="+48" data-country-value="PL" data-mask="+48 (ZZZ) ZZZ-ZZZ" class="country-select__option"><img width="24" height="17" src="../assets/flags/poland.png" alt="" class="flag"><span class="country-name">Poland</span><span class="country-code">+48</span></li>
-                <li data-value="+44" data-country-value="UK" data-mask="+44 (ZZZZ) ZZZZZZ" class="country-select__option"><img width="24" height="17" src="../assets/flags/england.png" alt="" class="flag"><span class="country-name">United Kingdom</span><span class="country-code">+44</span></li>
-                <li data-value="+1" data-country-value="USA" data-mask="+1 (ZZZ) ZZZ-ZZZZ" class="country-select__option"><img width="24" height="17" src="../assets/flags/usa.png" alt="" class="flag"><span class="country-name">USA</span><span class="country-code">+1</span></li>
-                <li data-value="+971" data-country-value="AE" data-mask="+971 (ZZ) ZZZ-ZZZZ" class="country-select__option"><img width="24" height="17" src="../assets/flags/ae.png" alt="" class="flag"><span class="country-name">UAE</span><span class="country-code">+971</span></li>
-                <li data-value="+" data-country-value="NEUTRAL" data-mask="+ZZZ (ZZ) ZZZ-ZZ-ZZ" class="country-select__option"><img width="24" height="17" src="../assets/flags/neutral.png" alt="" class="flag"><span class="country-name">Other country</span><span class="country-code">+</span></li>
+              <button class="country-select__button js-selected-country" type="button" data-country="UK" aria-label="Country code"><img width="24" height="17" src="../assets/vendor/phone-country-dropdown/img/flags/neutral.png" alt="" class="flag"><span class="dropdown-arrow">&#9660;</span></button>
+              <ul class="country-select__dropdown">
+                <li data-value="+380" data-country-value="UA" class="country-select__option"><img width="24" height="17" src="../assets/vendor/phone-country-dropdown/img/flags/ukraine.png" alt="ukraine" class="flag"><span class="country-name">Ukraine</span><span class="country-code">+380</span></li>
+                <li data-value="+48" data-country-value="PL" class="country-select__option"><img width="24" height="17" src="../assets/vendor/phone-country-dropdown/img/flags/poland.png" alt="poland" class="flag"><span class="country-name">Poland</span><span class="country-code">+48</span></li>
+                <li data-value="+44" data-country-value="UK" class="country-select__option"><img width="24" height="17" src="../assets/vendor/phone-country-dropdown/img/flags/england.png" alt="england" class="flag"><span class="country-name">United Kingdom</span><span class="country-code">+44</span></li>
+                <li data-value="+1" data-country-value="USA" class="country-select__option"><img width="24" height="17" src="../assets/vendor/phone-country-dropdown/img/flags/usa.png" alt="usa" class="flag"><span class="country-name">USA</span><span class="country-code">+1</span></li>
+                <li data-value="+971" data-country-value="AE" class="country-select__option"><img width="24" height="17" src="../assets/vendor/phone-country-dropdown/img/flags/ae.png" alt="ae" class="flag"><span class="country-name">UAE</span><span class="country-code">+971</span></li>
+                <li data-value="+" data-country-value="NEUTRAL" class="country-select__option"><img width="24" height="17" src="../assets/vendor/phone-country-dropdown/img/flags/neutral.png" alt="neutral" class="flag"><span class="country-name">Other country</span><span class="country-code">+</span></li>
               </ul>
             </div>
-            <input class="input input--soft q-phone__input" id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+380" required aria-describedby="phone-hint phone-err">
+            <input class="input input--soft q-phone__input" id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+" required aria-describedby="phone-hint phone-err">
             <input type="hidden" name="country_code" value="UA">
           </div>
           <div class="field__msg">
@@ -607,7 +608,9 @@
 </section>
 </main>
 
-<script src="../assets/js/phone-country-dropdown.js"></script>
+<script src="../assets/vendor/jquery.min.js"></script>
+<script src="../assets/vendor/jquery.mask.min.js"></script>
+<script src="../assets/vendor/phone-country-dropdown/phone-country-dropdown.js"></script>
 <script>
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -801,13 +804,13 @@
   }
 
   /* ── кнопка кроку неактивна, поки не виконано обов’язкове (побажання власника 30.09) ── */
-  var titleOkFn = null;  /* перевірка заголовка S6 — задає сам екран, правило залежить від локалі */
+  var titleOkFn = null, phoneStateFn = null;  /* перевірка заголовка S6 — задає сам екран, правило залежить від локалі */
   var GATE = {
     s2: function () { var r = $('#remote'); return !!(state.settlement || (r && r.checked)); },
     s4: function () { return !!$('#s4-options input:checked'); },
     s6: function () { var t = $('#story'); return !!(titleOkFn ? titleOkFn() : true) && !!((t && t.value.trim().length >= 50) || state.voice); },
     s9: function () { return !!$('#s9 input:checked'); },
-    s12: function () { var st = window.PhoneCountryDropdown ? PhoneCountryDropdown.getState($('#phone-box')) : null; return !!($('#consent').checked && st && st.valid); }
+    s12: function () { var st = phoneStateFn ? phoneStateFn() : null; return !!($('#consent').checked && st && st.valid); }
   };
   function refreshGate() { var g = GATE[current]; if (!g) return; var off = !g(); bar.next.disabled = off; bar.next.setAttribute('aria-disabled', off ? 'true' : 'false'); }
   root.addEventListener('input', refreshGate); root.addEventListener('change', refreshGate);
@@ -1133,10 +1136,18 @@
   (function () {
     var form = $('#s12'), phone = $('#phone'), phoneBox = $('#phone-box'), perr = $('#phone-err');
     var email = $('#email'), eerr = $('#email-err'), consent = $('#consent'), cerr = $('#consent-err'), more = $('#s12-more');
-    /* поле телефону — спільний компонент assets/js/phone-country-dropdown.js (той самий, що в проєктах компанії); країна за замовчуванням — з локалі */
-    var PC = { UA: 'UA', US: 'USA', GB: 'UK', PL: 'PL', AE: 'AE' };
-    PhoneCountryDropdown.attach(phoneBox, { country: PC[L.country] || 'UA', onChange: function (st) { if (st.valid) { phoneBox.dataset.state = 'success'; perr.hidden = true; } else phoneBox.removeAttribute('data-state'); } });
-    function phoneState() { return PhoneCountryDropdown.getState(phoneBox) || { valid: false, value: '', e164: '', country: '' }; }
+    /* поле телефону — оригінальний компонент компанії (assets/vendor/phone-country-dropdown, jQuery + jquery.mask) без змін; тут лише надбудова:
+       перевірка повноти номера за маскою країни, стан поля, країна за замовчуванням — з локалі (атрибут data-country підставляє build.py) */
+    var NEED = { UA: 12, PL: 11, UK: 12, USA: 11, AE: 12 };  // цифр разом із кодом країни за масками компонента
+    function phoneState() {
+      var c = (window.PhoneCountryDropdown && PhoneCountryDropdown.getSelectedCountry(phone)) || 'UA', d = phone.value.replace(/\D/g, '');
+      var valid = c === 'NEUTRAL' ? (d.length >= 8 && d.length <= 15) : d.length === NEED[c];
+      return { country: c, valid: valid, value: phone.value, e164: '+' + d };
+    }
+    phoneStateFn = phoneState;
+    function phoneSync() { if (phoneState().valid) { phoneBox.dataset.state = 'success'; perr.hidden = true; } else phoneBox.removeAttribute('data-state'); }
+    phone.addEventListener('input', phoneSync);
+    phoneBox.addEventListener('click', function (e) { if (e.target.closest('.country-select__option')) setTimeout(function () { phoneSync(); phone.dispatchEvent(new Event('input', { bubbles: true })); }, 0); });
     consent.addEventListener('change', function () { if (consent.checked) cerr.hidden = true; });
     form.addEventListener('submit', function (e) {
       e.preventDefault();

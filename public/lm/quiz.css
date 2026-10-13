@@ -752,23 +752,22 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 .funnel__or { display: flex; align-items: center; gap: 12px; margin: -4px 0; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--color-gray-600); }
 .funnel__or::before, .funnel__or::after { content: ""; flex: 1; height: 1px; background: var(--color-gray-300); }
 
-/* ── Поле телефону з вибором країни — спільний компонент компанії (розмітка і поведінка phone-country-dropdown), вигляд — за нашою системою:
-   список як підказки населених пунктів (.q-search__pop): біла підкладка, рамка gray-300, без прозорості ── */
+/* ── Поле телефону з вибором країни: оригінальний компонент компанії (assets/vendor/phone-country-dropdown, підключається в head) + надбудова у вигляді
+   дизайн-системи: список як підказки населених пунктів (.q-search__pop) — біла підкладка, рамка gray-300, без прозорості, на всю ширину поля ── */
 .call-trigger-modal__input-group { width: 100%; position: relative; display: flex; flex-grow: 1; }
 .call-trigger-modal__input-group input[type="tel"] { width: 100%; padding: 10px 16px 10px 68px; font-size: 17px; box-sizing: border-box; height: 56px; }
-.country-select { position: static; }
+.country-select { position: static; left: auto; top: auto; transform: none; font-family: inherit; }
 .country-select__button { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); z-index: 2; display: flex; align-items: center; gap: 4px; height: 40px; padding: 0 4px; border: 0; border-radius: 8px; background: none; cursor: pointer; color: var(--color-gray-600); }
 .country-select__button:hover { background: var(--color-gray-300); }
 .country-select__button:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
-.country-select__button .flag { width: 24px; height: 17px; border-radius: 3px; object-fit: cover; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .08); }
-.country-select .dropdown-arrow { width: 16px; height: 16px; transition: transform .2s ease; }
-.country-select__dropdown { display: none; position: absolute; left: 0; right: 0; top: calc(100% + 8px); z-index: 30; max-height: 264px; overflow-y: auto; margin: 0; padding: 6px; list-style: none; background: var(--color-white); border: 1px solid var(--color-gray-300); border-radius: var(--radius-card); }
-.country-select__option { display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 10px 14px; border-radius: calc(var(--radius-card) - 6px); cursor: pointer; font-size: 15px; color: var(--color-text); }
-.country-select__option:hover, .country-select__option[aria-selected="true"] { background: var(--color-gray-100); }
+.country-select__button .flag { width: 24px; height: 17px; margin-right: 2px; border-radius: 3px; object-fit: cover; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .08); }
+.country-select .dropdown-arrow { font-size: 10px; line-height: 1; color: var(--color-gray-600); transition: transform .2s ease; }
+.country-select__dropdown { display: none; position: absolute; left: 0; right: 0; top: calc(100% + 8px); width: auto; z-index: 30; max-height: 264px; overflow-y: auto; margin: 0; padding: 6px; list-style: none; background: var(--color-white); border: 1px solid var(--color-gray-300); border-radius: var(--radius-card); }
+.country-select__option { display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 10px 14px; border-radius: calc(var(--radius-card) - 6px); cursor: pointer; font-size: 15px; color: var(--color-text); transition: none; }
+.country-select__option:hover { transform: none; background: var(--color-gray-100); }
 .country-select__option .flag { width: 24px; height: 17px; margin: 0; border-radius: 3px; object-fit: cover; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .08); }
 .country-select__option .country-name { flex: 1; margin: 0; font-size: 15px; color: var(--color-text); opacity: 1; }
 .country-select__option .country-code { font-size: 14px; color: var(--color-gray-600); opacity: 1; font-variant-numeric: tabular-nums; }
-.country-select__option[aria-selected="true"] .country-name { font-weight: 600; }
 .country-select.open .country-select__dropdown { display: block; }
 .country-select.open .dropdown-arrow { transform: rotate(180deg); }
 .funnel__phone[data-state="invalid"] input[type="tel"] { box-shadow: inset 0 0 0 1px var(--color-text); }

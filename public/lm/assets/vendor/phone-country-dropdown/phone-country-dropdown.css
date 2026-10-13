@@ -1,0 +1,100 @@
+/* Стилі поля телефону з вибором країни (спільні для варіантів з Vue і без Vue).
+   Базується на soinproduction/scss/components/_country_dropdown.scss. */
+
+.call-trigger-modal__input-group {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-grow: 1;
+}
+
+.call-trigger-modal__input-group input[type="tel"] {
+    width: 100%;
+    padding: 10px 10px 10px 60px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.country-select {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: Arial, sans-serif;
+}
+
+.country-select__button {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 0;
+    border: 0;
+    background: none;
+}
+
+.country-select__button .flag {
+    width: 24px;
+    margin-right: 6px;
+}
+
+.country-select .dropdown-arrow {
+    font-size: 12px;
+    color: #7b7474;
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+
+.country-select__dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: -10px;
+    width: 275px;
+    max-height: 220px;
+    overflow-y: auto;
+    margin: 0;
+    padding: 5px;
+    list-style: none;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 5px;
+    z-index: 1000;
+}
+
+.country-select__option {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.country-select__option:hover {
+    transform: scale(1.02);
+}
+
+.country-select__option .flag {
+    width: 28px;
+    margin-right: 5px;
+}
+
+.country-select__option .country-name {
+    flex: 1;
+    margin-left: 5px;
+    font-size: 16px;
+    color: #fff;
+    opacity: 0.5;
+}
+
+.country-select__option .country-code {
+    font-size: 16px;
+    color: #fff;
+    opacity: 0.5;
+}
+
+.country-select.open .country-select__dropdown {
+    display: block;
+}
+
+.country-select.open .dropdown-arrow {
+    transform: rotate(180deg);
+}
