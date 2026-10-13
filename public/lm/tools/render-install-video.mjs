@@ -49,7 +49,26 @@ const TEXT = {
     answers: [
       { band: 'BASE (Base)', score: '35.68', name: 'Assistant Emily', role: 'Artificial Intelligence', loc: 'USA', ts: '07/01/2026, 18:05', photo: AI_US, text: 'Custody is set by agreement of the parents or by the court. Property acquired during the marriage is divided equally unless proven otherwise.' },
       { band: 'PREMIUM', score: '22.38', name: 'Basil Chochla', role: 'Lawyer', loc: 'New York, USA', ts: '07/01/2026, 18:32', photo: USP('chochla-basil'), text: 'I suggest an out-of-court route: a notarised property agreement and a visitation schedule. It is faster and cheaper than court.' },
-      { band: 'PRO', score: '33.23', name: 'Oleksii Tarasenko', role: 'Consultant', loc: 'Henderson, USA', ts: '07/01/2026, 19:10', photo: USP('consultant-1160'), text: 'I would prepare a claim right away: document income and assets and collect proof of your role in raising the children.' } ] }
+      { band: 'PRO', score: '33.23', name: 'Oleksii Tarasenko', role: 'Consultant', loc: 'Henderson, USA', ts: '07/01/2026, 19:10', photo: USP('consultant-1160'), text: 'I would prepare a claim right away: document income and assets and collect proof of your role in raising the children.' } ] },
+  gb: {
+    lockup: LOGO('consultant-lm_logo_en_on-dark_R.svg'), sign: LOGO('consultant-lm_logo_sign_on-dark_clean.svg'),
+    yourQ: 'Your question', orders: 'My orders', chips: ['Consultations', 'Documents', 'Services', 'Cases'], status: 'Status:', order: 'Order the service', best: 'Best answer', fresh: 'New',
+    store: { back: 'Search', title: 'ConsultantLM', sub: 'Legal marketplace', get: 'GET', open: 'OPEN', meta: [['4.8', '592 ratings'], ['4+', 'Age'], ['Legal', 'Category']],
+      preview: 'Preview', desc: 'Free AI analysis of your situation, answers from several lawyers, services with stages and exact prices.', tabs: ['Today', 'Games', 'Apps', 'Arcade', 'Search'] },
+    hero: { tag: 'A lawyer is always there for you!', pills: ['Individual consultations', 'Download document', 'Order the service', 'Select specialist'] },
+    auth: { h: 'Authorization', p: 'of the client by phone number', pre: '+44', ph: '0000 000000', digits: '7400123456', groups: [4, 6], hint: 'We will send an authorization code to this number', btn: 'Get the code',
+      legal: 'By continuing you accept the ', legalLink: 'User Agreement', done: 'Done', codeH: 'Enter the code from SMS', codeP: 'Code sent to ', codeNum: '+44 7400 123456', code: '4812', resend: 'Resend the code in 0:59', authBtn: 'Authorize' },
+    list: [
+      { date: '07/01/2026 18:04', q: 'We decided to divorce, we have two children and cannot agree on custody and the division of property', st: 'Opened', avatars: [USP('chochla-basil'), USP('mizrahi-karen'), USP('phylypchyk-svitlana')], fresh: true },
+      { date: '06/28/2026 11:20', q: 'How do I appeal a parking fine that was issued by mistake?', st: 'Answered', avatars: [USP('khidoyatov-miraziz')] },
+      { date: '06/19/2026 09:45', q: 'Can I get a prepayment back for poor-quality apartment repairs?', st: 'Closed', closed: true, avatars: [USP('bukovskaya-yulianna'), USP('artemieva-nataliia')] },
+      { date: '06/03/2026 16:10', q: 'What can I do if my landlord will not return the deposit?', st: 'Closed', closed: true, avatars: [USP('chochla-basil')] } ],
+    qnum: 'Question #14238', qdate: '01 July, 2026 18:04', qtitle: 'Divorce with two children: custody and division of property',
+    qbody: 'We decided to divorce, we have two children and cannot agree on custody and the division of property.',
+    answers: [
+      { band: 'BASE (Base)', score: '35.68', name: 'Assistant Emily', role: 'Artificial Intelligence', loc: 'England', ts: '07/01/2026, 18:05', photo: AI_US, text: 'Custody is set by agreement of the parents or by the court. Property acquired during the marriage is divided equally unless proven otherwise.' },
+      { band: 'PREMIUM', score: '22.38', name: 'Basil Chochla', role: 'Lawyer', loc: 'Online', ts: '07/01/2026, 18:32', photo: USP('chochla-basil'), text: 'I suggest an out-of-court route: a notarised property agreement and a visitation schedule. It is faster and cheaper than court.' },
+      { band: 'PRO', score: '33.23', name: 'Oleksii Tarasenko', role: 'Consultant', loc: 'Online', ts: '07/01/2026, 19:10', photo: USP('consultant-1160'), text: 'I would prepare a claim right away: document income and assets and collect proof of your role in raising the children.' } ] }
 };
 const FPS = 30;
 const PLAN = [['store', 36], ['tapget', 12], ['progress', 42], ['open', 15], ['tapopen', 12], ['splash', 15], ['heroin', 12], ['hero', 33], ['taptab', 15],
@@ -97,6 +116,7 @@ const CSS = `*, *::before, *::after { transition: none !important; animation: no
 .au__field { position:absolute; top:330px; left:22px; right:22px; height:58px; border-radius:12px; background:#2C2C2E; display:flex; align-items:center; gap:10px; padding:0 16px; font-size:20px; font-weight:600; }
 .au__flag { position:relative; overflow:hidden; width:26px; height:18px; border-radius:3px; background:linear-gradient(#005BBB 0 50%, #FFD500 50% 100%); flex-shrink:0; }
 .au__flag--us { background:repeating-linear-gradient(#B22234 0 1.4px, #fff 1.4px 2.8px); } .au__flag--us::after { content:""; position:absolute; left:0; top:0; width:11px; height:9.5px; background:#3C3B6E; }
+.au__flag--gb { background: linear-gradient(#C8102E 0 0) center / 100% 4px no-repeat, linear-gradient(#C8102E 0 0) center / 4px 100% no-repeat, linear-gradient(#fff 0 0) center / 100% 7px no-repeat, linear-gradient(#fff 0 0) center / 7px 100% no-repeat, #012169; } .au__flag--gb::after { content:""; position:absolute; inset:0; background: linear-gradient(#C8102E 0 0) center / 100% 3px no-repeat, linear-gradient(#C8102E 0 0) center / 3px 100% no-repeat; }
 .au__pre i { font-style:normal; font-size:12px; color:#A1A1A6; margin-left:3px; } .au__sep { width:1px; height:26px; background:#48484A; }
 .au__val { letter-spacing:.3px; } .au__val:empty::before { content: attr(data-ph); color:#6E6E73; font-weight:400; } .au__caret { width:2px; height:26px; background:#0A84FF; }
 .au__hint { position:absolute; top:400px; left:22px; right:22px; font-size:13px; color:#8E8E93; text-align:center; }
@@ -165,7 +185,7 @@ for (const loc of (process.env.ONLY ? [process.env.ONLY] : Object.keys(TEXT))) {
     /* прев’ю без екрана з логотипом: там він був би вужчий за 160 px */ [[9, s9], [10, s10]].forEach(([n, el]) => { const c = el.cloneNode(true); c.querySelectorAll('.dim, .tapdot').forEach(x => x.remove()); c.style.opacity = '1'; c.style.visibility = 'visible'; c.style.transform = 'scale(0.4524)'; q(st, '[data-shot="' + n + '"]').appendChild(c); });
     const au = document.createElement('div'); au.className = 'ov ov--dark ov--auth'; au.innerHTML = sbL + '<div class="au__back">' + chev + '</div><div class="au__logo"><img src="' + T.lockup + '" alt=""></div>' +
       '<div class="au__h">' + T.auth.h + '</div><div class="au__p">' + T.auth.p + '</div>' +
-      '<div class="au__field"><span class="au__flag' + (T.auth.pre === '+1' ? ' au__flag--us' : '') + '"></span><span class="au__pre">' + T.auth.pre + '<i>&#8964;</i></span><span class="au__sep"></span><span class="au__val" data-val data-ph="' + T.auth.ph + '"></span><span class="au__caret" data-caret></span></div>' +
+      '<div class="au__field"><span class="au__flag' + (T.auth.pre === '+1' ? ' au__flag--us' : T.auth.pre === '+44' ? ' au__flag--gb' : '') + '"></span><span class="au__pre">' + T.auth.pre + '<i>&#8964;</i></span><span class="au__sep"></span><span class="au__val" data-val data-ph="' + T.auth.ph + '"></span><span class="au__caret" data-caret></span></div>' +
       '<div class="au__hint">' + T.auth.hint + '</div><div class="au__btn" data-btn>' + T.auth.btn + '</div><div class="au__legal">' + T.auth.legal + '<b>' + T.auth.legalLink + '</b></div>' + kb + '<div class="homebar2"></div>';
     scr.appendChild(au);
     const cd = document.createElement('div'); cd.className = 'ov ov--dark ov--code'; cd.innerHTML = sbL + '<div class="au__back">' + chev + '</div><div class="au__logo"><img src="' + T.lockup + '" alt=""></div>' +

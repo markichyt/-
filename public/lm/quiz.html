@@ -10,6 +10,7 @@
 <link rel="canonical" href="https://consultant.net.ua/bezkoshtovnyi-analiz">
 <link rel="alternate" hreflang="uk" href="https://consultant.net.ua/bezkoshtovnyi-analiz">
 <link rel="alternate" hreflang="en" href="https://consultantlm.com/free-case-analysis">
+<link rel="alternate" hreflang="en-GB" href="https://consultantlm.com/gb/free-case-analysis">
 <link rel="alternate" hreflang="x-default" href="https://consultantlm.com/free-case-analysis">
 <meta name="theme-color" content="#FFFFFF">
 <link rel="icon" href="design-system/assets/logo/consultant-lm_logo_sign_on-light_clean.svg" type="image/svg+xml">
@@ -19,7 +20,7 @@
 <link rel="stylesheet" href="design-system/tokens.css">
 <link rel="stylesheet" href="design-system/styles.css">
 <link rel="stylesheet" href="quiz.css">
-<script>window.QUIZ_LOCALE = { lang: 'uk', country: 'UA',
+<script>window.QUIZ_LOCALE = { lang: 'uk', country: 'UA', titleWords: [7, 12],
   phone: { code: '+380', digits: 9, groups: [2, 3, 2, 2] },
   plural: function (n) { var m10 = n % 10, m100 = n % 100; return (m10 === 1 && m100 !== 11) ? 0 : (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) ? 1 : 2; },
   step: function (n, m) { return 'Крок ' + n + ' із ' + m; },
@@ -406,7 +407,7 @@
                    autocomplete="tel-national" placeholder="67 123 45 67" data-locale-phone-placeholder required aria-describedby="phone-hint phone-err">
           </div>
           <div class="field__msg">
-            <p class="caption sr-only" id="phone-hint">Код країни можна змінити у списку зліва</p>
+                        <p class="caption sr-only" id="phone-hint">Код країни можна змінити у списку зліва</p>
             <p class="q-error" id="phone-err" role="alert" hidden>
               <svg class="q-error__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg>
               Введіть номер телефону повністю
@@ -422,8 +423,8 @@
             <div class="field__msg"><p class="caption" id="name-hint">Так до Вас звертатиметься фахівець</p></div>
           </div>
           <div class="field">
-            <label class="field__label" for="email">E-mail</label>
-            <input class="input input--soft" id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="imya@example.com" aria-describedby="email-hint email-err">
+            <label class="field__label" for="email">Електронна пошта</label>
+            <input class="input input--soft" id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="ім’я@example.com" aria-describedby="email-hint email-err">
             <div class="field__msg">
               <p class="caption" id="email-hint">Надішлемо копію аналізу</p>
               <p class="q-error" id="email-err" role="alert" hidden>
@@ -774,10 +775,11 @@
   }
 
   /* ── кнопка кроку неактивна, поки не виконано обов’язкове (побажання власника 30.09) ── */
+  var titleOkFn = null;  /* перевірка заголовка S6 — задає сам екран, правило залежить від локалі */
   var GATE = {
     s2: function () { var r = $('#remote'); return !!(state.settlement || (r && r.checked)); },
     s4: function () { return !!$('#s4-options input:checked'); },
-    s6: function () { var t = $('#story'), h = $('#story-title'), n = h ? h.value.trim().split(/\s+/).filter(Boolean).length : 0; return n >= 7 && n <= 12 && !!((t && t.value.trim().length >= 50) || state.voice); },
+    s6: function () { var t = $('#story'); return !!(titleOkFn ? titleOkFn() : true) && !!((t && t.value.trim().length >= 50) || state.voice); },
     s9: function () { return !!$('#s9 input:checked'); },
     s12: function () { var ph = $('#phone'), d = ph ? ph.value.replace(/\D/g, '') : ''; return !!($('#consent').checked && d.length >= +(ph.dataset.min || 7) && d.length <= +(ph.dataset.max || 12)); }
   };
@@ -964,11 +966,14 @@
   /* S6 · описание + голос */
   (function () {
     var ta = $('#story'), count = $('.q-textarea__count-num', $('#s6')), err = $('#story-err'), errText = $('[data-story-err-text]', err);
-    var title = $('#story-title'), terr = $('#story-title-err'), twords = $('[data-title-words]');
+    var title = $('#story-title'), terr = $('#story-title-err'), twords = $('[data-title-words]'), thint = $('#story-title-hint');
+    var TW = L.titleWords || null;  /* uk: 7–12 слів; en/gb: лише довжина до 100 символів (правки US 13.10) */
+    if (!TW) { title.maxLength = 100; thint.textContent = L.titleHint || ''; }
     var MIN_DESC = 50, VOICE_MAX = 60000;
     function wordsOf(v) { return v.trim().split(/\s+/).filter(Boolean).length; }
-    function titleOk() { var n = wordsOf(title.value); return n >= 7 && n <= 12; }
-    title.addEventListener('input', function () { twords.textContent = wordsOf(title.value); if (titleOk()) { terr.hidden = true; title.removeAttribute('aria-invalid'); } });
+    function titleOk() { var v = title.value.trim(), n = wordsOf(v); return TW ? (n >= TW[0] && n <= TW[1]) : (v.length >= 3 && v.length <= 100); }
+    titleOkFn = titleOk;
+    title.addEventListener('input', function () { if (TW) twords.textContent = wordsOf(title.value); if (titleOk()) { terr.hidden = true; title.removeAttribute('aria-invalid'); } });
     var box = $('#voice'), toggle = $('[data-voice="toggle"]', box), label = $('[data-voice-label]', box);
     var icon = $('use', $('[data-voice-icon]', box)), text = $('[data-voice-text]', box), reset = $('[data-voice="reset"]', box), verr = $('[data-voice-error]', box);
     var rec = null, chunks = [], t0 = 0, tick = 0, stream = null;
@@ -1188,7 +1193,7 @@
     });
     later(function () { if (onDone) onDone(items); }, stepMs * items.length);
   }
-  function fmtNow() { var d = new Date(), p = function (n) { return (n < 10 ? '0' : '') + n; }; return (L.lang === 'en' ? p(d.getMonth() + 1) + '/' + p(d.getDate()) + '/' + d.getFullYear() : p(d.getDate()) + '.' + p(d.getMonth() + 1) + '.' + d.getFullYear()) + ', ' + p(d.getHours()) + ':' + p(d.getMinutes()); }
+  function fmtNow() { var d = new Date(), p = function (n) { return (n < 10 ? '0' : '') + n; }; return (L.date ? L.date(d) : p(d.getDate()) + '.' + p(d.getMonth() + 1) + '.' + d.getFullYear()) + ', ' + p(d.getHours()) + ':' + p(d.getMinutes()); }
   function stampNow(el) { $$('.appframe__date', el).forEach(function (q) { q.lastChild.textContent = fmtNow(); }); }
   var TIER_MARK = '<svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="14" width="4" height="7" rx="1"/><rect x="10" y="9" width="4" height="12" rx="1"/><rect x="17" y="4" width="4" height="17" rx="1"/></svg>';
   function answerCard(a, ts, txt) {

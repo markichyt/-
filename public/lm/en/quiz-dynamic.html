@@ -10,6 +10,7 @@
 <link rel="canonical" href="https://consultantlm.com/find-a-lawyer">
 <link rel="alternate" hreflang="uk" href="https://consultant.net.ua/pidbir-yurysta">
 <link rel="alternate" hreflang="en" href="https://consultantlm.com/find-a-lawyer">
+<link rel="alternate" hreflang="en-GB" href="https://consultantlm.com/gb/find-a-lawyer">
 <link rel="alternate" hreflang="x-default" href="https://consultantlm.com/find-a-lawyer">
 <meta name="theme-color" content="#FFFFFF">
 <link rel="icon" href="../design-system/assets/logo/consultant-lm_logo_sign_on-light_clean.svg" type="image/svg+xml">
@@ -19,7 +20,8 @@
 <link rel="stylesheet" href="../design-system/tokens.css">
 <link rel="stylesheet" href="../design-system/styles.css">
 <link rel="stylesheet" href="../quiz.css">
-<script>window.QUIZ_LOCALE = { lang: 'en', country: 'US', ai: { name: 'Assistant Emily', photo: 'ai-en' },
+<script>window.QUIZ_LOCALE = { lang: 'en', country: 'US', ai: { name: 'Assistant Emily', photo: 'ai-en' }, titleHint: 'Up to 100 characters.',
+  date: function (d) { return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear(); },
   phone: { code: '+1', digits: 10, groups: [3, 3, 4] },
   plural: function (n) { return n === 1 ? 0 : 1; },
   step: function (n, m) { return 'Step ' + n + ' of ' + m; },
@@ -121,11 +123,11 @@
         <p class="funnel__hint funnel__hint--sm" data-hint>A few questions and we match you with a lawyer for your situation. Free and with no obligation.</p>
       </div>
       <fieldset class="funnel__options" id="start-options" aria-describedby="start-err">
-        <legend class="sr-only">Pick one option</legend>
+        <legend class="sr-only">Select one option</legend>
         <label class="q-option">
           <input class="q-option__input" type="radio" name="need" value="yes" data-label="Yes, I do">
           <span class="q-option__icon" aria-hidden="true"><svg class="icon"><use href="#i-check"></use></svg></span>
-          <span class="q-option__label">Yes, I do<span class="q-option__note">We match a specialist in 1–2 minutes</span></span>
+          <span class="q-option__label">Yes, I do<span class="q-option__note">We match a attorney in 1–2 minutes</span></span>
         </label>
         <label class="q-option">
           <input class="q-option__input" type="radio" name="need" value="unsure" data-label="Not sure yet">
@@ -156,15 +158,15 @@
           <span class="q-option__label">I’m afraid it’s expensive</span>
         </label>
         <label class="q-option q-option--row">
-          <input class="q-option__input" type="radio" name="objection" value="trust" data-reply="Every specialist on the platform is verified. The profile shows a rating out of 100, client reviews and experience in similar cases.">
+          <input class="q-option__input" type="radio" name="objection" value="trust" data-reply="Every attorney on the platform is verified. The profile shows a rating out of 100, client reviews and experience in similar cases.">
           <span class="q-option__label">I’m not sure I can trust it</span>
         </label>
         <label class="q-option q-option--row">
-          <input class="q-option__input" type="radio" name="objection" value="time" data-reply="It takes 1–2 minutes. You can ask now and read the specialist’s answer whenever it suits you.">
+          <input class="q-option__input" type="radio" name="objection" value="time" data-reply="It takes 1–2 minutes. You can ask now and read the attorney’s answer whenever it suits you.">
           <span class="q-option__label">No time right now</span>
         </label>
         <label class="q-option q-option--row">
-          <input class="q-option__input" type="radio" name="objection" value="browse" data-reply="The directory of specialists is open without registration. The quiz only narrows it down to those who fit you.">
+          <input class="q-option__input" type="radio" name="objection" value="browse" data-reply="The directory of attorneys is open without registration. The quiz only narrows it down to those who fit you.">
           <span class="q-option__label">Just looking</span>
         </label>
       </fieldset>
@@ -178,7 +180,7 @@
     <section class="funnel__screen funnel__center" id="bye" data-screen="bye" aria-labelledby="bye-title" hidden>
       <span class="funnel__icon" aria-hidden="true"><svg class="icon"><use href="#i-heart"></use></svg></span>
       <h2 class="funnel__title" id="bye-title" tabindex="-1">Thanks for stopping by.</h2>
-      <p class="funnel__hint">If a question comes up, the quiz is here and specialists work every day. The first consultation is free.</p>
+      <p class="funnel__hint">If a question comes up, the quiz is here and attorneys work every day. The first consultation is free.</p>
     </section>
 
     <!-- ── describe · вільний опис (категорія «Інше» або за бажанням) ───────── -->
@@ -206,7 +208,7 @@
       </div>
       <fieldset class="funnel__options" id="price-options" aria-describedby="price-err"
                 data-gate-allow="G10 3.1: діапазон вартості послуги, який обирає клієнт у квізі (голосове ТЗ 18.09, ADR-040) — не ціна консультанта; ціни етапів показує послуга">
-        <legend class="sr-only">Pick one option</legend>
+        <legend class="sr-only">Select one option</legend>
         <label class="q-option">
           <input class="q-option__input" type="radio" name="price_range" value="free" data-label="Only the free consultation">
           <span class="q-option__label">Only the free consultation<span class="q-option__note">I want to understand the situation first</span></span>
@@ -234,11 +236,11 @@
     <!-- ── match · підбір перед контактами (цінність до запиту даних, 07-pages A-06) ── -->
     <section class="funnel__screen" id="match" data-screen="match" aria-labelledby="match-title" hidden>
       <div class="funnel__head">
-        <h2 class="funnel__title" id="match-title" tabindex="-1" data-match-title>We matched specialists to your situation</h2>
+        <h2 class="funnel__title" id="match-title" tabindex="-1" data-match-title>We matched attorneys to your situation</h2>
         <p class="funnel__hint funnel__hint--sm">Your answers — tap any of them to change it.</p>
       </div>
       <div class="dq__chips" id="match-summary" role="list" aria-label="Your answers"></div>
-      <div class="dq__people" id="match-people" role="list" aria-label="Matched specialists"></div>
+      <div class="dq__people" id="match-people" role="list" aria-label="Matched attorneys"></div>
       <p class="funnel__trigger funnel__hide-short"><svg class="icon" width="20" height="20" aria-hidden="true"><use href="#i-check"></use></svg>The first consultation is free. Then you choose whom to work with.</p>
     </section>
 
@@ -246,7 +248,7 @@
     <form class="funnel__screen funnel__screen--tight" id="contacts" data-screen="contacts" aria-labelledby="contacts-title" novalidate hidden data-ds-event="quiz_contact_submit">
       <div class="funnel__head">
         <h2 class="funnel__title" id="contacts-title" tabindex="-1" data-contacts-title>Where should we send the matches?</h2>
-        <p class="funnel__hint funnel__hint--sm funnel__hide-short" data-contacts-hint>The specialist will message you on Telegram at this number.</p>
+        <p class="funnel__hint funnel__hint--sm funnel__hide-short" data-contacts-hint>The attorney will message you on Telegram at this number.</p>
       </div>
       <div class="funnel__form">
         <div class="field" id="phone-field">
@@ -283,15 +285,15 @@
         <details class="funnel__more" id="contacts-more">
           <summary>Add name <span class="q-req">(optional)</span><svg class="icon" width="20" height="20" aria-hidden="true"><use href="#i-chevron-down"></use></svg></summary>
           <div class="field">
-            <label class="field__label" for="name">Name</label>
+            <label class="field__label" for="name">Name (Optional)</label>
             <input class="input input--soft" id="name" name="name" type="text" autocomplete="given-name" placeholder="Emily" aria-describedby="name-hint">
-            <div class="field__msg"><p class="caption" id="name-hint">This is how the specialist will address you</p></div>
+            <div class="field__msg"><p class="caption" id="name-hint">This is how the attorney will address you</p></div>
           </div>
         </details>
         <div class="field funnel__consent">
           <label class="q-check">
             <input class="q-option__input" type="checkbox" id="consent" name="consent" required aria-describedby="consent-err">
-            <span class="q-option__label funnel__hint--sm">I agree to the <a href="https://consultantlm.com/legal/privacy-policy">privacy policy</a><span class="sr-only"> (required)</span></span>
+            <span class="q-option__label funnel__hint--sm">I agree to the <a href="https://consultantlm.com/legal/privacy-policy">Privacy Policy</a><span class="sr-only"> (required)</span></span>
           </label>
           <div class="field__msg">
             <p class="q-error" id="consent-err" role="alert" hidden>
@@ -308,7 +310,7 @@
     <section class="funnel__screen" id="thanks" data-screen="thanks" aria-labelledby="thanks-title" data-ds-event="quiz_result_view" hidden>
       <div class="funnel__head">
         <h2 class="funnel__title" id="thanks-title" tabindex="-1" data-thanks-title>Thank you, your request has been sent.</h2>
-        <p class="funnel__hint funnel__hint--sm" data-thanks-hint>The specialist will message you on Telegram.</p>
+        <p class="funnel__hint funnel__hint--sm" data-thanks-hint>The attorney will message you on Telegram.</p>
       </div>
       <div class="dq__thanks-card">
         <span class="funnel__icon" aria-hidden="true"><svg class="icon"><use href="#i-check"></use></svg></span>
@@ -317,10 +319,10 @@
       </div>
       <ol class="q-steps dq__next" aria-label="What’s next">
         <li class="q-steps__item" data-state="done"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">Request created</p></div></li>
-        <li class="q-steps__item" data-state="current" aria-current="step"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">The specialist is preparing an answer</p></div></li>
+        <li class="q-steps__item" data-state="current" aria-current="step"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">The attorney is preparing an answer</p></div></li>
         <li class="q-steps__item" data-state="upcoming"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">Free first consultation</p></div></li>
       </ol>
-      <p class="funnel__key funnel__hide-short">In the ConsultantLM™ app, all specialists’ answers are gathered in one place.</p>
+      <p class="funnel__key funnel__hide-short">In the ConsultantLM™ app, all attorneys’ answers are gathered in one place.</p>
     </section>
 
     <p class="sr-only" id="funnel-live" role="status" aria-live="polite"></p>
@@ -422,7 +424,7 @@
       next: function (a) { return a.topic === 'other' ? 'describe' : 'stage'; } },
     describe: { kind: 'text', name: 'describe', static: true, next: 'stage' },
     stage: { kind: 'single', name: 'stage', title: 'What stage is the matter at?',
-      hint: 'This determines which specialist and format of work will fit.',
+      hint: 'This determines which attorney and format of work will fit.',
       options: [
         ['thinking', 'Just thinking about it', 'I want to prepare in advance', 'i-eye'],
         ['documents', 'I have documents or letters', 'A contract, a demand letter, a summons, an order', 'i-file'],
@@ -431,7 +433,7 @@
       ],
       next: 'urgency' },
     urgency: { kind: 'single', name: 'urgency', title: 'How urgently do you need help?',
-      hint: 'For urgent requests we show specialists who are online now.',
+      hint: 'For urgent requests we show attorneys who are online now.',
       options: [
         ['today', 'Today', 'There is a deadline or an event in the next few hours', 'i-bolt'],
         ['week', 'This week', 'I want to resolve it in the next few days', 'i-clock'],
@@ -441,7 +443,7 @@
       next: 'price' },
     price: { kind: 'single', name: 'price', static: true, next: 'channel', bar: { label: 'Next', note: 'The first consultation is free' } },
     channel: { kind: 'single', name: 'channel', title: 'How would you like to be contacted?',
-      hint: 'The specialist will only write or call the way you choose.', hintShort: true,
+      hint: 'The attorney will only write or call the way you choose.', hintShort: true,
       options: [
         ['call', 'Phone call', 'We call back at a convenient time', 'i-phone-call'],
         ['telegram', 'Telegram', 'We message your number', 'i-message'],
@@ -833,10 +835,10 @@
     return pool.slice(0, 3);
   }
   var CHANNEL_TEXT = {
-    call: ['Will call', 'will call you', 'The specialist will call this number.'],
-    telegram: ['Will message on Telegram', 'will message you on Telegram', 'The specialist will message you on Telegram at this number.'],
-    viber: ['Will message on Viber', 'will message you on Viber', 'The specialist will message you on Viber at this number.'],
-    whatsapp: ['Will message on WhatsApp', 'will message you on WhatsApp', 'The specialist will message you on WhatsApp at this number.'],
+    call: ['Will call', 'will call you', 'The attorney will call this number.'],
+    telegram: ['Will message on Telegram', 'will message you on Telegram', 'The attorney will message you on Telegram at this number.'],
+    viber: ['Will message on Viber', 'will message you on Viber', 'The attorney will message you on Viber at this number.'],
+    whatsapp: ['Will message on WhatsApp', 'will message you on WhatsApp', 'The attorney will message you on WhatsApp at this number.'],
     email: ['Will send by email', 'will send the answer by email', 'The matches and the answer arrive by email. The number is needed to sign in to the app.']
   };
   var WHEN = { asap: 'during working hours, 9 AM–8 PM, as soon as possible', evening: 'today after 6 PM', tomorrow: 'tomorrow between 9 AM and 12 PM', any: 'any time during working hours' };
@@ -861,7 +863,7 @@
           '<span class="dq__person-meta">' + esc(p[2]) + ' · ' + esc(p[5]) + ' · ' + esc(p[6]) + (p[4] === 'online' ? ' · online' : '') + '</span></span>' +
           '<span class="q-score" aria-label="Rating ' + esc(p[7]) + ' of 100"><span class="q-score__value num">' + esc(p[7]) + '</span><span class="q-score__scale">/ 100</span></span></div>';
       }).join('');
-      var words = ['one specialist', 'two specialists', 'three specialists'];
+      var words = ['one attorney', 'two attorneys', 'three attorneys'];
       $('[data-match-title]').textContent = 'We matched ' + words[people.length - 1] + ': ' + catName(a.category).toLowerCase() + '.';
       track('quiz_match_view', { practice_area: a.category, matched: people.length });
     },
@@ -873,7 +875,7 @@
     thanks: function () {
       var a = state.answers, lead = state.lead || {}, t = CHANNEL_TEXT[a.channel] || CHANNEL_TEXT.telegram, p = matched()[0];
       $('[data-thanks-title]').textContent = lead.name ? 'Thank you, ' + lead.name + '. Your request has been sent.' : 'Thank you, your request has been sent.';
-      $('[data-thanks-hint]').textContent = 'The specialist ' + t[1] + (a.urgency === 'today' ? ' — the request is marked as urgent.' : '.');
+      $('[data-thanks-hint]').textContent = 'The attorney ' + t[1] + (a.urgency === 'today' ? ' — the request is marked as urgent.' : '.');
       $('[data-thanks-who]').textContent = p[0] + ' ' + p[1] + ' is reviewing your answers';
       $('[data-thanks-when]').textContent = a.channel === 'call' ? 'A call ' + (WHEN[a.calltime] || 'as soon as possible during working hours') : (t[0] + ' during working hours, 9 AM–8 PM');
       track('quiz_result_view', { preferred_channel: a.channel });
