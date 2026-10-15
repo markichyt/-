@@ -215,7 +215,7 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 .chip .icon { width: 14px; height: 14px; }
 /* tier and score */
 .q-tier { gap: 5px; text-transform: uppercase; letter-spacing: 0.04em; }
-.q-tier__mark { width: 12px; height: 12px; fill: currentColor; }
+.q-tier__mark { width: 12px; height: 12px; flex: none; fill: currentColor; }  /* у вузькій смузі картки іконка не стискається до нуля */
 .q-tier[data-tier="premium"] { background: var(--color-text); border-color: var(--color-text); color: var(--color-white); }
 .q-tier[data-tier="start"] { color: var(--color-gray-600); }
 .q-score { display: inline-flex; align-items: baseline; gap: 4px; white-space: nowrap; }
@@ -736,8 +736,8 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 .q-in { animation: q-card-in .45s cubic-bezier(.2,.7,.2,1) both; }
 @keyframes q-card-in { from { opacity: 0; transform: translateY(10px); } }
 .appframe__typing { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px dashed var(--color-gray-300); border-radius: 16px; font-size: 13px; color: var(--color-gray-600); }
-.appframe__typing-dots { display: inline-flex; gap: 4px; } .appframe__typing-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--color-accent); animation: q-dot 1s ease-in-out infinite; }
-.appframe__typing-dots i:nth-child(2) { animation-delay: .15s; } .appframe__typing-dots i:nth-child(3) { animation-delay: .3s; }
+.appframe__typing-dots { display: inline-flex; gap: 4px; } .appframe__typing-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--color-accent); animation: q-dot 1s ease-in-out infinite; animation-delay: calc(var(--d, 0s) + var(--k, 0s)); }
+.appframe__typing-dots i:nth-child(2) { --k: .15s; } .appframe__typing-dots i:nth-child(3) { --k: .3s; }
 @keyframes q-dot { 0%, 100% { opacity: .3; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-3px); } }
 .appframe__ans--ai { border-color: var(--color-accent); } .appframe__ans--ai .appframe__band { background: var(--color-white); border-bottom-color: var(--color-gray-300); }
 .q-tier[data-tier="ai"] { background: var(--color-accent); border-color: var(--color-accent); color: var(--color-white); }
@@ -773,3 +773,13 @@ body.funnel-page.is-dark { background: var(--color-black); color: var(--color-wh
 .funnel__phone[data-state="invalid"] input[type="tel"] { box-shadow: inset 0 0 0 1px var(--color-text); }
 .field:has(.country-select.open) .field__msg { visibility: hidden; }
 @media (prefers-reduced-motion: reduce) { .country-select .dropdown-arrow { transition: none; } }
+
+/* S7/S8 · «юрист друкує відповідь» (15.10): замість тексту відповіді — нескінченний індикатор набору; тексти лише в застосунку */
+.appframe__typing-line { display: flex; align-items: center; gap: 8px; margin: 0 0 10px; padding: 6px 10px 0; font-size: 13px; color: var(--color-gray-600); }
+.appframe--compact .appframe__typing-line { margin-bottom: 6px; padding-top: 4px; font-size: 12px; }
+.appframe__ans--typing .appframe__who { padding-top: 5px; }
+.appframe__ans--typing .appframe__name { white-space: normal; }  /* без тексту відповіді є місце: довге ім’я переноситься, а не обрізається */
+.appframe--compact .appframe__list--stack { grid-template-columns: minmax(0, 1fr); }  /* S8: картки «друкує» списком і на десктопі — як стрічка відповідей у застосунку; у три колонки смуга PREMIUM не вміщує чип і рейтинг */
+.appframe__ans[data-tier="premium"] .appframe__typing-line { color: var(--color-gray-300); }
+.appframe__ans[data-tier="premium"] .appframe__typing-dots i { background: var(--color-white); }
+.appframe__note { margin: 0 8px; font-size: 12px; line-height: 1.4; color: var(--color-gray-600); text-align: center; }

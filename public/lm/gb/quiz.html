@@ -320,7 +320,6 @@
       <div class="appframe appframe--compact" role="img" aria-label="Question page in the app: your question, and below it the card of the lawyer who took your request">
         <div class="appframe__bar">Your question</div>
         <article class="appframe__card"><p class="appframe__date"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>07/01/2026, 18:04</p><p class="appframe__qt" data-s7-question>Title of your question</p><p class="appframe__qtext" data-s7-desc>Description</p></article>
-        <template id="s7-card"></template>
         <div class="appframe__list" id="s7-answers">
           <div class="appframe__skel appframe__skel--short"><span class="q-skel"></span><span class="q-skel"></span><span class="q-skel"></span></div>
           <div class="appframe__skel funnel__hide-short"><span class="q-skel"></span><span class="q-skel"></span><span class="q-skel"></span></div>
@@ -328,25 +327,19 @@
       </div>
     </section>
 
-    <!-- ── S8 · Proof №4 — як Ви отримаєте відповіді ────────────────────── -->
+    <!-- ── S8 · Proof №4 — відповіді вже друкуються; тексти відповідей лише в застосунку (ТЗ власника 15.10) ── -->
     <section class="funnel__screen" id="s8" data-screen="s8" aria-labelledby="s8-title" hidden>
       <div class="funnel__head">
-        <h2 class="funnel__title" id="s8-title" tabindex="-1">One Case. Multiple Legal Perspectives.</h2>
-        <p class="funnel__hint funnel__hint--sm funnel__hide-short">Several relevant lawyers can analyse your situation — you compare approaches, not a single opinion.</p>
+        <h2 class="funnel__title" id="s8-title" tabindex="-1">Lawyers are already answering your question.</h2>
+        <p class="funnel__hint funnel__hint--sm">You can view the answers in the app — tap Continue.</p>
       </div>
-      <div class="appframe appframe--compact" role="img" aria-label="Question page in the app: your question and rated answers from lawyers">
+      <div class="appframe appframe--compact" role="img" aria-label="Question page in the app: your question with lawyers typing their answers below">
         <div class="appframe__bar">Your question</div>
         <article class="appframe__card"><p class="appframe__date"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>07/01/2026, 18:04</p><p class="appframe__qt" data-s8-question>Title of your question</p><p class="appframe__qtext" data-s8-desc>Description</p></article>
-        <div class="appframe__list" data-answers></div>
+        <div class="appframe__list appframe__list--stack" data-answers></div>
+        <p class="appframe__note">The answer texts will appear in the app</p>
       </div>
-      <ul class="funnel__chips funnel__hide-short funnel__hide-mid" aria-label="What it gives you">
-        <li class="funnel__chip funnel__chip--static"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Different approaches</li>
-        <li class="funnel__chip funnel__chip--static"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Compare Legal Approaches</li>
-        <li class="funnel__chip funnel__chip--static"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Review Experience Before You Hire</li>
-        <li class="funnel__chip funnel__chip--static"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>No extra searching</li>
-        <li class="funnel__chip funnel__chip--static"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>You choose whom to trust</li>
-      </ul>
-      <p class="funnel__key funnel__hide-short funnel__hide-mid">First you see the expertise. Then you choose the lawyer.</p>
+      <p class="funnel__key funnel__hide-short funnel__hide-mid">In the app you will see every answer and compare approaches before choosing a lawyer.</p>
     </section>
 
     <!-- ── S9 · Q4 · Intent — Крок 4 із 5 ──────────────────────────────── -->
@@ -1216,14 +1209,17 @@
   function fmtNow() { var d = new Date(), p = function (n) { return (n < 10 ? '0' : '') + n; }; return (L.date ? L.date(d) : p(d.getDate()) + '.' + p(d.getMonth() + 1) + '.' + d.getFullYear()) + ', ' + p(d.getHours()) + ':' + p(d.getMinutes()); }
   function stampNow(el) { $$('.appframe__date', el).forEach(function (q) { q.lastChild.textContent = fmtNow(); }); }
   var TIER_MARK = '<svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="14" width="4" height="7" rx="1"/><rect x="10" y="9" width="4" height="12" rx="1"/><rect x="17" y="4" width="4" height="17" rx="1"/></svg>';
-  function answerCard(a, ts, txt) {
-    return '<article class="appframe__ans' + (a.hide ? ' funnel__hide-short' : '') + '" data-tier="' + a.tier + '"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="' + a.tier + '">' + TIER_MARK + a.tier.toUpperCase() + '</span>' +
+  /* картка «юрист друкує відповідь»: шапка фахівця як у застосунку, замість тексту — нескінченний індикатор набору.
+     Тексти відповідей на екрані не показуються (ТЗ власника 15.10): людина бачить, що відповідь уже пишуть, а читає її в застосунку.
+     --d зсуває ритм крапок, щоб три картки не блимали синхронно */
+  function typingCard(a, i) {
+    return '<article class="appframe__ans appframe__ans--typing' + (a.hide ? ' funnel__hide-short' : '') + '" data-tier="' + a.tier + '" style="--d:' + ((i || 0) * 0.4) + 's"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="' + a.tier + '">' + TIER_MARK + a.tier.toUpperCase() + '</span>' +
       '<span class="q-score"><span class="q-score__value num">' + esc(a.score) + '</span><span class="q-score__scale">/ 100</span></span></div>' +
       '<div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="../assets/people/' + a.photo + '.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">' + esc(a.initials) + '</span>' +
       '<span class="appframe__meta"><span class="appframe__name">' + esc(a.name) + '</span><span class="appframe__role">' + esc(a.role) + '</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>' + esc(a.city) + '</span></span></div>' +
-      '<p class="appframe__ts">' + ts + '</p><p class="appframe__txt">' + txt + '</p></article>';
+      '<p class="appframe__typing-line" aria-label="' + 'Typing an answer' + '"><span class="appframe__typing-dots" aria-hidden="true"><i></i><i></i><i></i></span>' + 'Typing an answer…' + '</p></article>';
   }
-  (function () { var list = $('[data-answers]'); if (list) list.innerHTML = ANSWERS.map(function (a) { return answerCard(a, esc(a.ts), esc(a.text)); }).join(''); var t = $('#s7-card'); if (t) t.innerHTML = answerCard(ANSWERS[0], '{{ts}}', '{{txt}}'); })();
+  (function () { var list = $('[data-answers]'); if (list) list.innerHTML = ANSWERS.map(function (a, i) { return typingCard(a, i); }).join(''); })();
   function reveal(el, on) { if (el) el.classList.toggle('is-visible', on !== false); }
   /* горизонтальная лента карточек: точки-пагинация, активная — ближайшая к центру */
   function railDots(rail, dots) {
@@ -1360,7 +1356,7 @@
       later(function () {
         var v = $('.appframe__viewers', answers); if (v) v.remove();
         if (short) { var ai = $('.appframe__ans--ai', answers); if (ai) ai.remove(); }  /* на коротких екранах — лише остання картка */
-        add($('#s7-card').innerHTML.replace('{{ts}}', 'just now').replace('{{txt}}', 'Took your request — preparing a case review…'));
+        add(typingCard(ANSWERS[0], 0));  /* перший фахівець уже друкує — текст відповіді не показуємо */
         step(3, 'done'); if (st) st.textContent = 'The first lawyer took the request';
       }, 6200);
       later(function () { doneAnimating(); go('s8'); }, 8400);
@@ -1370,6 +1366,8 @@
       var q = $('[data-s8-question]', el), d = $('[data-s8-desc]', el);
       q.textContent = state.title || (state.description ? state.description : 'Your situation (voice message)');
       d.textContent = state.description || (state.voice ? 'Voice message' : '');
+      var list = $('[data-answers]', el); list.innerHTML = typingCard(ANSWERS[0], 0);  /* та сама картка, що друкувала на S7 */
+      ANSWERS.slice(1).forEach(function (a, k) { later(function () { var w = document.createElement('div'); w.innerHTML = typingCard(a, k + 1); var n = w.firstElementChild; n.classList.add('q-in'); list.appendChild(n); }, 1100 + k * 1300); });  /* ще двоє приєднуються — видно живий процес */
     },
     s11: function () { if (PLANS_ENTER) PLANS_ENTER(); },
     s12: function () { track('membership_offer_result', { membership_choice: state.branch }); },

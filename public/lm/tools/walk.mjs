@@ -34,6 +34,7 @@ const visited = [];
 for (let guard = 0; guard < 24; guard++) {
   const id = await cur(); visited.push(id);
   if (id === 's1' || id === 's3' || id === 's7') { await page.waitForFunction(() => { const b = document.getElementById('funnel-next'); return b && !b.disabled; }, null, { timeout: 20000 }); await page.waitForTimeout(900); }
+  if (id === 's8') await page.waitForTimeout(3200);  // три картки «друкує відповідь» приєднуються з паузами
   if (id === 's16') { await page.waitForTimeout(3600); await shot(); break; }
   if (id === 's2' || id === 's4' || id === 's12') await shot('-empty');  // стан до вибору: кнопка має бути неактивна
   if (id === 's2' && remote) { await page.$eval('#remote', el => { if (!el.checked) el.click(); }); await page.waitForTimeout(200); }
