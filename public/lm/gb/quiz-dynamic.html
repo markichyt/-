@@ -271,7 +271,7 @@
                 <li data-value="+" data-country-value="NEUTRAL" class="country-select__option"><img width="24" height="17" src="../assets/vendor/phone-country-dropdown/img/flags/neutral.png" alt="neutral" class="flag"><span class="country-name">Other country</span><span class="country-code">+</span></li>
               </ul>
             </div>
-            <input class="input input--soft q-phone__input" id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+" required aria-describedby="phone-hint phone-err">
+            <input class="input input--soft" id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+" required aria-describedby="phone-hint phone-err">
             <input type="hidden" name="country_code" value="UA">
           </div>
           <div class="field__msg">
@@ -819,6 +819,10 @@
     return { country: c, valid: valid, value: phone.value, e164: '+' + d };
   }
   function phoneSync() { if (phoneState().valid) { phoneBox.dataset.state = 'success'; perr.hidden = true; } else phoneBox.removeAttribute('data-state'); }
+  /* надбудова: ведучий нуль після коду країни («067…», «07700…») знімається — маска компонента його не очікує і зсунула б цифри.
+     Слухач стоїть раніше за обробник jquery.mask (той підключається при показі поля), тож маска форматує вже виправлене значення */
+  var TRUNK = { UA: '380', PL: '48', UK: '44', USA: '1', AE: '971' };
+  phone.addEventListener('input', function () { var c = (window.PhoneCountryDropdown && PhoneCountryDropdown.getSelectedCountry(phone)) || 'UA', pd = TRUNK[c]; if (!pd) return; var d = phone.value.replace(/\D/g, ''); if (d.indexOf(pd + '0') === 0) phone.value = '+' + pd + d.slice(pd.length + 1); });
   phone.addEventListener('input', phoneSync);
   phoneBox.addEventListener('click', function (e) { if (e.target.closest('.country-select__option')) setTimeout(phoneSync, 0); /* без синтетичного input: його перехоплює jquery.mask і падає на зміні маски */ });
   consent.addEventListener('change', function () { if (consent.checked) cerr.hidden = true; });
