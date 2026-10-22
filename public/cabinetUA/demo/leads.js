@@ -510,7 +510,7 @@
 
   // ручний скид демо-стану: щоб показувати флоу покупки з нуля
   window.demoLeadsReset = function () {
-    try { localStorage.removeItem(KEY); } catch (e) {}
+    try { localStorage.removeItem(KEY); localStorage.removeItem('promo_lead_request_v1'); } catch (e) {}
     location.reload();
   };
 

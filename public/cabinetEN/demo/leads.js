@@ -503,7 +503,7 @@
 
   // manual demo reset: lets you show the purchase flow from scratch
   window.demoLeadsReset = function () {
-    try { localStorage.removeItem(KEY); } catch (e) {}
+    try { localStorage.removeItem(KEY); localStorage.removeItem('promo_lead_request_v1'); } catch (e) {}
     location.reload();
   };
 
