@@ -1,40 +1,28 @@
-/* Жовта картка «Замовити ліди» (закріплена першою) і вікно параметрів замовлення.
+/* Картка «Замовити ліди» (закріплена першою) і вікно параметрів замовлення.
    Класи rq-* / main-order--request — тільки цього шару. */
 
 /* ---------- картка ---------- */
+/* біла, як картки лідів; жовтий — лише полоска зверху, пілюля, точки чипів і рамка кнопки */
 .order-list__item--request{position:relative}
-.main-order.main-order--request{
-  background:linear-gradient(180deg,#fffbe6 0%,#fff3bd 100%);
-  border:1px solid #efce57;
-  box-shadow:0 2px 11px 0 rgba(120,86,0,.12);
-}
+.main-order.main-order--request{overflow:hidden}
 .main-order.main-order--request::before{
-  content:"";position:absolute;left:0;right:0;top:0;height:4px;background:#ffdb48;
+  content:"";position:absolute;left:0;right:0;top:0;height:3px;background:#ffdb48;
 }
-.main-order.main-order--request:hover{box-shadow:0 4px 18px 0 rgba(120,86,0,.2)}
-.main-order--request .main-order__title{color:#2c2c2c}
-.main-order--request .main-order__service--request{
-  background:#ffdb48;color:#2c2c2c;
-}
-.main-order--request .main-order__description{
-  -webkit-line-clamp:6;line-clamp:6;color:#5c5233;
-}
-.main-order--request .main-order__chip{background:rgba(255,255,255,.72)}
+.main-order--request .main-order__service--request{background:#fff4cc;color:#6b5200}
+.main-order--request .main-order__description{-webkit-line-clamp:6;line-clamp:6}
 .main-order--request .main-order__chip__dot{background:#e7a017}
-.main-order--request .main-order__footer{border-top-color:rgba(120,86,0,.14)}
 .main-order__request-btn{
-  background:#ffdb48;border:1px solid #e7b800;border-radius:3px;color:#2c2c2c;cursor:pointer;
+  background:#fff;border:1px solid #e7b800;border-radius:3px;color:#2c2c2c;cursor:pointer;
   font-size:14px;font-weight:700;letter-spacing:.2px;padding:11px 16px;text-align:center;
-  transition:background .15s,transform .15s;white-space:normal;width:100%;
+  transition:background .15s,border-color .15s,transform .15s;white-space:normal;width:100%;
 }
-.main-order__request-btn:hover{background:#ffcf1f}
+.main-order__request-btn:hover{background:#ffdb48}
 .main-order__request-btn:active{transform:translateY(1px)}
-.main-order__request-btn--ghost{background:rgba(255,255,255,.7);border-color:#e7b800}
-.main-order__request-btn--ghost:hover{background:#fff}
-.main-order--request .main-order__purchase-disclaimer p{color:#6b5f35}
-.rq-cancel{background:none;border:0;color:#8a6d00;cursor:pointer;font:inherit;
+.main-order__request-btn--ghost{border-color:#d7dfe5}
+.main-order__request-btn--ghost:hover{background:#fff;border-color:#e7b800}
+.rq-cancel{background:none;border:0;color:#686868;cursor:pointer;font:inherit;
   font-size:12px;padding:0;text-decoration:underline}
-.rq-cancel:hover{color:#5c4800}
+.rq-cancel:hover{color:#2c2c2c}
 
 /* ---------- вікно-майстер ---------- */
 .modal.success-modal.rq-modal{max-width:54rem;padding:1.5rem clamp(16px,3vw,2.25rem) 1.25rem;width:94vw}
