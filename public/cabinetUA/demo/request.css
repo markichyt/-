@@ -2,7 +2,7 @@
    Класи rq-* / main-order--request — тільки цього шару. */
 
 /* ---------- картка ---------- */
-/* біла, як картки лідів; жовтий — лише полоска зверху, пілюля, точки чипів і рамка кнопки */
+/* біла, як картки лідів; жовті — полоска зверху, пілюля, точки чипів і кнопка */
 .order-list__item--request{position:relative}
 .main-order.main-order--request{overflow:hidden}
 .main-order.main-order--request::before{
@@ -12,14 +12,12 @@
 .main-order--request .main-order__description{-webkit-line-clamp:6;line-clamp:6}
 .main-order--request .main-order__chip__dot{background:#e7a017}
 .main-order__request-btn{
-  align-items:center;background:#fff;border:1px solid #e7b800;border-radius:3px;color:#2c2c2c;cursor:pointer;display:flex;justify-content:center;
+  align-items:center;background:#ffdb48;border:1px solid #e7b800;border-radius:3px;color:#2c2c2c;cursor:pointer;display:flex;justify-content:center;
   font-size:14px;font-weight:700;letter-spacing:.2px;padding:11px 16px;text-align:center;
   transition:background .15s,border-color .15s,transform .15s;white-space:normal;width:100%;
 }
-.main-order__request-btn:hover{background:#ffdb48}
+.main-order__request-btn:hover{background:#ffcf1f}
 .main-order__request-btn:active{transform:translateY(1px)}
-.main-order__request-btn--ghost{border-color:#d7dfe5}
-.main-order__request-btn--ghost:hover{background:#fff;border-color:#e7b800}
 .rq-cancel{background:none;border:0;color:#686868;cursor:pointer;font:inherit;
   font-size:12px;padding:0;text-decoration:underline}
 .rq-cancel:hover{color:#2c2c2c}
