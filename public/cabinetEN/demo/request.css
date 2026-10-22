@@ -73,7 +73,7 @@ button.rq-steps__btn:hover span{color:#2c2c2c;text-decoration:underline}
 .is-current .rq-steps__btn span{color:#2c2c2c;font-weight:700}
 .rq-steps__mob{display:none}
 .modal.success-modal.rq-modal.rq-modal--short{max-width:46rem}
-.rq-steps--short{max-width:30rem}
+.rq-steps--short{margin-left:auto;margin-right:auto;max-width:30rem}
 .rq-cap .rq-money{max-width:20rem}
 .rq-modal.success-modal p.rq-calc{color:#5c4800;font-size:14px;font-weight:600;margin:12px 0 0}
 
