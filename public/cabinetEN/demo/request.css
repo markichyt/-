@@ -72,6 +72,10 @@ button.rq-steps__btn:hover span{color:#2c2c2c;text-decoration:underline}
 .is-current .rq-steps__btn em{background:#ffdb48;border-color:#e7b800;color:#2c2c2c}
 .is-current .rq-steps__btn span{color:#2c2c2c;font-weight:700}
 .rq-steps__mob{display:none}
+.modal.success-modal.rq-modal.rq-modal--short{max-width:46rem}
+.rq-steps--short{max-width:30rem}
+.rq-cap .rq-money{max-width:20rem}
+.rq-modal.success-modal p.rq-calc{color:#5c4800;font-size:14px;font-weight:600;margin:12px 0 0}
 
 /* як це працює */
 .rq-tl{background:#fffbe6;border:1px solid #f1dc8a;border-radius:3px;margin-top:14px;padding:12px 14px;text-align:left;width:100%;box-sizing:border-box}
@@ -216,6 +220,8 @@ select.rq-input{padding-right:6px}
 @media (max-width:760px){
   .rq-steps__btn span{display:none}
   .rq-steps__mob{color:#686868;display:block;font-size:13px;margin:8px 0 0}
+  .rq-steps--short .rq-steps__btn span{display:block}
+  .rq-steps--short+.rq-steps__mob{display:none}
   .rq-tl ol,.rq-grid,.rq-cases,.rq-review{grid-template-columns:1fr}
   .rq-warn{margin-top:0}
 }

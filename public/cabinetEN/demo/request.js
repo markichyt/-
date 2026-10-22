@@ -1,4 +1,4 @@
-/* Жовта картка «Замовити ліди» першою в списку + майстер замовлення лідів (7 кроків).
+/* Картка «Замовити ліди» першою в списку + форма замовлення лідів: коротка (3 кроки) або повна (?rq=1, 7 кроків).
    EN — анкета для імміграційних юристів Техасу, UA — та сама структура під українську практику.
    Стан заявки — localStorage promo_lead_request_v1 (скидається разом із демо-станом). */
 (function () {
@@ -19,7 +19,14 @@
     doneTitle: 'Leads order submitted', pillDone: 'Under review',
     doneDesc: 'We’ll review the order within 2 days. First leads will appear in this list, and the flow becomes steady in 2–3 weeks once the ad campaigns warm up. Notifications go to ' + EMAIL + '.',
     btnEdit: 'View or edit the order', cancelOrder: 'Cancel the order', cancelled: 'The order has been cancelled.',
-    cCases: 'Case types: ', cLeads: ' leads/mo', cSum: '/mo',
+    cCases: 'Case types: ', cLeads: ' leads/mo', cSum: '/mo', cBudget: 'up to ',
+    desc2: 'If none of the current leads fit, order them: choose case types, area and a monthly budget. First leads within 2 days, a steady flow in 2–3 weeks. You’ll be notified by email.',
+    chips2: ['First leads in 2 days', 'Your budget', 'Email notification'],
+    budgetStep: 'Budget', capLead: 'How much are you ready to spend on leads each month? We’ll send as many leads as fit into this amount.',
+    capCalc: 'At the estimated prices that’s about {a}–{b} leads a month.', estLeads: '≈ {a}–{b} leads/mo',
+    capTiming: 'First leads arrive within 2 days. The flow becomes steady in 2–3 weeks, while ad campaigns warm up and SEO kicks in.',
+    errCap: 'Enter your monthly budget.', send: 'Send the order',
+    okTitle2: 'We’ve received your order', okText2: 'Please wait: within 2 days we’ll pick leads for your parameters and send an email to ',
 
     mTitle: 'Order leads for your practice', mTitleEdit: 'Your leads order',
     steps: ['About you', 'Case types', 'Area', 'Qualification', 'Volume & price', 'Delivery & payment', 'Review'],
@@ -109,7 +116,14 @@
     doneTitle: 'Заявку на ліди надіслано', pillDone: 'На перевірці',
     doneDesc: 'Перевіримо заявку протягом 2 днів. Перші ліди з’являться в цьому списку, стабільний потік — через 2–3 тижні, коли прогріються рекламні кампанії. Сповіщення прийде на ' + EMAIL + '.',
     btnEdit: 'Переглянути або змінити', cancelOrder: 'Скасувати заявку', cancelled: 'Заявку скасовано.',
-    cCases: 'Справ: ', cLeads: ' лідів/міс', cSum: '/міс',
+    cCases: 'Справ: ', cLeads: ' лідів/міс', cSum: '/міс', cBudget: 'до ',
+    desc2: 'Якщо серед поточних лідів немає потрібних — замовте їх: оберіть справи, місто й місячний бюджет. Перші ліди — протягом 2 днів, стабільний потік — через 2–3 тижні. Сповіщення прийде на пошту.',
+    chips2: ['Перші ліди до 2 днів', 'Ваш бюджет', 'Сповіщення на пошту'],
+    budgetStep: 'Бюджет', capLead: 'Скільки ви готові витрачати на ліди щомісяця? Ми підберемо стільки лідів, скільки вміщається в цю суму.',
+    capCalc: 'За орієнтовними цінами це приблизно {a}–{b} лідів на місяць.', estLeads: '≈ {a}–{b} лідів/міс',
+    capTiming: 'Перші ліди — протягом 2 днів. Стабільний потік — через 2–3 тижні, поки прогріваються рекламні кампанії та підключається SEO.',
+    errCap: 'Вкажіть бюджет на місяць.', send: 'Надіслати заявку',
+    okTitle2: 'Ми отримали вашу заявку', okText2: 'Очікуйте: протягом 2 днів ми підберемо ліди за вашими параметрами й надішлемо лист на ',
 
     mTitle: 'Замовлення лідів для вашої практики', mTitleEdit: 'Ваша заявка на ліди',
     steps: ['Про вас', 'Справи', 'Географія', 'Кваліфікація', 'Обсяг і ціна', 'Доставка й оплата', 'Перевірка'],
@@ -213,6 +227,10 @@
     try { var s = JSON.parse(localStorage.getItem(KEY) || 'null'); return s && s.id && s.rows ? s : null; } catch (e) { return null; }
   }
   function save(s) { try { if (s) localStorage.setItem(KEY, JSON.stringify(s)); else localStorage.removeItem(KEY); } catch (e) {} }
+  // Варіант 2 (за замовчуванням) — коротка форма: справи → географія → бюджет. Варіант 1 (?rq=1) — повний майстер.
+  var V1 = /[?&]rq=1(&|$)/.test(location.search);
+  var FLOW = V1 ? [0, 1, 2, 3, 4, 5, 6] : [1, 2, 7];
+  function flowLabel(k) { return k === 7 ? L.budgetStep : L.steps[k]; }
   var order = load();          // надіслана заявка або null
   var draft = null;            // стан майстра
   var step = 0, seen = 0, doneView = false;
@@ -260,8 +278,11 @@
   // ---------- картка ----------
   function cardHtml() {
     var done = !!order;
-    var chips = L.chips;
-    if (done) {
+    var chips = V1 ? L.chips : L.chips2;
+    if (done && order.v === 2) {
+      var area = [names(L.areas, order.areas), order.other].filter(Boolean).join(', ');
+      chips = [L.cCases + order.cases.length, area.length > 20 ? area.slice(0, 19) + '…' : area, L.cBudget + money(+order.cap) + L.cSum];
+    } else if (done) {
       var tt = totals(order);
       chips = [L.cCases + order.cases.length, tt.n + L.cLeads, money(tt.t) + L.cSum];
     }
@@ -271,7 +292,7 @@
         '<div class="main-order__inner"><span class="main-order__service main-order__service--request">' +
           esc(done ? L.pillDone + ' · ' + order.id : L.pill) + '</span></div>' +
       '</div>' +
-      '<div class="main-order__middle"><p class="main-order__description">' + esc(done ? L.doneDesc : L.desc) + '</p></div>' +
+      '<div class="main-order__middle"><p class="main-order__description">' + esc(done ? L.doneDesc : V1 ? L.desc : L.desc2) + '</p></div>' +
       '<div class="main-order__bottom">' +
         '<div class="main-order__chips">' + chips.map(function (c) {
           return '<span class="main-order__chip"><span class="main-order__chip__dot"></span><span>' + esc(c) + '</span></span>';
@@ -430,8 +451,22 @@
         '<label class="rq-check"><input type="checkbox" data-f="tos"' + (draft.tos ? ' checked' : '') + '><span>' + L.tos + ' <i>*</i></span></label>' +
         '<label class="rq-check"><input type="checkbox" data-f="consent"' + (draft.consent ? ' checked' : '') + '><span>' + esc(L.consent) + ' <i>*</i></span></label>' +
         '<p class="rq-note">' + esc(L.payNote) + '</p>';
+    },
+    function () {
+      return '<h4 class="rq-h">' + esc(L.fCap) + ' <i>*</i></h4><p class="rq-lead">' + esc(L.capLead) + '</p>' +
+        '<div class="rq-sec rq-sec--first rq-cap"><div class="rq-money">' + input('cap', draft.cap, ' inputmode="numeric" data-num placeholder="' + (EN ? '2000' : '20000') + '" aria-label="' + esc(L.fCap) + '"') + '<em>' + cur() + '</em></div>' +
+          '<p class="rq-hint">' + esc(L.capHint) + '</p><p class="rq-calc" data-rq-calc hidden></p></div>' +
+        '<p class="rq-note">' + esc(L.capTiming) + '</p>';
     }
   ];
+  function leadsFor(d) {
+    var cap = +d.cap, lo = 0, hi = 0;
+    if (!cap || !d.cases.length) return null;
+    d.cases.forEach(function (i) { var e = estFor(d, i); lo += e[0]; hi += e[1]; });
+    lo /= d.cases.length; hi /= d.cases.length;
+    var a = Math.floor(cap / hi), b = Math.floor(cap / lo);
+    return b ? { a: Math.max(1, a), b: b } : null;
+  }
 
   function names(items, idx) { return idx.map(function (i) { return items[i]; }).join(', '); }
   function reviewHtml(d, editable) {
@@ -488,29 +523,31 @@
       if (d.hTo <= d.hFrom) return ['errHours'];
     }
     if (s === 6 && !(d.tos && d.consent)) return ['errTos'];
+    if (s === 7 && !(+d.cap > 0)) return ['errCap', 'cap'];
     return null;
   }
 
   // ---------- вікно ----------
   var modal = null;
   function headHtml() {
-    var of = fill(L.stepOf, { n: step + 1, t: L.steps.length });
+    var of = fill(L.stepOf, { n: step + 1, t: FLOW.length });
     return '<h3 class="rq-title">' + esc(order ? L.mTitleEdit : L.mTitle) + '</h3>' +
-      '<ol class="rq-steps" aria-label="' + esc(of) + '">' + L.steps.map(function (t, i) {
+      '<ol class="rq-steps' + (V1 ? '' : ' rq-steps--short') + '" aria-label="' + esc(of) + '">' + FLOW.map(function (k, i) {
+        var t = flowLabel(k);
         var cls = i === step ? ' is-current' : i <= seen ? ' is-done' : '';
         var inner = '<em>' + (i + 1) + '</em><span>' + esc(t) + '</span>';
         return '<li class="rq-steps__i' + cls + '">' + (i <= seen && i !== step
           ? '<button type="button" class="rq-steps__btn" data-rq-go="' + i + '">' + inner + '</button>'
           : '<span class="rq-steps__btn"' + (i === step ? ' aria-current="step"' : '') + '>' + inner + '</span>') + '</li>';
       }).join('') + '</ol>' +
-      '<p class="rq-steps__mob">' + esc(of) + ' · <b>' + esc(L.steps[step]) + '</b></p>';
+      '<p class="rq-steps__mob">' + esc(of) + ' · <b>' + esc(flowLabel(FLOW[step])) + '</b></p>';
   }
   function footHtml() {
-    var last = step === L.steps.length - 1;
+    var last = step === FLOW.length - 1;
     return '<div class="rq-foot">' +
       (step ? '<button type="button" class="rq-cancel-btn" data-rq-back>← ' + esc(L.back) + '</button>' : '<button type="button" class="rq-cancel-btn" data-rq-close>' + esc(L.cancel) + '</button>') +
       '<span class="rq-est" data-rq-estline></span>' +
-      '<button type="button" class="rq-btn" data-rq-next>' + esc(last ? (order ? L.save : L.submit) : L.next + ' →') + '</button></div>';
+      '<button type="button" class="rq-btn" data-rq-next>' + esc(last ? (order ? L.save : V1 ? L.submit : L.send) : L.next + ' →') + '</button></div>';
   }
   function doneHtml(o) {
     return '<div class="rq-done"><div class="rq-done__ico">✓</div><h3>' + esc(L.okTitle) + '</h3>' +
@@ -519,24 +556,36 @@
       timeline(L.okNext) + reviewHtml(o, false) +
       '<div class="rq-foot rq-foot--center"><button type="button" class="rq-btn" data-rq-close>' + esc(L.okClose) + '</button></div></div>';
   }
+  function doneHtml2() {
+    return '<div class="rq-done rq-done--short"><div class="rq-done__ico">✓</div><h3>' + esc(L.okTitle2) + '</h3>' +
+      '<p>' + esc(L.okText2) + '<b>' + EMAIL + '</b>.</p>' +
+      '<div class="rq-foot rq-foot--center"><button type="button" class="rq-btn" data-rq-close>' + esc(L.okClose) + '</button></div></div>';
+  }
   function body() { return modal.querySelector('[data-rq-body]'); }
   function paint(keepScroll) {
     var b = body(), top = b.scrollTop;
-    b.innerHTML = doneView ? doneHtml(order) : headHtml() + '<div class="rq-stepbody">' + STEPS[step]() + '</div><div class="rq-error" data-rq-error role="alert" hidden></div>' + footHtml();
+    b.innerHTML = doneView ? (V1 ? doneHtml(order) : doneHtml2()) : headHtml() + '<div class="rq-stepbody">' + STEPS[FLOW[step]]() + '</div><div class="rq-error" data-rq-error role="alert" hidden></div>' + footHtml();
     b.scrollTop = keepScroll ? top : 0;
     if (!doneView) live();
   }
   function live() {
-    var d = draft, line = modal.querySelector('[data-rq-estline]');
+    var d = draft, k = FLOW[step], line = modal.querySelector('[data-rq-estline]');
+    if (k === 7) {
+      var n = leadsFor(d), calc = modal.querySelector('[data-rq-calc]');
+      calc.hidden = !n;
+      if (n) calc.textContent = fill(L.capCalc, n);
+      if (line) line.textContent = n ? fill(L.estLeads, n) : '';
+      return;
+    }
     if (line) {
-      if (step >= 4) { var tt = totals(d); line.textContent = fill(L.estTotal, { n: tt.n, t: money(tt.t) }); }
+      if (k >= 4) { var tt = totals(d); line.textContent = fill(L.estTotal, { n: tt.n, t: money(tt.t) }); }
       else if (d.cases.length) {
         var lo = Infinity, hi = 0;
         d.cases.forEach(function (i) { var e = estFor(d, i); lo = Math.min(lo, e[0]); hi = Math.max(hi, e[1]); });
         line.textContent = fill(L.estPer, { r: range(lo, hi) });
-      } else line.textContent = step ? L.estNone : '';
+      } else line.textContent = k ? L.estNone : '';
     }
-    if (step !== 4) return;
+    if (k !== 4) return;
     d.cases.forEach(function (i) {
       var el = modal.querySelector('[data-st="' + i + '"]');
       if (!el) return;
@@ -560,15 +609,18 @@
     if (!overlay) return;
     if (!modal) {
       modal = document.createElement('div');
-      modal.className = 'modal success-modal rq-modal';
+      modal.className = 'modal success-modal rq-modal' + (V1 ? '' : ' rq-modal--short');
       modal.setAttribute('data-popup', 'lead-request');
       modal.innerHTML = '<div role="dialog" aria-modal="true" class="modal__box success-modal__box">' +
         '<button aria-label="Close" class="close modal__close" data-rq-close><svg width="20" height="20"><use href="' + SPRITE + '#close2"></use></svg></button>' +
         '<div data-rq-body></div></div>';
       overlay.appendChild(modal);
     }
-    if (order) { draft = copy(order); step = seen = L.steps.length - 1; }
-    else if (!draft) { draft = blank(); step = seen = 0; }
+    if (order) {
+      draft = copy(order);
+      for (var f in blank()) if (!(f in draft)) draft[f] = blank()[f];
+      seen = FLOW.length - 1; step = V1 ? seen : 0;
+    } else if (!draft) { draft = blank(); step = seen = 0; }
     doneView = false;
     paint(false);
     overlay.classList.add('active');
@@ -596,10 +648,11 @@
   }
   function go(s) { step = s; seen = Math.max(seen, s); paint(false); }
   function next() {
-    var v = validate(step);
+    var v = validate(FLOW[step]);
     if (v) return fail(v);
-    if (step < L.steps.length - 1) return go(step + 1);
+    if (step < FLOW.length - 1) return go(step + 1);
     var d = copy(draft);
+    d.v = V1 ? 1 : 2;
     d.id = order ? order.id : 'LO-' + (2400 + Math.floor(Math.random() * 600));
     d.at = Date.now();
     order = d; save(order);
