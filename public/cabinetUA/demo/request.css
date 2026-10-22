@@ -12,7 +12,7 @@
 .main-order--request .main-order__description{-webkit-line-clamp:6;line-clamp:6}
 .main-order--request .main-order__chip__dot{background:#e7a017}
 .main-order__request-btn{
-  background:#fff;border:1px solid #e7b800;border-radius:3px;color:#2c2c2c;cursor:pointer;
+  align-items:center;background:#fff;border:1px solid #e7b800;border-radius:3px;color:#2c2c2c;cursor:pointer;display:flex;justify-content:center;
   font-size:14px;font-weight:700;letter-spacing:.2px;padding:11px 16px;text-align:center;
   transition:background .15s,border-color .15s,transform .15s;white-space:normal;width:100%;
 }
