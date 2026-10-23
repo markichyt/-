@@ -20,13 +20,15 @@
     doneDesc: 'We’ll review the order within 2 days. First leads will appear in this list, and the flow becomes steady in 2–3 weeks once the ad campaigns warm up. Notifications go to ' + EMAIL + '.',
     btnEdit: 'View or edit the order', cancelOrder: 'Cancel the order', cancelled: 'The order has been cancelled.',
     cCases: 'Case types: ', cLeads: ' leads/mo', cSum: '/mo', cBudget: 'up to ',
-    desc2: 'If none of the current leads fit, order them: choose case types, area and a monthly budget. First leads within 2 days, a steady flow in 2–3 weeks. You’ll be notified by email.',
-    chips2: ['First leads in 2 days', 'Your budget', 'Email notification'],
+    desc2: 'If none of the current leads fit, order them: choose case types, area and a monthly budget. A steady lead flow starts in 2+ weeks. You’ll be notified by email.',
+    chips2: ['Your case types', 'Your budget', 'Email notification'],
+    doneDesc2: 'We’re picking leads for your parameters. They will appear in this list, and the flow becomes steady in 2+ weeks. Notifications go to ' + EMAIL + '.',
+    s2lead2: 'Choose one or more case types — we’ll pick leads for exactly those.',
     budgetStep: 'Budget', capLead: 'How much are you ready to spend on leads each month? We’ll send as many leads as fit into this amount.',
     capCalc: 'At the estimated prices that’s about {a}–{b} leads a month.', estLeads: '≈ {a}–{b} leads/mo',
-    capTiming: 'First leads arrive within 2 days. The flow becomes steady in 2–3 weeks, while ad campaigns warm up and SEO kicks in.',
+    capTiming: 'A steady lead flow starts in 2+ weeks, while ad campaigns warm up and SEO kicks in.',
     errCap: 'Enter your monthly budget.', send: 'Send the order',
-    okTitle2: 'We’ve received your order', okText2: 'Please wait: within 2 days we’ll pick leads for your parameters and send an email to ',
+    okTitle2: 'We’ve received your order', okText2: 'Please wait: we’ll pick leads for your parameters and send an email to ',
 
     mTitle: 'Order leads for your practice', mTitleEdit: 'Your leads order',
     steps: ['About you', 'Case types', 'Area', 'Qualification', 'Volume & price', 'Delivery & payment', 'Review'],
@@ -117,13 +119,15 @@
     doneDesc: 'Перевіримо заявку протягом 2 днів. Перші ліди з’являться в цьому списку, стабільний потік — через 2–3 тижні, коли прогріються рекламні кампанії. Сповіщення прийде на ' + EMAIL + '.',
     btnEdit: 'Переглянути або змінити', cancelOrder: 'Скасувати заявку', cancelled: 'Заявку скасовано.',
     cCases: 'Справ: ', cLeads: ' лідів/міс', cSum: '/міс', cBudget: 'до ',
-    desc2: 'Якщо серед поточних лідів немає потрібних — замовте їх: оберіть справи, місто й місячний бюджет. Перші ліди — протягом 2 днів, стабільний потік — через 2–3 тижні. Сповіщення прийде на пошту.',
-    chips2: ['Перші ліди до 2 днів', 'Ваш бюджет', 'Сповіщення на пошту'],
+    desc2: 'Якщо серед поточних лідів немає потрібних — замовте їх: оберіть справи, місто й місячний бюджет. Стабільний потік лідів — через 2+ тижні. Сповіщення прийде на пошту.',
+    chips2: ['Ваші справи', 'Ваш бюджет', 'Сповіщення на пошту'],
+    doneDesc2: 'Ми підбираємо ліди за вашими параметрами. Вони зʼявлятимуться в цьому списку, стабільний потік — через 2+ тижні. Сповіщення прийде на ' + EMAIL + '.',
+    s2lead2: 'Оберіть один або кілька типів справ — ми підберемо ліди саме під них.',
     budgetStep: 'Бюджет', capLead: 'Скільки ви готові витрачати на ліди щомісяця? Ми підберемо стільки лідів, скільки вміщається в цю суму.',
     capCalc: 'За орієнтовними цінами це приблизно {a}–{b} лідів на місяць.', estLeads: '≈ {a}–{b} лідів/міс',
-    capTiming: 'Перші ліди — протягом 2 днів. Стабільний потік — через 2–3 тижні, поки прогріваються рекламні кампанії та підключається SEO.',
+    capTiming: 'Стабільний потік лідів — через 2+ тижні, поки прогріваються рекламні кампанії та підключається SEO.',
     errCap: 'Вкажіть бюджет на місяць.', send: 'Надіслати заявку',
-    okTitle2: 'Ми отримали вашу заявку', okText2: 'Очікуйте: протягом 2 днів ми підберемо ліди за вашими параметрами й надішлемо лист на ',
+    okTitle2: 'Ми отримали вашу заявку', okText2: 'Очікуйте: ми підберемо ліди за вашими параметрами й надішлемо лист на ',
 
     mTitle: 'Замовлення лідів для вашої практики', mTitleEdit: 'Ваша заявка на ліди',
     steps: ['Про вас', 'Справи', 'Географія', 'Кваліфікація', 'Обсяг і ціна', 'Доставка й оплата', 'Перевірка'],
@@ -292,7 +296,7 @@
         '<div class="main-order__inner"><span class="main-order__service main-order__service--request">' +
           esc(done ? L.pillDone + ' · ' + order.id : L.pill) + '</span></div>' +
       '</div>' +
-      '<div class="main-order__middle"><p class="main-order__description">' + esc(done ? L.doneDesc : V1 ? L.desc : L.desc2) + '</p></div>' +
+      '<div class="main-order__middle"><p class="main-order__description">' + esc(done ? (V1 ? L.doneDesc : L.doneDesc2) : V1 ? L.desc : L.desc2) + '</p></div>' +
       '<div class="main-order__bottom">' +
         '<div class="main-order__chips">' + chips.map(function (c) {
           return '<span class="main-order__chip"><span class="main-order__chip__dot"></span><span>' + esc(c) + '</span></span>';
@@ -372,10 +376,10 @@
     },
     function () {
       var d = draft, m = mult(d);
-      return '<h4 class="rq-h">' + esc(L.s2title) + ' <i>*</i></h4><p class="rq-lead">' + esc(L.s2lead) + '</p>' +
+      return '<h4 class="rq-h">' + esc(L.s2title) + ' <i>*</i></h4><p class="rq-lead">' + esc(V1 ? L.s2lead : L.s2lead2) + '</p>' +
         '<div class="rq-cases">' + L.cases.map(function (c, i) {
           return '<button type="button" class="rq-case" data-g="cases" data-i="' + i + '" aria-pressed="' + (d.cases.indexOf(i) > -1) + '">' +
-            '<span>' + esc(c[0]) + '</span><em>' + range(rnd(c[1] * m), rnd(c[2] * m)) + ' ' + esc(L.perLead) + '</em></button>';
+            '<span>' + esc(c[0]) + '</span>' + (V1 ? '<em>' + range(rnd(c[1] * m), rnd(c[2] * m)) + ' ' + esc(L.perLead) + '</em>' : '') + '</button>';
         }).join('') + '</div>' +
         '<div class="rq-sec">' + label(L.fNot) + '<textarea class="rq-input" data-f="notCases" maxlength="300" placeholder="' + esc(L.fNotPh) + '">' + esc(d.notCases) + '</textarea></div>';
     },
@@ -577,7 +581,8 @@
       if (line) line.textContent = n ? fill(L.estLeads, n) : '';
       return;
     }
-    if (line) {
+    if (line && !V1) line.textContent = '';
+    else if (line) {
       if (k >= 4) { var tt = totals(d); line.textContent = fill(L.estTotal, { n: tt.n, t: money(tt.t) }); }
       else if (d.cases.length) {
         var lo = Infinity, hi = 0;
