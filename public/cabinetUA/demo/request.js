@@ -36,20 +36,20 @@
                ['IL', ['Chicago', 'Aurora']], ['GA', ['Atlanta', 'Savannah']], ['AZ', ['Phoenix', 'Tucson']],
                ['NJ', ['Newark', 'Jersey City']], ['NC', ['Charlotte', 'Raleigh']], ['WA', ['Seattle', 'Spokane']]],
     cats2: ['Immigration Law', 'Personal Injury', 'Family Law', 'Criminal Defense', 'DWI / DUI', 'Bankruptcy', 'Estate Planning & Probate', 'Employment Law', 'Workers\' Compensation', 'Social Security Disability (SSDI)', 'Real Estate Law', 'Business & Corporate Law', 'Tax Law'],
-    detTitle: 'Tell us about the service', opt2: 'Optional',
-    detLead: 'Optional. Write it in your own words — this helps our marketer set up the ads and pick the right clients.',
+    detTitle: 'Tell us about the service',
+    detLead: 'The more detail you give, the more precisely we tune the ads — and the closer your leads match the clients you want. Write it the way you’d explain it to a new assistant.',
     fService: 'Service', servicePh: 'For example: Marriage green card',
-    fAsk: 'Questions to ask the client before they send a request', askHint: '3–5 questions, one per line.',
+    fAsk: 'Questions to ask the client before they send a request',
     askPh: 'What is your current immigration status?\nWhen did you get married?\nDo you have a court date?',
-    fQual: 'Questions to qualify the request', qualHint: '3–5 questions that help us filter out clients who are not a fit.',
+    fQual: 'Questions to qualify the request',
     qualPh: 'Are you ready to pay for a consultation?\nAre you in Texas now?\nWhen do you need a lawyer?',
-    howTitle: 'How much do you want to spend?', fLeadPrice: 'Lead price you’re ready to pay', fSvcFee: 'Your fee for this service',
-    feeHint: 'Helps us match the lead price to the value of your cases.', fLeadsMo: 'Leads per month', fBudget2: 'Monthly budget',
-    ph: { leadFrom: '30', leadTo: '60', feeFrom: '2,500', feeTo: '5,000', leads: '20', cap: '1,000' },
-    capTiming: 'A steady lead flow starts in 2+ weeks, while ad campaigns warm up and SEO kicks in.',
+    howTitle: 'How much do you want to spend?', fSvcFee: 'Your fee for this service',
+    feeHint: 'Helps us match the lead price to the value of your cases.', fLeadsMo: 'Leads per month',
+    leadPrice: 50, leadsUnit: 'leads per month', approxBudget: '≈ {t} per month',
+    approxNote: 'Approximate: a lead costs about {p} on average. The final price depends on the city and practice area.',
+    ph: { feeFrom: '2,500', feeTo: '5,000' },
     errWhere: 'Choose at least one city or state.', errArea: 'Choose at least one practice area.',
-    errLeadRange: 'The “from” price is higher than the “to” price.', errFeeRange: 'The “from” fee is higher than the “to” fee.',
-    errLeads: 'Enter how many leads you want per month.', errCap2: 'Enter your monthly budget.',
+    errFeeRange: 'The “from” fee is higher than the “to” fee.',
     send: 'Send the order',
     doneDesc2: 'We’re picking leads for your parameters. They will appear in this list, and the flow becomes steady in 2+ weeks. Notifications go to ' + EMAIL + '.',
     okTitle2: 'We’ve received your order', okText2: 'Please wait: we’ll pick leads for your parameters and send an email to ',
@@ -162,20 +162,20 @@
              ['Івано-Франківська область', '', ['Івано-Франківськ', 'Калуш', 'Коломия']],
              ['Закарпатська область', '', ['Ужгород', 'Мукачево']]],
     cats2: ['Медичне право', 'Екологічне право', 'Юридичний аналіз документів', 'Автомобільні спори', 'Господарське та корпоративне право', 'Військове право', 'Підготовка та правовий аналіз документів', 'Стягнення заборгованості', 'Кримінальне право', 'Міграційне право', 'Нерухомість та земельне право', 'Трудове право', 'Соціальні виплати та спори', 'Сімейне право', 'Захист боржника', 'Інші юридичні послуги'],
-    detTitle: 'Розкажіть про послугу', opt2: 'Необовʼязково',
-    detLead: 'Необовʼязково. Напишіть своїми словами — це допоможе маркетологу налаштувати рекламу й відібрати потрібних клієнтів.',
+    detTitle: 'Розкажіть про послугу',
+    detLead: 'Що детальніше опишете, то точніше ми налаштуємо рекламу — і то більше ліди будуть схожі на клієнтів, яких ви шукаєте. Пишіть так, як пояснили б новому помічнику.',
     fService: 'Послуга', servicePh: 'Наприклад: відстрочка від мобілізації',
-    fAsk: 'Питання клієнту до того, як він залишить заявку', askHint: '3–5 питань, кожне з нового рядка.',
+    fAsk: 'Питання клієнту до того, як він залишить заявку',
     askPh: 'Скільки вам років?\nЧи є у вас підстави для відстрочки?\nЧи отримували ви повістку?',
-    fQual: 'Питання, щоб відібрати заявку', qualHint: '3–5 питань, які допоможуть відсіяти клієнтів, що вам не підходять.',
+    fQual: 'Питання, щоб відібрати заявку',
     qualPh: 'Чи готові ви оплатити консультацію?\nУ якому місті ви зараз?\nКоли вам потрібен юрист?',
-    howTitle: 'Скільки ви готові витрачати?', fLeadPrice: 'Ціна ліда, за якою готові купувати', fSvcFee: 'Вартість вашої послуги',
-    feeHint: 'Допомагає співвіднести ціну ліда з вартістю ваших справ.', fLeadsMo: 'Лідів на місяць', fBudget2: 'Бюджет на місяць',
-    ph: { leadFrom: '200', leadTo: '500', feeFrom: '5 000', feeTo: '15 000', leads: '20', cap: '10 000' },
-    capTiming: 'Стабільний потік лідів — через 2+ тижні, поки прогріваються рекламні кампанії та підключається SEO.',
+    howTitle: 'Скільки ви готові витрачати?', fSvcFee: 'Вартість вашої послуги',
+    feeHint: 'Допомагає співвіднести ціну ліда з вартістю ваших справ.', fLeadsMo: 'Скільки лідів на місяць',
+    leadPrice: 2000, leadsUnit: 'лідів на місяць', approxBudget: '≈ {t} на місяць',
+    approxNote: 'Приблизно: один лід коштує в середньому {p}. Точна ціна залежить від міста й категорії.',
+    ph: { feeFrom: '5 000', feeTo: '15 000' },
     errWhere: 'Оберіть хоча б одне місто або область.', errArea: 'Оберіть хоча б одну категорію права.',
-    errLeadRange: 'Ціна «від» більша за ціну «до».', errFeeRange: 'Вартість «від» більша за вартість «до».',
-    errLeads: 'Вкажіть, скільки лідів потрібно на місяць.', errCap2: 'Вкажіть бюджет на місяць.',
+    errFeeRange: 'Вартість «від» більша за вартість «до».',
     send: 'Надіслати заявку',
     doneDesc2: 'Ми підбираємо ліди за вашими параметрами. Вони зʼявлятимуться в цьому списку, стабільний потік — через 2+ тижні. Сповіщення прийде на ' + EMAIL + '.',
     okTitle2: 'Ми отримали вашу заявку', okText2: 'Очікуйте: ми підберемо ліди за вашими параметрами й надішлемо лист на ',
@@ -269,7 +269,7 @@
     return {
       name: personName(), firm: L.firm, bar: '', email: EMAIL, phone: L.phone, site: '', office: '', langs: [0], intake: '',
       cases: [], notCases: '',
-      places: [], cats: [], service: '', askBefore: '', qualify: '', leadFrom: '', leadTo: '', feeFrom: '', feeTo: '', leads: '',
+      places: [], cats: [], service: '', askBefore: '', qualify: '', feeFrom: '', feeTo: '', leads: '20',
       areas: [], other: '', remote: 'yes', format: 'both',
       budget: '0', consult: 'free', fee: '', det: 'yes', crim: 'yes', urg: 'all', leadLangs: [0],
       period: 'month', excl: 'shared', rows: {}, cap: '',
@@ -343,7 +343,7 @@
       var area = areaList(order), more = area.length > 1 ? ' +' + (area.length - 1) : '';
       var first = area.length ? (EN ? area[0] : area[0].split(',')[0]) : '';
       if (first.length + more.length > 22) first = first.slice(0, 21 - more.length) + '…';
-      chips = [first + more, shortList(order.cats || [], String, 22), money(+order.cap) + L.cSum];
+      chips = [first + more, shortList(order.cats || [], String, 22), '≈ ' + money(+order.cap) + L.cSum];
     } else if (done) {
       var tt = totals(order);
       chips = [L.cCases + order.cases.length, tt.n + L.cLeads, money(tt.t) + L.cSum];
@@ -522,13 +522,13 @@
     function () {
       var d = draft;
       return '<h4 class="rq-h">' + esc(L.howTitle) + '</h4>' +
-        rangeHtml('leadFrom', 'leadTo', L.fLeadPrice, '', true) +
-        rangeHtml('feeFrom', 'feeTo', L.fSvcFee, L.feeHint, false) +
-        '<div class="rq-sec rq-grid">' +
-          '<div>' + label(L.fLeadsMo, true) + input('leads', d.leads, ' inputmode="numeric" data-num maxlength="4" placeholder="' + L.ph.leads + '"') + '</div>' +
-          '<div>' + label(L.fBudget2, true) + moneyHtml('cap', L.fBudget2) + '</div>' +
-        '</div>' +
-        '<p class="rq-note">' + esc(L.capTiming) + '</p>';
+        '<div class="rq-sec rq-sec--first">' +
+          '<div class="rq-slider"><div class="rq-slider__val"><b data-rq-leads>' + d.leads + '</b><span>' + esc(L.leadsUnit) + '</span>' +
+            '<em data-rq-approx>' + esc(approxText(d.leads)) + '</em></div>' +
+            '<input type="range" class="rq-slider__input" data-f="leads" min="5" max="200" step="5" value="' + d.leads + '" aria-label="' + esc(L.fLeadsMo) + '" style="--p:' + sliderPct(d.leads) + '%">' +
+            '<div class="rq-slider__scale"><span>5</span><span>200</span></div></div>' +
+          '<p class="rq-hint">' + esc(fill(L.approxNote, { p: money(L.leadPrice) })) + '</p></div>' +
+        rangeHtml('feeFrom', 'feeTo', L.fSvcFee, L.feeHint, false);
     },
     function () {
       return '<h4 class="rq-h">' + esc(L.whereTitle) + '</h4>' +
@@ -538,9 +538,9 @@
     function () {
       var d = draft;
       return '<h4 class="rq-h">' + esc(L.detTitle) + '</h4><p class="rq-lead">' + esc(L.detLead) + '</p>' +
-        '<div class="rq-sec rq-sec--first">' + label(L.fService, false, opt2()) + input('service', d.service, ' maxlength="120" placeholder="' + esc(L.servicePh) + '"') + '</div>' +
-        '<div class="rq-sec">' + label(L.fAsk, false, opt2()) + '<p class="rq-hint rq-hint--top">' + esc(L.askHint) + '</p>' + areaHtml('askBefore', L.askPh) + '</div>' +
-        '<div class="rq-sec">' + label(L.fQual, false, opt2()) + '<p class="rq-hint rq-hint--top">' + esc(L.qualHint) + '</p>' + areaHtml('qualify', L.qualPh) + '</div>';
+        '<div class="rq-sec rq-sec--first">' + label(L.fService) + input('service', d.service, ' maxlength="120" placeholder="' + esc(L.servicePh) + '"') + '</div>' +
+        '<div class="rq-sec">' + label(L.fAsk) + areaHtml('askBefore', L.askPh) + '</div>' +
+        '<div class="rq-sec">' + label(L.fQual) + areaHtml('qualify', L.qualPh) + '</div>';
     }
   ];
   function byNum(a, b) { return a - b; }
@@ -604,12 +604,13 @@
   // коротко для рядка списку: в UA без назви області («Київ»), в EN — «Houston, TX»
   function msShort(key, v) { var t = msLabel(key, v); return key === 'place' && !EN && v.slice(-2) !== '|*' ? t.split(',')[0] : t; }
   function msToggle(key, v) { toggle(msSel(key), v); }
-  function opt2() { return '<span class="rq-hint rq-hint--inline">' + esc(L.opt2) + '</span>'; }
   function moneyHtml(f, aria) {
     return '<div class="rq-money' + (EN ? ' rq-money--pre' : '') + '">' + input(f, groupNum(draft[f]), ' inputmode="numeric" data-money placeholder="' + esc(L.ph[f]) + '" aria-label="' + esc(aria) + '"') + '<em>' + cur() + '</em></div>';
   }
+  function approxText(n) { return fill(L.approxBudget, { t: money((+n || 0) * L.leadPrice) }); }
+  function sliderPct(n) { return Math.round(((+n || 5) - 5) / 195 * 100); }
   function rangeHtml(a, b, title, hint, first) {
-    return '<div class="rq-sec' + (first ? ' rq-sec--first' : '') + '">' + label(title, false, opt2()) +
+    return '<div class="rq-sec' + (first ? ' rq-sec--first' : '') + '">' + label(title) +
       '<div class="rq-range rq-range--money">' + moneyHtml(a, title) + '<span>—</span>' + moneyHtml(b, title) + '</div>' +
       (hint ? '<p class="rq-hint">' + esc(hint) + '</p>' : '') + '</div>';
   }
@@ -692,10 +693,7 @@
       if (!d.cats.length) return ['errArea'];
     }
     if (s === 7) {
-      if (d.leadFrom && d.leadTo && +d.leadFrom > +d.leadTo) return ['errLeadRange', 'leadFrom'];
       if (d.feeFrom && d.feeTo && +d.feeFrom > +d.feeTo) return ['errFeeRange', 'feeFrom'];
-      if (!(+d.leads > 0)) return ['errLeads', 'leads'];
-      if (!(+d.cap > 0)) return ['errCap2', 'cap'];
     }
     return null;
   }
@@ -825,6 +823,7 @@
     var v = validate(FLOW[step]);
     if (v) return fail(v);
     if (step < FLOW.length - 1) return go(step + 1);
+    if (!V1) draft.cap = String((+draft.leads || 0) * L.leadPrice);   // орієнтовний бюджет = ліди × середня ціна
     var d = copy(draft);
     d.v = V1 ? 1 : 2;
     d.id = order ? order.id : 'LO-' + (2400 + Math.floor(Math.random() * 600));
@@ -889,6 +888,13 @@
   function onInput(e) {
     if (!modal || !modal.classList.contains('active') || doneView) return;
     var t = e.target, f = t.getAttribute('data-f'), row = t.getAttribute('data-row');
+    if (t.type === 'range') {
+      draft.leads = t.value;
+      t.style.setProperty('--p', sliderPct(t.value) + '%');
+      modal.querySelector('[data-rq-leads]').textContent = t.value;
+      modal.querySelector('[data-rq-approx]').textContent = approxText(t.value);
+      return;
+    }
     if (t.hasAttribute('data-ms-q')) {
       if (e.type === 'input') { msQuery = t.value; modal.querySelector('[data-ms-list]').innerHTML = msList(t.getAttribute('data-ms-q'), msQuery); }
       return;
@@ -910,7 +916,7 @@
       }
     } else return;
     t.removeAttribute('aria-invalid');
-    var pair = { leadTo: 'leadFrom', feeTo: 'feeFrom' }[f], pf = pair && modal.querySelector('[data-f="' + pair + '"]');
+    var pair = { feeTo: 'feeFrom' }[f], pf = pair && modal.querySelector('[data-f="' + pair + '"]');
     if (pf) pf.removeAttribute('aria-invalid');
     var err = modal.querySelector('[data-rq-error]');
     if (err) err.hidden = true;

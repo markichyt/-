@@ -143,7 +143,20 @@ select.rq-input{padding-right:6px}
 .rq-money--fee{flex:0 0 190px}
 .rq-city-extra{margin-top:9px}
 .rq-range--money{max-width:28rem}
-.rq-modal.success-modal p.rq-hint--top{margin:0 0 8px}
+/* повзунок кількості лідів */
+.rq-slider{display:flex;flex-direction:column;gap:12px}
+.rq-slider__val{align-items:baseline;display:flex;flex-wrap:wrap;gap:4px 10px}
+.rq-slider__val b{color:#2c2c2c;font-size:30px;font-variant-numeric:tabular-nums;font-weight:700;line-height:1}
+.rq-slider__val span{color:#4a545e;font-size:14px}
+.rq-slider__val em{background:#eaf6fc;border-radius:1.25rem;color:#0b7099;font-size:16px;font-style:normal;font-variant-numeric:tabular-nums;font-weight:700;margin-left:auto;padding:6px 14px}
+.rq-slider__input{
+  -webkit-appearance:none;appearance:none;background:linear-gradient(to right,#1499d8 var(--p,0%),#e3e8ec var(--p,0%));
+  border-radius:3px;cursor:pointer;height:6px;margin:8px 0 0;outline:0;width:100%;
+}
+.rq-slider__input::-webkit-slider-thumb{-webkit-appearance:none;background:#fff;border:2px solid #1499d8;border-radius:50%;box-shadow:0 1px 4px rgba(16,41,58,.2);height:24px;width:24px}
+.rq-slider__input::-moz-range-thumb{background:#fff;border:2px solid #1499d8;border-radius:50%;box-shadow:0 1px 4px rgba(16,41,58,.2);height:20px;width:20px}
+.rq-slider__input:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 4px rgba(20,153,216,.25)}
+.rq-slider__scale{color:#667380;display:flex;font-size:12px;justify-content:space-between}
 textarea.rq-area{min-height:116px}
 /* дропдаун з пошуком (штати й міста США) */
 .rq-ms{position:relative}
