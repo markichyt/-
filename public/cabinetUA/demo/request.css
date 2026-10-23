@@ -2,12 +2,9 @@
    Класи rq-* / main-order--request — тільки цього шару. */
 
 /* ---------- картка ---------- */
-/* біла, як картки лідів; жовті — полоска зверху, пілюля, точки чипів і кнопка */
+/* біла, як картки лідів; жовті — лише пілюля, точки чипів і кнопка */
 .order-list__item--request{position:relative}
-.main-order.main-order--request{overflow:hidden}
-.main-order.main-order--request::before{
-  content:"";position:absolute;left:0;right:0;top:0;height:3px;background:#ffdb48;
-}
+.main-order.main-order--request,.main-order--request .main-order__middle{overflow:visible}
 .main-order--request .main-order__service--request{background:#fff4cc;color:#6b5200}
 .main-order--request .main-order__description{-webkit-line-clamp:6;line-clamp:6}
 .main-order--request .main-order__chip__dot{background:#e7a017}
@@ -18,9 +15,21 @@
 }
 .main-order__request-btn:hover{background:#ffcf1f}
 .main-order__request-btn:active{transform:translateY(1px)}
-.rq-benefits{display:flex;flex-direction:column;gap:12px;list-style:none;margin:0;padding:0 15px 0 0}
-.rq-benefits b{color:#2c2c2c;display:block;font-size:14px;font-weight:700;line-height:1.3;margin-bottom:3px}
-.rq-benefits span{color:#918e8e;display:block;font-size:13.5px;line-height:1.45}
+.rq-benefits{display:flex;flex-direction:column;gap:18px;list-style:none;margin:0;padding:4px 0 0}
+.rq-benefits li{align-items:center;display:flex;gap:8px}
+.rq-benefits b{color:#2c2c2c;font-size:16px;font-weight:700;line-height:1.3}
+.rq-info{
+  align-items:center;background:#fff;border:1.5px solid #9aa3ab;border-radius:50%;color:#667380;cursor:help;display:flex;
+  flex:none;font:700 11px/1 Georgia,"Times New Roman",serif;height:18px;justify-content:center;padding:0;position:relative;width:18px;
+}
+.rq-info:hover,.rq-info:focus-visible{border-color:#1499d8;color:#1499d8;outline:0}
+.rq-tip{
+  background:#2c2c2c;border-radius:3px;bottom:calc(100% + 10px);box-shadow:0 8px 24px rgba(0,0,0,.18);color:#fff;
+  font:400 13px/1.45 var(--font-family2),Arial,sans-serif;left:50%;max-width:240px;opacity:0;padding:9px 12px;pointer-events:none;
+  position:absolute;text-align:left;transform:translateX(-50%);transition:opacity .15s,visibility .15s;visibility:hidden;width:max-content;z-index:5;
+}
+.rq-tip::after{border:6px solid transparent;border-top-color:#2c2c2c;content:"";left:50%;margin-left:-6px;position:absolute;top:100%}
+.rq-info:hover .rq-tip,.rq-info:focus .rq-tip{opacity:1;visibility:visible}
 .rq-cancel{background:none;border:0;color:#686868;cursor:pointer;font:inherit;
   font-size:12px;padding:0;text-decoration:underline}
 .rq-cancel:hover{color:#2c2c2c}
@@ -143,6 +152,9 @@ textarea.rq-area{min-height:116px}
   display:flex;font:inherit;font-size:14px;height:40px;justify-content:space-between;padding:0 12px;text-align:left;width:100%;
 }
 .rq-ms__btn:hover{border-color:#1499d8}
+.rq-ms__btn span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#667380}
+.rq-ms__btn.has span{color:#2c2c2c}
+.rq-ms__n{background:#eaf6fc;border-radius:1.25rem;color:#0b7099;flex:none;font-size:12px;font-weight:700;line-height:1;margin-left:10px;padding:4px 8px}
 .rq-ms.is-open .rq-ms__btn{border-color:#1499d8;box-shadow:0 0 0 3px rgba(20,153,216,.22)}
 .rq-ms__btn i{border-bottom:2px solid #667380;border-right:2px solid #667380;height:7px;margin:-4px 2px 0 12px;transform:rotate(45deg);transition:transform .15s;width:7px}
 .rq-ms.is-open .rq-ms__btn i{margin-top:4px;transform:rotate(-135deg)}

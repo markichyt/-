@@ -355,7 +355,10 @@
           esc(done ? L.pillDone + ' · ' + order.id : L.pill) + '</span></div>' +
       '</div>' +
       '<div class="main-order__middle">' + (!done && !V1
-        ? '<ul class="rq-benefits">' + L.benefits.map(function (b) { return '<li><b>' + esc(b[0]) + '</b><span>' + esc(b[1]) + '</span></li>'; }).join('') + '</ul>'
+        ? '<ul class="rq-benefits">' + L.benefits.map(function (b) {
+            return '<li><b>' + esc(b[0]) + '</b><button type="button" class="rq-info" aria-label="' + esc(b[1]) + '"><span aria-hidden="true">i</span>' +
+              '<span class="rq-tip" role="tooltip">' + esc(b[1]) + '</span></button></li>';
+          }).join('') + '</ul>'
         : '<p class="main-order__description">' + esc(done ? (V1 ? L.doneDesc : L.doneDesc2) : L.desc) + '</p>') + '</div>' +
       '<div class="main-order__bottom">' +
         (chips.length ? '<div class="main-order__chips">' + chips.map(function (c) {
@@ -363,9 +366,9 @@
         }).join('') + '</div>' : '') +
         '<div class="main-order__footer"><button type="button" class="main-order__request-btn' + (done ? ' main-order__request-btn--ghost' : '') + '" data-rq-open>' +
           esc(done ? L.btnEdit : L.btn) + '</button></div>' +
-        '<div class="main-order__purchase-disclaimer"><p>' +
+        (done || V1 ? '<div class="main-order__purchase-disclaimer"><p>' +
           (done ? '<button type="button" class="rq-cancel" data-rq-cancel>' + esc(L.cancelOrder) + '</button>' : esc(L.disclaimer)) +
-        '</p></div>' +
+        '</p></div>' : '') +
       '</div></div>';
   }
   // Vue пересобирает список из шаблона после загрузки — картку щоразу шукаємо в живому DOM
@@ -582,6 +585,7 @@
       return (' ' + o[1].toLowerCase()).indexOf(' ' + q) > -1 || (code && o[0].indexOf(code + '|') === 0);
     });
     if (q) opts.sort(function (a, b) { return b[2] - a[2]; });
+    else opts = opts.filter(function (o) { return sel.indexOf(o[0]) > -1; }).concat(opts.filter(function (o) { return sel.indexOf(o[0]) < 0; }));
     return opts.length ? opts.slice(0, 300).map(function (o) {
       return '<button type="button" class="rq-ms__opt" data-ms-opt="' + key + '" data-v="' + esc(o[0]) + '" aria-pressed="' + (sel.indexOf(o[0]) > -1) + '">' + esc(o[1]) + '</button>';
     }).join('') : '<p class="rq-ms__none">' + esc(L.noMatch) + '</p>';
@@ -589,15 +593,16 @@
   function msHtml(key) {
     var open = openMs === key, sel = msSel(key);
     return '<div class="rq-ms' + (open ? ' is-open' : '') + '">' +
-      '<button type="button" class="rq-ms__btn" data-ms-toggle="' + key + '" aria-expanded="' + open + '"><span>' +
-        esc(sel.length ? fill(L.msCount, { n: sel.length }) : L.msPh[key]) + '</span><i aria-hidden="true"></i></button>' +
+      '<button type="button" class="rq-ms__btn' + (sel.length ? ' has' : '') + '" data-ms-toggle="' + key + '" aria-expanded="' + open + '"' +
+        (sel.length ? ' title="' + esc(sel.map(function (v) { return msLabel(key, v); }).join('; ')) + '"' : '') + '><span>' +
+        esc(sel.length ? sel.map(function (v) { return msShort(key, v); }).join(' · ') : L.msPh[key]) + '</span>' +
+        (sel.length > 1 ? '<b class="rq-ms__n">' + sel.length + '</b>' : '') + '<i aria-hidden="true"></i></button>' +
       (open ? '<div class="rq-ms__panel"><input type="text" class="rq-input rq-ms__q" data-ms-q="' + key + '" value="' + esc(msQuery) + '" placeholder="' + esc(L.msSearch[key]) + '" autocomplete="off">' +
         '<div class="rq-ms__list" data-ms-list>' + msList(key, msQuery) + '</div></div>' : '') +
-      '</div>' +
-      (sel.length ? '<div class="rq-chips rq-picked">' + sel.map(function (v) {
-        return '<button type="button" class="rq-chip rq-chip--x" data-rq-unpick="' + key + '|' + esc(v) + '" aria-pressed="true">' + esc(msLabel(key, v)) + '<span aria-hidden="true">×</span></button>';
-      }).join('') + '</div>' : '');
+      '</div>';
   }
+  // коротко для рядка списку: в UA без назви області («Київ»), в EN — «Houston, TX»
+  function msShort(key, v) { var t = msLabel(key, v); return key === 'place' && !EN && v.slice(-2) !== '|*' ? t.split(',')[0] : t; }
   function msToggle(key, v) { toggle(msSel(key), v); }
   function opt2() { return '<span class="rq-hint rq-hint--inline">' + esc(L.opt2) + '</span>'; }
   function moneyHtml(f, aria) {
