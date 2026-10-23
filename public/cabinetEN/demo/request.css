@@ -78,7 +78,6 @@ button.rq-steps__btn:hover span{color:#2c2c2c;text-decoration:underline}
 .modal.success-modal.rq-modal.rq-modal--short{max-width:46rem}
 .rq-steps--short{margin-left:auto;margin-right:auto;max-width:30rem}
 .rq-cap .rq-money{max-width:20rem}
-.rq-modal.success-modal p.rq-calc{color:#0b7099;font-size:14px;font-weight:600;margin:12px 0 0}
 
 /* як це працює */
 .rq-tl{background:#f3f9fd;border:1px solid #cfe8f5;border-radius:3px;margin-top:14px;padding:12px 14px;text-align:left;width:100%;box-sizing:border-box}
@@ -134,6 +133,9 @@ select.rq-input{padding-right:6px}
 .rq-money--pre .rq-input{padding-left:26px;padding-right:12px}
 .rq-money--fee{flex:0 0 190px}
 .rq-city-extra{margin-top:9px}
+.rq-range--money{max-width:28rem}
+.rq-modal.success-modal p.rq-hint--top{margin:0 0 8px}
+textarea.rq-area{min-height:116px}
 /* дропдаун з пошуком (штати й міста США) */
 .rq-ms{position:relative}
 .rq-ms__btn{
@@ -162,7 +164,6 @@ select.rq-input{padding-right:6px}
 .rq-picked{margin-top:10px}
 .rq-chip--x span{color:#0b7099;font-weight:700;margin-left:8px}
 .rq-chip--x[aria-pressed="true"]::before{content:none}
-.rq-money--cap{margin-top:12px;max-width:20rem}
 
 /* справи з ціною */
 .rq-cases{display:grid;gap:8px;grid-template-columns:1fr 1fr;margin-top:12px}

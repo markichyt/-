@@ -23,10 +23,11 @@
     benefits: [['Exclusive Leads', 'One lead, one lawyer. No competition for the same client.'],
                ['Form-Qualified Leads', 'Clients complete a qualification form specifying their legal needs and location.'],
                ['Transparent Pricing', 'See the lead price before purchasing. No hidden fees or bidding wars.']],
-    flow2: ['Where', 'What', 'How much'],
-    whereTitle: 'Where do you want leads from?', fPlace: 'City, State',
-    placeHint: 'Start typing a city or a state. Pick as many as you need.',
-    msPlacePh: 'Select cities', msCount: '{n} selected', msSearch: 'Search a city or state…',
+    flow2: ['Where & what', 'Details', 'Budget'],
+    whereTitle: 'Where and what do you want leads for?', fPlace: 'City, State', fArea: 'Practice Area',
+    placeHint: 'Start typing a city or a state. Type a state to cover all of it.',
+    msPh: { place: 'Select cities or states', cat: 'Select a practice area' }, msCount: '{n} selected',
+    msSearch: { place: 'Search a city or state…', cat: 'Search a practice area…' },
     allIn: 'All of {s}', noMatch: 'No matches — check the spelling.',
     usStates: [['TX', ['Houston', 'Dallas', 'San Antonio', 'Austin', 'Fort Worth', 'El Paso', 'McAllen', 'Laredo', 'Brownsville', 'Corpus Christi']],
                ['CA', ['Los Angeles', 'San Diego', 'San Jose', 'San Francisco', 'Fresno', 'Sacramento']],
@@ -34,35 +35,22 @@
                ['NY', ['New York', 'Brooklyn', 'Queens', 'Buffalo']],
                ['IL', ['Chicago', 'Aurora']], ['GA', ['Atlanta', 'Savannah']], ['AZ', ['Phoenix', 'Tucson']],
                ['NJ', ['Newark', 'Jersey City']], ['NC', ['Charlotte', 'Raleigh']], ['WA', ['Seattle', 'Spokane']]],
-    whatTitle: 'What kind of cases do you want?', fArea: 'Practice Area', fServices: 'Services — {c}', selectAll: 'Select all',
-    cats2: [['Immigration Law', 60, 200, ['Family-Based Green Card', 'Marriage Green Card', 'Adjustment of Status', 'Citizenship / Naturalization', 'Removal Defense / Deportation', 'Asylum', 'DACA', 'Work Visas (H-1B, L-1, O-1)', 'Investor Visas (EB-5, E-2)', 'U Visa / VAWA', 'Bond Hearings', 'TPS']],
-            ['Personal Injury', 100, 300, ['Car Accidents', 'Truck Accidents', 'Motorcycle Accidents', 'Slip & Fall', 'Medical Malpractice', 'Wrongful Death', 'Dog Bites', 'Workplace Injuries']],
-            ['Family Law', 50, 150, ['Divorce', 'Child Custody', 'Child Support', 'Alimony / Spousal Support', 'Adoption', 'Prenuptial Agreements', 'Protective Orders']],
-            ['Criminal Defense', 60, 180, ['DWI / DUI', 'Drug Charges', 'Assault', 'Theft', 'Domestic Violence', 'Expungement', 'Federal Crimes']],
-            ['DWI / DUI', 60, 160, ['First-Time DWI', 'Repeat DWI', 'License Suspension / ALR Hearing', 'Intoxication Assault']],
-            ['Bankruptcy', 40, 100, ['Chapter 7', 'Chapter 13', 'Debt Relief', 'Foreclosure Defense']],
-            ['Estate Planning & Probate', 40, 120, ['Wills', 'Living Trusts', 'Power of Attorney', 'Probate', 'Guardianship']],
-            ['Employment Law', 60, 180, ['Wrongful Termination', 'Discrimination', 'Sexual Harassment', 'Unpaid Wages / Overtime']],
-            ['Workers\' Compensation', 60, 180, ['Denied Claims', 'Workplace Injury Benefits', 'Occupational Illness', 'Return-to-Work Disputes']],
-            ['Social Security Disability (SSDI)', 40, 120, ['Initial Applications', 'Denied Claim Appeals', 'SSI Claims', 'Disability Hearings']],
-            ['Real Estate Law', 40, 120, ['Purchase & Sale', 'Landlord–Tenant Disputes', 'Title Disputes', 'Foreclosure Defense']],
-            ['Business & Corporate Law', 70, 200, ['Business Formation (LLC, Corp)', 'Contracts', 'Partnership Disputes', 'Commercial Litigation']],
-            ['Tax Law', 70, 200, ['IRS Audits', 'Tax Debt Relief', 'Business Tax Planning', 'Tax Litigation']]],
-    howTitle: 'How much do you want to spend?', fBudget2: 'Monthly Budget', customPh: '3,000',
-    budgets2: [['$500 – $1,000/mo', 500, 1000], ['$1,000 – $2,500/mo', 1000, 2500], ['$2,500 – $5,000/mo', 2500, 5000],
-               ['$5,000 – $10,000/mo', 5000, 10000], ['$10,000+/mo', 10000, 0], ['Custom', 0, 0]],
-    fModel: 'Pricing Model', models: [['ppl', 'Pay Per Lead'], ['pkg', 'Monthly Package'], ['ppc', 'Pay Per Call']],
-    fType: 'Lead Type', ltypes: [['exclusive', 'Exclusive'], ['shared', 'Shared']],
-    fVol: 'Lead Volume', vols: [['10', '10–25/mo'], ['25', '25–50/mo'], ['50', '50–100/mo'], ['100', '100+/mo']],
-    fLang2: 'Language', langs2: [['en', 'English'], ['es', 'Spanish'], ['bi', 'Bilingual']], lang2Def: 'en',
-    fStart: 'Start Date', startPh: 'MM/DD/YYYY', dateSep: '/',
-    capCalc: 'At typical prices for your practice areas that’s about {a}–{b} leads a month.',
-    capCalcPlus: 'At typical prices for your practice areas that’s about {a}+ leads a month.',
-    estLeads: '≈ {a}–{b} leads/mo', estLeadsPlus: '≈ {a}+ leads/mo',
+    cats2: ['Immigration Law', 'Personal Injury', 'Family Law', 'Criminal Defense', 'DWI / DUI', 'Bankruptcy', 'Estate Planning & Probate', 'Employment Law', 'Workers\' Compensation', 'Social Security Disability (SSDI)', 'Real Estate Law', 'Business & Corporate Law', 'Tax Law'],
+    detTitle: 'Tell us about the service', opt2: 'Optional',
+    detLead: 'Optional. Write it in your own words — this helps our marketer set up the ads and pick the right clients.',
+    fService: 'Service', servicePh: 'For example: Marriage green card',
+    fAsk: 'Questions to ask the client before they send a request', askHint: '3–5 questions, one per line.',
+    askPh: 'What is your current immigration status?\nWhen did you get married?\nDo you have a court date?',
+    fQual: 'Questions to qualify the request', qualHint: '3–5 questions that help us filter out clients who are not a fit.',
+    qualPh: 'Are you ready to pay for a consultation?\nAre you in Texas now?\nWhen do you need a lawyer?',
+    howTitle: 'How much do you want to spend?', fLeadPrice: 'Lead price you’re ready to pay', fSvcFee: 'Your fee for this service',
+    feeHint: 'Helps us match the lead price to the value of your cases.', fLeadsMo: 'Leads per month', fBudget2: 'Monthly budget',
+    ph: { leadFrom: '30', leadTo: '60', feeFrom: '2,500', feeTo: '5,000', leads: '20', cap: '1,000' },
     capTiming: 'A steady lead flow starts in 2+ weeks, while ad campaigns warm up and SEO kicks in.',
-    errWhere: 'Choose at least one city or state.', errArea: 'Choose at least one practice area.', errSvc: 'Choose at least one service in “{c}”.',
-    errBudget: 'Choose a monthly budget.', errCustom: 'Enter your monthly budget.', errStart: 'Enter the start date as MM/DD/YYYY.',
-    cSvc: 'Services: ', send: 'Send the order',
+    errWhere: 'Choose at least one city or state.', errArea: 'Choose at least one practice area.',
+    errLeadRange: 'The “from” price is higher than the “to” price.', errFeeRange: 'The “from” fee is higher than the “to” fee.',
+    errLeads: 'Enter how many leads you want per month.', errCap2: 'Enter your monthly budget.',
+    send: 'Send the order',
     doneDesc2: 'We’re picking leads for your parameters. They will appear in this list, and the flow becomes steady in 2+ weeks. Notifications go to ' + EMAIL + '.',
     okTitle2: 'We’ve received your order', okText2: 'Please wait: we’ll pick leads for your parameters and send an email to ',
 
@@ -157,11 +145,12 @@
     benefits: [['Ексклюзивні ліди', 'Один лід — один юрист. Жодної конкуренції за того самого клієнта.'],
                ['Ліди з анкетою', 'Клієнт заповнює анкету: яка юридична допомога потрібна і де він перебуває.'],
                ['Прозорі ціни', 'Ціну ліда видно до покупки. Без прихованих платежів і аукціонів.']],
-    flow2: ['Де', 'Що', 'За скільки'],
-    whereTitle: 'Звідки вам потрібні ліди?', fPlace: 'Місто, область',
+    flow2: ['Де і що', 'Деталі', 'Бюджет'],
+    whereTitle: 'Звідки і які ліди вам потрібні?', fPlace: 'Місто, область', fArea: 'Категорія права',
     placeHint: 'Почніть вводити місто або область. Можна обрати кілька.',
-    msPlacePh: 'Оберіть міста', msCount: 'Обрано: {n}', msSearch: 'Пошук міста або області…', noMatch: 'Нічого не знайдено — перевірте назву.',
-    allIn: 'Уся {s}',
+    msPh: { place: 'Оберіть міста або області', cat: 'Оберіть категорію права' }, msCount: 'Обрано: {n}',
+    msSearch: { place: 'Пошук міста або області…', cat: 'Пошук категорії…' },
+    allIn: 'Уся {s}', noMatch: 'Нічого не знайдено — перевірте назву.',
     states: [['Київська область', '', ['Київ', 'Бровари', 'Ірпінь', 'Біла Церква', 'Бориспіль']],
              ['Львівська область', '', ['Львів', 'Дрогобич', 'Стрий', 'Червоноград']],
              ['Харківська область', '', ['Харків', 'Лозова', 'Ізюм']],
@@ -172,38 +161,22 @@
              ['Полтавська область', '', ['Полтава', 'Кременчук']],
              ['Івано-Франківська область', '', ['Івано-Франківськ', 'Калуш', 'Коломия']],
              ['Закарпатська область', '', ['Ужгород', 'Мукачево']]],
-    whatTitle: 'Які справи вам потрібні?', fArea: 'Категорія права', fServices: 'Послуги — {c}', selectAll: 'Обрати всі',
-    cats2: [['Медичне право', 300, 600, ['Лікарські помилки', 'Відшкодування шкоди здоровʼю', 'Права пацієнтів', 'Ліцензування медичної діяльності']],
-            ['Екологічне право', 300, 600, ['Екологічні дозволи', 'Оскарження екологічних штрафів', 'Оцінка впливу на довкілля', 'Спори щодо забруднення']],
-            ['Юридичний аналіз документів', 150, 300, ['Аналіз документа за фото', 'Перевірка договору перед підписанням', 'Пояснення судового рішення']],
-            ['Автомобільні спори', 300, 600, ['Стягнення з винуватця ДТП', 'Повернення та відновлення водійських прав', 'Виїзд адвоката на місце ДТП', 'Захист винуватця ДТП у суді', 'Штраф за паркування', 'Перевищення швидкості', 'Керування в нетверезому стані (ст. 130 КУпАП)', 'Стягнення зі страхової компанії']],
-            ['Господарське та корпоративне право', 500, 1000, ['Реєстрація ФОП і ТОВ', 'Господарські договори', 'Корпоративні спори', 'Супровід бізнесу']],
-            ['Військове право', 250, 450, ['Відстрочка від мобілізації', 'Оскарження рішень ВЛК', 'Скарги на дії ТЦК', 'Звільнення з військової служби', 'Виплати військовослужбовцям', 'Статус УБД']],
-            ['Підготовка та правовий аналіз документів', 150, 300, ['Позовна заява', 'Складання договору', 'Претензії та скарги', 'Адвокатський запит']],
-            ['Стягнення заборгованості', 300, 600, ['Борг за розпискою', 'Борг з компанії', 'Досудова претензія', 'Виконавче провадження']],
-            ['Кримінальне право', 400, 800, ['Захист підозрюваного', 'Адвокат на допит', 'Оскарження запобіжного заходу', 'Представництво потерпілого']],
-            ['Міграційне право', 300, 600, ['Посвідка на проживання', 'Громадянство', 'Дозвіл на роботу іноземцям', 'Статус біженця']],
-            ['Нерухомість та земельне право', 300, 600, ['Супровід купівлі-продажу', 'Реєстрація права власності', 'Земельні спори', 'Спори із забудовниками', 'Виселення']],
-            ['Трудове право', 150, 300, ['Незаконне звільнення', 'Стягнення заробітної плати', 'Трудові договори', 'Спори з роботодавцем']],
-            ['Соціальні виплати та спори', 150, 300, ['Оформлення пенсії', 'Субсидії та допомоги', 'Виплати ВПО', 'Оскарження відмов ПФУ']],
-            ['Сімейне право', 200, 400, ['Розлучення', 'Аліменти', 'Поділ майна подружжя', 'Місце проживання дитини', 'Шлюбний договір']],
-            ['Захист боржника', 250, 500, ['Захист від колекторів', 'Оскарження кредитного договору', 'Захист у виконавчому провадженні', 'Реструктуризація боргів']],
-            ['Інші юридичні послуги', 150, 300, ['Юридична консультація', 'Представництво в суді', 'Інше питання']]],
-    howTitle: 'Скільки ви готові витрачати?', fBudget2: 'Бюджет на місяць', customPh: '30 000',
-    budgets2: [['5 000 – 10 000 ₴/міс', 5000, 10000], ['10 000 – 25 000 ₴/міс', 10000, 25000], ['25 000 – 50 000 ₴/міс', 25000, 50000],
-               ['50 000 – 100 000 ₴/міс', 50000, 100000], ['100 000+ ₴/міс', 100000, 0], ['Своя сума', 0, 0]],
-    fModel: 'Модель оплати', models: [['ppl', 'Оплата за лід'], ['pkg', 'Місячний пакет'], ['ppc', 'Оплата за дзвінок']],
-    fType: 'Тип лідів', ltypes: [['exclusive', 'Ексклюзивні'], ['shared', 'Спільні']],
-    fVol: 'Кількість лідів', vols: [['10', '10–25/міс'], ['25', '25–50/міс'], ['50', '50–100/міс'], ['100', '100+/міс']],
-    fLang2: 'Мова клієнта', langs2: [['uk', 'Українська'], ['en', 'Англійська'], ['bi', 'Обидві']], lang2Def: 'uk',
-    fStart: 'Дата старту', startPh: 'ДД.ММ.РРРР', dateSep: '.',
-    capCalc: 'За типовими цінами у ваших категоріях це приблизно {a}–{b} лідів на місяць.',
-    capCalcPlus: 'За типовими цінами у ваших категоріях це приблизно {a}+ лідів на місяць.',
-    estLeads: '≈ {a}–{b} лідів/міс', estLeadsPlus: '≈ {a}+ лідів/міс',
+    cats2: ['Медичне право', 'Екологічне право', 'Юридичний аналіз документів', 'Автомобільні спори', 'Господарське та корпоративне право', 'Військове право', 'Підготовка та правовий аналіз документів', 'Стягнення заборгованості', 'Кримінальне право', 'Міграційне право', 'Нерухомість та земельне право', 'Трудове право', 'Соціальні виплати та спори', 'Сімейне право', 'Захист боржника', 'Інші юридичні послуги'],
+    detTitle: 'Розкажіть про послугу', opt2: 'Необовʼязково',
+    detLead: 'Необовʼязково. Напишіть своїми словами — це допоможе маркетологу налаштувати рекламу й відібрати потрібних клієнтів.',
+    fService: 'Послуга', servicePh: 'Наприклад: відстрочка від мобілізації',
+    fAsk: 'Питання клієнту до того, як він залишить заявку', askHint: '3–5 питань, кожне з нового рядка.',
+    askPh: 'Скільки вам років?\nЧи є у вас підстави для відстрочки?\nЧи отримували ви повістку?',
+    fQual: 'Питання, щоб відібрати заявку', qualHint: '3–5 питань, які допоможуть відсіяти клієнтів, що вам не підходять.',
+    qualPh: 'Чи готові ви оплатити консультацію?\nУ якому місті ви зараз?\nКоли вам потрібен юрист?',
+    howTitle: 'Скільки ви готові витрачати?', fLeadPrice: 'Ціна ліда, за якою готові купувати', fSvcFee: 'Вартість вашої послуги',
+    feeHint: 'Допомагає співвіднести ціну ліда з вартістю ваших справ.', fLeadsMo: 'Лідів на місяць', fBudget2: 'Бюджет на місяць',
+    ph: { leadFrom: '200', leadTo: '500', feeFrom: '5 000', feeTo: '15 000', leads: '20', cap: '10 000' },
     capTiming: 'Стабільний потік лідів — через 2+ тижні, поки прогріваються рекламні кампанії та підключається SEO.',
-    errWhere: 'Оберіть хоча б одне місто або область.', errArea: 'Оберіть хоча б одну категорію права.', errSvc: 'Оберіть хоча б одну послугу в категорії «{c}».',
-    errBudget: 'Оберіть бюджет на місяць.', errCustom: 'Вкажіть свою суму.', errStart: 'Вкажіть дату у форматі ДД.ММ.РРРР.',
-    cSvc: 'Послуг: ', send: 'Надіслати заявку',
+    errWhere: 'Оберіть хоча б одне місто або область.', errArea: 'Оберіть хоча б одну категорію права.',
+    errLeadRange: 'Ціна «від» більша за ціну «до».', errFeeRange: 'Вартість «від» більша за вартість «до».',
+    errLeads: 'Вкажіть, скільки лідів потрібно на місяць.', errCap2: 'Вкажіть бюджет на місяць.',
+    send: 'Надіслати заявку',
     doneDesc2: 'Ми підбираємо ліди за вашими параметрами. Вони зʼявлятимуться в цьому списку, стабільний потік — через 2+ тижні. Сповіщення прийде на ' + EMAIL + '.',
     okTitle2: 'Ми отримали вашу заявку', okText2: 'Очікуйте: ми підберемо ліди за вашими параметрами й надішлемо лист на ',
 
@@ -295,8 +268,8 @@
   function blank() {
     return {
       name: personName(), firm: L.firm, bar: '', email: EMAIL, phone: L.phone, site: '', office: '', langs: [0], intake: '',
-      cases: [], notCases: '', cats: [], svcs: {},
-      places: [], bud: '', model: 'ppl', ltype: 'exclusive', vol: '10', lang2: L.lang2Def, start: '',
+      cases: [], notCases: '',
+      places: [], cats: [], service: '', askBefore: '', qualify: '', leadFrom: '', leadTo: '', feeFrom: '', feeTo: '', leads: '',
       areas: [], other: '', remote: 'yes', format: 'both',
       budget: '0', consult: 'free', fee: '', det: 'yes', crim: 'yes', urg: 'all', leadLangs: [0],
       period: 'month', excl: 'shared', rows: {}, cap: '',
@@ -306,7 +279,11 @@
   }
   function copy(o) { return JSON.parse(JSON.stringify(o)); }
   function load() {
-    try { var s = JSON.parse(localStorage.getItem(KEY) || 'null'); return s && s.id && s.rows ? s : null; } catch (e) { return null; }
+    try {
+      var s = JSON.parse(localStorage.getItem(KEY) || 'null');
+      if (s && s.v === 2 && !('leads' in s)) return null;     // заявка зі старої версії форми
+      return s && s.id && s.rows ? s : null;
+    } catch (e) { return null; }
   }
   function save(s) { try { if (s) localStorage.setItem(KEY, JSON.stringify(s)); else localStorage.removeItem(KEY); } catch (e) {} }
   // Варіант 2 (за замовчуванням) — коротка форма «Де → Що → За скільки». Варіант 1 (?rq=1) — повний майстер.
@@ -366,7 +343,7 @@
       var area = areaList(order), more = area.length > 1 ? ' +' + (area.length - 1) : '';
       var first = area.length ? (EN ? area[0] : area[0].split(',')[0]) : '';
       if (first.length + more.length > 22) first = first.slice(0, 21 - more.length) + '…';
-      chips = [first + more, L.cSvc + svcCount(order), budgetLabel(order)];
+      chips = [first + more, shortList(order.cats || [], String, 22), money(+order.cap) + L.cSum];
     } else if (done) {
       var tt = totals(order);
       chips = [L.cCases + order.cases.length, tt.n + L.cLeads, money(tt.t) + L.cSum];
@@ -542,36 +519,25 @@
     function () {
       var d = draft;
       return '<h4 class="rq-h">' + esc(L.howTitle) + '</h4>' +
-        '<div class="rq-sec rq-sec--first">' + label(L.fBudget2, true) + segHtml('bud', idxOpts(L.budgets2), d.bud) +
-          (d.bud === '5' ? '<div class="rq-money rq-money--cap' + (EN ? ' rq-money--pre' : '') + '">' + input('cap', groupNum(d.cap), ' inputmode="numeric" data-money placeholder="' + esc(L.customPh) + '" aria-label="' + esc(L.fBudget2) + '"') + '<em>' + cur() + '</em></div>' : '') +
-          '<p class="rq-hint">' + esc(L.capHint) + '</p><p class="rq-calc" data-rq-calc hidden></p></div>' +
+        rangeHtml('leadFrom', 'leadTo', L.fLeadPrice, '', true) +
+        rangeHtml('feeFrom', 'feeTo', L.fSvcFee, L.feeHint, false) +
         '<div class="rq-sec rq-grid">' +
-          '<div>' + label(L.fModel) + segHtml('model', L.models, d.model) + '</div>' +
-          '<div>' + label(L.fType) + segHtml('ltype', L.ltypes, d.ltype) + '</div>' +
-          '<div>' + label(L.fVol) + segHtml('vol', L.vols, d.vol) + '</div>' +
-          '<div>' + label(L.fLang2) + segHtml('lang2', L.langs2, d.lang2) + '</div>' +
-          '<div>' + label(L.fStart) + input('start', d.start, ' inputmode="numeric" data-date maxlength="10" placeholder="' + esc(L.startPh) + '"') + '</div>' +
+          '<div>' + label(L.fLeadsMo, true) + input('leads', d.leads, ' inputmode="numeric" data-num maxlength="4" placeholder="' + L.ph.leads + '"') + '</div>' +
+          '<div>' + label(L.fBudget2, true) + moneyHtml('cap', L.fBudget2) + '</div>' +
         '</div>' +
         '<p class="rq-note">' + esc(L.capTiming) + '</p>';
     },
     function () {
-      return '<h4 class="rq-h">' + esc(L.whereTitle) + ' <i>*</i></h4>' +
-        '<div class="rq-sec rq-sec--first">' + label(L.fPlace, true) + msHtml() + '<p class="rq-hint">' + esc(L.placeHint) + '</p></div>';
+      return '<h4 class="rq-h">' + esc(L.whereTitle) + '</h4>' +
+        '<div class="rq-sec rq-sec--first">' + label(L.fPlace, true) + msHtml('place') + '<p class="rq-hint">' + esc(L.placeHint) + '</p></div>' +
+        '<div class="rq-sec">' + label(L.fArea, true) + msHtml('cat') + '</div>';
     },
     function () {
       var d = draft;
-      return '<h4 class="rq-h">' + esc(L.whatTitle) + ' <i>*</i></h4>' +
-        '<div class="rq-sec rq-sec--first">' + label(L.fArea, true) + '<div class="rq-cases">' + L.cats2.map(function (c, i) {
-          return '<button type="button" class="rq-case" data-g="cats" data-i="' + i + '" aria-pressed="' + (d.cats.indexOf(i) > -1) + '"><span>' + esc(c[0]) + '</span></button>';
-        }).join('') + '</div></div>' +
-        d.cats.slice().sort(byNum).map(function (c) {
-          var sel = d.svcs[c] || [];
-          return '<div class="rq-sec">' +
-            label(fill(L.fServices, { c: L.cats2[c][0] }), true, '<button type="button" class="rq-link" data-rq-svcall="' + c + '">' + esc(L.selectAll) + '</button>') +
-            '<div class="rq-chips">' + L.cats2[c][3].map(function (t, i) {
-              return '<button type="button" class="rq-chip" data-g="svc" data-c="' + c + '" data-i="' + i + '" aria-pressed="' + (sel.indexOf(i) > -1) + '">' + esc(t) + '</button>';
-            }).join('') + '</div></div>';
-        }).join('');
+      return '<h4 class="rq-h">' + esc(L.detTitle) + '</h4><p class="rq-lead">' + esc(L.detLead) + '</p>' +
+        '<div class="rq-sec rq-sec--first">' + label(L.fService, false, opt2()) + input('service', d.service, ' maxlength="120" placeholder="' + esc(L.servicePh) + '"') + '</div>' +
+        '<div class="rq-sec">' + label(L.fAsk, false, opt2()) + '<p class="rq-hint rq-hint--top">' + esc(L.askHint) + '</p>' + areaHtml('askBefore', L.askPh) + '</div>' +
+        '<div class="rq-sec">' + label(L.fQual, false, opt2()) + '<p class="rq-hint rq-hint--top">' + esc(L.qualHint) + '</p>' + areaHtml('qualify', L.qualPh) + '</div>';
     }
   ];
   function byNum(a, b) { return a - b; }
@@ -604,62 +570,62 @@
     for (var i = 0; i < all.length; i++) if (all[i][0] === k) return all[i][1];
     return k;
   }
-  function msList(q) {
+  // дропдаун з пошуком: 'place' — міста й штати/області, 'cat' — категорії права
+  function msSel(key) { return key === 'place' ? draft.places : draft.cats; }
+  function msOpts(key) { return key === 'place' ? places() : L.cats2.map(function (c) { return [c, c, 0]; }); }
+  function msLabel(key, v) { return key === 'place' ? placeLabel(v) : v; }
+  function msList(key, q) {
     q = q.trim().toLowerCase();
-    var sel = draft.places, code = q.length === 2 ? q.toUpperCase() : '';
-    var opts = places().filter(function (o) {
-      if (!q) return EN ? !o[2] : true;
-      return (' ' + o[1].toLowerCase()).indexOf(' ' + q) > -1 || (EN && code && o[0].indexOf(code + '|') === 0);
+    var sel = msSel(key), code = key === 'place' && EN && q.length === 2 ? q.toUpperCase() : '';
+    var opts = msOpts(key).filter(function (o) {
+      if (!q) return key === 'place' && EN ? !o[2] : true;
+      return (' ' + o[1].toLowerCase()).indexOf(' ' + q) > -1 || (code && o[0].indexOf(code + '|') === 0);
     });
     if (q) opts.sort(function (a, b) { return b[2] - a[2]; });
     return opts.length ? opts.slice(0, 300).map(function (o) {
-      return '<button type="button" class="rq-ms__opt" data-ms-opt="place" data-v="' + esc(o[0]) + '" aria-pressed="' + (sel.indexOf(o[0]) > -1) + '">' + esc(o[1]) + '</button>';
+      return '<button type="button" class="rq-ms__opt" data-ms-opt="' + key + '" data-v="' + esc(o[0]) + '" aria-pressed="' + (sel.indexOf(o[0]) > -1) + '">' + esc(o[1]) + '</button>';
     }).join('') : '<p class="rq-ms__none">' + esc(L.noMatch) + '</p>';
   }
-  function msHtml() {
-    var open = openMs === 'place', sel = draft.places;
+  function msHtml(key) {
+    var open = openMs === key, sel = msSel(key);
     return '<div class="rq-ms' + (open ? ' is-open' : '') + '">' +
-      '<button type="button" class="rq-ms__btn" data-ms-toggle="place" aria-expanded="' + open + '"><span>' +
-        esc(sel.length ? fill(L.msCount, { n: sel.length }) : L.msPlacePh) + '</span><i aria-hidden="true"></i></button>' +
-      (open ? '<div class="rq-ms__panel"><input type="text" class="rq-input rq-ms__q" data-ms-q="place" value="' + esc(msQuery) + '" placeholder="' + esc(L.msSearch) + '" autocomplete="off">' +
-        '<div class="rq-ms__list" data-ms-list>' + msList(msQuery) + '</div></div>' : '') +
+      '<button type="button" class="rq-ms__btn" data-ms-toggle="' + key + '" aria-expanded="' + open + '"><span>' +
+        esc(sel.length ? fill(L.msCount, { n: sel.length }) : L.msPh[key]) + '</span><i aria-hidden="true"></i></button>' +
+      (open ? '<div class="rq-ms__panel"><input type="text" class="rq-input rq-ms__q" data-ms-q="' + key + '" value="' + esc(msQuery) + '" placeholder="' + esc(L.msSearch[key]) + '" autocomplete="off">' +
+        '<div class="rq-ms__list" data-ms-list>' + msList(key, msQuery) + '</div></div>' : '') +
       '</div>' +
       (sel.length ? '<div class="rq-chips rq-picked">' + sel.map(function (v) {
-        return '<button type="button" class="rq-chip rq-chip--x" data-rq-unpick="place|' + esc(v) + '" aria-pressed="true">' + esc(placeLabel(v)) + '<span aria-hidden="true">×</span></button>';
+        return '<button type="button" class="rq-chip rq-chip--x" data-rq-unpick="' + key + '|' + esc(v) + '" aria-pressed="true">' + esc(msLabel(key, v)) + '<span aria-hidden="true">×</span></button>';
       }).join('') + '</div>' : '');
   }
-  function msToggle(key, v) { toggle(draft.places, v); }
+  function msToggle(key, v) { toggle(msSel(key), v); }
+  function opt2() { return '<span class="rq-hint rq-hint--inline">' + esc(L.opt2) + '</span>'; }
+  function moneyHtml(f, aria) {
+    return '<div class="rq-money' + (EN ? ' rq-money--pre' : '') + '">' + input(f, groupNum(draft[f]), ' inputmode="numeric" data-money placeholder="' + esc(L.ph[f]) + '" aria-label="' + esc(aria) + '"') + '<em>' + cur() + '</em></div>';
+  }
+  function rangeHtml(a, b, title, hint, first) {
+    return '<div class="rq-sec' + (first ? ' rq-sec--first' : '') + '">' + label(title, false, opt2()) +
+      '<div class="rq-range rq-range--money">' + moneyHtml(a, title) + '<span>—</span>' + moneyHtml(b, title) + '</div>' +
+      (hint ? '<p class="rq-hint">' + esc(hint) + '</p>' : '') + '</div>';
+  }
+  function areaHtml(f, ph) {
+    return '<textarea class="rq-input rq-area" data-f="' + f + '" maxlength="800" placeholder="' + esc(ph) + '">' + esc(draft[f]) + '</textarea>';
+  }
+  function shortList(list, labelFn, max) {
+    if (!list.length) return '';
+    var more = list.length > 1 ? ' +' + (list.length - 1) : '', first = labelFn(list[0]);
+    if (first.length + more.length > max) first = first.slice(0, max - 1 - more.length) + '…';
+    return first + more;
+  }
   function areaList(o) { return (o.places || []).map(placeLabel); }
-  function svcCount(o) { var n = 0; for (var c in (o.svcs || {})) n += o.svcs[c].length; return n; }
-  function budgetLabel(o) { return o.bud === '5' ? money(+o.cap) + L.cSum : o.bud ? L.budgets2[+o.bud][0] : ''; }
   function groupNum(v) { return v ? Number(v).toLocaleString(EN ? 'en-US' : 'uk-UA').replace(/[  ]/g, ' ') : ''; }
-  function dateMask(v) {
-    var d = num(v).slice(0, 8), sep = L.dateSep;
-    return d.slice(0, 2) + (d.length > 2 ? sep + d.slice(2, 4) : '') + (d.length > 4 ? sep + d.slice(4) : '');
-  }
-  function dateOk(v) {
-    var p = v.split(L.dateSep);
-    if (p.length !== 3 || p[2].length !== 4) return false;
-    var m = +(EN ? p[0] : p[1]), dd = +(EN ? p[1] : p[0]), dt = new Date(+p[2], m - 1, dd);
-    return dt.getMonth() === m - 1 && dt.getDate() === dd;
-  }
   function leadsFor(d) {
-    if (V1) {
-      var cap = +d.cap, lo1 = 0, hi1 = 0;
-      if (!cap || !d.cases.length) return null;
-      d.cases.forEach(function (i) { var e = estFor(d, i); lo1 += e[0]; hi1 += e[1]; });
-      lo1 /= d.cases.length; hi1 /= d.cases.length;
-      var a1 = Math.floor(cap / hi1), b1 = Math.floor(cap / lo1);
-      return b1 ? { a: Math.max(1, a1), b: b1 } : null;
-    }
-    if (!d.cats.length || d.bud === '') return null;
-    var m = d.ltype === 'exclusive' ? 1.8 : 1, lo = 0, hi = 0;
-    d.cats.forEach(function (i) { lo += rnd(L.cats2[i][1] * m); hi += rnd(L.cats2[i][2] * m); });
-    lo /= d.cats.length; hi /= d.cats.length;
-    var bud = L.budgets2[+d.bud], from = bud[1], to = bud[2];
-    if (d.bud === '5') { from = to = +d.cap; if (!from) return null; }
-    var a = Math.max(1, Math.floor(from / hi));
-    return to ? { a: a, b: Math.max(a, Math.floor(to / lo)) } : { a: a, plus: true };
+    var cap = +d.cap, lo = 0, hi = 0;
+    if (!cap || !d.cases.length) return null;
+    d.cases.forEach(function (i) { var e = estFor(d, i); lo += e[0]; hi += e[1]; });
+    lo /= d.cases.length; hi /= d.cases.length;
+    var a = Math.floor(cap / hi), b = Math.floor(cap / lo);
+    return b ? { a: Math.max(1, a), b: b } : null;
   }
   function names(items, idx) { return idx.map(function (i) { return items[i]; }).join(', '); }
   function reviewHtml(d, editable) {
@@ -716,16 +682,15 @@
       if (d.hTo <= d.hFrom) return ['errHours'];
     }
     if (s === 6 && !(d.tos && d.consent)) return ['errTos'];
-    if (s === 7) {
-      if (d.bud === '') return ['errBudget'];
-      if (d.bud === '5' && !(+d.cap > 0)) return ['errCustom', 'cap'];
-      if (d.start && !dateOk(d.start)) return ['errStart', 'start'];
-    }
-    if (s === 8 && !d.places.length) return ['errWhere'];
-    if (s === 9) {
+    if (s === 8) {
+      if (!d.places.length) return ['errWhere'];
       if (!d.cats.length) return ['errArea'];
-      var cs = d.cats.slice().sort(byNum);
-      for (var q = 0; q < cs.length; q++) if (!(d.svcs[cs[q]] || []).length) return [null, null, fill(L.errSvc, { c: L.cats2[cs[q]][0] })];
+    }
+    if (s === 7) {
+      if (d.leadFrom && d.leadTo && +d.leadFrom > +d.leadTo) return ['errLeadRange', 'leadFrom'];
+      if (d.feeFrom && d.feeTo && +d.feeFrom > +d.feeTo) return ['errFeeRange', 'feeFrom'];
+      if (!(+d.leads > 0)) return ['errLeads', 'leads'];
+      if (!(+d.cap > 0)) return ['errCap2', 'cap'];
     }
     return null;
   }
@@ -779,15 +744,8 @@
   }
   function live() {
     var d = draft, k = FLOW[step], line = modal.querySelector('[data-rq-estline]');
-    if (k === 7) {
-      var n = leadsFor(d), calc = modal.querySelector('[data-rq-calc]');
-      calc.hidden = !n;
-      if (n) calc.textContent = fill(n.plus ? L.capCalcPlus : L.capCalc, n);
-      if (line) line.textContent = n ? fill(n.plus ? L.estLeadsPlus : L.estLeads, n) : '';
-      return;
-    }
-    if (line && !V1) line.textContent = '';
-    else if (line) {
+    if (!V1) { if (line) line.textContent = ''; return; }
+    if (line) {
       if (k >= 4) { var tt = totals(d); line.textContent = fill(L.estTotal, { n: tt.n, t: money(tt.t) }); }
       else if (d.cases.length) {
         var lo = Infinity, hi = 0;
@@ -902,15 +860,6 @@
       paint(true);
       return;
     }
-    var sv = t.closest('[data-g="svc"]');
-    if (sv) { var sc = sv.getAttribute('data-c'); toggle(draft.svcs[sc] || (draft.svcs[sc] = []), +sv.getAttribute('data-i')); paint(true); return; }
-    var sa = t.closest('[data-rq-svcall]');
-    if (sa) {
-      var c2 = sa.getAttribute('data-rq-svcall'), all = L.cats2[c2][3].map(function (_, i) { return i; });
-      draft.svcs[c2] = (draft.svcs[c2] || []).length === all.length ? [] : all;
-      paint(true);
-      return;
-    }
     var c = t.closest('[data-g]');
     if (c) {
       var grp = c.getAttribute('data-g'), i = +c.getAttribute('data-i'), arr = draft[grp];
@@ -918,7 +867,6 @@
         if (i === 0) draft[grp] = arr.indexOf(0) > -1 ? [] : [0];
         else { draft[grp] = arr.filter(function (x) { return x !== 0; }); toggle(draft[grp], i); }
       } else toggle(arr, i);
-      if (grp === 'cats' && arr.indexOf(i) < 0) delete draft.svcs[i];
       paint(true);
       return;
     }
@@ -937,10 +885,9 @@
     if (!modal || !modal.classList.contains('active') || doneView) return;
     var t = e.target, f = t.getAttribute('data-f'), row = t.getAttribute('data-row');
     if (t.hasAttribute('data-ms-q')) {
-      if (e.type === 'input') { msQuery = t.value; modal.querySelector('[data-ms-list]').innerHTML = msList(msQuery); }
+      if (e.type === 'input') { msQuery = t.value; modal.querySelector('[data-ms-list]').innerHTML = msList(t.getAttribute('data-ms-q'), msQuery); }
       return;
     }
-    if (t.hasAttribute('data-date')) { var dm = dateMask(t.value); if (dm !== t.value) t.value = dm; }
     if (row !== null) {
       var v = num(t.value); if (v !== t.value) t.value = v;
       (draft.rows[row] || (draft.rows[row] = {}))[t.getAttribute('data-k')] = v;
@@ -958,6 +905,8 @@
       }
     } else return;
     t.removeAttribute('aria-invalid');
+    var pair = { leadTo: 'leadFrom', feeTo: 'feeFrom' }[f], pf = pair && modal.querySelector('[data-f="' + pair + '"]');
+    if (pf) pf.removeAttribute('aria-invalid');
     var err = modal.querySelector('[data-rq-error]');
     if (err) err.hidden = true;
     live();
