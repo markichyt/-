@@ -20,6 +20,7 @@
     doneDesc: 'We’ll review the order within 2 days. First leads will appear in this list, and the flow becomes steady in 2–3 weeks once the ad campaigns warm up. Notifications go to ' + EMAIL + '.',
     btnEdit: 'View or edit the order', cancelOrder: 'Cancel the order', cancelled: 'The order has been cancelled.',
     cCases: 'Case types: ', cLeads: ' leads/mo', cSum: '/mo', cBudget: 'up to ',
+    tkTitle: 'New lead', tkMeta: 'Houston, TX',
     benefits: [['Exclusive Leads', 'One lead, one lawyer. No competition for the same client.'],
                ['Form-Qualified Leads', 'Clients complete a qualification form specifying their legal needs and location.'],
                ['Transparent Pricing', 'See the lead price before purchasing. No hidden fees or bidding wars.']],
@@ -142,6 +143,7 @@
     doneDesc: 'Перевіримо заявку протягом 2 днів. Перші ліди з’являться в цьому списку, стабільний потік — через 2–3 тижні, коли прогріються рекламні кампанії. Сповіщення прийде на ' + EMAIL + '.',
     btnEdit: 'Переглянути або змінити', cancelOrder: 'Скасувати заявку', cancelled: 'Заявку скасовано.',
     cCases: 'Справ: ', cLeads: ' лідів/міс', cSum: '/міс', cBudget: 'до ',
+    tkTitle: 'Новий лід', tkMeta: 'Київ · аліменти',
     benefits: [['Ексклюзивні ліди', 'Один лід — один юрист. Жодної конкуренції за того самого клієнта.'],
                ['Ліди з анкетою', 'Клієнт заповнює анкету: яка юридична допомога потрібна і де він перебуває.'],
                ['Прозорі ціни', 'Ціну ліда видно до покупки. Без прихованих платежів і аукціонів.']],
@@ -336,6 +338,12 @@
   function pct(m) { var p = Math.round((m - 1) * 100); return (p > 0 ? '+' : '−') + Math.abs(p) + '%'; }
 
   // ---------- картка ----------
+  // іконки переваг: щит (ексклюзивні), анкета, цінник
+  var ICONS = [
+    '<svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8.4-7 10-4-1.6-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>',
+    '<svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 3h6v3H9zM9 11h6M9 15h4"/></svg>',
+    '<svg viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="7.5" r="1.4"/></svg>'
+  ];
   function cardHtml() {
     var done = !!order;
     var chips = V1 ? L.chips : [];
@@ -355,17 +363,21 @@
           esc(done ? L.pillDone + ' · ' + order.id : L.pill) + '</span></div>' +
       '</div>' +
       '<div class="main-order__middle">' + (!done && !V1
-        ? '<ul class="rq-benefits">' + L.benefits.map(function (b) {
-            return '<li><b>' + esc(b[0]) + '</b><button type="button" class="rq-info" aria-label="' + esc(b[1]) + '"><span aria-hidden="true">i</span>' +
+        ? '<ul class="rq-benefits">' + L.benefits.map(function (b, i) {
+            return '<li><span class="rq-ico" aria-hidden="true">' + ICONS[i] + '</span><b>' + esc(b[0]) + '</b>' +
+              '<button type="button" class="rq-info" aria-label="' + esc(b[1]) + '"><span aria-hidden="true">i</span>' +
               '<span class="rq-tip" role="tooltip">' + esc(b[1]) + '</span></button></li>';
-          }).join('') + '</ul>'
+          }).join('') + '</ul>' +
+          '<div class="rq-stack" aria-hidden="true"><span class="rq-tk"><i></i><span><u></u><u></u></span></span>' +
+            '<span class="rq-tk"><i></i><span><u></u><u></u></span></span>' +
+            '<span class="rq-tk"><i></i><span><b>' + esc(L.tkTitle) + '</b><small>' + esc(L.tkMeta) + '</small></span><em>+1</em></span></div>'
         : '<p class="main-order__description">' + esc(done ? (V1 ? L.doneDesc : L.doneDesc2) : L.desc) + '</p>') + '</div>' +
       '<div class="main-order__bottom">' +
         (chips.length ? '<div class="main-order__chips">' + chips.map(function (c) {
           return '<span class="main-order__chip"><span class="main-order__chip__dot"></span><span>' + esc(c) + '</span></span>';
         }).join('') + '</div>' : '') +
         '<div class="main-order__footer"><button type="button" class="main-order__request-btn' + (done ? ' main-order__request-btn--ghost' : '') + '" data-rq-open>' +
-          esc(done ? L.btnEdit : L.btn) + '</button></div>' +
+          esc(done ? L.btnEdit : L.btn) + (done ? '' : '<span class="rq-arrow" aria-hidden="true">→</span>') + '</button></div>' +
         (done || V1 ? '<div class="main-order__purchase-disclaimer"><p>' +
           (done ? '<button type="button" class="rq-cancel" data-rq-cancel>' + esc(L.cancelOrder) + '</button>' : esc(L.disclaimer)) +
         '</p></div>' : '') +
