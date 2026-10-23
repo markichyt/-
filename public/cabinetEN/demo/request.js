@@ -20,33 +20,60 @@
     doneDesc: 'We’ll review the order within 2 days. First leads will appear in this list, and the flow becomes steady in 2–3 weeks once the ad campaigns warm up. Notifications go to ' + EMAIL + '.',
     btnEdit: 'View or edit the order', cancelOrder: 'Cancel the order', cancelled: 'The order has been cancelled.',
     cCases: 'Case types: ', cLeads: ' leads/mo', cSum: '/mo', cBudget: 'up to ',
-    desc2: 'If none of the current leads fit, order them: choose your area, practice areas, services and a monthly budget. A steady lead flow starts in 2+ weeks. You’ll be notified by email.',
-    chips2: ['Your area', 'Your services', 'Your budget'],
-    flow2: ['Location', 'Practice area', 'Services', 'Budget'],
-    geoTitle: 'Where are your clients?', fPlaces: 'States and cities', allIn: 'All of {s}',
-    placesPh: 'Start typing a city or state — e.g. Houston', placesHint: 'Add a whole state or specific cities. You can pick several.',
-    popular: 'Popular', entireState: 'entire state', noMatch: 'No matches — check the spelling.',
-    popularKeys: ['TX', 'Houston|TX', 'Dallas|TX', 'San Antonio|TX', 'Austin|TX', 'Fort Worth|TX', 'El Paso|TX', 'Los Angeles|CA', 'New York|NY', 'Chicago|IL', 'Miami|FL'],
-    catTitle: 'Which practice areas do you work in?', svcTitle: 'Which services do you provide?', selectAll: 'Select all',
-    fNotSvc: 'Services you do NOT provide', fNotSvcPh: 'For example: appeals, pro bono cases',
-    cats2: [['Banking & Financial Law', 70, 200, ['Loan & credit disputes', 'Debt collection defense', 'Banking regulation & compliance', 'Securities & investment disputes', 'Fraud & identity theft']],
-            ['Real Estate Law', 40, 120, ['Purchase & sale', 'Landlord–tenant disputes', 'Title disputes', 'Foreclosure defense', 'HOA disputes']],
-            ['Labor Law', 60, 180, ['Union & collective bargaining', 'Wage & hour claims', 'Workplace safety (OSHA)', 'Unfair labor practices']],
-            ['Intellectual Property Law', 70, 220, ['Trademark registration', 'Copyright', 'Patents', 'IP infringement disputes']],
-            ['General Legal Services', 30, 90, ['Legal consultation', 'Document review', 'Contract drafting', 'Demand letters']],
-            ['Family Law', 50, 150, ['Divorce', 'Child custody', 'Child support', 'Alimony / spousal support', 'Adoption', 'Prenuptial agreements', 'Protective orders']],
-            ['Business & Corporate Law', 70, 200, ['Business formation (LLC, Corp)', 'Contracts', 'Partnership disputes', 'Mergers & acquisitions', 'Commercial litigation']],
-            ['Tax Law', 70, 200, ['IRS audits', 'Tax debt relief', 'Business tax planning', 'Tax litigation']],
-            ['Motor Vehicle Law', 50, 160, ['Car accidents', 'DWI / DUI', 'Traffic tickets', 'License suspension & reinstatement', 'Auto insurance claims']],
-            ['Employment Law', 60, 180, ['Wrongful termination', 'Discrimination & harassment', 'Non-compete agreements', 'Workplace retaliation']],
-            ['Immigration Law', 60, 200, ['Family-based green cards / marriage petitions', 'Naturalization / citizenship', 'Removal defense / deportation', 'Detention / bond hearings', 'Asylum', 'DACA', 'U-visa / T-visa / VAWA', 'Employment visas (H-1B, L-1, O-1, PERM)', 'Investor visas (EB-5, E-2)', 'Crimmigration']]],
-    errStates: 'Choose at least one state or city.', errCats2: 'Choose at least one practice area.', errSvc: 'Choose at least one service in “{c}”.',
-    cSvc: 'Services: ',
-    doneDesc2: 'We’re picking leads for your parameters. They will appear in this list, and the flow becomes steady in 2+ weeks. Notifications go to ' + EMAIL + '.',
-    budgetStep: 'Budget', capLead: 'How much are you ready to spend on leads each month? We’ll send as many leads as fit into this amount.',
-    capCalc: 'At the estimated prices that’s about {a}–{b} leads a month.', estLeads: '≈ {a}–{b} leads/mo',
+    benefits: [['Exclusive Leads', 'One lead, one lawyer. No competition for the same client.'],
+               ['Form-Qualified Leads', 'Clients complete a qualification form specifying their legal needs and location.'],
+               ['Transparent Pricing', 'See the lead price before purchasing. No hidden fees or bidding wars.']],
+    flow2: ['Where', 'What', 'How much'],
+    whereTitle: 'Where do you want leads from?', fCov: 'Coverage',
+    covs: [['state', 'Statewide'], ['metro', 'Metro Area'], ['city', 'City'], ['zip', 'ZIP Code + Radius']],
+    fState: 'State', moreStatePh: 'Add another state', citiesIn: 'Cities — {s}', metrosIn: 'Metro areas — {s}',
+    moreCityPh: 'Add another city in {s}', noMetro: 'No metro areas listed for {s} — the whole state will be covered.',
+    allIn: 'All of {s}', noMatch: 'No matches — check the spelling.',
+    msStatePh: 'Select states', msCityPh: 'Select cities in {s}', msCount: '{n} selected', msSearch: 'Search…',
+    fZip: 'ZIP Code', zipPh: '77002', fRadius: 'Radius',
+    radii: [['10', 'within 10 miles'], ['25', 'within 25 miles'], ['50', 'within 50 miles'], ['100', 'within 100 miles']],
+    usStates: [['TX', ['Houston', 'Dallas', 'San Antonio', 'Austin', 'Fort Worth', 'El Paso', 'McAllen', 'Laredo', 'Brownsville', 'Corpus Christi'], ['Dallas–Fort Worth', 'Greater Houston', 'San Antonio–New Braunfels', 'Austin–Round Rock', 'Rio Grande Valley']],
+               ['CA', ['Los Angeles', 'San Diego', 'San Jose', 'San Francisco', 'Fresno', 'Sacramento'], ['Greater Los Angeles', 'San Francisco Bay Area', 'San Diego County', 'Sacramento Metro']],
+               ['FL', ['Miami', 'Orlando', 'Tampa', 'Jacksonville', 'Fort Lauderdale'], ['Miami–Fort Lauderdale', 'Tampa Bay', 'Greater Orlando']],
+               ['NY', ['New York', 'Brooklyn', 'Queens', 'Buffalo'], ['New York City Metro', 'Buffalo–Niagara Falls']],
+               ['IL', ['Chicago', 'Aurora'], ['Chicagoland']],
+               ['GA', ['Atlanta', 'Savannah'], ['Metro Atlanta']],
+               ['AZ', ['Phoenix', 'Tucson'], ['Phoenix Metro', 'Tucson Metro']],
+               ['NJ', ['Newark', 'Jersey City'], ['North Jersey']],
+               ['NC', ['Charlotte', 'Raleigh'], ['Charlotte Metro', 'Research Triangle']],
+               ['WA', ['Seattle', 'Spokane'], ['Seattle Metro']]],
+    whatTitle: 'What kind of cases do you want?', fArea: 'Practice Area', fServices: 'Services — {c}', selectAll: 'Select all',
+    cats2: [['Immigration Law', 60, 200, ['Family-Based Green Card', 'Marriage Green Card', 'Adjustment of Status', 'Citizenship / Naturalization', 'Removal Defense / Deportation', 'Asylum', 'DACA', 'Work Visas (H-1B, L-1, O-1)', 'Investor Visas (EB-5, E-2)', 'U Visa / VAWA', 'Bond Hearings', 'TPS']],
+            ['Personal Injury', 100, 300, ['Car Accidents', 'Truck Accidents', 'Motorcycle Accidents', 'Slip & Fall', 'Medical Malpractice', 'Wrongful Death', 'Dog Bites', 'Workplace Injuries']],
+            ['Family Law', 50, 150, ['Divorce', 'Child Custody', 'Child Support', 'Alimony / Spousal Support', 'Adoption', 'Prenuptial Agreements', 'Protective Orders']],
+            ['Criminal Defense', 60, 180, ['DWI / DUI', 'Drug Charges', 'Assault', 'Theft', 'Domestic Violence', 'Expungement', 'Federal Crimes']],
+            ['DWI / DUI', 60, 160, ['First-Time DWI', 'Repeat DWI', 'License Suspension / ALR Hearing', 'Intoxication Assault']],
+            ['Bankruptcy', 40, 100, ['Chapter 7', 'Chapter 13', 'Debt Relief', 'Foreclosure Defense']],
+            ['Estate Planning & Probate', 40, 120, ['Wills', 'Living Trusts', 'Power of Attorney', 'Probate', 'Guardianship']],
+            ['Employment Law', 60, 180, ['Wrongful Termination', 'Discrimination', 'Sexual Harassment', 'Unpaid Wages / Overtime']],
+            ['Workers\' Compensation', 60, 180, ['Denied Claims', 'Workplace Injury Benefits', 'Occupational Illness', 'Return-to-Work Disputes']],
+            ['Social Security Disability (SSDI)', 40, 120, ['Initial Applications', 'Denied Claim Appeals', 'SSI Claims', 'Disability Hearings']],
+            ['Real Estate Law', 40, 120, ['Purchase & Sale', 'Landlord–Tenant Disputes', 'Title Disputes', 'Foreclosure Defense']],
+            ['Business & Corporate Law', 70, 200, ['Business Formation (LLC, Corp)', 'Contracts', 'Partnership Disputes', 'Commercial Litigation']],
+            ['Tax Law', 70, 200, ['IRS Audits', 'Tax Debt Relief', 'Business Tax Planning', 'Tax Litigation']]],
+    howTitle: 'How much do you want to spend?', fBudget2: 'Monthly Budget', customPh: '3,000',
+    budgets2: [['$500 – $1,000/mo', 500, 1000], ['$1,000 – $2,500/mo', 1000, 2500], ['$2,500 – $5,000/mo', 2500, 5000],
+               ['$5,000 – $10,000/mo', 5000, 10000], ['$10,000+/mo', 10000, 0], ['Custom', 0, 0]],
+    fModel: 'Pricing Model', models: [['ppl', 'Pay Per Lead'], ['pkg', 'Monthly Package'], ['ppc', 'Pay Per Call']],
+    fType: 'Lead Type', ltypes: [['exclusive', 'Exclusive'], ['shared', 'Shared']],
+    fVol: 'Lead Volume', vols: [['10', '10–25/mo'], ['25', '25–50/mo'], ['50', '50–100/mo'], ['100', '100+/mo']],
+    fLang2: 'Language', langs2: [['en', 'English'], ['es', 'Spanish'], ['bi', 'Bilingual']], lang2Def: 'en',
+    fDlv: 'Delivery', dlvs: ['Email', 'SMS', 'CRM Integration', 'Live Transfer'],
+    fStart: 'Start Date', startPh: 'MM/DD/YYYY', dateSep: '/',
+    capCalc: 'At typical prices for your practice areas that’s about {a}–{b} leads a month.',
+    capCalcPlus: 'At typical prices for your practice areas that’s about {a}+ leads a month.',
+    estLeads: '≈ {a}–{b} leads/mo', estLeadsPlus: '≈ {a}+ leads/mo',
     capTiming: 'A steady lead flow starts in 2+ weeks, while ad campaigns warm up and SEO kicks in.',
-    errCap: 'Enter your monthly budget.', send: 'Send the order',
+    errWhere: 'Choose at least one state.', errCity: 'Choose at least one city in {s}.', errMetro: 'Choose at least one metro area in {s}.',
+    errZip: 'Enter a 5-digit ZIP code.', errArea: 'Choose at least one practice area.', errSvc: 'Choose at least one service in “{c}”.',
+    errBudget: 'Choose a monthly budget.', errCustom: 'Enter your monthly budget.', errStart: 'Enter the start date as MM/DD/YYYY.',
+    cSvc: 'Services: ', send: 'Send the order',
+    doneDesc2: 'We’re picking leads for your parameters. They will appear in this list, and the flow becomes steady in 2+ weeks. Notifications go to ' + EMAIL + '.',
     okTitle2: 'We’ve received your order', okText2: 'Please wait: we’ll pick leads for your parameters and send an email to ',
 
     mTitle: 'Order leads for your practice', mTitleEdit: 'Your leads order',
@@ -137,10 +164,11 @@
     doneDesc: 'Перевіримо заявку протягом 2 днів. Перші ліди з’являться в цьому списку, стабільний потік — через 2–3 тижні, коли прогріються рекламні кампанії. Сповіщення прийде на ' + EMAIL + '.',
     btnEdit: 'Переглянути або змінити', cancelOrder: 'Скасувати заявку', cancelled: 'Заявку скасовано.',
     cCases: 'Справ: ', cLeads: ' лідів/міс', cSum: '/міс', cBudget: 'до ',
-    desc2: 'Якщо серед поточних лідів немає потрібних — замовте їх: оберіть місто, категорії права, послуги й місячний бюджет. Стабільний потік лідів — через 2+ тижні. Сповіщення прийде на пошту.',
-    chips2: ['Ваше місто', 'Ваші послуги', 'Ваш бюджет'],
-    flow2: ['Географія', 'Категорія права', 'Послуги', 'Бюджет'],
-    geoTitle: 'Де ваші клієнти?', fStates: 'Області', statesHint: 'Оберіть одну або кілька областей, а потім уточніть міста.',
+    benefits: [['Ексклюзивні ліди', 'Один лід — один юрист. Жодної конкуренції за того самого клієнта.'],
+               ['Ліди з анкетою', 'Клієнт заповнює анкету: яка юридична допомога потрібна і де він перебуває.'],
+               ['Прозорі ціни', 'Ціну ліда видно до покупки. Без прихованих платежів і аукціонів.']],
+    flow2: ['Де', 'Що', 'За скільки'],
+    whereTitle: 'Звідки вам потрібні ліди?', fStates: 'Області', statesHint: 'Оберіть одну або кілька областей, а потім уточніть міста.',
     citiesIn: 'Міста — {s}', allIn: 'Уся {s}', fOther2Ph: 'Інше місто, наприклад: Біла Церква',
     states: [['Київська область', '', ['Київ', 'Бровари', 'Ірпінь', 'Біла Церква', 'Бориспіль']],
              ['Львівська область', '', ['Львів', 'Дрогобич', 'Стрий', 'Червоноград']],
@@ -152,8 +180,7 @@
              ['Полтавська область', '', ['Полтава', 'Кременчук']],
              ['Івано-Франківська область', '', ['Івано-Франківськ', 'Калуш', 'Коломия']],
              ['Закарпатська область', '', ['Ужгород', 'Мукачево']]],
-    catTitle: 'У яких категоріях права ви працюєте?', svcTitle: 'Які послуги ви надаєте?', selectAll: 'Обрати всі',
-    fNotSvc: 'Послуги, які ви НЕ надаєте', fNotSvcPh: 'Наприклад: апеляції, безоплатні справи',
+    whatTitle: 'Які справи вам потрібні?', fArea: 'Категорія права', fServices: 'Послуги — {c}', selectAll: 'Обрати всі',
     cats2: [['Медичне право', 300, 600, ['Лікарські помилки', 'Відшкодування шкоди здоровʼю', 'Права пацієнтів', 'Ліцензування медичної діяльності']],
             ['Екологічне право', 300, 600, ['Екологічні дозволи', 'Оскарження екологічних штрафів', 'Оцінка впливу на довкілля', 'Спори щодо забруднення']],
             ['Юридичний аналіз документів', 150, 300, ['Аналіз документа за фото', 'Перевірка договору перед підписанням', 'Пояснення судового рішення']],
@@ -170,13 +197,23 @@
             ['Сімейне право', 200, 400, ['Розлучення', 'Аліменти', 'Поділ майна подружжя', 'Місце проживання дитини', 'Шлюбний договір']],
             ['Захист боржника', 250, 500, ['Захист від колекторів', 'Оскарження кредитного договору', 'Захист у виконавчому провадженні', 'Реструктуризація боргів']],
             ['Інші юридичні послуги', 150, 300, ['Юридична консультація', 'Представництво в суді', 'Інше питання']]],
-    errStates: 'Оберіть хоча б одну область.', errCats2: 'Оберіть хоча б одну категорію права.', errSvc: 'Оберіть хоча б одну послугу в категорії «{c}».',
-    cSvc: 'Послуг: ',
-    doneDesc2: 'Ми підбираємо ліди за вашими параметрами. Вони зʼявлятимуться в цьому списку, стабільний потік — через 2+ тижні. Сповіщення прийде на ' + EMAIL + '.',
-    budgetStep: 'Бюджет', capLead: 'Скільки ви готові витрачати на ліди щомісяця? Ми підберемо стільки лідів, скільки вміщається в цю суму.',
-    capCalc: 'За орієнтовними цінами це приблизно {a}–{b} лідів на місяць.', estLeads: '≈ {a}–{b} лідів/міс',
+    howTitle: 'Скільки ви готові витрачати?', fBudget2: 'Бюджет на місяць', customPh: '30 000',
+    budgets2: [['5 000 – 10 000 ₴/міс', 5000, 10000], ['10 000 – 25 000 ₴/міс', 10000, 25000], ['25 000 – 50 000 ₴/міс', 25000, 50000],
+               ['50 000 – 100 000 ₴/міс', 50000, 100000], ['100 000+ ₴/міс', 100000, 0], ['Своя сума', 0, 0]],
+    fModel: 'Модель оплати', models: [['ppl', 'Оплата за лід'], ['pkg', 'Місячний пакет'], ['ppc', 'Оплата за дзвінок']],
+    fType: 'Тип лідів', ltypes: [['exclusive', 'Ексклюзивні'], ['shared', 'Спільні']],
+    fVol: 'Кількість лідів', vols: [['10', '10–25/міс'], ['25', '25–50/міс'], ['50', '50–100/міс'], ['100', '100+/міс']],
+    fLang2: 'Мова клієнта', langs2: [['uk', 'Українська'], ['en', 'Англійська'], ['bi', 'Обидві']], lang2Def: 'uk',
+    fDlv: 'Як отримувати ліди', dlvs: ['Email', 'SMS', 'Інтеграція з CRM', 'Переведення дзвінка'],
+    fStart: 'Дата старту', startPh: 'ДД.ММ.РРРР', dateSep: '.',
+    capCalc: 'За типовими цінами у ваших категоріях це приблизно {a}–{b} лідів на місяць.',
+    capCalcPlus: 'За типовими цінами у ваших категоріях це приблизно {a}+ лідів на місяць.',
+    estLeads: '≈ {a}–{b} лідів/міс', estLeadsPlus: '≈ {a}+ лідів/міс',
     capTiming: 'Стабільний потік лідів — через 2+ тижні, поки прогріваються рекламні кампанії та підключається SEO.',
-    errCap: 'Вкажіть бюджет на місяць.', send: 'Надіслати заявку',
+    errWhere: 'Оберіть хоча б одну область.', errArea: 'Оберіть хоча б одну категорію права.', errSvc: 'Оберіть хоча б одну послугу в категорії «{c}».',
+    errBudget: 'Оберіть бюджет на місяць.', errCustom: 'Вкажіть свою суму.', errStart: 'Вкажіть дату у форматі ДД.ММ.РРРР.',
+    cSvc: 'Послуг: ', send: 'Надіслати заявку',
+    doneDesc2: 'Ми підбираємо ліди за вашими параметрами. Вони зʼявлятимуться в цьому списку, стабільний потік — через 2+ тижні. Сповіщення прийде на ' + EMAIL + '.',
     okTitle2: 'Ми отримали вашу заявку', okText2: 'Очікуйте: ми підберемо ліди за вашими параметрами й надішлемо лист на ',
 
     mTitle: 'Замовлення лідів для вашої практики', mTitleEdit: 'Ваша заявка на ліди',
@@ -267,7 +304,9 @@
   function blank() {
     return {
       name: personName(), firm: L.firm, bar: '', email: EMAIL, phone: L.phone, site: '', office: '', langs: [0], intake: '',
-      cases: [], notCases: '', states: [], cities: {}, places: [], cats: [], svcs: {},
+      cases: [], notCases: '', states: [], cities: {}, cats: [], svcs: {},
+      cov: 'city', usSt: [], usCity: {}, usMetro: {}, zip: '', radius: '25',
+      bud: '', model: 'ppl', ltype: 'exclusive', vol: '10', lang2: L.lang2Def, dlv: [0], start: '',
       areas: [], other: '', remote: 'yes', format: 'both',
       budget: '0', consult: 'free', fee: '', det: 'yes', crim: 'yes', urg: 'all', leadLangs: [0],
       period: 'month', excl: 'shared', rows: {}, cap: '',
@@ -280,13 +319,14 @@
     try { var s = JSON.parse(localStorage.getItem(KEY) || 'null'); return s && s.id && s.rows ? s : null; } catch (e) { return null; }
   }
   function save(s) { try { if (s) localStorage.setItem(KEY, JSON.stringify(s)); else localStorage.removeItem(KEY); } catch (e) {} }
-  // Варіант 2 (за замовчуванням) — коротка форма: географія → категорія права → послуги → бюджет. Варіант 1 (?rq=1) — повний майстер.
+  // Варіант 2 (за замовчуванням) — коротка форма «Де → Що → За скільки». Варіант 1 (?rq=1) — повний майстер.
   var V1 = /[?&]rq=1(&|$)/.test(location.search);
-  var FLOW = V1 ? [0, 1, 2, 3, 4, 5, 6] : [8, 9, 10, 7];
+  var FLOW = V1 ? [0, 1, 2, 3, 4, 5, 6] : [8, 9, 7];
   function flowLabel(k) { return V1 ? L.steps[k] : L.flow2[FLOW.indexOf(k)]; }
   var order = load();          // надіслана заявка або null
   var draft = null;            // стан майстра
   var step = 0, seen = 0, doneView = false;
+  var openMs = null, msQuery = '';       // відкритий дропдаун з пошуком і його запит
 
   function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
   function num(v) { return String(v).replace(/[^\d]/g, ''); }
@@ -331,10 +371,10 @@
   // ---------- картка ----------
   function cardHtml() {
     var done = !!order;
-    var chips = V1 ? L.chips : L.chips2;
+    var chips = V1 ? L.chips : [];
     if (done && order.v === 2) {
       var area = areaList(order), at = area.length ? area[0] + (area.length > 1 ? ' +' + (area.length - 1) : '') : '';
-      chips = [at.length > 22 ? at.slice(0, 21) + '…' : at, L.cSvc + svcCount(order), L.cBudget + money(+order.cap) + L.cSum];
+      chips = [at.length > 22 ? at.slice(0, 21) + '…' : at, L.cSvc + svcCount(order), budgetLabel(order)];
     } else if (done) {
       var tt = totals(order);
       chips = [L.cCases + order.cases.length, tt.n + L.cLeads, money(tt.t) + L.cSum];
@@ -345,11 +385,13 @@
         '<div class="main-order__inner"><span class="main-order__service main-order__service--request">' +
           esc(done ? L.pillDone + ' · ' + order.id : L.pill) + '</span></div>' +
       '</div>' +
-      '<div class="main-order__middle"><p class="main-order__description">' + esc(done ? (V1 ? L.doneDesc : L.doneDesc2) : V1 ? L.desc : L.desc2) + '</p></div>' +
+      '<div class="main-order__middle">' + (!done && !V1
+        ? '<ul class="rq-benefits">' + L.benefits.map(function (b) { return '<li><b>' + esc(b[0]) + '</b><span>' + esc(b[1]) + '</span></li>'; }).join('') + '</ul>'
+        : '<p class="main-order__description">' + esc(done ? (V1 ? L.doneDesc : L.doneDesc2) : L.desc) + '</p>') + '</div>' +
       '<div class="main-order__bottom">' +
-        '<div class="main-order__chips">' + chips.map(function (c) {
+        (chips.length ? '<div class="main-order__chips">' + chips.map(function (c) {
           return '<span class="main-order__chip"><span class="main-order__chip__dot"></span><span>' + esc(c) + '</span></span>';
-        }).join('') + '</div>' +
+        }).join('') + '</div>' : '') +
         '<div class="main-order__footer"><button type="button" class="main-order__request-btn' + (done ? ' main-order__request-btn--ghost' : '') + '" data-rq-open>' +
           esc(done ? L.btnEdit : L.btn) + '</button></div>' +
         '<div class="main-order__purchase-disclaimer"><p>' +
@@ -506,26 +548,24 @@
         '<p class="rq-note">' + esc(L.payNote) + '</p>';
     },
     function () {
-      return '<h4 class="rq-h">' + esc(L.fCap) + ' <i>*</i></h4><p class="rq-lead">' + esc(L.capLead) + '</p>' +
-        '<div class="rq-sec rq-sec--first rq-cap"><div class="rq-money' + (EN ? ' rq-money--pre' : '') + '">' + input('cap', groupNum(draft.cap), ' inputmode="numeric" data-money placeholder="' + (EN ? '2,000' : '20 000') + '" aria-label="' + esc(L.fCap) + '"') + '<em>' + cur() + '</em></div>' +
+      var d = draft;
+      return '<h4 class="rq-h">' + esc(L.howTitle) + '</h4>' +
+        '<div class="rq-sec rq-sec--first">' + label(L.fBudget2, true) + segHtml('bud', idxOpts(L.budgets2), d.bud) +
+          (d.bud === '5' ? '<div class="rq-money rq-money--cap' + (EN ? ' rq-money--pre' : '') + '">' + input('cap', groupNum(d.cap), ' inputmode="numeric" data-money placeholder="' + esc(L.customPh) + '" aria-label="' + esc(L.fBudget2) + '"') + '<em>' + cur() + '</em></div>' : '') +
           '<p class="rq-hint">' + esc(L.capHint) + '</p><p class="rq-calc" data-rq-calc hidden></p></div>' +
+        '<div class="rq-sec rq-grid">' +
+          '<div>' + label(L.fModel) + segHtml('model', L.models, d.model) + '</div>' +
+          '<div>' + label(L.fType) + segHtml('ltype', L.ltypes, d.ltype) + '</div>' +
+          '<div>' + label(L.fVol) + segHtml('vol', L.vols, d.vol) + '</div>' +
+          '<div>' + label(L.fLang2) + segHtml('lang2', L.langs2, d.lang2) + '</div>' +
+          '<div>' + label(L.fDlv) + chipsHtml('dlv', L.dlvs, d.dlv) + '</div>' +
+          '<div>' + label(L.fStart) + input('start', d.start, ' inputmode="numeric" data-date maxlength="10" placeholder="' + esc(L.startPh) + '"') + '</div>' +
+        '</div>' +
         '<p class="rq-note">' + esc(L.capTiming) + '</p>';
     },
     function () {
-      var d = draft, html = '<h4 class="rq-h">' + esc(L.geoTitle) + ' <i>*</i></h4>';
-      if (EN) {
-        html += '<div class="rq-sec rq-sec--first">' + label(L.fPlaces) +
-          '<div class="rq-search"><input type="text" class="rq-input" data-rq-search autocomplete="off" placeholder="' + esc(L.placesPh) + '" aria-label="' + esc(L.fPlaces) + '">' +
-          '<div class="rq-suggest" data-rq-suggest hidden></div></div>' +
-          '<div class="rq-chips rq-picked">' + d.places.map(function (k) {
-            return '<button type="button" class="rq-chip rq-chip--x" data-rq-unpick="' + esc(k) + '" aria-pressed="true">' + esc(placeLabel(k)) + '<span aria-hidden="true">×</span></button>';
-          }).join('') + '</div>' +
-          '<p class="rq-hint">' + esc(L.placesHint) + '</p>' +
-          '<div class="rq-label rq-label--sub"><b>' + esc(L.popular) + '</b></div><div class="rq-chips">' +
-          L.popularKeys.filter(function (k) { return d.places.indexOf(k) < 0; }).map(function (k) {
-            return '<button type="button" class="rq-chip" data-rq-pick="' + esc(k) + '">' + esc(placeLabel(k)) + '</button>';
-          }).join('') + '</div></div>';
-      } else {
+      var d = draft, html = '<h4 class="rq-h">' + esc(L.whereTitle) + ' <i>*</i></h4>';
+      if (!EN) {
         html += '<div class="rq-sec rq-sec--first">' + label(L.fStates) + chipsHtml('states', L.states.map(function (x) { return x[0]; }), d.states) +
           '<p class="rq-hint">' + esc(L.statesHint) + '</p></div>';
         d.states.slice().sort(byNum).forEach(function (si) {
@@ -536,77 +576,116 @@
               return '<button type="button" class="rq-chip" data-g="city" data-s="' + si + '" data-i="' + i + '" aria-pressed="' + (sel.indexOf(i) > -1) + '">' + esc(cityLabel(si, i)) + '</button>';
             }).join('') + '</div></div>';
         });
-        html += '<div class="rq-city-extra">' + input('other', d.other, ' placeholder="' + esc(L.fOther2Ph) + '" aria-label="' + esc(L.fOther) + '"') + '</div>';
+        return html + '<div class="rq-city-extra">' + input('other', d.other, ' placeholder="' + esc(L.fOther2Ph) + '" aria-label="' + esc(L.fOther) + '"') + '</div>';
       }
-      return html +
-        '<div class="rq-sec">' + label(L.fRemote) + segHtml('remote', yn(), d.remote) + '</div>' +
-        '<div class="rq-sec">' + label(L.fFormat) + segHtml('format', L.formats, d.format) + '</div>';
-    },
-    function () {
-      return '<h4 class="rq-h">' + esc(L.catTitle) + ' <i>*</i></h4>' +
-        '<div class="rq-cases">' + L.cats2.map(function (c, i) {
-          return '<button type="button" class="rq-case" data-g="cats" data-i="' + i + '" aria-pressed="' + (draft.cats.indexOf(i) > -1) + '"><span>' + esc(c[0]) + '</span></button>';
-        }).join('') + '</div>';
+      html += '<div class="rq-sec rq-sec--first">' + label(L.fCov) + segHtml('cov', L.covs, d.cov) + '</div>';
+      if (d.cov === 'zip') {
+        return html + '<div class="rq-sec rq-grid">' +
+          '<div>' + label(L.fZip, true) + input('zip', d.zip, ' inputmode="numeric" data-zip maxlength="5" placeholder="' + L.zipPh + '"') + '</div>' +
+          '<div>' + label(L.fRadius) + segHtml('radius', L.radii.map(function (r) { return [r[0], r[0] + ' mi']; }), d.radius) + '</div></div>';
+      }
+      html += '<div class="rq-sec">' + label(L.fState, true) + msHtml('state', '') + '</div>';
+      if (d.cov === 'state') return html;
+      d.usSt.forEach(function (code) {
+        var name = stateName(code);
+        if (d.cov === 'city') {
+          html += '<div class="rq-sub">' + label(fill(L.citiesIn, { s: name })) + msHtml('city', code) + '</div>';
+          return;
+        }
+        var metros = usInfo(code)[2], sel = d.usMetro[code] || [];
+        html += '<div class="rq-sub">' + (metros.length
+          ? label(fill(L.metrosIn, { s: name })) + '<div class="rq-chips">' + metros.map(function (m) {
+              return '<button type="button" class="rq-chip" data-rq-metro="' + code + '|' + esc(m) + '" aria-pressed="' + (sel.indexOf(m) > -1) + '">' + esc(m + ', ' + code) + '</button>';
+            }).join('') + '</div>'
+          : '<p class="rq-hint">' + esc(fill(L.noMetro, { s: name })) + '</p>') + '</div>';
+      });
+      return html;
     },
     function () {
       var d = draft;
-      return '<h4 class="rq-h">' + esc(L.svcTitle) + ' <i>*</i></h4>' + d.cats.slice().sort(byNum).map(function (c, k) {
-        var sel = d.svcs[c] || [];
-        return '<div class="rq-sec' + (k ? '' : ' rq-sec--first') + '">' +
-          label(L.cats2[c][0], false, '<button type="button" class="rq-link" data-rq-svcall="' + c + '">' + esc(L.selectAll) + '</button>') +
-          '<div class="rq-chips">' + L.cats2[c][3].map(function (t, i) {
-            return '<button type="button" class="rq-chip" data-g="svc" data-c="' + c + '" data-i="' + i + '" aria-pressed="' + (sel.indexOf(i) > -1) + '">' + esc(t) + '</button>';
-          }).join('') + '</div></div>';
-      }).join('') +
-        '<div class="rq-sec">' + label(L.fNotSvc) + '<textarea class="rq-input" data-f="notCases" maxlength="300" placeholder="' + esc(L.fNotSvcPh) + '">' + esc(d.notCases) + '</textarea></div>';
+      return '<h4 class="rq-h">' + esc(L.whatTitle) + ' <i>*</i></h4>' +
+        '<div class="rq-sec rq-sec--first">' + label(L.fArea, true) + '<div class="rq-cases">' + L.cats2.map(function (c, i) {
+          return '<button type="button" class="rq-case" data-g="cats" data-i="' + i + '" aria-pressed="' + (d.cats.indexOf(i) > -1) + '"><span>' + esc(c[0]) + '</span></button>';
+        }).join('') + '</div></div>' +
+        d.cats.slice().sort(byNum).map(function (c) {
+          var sel = d.svcs[c] || [];
+          return '<div class="rq-sec">' +
+            label(fill(L.fServices, { c: L.cats2[c][0] }), true, '<button type="button" class="rq-link" data-rq-svcall="' + c + '">' + esc(L.selectAll) + '</button>') +
+            '<div class="rq-chips">' + L.cats2[c][3].map(function (t, i) {
+              return '<button type="button" class="rq-chip" data-g="svc" data-c="' + c + '" data-i="' + i + '" aria-pressed="' + (sel.indexOf(i) > -1) + '">' + esc(t) + '</button>';
+            }).join('') + '</div></div>';
+        }).join('');
     }
   ];
   function byNum(a, b) { return a - b; }
-  // місце в EN: 'TX' — весь штат, 'Houston|TX' — місто; підпис у форматі США
+  // EN: штат — код ('TX'), місто — назва; підписи у форматі США «Houston, TX»
   function stateName(code) {
     var st = window.US_STATES || [];
     for (var i = 0; i < st.length; i++) if (st[i][0] === code) return st[i][1];
     return code;
   }
-  function placeLabel(k) {
-    var p = k.split('|');
-    return p.length > 1 ? p[0] + ', ' + p[1] : fill(L.allIn, { s: stateName(k) });
+  function usInfo(code) {
+    for (var i = 0; i < L.usStates.length; i++) if (L.usStates[i][0] === code) return L.usStates[i];
+    return [code, [], []];
   }
-  function suggest(q) {
-    q = q.trim().toLowerCase();
-    if (q.length < 2) return [];
-    var out = [], taken = draft.places;
-    (window.US_STATES || []).forEach(function (st) {
-      if ((st[1].toLowerCase().indexOf(q) === 0 || st[0].toLowerCase() === q) && taken.indexOf(st[0]) < 0 && out.length < 3) out.push(st[0]);
-    });
-    var cities = window.US_CITIES || [];
-    for (var i = 0; i < cities.length && out.length < 9; i++) {
-      var c = cities[i], full = (c[0] + ', ' + c[1]).toLowerCase(), k = c[0] + '|' + c[1];
-      var hit = full.indexOf(q) === 0 || (' ' + c[0].toLowerCase()).indexOf(' ' + q) > -1;
-      if (hit && taken.indexOf(k) < 0) out.push(k);
+  // дропдаун з пошуком: ключ 'state:' — штати, 'city:TX' — міста штату
+  function msSel(key) { return key === 'state:' ? draft.usSt : (draft.usCity[key.slice(5)] || []); }
+  function msOptions(key) {
+    if (key === 'state:') {
+      var main = L.usStates.map(function (x) { return x[0]; });
+      var rest = (window.US_STATES || []).map(function (x) { return x[0]; }).filter(function (c) { return main.indexOf(c) < 0; })
+        .sort(function (a, b) { return stateName(a) < stateName(b) ? -1 : 1; });
+      return main.concat(rest).map(function (c) { return [c, stateName(c) + ' (' + c + ')']; });
     }
-    return out;
+    var code = key.slice(5), names = usInfo(code)[1].slice();
+    (window.US_CITIES || []).forEach(function (c) { if (c[1] === code && names.indexOf(c[0]) < 0) names.push(c[0]); });
+    return names.map(function (n) { return [n, n + ', ' + code]; });
   }
-  function renderSuggest(q) {
-    var box = modal.querySelector('[data-rq-suggest]');
-    if (!box) return;
-    var list = suggest(q);
-    box.hidden = q.trim().length < 2;
-    box.innerHTML = list.length ? list.map(function (k, i) {
-      return '<button type="button" class="rq-suggest__i' + (i ? '' : ' is-active') + '" data-rq-pick="' + esc(k) + '">' + esc(placeLabel(k)) +
-        (k.indexOf('|') < 0 ? '<em>' + esc(L.entireState) + '</em>' : '') + '</button>';
-    }).join('') : '<p class="rq-suggest__none">' + esc(L.noMatch) + '</p>';
+  function msList(key, q) {
+    q = q.trim().toLowerCase();
+    var sel = msSel(key), opts = msOptions(key).filter(function (o) {
+      return !q || (' ' + o[1].toLowerCase()).indexOf(' ' + q) > -1;
+    });
+    return opts.length ? opts.slice(0, 300).map(function (o) {
+      return '<button type="button" class="rq-ms__opt" data-ms-opt="' + key + '" data-v="' + esc(o[0]) + '" aria-pressed="' + (sel.indexOf(o[0]) > -1) + '">' + esc(o[1]) + '</button>';
+    }).join('') : '<p class="rq-ms__none">' + esc(L.noMatch) + '</p>';
   }
-  function pick(k) {
-    if (draft.places.indexOf(k) < 0) draft.places.push(k);
-    paint(true);
-    var f = modal.querySelector('[data-rq-search]');
-    if (f) f.focus();
+  function msHtml(kind, code) {
+    var key = kind + ':' + code, open = openMs === key, sel = msSel(key);
+    var ph = kind === 'state' ? L.msStatePh : fill(L.msCityPh, { s: stateName(code) });
+    return '<div class="rq-ms' + (open ? ' is-open' : '') + '">' +
+      '<button type="button" class="rq-ms__btn" data-ms-toggle="' + key + '" aria-expanded="' + open + '"><span>' +
+        esc(sel.length ? fill(L.msCount, { n: sel.length }) : ph) + '</span><i aria-hidden="true"></i></button>' +
+      (open ? '<div class="rq-ms__panel"><input type="text" class="rq-input rq-ms__q" data-ms-q="' + key + '" value="' + esc(msQuery) + '" placeholder="' + esc(L.msSearch) + '" autocomplete="off">' +
+        '<div class="rq-ms__list" data-ms-list>' + msList(key, msQuery) + '</div></div>' : '') +
+      '</div>' +
+      (sel.length ? '<div class="rq-chips rq-picked">' + sel.map(function (v) {
+        return '<button type="button" class="rq-chip rq-chip--x" data-rq-unpick="' + key + '|' + esc(v) + '" aria-pressed="true">' +
+          esc(kind === 'state' ? stateName(v) : v + ', ' + code) + '<span aria-hidden="true">×</span></button>';
+      }).join('') + '</div>' : '');
+  }
+  function msToggle(key, v) {
+    if (key === 'state:') {
+      toggle(draft.usSt, v);
+      if (draft.usSt.indexOf(v) < 0) { delete draft.usCity[v]; delete draft.usMetro[v]; }
+    } else {
+      var code = key.slice(5), arr = draft.usCity[code] || (draft.usCity[code] = []);
+      toggle(arr, v);
+      if (!arr.length) delete draft.usCity[code];
+    }
   }
   function cityLabel(si, i) { var st = L.states[si]; return st[2][i] + (st[1] ? ', ' + st[1] : ''); }
   function areaList(o) {
-    if (EN) return (o.places || []).map(placeLabel);
     var out = [];
+    if (EN) {
+      if (o.cov === 'zip') return o.zip ? [o.zip + ' – ' + pick(L.radii, o.radius)] : [];
+      (o.usSt || []).forEach(function (code) {
+        var sel = o.cov === 'city' ? (o.usCity || {})[code] : o.cov === 'metro' ? (o.usMetro || {})[code] : null;
+        if (!sel || !sel.length) out.push(fill(L.allIn, { s: stateName(code) }));
+        else sel.forEach(function (n) { out.push(n + ', ' + code); });
+      });
+      return out;
+    }
     (o.states || []).slice().sort(byNum).forEach(function (si) {
       var sel = (o.cities || {})[si] || [];
       if (!sel.length) out.push(fill(L.allIn, { s: L.states[si][0] }));
@@ -616,19 +695,36 @@
     return out;
   }
   function svcCount(o) { var n = 0; for (var c in (o.svcs || {})) n += o.svcs[c].length; return n; }
-  function groupNum(v) { return v ? Number(v).toLocaleString(EN ? 'en-US' : 'uk-UA').replace(/[\u202f\u00a0]/g, ' ') : ''; }
-  function leadsFor(d) {
-    var cap = +d.cap, lo = 0, hi = 0, list = V1 ? d.cases : d.cats, m = mult(d);
-    if (!cap || !list.length) return null;
-    list.forEach(function (i) {
-      var e = V1 ? estFor(d, i) : [rnd(L.cats2[i][1] * m), rnd(L.cats2[i][2] * m)];
-      lo += e[0]; hi += e[1];
-    });
-    lo /= list.length; hi /= list.length;
-    var a = Math.floor(cap / hi), b = Math.floor(cap / lo);
-    return b ? { a: Math.max(1, a), b: b } : null;
+  function budgetLabel(o) { return o.bud === '5' ? money(+o.cap) + L.cSum : o.bud ? L.budgets2[+o.bud][0] : ''; }
+  function groupNum(v) { return v ? Number(v).toLocaleString(EN ? 'en-US' : 'uk-UA').replace(/[  ]/g, ' ') : ''; }
+  function dateMask(v) {
+    var d = num(v).slice(0, 8), sep = L.dateSep;
+    return d.slice(0, 2) + (d.length > 2 ? sep + d.slice(2, 4) : '') + (d.length > 4 ? sep + d.slice(4) : '');
   }
-
+  function dateOk(v) {
+    var p = v.split(L.dateSep);
+    if (p.length !== 3 || p[2].length !== 4) return false;
+    var m = +(EN ? p[0] : p[1]), dd = +(EN ? p[1] : p[0]), dt = new Date(+p[2], m - 1, dd);
+    return dt.getMonth() === m - 1 && dt.getDate() === dd;
+  }
+  function leadsFor(d) {
+    if (V1) {
+      var cap = +d.cap, lo1 = 0, hi1 = 0;
+      if (!cap || !d.cases.length) return null;
+      d.cases.forEach(function (i) { var e = estFor(d, i); lo1 += e[0]; hi1 += e[1]; });
+      lo1 /= d.cases.length; hi1 /= d.cases.length;
+      var a1 = Math.floor(cap / hi1), b1 = Math.floor(cap / lo1);
+      return b1 ? { a: Math.max(1, a1), b: b1 } : null;
+    }
+    if (!d.cats.length || d.bud === '') return null;
+    var m = d.ltype === 'exclusive' ? 1.8 : 1, lo = 0, hi = 0;
+    d.cats.forEach(function (i) { lo += rnd(L.cats2[i][1] * m); hi += rnd(L.cats2[i][2] * m); });
+    lo /= d.cats.length; hi /= d.cats.length;
+    var bud = L.budgets2[+d.bud], from = bud[1], to = bud[2];
+    if (d.bud === '5') { from = to = +d.cap; if (!from) return null; }
+    var a = Math.max(1, Math.floor(from / hi));
+    return to ? { a: a, b: Math.max(a, Math.floor(to / lo)) } : { a: a, plus: true };
+  }
   function names(items, idx) { return idx.map(function (i) { return items[i]; }).join(', '); }
   function reviewHtml(d, editable) {
     var tt = totals(d);
@@ -684,10 +780,25 @@
       if (d.hTo <= d.hFrom) return ['errHours'];
     }
     if (s === 6 && !(d.tos && d.consent)) return ['errTos'];
-    if (s === 7 && !(+d.cap > 0)) return ['errCap', 'cap'];
-    if (s === 8 && (EN ? !d.places.length : !d.states.length && !d.other.trim())) return ['errStates'];
-    if (s === 9 && !d.cats.length) return ['errCats2'];
-    if (s === 10) {
+    if (s === 7) {
+      if (d.bud === '') return ['errBudget'];
+      if (d.bud === '5' && !(+d.cap > 0)) return ['errCustom', 'cap'];
+      if (d.start && !dateOk(d.start)) return ['errStart', 'start'];
+    }
+    if (s === 8) {
+      if (!EN) { if (!d.states.length && !d.other.trim()) return ['errWhere']; }
+      else if (d.cov === 'zip') { if (!/^\d{5}$/.test(d.zip)) return ['errZip', 'zip']; }
+      else {
+        if (!d.usSt.length) return ['errWhere'];
+        for (var u = 0; u < d.usSt.length; u++) {
+          var sc = d.usSt[u], nm = { s: stateName(sc) };
+          if (d.cov === 'city' && !(d.usCity[sc] || []).length) return [null, null, fill(L.errCity, nm)];
+          if (d.cov === 'metro' && usInfo(sc)[2].length && !(d.usMetro[sc] || []).length) return [null, null, fill(L.errMetro, nm)];
+        }
+      }
+    }
+    if (s === 9) {
+      if (!d.cats.length) return ['errArea'];
       var cs = d.cats.slice().sort(byNum);
       for (var q = 0; q < cs.length; q++) if (!(d.svcs[cs[q]] || []).length) return [null, null, fill(L.errSvc, { c: L.cats2[cs[q]][0] })];
     }
@@ -730,18 +841,24 @@
   }
   function body() { return modal.querySelector('[data-rq-body]'); }
   function paint(keepScroll) {
-    var b = body(), top = b.scrollTop;
+    var b = body(), top = b.scrollTop, ol = b.querySelector('[data-ms-list]'), listTop = ol ? ol.scrollTop : 0;
     b.innerHTML = doneView ? (V1 ? doneHtml(order) : doneHtml2()) : headHtml() + '<div class="rq-stepbody">' + STEPS[FLOW[step]]() + '</div><div class="rq-error" data-rq-error role="alert" hidden></div>' + footHtml();
     b.scrollTop = keepScroll ? top : 0;
     if (!doneView) live();
+    var q = openMs && b.querySelector('[data-ms-q]');
+    if (q) {
+      b.querySelector('[data-ms-list]').scrollTop = listTop;
+      q.focus();
+      q.setSelectionRange(q.value.length, q.value.length);
+    }
   }
   function live() {
     var d = draft, k = FLOW[step], line = modal.querySelector('[data-rq-estline]');
     if (k === 7) {
       var n = leadsFor(d), calc = modal.querySelector('[data-rq-calc]');
       calc.hidden = !n;
-      if (n) calc.textContent = fill(L.capCalc, n);
-      if (line) line.textContent = n ? fill(L.estLeads, n) : '';
+      if (n) calc.textContent = fill(n.plus ? L.capCalcPlus : L.capCalc, n);
+      if (line) line.textContent = n ? fill(n.plus ? L.estLeadsPlus : L.estLeads, n) : '';
       return;
     }
     if (line && !V1) line.textContent = '';
@@ -790,6 +907,7 @@
       seen = FLOW.length - 1; step = V1 ? seen : 0;
     } else if (!draft) { draft = blank(); step = seen = 0; }
     doneView = false;
+    openMs = null;
     paint(false);
     overlay.classList.add('active');
     modal.classList.add('active');
@@ -814,7 +932,7 @@
     if (f) { f.setAttribute('aria-invalid', 'true'); f.focus(); }
     box.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   }
-  function go(s) { step = s; seen = Math.max(seen, s); paint(false); }
+  function go(s) { step = s; seen = Math.max(seen, s); openMs = null; paint(false); }
   function next() {
     var v = validate(FLOW[step]);
     if (v) return fail(v);
@@ -847,11 +965,25 @@
     if (t.closest('[data-rq-back]')) { go(step - 1); return; }
     var g = t.closest('[data-rq-go]');
     if (g) { go(+g.getAttribute('data-rq-go')); return; }
-    var pk = t.closest('[data-rq-pick]');
-    if (pk) { pick(pk.getAttribute('data-rq-pick')); return; }
+    if (openMs && !t.closest('.rq-ms')) { openMs = null; paint(true); }
+    var mt = t.closest('[data-ms-toggle]');
+    if (mt) { var mk = mt.getAttribute('data-ms-toggle'); openMs = openMs === mk ? null : mk; msQuery = ''; paint(true); return; }
+    var mo = t.closest('[data-ms-opt]');
+    if (mo) { msToggle(mo.getAttribute('data-ms-opt'), mo.getAttribute('data-v')); paint(true); return; }
     var up = t.closest('[data-rq-unpick]');
-    if (up) { var uk = draft.places.indexOf(up.getAttribute('data-rq-unpick')); if (uk > -1) draft.places.splice(uk, 1); paint(true); return; }
-    if (!t.closest('.rq-search')) { var sb = modal.querySelector('[data-rq-suggest]'); if (sb) sb.hidden = true; }
+    if (up) {
+      var uv = up.getAttribute('data-rq-unpick'), cut = uv.indexOf('|');
+      msToggle(uv.slice(0, cut), uv.slice(cut + 1));
+      paint(true);
+      return;
+    }
+    var me = t.closest('[data-rq-metro]');
+    if (me) {
+      var mv = me.getAttribute('data-rq-metro').split('|'), ma = draft.usMetro[mv[0]] || (draft.usMetro[mv[0]] = []);
+      toggle(ma, mv[1]);
+      paint(true);
+      return;
+    }
     var cc = t.closest('[data-g="city"]');
     if (cc) {
       var cs = cc.getAttribute('data-s'), ci = +cc.getAttribute('data-i');
@@ -895,7 +1027,12 @@
   function onInput(e) {
     if (!modal || !modal.classList.contains('active') || doneView) return;
     var t = e.target, f = t.getAttribute('data-f'), row = t.getAttribute('data-row');
-    if (t.hasAttribute('data-rq-search')) { if (e.type === 'input') renderSuggest(t.value); return; }
+    if (t.hasAttribute('data-ms-q')) {
+      if (e.type === 'input') { msQuery = t.value; modal.querySelector('[data-ms-list]').innerHTML = msList(t.getAttribute('data-ms-q'), msQuery); }
+      return;
+    }
+    if (t.hasAttribute('data-zip')) { var z = num(t.value).slice(0, 5); if (z !== t.value) t.value = z; }
+    if (t.hasAttribute('data-date')) { var dm = dateMask(t.value); if (dm !== t.value) t.value = dm; }
     if (row !== null) {
       var v = num(t.value); if (v !== t.value) t.value = v;
       (draft.rows[row] || (draft.rows[row] = {}))[t.getAttribute('data-k')] = v;
@@ -925,10 +1062,14 @@
     document.addEventListener('change', onInput);
     document.addEventListener('keydown', function (e) {
       if (!modal || !modal.classList.contains('active')) return;
-      var box = modal.querySelector('[data-rq-suggest]');
-      if (e.target.hasAttribute && e.target.hasAttribute('data-rq-search') && box && !box.hidden) {
-        if (e.key === 'Escape') { box.hidden = true; return; }
-        if (e.key === 'Enter') { e.preventDefault(); var first = box.querySelector('[data-rq-pick]'); if (first) pick(first.getAttribute('data-rq-pick')); return; }
+      if (openMs) {
+        if (e.key === 'Escape') { openMs = null; paint(true); return; }
+        if (e.key === 'Enter' && e.target.hasAttribute && e.target.hasAttribute('data-ms-q')) {
+          e.preventDefault();
+          var first = modal.querySelector('[data-ms-opt]');
+          if (first) { msToggle(first.getAttribute('data-ms-opt'), first.getAttribute('data-v')); paint(true); }
+          return;
+        }
       }
       if (e.key === 'Escape') closeModal();
     });
