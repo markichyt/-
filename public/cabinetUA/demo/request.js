@@ -20,10 +20,29 @@
     doneDesc: 'We’ll review the order within 2 days. First leads will appear in this list, and the flow becomes steady in 2–3 weeks once the ad campaigns warm up. Notifications go to ' + EMAIL + '.',
     btnEdit: 'View or edit the order', cancelOrder: 'Cancel the order', cancelled: 'The order has been cancelled.',
     cCases: 'Case types: ', cLeads: ' leads/mo', cSum: '/mo', cBudget: 'up to ',
-    desc2: 'If none of the current leads fit, order them: choose case types, area and a monthly budget. A steady lead flow starts in 2+ weeks. You’ll be notified by email.',
-    chips2: ['Your case types', 'Your budget', 'Email notification'],
+    desc2: 'If none of the current leads fit, order them: choose your area, practice areas, services and a monthly budget. A steady lead flow starts in 2+ weeks. You’ll be notified by email.',
+    chips2: ['Your area', 'Your services', 'Your budget'],
+    flow2: ['Location', 'Practice area', 'Services', 'Budget'],
+    geoTitle: 'Where are your clients?', fPlaces: 'States and cities', allIn: 'All of {s}',
+    placesPh: 'Start typing a city or state — e.g. Houston', placesHint: 'Add a whole state or specific cities. You can pick several.',
+    popular: 'Popular', entireState: 'entire state', noMatch: 'No matches — check the spelling.',
+    popularKeys: ['TX', 'Houston|TX', 'Dallas|TX', 'San Antonio|TX', 'Austin|TX', 'Fort Worth|TX', 'El Paso|TX', 'Los Angeles|CA', 'New York|NY', 'Chicago|IL', 'Miami|FL'],
+    catTitle: 'Which practice areas do you work in?', svcTitle: 'Which services do you provide?', selectAll: 'Select all',
+    fNotSvc: 'Services you do NOT provide', fNotSvcPh: 'For example: appeals, pro bono cases',
+    cats2: [['Banking & Financial Law', 70, 200, ['Loan & credit disputes', 'Debt collection defense', 'Banking regulation & compliance', 'Securities & investment disputes', 'Fraud & identity theft']],
+            ['Real Estate Law', 40, 120, ['Purchase & sale', 'Landlord–tenant disputes', 'Title disputes', 'Foreclosure defense', 'HOA disputes']],
+            ['Labor Law', 60, 180, ['Union & collective bargaining', 'Wage & hour claims', 'Workplace safety (OSHA)', 'Unfair labor practices']],
+            ['Intellectual Property Law', 70, 220, ['Trademark registration', 'Copyright', 'Patents', 'IP infringement disputes']],
+            ['General Legal Services', 30, 90, ['Legal consultation', 'Document review', 'Contract drafting', 'Demand letters']],
+            ['Family Law', 50, 150, ['Divorce', 'Child custody', 'Child support', 'Alimony / spousal support', 'Adoption', 'Prenuptial agreements', 'Protective orders']],
+            ['Business & Corporate Law', 70, 200, ['Business formation (LLC, Corp)', 'Contracts', 'Partnership disputes', 'Mergers & acquisitions', 'Commercial litigation']],
+            ['Tax Law', 70, 200, ['IRS audits', 'Tax debt relief', 'Business tax planning', 'Tax litigation']],
+            ['Motor Vehicle Law', 50, 160, ['Car accidents', 'DWI / DUI', 'Traffic tickets', 'License suspension & reinstatement', 'Auto insurance claims']],
+            ['Employment Law', 60, 180, ['Wrongful termination', 'Discrimination & harassment', 'Non-compete agreements', 'Workplace retaliation']],
+            ['Immigration Law', 60, 200, ['Family-based green cards / marriage petitions', 'Naturalization / citizenship', 'Removal defense / deportation', 'Detention / bond hearings', 'Asylum', 'DACA', 'U-visa / T-visa / VAWA', 'Employment visas (H-1B, L-1, O-1, PERM)', 'Investor visas (EB-5, E-2)', 'Crimmigration']]],
+    errStates: 'Choose at least one state or city.', errCats2: 'Choose at least one practice area.', errSvc: 'Choose at least one service in “{c}”.',
+    cSvc: 'Services: ',
     doneDesc2: 'We’re picking leads for your parameters. They will appear in this list, and the flow becomes steady in 2+ weeks. Notifications go to ' + EMAIL + '.',
-    s2lead2: 'Choose one or more case types — we’ll pick leads for exactly those.',
     budgetStep: 'Budget', capLead: 'How much are you ready to spend on leads each month? We’ll send as many leads as fit into this amount.',
     capCalc: 'At the estimated prices that’s about {a}–{b} leads a month.', estLeads: '≈ {a}–{b} leads/mo',
     capTiming: 'A steady lead flow starts in 2+ weeks, while ad campaigns warm up and SEO kicks in.',
@@ -45,7 +64,6 @@
     intake: ['Me personally', 'A paralegal', 'A call center'],
     langs: ['English', 'Spanish', 'Vietnamese', 'Hindi', 'Chinese', 'Arabic', 'Ukrainian', 'Russian'],
     s2title: 'Which case types do you want leads for?',
-    s2lead: 'The lead price follows the case value: the higher the typical fee for a case type, the more a lead costs.',
     perLead: '/ lead', fNot: 'Case types you do NOT accept', fNotPh: 'For example: appeals, cases without documents',
     cases: [['Family-based green cards / marriage petitions', 60, 110], ['Naturalization / citizenship', 30, 60],
             ['Removal defense / deportation', 120, 220], ['Detention / bond hearings', 150, 260], ['Asylum', 70, 130],
@@ -119,10 +137,42 @@
     doneDesc: 'Перевіримо заявку протягом 2 днів. Перші ліди з’являться в цьому списку, стабільний потік — через 2–3 тижні, коли прогріються рекламні кампанії. Сповіщення прийде на ' + EMAIL + '.',
     btnEdit: 'Переглянути або змінити', cancelOrder: 'Скасувати заявку', cancelled: 'Заявку скасовано.',
     cCases: 'Справ: ', cLeads: ' лідів/міс', cSum: '/міс', cBudget: 'до ',
-    desc2: 'Якщо серед поточних лідів немає потрібних — замовте їх: оберіть справи, місто й місячний бюджет. Стабільний потік лідів — через 2+ тижні. Сповіщення прийде на пошту.',
-    chips2: ['Ваші справи', 'Ваш бюджет', 'Сповіщення на пошту'],
+    desc2: 'Якщо серед поточних лідів немає потрібних — замовте їх: оберіть місто, категорії права, послуги й місячний бюджет. Стабільний потік лідів — через 2+ тижні. Сповіщення прийде на пошту.',
+    chips2: ['Ваше місто', 'Ваші послуги', 'Ваш бюджет'],
+    flow2: ['Географія', 'Категорія права', 'Послуги', 'Бюджет'],
+    geoTitle: 'Де ваші клієнти?', fStates: 'Області', statesHint: 'Оберіть одну або кілька областей, а потім уточніть міста.',
+    citiesIn: 'Міста — {s}', allIn: 'Уся {s}', fOther2Ph: 'Інше місто, наприклад: Біла Церква',
+    states: [['Київська область', '', ['Київ', 'Бровари', 'Ірпінь', 'Біла Церква', 'Бориспіль']],
+             ['Львівська область', '', ['Львів', 'Дрогобич', 'Стрий', 'Червоноград']],
+             ['Харківська область', '', ['Харків', 'Лозова', 'Ізюм']],
+             ['Дніпропетровська область', '', ['Дніпро', 'Кривий Ріг', 'Камʼянське', 'Павлоград']],
+             ['Одеська область', '', ['Одеса', 'Ізмаїл', 'Чорноморськ']],
+             ['Запорізька область', '', ['Запоріжжя']],
+             ['Вінницька область', '', ['Вінниця', 'Жмеринка']],
+             ['Полтавська область', '', ['Полтава', 'Кременчук']],
+             ['Івано-Франківська область', '', ['Івано-Франківськ', 'Калуш', 'Коломия']],
+             ['Закарпатська область', '', ['Ужгород', 'Мукачево']]],
+    catTitle: 'У яких категоріях права ви працюєте?', svcTitle: 'Які послуги ви надаєте?', selectAll: 'Обрати всі',
+    fNotSvc: 'Послуги, які ви НЕ надаєте', fNotSvcPh: 'Наприклад: апеляції, безоплатні справи',
+    cats2: [['Медичне право', 300, 600, ['Лікарські помилки', 'Відшкодування шкоди здоровʼю', 'Права пацієнтів', 'Ліцензування медичної діяльності']],
+            ['Екологічне право', 300, 600, ['Екологічні дозволи', 'Оскарження екологічних штрафів', 'Оцінка впливу на довкілля', 'Спори щодо забруднення']],
+            ['Юридичний аналіз документів', 150, 300, ['Аналіз документа за фото', 'Перевірка договору перед підписанням', 'Пояснення судового рішення']],
+            ['Автомобільні спори', 300, 600, ['Стягнення з винуватця ДТП', 'Повернення та відновлення водійських прав', 'Виїзд адвоката на місце ДТП', 'Захист винуватця ДТП у суді', 'Штраф за паркування', 'Перевищення швидкості', 'Керування в нетверезому стані (ст. 130 КУпАП)', 'Стягнення зі страхової компанії']],
+            ['Господарське та корпоративне право', 500, 1000, ['Реєстрація ФОП і ТОВ', 'Господарські договори', 'Корпоративні спори', 'Супровід бізнесу']],
+            ['Військове право', 250, 450, ['Відстрочка від мобілізації', 'Оскарження рішень ВЛК', 'Скарги на дії ТЦК', 'Звільнення з військової служби', 'Виплати військовослужбовцям', 'Статус УБД']],
+            ['Підготовка та правовий аналіз документів', 150, 300, ['Позовна заява', 'Складання договору', 'Претензії та скарги', 'Адвокатський запит']],
+            ['Стягнення заборгованості', 300, 600, ['Борг за розпискою', 'Борг з компанії', 'Досудова претензія', 'Виконавче провадження']],
+            ['Кримінальне право', 400, 800, ['Захист підозрюваного', 'Адвокат на допит', 'Оскарження запобіжного заходу', 'Представництво потерпілого']],
+            ['Міграційне право', 300, 600, ['Посвідка на проживання', 'Громадянство', 'Дозвіл на роботу іноземцям', 'Статус біженця']],
+            ['Нерухомість та земельне право', 300, 600, ['Супровід купівлі-продажу', 'Реєстрація права власності', 'Земельні спори', 'Спори із забудовниками', 'Виселення']],
+            ['Трудове право', 150, 300, ['Незаконне звільнення', 'Стягнення заробітної плати', 'Трудові договори', 'Спори з роботодавцем']],
+            ['Соціальні виплати та спори', 150, 300, ['Оформлення пенсії', 'Субсидії та допомоги', 'Виплати ВПО', 'Оскарження відмов ПФУ']],
+            ['Сімейне право', 200, 400, ['Розлучення', 'Аліменти', 'Поділ майна подружжя', 'Місце проживання дитини', 'Шлюбний договір']],
+            ['Захист боржника', 250, 500, ['Захист від колекторів', 'Оскарження кредитного договору', 'Захист у виконавчому провадженні', 'Реструктуризація боргів']],
+            ['Інші юридичні послуги', 150, 300, ['Юридична консультація', 'Представництво в суді', 'Інше питання']]],
+    errStates: 'Оберіть хоча б одну область.', errCats2: 'Оберіть хоча б одну категорію права.', errSvc: 'Оберіть хоча б одну послугу в категорії «{c}».',
+    cSvc: 'Послуг: ',
     doneDesc2: 'Ми підбираємо ліди за вашими параметрами. Вони зʼявлятимуться в цьому списку, стабільний потік — через 2+ тижні. Сповіщення прийде на ' + EMAIL + '.',
-    s2lead2: 'Оберіть один або кілька типів справ — ми підберемо ліди саме під них.',
     budgetStep: 'Бюджет', capLead: 'Скільки ви готові витрачати на ліди щомісяця? Ми підберемо стільки лідів, скільки вміщається в цю суму.',
     capCalc: 'За орієнтовними цінами це приблизно {a}–{b} лідів на місяць.', estLeads: '≈ {a}–{b} лідів/міс',
     capTiming: 'Стабільний потік лідів — через 2+ тижні, поки прогріваються рекламні кампанії та підключається SEO.',
@@ -144,7 +194,6 @@
     intake: ['Я особисто', 'Помічник', 'Кол-центр'],
     langs: ['Українська', 'Англійська', 'Польська', 'Німецька', 'Російська'],
     s2title: 'Які справи ви хочете отримувати?',
-    s2lead: 'Ціна ліда залежить від цінності справи: чим вищий гонорар за таку справу, тим дорожчий лід.',
     perLead: '/ лід', fNot: 'Справи, які ви НЕ приймаєте', fNotPh: 'Наприклад: апеляції, справи без документів',
     cases: [['Військове право (ТЦК, ВЛК, відстрочка)', 250, 450], ['Сімейне право (розлучення, аліменти)', 200, 400],
             ['Кримінальний захист', 400, 800], ['Нерухомість і земля', 300, 600], ['Спадщина', 250, 500],
@@ -218,7 +267,7 @@
   function blank() {
     return {
       name: personName(), firm: L.firm, bar: '', email: EMAIL, phone: L.phone, site: '', office: '', langs: [0], intake: '',
-      cases: [], notCases: '',
+      cases: [], notCases: '', states: [], cities: {}, places: [], cats: [], svcs: {},
       areas: [], other: '', remote: 'yes', format: 'both',
       budget: '0', consult: 'free', fee: '', det: 'yes', crim: 'yes', urg: 'all', leadLangs: [0],
       period: 'month', excl: 'shared', rows: {}, cap: '',
@@ -231,10 +280,10 @@
     try { var s = JSON.parse(localStorage.getItem(KEY) || 'null'); return s && s.id && s.rows ? s : null; } catch (e) { return null; }
   }
   function save(s) { try { if (s) localStorage.setItem(KEY, JSON.stringify(s)); else localStorage.removeItem(KEY); } catch (e) {} }
-  // Варіант 2 (за замовчуванням) — коротка форма: справи → географія → бюджет. Варіант 1 (?rq=1) — повний майстер.
+  // Варіант 2 (за замовчуванням) — коротка форма: географія → категорія права → послуги → бюджет. Варіант 1 (?rq=1) — повний майстер.
   var V1 = /[?&]rq=1(&|$)/.test(location.search);
-  var FLOW = V1 ? [0, 1, 2, 3, 4, 5, 6] : [1, 2, 7];
-  function flowLabel(k) { return k === 7 ? L.budgetStep : L.steps[k]; }
+  var FLOW = V1 ? [0, 1, 2, 3, 4, 5, 6] : [8, 9, 10, 7];
+  function flowLabel(k) { return V1 ? L.steps[k] : L.flow2[FLOW.indexOf(k)]; }
   var order = load();          // надіслана заявка або null
   var draft = null;            // стан майстра
   var step = 0, seen = 0, doneView = false;
@@ -284,8 +333,8 @@
     var done = !!order;
     var chips = V1 ? L.chips : L.chips2;
     if (done && order.v === 2) {
-      var area = [names(L.areas, order.areas), order.other].filter(Boolean).join(', ');
-      chips = [L.cCases + order.cases.length, area.length > 20 ? area.slice(0, 19) + '…' : area, L.cBudget + money(+order.cap) + L.cSum];
+      var area = areaList(order), at = area.length ? area[0] + (area.length > 1 ? ' +' + (area.length - 1) : '') : '';
+      chips = [at.length > 22 ? at.slice(0, 21) + '…' : at, L.cSvc + svcCount(order), L.cBudget + money(+order.cap) + L.cSum];
     } else if (done) {
       var tt = totals(order);
       chips = [L.cCases + order.cases.length, tt.n + L.cLeads, money(tt.t) + L.cSum];
@@ -376,7 +425,7 @@
     },
     function () {
       var d = draft, m = mult(d);
-      return '<h4 class="rq-h">' + esc(L.s2title) + ' <i>*</i></h4><p class="rq-lead">' + esc(V1 ? L.s2lead : L.s2lead2) + '</p>' +
+      return '<h4 class="rq-h">' + esc(L.s2title) + ' <i>*</i></h4>' +
         '<div class="rq-cases">' + L.cases.map(function (c, i) {
           return '<button type="button" class="rq-case" data-g="cases" data-i="' + i + '" aria-pressed="' + (d.cases.indexOf(i) > -1) + '">' +
             '<span>' + esc(c[0]) + '</span>' + (V1 ? '<em>' + range(rnd(c[1] * m), rnd(c[2] * m)) + ' ' + esc(L.perLead) + '</em>' : '') + '</button>';
@@ -458,16 +507,124 @@
     },
     function () {
       return '<h4 class="rq-h">' + esc(L.fCap) + ' <i>*</i></h4><p class="rq-lead">' + esc(L.capLead) + '</p>' +
-        '<div class="rq-sec rq-sec--first rq-cap"><div class="rq-money">' + input('cap', draft.cap, ' inputmode="numeric" data-num placeholder="' + (EN ? '2000' : '20000') + '" aria-label="' + esc(L.fCap) + '"') + '<em>' + cur() + '</em></div>' +
+        '<div class="rq-sec rq-sec--first rq-cap"><div class="rq-money' + (EN ? ' rq-money--pre' : '') + '">' + input('cap', groupNum(draft.cap), ' inputmode="numeric" data-money placeholder="' + (EN ? '2,000' : '20 000') + '" aria-label="' + esc(L.fCap) + '"') + '<em>' + cur() + '</em></div>' +
           '<p class="rq-hint">' + esc(L.capHint) + '</p><p class="rq-calc" data-rq-calc hidden></p></div>' +
         '<p class="rq-note">' + esc(L.capTiming) + '</p>';
+    },
+    function () {
+      var d = draft, html = '<h4 class="rq-h">' + esc(L.geoTitle) + ' <i>*</i></h4>';
+      if (EN) {
+        html += '<div class="rq-sec rq-sec--first">' + label(L.fPlaces) +
+          '<div class="rq-search"><input type="text" class="rq-input" data-rq-search autocomplete="off" placeholder="' + esc(L.placesPh) + '" aria-label="' + esc(L.fPlaces) + '">' +
+          '<div class="rq-suggest" data-rq-suggest hidden></div></div>' +
+          '<div class="rq-chips rq-picked">' + d.places.map(function (k) {
+            return '<button type="button" class="rq-chip rq-chip--x" data-rq-unpick="' + esc(k) + '" aria-pressed="true">' + esc(placeLabel(k)) + '<span aria-hidden="true">×</span></button>';
+          }).join('') + '</div>' +
+          '<p class="rq-hint">' + esc(L.placesHint) + '</p>' +
+          '<div class="rq-label rq-label--sub"><b>' + esc(L.popular) + '</b></div><div class="rq-chips">' +
+          L.popularKeys.filter(function (k) { return d.places.indexOf(k) < 0; }).map(function (k) {
+            return '<button type="button" class="rq-chip" data-rq-pick="' + esc(k) + '">' + esc(placeLabel(k)) + '</button>';
+          }).join('') + '</div></div>';
+      } else {
+        html += '<div class="rq-sec rq-sec--first">' + label(L.fStates) + chipsHtml('states', L.states.map(function (x) { return x[0]; }), d.states) +
+          '<p class="rq-hint">' + esc(L.statesHint) + '</p></div>';
+        d.states.slice().sort(byNum).forEach(function (si) {
+          var st = L.states[si], sel = d.cities[si] || [];
+          html += '<div class="rq-sub">' + label(fill(L.citiesIn, { s: st[0] })) + '<div class="rq-chips">' +
+            '<button type="button" class="rq-chip" data-g="city" data-s="' + si + '" data-i="-1" aria-pressed="' + !sel.length + '">' + esc(fill(L.allIn, { s: st[0] })) + '</button>' +
+            st[2].map(function (c, i) {
+              return '<button type="button" class="rq-chip" data-g="city" data-s="' + si + '" data-i="' + i + '" aria-pressed="' + (sel.indexOf(i) > -1) + '">' + esc(cityLabel(si, i)) + '</button>';
+            }).join('') + '</div></div>';
+        });
+        html += '<div class="rq-city-extra">' + input('other', d.other, ' placeholder="' + esc(L.fOther2Ph) + '" aria-label="' + esc(L.fOther) + '"') + '</div>';
+      }
+      return html +
+        '<div class="rq-sec">' + label(L.fRemote) + segHtml('remote', yn(), d.remote) + '</div>' +
+        '<div class="rq-sec">' + label(L.fFormat) + segHtml('format', L.formats, d.format) + '</div>';
+    },
+    function () {
+      return '<h4 class="rq-h">' + esc(L.catTitle) + ' <i>*</i></h4>' +
+        '<div class="rq-cases">' + L.cats2.map(function (c, i) {
+          return '<button type="button" class="rq-case" data-g="cats" data-i="' + i + '" aria-pressed="' + (draft.cats.indexOf(i) > -1) + '"><span>' + esc(c[0]) + '</span></button>';
+        }).join('') + '</div>';
+    },
+    function () {
+      var d = draft;
+      return '<h4 class="rq-h">' + esc(L.svcTitle) + ' <i>*</i></h4>' + d.cats.slice().sort(byNum).map(function (c, k) {
+        var sel = d.svcs[c] || [];
+        return '<div class="rq-sec' + (k ? '' : ' rq-sec--first') + '">' +
+          label(L.cats2[c][0], false, '<button type="button" class="rq-link" data-rq-svcall="' + c + '">' + esc(L.selectAll) + '</button>') +
+          '<div class="rq-chips">' + L.cats2[c][3].map(function (t, i) {
+            return '<button type="button" class="rq-chip" data-g="svc" data-c="' + c + '" data-i="' + i + '" aria-pressed="' + (sel.indexOf(i) > -1) + '">' + esc(t) + '</button>';
+          }).join('') + '</div></div>';
+      }).join('') +
+        '<div class="rq-sec">' + label(L.fNotSvc) + '<textarea class="rq-input" data-f="notCases" maxlength="300" placeholder="' + esc(L.fNotSvcPh) + '">' + esc(d.notCases) + '</textarea></div>';
     }
   ];
+  function byNum(a, b) { return a - b; }
+  // місце в EN: 'TX' — весь штат, 'Houston|TX' — місто; підпис у форматі США
+  function stateName(code) {
+    var st = window.US_STATES || [];
+    for (var i = 0; i < st.length; i++) if (st[i][0] === code) return st[i][1];
+    return code;
+  }
+  function placeLabel(k) {
+    var p = k.split('|');
+    return p.length > 1 ? p[0] + ', ' + p[1] : fill(L.allIn, { s: stateName(k) });
+  }
+  function suggest(q) {
+    q = q.trim().toLowerCase();
+    if (q.length < 2) return [];
+    var out = [], taken = draft.places;
+    (window.US_STATES || []).forEach(function (st) {
+      if ((st[1].toLowerCase().indexOf(q) === 0 || st[0].toLowerCase() === q) && taken.indexOf(st[0]) < 0 && out.length < 3) out.push(st[0]);
+    });
+    var cities = window.US_CITIES || [];
+    for (var i = 0; i < cities.length && out.length < 9; i++) {
+      var c = cities[i], full = (c[0] + ', ' + c[1]).toLowerCase(), k = c[0] + '|' + c[1];
+      var hit = full.indexOf(q) === 0 || (' ' + c[0].toLowerCase()).indexOf(' ' + q) > -1;
+      if (hit && taken.indexOf(k) < 0) out.push(k);
+    }
+    return out;
+  }
+  function renderSuggest(q) {
+    var box = modal.querySelector('[data-rq-suggest]');
+    if (!box) return;
+    var list = suggest(q);
+    box.hidden = q.trim().length < 2;
+    box.innerHTML = list.length ? list.map(function (k, i) {
+      return '<button type="button" class="rq-suggest__i' + (i ? '' : ' is-active') + '" data-rq-pick="' + esc(k) + '">' + esc(placeLabel(k)) +
+        (k.indexOf('|') < 0 ? '<em>' + esc(L.entireState) + '</em>' : '') + '</button>';
+    }).join('') : '<p class="rq-suggest__none">' + esc(L.noMatch) + '</p>';
+  }
+  function pick(k) {
+    if (draft.places.indexOf(k) < 0) draft.places.push(k);
+    paint(true);
+    var f = modal.querySelector('[data-rq-search]');
+    if (f) f.focus();
+  }
+  function cityLabel(si, i) { var st = L.states[si]; return st[2][i] + (st[1] ? ', ' + st[1] : ''); }
+  function areaList(o) {
+    if (EN) return (o.places || []).map(placeLabel);
+    var out = [];
+    (o.states || []).slice().sort(byNum).forEach(function (si) {
+      var sel = (o.cities || {})[si] || [];
+      if (!sel.length) out.push(fill(L.allIn, { s: L.states[si][0] }));
+      else sel.slice().sort(byNum).forEach(function (i) { out.push(cityLabel(si, i)); });
+    });
+    if (o.other) out.push(o.other);
+    return out;
+  }
+  function svcCount(o) { var n = 0; for (var c in (o.svcs || {})) n += o.svcs[c].length; return n; }
+  function groupNum(v) { return v ? Number(v).toLocaleString(EN ? 'en-US' : 'uk-UA').replace(/[\u202f\u00a0]/g, ' ') : ''; }
   function leadsFor(d) {
-    var cap = +d.cap, lo = 0, hi = 0;
-    if (!cap || !d.cases.length) return null;
-    d.cases.forEach(function (i) { var e = estFor(d, i); lo += e[0]; hi += e[1]; });
-    lo /= d.cases.length; hi /= d.cases.length;
+    var cap = +d.cap, lo = 0, hi = 0, list = V1 ? d.cases : d.cats, m = mult(d);
+    if (!cap || !list.length) return null;
+    list.forEach(function (i) {
+      var e = V1 ? estFor(d, i) : [rnd(L.cats2[i][1] * m), rnd(L.cats2[i][2] * m)];
+      lo += e[0]; hi += e[1];
+    });
+    lo /= list.length; hi /= list.length;
     var a = Math.floor(cap / hi), b = Math.floor(cap / lo);
     return b ? { a: Math.max(1, a), b: b } : null;
   }
@@ -528,6 +685,12 @@
     }
     if (s === 6 && !(d.tos && d.consent)) return ['errTos'];
     if (s === 7 && !(+d.cap > 0)) return ['errCap', 'cap'];
+    if (s === 8 && (EN ? !d.places.length : !d.states.length && !d.other.trim())) return ['errStates'];
+    if (s === 9 && !d.cats.length) return ['errCats2'];
+    if (s === 10) {
+      var cs = d.cats.slice().sort(byNum);
+      for (var q = 0; q < cs.length; q++) if (!(d.svcs[cs[q]] || []).length) return [null, null, fill(L.errSvc, { c: L.cats2[cs[q]][0] })];
+    }
     return null;
   }
 
@@ -684,6 +847,28 @@
     if (t.closest('[data-rq-back]')) { go(step - 1); return; }
     var g = t.closest('[data-rq-go]');
     if (g) { go(+g.getAttribute('data-rq-go')); return; }
+    var pk = t.closest('[data-rq-pick]');
+    if (pk) { pick(pk.getAttribute('data-rq-pick')); return; }
+    var up = t.closest('[data-rq-unpick]');
+    if (up) { var uk = draft.places.indexOf(up.getAttribute('data-rq-unpick')); if (uk > -1) draft.places.splice(uk, 1); paint(true); return; }
+    if (!t.closest('.rq-search')) { var sb = modal.querySelector('[data-rq-suggest]'); if (sb) sb.hidden = true; }
+    var cc = t.closest('[data-g="city"]');
+    if (cc) {
+      var cs = cc.getAttribute('data-s'), ci = +cc.getAttribute('data-i');
+      if (ci < 0) delete draft.cities[cs];
+      else { var ca = draft.cities[cs] || (draft.cities[cs] = []); toggle(ca, ci); if (!ca.length) delete draft.cities[cs]; }
+      paint(true);
+      return;
+    }
+    var sv = t.closest('[data-g="svc"]');
+    if (sv) { var sc = sv.getAttribute('data-c'); toggle(draft.svcs[sc] || (draft.svcs[sc] = []), +sv.getAttribute('data-i')); paint(true); return; }
+    var sa = t.closest('[data-rq-svcall]');
+    if (sa) {
+      var c2 = sa.getAttribute('data-rq-svcall'), all = L.cats2[c2][3].map(function (_, i) { return i; });
+      draft.svcs[c2] = (draft.svcs[c2] || []).length === all.length ? [] : all;
+      paint(true);
+      return;
+    }
     var c = t.closest('[data-g]');
     if (c) {
       var grp = c.getAttribute('data-g'), i = +c.getAttribute('data-i'), arr = draft[grp];
@@ -691,6 +876,8 @@
         if (i === 0) draft[grp] = arr.indexOf(0) > -1 ? [] : [0];
         else { draft[grp] = arr.filter(function (x) { return x !== 0; }); toggle(draft[grp], i); }
       } else toggle(arr, i);
+      if (grp === 'states' && arr.indexOf(i) < 0) delete draft.cities[i];
+      if (grp === 'cats' && arr.indexOf(i) < 0) delete draft.svcs[i];
       paint(true);
       return;
     }
@@ -708,14 +895,21 @@
   function onInput(e) {
     if (!modal || !modal.classList.contains('active') || doneView) return;
     var t = e.target, f = t.getAttribute('data-f'), row = t.getAttribute('data-row');
+    if (t.hasAttribute('data-rq-search')) { if (e.type === 'input') renderSuggest(t.value); return; }
     if (row !== null) {
       var v = num(t.value); if (v !== t.value) t.value = v;
       (draft.rows[row] || (draft.rows[row] = {}))[t.getAttribute('data-k')] = v;
     } else if (f) {
       if (t.type === 'checkbox') draft[f] = t.checked;
       else {
-        if (t.hasAttribute('data-num')) { var n = num(t.value); if (n !== t.value) t.value = n; }
-        draft[f] = t.value;
+        if (t.hasAttribute('data-money')) {
+          var dg = num(t.value), g2 = groupNum(dg);
+          if (g2 !== t.value) t.value = g2;
+          draft[f] = dg;
+        } else {
+          if (t.hasAttribute('data-num')) { var n = num(t.value); if (n !== t.value) t.value = n; }
+          draft[f] = t.value;
+        }
       }
     } else return;
     t.removeAttribute('aria-invalid');
@@ -730,7 +924,13 @@
     document.addEventListener('input', onInput);
     document.addEventListener('change', onInput);
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && modal && modal.classList.contains('active')) closeModal();
+      if (!modal || !modal.classList.contains('active')) return;
+      var box = modal.querySelector('[data-rq-suggest]');
+      if (e.target.hasAttribute && e.target.hasAttribute('data-rq-search') && box && !box.hidden) {
+        if (e.key === 'Escape') { box.hidden = true; return; }
+        if (e.key === 'Enter') { e.preventDefault(); var first = box.querySelector('[data-rq-pick]'); if (first) pick(first.getAttribute('data-rq-pick')); return; }
+      }
+      if (e.key === 'Escape') closeModal();
     });
   }
 

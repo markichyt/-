@@ -57,7 +57,7 @@
 .rq-steps{display:flex;list-style:none;margin:14px 0 2px;padding:0}
 .rq-steps__i{flex:1;min-width:0;position:relative}
 .rq-steps__i+.rq-steps__i::before{background:#e6ebef;content:"";height:2px;left:-50%;position:absolute;right:50%;top:13px}
-.rq-steps__i.is-done::before,.rq-steps__i.is-current::before{background:#e7a017}
+.rq-steps__i.is-done::before,.rq-steps__i.is-current::before{background:#1499d8}
 .rq-steps__btn{
   align-items:center;background:none;border:0;color:#7a838c;display:flex;flex-direction:column;font:inherit;gap:6px;padding:0;width:100%;
 }
@@ -68,22 +68,22 @@ button.rq-steps__btn:hover span{color:#2c2c2c;text-decoration:underline}
   font-style:normal;font-weight:700;height:26px;justify-content:center;position:relative;width:26px;z-index:1;
 }
 .rq-steps__btn span{font-size:11.5px;line-height:1.25;text-align:center}
-.is-done .rq-steps__btn em{background:#fff3bd;border-color:#e7a017;color:#8a6d00}
-.is-current .rq-steps__btn em{background:#ffdb48;border-color:#e7b800;color:#2c2c2c}
+.is-done .rq-steps__btn em{background:#eaf6fc;border-color:#1499d8;color:#0b7099}
+.is-current .rq-steps__btn em{background:#1499d8;border-color:#1499d8;color:#fff}
 .is-current .rq-steps__btn span{color:#2c2c2c;font-weight:700}
 .rq-steps__mob{display:none}
 .modal.success-modal.rq-modal.rq-modal--short{max-width:46rem}
 .rq-steps--short{margin-left:auto;margin-right:auto;max-width:30rem}
 .rq-cap .rq-money{max-width:20rem}
-.rq-modal.success-modal p.rq-calc{color:#5c4800;font-size:14px;font-weight:600;margin:12px 0 0}
+.rq-modal.success-modal p.rq-calc{color:#0b7099;font-size:14px;font-weight:600;margin:12px 0 0}
 
 /* як це працює */
-.rq-tl{background:#fffbe6;border:1px solid #f1dc8a;border-radius:3px;margin-top:14px;padding:12px 14px;text-align:left;width:100%;box-sizing:border-box}
+.rq-tl{background:#f3f9fd;border:1px solid #cfe8f5;border-radius:3px;margin-top:14px;padding:12px 14px;text-align:left;width:100%;box-sizing:border-box}
 .rq-tl__title{display:block;font-size:13.5px;margin-bottom:9px}
 .rq-tl ol{display:grid;gap:12px;grid-template-columns:repeat(3,1fr);list-style:none;margin:0;padding:0}
-.rq-tl li{border-left:3px solid #ffdb48;padding-left:10px}
+.rq-tl li{border-left:3px solid #1499d8;padding-left:10px}
 .rq-tl li b{display:block;font-size:13.5px;margin-bottom:3px}
-.rq-tl li span{color:#5c5233;font-size:12.5px;line-height:1.45}
+.rq-tl li span{color:#4a545e;font-size:12.5px;line-height:1.45}
 
 /* поля */
 .rq-sec{border-top:1px solid #eef2f6;margin-top:16px;padding-top:14px}
@@ -102,16 +102,16 @@ button.rq-steps__btn:hover span{color:#2c2c2c;text-decoration:underline}
   background:#fff;border:1px solid #d7dfe5;border-radius:1.25rem;color:#2c2c2c;cursor:pointer;
   font:inherit;font-size:13.5px;line-height:1;padding:8px 14px;transition:background .15s,border-color .15s;
 }
-.rq-chip:hover{border-color:#e7a017}
-.rq-chip[aria-pressed="true"]{background:#ffefa8;border-color:#e7a017;font-weight:600}
-.rq-chip[aria-pressed="true"]::before{content:"\2713\00a0";color:#8a6d00}
+.rq-chip:hover{border-color:#1499d8}
+.rq-chip[aria-pressed="true"]{background:#eaf6fc;border-color:#1499d8;color:#0b7099;font-weight:600}
+.rq-chip[aria-pressed="true"]::before{content:"\2713\00a0";color:#0b7099}
 .rq-seg{background:#f2f5f8;border-radius:3px;display:inline-flex;flex-wrap:wrap;gap:2px;padding:3px}
 .rq-seg button{
   background:none;border:0;border-radius:2px;color:#4a545e;cursor:pointer;font:inherit;font-size:13.5px;
   padding:8px 14px;transition:background .15s;
 }
 .rq-seg button:hover{background:#fff}
-.rq-seg button[aria-pressed="true"]{background:#ffdb48;color:#2c2c2c;font-weight:700}
+.rq-seg button[aria-pressed="true"]{background:#1499d8;color:#fff;font-weight:700}
 .rq-inline{align-items:center;display:flex;flex-wrap:wrap;gap:10px}
 .rq-sub{margin-top:14px}
 .rq-input{
@@ -120,15 +120,35 @@ button.rq-steps__btn:hover span{color:#2c2c2c;text-decoration:underline}
 }
 textarea.rq-input{height:auto;min-height:64px;padding:10px 12px;resize:vertical}
 select.rq-input{padding-right:6px}
-.rq-input:focus{border-color:#e7a017;box-shadow:0 0 0 3px rgba(255,219,72,.35);outline:0}
+.rq-input:focus{border-color:#1499d8;box-shadow:0 0 0 3px rgba(20,153,216,.22);outline:0}
 .rq-input[aria-invalid="true"]{border-color:#c2334d}
 .rq-range{align-items:center;display:flex;gap:8px}
 .rq-range span{color:#7a838c;font-size:13px}
 .rq-money{flex:1;position:relative}
 .rq-money em{color:#7a838c;font-size:13px;font-style:normal;pointer-events:none;position:absolute;right:11px;top:50%;transform:translateY(-50%)}
 .rq-money .rq-input{padding-right:28px}
+.rq-money--pre em{left:12px;right:auto}
+.rq-money--pre .rq-input{padding-left:26px;padding-right:12px}
 .rq-money--fee{flex:0 0 190px}
 .rq-city-extra{margin-top:9px}
+/* пошук штатів і міст США */
+.rq-search{position:relative}
+.rq-suggest{
+  background:#fff;border:1px solid #d7dfe5;border-radius:3px;box-shadow:0 8px 24px rgba(16,41,58,.12);left:0;
+  max-height:300px;overflow-y:auto;padding:4px;position:absolute;right:0;top:calc(100% + 4px);z-index:5;
+}
+.rq-suggest__i{
+  align-items:baseline;background:none;border:0;border-radius:2px;color:#2c2c2c;cursor:pointer;display:flex;font:inherit;
+  font-size:14px;gap:10px;justify-content:space-between;padding:9px 10px;text-align:left;width:100%;
+}
+.rq-suggest__i:hover,.rq-suggest__i.is-active{background:#eaf6fc}
+.rq-suggest__i em{color:#667380;font-size:12.5px;font-style:normal}
+.rq-modal.success-modal p.rq-suggest__none{color:#667380;margin:0;padding:9px 10px}
+.rq-picked{margin-top:10px}
+.rq-picked:empty{display:none}
+.rq-chip--x span{color:#0b7099;font-weight:700;margin-left:8px}
+.rq-chip--x[aria-pressed="true"]::before{content:none}
+.rq-label--sub{margin-top:14px}
 
 /* справи з ціною */
 .rq-cases{display:grid;gap:8px;grid-template-columns:1fr 1fr;margin-top:12px}
@@ -140,17 +160,17 @@ select.rq-input{padding-right:6px}
   align-items:center;background:#fff;border:1.5px solid #b9c3cc;border-radius:3px;box-sizing:border-box;color:#2c2c2c;content:"";
   display:flex;font-size:11px;font-weight:700;height:17px;justify-content:center;left:12px;position:absolute;top:11px;width:17px;
 }
-.rq-case:hover{border-color:#e7a017}
-.rq-case[aria-pressed="true"]{background:#fffbe6;border-color:#e7a017}
-.rq-case[aria-pressed="true"]::before{background:#ffdb48;border-color:#e7a017;content:"\2713"}
+.rq-case:hover{border-color:#1499d8}
+.rq-case[aria-pressed="true"]{background:#f3f9fd;border-color:#1499d8}
+.rq-case[aria-pressed="true"]::before{background:#1499d8;border-color:#1499d8;color:#fff;content:"\2713"}
 .rq-case span{color:#2c2c2c;font-size:13.5px;font-weight:600;line-height:1.35}
-.rq-case em{color:#8a6d00;font-size:12.5px;font-style:normal}
+.rq-case em{color:#0b7099;font-size:12.5px;font-style:normal}
 
 /* обсяг і ціна */
 .rq-prow{align-items:center;border-bottom:1px solid #eef2f6;display:grid;gap:6px 12px;grid-template-columns:minmax(0,1fr) 150px 80px;padding:10px 0}
 .rq-prow--head{color:#7a838c;font-size:12px;padding:0 0 6px}
 .rq-prow__case b{display:block;font-size:13.5px;font-weight:600;line-height:1.35}
-.rq-prow__case span{color:#8a6d00;font-size:12.5px}
+.rq-prow__case span{color:#0b7099;font-size:12.5px}
 .rq-qty{text-align:center}
 .rq-prow__st{font-size:12.5px;grid-column:1/-1;line-height:1.4;margin:0}
 .rq-prow__st:empty{display:none}
@@ -160,14 +180,14 @@ select.rq-input{padding-right:6px}
 [data-rq-est]{margin-top:10px}
 .rq-fx{align-items:center;display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
 .rq-fx b{font-size:13px;margin-right:4px}
-.rq-fx__i{background:#fff3bd;border-radius:1.25rem;color:#5c4800;font-size:12.5px;padding:5px 10px}
-.rq-fx__i--down{background:#e8f4fb;color:#0b7099}
+.rq-fx__i{background:#eaf6fc;border-radius:1.25rem;color:#0b7099;font-size:12.5px;padding:5px 10px}
+.rq-fx__i--down{background:#f2f5f8;color:#4a545e}
 .rq-fx__i--none{background:#f2f5f8;color:#686868}
 .rq-total{
-  align-items:baseline;background:#fffbe6;border:1px solid #f1dc8a;border-radius:3px;display:flex;gap:12px;
+  align-items:baseline;background:#f3f9fd;border:1px solid #cfe8f5;border-radius:3px;display:flex;gap:12px;
   justify-content:space-between;margin-top:14px;padding:12px 14px;
 }
-.rq-total span{color:#5c5233;font-size:14px}
+.rq-total span{color:#4a545e;font-size:14px}
 .rq-total b{font-size:18px;font-weight:700}
 .rq-warn{align-self:start;background:#fff6e5;border:1px solid #f3d28a;border-radius:3px;color:#8a5b00;font-size:13px;line-height:1.45;margin-top:27px;padding:9px 12px}
 .rq-note{color:#7a838c;font-size:12.5px;line-height:1.5;margin:14px 0 0}
@@ -179,7 +199,7 @@ select.rq-input{padding-right:6px}
 .rq-ret ul{color:#4a545e;font-size:13px;line-height:1.6;list-style:disc;margin:0;padding-left:18px}
 .rq-ret .rq-ret__note{color:#7a838c;font-size:12.5px;margin-top:6px}
 .rq-check{align-items:flex-start;color:#2c2c2c;cursor:pointer;display:flex;font-size:13.5px;gap:10px;line-height:1.5;margin-top:14px}
-.rq-check input{accent-color:#e7a017;flex:none;height:18px;margin:2px 0 0;width:18px}
+.rq-check input{accent-color:#1499d8;flex:none;height:18px;margin:2px 0 0;width:18px}
 .rq-check a{color:#0b7099}
 
 /* перевірка */
@@ -200,19 +220,19 @@ select.rq-input{padding-right:6px}
   justify-content:space-between;margin-top:16px;padding:14px 0 2px;position:sticky;z-index:2;
 }
 .rq-foot--center{justify-content:center;width:100%}
-.rq-est{color:#5c5233;flex:1;font-size:13px;font-weight:600;text-align:right}
+.rq-est{color:#0b7099;flex:1;font-size:13px;font-weight:600;text-align:right}
 .rq-btn{
-  background:#ffdb48;border:1px solid #e7b800;border-radius:3px;color:#2c2c2c;cursor:pointer;font:inherit;
+  background:#1499d8;border:1px solid #1499d8;border-radius:3px;color:#fff;cursor:pointer;font:inherit;
   font-size:15px;font-weight:700;min-height:44px;padding:11px 26px;text-align:center;transition:background .15s;white-space:nowrap;
 }
-.rq-btn:hover{background:#ffcf1f}
+.rq-btn:hover{background:#0d84bd;border-color:#0d84bd}
 .rq-cancel-btn{background:none;border:0;color:#686868;cursor:pointer;font:inherit;font-size:14px;padding:8px 4px;white-space:nowrap}
 .rq-cancel-btn:hover{color:#2c2c2c}
 
 /* екран «заявку надіслано» */
 .rq-done{align-items:center;display:flex;flex-direction:column;text-align:center}
 .rq-done__ico{
-  align-items:center;background:#fff3bd;border-radius:50%;color:#8a6d00;display:flex;font-size:28px;font-weight:700;
+  align-items:center;background:#eaf6fc;border-radius:50%;color:#1499d8;display:flex;font-size:28px;font-weight:700;
   height:64px;justify-content:center;margin-bottom:14px;width:64px;
 }
 .rq-done h3{font-size:21px;font-weight:700;margin:0 0 6px}
