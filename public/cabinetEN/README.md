@@ -36,11 +36,10 @@ Utility pages: `index.html` (demo map), `demo-stub.html` (stub for addresses out
 
 ## Leads on the page
 
-The cards come from a fresh snapshot of the live `/cabinet/applications/relevant` page
-(August 2026): 10 real client enquiries (enlistment centre, medical board, deferral,
-reserved-occupation status, sole trader registration) and 6 cards of the new **«Lead»**
-type — with a Lead Score, source/category/region chips and a «Buy for N ₴» button right
-in the card. The avatars of consultants who already answered are stored locally.
+The cards are written for the US market: 6 **«Lead»** cards ordered by how valuable the
+case type is to a US firm (truck accident, car accident, medical malpractice, immigration,
+DUI, workers' comp) and 10 client questions from the same demand areas. Each «Lead» card has
+a Lead Score, source/category/region chips and a «Buy for $N» button right in the card. The avatars of consultants who already answered are stored locally.
 Along with the cards, `assets/cabinet/css/glassupply.css` was updated to the live version —
 the older copy had no styles for the new cards.
 

@@ -125,9 +125,12 @@
   }
 
   // demo client contacts: derived from the id so they do not jump between reloads
-  var NAMES = ['Olena Kovalchuk', 'Ihor Melnyk', 'Nataliia Bondarenko', 'Serhii Tkachenko',
-               'Maryna Lytvyn', 'Andrii Shevchuk', 'Oksana Kravets', 'Dmytro Polishchuk'];
-  function contactsFor(id) {
+  var NAMES = ['James Carter', 'Maria Gonzalez', 'Michael Johnson', 'Ashley Williams',
+               'David Nguyen', 'Jennifer Martinez', 'Robert Brown', 'Emily Davis'];
+  var AREA_BY_REGION = { 'Houston, TX': '713', 'Los Angeles, CA': '213', 'Miami, FL': '305',
+                         'Dallas, TX': '214', 'Phoenix, AZ': '602', 'New York, NY': '212' };
+  var AREAS = ['713', '214', '210', '305', '312', '404', '602', '212'];
+  function contactsFor(id, region) {
     var n = 0, str = String(id);
     for (var i = 0; i < str.length; i++) n = (n * 31 + str.charCodeAt(i)) >>> 0;
     var name = NAMES[n % NAMES.length];
@@ -135,7 +138,7 @@
     var lat = name.split(' ')[0].replace(/[^A-Za-z]/g, '').toLowerCase();
     return {
       name: name,
-      phone: '+380 (9' + (n % 10) + ') ' + (100 + n % 900) + '-' + tail.toString().slice(0, 2) + '-' + tail.toString().slice(2),
+      phone: '+1 (' + (AREA_BY_REGION[region] || AREAS[n % AREAS.length]) + ') 555-01' + ('0' + (n % 100)).slice(-2),
       email: lat + tail + '@gmail.com'
     };
   }
@@ -458,7 +461,7 @@
     var ul = document.createElement('ul');
     ul.className = 'order-list';
     ul.innerHTML = state.bought.map(function (b) {
-      var c = contactsFor(b.id || b.itemId || b.title);
+      var c = contactsFor(b.id || b.itemId || b.title, b.region);
       var when = new Date(b.at);
       var stamp = ('0' + when.getDate()).slice(-2) + '.' + ('0' + (when.getMonth() + 1)).slice(-2) + '.' + when.getFullYear();
       return '' +
@@ -514,6 +517,20 @@
       window.demoLeadsReset();
     });
   }
+
+  // ---------- "Read more" on cards ----------
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.main-order__expand-btn');
+    if (!btn) return;
+    var card = btn.closest('.main-order');
+    var text = card && card.querySelector('.main-order__description, .main-order__text');
+    if (!text) return;
+    e.preventDefault();
+    var base = text.classList.contains('main-order__description') ? 'main-order__description' : 'main-order__text';
+    var open = text.classList.toggle(base + '--expanded');
+    var lbl = btn.querySelector('.lbl');
+    if (lbl) lbl.textContent = open ? 'Show less' : 'Read more';
+  });
 
   // ---------- balance top-up ----------
   function initTopUp() {

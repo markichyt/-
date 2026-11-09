@@ -124,3 +124,8 @@
 /* .hidden comes from another bundle on the live site; restored here,
    otherwise pages with language versions show both at once */
 .hidden{display:none}
+
+.main-order:has(.main-order__description--expanded),
+.main-order:has(.main-order__text--expanded) { height: auto; min-height: 388px; }
+.main-order .main-order__description.main-order__description--expanded,
+.main-order .main-order__text.main-order__text--expanded { max-height: none !important; overflow: visible; }
