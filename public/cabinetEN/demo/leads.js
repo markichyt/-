@@ -9,7 +9,6 @@
     PRICE: { question: 1.75, order: 6.25 },
     DISCOUNT_PCT: 0,           // there is no discount on leads — the row stays hidden
     PLAN: 'PREMIUM',
-    TAX_PCT: 23,            // top-up tax, as in the cabinet
     START_BALANCE: 0
   };
 
@@ -524,19 +523,14 @@
     var submit = modal.querySelector('.replenish-card-modal__submit');
     if (!input || !submit) return;
 
-    function calc() {
-      var amount = parseMoney(input.value);
-      var tax = Math.round(amount * CONFIG.TAX_PCT) / 100;
-      return { amount: amount, tax: tax, credited: Math.max(0, Math.round((amount - tax) * 100) / 100) };
-    }
+    var amounts = modal.querySelectorAll('.replenish-card-modal__row-value');
 
     function render() {
-      var v = calc();
-      var cells = modal.querySelectorAll('.replenish-card-modal__row-value');
-      if (cells[0]) cells[0].textContent = money(v.amount);
-      if (cells[1]) cells[1].textContent = money(v.tax);
-      if (cells[2]) cells[2].textContent = money(v.credited);
-      submit.disabled = !(v.amount > 0);
+      var amount = parseMoney(input.value);
+      amounts.forEach(function (cell) {
+        cell.textContent = money(amount);
+      });
+      submit.disabled = !(amount > 0);
     }
 
     function closeTopUp() {
@@ -556,9 +550,9 @@
 
     submit.addEventListener('click', function (e) {
       e.preventDefault();
-      var v = calc();
-      if (v.amount <= 0) return;
-      state.balance += v.credited;
+      var amount = parseMoney(input.value);
+      if (amount <= 0) return;
+      state.balance = Math.round((state.balance + amount) * 100) / 100;
       save(state);
       paintChrome();
       input.value = '';
@@ -566,7 +560,7 @@
       closeTopUp();
       renderReserveBar();
       if (window.demoToast) {
-        window.demoToast('Balance topped up by ' + money(v.credited) + ' — ' + money(v.tax) + ' tax withheld.');
+        window.demoToast('Balance topped up by ' + money(amount) + '.');
       }
     });
 
