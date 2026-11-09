@@ -84,15 +84,9 @@ Currency stays UAH — this is the same cabinet, only the interface language cha
 
 ## Balance top-up
 
-**The demo balance starts at zero.** On the «Top up balance» page the «Top up by card» card opens
-a window where everything is calculated live: type an amount and you immediately see «Amount due»,
-«Tax (23%)» in red and «Will be credited to your balance». The «Top up» button stays disabled until
-an amount is entered; pressing it credits the amount **after tax** to the balance, closes the window,
-and the new balance shows up at once both in the sidebar and in the «Balance» block on the balance page.
-
-This closes the end-to-end demo scenario: balance 0 → buying a 1 200 ₴ lead shows «Not enough funds»
-and how much is missing → top up → the lead can be bought.
-The tax rate is `TAX_PCT` in `CONFIG` (`demo/leads.js`), the starting balance is `START_BALANCE`.
+The demo starts with a zero balance. Select «Top up by card» and enter an amount.
+The dialog shows the same amount due and to be credited. Select «Top up» to credit
+the full amount. The updated balance appears in the sidebar and on the balance page.
 
 ## What else works
 

@@ -4,14 +4,14 @@
 (function () {
   var EN = document.documentElement.lang === 'en';
   var KEY = 'promo_lead_request_v1';
-  var EMAIL = 'o.kovalchuk@consultant.net.ua';
+  var EMAIL = 'e.kurze@consultant.net.ua';
   var SPRITE = 'assets/cabinet/img/sprite/sprite.svg';
   var OFFER = 'https://consultant.net.ua/legal/consultant-agreement';
   var POLICY = 'https://consultant.net.ua/legal/lead-purchase-and-use-policy';
 
   var L = EN ? {
     round: 5,
-    firm: 'Kovalchuk Immigration Law, PLLC', phone: '+1 (713) 555-0148',
+    firm: 'Kurze Immigration Law, PLLC', phone: '+1 (713) 555-0148',
     cardTitle: 'Can’t find the leads you need?', pill: 'Custom order',
     desc: 'If none of the current leads fit, order them for your practice: case types, area, client budget and your price per lead. First leads within 2 days, a steady flow in 2–3 weeks. You’ll be notified by email.',
     chips: ['First leads in 2 days', 'Your price per lead', 'Email notification'],
@@ -134,7 +134,7 @@
     errTos: 'Confirm the terms and the consent to receive leads.'
   } : {
     round: 10,
-    firm: 'АО «Ковальчук і партнери»', phone: '+380 67 123 45 67',
+    firm: 'АО «Курзе і партнери»', phone: '+380 67 123 45 67',
     cardTitle: 'Не знайшли потрібних лідів?', pill: 'Індивідуальне замовлення',
     desc: 'Якщо серед поточних лідів немає потрібних — замовте їх під свою практику: справи, місто, бюджет клієнта, ціна за лід. Перші ліди — протягом 2 днів, стабільний потік — через 2–3 тижні. Сповіщення прийде на пошту.',
     chips: ['Перші ліди до 2 днів', 'Ваша ціна за лід', 'Сповіщення на пошту'],
