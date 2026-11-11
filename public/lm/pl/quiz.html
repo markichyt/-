@@ -1,0 +1,1422 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Analiza Twojej sytuacji w 2–3 minuty — quiz | ConsultantLM</title>
+<meta name="description" content="Opisz swoją sytuację w 2–3 minuty: ConsultantLM ją przeanalizuje, dobierze odpowiednich prawników i pokaże ceny usług, zanim podejmiesz decyzję.">
+<!-- Макет: данные, фахівці и кейсы — заглушки до подключения базы сайта; индексирование запрещено явно -->
+<meta name="robots" content="noindex,nofollow">
+<link rel="canonical" href="https://consultant.net.pl/bezplatna-analiza">
+<link rel="alternate" hreflang="uk" href="https://consultant.net.ua/bezkoshtovnyi-analiz">
+<link rel="alternate" hreflang="en" href="https://consultantlm.com/free-case-analysis">
+<link rel="alternate" hreflang="en-GB" href="https://consultantlm.com/gb/free-case-analysis">
+<link rel="alternate" hreflang="pl" href="https://consultant.net.pl/bezplatna-analiza">
+<link rel="alternate" hreflang="x-default" href="https://consultantlm.com/free-case-analysis">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="icon" href="../design-system/assets/logo/consultant-lm_logo_sign_on-light_clean.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Onest:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../design-system/tokens.css">
+<link rel="stylesheet" href="../design-system/styles.css">
+<link rel="stylesheet" href="../assets/vendor/phone-country-dropdown/phone-country-dropdown.css">
+<link rel="stylesheet" href="../quiz.css">
+<script>window.QUIZ_LOCALE = { lang: 'pl', country: 'PL', titleWords: [7, 12], ai: { name: 'Asystent AI', photo: 'ai-pl' },
+  phone: { code: '+48', digits: 9, groups: [3, 3, 3] },
+  plural: function (n) { var m10 = n % 10, m100 = n % 100; return n === 1 ? 0 : (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) ? 1 : 2; },
+  step: function (n, m) { return 'Krok ' + n + ' z ' + m; },
+  money: function (n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '\u00a0') + '\u00a0zł'; },
+  plans: [{"id":"base","name":"BASE","price":59,"year":637,"discount":5,"example":{"service":"Uzyskanie karty pobytu","price":2598},"features":["Indywidualne konsultacje: 3","Wzory dokumentów: bez ograniczeń","Rozszerzony asystent AI 24/7"],"pill":"Rabat do 5% na wszystkie usługi","savings":{"total":"Szacunkowa oszczędność — do 5 200 zł miesięcznie","items":["3 konsultacje po 200 zł zamiast osobnej płatności — do 600 zł","Wzory dokumentów bez ograniczeń — do 600 zł","Rabat 5% na usługi przy zamówieniach za 80 000 zł — do 4 000 zł"]}},{"id":"pro","name":"PRO","price":199,"year":2149,"discount":10,"recommended":true,"example":{"service":"Uzyskanie karty pobytu","price":2598},"features":["Indywidualne konsultacje: 12","Wzory dokumentów: bez ograniczeń","Osobisty menedżer"],"pill":"Rabat do 10% na wszystkie usługi","savings":{"total":"Szacunkowa oszczędność — do 15 000 zł miesięcznie","items":["12 konsultacji po 200 zł zamiast osobnej płatności — do 2 400 zł","Wzory dokumentów bez ograniczeń — do 600 zł","Rabat 10% na usługi przy zamówieniach za 120 000 zł — do 12 000 zł"]}},{"id":"premium","name":"PREMIUM","price":1199,"year":12949,"discount":20,"example":{"service":"Zaskarżenie zwolnienia i przywrócenie do pracy","price":5006},"features":["Indywidualne konsultacje: bez ograniczeń","Wzory dokumentów: bez ograniczeń","Osobisty menedżer VIP"],"pill":"Rabat do 20% na wszystkie usługi","savings":{"total":"Szacunkowa oszczędność — do 80 000 zł miesięcznie","items":["Konsultacje bez ograniczeń — do 8 000 zł","Wzory dokumentów bez ograniczeń — do 8 000 zł","Rabat 20% na usługi przy zamówieniach za 320 000 zł — do 64 000 zł"]}}],
+  settlements: [['Warszawa', 'woj. mazowieckie', null, 52.23, 21.01], ['Kraków', 'woj. małopolskie', null, 50.06, 19.94], ['Wrocław', 'woj. dolnośląskie', null, 51.11, 17.03], ['Łódź', 'woj. łódzkie', null, 51.76, 19.46], ['Poznań', 'woj. wielkopolskie', null, 52.41, 16.93],
+    ['Gdańsk', 'woj. pomorskie', null, 54.35, 18.65], ['Szczecin', 'woj. zachodniopomorskie', null, 53.43, 14.55], ['Bydgoszcz', 'woj. kujawsko-pomorskie', null, 53.12, 18.01], ['Lublin', 'woj. lubelskie', null, 51.25, 22.57], ['Białystok', 'woj. podlaskie', null, 53.13, 23.16],
+    ['Katowice', 'woj. śląskie', null, 50.26, 19.02], ['Gdynia', 'woj. pomorskie', null, 54.52, 18.53], ['Częstochowa', 'woj. śląskie', null, 50.81, 19.12], ['Radom', 'woj. mazowieckie', null, 51.4, 21.15], ['Rzeszów', 'woj. podkarpackie', null, 50.04, 22.0],
+    ['Toruń', 'woj. kujawsko-pomorskie', null, 53.01, 18.6], ['Sosnowiec', 'woj. śląskie', null, 50.29, 19.1], ['Kielce', 'woj. świętokrzyskie', null, 50.87, 20.63], ['Gliwice', 'woj. śląskie', null, 50.29, 18.67], ['Olsztyn', 'woj. warmińsko-mazurskie', null, 53.78, 20.49],
+    ['Zabrze', 'woj. śląskie', null, 50.32, 18.79], ['Bielsko-Biała', 'woj. śląskie', null, 49.82, 19.04], ['Bytom', 'woj. śląskie', null, 50.35, 18.92], ['Zielona Góra', 'woj. lubuskie', null, 51.94, 15.51], ['Rybnik', 'woj. śląskie', null, 50.1, 18.55],
+    ['Ruda Śląska', 'woj. śląskie', null, 50.26, 18.86], ['Opole', 'woj. opolskie', null, 50.67, 17.93], ['Tychy', 'woj. śląskie', null, 50.12, 18.99], ['Gorzów Wielkopolski', 'woj. lubuskie', null, 52.73, 15.24], ['Elbląg', 'woj. warmińsko-mazurskie', null, 54.16, 19.4],
+    ['Płock', 'woj. mazowieckie', null, 52.55, 19.71], ['Dąbrowa Górnicza', 'woj. śląskie', null, 50.32, 19.19], ['Wałbrzych', 'woj. dolnośląskie', null, 50.77, 16.28], ['Włocławek', 'woj. kujawsko-pomorskie', null, 52.65, 19.07], ['Tarnów', 'woj. małopolskie', null, 50.01, 20.99],
+    ['Chorzów', 'woj. śląskie', null, 50.3, 18.95], ['Koszalin', 'woj. zachodniopomorskie', null, 54.19, 16.17], ['Kalisz', 'woj. wielkopolskie', null, 51.76, 18.09], ['Legnica', 'woj. dolnośląskie', null, 51.21, 16.16], ['Grudziądz', 'woj. kujawsko-pomorskie', null, 53.48, 18.75],
+    ['Słupsk', 'woj. pomorskie', null, 54.46, 17.03], ['Jaworzno', 'woj. śląskie', null, 50.2, 19.27], ['Jastrzębie-Zdrój', 'woj. śląskie', null, 49.96, 18.6], ['Nowy Sącz', 'woj. małopolskie', null, 49.62, 20.69], ['Jelenia Góra', 'woj. dolnośląskie', null, 50.9, 15.73],
+    ['Siedlce', 'woj. mazowieckie', null, 52.17, 22.29], ['Mysłowice', 'woj. śląskie', null, 50.21, 19.17], ['Konin', 'woj. wielkopolskie', null, 52.22, 18.25], ['Piotrków Trybunalski', 'woj. łódzkie', null, 51.41, 19.7], ['Inowrocław', 'woj. kujawsko-pomorskie', null, 52.8, 18.26],
+    ['Lubin', 'woj. dolnośląskie', null, 51.4, 16.2], ['Ostrów Wielkopolski', 'woj. wielkopolskie', null, 51.65, 17.81], ['Suwałki', 'woj. podlaskie', null, 54.1, 22.93], ['Gniezno', 'woj. wielkopolskie', null, 52.54, 17.6], ['Przemyśl', 'woj. podkarpackie', null, 49.78, 22.77],
+    ['Zamość', 'woj. lubelskie', null, 50.72, 23.25], ['Chełm', 'woj. lubelskie', null, 51.14, 23.47], ['Bolesławiec', 'woj. dolnośląskie', null, 51.26, 15.57], ['Wągrowiec', 'woj. wielkopolskie', null, 52.81, 17.2], ['Sopot', 'woj. pomorskie', null, 54.44, 18.56],
+    ['Zakopane', 'woj. małopolskie', null, 49.3, 19.95], ['Pruszków', 'woj. mazowieckie', null, 52.17, 20.8], ['Piaseczno', 'woj. mazowieckie', null, 52.08, 21.02], ['Legionowo', 'woj. mazowieckie', null, 52.4, 20.93], ['Wieliczka', 'woj. małopolskie', null, 49.99, 20.06],
+    ['Kijów', 'Ukraina', null, 50.45, 30.52, 'UA'], ['Lwów', 'Ukraina', null, 49.84, 24.03, 'UA'], ['Berlin', 'Niemcy', null, 52.52, 13.4, 'DE'], ['Praga', 'Czechy', null, 50.08, 14.44, 'CZ']],
+  regionTotal: {} , assets: '../assets/', geo: {"code":"PL","path":"M387.4 388L385.6 377.3L378.4 374.2L376.3 368.1L377.4 364.9L376.3 364.2L376 361.1L372.8 361.8L368 359.4L364.8 361.1L363.3 358.5L356.7 355.6L356.5 353.7L352.7 351.7L354 354.6L345.9 356.6L342.7 353.1L340.9 349.4L341.4 348.4L337.3 347.6L335.5 343.8L339.1 343L342.1 340.1L340.4 333.8L337.1 337.1L330.4 336.8L328.6 338.5L327 336.4L325.1 337.2L324.2 333.9L324.9 333.6L319.6 332L318.7 329.2L306.4 325.5L305.2 327.2L307.8 333.2L310.3 335.5L311.4 340L309.2 339.1L303.2 342.2L298.3 348.4L296.6 348.5L292.7 345.2L291.4 340.8L287.3 334.6L284.5 333.3L283.4 329.8L280 330.1L277.4 327.3L277.9 324.3L281.1 321.4L283.8 321.4L286.8 316.4L282.9 311.2L278.7 310.1L276.4 312.5L272.7 311L268.3 313.9L269 311.8L267.8 308.9L262.7 309.1L260.4 304.5L255.8 305.3L245.7 300.6L242.1 302.3L241.5 298.5L237.9 293.9L238.5 290.3L234.4 288.6L233.3 286.3L231.8 288.4L227.4 285.7L225.6 287.6L227.1 289.8L226.5 296.6L219.3 296.7L225.4 282.7L228.1 268.7L225.7 264.8L224.9 256.6L215.1 251.1L216.5 246L216.1 242.5L212.5 238.5L212 235L209.9 232.6L210.4 230L214.2 225.3L214.7 219.8L217.3 214.1L214.1 211.1L215.2 203.3L209.9 199.6L208.2 193.4L208 190.7L211.9 185.7L210.9 184.2L212.4 180.2L203.5 172.8L201.4 169.3L190.6 161.7L192.3 158.6L191.5 154.3L199.8 148.3L201.7 142.6L201.4 138.7L203.9 134.5L202.3 132.7L200.5 121.5L198.2 117.1L196.5 104.1L198.2 103.3L197.7 100.8L202.8 105.3L207.6 107L210.1 111L211.5 107.3L209.5 106.9L208.2 103.9L209.5 99.4L211.5 99.4L211.8 93.9L210 96.5L209.5 93.6L203.9 92.6L203.5 90.2L200.6 92L202.9 92.9L202.4 94.4L198.8 96.1L192.8 90.1L194.2 88L202.4 89.1L218.1 81.5L263.2 66.9L274.5 64.6L271.9 66L276.5 66L278.2 65.1L278 63.5L274.8 64.1L280.5 59.5L278.7 61.9L282.6 60.1L282.6 58.5L280.8 59.5L287.4 50.7L287.6 52L288.8 51.1L288.8 49.9L287.7 50.7L288.5 49.1L292.8 46L308.3 42.7L312.3 38.6L324.9 33.1L359 27L366.8 27.3L384 37L387.5 42.9L382.2 36.3L371.7 30.4L369.9 33.2L372.5 37.2L372.5 40.4L374.5 40L376.5 46.5L377.2 54.4L389.7 60.1L410.2 58.2L419.9 52.9L422.9 54.2L549 60.6L554.8 56.6L560 57.9L563.3 60.7L563.7 63.8L566.5 63.2L574.8 67.8L580.4 73.3L582.3 80.8L580.8 85L585.2 101.3L586.3 110.1L595.1 135.1L598.9 141.3L597.5 147L599.7 151.2L600.2 169L597.9 173.9L578 184.8L568.5 199.7L569.7 200.9L569.5 203L578.1 205.8L578 207L582 207L583 210.9L585.8 211.1L588.2 213.6L589.9 219.7L587.9 223L586.4 229.9L587.9 232.2L587.4 233.8L584.7 237.2L584.3 246.9L587.3 253.4L589.3 254.5L588.7 256.3L590.8 259.7L588.1 264.1L588.1 266.4L590.3 267.3L592.6 272.4L597.7 277L597.3 278.8L599.4 282.8L599.7 286.6L602.5 291.3L609.4 296.8L603.1 298.2L601.6 300.1L602.3 302.2L604.5 302.9L604.5 305.5L606.8 306.5L607.9 318.2L603.8 321.4L602.6 327.4L590.1 329.9L588.5 333.6L565.8 357.7L547.6 384.2L546.6 386.8L548.2 394.2L549.9 396.6L550.6 403.9L548.3 411.7L555.5 416.9L555.5 423L551.4 419.6L536.1 416.3L534 414L528.8 413.1L528.1 410.9L521.5 409.2L516.8 400.2L512.3 397L509.7 399L506.9 395.3L503.1 393.7L495.9 394.8L488.9 392.1L486.1 395.5L480.9 394.2L479.4 395.5L481 398.4L478.7 398.7L474.6 402.9L468.7 400.2L465 395.5L458.9 397.5L454.5 395.3L453.9 396.6L449.5 396.1L448.1 399.6L441.9 401.7L438.3 410.9L433.6 407.3L429.2 410L426.2 409.4L425.8 407.8L428.2 404.2L427 402.7L426.6 396L420.6 395.4L420.9 392.7L417.7 391.8L415.5 384.4L413.5 382.1L408.6 386.8L404.2 388.2L403.2 392.4L400.3 395.9L392.8 396.2L392.8 389.2L387.4 388Z","proj":[14.1239,54.8383,41.7942,67.7582,190.6,27.0],"cities":[[52.23,21.01],[50.06,19.94],[51.11,17.03],[51.76,19.46],[52.41,16.93],[54.35,18.65],[53.43,14.55],[51.25,22.57],[50.26,19.02],[53.13,23.16],[53.12,18.01],[50.04,22.0]]}, cases: {"family":[["Rozwód w Polsce za porozumieniem stron bez orzekania o winie","Prawomocne orzeczenie rozwodu bez orzekania o winie"],["Zmniejszenie wysokości alimentów","Sąd wydał wyrok na korzyść klienta, zmniejszając alimenty z 2800 PLN do 2000 PLN miesięcznie."],["Ustanowienie pełnomocnictwa do opieki nad dzieckiem podczas nieobecności w Polsce","Pełnomocnictwo poświadczone przez notariusza pozwoliło ciotce opiekować się dzieckiem podczas nieobecności…"]],"general":[["Transport zwłok z Polski do Ukrainy — dokumenty","W przedstawionym scenariuszu rodzina uzyskała niezbędne dokumenty potwierdzające zgon, dopełniła polskich…"],["Ekwiwalent za niewykorzystany urlop w Polsce","W przykładowej sprawie po otrzymaniu pisemnego wezwania pracodawca przekazał sprawę do księgowości i uznał…"],["Zwrot towaru w Polsce — odmowa z powodu otwartej paczki","W przykładowej sprawie po otrzymaniu pisemnego stanowiska sklep zmienił swoją pierwotną odpowiedź."],["Zwrot kaucji w Polsce — uszkodzenia istniały przed najmem","W przykładowej sprawie po otrzymaniu wezwania i kopii dowodów właściciel zrezygnował z potrąceń za szafę i…"]],"debtor":[["Cofnięcie zastrzeżenia numeru PESEL przed podpisaniem umowy kredytowej","W opisanym typowym scenariuszu klient skutecznie cofnął zastrzeżenie numeru PESEL na czas finalizacji umowy…"],["Skuteczne zaskarżenie nakazu zapłaty w Polsce","W przedstawionym scenariuszu nasz zespół przygotował i wniósł zarzuty w ustawowym terminie."],["Ochrona numeru PESEL po wycieku danych i zagrożeniu pożyczką","W przedstawionym scenariuszu klientka zastrzegła numer PESEL w odpowiednim rejestrze i uzyskała potwierdzenie…"]],"social":[["Weryfikacja dokumentów do złożenia wniosku o emeryturę w ZUS — skuteczne przyznanie…","Dokumenty zostały złożone w ZUS bez uwag."]],"migration":[["Legalizacja pobytu i pracy grupy cudzoziemców","W tym modelowym scenariuszu przedsiębiorstwo etapami dopełniło formalności związanych z zatrudnieniem…"],["Wymiana karty pobytu po zmianie nazwiska w Polsce","W przedstawionym scenariuszu urząd wojewódzki przyjął wniosek o wymianę karty pobytu wraz z wymaganymi…"],["Wniosek o CUKR po uzupełnieniu danych PESEL UKR","Niezbędne dane w rejestrze zostały uzupełnione, co pozwoliło przejść do kolejnego etapu procedury."],["Przywrócenie PESEL UKR po błędnej utracie statusu","W wyniku działań naszej firmy ustalono i przeanalizowano przyczynę problemu ze statusem PESEL UKR."]],"auto":[["Wymiana zagranicznego prawa jazdy po odmowie","W tym modelowym scenariuszu po wniesieniu odwołania uchylono decyzję odmowną, a sprawę przekazano do…"],["Anulowanie kary UFG w wysokości 1920 zł za brak OC","W przedstawionym przykładowym scenariuszu towarzystwo ubezpieczeniowe zweryfikowało informacje i…"],["Mandat z fotoradaru w Polsce za innego kierowcę","W przedstawionym przykładowym scenariuszu CANARD otrzymał prawidłowo wypełnione oświadczenie oraz dane osoby…"],["Anulowanie opłaty dodatkowej za parkowanie w Polsce – 300 zł","W przedstawionym przykładowym scenariuszu, po rozpatrzeniu reklamacji i analizie dokumentów, administrator…"]],"business":[["Likwidacja spółki z ograniczoną odpowiedzialnością (Sp. z o.o.) w Polsce","Pełna likwidacja spółki z o.o."],["Uzyskanie licencji na prowadzenie agencji zatrudnienia w Polsce","Klient rozpoczął pełnoprawną działalność jako legalna agencja pracy z możliwością zatrudniania cudzoziemców…"],["Otwarcie sklepu z odzieżą damską w Gdańsku: przypadek pełnego uruchomienia biznesu od…","Firma została w pełni zarejestrowana i gotowa do działania w ciągu 3 tygodni"]],"military":[],"criminal":[],"debt":[["Uzyskanie adresu dłużnika z rejestru PESEL","W przedstawionym scenariuszu organ gminy uwzględnił prawidłowo uzasadniony wniosek i udostępnił dostępne w…"],["Odzyskanie 4500 zł kaucji za wynajem mieszkania w Polsce","W przedstawionym scenariuszu, po otrzymaniu pisemnego wezwania do zapłaty, właściciel mieszkania zgodził się…"],["Odzyskanie wynagrodzenia w Polsce — po wezwaniu do zapłaty","W przykładowej sprawie po otrzymaniu pisemnego wezwania pracodawca przedstawił rozliczenie i przelał zaległe…"]],"other":[]}, caseCounts: {"family":18,"general":37,"debtor":5,"social":49,"migration":119,"auto":52,"business":38,"military":1,"criminal":6,"debt":13,"other":338}, marquee: [["pl/konsultant-nr-id-49","PREMIUM"],["pl/konsultant-nr-id-118","START"],["pl/konsultant-nr-id-32","PREMIUM"],["pl/konsultant-nr-id-14","BASE"],["pl/kuzmina-nataliia-oleksandrivna-1","PREMIUM"],["pl/konsultant-nr-id-50","PREMIUM"],["pl/moroz-yuliia-1","BASE"],["pl/kolomiets-witalij-wladyslawowicz","PREMIUM"],["pl/bondarenko-iryna-2","PREMIUM"],["pl/konsultant-nr-id-69","BASE"],["pl/prokopenko-polina","PREMIUM"],["pl/semenczuk-aleksander-wladimirowicz","PREMIUM"],["pl/chmelinska-olena","START"],["pl/litwinowa-julia","PREMIUM"],["pl/moroz-eugeniusz-olehowicz","PREMIUM"],["pl/serpeninov-oleksandr-petrovic-1","PREMIUM"],["pl/konsultant-nr-id-104","BASE"],["pl/konsultant-nr-id-31","PREMIUM"],["pl/kaufman-vladlena-konstantynowna","PREMIUM"],["pl/szwiecowa-lika","PREMIUM"],["pl/velento-andrii-iosipovic-1","BASE"],["pl/yednak-petro-piotrowicz","PREMIUM"],["pl/kaluza-magdalena-anna-1","PREMIUM"],["pl/snitko-pleszko-michal","PREMIUM"],["pl/powraziuk-ruslan-waleryjowicz","BASE"],["pl/twardowska-krystyna","PREMIUM"],["pl/konsultant-nr-id-105","PREMIUM"],["pl/konsultant-nr-id-76","PREMIUM"]], people: [["Andrzej","Sinewyr","Prawnik","AS","online","pl/av/konsultant-nr-id-49"],["Walerij","Melnyk","Prawnik","WM","online","pl/av/konsultant-nr-id-50"],["Iryna","Bondarenko","Prawnik","IB","online","pl/av/bondarenko-iryna-2"],["Julia","Litwinowa","Prawnik","JL","offline","pl/av/litwinowa-julia"]], answers: [{"tier":"premium","score":"61,76","name":"Andrzej Sinewyr","role":"Prawnik","city":"Warszawa","photo":"pl/av/konsultant-nr-id-49","initials":"AS","ts":"po 14 min","text":""},{"tier":"start","score":"32,91","name":"Pavlo Tykhomirov","role":"Prawnik","city":"Polska","photo":"pl/av/konsultant-nr-id-118","initials":"PT","ts":"po 26 min","text":""},{"tier":"base","score":"33,59","name":"Oleksandra Tarnovska","role":"Prawnik","city":"woj. kujawsko-pomorskie","photo":"pl/av/konsultant-nr-id-14","initials":"OT","ts":"po 41 min","text":"","hide":true}], dqPeople: [["Andrzej","Sinewyr","Prawnik","AS","online","Warszawa","PREMIUM","61,76",["family","property","debt"],"pl/av/konsultant-nr-id-49"],["Anastazja","Wiśniewska","Prawnik","AW","online","Wrocław","PREMIUM","57,77",["criminal","military","auto"],"pl/av/konsultant-nr-id-32"],["Natalia","Kuzmina","Prawnik","NK","online","Wrocław","PREMIUM","47,64",["labor","business","family"],"pl/av/kuzmina-nataliia-oleksandrivna-1"],["Walerij","Melnyk","Prawnik","WM","offline","Warszawa","PREMIUM","44,1",["migration","property","business"],"pl/av/konsultant-nr-id-50"],["Iryna","Bondarenko","Prawnik","IB","online","Warszawa","PREMIUM","41,88",["debt","auto","labor"],"pl/av/bondarenko-iryna-2"],["Polina","Prokopenko","Prawnik","PP","online","Wrocław","PREMIUM","38,21",["military","criminal","migration"],"pl/av/prokopenko-polina"]] };</script>
+<!-- CONSULTANT design system v1.0 · квиз-воронка «Безкоштовний аналіз вашої ситуації» (ТЗ v2) · локаль pl · build.py -->
+</head>
+<body class="funnel-page">
+
+<a class="q-skip-link" href="#main">Przejdź do głównej treści</a>
+
+<!-- Спрайт иконок (§8.3.4): первый узел body, скрыт -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-map-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4 4L19 7"/></symbol>
+  <symbol id="i-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></symbol>
+  <symbol id="i-arrow-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></symbol>
+  <symbol id="i-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/><path d="M8 21h8"/></symbol>
+  <symbol id="i-stop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 21a8 8 0 0 0-16 0"/><circle cx="10" cy="8" r="5"/><path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/></symbol>
+  <symbol id="i-family" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M14.5 20a4.5 4.5 0 0 1 6.5-4"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 12h6M9 16h6"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.5 8.5 8 9 4.5-.5 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18"/><path d="M12 3a14 14 0 0 0 0 18"/></symbol>
+  <symbol id="i-car" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l1.6-4.5h10.8L19 11"/><rect x="3" y="11" width="18" height="6" rx="1.5"/><circle cx="7.5" cy="17.5" r="1.5"/><circle cx="16.5" cy="17.5" r="1.5"/></symbol>
+  <symbol id="i-briefcase" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></symbol>
+  <symbol id="i-shield-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.5 8.5 8 9 4.5-.5 8-4 8-9V6z"/><path d="M12 9v4"/><path d="M12 16h.01"/></symbol>
+  <symbol id="i-scale" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M5 7h14"/><path d="m5 7-3 7a3 3 0 0 0 6 0z"/><path d="m19 7-3 7a3 3 0 0 0 6 0z"/><path d="M8 21h8"/></symbol>
+  <symbol id="i-coins" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="5"/><path d="M14.5 10.5a5 5 0 1 1-6 6"/></symbol>
+  <symbol id="i-dots" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="18" cy="12" r="1.5"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3 5 14h6l-1 7 8-11h-6z"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/><path d="M8 7h7"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="i-message" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"/></symbol>
+  <!-- знаки магазинов — Simple Icons 16.31.0 (CC0), монохром: цвет задаёт страница, как у logo-wall (08-visual §8.6.3) -->
+  <symbol id="i-appstore" viewBox="0 0 24 24" fill="currentColor"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></symbol>
+  <symbol id="i-googleplay" viewBox="0 0 24 24" fill="currentColor"><path d="M22.018 13.298l-3.919 2.218-3.515-3.493 3.543-3.521 3.891 2.202a1.49 1.49 0 0 1 0 2.594zM1.337.924a1.486 1.486 0 0 0-.112.568v21.017c0 .217.045.419.124.6l11.155-11.087L1.337.924zm12.207 10.065l3.258-3.238L3.45.195a1.466 1.466 0 0 0-.946-.179l11.04 10.973zm0 2.067l-11 10.933c.298.036.612-.016.906-.183l13.324-7.54-3.23-3.21z"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></symbol>
+</svg>
+
+<!-- Живой регион: перед main, пустой, создаётся заранее -->
+<p id="ds-status" role="status" class="sr-only"></p>
+
+<main id="main" tabindex="-1">
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     quiz@sunken — единственная секция страницы и её экран-приложение (ADR-038, ADR-039):
+     без шапки и подвала сайта, верхняя панель (локап · шаг · выход), тело с одним
+     видимым экраном S0…S16, нижняя панель действий, закреплённая у края экрана.
+     ═══════════════════════════════════════════════════════════════════════ -->
+<section class="funnel" aria-labelledby="quiz-title" id="funnel" data-step="s0" data-branch="free">
+
+  <header class="funnel__top">
+    <div class="funnel__topin">
+      <a class="funnel__brand" href="https://consultant.net.pl/" aria-label="ConsultantLM — strona główna">
+        <img class="funnel__brand-img--light" src="../design-system/assets/logo/consultant-lm_logo_en_on-light_R.svg" width="580" height="122" alt="" decoding="async">
+        <img class="funnel__brand-img--dark"  src="../design-system/assets/logo/consultant-lm_logo_en_on-dark_R.svg" width="580" height="122" alt="" decoding="async">
+      </a>
+      <span class="funnel__step" id="funnel-where" hidden>Krok 1 z 5</span>
+    </div>
+    <div class="funnel__progress" id="funnel-progress" hidden>
+      <div class="progress progress--segments" id="funnel-bars" role="progressbar" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1" aria-valuetext="Krok 1 z 5">
+        <span class="progress__seg" data-bar="1"></span>
+        <span class="progress__seg" data-bar="2"></span>
+        <span class="progress__seg" data-bar="3"></span>
+        <span class="progress__seg" data-bar="4"></span>
+        <span class="progress__seg" data-bar="5"></span>
+      </div>
+    </div>
+  </header>
+
+  <div class="funnel__body">
+
+    <!-- ── S0 · Вхід у квіз — сцена «як це працює» + текст (правка владельца 21.09: формат скрина 3, интерфейс — как в застосунку) ── -->
+    <section class="funnel__screen funnel__screen--entry" id="s0" data-screen="s0" aria-labelledby="quiz-title">
+      <div class="funnel__stage" role="img" aria-label="Tak to działa w aplikacji: Twoje pytanie, odpowiedź asystenta AI i odpowiedzi kilku prawników">
+        <div class="funnel__device funnel__device--real">
+          <div class="funnel__device-screen">
+            <video class="funnel__device-video" id="s0-video" autoplay muted loop playsinline preload="metadata" poster="../assets/app/flow-pl.jpg" width="720" height="1638" aria-hidden="true" tabindex="-1">
+              <source src="../assets/app/flow-pl.webm" type="video/webm">
+              <source src="../assets/app/flow-pl.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+      <div class="funnel__head">
+        <h1 class="funnel__title funnel__title--hero" id="quiz-title" tabindex="-1">Otrzymaj analizę swojej sytuacji.</h1>
+        <p class="funnel__hint funnel__hint--sm">Opisz problem w 2–3 minuty — przeanalizujemy go i dobierzemy prawników.</p>
+      </div>
+      <ul class="funnel__points" aria-label="Co otrzymujesz">
+        <li><span class="funnel__points-mark" aria-hidden="true"><svg class="icon"><use href="#i-check"></use></svg></span>Wstępna analiza sytuacji</li>
+        <li><span class="funnel__points-mark" aria-hidden="true"><svg class="icon"><use href="#i-check"></use></svg></span>Kilka profesjonalnych opinii</li>
+        <li><span class="funnel__points-mark" aria-hidden="true"><svg class="icon"><use href="#i-check"></use></svg></span>Porównanie prawników i cen usług</li>
+      </ul>
+    </section>
+
+    <!-- ── S1 · Proof №1 — як ConsultantLM підбирає фахівця ──────────────── -->
+    <section class="funnel__screen" id="s1" data-screen="s1" aria-labelledby="s1-title" hidden>
+      <div class="funnel__head">
+        <h2 class="funnel__title" id="s1-title" tabindex="-1">Nie pokazujemy po prostu listy prawników.</h2>
+        <p class="funnel__hint funnel__hint--sm funnel__hide-short">ConsultantLM® dobiera prawników dokładnie do Twojej sytuacji.</p>
+      </div>
+      <div class="funnel__card funnel__card--stat funnel__reveal" data-s1-step="1">
+        <div class="funnel__stat">
+          <p class="funnel__bignum num">3&nbsp;500<span class="funnel__bignum-plus">+</span></p>
+          <p class="funnel__hint funnel__hint--sm">specjalistów na platformie — wybieramy z nich tych, którzy pasują właśnie do Ciebie</p>
+        </div>
+        <div class="mq" data-marquee aria-hidden="true"></div>
+      </div>
+      <div class="funnel__card funnel__reveal" data-s1-step="2">
+        <p class="funnel__card-label">Jak dobieramy dla Ciebie prawników</p>
+        <p class="funnel__hint funnel__hint--sm">Każdego prawnika sprawdzamy według pięciu kryteriów — widzisz tylko tych, którzy pasują:</p>
+        <ul class="funnel__chips" id="s1-chips" aria-label="Kryteria doboru">
+          <li class="funnel__chip"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Doświadczenie w podobnych sprawach</li>
+          <li class="funnel__chip"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Opinie klientów</li>
+          <li class="funnel__chip"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Szybkość odpowiedzi</li>
+          <li class="funnel__chip"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Przejrzyste ceny</li>
+          <li class="funnel__chip"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Potwierdzone doświadczenie</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ── S2 · Q1 · Локація — Крок 1 із 5 ──────────────────────────────── -->
+    <form class="funnel__screen" id="s2" data-screen="s2" aria-labelledby="s2-title" novalidate hidden>
+      <div class="funnel__head">
+        <h2 class="funnel__title" id="s2-title" tabindex="-1">Gdzie potrzebujesz pomocy?</h2>
+        <p class="funnel__hint">Zacznij wpisywać nazwę miejscowości — miasta, gminy lub wsi.</p>
+      </div>
+      <div class="field funnel__field">
+        <label class="field__label" for="settlement">Miejscowość</label>
+        <div class="q-search" id="settlement-box">
+          <svg class="icon q-search__icon" width="20" height="20" aria-hidden="true"><use href="#i-map-pin"></use></svg>
+          <input class="input input--soft q-search__input" id="settlement" name="settlement" type="text" placeholder="Zacznij pisać"
+                 role="combobox" aria-expanded="false" aria-controls="settlement-list" aria-autocomplete="list"
+                 autocomplete="off" enterkeyhint="done" aria-describedby="settlement-hint settlement-err">
+          <button class="q-search__clear" type="button" aria-label="Wyczyść pole" hidden>
+            <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#i-x"></use></svg>
+          </button>
+          <div class="q-search__pop" id="settlement-pop" hidden>
+            <div class="q-search__list" id="settlement-list" role="listbox" aria-label="Miejscowości"></div>
+            <div class="q-search__empty caption" id="settlement-empty" role="status" hidden>Brak miejscowości na liście? Wybierz najbliższą albo zaznacz „zdalnie”.</div>
+          </div>
+        </div>
+        <div class="field__msg">
+          <p class="caption" id="settlement-hint">Na przykład: Kraków, woj. małopolskie</p>
+          <p class="q-error" id="settlement-err" role="alert" hidden>
+            <svg class="q-error__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg>
+            Wybierz miejscowość z listy albo zaznacz „zdalnie”
+          </p>
+        </div>
+      </div>
+      <label class="q-check q-check--card">
+        <input class="q-option__input" type="checkbox" id="remote" name="remote_ok" value="1">
+        <span class="q-option__label">Moja sprawa może być prowadzona zdalnie</span>
+      </label>
+    </form>
+
+    <!-- ── S3 · Proof №2 — фахівці у Вашій локації ───────────────────────── -->
+    <section class="funnel__screen" id="s3" data-screen="s3" aria-labelledby="s3-title" hidden>
+      <div class="funnel__head">
+        <h2 class="funnel__title" id="s3-title" tabindex="-1" aria-live="polite" data-s3-title>Dobieramy prawników…</h2>
+        <p class="funnel__hint funnel__hint--sm funnel__hide-short">Na platformie jest ponad 3 500 specjalistów. Teraz wybierzemy tych, którzy zajmują się właśnie Twoim rodzajem sprawy.</p>
+      </div>
+      <div class="funnel__media funnel__reveal" data-s3-map>
+        <div class="q-media" data-s3-media>
+          <svg class="funnel__geo" viewBox="0 0 800 450" role="img" aria-labelledby="s3-map-title" focusable="false" data-s3-svg>
+            <title id="s3-map-title">Mapa kraju z zaznaczoną miejscowością</title>
+            <path class="funnel__geo-land" data-geo-land d=""/>
+            <g class="funnel__geo-dots" data-geo-dots style="display:none"></g>
+            <g class="funnel__geo-pin" data-geo-pin stroke-width="4" transform="translate(400 215)">
+              <path d="M0 -44 a24 24 0 0 1 24 24 c0 18 -24 44 -24 44 s-24 -26 -24 -44 a24 24 0 0 1 24 -24 z"/>
+              <circle cx="0" cy="-20" r="8" fill="currentColor" stroke="none"/>
+            </g>
+            <text class="funnel__geo-label" data-geo-label x="400" y="240" text-anchor="middle">Miejscowość</text>
+          </svg>
+          <p class="q-media__caption"><strong data-s3-caption>Miejscowość</strong><small data-s3-caption-sub>woj.</small></p>
+          <button class="btn btn--sm funnel__mapbtn" type="button" data-s3-loadmap>Pokaż na mapie</button>
+        </div>
+      </div>
+      <div class="funnel__reveal" data-s3-people-wrap>
+        <div class="funnel__people" id="s3-people" role="list" aria-label="Prawnicy pasujący do zgłoszenia"></div>
+      </div>
+      <p class="caption funnel__reveal" data-s3-people-note>Pasują do Twojego zgłoszenia</p>
+      <p class="funnel__hint funnel__hint--sm funnel__reveal funnel__hide-short" data-s3-bottom>Otrzymasz kilka profesjonalnych opinii o jednej sytuacji i porównasz podejścia prawników.</p>
+    </section>
+
+    <!-- ── S4 · Q2 · Категорія — Крок 2 із 5 (multi) ────────────────────── -->
+    <form class="funnel__screen" id="s4" data-screen="s4" aria-labelledby="s4-title" novalidate hidden>
+      <div class="funnel__head">
+        <h2 class="funnel__title" id="s4-title" tabindex="-1">W jakiej sprawie potrzebujesz pomocy?</h2>
+        <p class="funnel__hint funnel__hint--sm">Wybierz maksymalnie trzy kategorie.</p>
+      </div>
+      <fieldset class="funnel__grid" id="s4-options" aria-describedby="s4-err">
+        <legend class="sr-only">Kategorie prawa — wybierz jedną lub kilka</legend>
+        <!-- плитки рендерит скрипт: категории сайта (заглушки до списка Ігоря, ТЗ S4) -->
+      </fieldset>
+      <p class="funnel__error" id="s4-err" role="alert" hidden>Wybierz co najmniej jedną kategorię, aby kontynuować</p>
+    </form>
+
+    <!-- ── S5 · Proof №3 — досвід саме в цій категорії (динамічний) ─────── -->
+    <section class="funnel__screen funnel__screen--tight" id="s5" data-screen="s5" aria-labelledby="s5-title" hidden>
+      <div class="funnel__head cases-head">
+        <p class="cases-hero"><strong class="cases-hero__num num" data-s5-total>523</strong><span class="cases-hero__label" data-s5-total-label>spraw z ostatnich 12 miesięcy</span></p>
+        <h2 class="funnel__title cases-hero__title" id="s5-title" tabindex="-1">Nasi prawnicy prowadzili już podobne sprawy.</h2>
+      </div>
+      <!-- число кейсів — показник платформи з бази кейсів сайту за категорією (ТЗ S5), не поле консультанта -->
+      <ul class="cases-stats" id="s5-counts" data-gate-allow="G10 3.4: число кейсів за категорією з бази кейсів сайту — показник платформи (ТЗ квіза S5), не число справ консультанта"></ul>
+      <div class="cases-sub"><h3 class="cases-sub__title">Przykłady z platformy</h3><span class="caption funnel__hide-short">Trzy przykłady</span></div>
+      <ul class="cases-list" id="s5-cases" aria-label="Przykłady spraw"></ul>
+      <div class="cases-rating funnel__hide-short" role="group" aria-label="Oceny aplikacji w sklepach">
+        <p class="cases-rating__label">Ocena użytkowników</p>
+        <div class="cases-rating__row">
+          <p class="cases-rating__item" data-gate-allow="G10 3.3: кількість відгуків застосунку в App Store — реальні дані магазину (ТЗ S5), не лічильник відгуків консультанта"><svg class="icon" aria-hidden="true"><use href="#i-appstore"></use></svg><strong class="num">5,0</strong><span class="cases-rating__meta"><b class="cases-rating__store">App Store</b><small>ocena w sklepie</small></span></p>
+          <p class="cases-rating__item" data-gate-allow="G10 3.3: кількість відгуків застосунку в Google Play — реальні дані магазину (ТЗ S5), не лічильник відгуків консультанта"><svg class="icon" aria-hidden="true"><use href="#i-googleplay"></use></svg><strong class="num">4,5</strong><span class="cases-rating__meta"><b class="cases-rating__store">Google Play</b><small>ocena w sklepie</small></span></p>
+        </div>
+      </div>
+      <p class="caption q-disclaimer funnel__hint--sm funnel__hide-short">Opinie wystawiają klienci platformy. Doświadczenie innej osoby nie gwarantuje takiego samego wyniku w Twojej sprawie.</p>
+    </section>
+
+    <!-- ── S6 · Q3 · Опис ситуації — Крок 3 із 5 ────────────────────────── -->
+    <form class="funnel__screen" id="s6" data-screen="s6" aria-labelledby="s6-title" novalidate hidden>
+      <div class="funnel__head">
+        <h2 class="funnel__title" id="s6-title" tabindex="-1">Opowiedz, co się stało</h2>
+        <p class="funnel__hint funnel__hint--sm">Tytuł napisz sam. Sytuację możesz opisać tekstem albo nagrać głosem — im więcej szczegółów, tym dokładniejsza analiza.</p>
+      </div>
+      <div class="field funnel__field">
+        <label class="field__label" for="story-title">Tytuł pytania</label>
+        <input class="input input--soft" id="story-title" name="case_title" type="text" autocomplete="off" enterkeyhint="next" placeholder="Na przykład: Rozwód, dwoje dzieci — opieka i podział majątku" aria-describedby="story-title-hint story-title-err" required>
+        <div class="field__msg">
+          <p class="caption" id="story-title-hint">Liczba słów: <span class="num" data-title-words>0</span> · wymagane od 7 do 12</p>
+          <p class="q-error" id="story-title-err" role="alert" hidden>
+            <svg class="q-error__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg>
+            Tytuł powinien mieć od 7 do 12 słów
+          </p>
+        </div>
+      </div>
+      <div class="field funnel__field funnel__textarea">
+        <label class="field__label" for="story">Opis sytuacji tekstem</label>
+        <div class="q-textarea">
+          <textarea class="input input--soft q-textarea__field" id="story" name="case_description" rows="4" maxlength="1000"
+                    placeholder="Na przykład: postanowiliśmy się rozwieść, mamy dwoje dzieci i nie możemy dojść do porozumienia w sprawie opieki i podziału majątku…"
+                    aria-describedby="story-count story-err"></textarea>
+          <p class="q-textarea__count caption" id="story-count" aria-live="polite"><span class="q-textarea__count-num num">0</span> / 1 000 · minimum 50</p>
+        </div>
+        <div class="field__msg">
+          <p class="q-error" id="story-err" role="alert" hidden>
+            <svg class="q-error__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg>
+            <span data-story-err-text>Opisz sytuację tekstem albo nagraj ją głosem</span>
+          </p>
+        </div>
+      </div>
+      <p class="funnel__or" aria-hidden="true"><span>albo</span></p>
+      <div class="funnel__voice" id="voice" data-state="idle">
+        <button class="btn btn--outline" type="button" data-voice="toggle" aria-describedby="voice-status">
+          <svg class="icon" width="20" height="20" aria-hidden="true" data-voice-icon><use href="#i-mic"></use></svg>
+          <span data-voice-label>Opowiedz głosem · do 1 min</span>
+        </button>
+        <p class="funnel__voice-status" id="voice-status" role="status" aria-live="polite"><span class="funnel__voice-dot" aria-hidden="true"></span><span data-voice-text></span></p>
+        <button class="link" type="button" data-voice="reset" hidden>Nagraj ponownie</button>
+        <p class="q-error" role="alert" data-voice-error hidden>
+          <svg class="q-error__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg>
+          Mikrofon jest niedostępny — opisz sytuację tekstem
+        </p>
+      </div>
+    </form>
+
+    <!-- ── S7 · Processing — запит уже аналізується ──────────────────────── -->
+    <section class="funnel__screen" id="s7" data-screen="s7" aria-labelledby="s7-title" hidden>
+      <div class="funnel__head">
+        <h2 class="funnel__title" id="s7-title" tabindex="-1">Już analizujemy Twoją sytuację.</h2>
+      </div>
+      <ol class="q-steps funnel__checklist" id="s7-list" aria-label="Stan obsługi zgłoszenia" aria-busy="true">
+        <li class="q-steps__item" data-state="upcoming"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">Otrzymaliśmy Twoje pytanie</p></div></li>
+        <li class="q-steps__item" data-state="upcoming"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">Ustalono kategorię</p></div></li>
+        <li class="q-steps__item" data-state="upcoming"><span class="q-steps__dot" aria-hidden="true"></span><div class="q-steps__body"><p class="q-steps__title">Dobieramy odpowiednich prawników</p><p class="q-steps__status" data-status hidden>W toku…</p></div></li>
+      </ol>
+      <div class="appframe appframe--compact" role="img" aria-label="Strona pytania w aplikacji: Twoje pytanie, pod nim pojawia się karta prawnika, który przyjął zgłoszenie">
+        <div class="appframe__bar">Twoje pytanie</div>
+        <article class="appframe__card"><p class="appframe__date"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>01.07.2026, 18:04</p><p class="appframe__qt" data-s7-question>Tytuł Twojego pytania</p><p class="appframe__qtext" data-s7-desc>Opis sytuacji</p></article>
+        <div class="appframe__list" id="s7-answers">
+          <div class="appframe__skel appframe__skel--short"><span class="q-skel"></span><span class="q-skel"></span><span class="q-skel"></span></div>
+          <div class="appframe__skel funnel__hide-short"><span class="q-skel"></span><span class="q-skel"></span><span class="q-skel"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── S8 · Proof №4 — відповіді вже друкуються; тексти відповідей лише в застосунку (ТЗ власника 15.10) ── -->
+    <section class="funnel__screen" id="s8" data-screen="s8" aria-labelledby="s8-title" hidden>
+      <div class="funnel__head">
+        <h2 class="funnel__title" id="s8-title" tabindex="-1">Prawnicy już odpowiadają na Twoje pytanie.</h2>
+        <p class="funnel__hint funnel__hint--sm">Odpowiedzi zobaczysz w aplikacji — kliknij „Dalej”.</p>
+      </div>
+      <div class="appframe appframe--compact" role="img" aria-label="Strona pytania w aplikacji: Twoje pytanie, pod nim prawnicy piszą odpowiedzi">
+        <div class="appframe__bar">Twoje pytanie</div>
+        <article class="appframe__card"><p class="appframe__date"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>01.07.2026, 18:04</p><p class="appframe__qt" data-s8-question>Tytuł Twojego pytania</p><p class="appframe__qtext" data-s8-desc>Opis sytuacji</p></article>
+        <div class="appframe__list appframe__list--stack" data-answers></div>
+        <p class="appframe__note">Treść odpowiedzi pojawi się w aplikacji</p>
+      </div>
+      <p class="funnel__key funnel__hide-short funnel__hide-mid">W aplikacji zobaczysz wszystkie odpowiedzi i porównasz podejścia, zanim wybierzesz prawnika.</p>
+    </section>
+
+    <!-- ── S9 · Q4 · Intent — Крок 4 із 5 ──────────────────────────────── -->
+    <form class="funnel__screen" id="s9" data-screen="s9" aria-labelledby="s9-title" novalidate hidden>
+      <div class="funnel__head">
+        <h2 class="funnel__title" id="s9-title" tabindex="-1">Co chcesz zrobić dalej?</h2>
+      </div>
+      <fieldset class="funnel__options" id="s9-options" aria-describedby="s9-err">
+        <legend class="sr-only">Wybierz jedną odpowiedź</legend>
+        <label class="q-option">
+          <input class="q-option__input" type="radio" name="client_intent" value="high">
+          <span class="q-option__icon" aria-hidden="true"><svg class="icon"><use href="#i-bolt"></use></svg></span>
+          <span class="q-option__label">Jak najszybciej uzyskać pomoc</span>
+        </label>
+        <label class="q-option">
+          <input class="q-option__input" type="radio" name="client_intent" value="medium">
+          <span class="q-option__icon" aria-hidden="true"><svg class="icon"><use href="#i-eye"></use></svg></span>
+          <span class="q-option__label">Zrozumieć możliwe rozwiązania i koszty</span>
+        </label>
+        <label class="q-option">
+          <input class="q-option__input" type="radio" name="client_intent" value="low">
+          <span class="q-option__icon" aria-hidden="true"><svg class="icon"><use href="#i-book"></use></svg></span>
+          <span class="q-option__label">Spokojnie zebrać informacje</span>
+        </label>
+      </fieldset>
+      <p class="funnel__error" id="s9-err" role="alert" hidden>Wybierz jedną z odpowiedzi, aby kontynuować</p>
+    </form>
+
+    
+
+    <!-- ── S11 · Пакети послуг — слайдер 3 пакетів застосунку ──────────────────────────────── -->
+    <form class="funnel__screen" id="s11" data-screen="s11" aria-labelledby="s11-title" novalidate hidden>
+      <div class="funnel__head">
+        <h2 class="funnel__title" id="s11-title" tabindex="-1">Wybierz pakiet, który najbardziej Ci odpowiada.</h2>
+        <p class="funnel__hint funnel__hint--sm funnel__hide-short funnel__hide-mid">Rabat na usługi, konsultacje bez ograniczeń, osobisty menedżer i dostęp do adwokatów premium.</p>
+      </div>
+      <article class="funnel__card funnel__example" aria-live="polite">
+        <p class="funnel__card-label">Przykład korzyści</p>
+        <p class="funnel__example-service"><span data-ex-service>Wyjazd adwokata do zatrzymanego</span> — <strong class="num" data-ex-price>2 598 zł</strong></p>
+        <p class="funnel__example-line">Z pakietem <strong data-ex-plan>PRO</strong> (−<span class="num" data-ex-discount>10</span>&nbsp;%) — <strong class="num" data-ex-new>2 338 zł</strong></p>
+        <p class="funnel__example-total">Zapłać <strong class="num" data-ex-fee>199 zł</strong> za pakiet i zaoszczędź <strong class="num funnel__example-save" data-ex-save>260 zł</strong> na tej usłudze.</p>
+      </article>
+      <div class="plans" id="s11-plans">
+        <div class="plans__toggle funnel__hide-short" role="group" aria-label="Okres płatności">
+          <button class="plans__tab is-on" type="button" data-period="month" aria-pressed="true">1 miesiąc</button>
+          <button class="plans__tab" type="button" data-period="year" aria-pressed="false">1 rok</button>
+        </div>
+        <div class="plans__track" data-plans-track role="radiogroup" aria-label="Pakiety usług">
+          <!-- картки рендерить скрипт з QUIZ_LOCALE.plans (дані пакетів застосунку) -->
+        </div>
+        <div class="plans__nav">
+          <button class="btn btn--icon plans__arrow" type="button" data-plans-prev aria-label="Poprzedni pakiet"><svg class="icon" width="24" height="24" aria-hidden="true"><use href="#i-arrow-left"></use></svg></button>
+          <div class="plans__dots" data-plans-dots role="tablist" aria-label="Pakiety"></div>
+          <button class="btn btn--icon plans__arrow plans__arrow--next" type="button" data-plans-next aria-label="Następny pakiet"><svg class="icon" width="24" height="24" aria-hidden="true"><use href="#i-arrow-left"></use></svg></button>
+        </div>
+        <p class="caption plans__cancel">Możesz anulować w dowolnym momencie. Kupując pakiet, akceptujesz <a href="https://consultant.net.pl/prawo/client-agreement">Ofertę publiczną dla Klientów</a>.</p>
+      </div>
+      <p class="caption q-disclaimer funnel__hint--sm">Wyliczenie jest orientacyjne i nie stanowi oferty handlowej. Ostateczną cenę prawnik podaje przed rozpoczęciem pracy.</p>
+    </form>
+
+    <!-- ── S12 · Q5 · Контакти — Крок 5 із 5 (спільна для обох гілок) ───── -->
+    <form class="funnel__screen funnel__screen--tight" id="s12" data-screen="s12" aria-labelledby="s12-title" novalidate hidden data-ds-event="quiz_contact_submit">
+      <div class="funnel__head">
+        <h2 class="funnel__title" id="s12-title" tabindex="-1">Gdzie wysłać wynik analizy Twojej sytuacji?</h2>
+        <p class="funnel__hint funnel__hint--sm funnel__hide-short">Na ten numer utworzymy Twoje pytanie w aplikacji i wyślemy odpowiedzi prawników.</p>
+      </div>
+      <div class="funnel__form">
+        <div class="field">
+          <label class="field__label sr-only" id="phone-label" for="phone">Telefon (wymagane)</label>
+          <div class="call-trigger-modal__input-group js-call-trigger-modal__input-group funnel__phone" id="phone-box" role="group" aria-labelledby="phone-label">
+            <div class="country-select">
+              <button class="country-select__button js-selected-country" type="button" data-country="PL" aria-label="Kod kraju"><img width="24" height="17" src="../assets/vendor/phone-country-dropdown/img/flags/neutral.png" alt="" class="flag"><span class="dropdown-arrow">&#9660;</span></button>
+              <ul class="country-select__dropdown">
+                <li data-value="+380" data-country-value="UA" class="country-select__option"><img width="24" height="17" src="../assets/vendor/phone-country-dropdown/img/flags/ukraine.png" alt="ukraine" class="flag"><span class="country-name">Ukraina</span><span class="country-code">+380</span></li>
+                <li data-value="+48" data-country-value="PL" class="country-select__option"><img width="24" height="17" src="../assets/vendor/phone-country-dropdown/img/flags/poland.png" alt="poland" class="flag"><span class="country-name">Polska</span><span class="country-code">+48</span></li>
+                <li data-value="+44" data-country-value="UK" class="country-select__option"><img width="24" height="17" src="../assets/vendor/phone-country-dropdown/img/flags/england.png" alt="england" class="flag"><span class="country-name">Wielka Brytania</span><span class="country-code">+44</span></li>
+                <li data-value="+1" data-country-value="USA" class="country-select__option"><img width="24" height="17" src="../assets/vendor/phone-country-dropdown/img/flags/usa.png" alt="usa" class="flag"><span class="country-name">USA</span><span class="country-code">+1</span></li>
+                <li data-value="+971" data-country-value="AE" class="country-select__option"><img width="24" height="17" src="../assets/vendor/phone-country-dropdown/img/flags/ae.png" alt="ae" class="flag"><span class="country-name">ZEA</span><span class="country-code">+971</span></li>
+                <li data-value="+" data-country-value="NEUTRAL" class="country-select__option"><img width="24" height="17" src="../assets/vendor/phone-country-dropdown/img/flags/neutral.png" alt="neutral" class="flag"><span class="country-name">Inny kraj</span><span class="country-code">+</span></li>
+              </ul>
+            </div>
+            <input class="input input--soft" id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+" required aria-describedby="phone-hint phone-err">
+            <input type="hidden" name="country_code" value="UA">
+          </div>
+          <div class="field__msg">
+                        <p class="caption sr-only" id="phone-hint">Kod kraju możesz zmienić na liście po lewej</p>
+            <p class="q-error" id="phone-err" role="alert" hidden>
+              <svg class="q-error__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg>
+              Wpisz pełny numer telefonu
+            </p>
+          </div>
+        </div>
+
+        <details class="funnel__more" id="s12-more">
+          <summary>Dodaj imię i e-mail <span class="q-req">(opcjonalnie)</span><svg class="icon" width="20" height="20" aria-hidden="true"><use href="#i-chevron-down"></use></svg></summary>
+          <div class="field">
+            <label class="field__label" for="name">Imię</label>
+            <input class="input input--soft" id="name" name="name" type="text" autocomplete="given-name" placeholder="Anna" aria-describedby="name-hint">
+            <div class="field__msg"><p class="caption" id="name-hint">Tak będzie się do Ciebie zwracać prawnik</p></div>
+          </div>
+          <div class="field">
+            <label class="field__label" for="email">E-mail</label>
+            <input class="input input--soft" id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="imie@example.com" aria-describedby="email-hint email-err">
+            <div class="field__msg">
+              <p class="caption" id="email-hint">Wyślemy kopię analizy</p>
+              <p class="q-error" id="email-err" role="alert" hidden>
+                <svg class="q-error__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg>
+                Wpisz poprawny adres, na przykład imie@example.com
+              </p>
+            </div>
+          </div>
+        </details>
+
+
+        <div class="field funnel__consent">
+          <label class="q-check">
+            <input class="q-option__input" type="checkbox" id="consent" name="consent" required aria-describedby="consent-err">
+            <span class="q-option__label funnel__hint--sm">Akceptuję <a href="https://consultant.net.pl/prawo/privacy-policy">politykę prywatności</a><span class="sr-only"> (wymagane)</span></span>
+          </label>
+          <div class="field__msg">
+            <p class="q-error" id="consent-err" role="alert" hidden>
+              <svg class="q-error__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg>
+              Aby kontynuować, zaakceptuj politykę prywatności
+            </p>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <!-- ── S13 · Оплата пакета (тільки гілка з пакетом) ─────────────────── -->
+    <form class="funnel__screen" id="s13" data-screen="s13" aria-labelledby="s13-title" novalidate hidden>
+      <div class="funnel__head">
+        <h2 class="funnel__title" id="s13-title" tabindex="-1">Płatność za pakiet usług</h2>
+        <p class="funnel__hint funnel__hint--sm funnel__hide-short funnel__hide-mid">Twoje pytanie jest już utworzone — płatność nie wpływa na analizę.</p>
+      </div>
+      <div class="q-alert" role="alert" tabindex="-1" id="s13-error" hidden>
+        <svg class="q-alert__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg>
+        <div class="q-alert__body">
+          <p class="q-alert__title"><span class="sr-only">Błąd. </span>Płatność nie została zrealizowana</p>
+          <p class="q-alert__text">Bank odrzucił płatność. Spróbuj ponownie lub kontynuuj bez pakietu — Twoje pytanie jest już utworzone.</p>
+          <div class="q-alert__actions">
+            <button class="q-alert__action" type="button" data-pay="retry">Spróbuj ponownie</button>
+          </div>
+        </div>
+      </div>
+      <article class="funnel__card funnel__pay" aria-labelledby="s13-summary-title">
+        <div class="funnel__pay-top">
+          <p class="funnel__card-label" id="s13-summary-title">Twój pakiet</p>
+          <span class="chip chip--sm q-tier" data-tier="pro" data-s13-chip><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="14" width="4" height="7" rx="1"/><rect x="10" y="9" width="4" height="12" rx="1"/><rect x="17" y="4" width="4" height="17" rx="1"/></svg><span data-s13-plan>PRO</span></span>
+        </div>
+        <div class="funnel__pay-row">
+          <p class="funnel__pay-price"><strong class="num" data-s13-total>199 zł</strong><span data-s13-period>/ 1 miesiąc</span></p>
+          <p class="funnel__pay-disc"><strong class="num"><span data-s13-disc>−10&nbsp;%</span></strong><small>rabat na wszystkie usługi</small></p>
+        </div>
+        <ul class="funnel__pay-points">
+          <li><svg class="icon" aria-hidden="true"><use href="#i-coins"></use></svg><span data-s13-save>Łączna oszczędność od 15 000 zł</span></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Anuluj w dowolnym momencie — bez wyjaśnień i kar</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-shield"></use></svg>Bezpieczna płatność — dane karty nie są przechowywane</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-bolt"></use></svg>Pakiet aktywuje się od razu po płatności</li>
+        </ul>
+      </article>
+      <div class="funnel__terms" aria-label="Warunki subskrypcji">
+        <p class="caption">Subskrypcja: pakiet <strong data-s13-plan2>PRO</strong> na <span data-s13-period2>1 miesiąc</span> — <strong class="num" data-s13-price2>199 zł</strong>. Odnawia się automatycznie <span data-s13-cadence>co miesiąc</span> w tej samej cenie, dopóki jej nie anulujesz.</p>
+        <p class="caption">Subskrypcję możesz anulować w dowolnym momencie w ustawieniach aplikacji lub przez pomoc techniczną. Po anulowaniu pakiet działa do końca opłaconego okresu, kolejne płatności nie są pobierane.</p>
+        <p class="caption">Nie przechowujemy danych karty — płatność obsługuje certyfikowany operator płatności.</p>
+        <p class="caption">Klikając „Zapłać”, akceptujesz <a href="https://consultant.net.pl/prawo/client-agreement">Ofertą publiczną dla Klientów</a> oraz <a href="https://consultant.net.pl/prawo/privacy-policy">Politykę prywatności</a>.</p>
+      </div>
+    </form>
+
+    <!-- ── S14 · Пакет активовано ──────────────────────────────────────── -->
+    <section class="funnel__screen funnel__center" id="s14" data-screen="s14" aria-labelledby="s14-title" hidden>
+      <span class="chip chip--sm">Pakiet opłacony</span>
+      <h2 class="funnel__title" id="s14-title" tabindex="-1">Pakiet usług aktywowany.</h2>
+      <p class="funnel__hint">Twój status uwzględniliśmy przy obsłudze zgłoszenia. Pakiet <strong data-s14-plan>PRO</strong> działa od tej chwili.</p>
+    </section>
+
+    <!-- ── S15 · Final processing ────────────────────────────────────────── -->
+    <section class="funnel__screen" id="s15" data-screen="s15" aria-labelledby="s15-title" hidden>
+      <div class="funnel__head">
+        <h2 class="funnel__title" id="s15-title" tabindex="-1">Dziękujemy.</h2>
+        <p class="funnel__hint">Z wynikami analizy zapoznasz się w aplikacji mobilnej ConsultantLM.</p>
+        <p class="funnel__hint funnel__hint--sm funnel__hide-short">Pytanie utworzono dla numeru <span class="num" data-s15-phone>+380 67 123 45 67</span>.</p>
+      </div>
+      <article class="funnel__card funnel__vip" aria-labelledby="s15-vip-title">
+        <div class="funnel__vip-top">
+          <img class="funnel__vip-sign" src="../design-system/assets/logo/consultant-lm_logo_sign_on-dark_clean.svg" width="139" height="122" alt="" decoding="async">
+          <span class="funnel__vip-tag">Pakiet VIP</span>
+        </div>
+        <p class="funnel__vip-title" id="s15-vip-title"><span class="funnel__vip-num"><span class="funnel__vip-upto">Rabat do</span><span class="num">20</span><span class="funnel__vip-pct">%</span></span><span class="funnel__vip-sub">na usługi adwokatów i prawników</span></p>
+        <ul class="funnel__vip-list">
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Konsultacje bez ograniczeń</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Osobisty menedżer</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Dostęp do adwokatów premium</li>
+        </ul>
+        <div class="funnel__vip-foot">
+          <p class="funnel__vip-from">Od <strong class="num" data-s15-from>59 zł</strong> miesięcznie</p>
+          <p class="funnel__vip-tiers" aria-label="Pakiety: BASE, PRO, PREMIUM"><span class="chip chip--sm q-tier" data-tier="base"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="14" width="4" height="7" rx="1"/><rect x="10" y="9" width="4" height="12" rx="1"/><rect x="17" y="4" width="4" height="17" rx="1"/></svg>BASE</span><span class="chip chip--sm q-tier" data-tier="pro"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="14" width="4" height="7" rx="1"/><rect x="10" y="9" width="4" height="12" rx="1"/><rect x="17" y="4" width="4" height="17" rx="1"/></svg>PRO</span><span class="chip chip--sm q-tier" data-tier="premium"><svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="14" width="4" height="7" rx="1"/><rect x="10" y="9" width="4" height="12" rx="1"/><rect x="17" y="4" width="4" height="17" rx="1"/></svg>PREMIUM</span></p>
+        </div>
+      </article>
+      <p class="funnel__key funnel__hide-short funnel__hide-mid">Analiza jest już Twoja — pakiet nie ma na nią wpływu.</p>
+    </section>
+
+    <!-- ── S16 · Final App CTA — останній екран ─────────────────────────── -->
+    <section class="funnel__screen funnel__screen--final" id="s16" data-screen="s16" aria-labelledby="s16-title" data-ds-event="quiz_result_view" hidden>
+      <div class="funnel__head">
+        <h2 class="funnel__title" id="s16-title" tabindex="-1">Odpowiedzi pojawią się w aplikacji ConsultantLM.</h2>
+        <p class="funnel__hint funnel__hint--sm funnel__hide-short">W aplikacji zobaczysz wszystkie analizy Twojej sytuacji w jednym miejscu.</p>
+      </div>
+      <p class="funnel__trigger"><svg class="icon" width="20" height="20" aria-hidden="true"><use href="#i-check"></use></svg>Twoja pierwsza konsultacja jest już dostępna.</p>
+      <ol class="funnel__benefits funnel__hide-mid" aria-label="Co jest w aplikacji">
+        <li>Analiza AI Twojej sytuacji</li>
+        <li>Odpowiedzi kilku odpowiednich prawników</li>
+        <li>Ocena, opinie i profil każdego</li>
+        <li>Usługi z etapami i dokładną ceną</li>
+      </ol>
+      <p class="funnel__key funnel__hide-short">Porównaj podejścia i sam wybierz prawnika.</p>
+      <div class="funnel__stage funnel__stage--final" role="img" aria-label="Jak otworzyć odpowiedzi: zainstaluj aplikację z App Store lub Google Play, zaloguj się numerem telefonu i otwórz swoje pytanie">
+        <div class="funnel__device funnel__device--real">
+          <div class="funnel__device-screen">
+            <video class="funnel__device-video" id="s16-video" muted loop playsinline preload="none" poster="../assets/app/install-pl.jpg" width="720" height="1638" aria-hidden="true" tabindex="-1">
+              <source src="../assets/app/install-pl.webm" type="video/webm">
+              <source src="../assets/app/install-pl.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+      <figure class="funnel__qr" aria-label="Kod QR do otwarcia aplikacji">
+        <div class="funnel__qr-code" aria-hidden="true"><svg role="img" aria-label="Kod QR: link do aplikacji ConsultantLM" focusable="false" viewBox="0 0 132 132" class="segno"><path transform="scale(4)" class="qrline" stroke="currentColor" d="M2 2.5h7m1 0h1m1 0h3m5 0h1m3 0h7m-29 1h1m5 0h1m4 0h3m2 0h3m1 0h1m1 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m1 0h2m2 0h6m2 0h1m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h4m2 0h1m1 0h2m3 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m4 0h1m1 0h2m3 0h1m3 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h1m1 0h1m1 0h1m3 0h1m1 0h1m3 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-19 1h2m4 0h1m1 0h3m-21 1h1m1 0h1m3 0h2m3 0h5m2 0h1m1 0h1m2 0h1m2 0h1m1 0h1m-29 1h1m1 0h2m3 0h1m2 0h1m1 0h2m1 0h3m1 0h1m1 0h3m3 0h2m-29 1h1m2 0h2m1 0h1m1 0h2m1 0h1m3 0h1m3 0h1m2 0h1m2 0h2m1 0h1m-28 1h2m1 0h2m1 0h2m1 0h1m1 0h2m4 0h1m1 0h2m3 0h1m-25 1h2m1 0h3m2 0h3m1 0h1m1 0h1m4 0h1m1 0h1m5 0h1m-28 1h1m2 0h1m3 0h2m5 0h2m2 0h2m1 0h2m3 0h2m-29 1h1m1 0h1m2 0h5m3 0h3m1 0h4m2 0h1m4 0h1m-29 1h1m1 0h1m2 0h1m1 0h3m1 0h2m1 0h1m1 0h1m1 0h1m1 0h1m2 0h2m-23 1h1m3 0h1m1 0h3m1 0h3m5 0h1m1 0h2m4 0h1m-27 1h2m1 0h1m2 0h2m3 0h3m2 0h6m2 0h3m-29 1h3m3 0h1m5 0h1m2 0h1m1 0h4m1 0h1m2 0h1m2 0h1m-26 1h2m5 0h2m1 0h1m1 0h1m4 0h1m2 0h2m-25 1h2m3 0h2m1 0h1m2 0h3m1 0h2m2 0h7m1 0h1m-20 1h1m2 0h2m2 0h2m1 0h3m3 0h3m1 0h1m-29 1h7m1 0h3m1 0h7m1 0h1m1 0h1m1 0h1m3 0h1m-29 1h1m5 0h1m3 0h2m2 0h2m3 0h2m3 0h1m2 0h1m-28 1h1m1 0h3m1 0h1m2 0h1m2 0h4m2 0h8m2 0h1m-29 1h1m1 0h3m1 0h1m3 0h2m2 0h5m1 0h2m2 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h1m2 0h2m2 0h1m5 0h1m2 0h1m2 0h2m-29 1h1m5 0h1m2 0h2m1 0h1m2 0h1m2 0h1m1 0h1m2 0h3m-26 1h7m1 0h1m5 0h2m4 0h1m1 0h4m2 0h1"/></svg></div>
+        <figcaption class="caption">Zeskanuj, aby otworzyć aplikację w telefonie</figcaption>
+      </figure>
+    </section>
+
+    <p class="sr-only" id="funnel-live" role="status" aria-live="polite"></p>
+  </div>
+
+  <!-- ── Панель действий: одна на все экраны, всегда у нижнего края (ТЗ §3) ── -->
+  <footer class="funnel__bottom" id="funnel-bar" aria-label="Działania kroku">
+    <div class="funnel__botin">
+      <p class="funnel__note" id="funnel-note">2–3 minuty</p>
+      <div class="funnel__row">
+        <button class="btn btn--ghost funnel__back" type="button" id="funnel-back" data-nav="back" aria-label="Wstecz" hidden>
+          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+          <span class="funnel__back-text" aria-hidden="true">Wstecz</span>
+        </button>
+        <button class="btn btn--ghost funnel__skip" type="button" id="funnel-skip" data-nav="skip" hidden>Pomiń</button>
+        <button class="btn btn--primary funnel__next" type="button" id="funnel-next" data-nav="next" data-ds-event="quiz_start">
+          <span class="btn__label"><span class="funnel__lbl--full" data-lbl-full>Rozpocznij analizę</span><span class="funnel__lbl--short" data-lbl-short></span></span>
+          <span class="btn__spinner" aria-hidden="true"></span>
+        </button>
+        <a class="btn btn--primary funnel__next" id="funnel-link" href="https://consultantlm.com/app?src=quiz" rel="noopener" data-ds-event="quiz_result_view" hidden>Zobacz odpowiedzi</a>
+      </div>
+      <div class="funnel__row" id="funnel-altrow" hidden>
+        <button class="btn btn--outline btn--block funnel__alt" type="button" id="funnel-alt" data-nav="free">Kontynuuj bez VIP</button>
+      </div>
+    </div>
+  </footer>
+
+</section>
+</main>
+
+<script src="../assets/vendor/jquery.min.js"></script>
+<script src="../assets/vendor/jquery.mask.min.js"></script>
+<script src="../assets/vendor/phone-country-dropdown/phone-country-dropdown.js"></script>
+<script>
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ВОРОНКА (ТЗ v2, 17.09.2026; ADR-038, ADR-039)
+   · экран = #sN в URL (аналитика по шагам; ТЗ §5) · «Назад» и действие шага — в нижней панели
+   · состояние — только в памяти: повторный вход начинает квиз сначала (ТЗ §5)
+   · UTM / источник — с первого экрана до лида · события — dataLayer + CustomEvent «ds:quiz»
+   · фокус после смены экрана — на заголовок, живой регион объявляет шаг
+   ═══════════════════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+  var root = document.getElementById('funnel');
+  if (!root) return;
+  /* локаль страницы: язык, телефонный код и маска, валюта, множественное число, города — window.QUIZ_LOCALE (build.py) */
+  var L = window.QUIZ_LOCALE || {};
+
+  /* ── данные-заглушки (в продукте — база сайта); населённые пункты — из локали ── */
+  var SETTLEMENTS = L.settlements || [
+    ['Kijów', 'Kijów', 1000, 50.45, 30.52], ['Lwów', 'obw. lwowski', 640, 49.84, 24.03], ['Odessa', 'obw. odeski', 520, 46.48, 30.73],
+    ['Charków', 'obw. charkowski', 480, 49.99, 36.23], ['Dniepr', 'obw. dniepropetrowski', 450, 48.46, 35.05], ['Połtawa', 'obw. połtawski', 1000, 49.59, 34.55],
+    ['Zaporoże', 'obw. zaporoski', 210, 47.84, 35.14], ['Winnica', 'obw. winnicki', 190, 49.23, 28.47], ['Iwano-Frankiwsk', 'obw. iwanofrankiwski', 170, 48.92, 24.71],
+    ['Czerkasy', 'obw. czerkaski', 160, 49.44, 32.06], ['Chmielnicki', 'obw. chmielnicki', 150, 49.42, 26.98], ['Żytomierz', 'obw. żytomierski', 140, 50.25, 28.66],
+    ['Krzywy Róg', 'obw. dniepropetrowski', 140, 47.91, 33.39], ['Równe', 'obw. rówieński', 130, 50.62, 26.25], ['Łuck', 'obw. wołyński', 120, 50.75, 25.33],
+    ['Mikołajów', 'obw. mikołajowski', 120, 46.97, 32.0], ['Tarnopol', 'obw. tarnopolski', 110, 49.55, 25.59], ['Czerniowce', 'obw. czerniowiecki', 100, 48.29, 25.94],
+    ['Użhorod', 'obw. zakarpacki', 90, 48.62, 22.29], ['Czernihów', 'obw. czernihowski', 90, 51.5, 31.29], ['Kropywnycki', 'obw. kirowohradzki', 85, 48.51, 32.26],
+    ['Sumy', 'obw. sumski', 80, 50.91, 34.8], ['Krzemieńczuk', 'obw. połtawski', 70, 49.07, 33.42], ['Chersoń', 'obw. chersoński', 60, 46.64, 32.61],
+    ['Biała Cerkiew', 'obw. kijowski', 60, 49.8, 30.11], ['Browary', 'obw. kijowski', 45, 50.51, 30.79], ['Dubno', 'obw. rówieński', 41, 50.42, 25.75],
+    ['Irpień', 'obw. kijowski', 40, 50.52, 30.25], ['Mukaczewo', 'obw. zakarpacki', 35, 48.44, 22.72], ['Kamieniec Podolski', 'obw. chmielnicki', 32, 48.68, 26.58],
+    ['Humań', 'obw. czerkaski', 30, 48.75, 30.22], ['Bucza', 'obw. kijowski', 30, 50.54, 30.21], ['Drohobycz', 'obw. lwowski', 28, 49.35, 23.51],
+    ['Pawłohrad', 'obw. dniepropetrowski', 26, 48.52, 35.87], ['Berdyczów', 'obw. żytomierski', 25, 49.9, 28.58], ['Kowel', 'obw. wołyński', 24, 51.22, 24.71],
+    ['Niżyn', 'obw. czernihowski', 22, 51.05, 31.89], ['Wasylków', 'obw. kijowski', 20, 50.18, 30.31], ['Stryj', 'obw. lwowski', 20, 49.26, 23.85],
+    ['Obuchów', 'obw. kijowski', 18, 50.11, 30.63], ['Kołomyja', 'obw. iwanofrankiwski', 18, 48.53, 25.04], ['Fastów', 'obw. kijowski', 15, 50.08, 29.92],
+    ['Nowogród Wołyński', 'obw. żytomierski', 12, 50.59, 27.62], ['Sławutycz', 'obw. kijowski', 6, 51.52, 30.76], ['Tetijów', 'obw. kijowski', 4, 49.37, 29.68],
+    ['Kagarlik', 'obw. kijowski', 3, 49.87, 30.82], ['Wołodarka', 'obw. kijowski', 2, 49.52, 29.92], ['Stawyszcze', 'obw. kijowski', 1, 49.39, 30.19],
+    ['Warszawa', 'Polska', 38, 52.23, 21.01, 'PL'], ['Kraków', 'Polska', 21, 50.06, 19.94, 'PL'], ['Berlin', 'Niemcy', 17, 52.52, 13.4, 'DE'], ['Praga', 'Czechy', 12, 50.08, 14.44, 'CZ']
+  ];
+  /* карта країни на S3: контур і проекція приходять з QUIZ_LOCALE.geo (tools/make-geo.py) */
+  var GEO = L.geo || null, ASSETS = L.assets || 'assets/', geoCache = {};
+  if (GEO) geoCache[L.country || 'UA'] = GEO;
+  function geoXY(g, lat, lon) { var p = g.proj; return [p[4] + (lon - p[0]) * p[2], p[5] + (p[1] - lat) * p[3]]; }
+  /* контур страны населённого пункта; нет файла — карта мира */
+  function loadGeo(cc) {
+    if (geoCache[cc]) return Promise.resolve(geoCache[cc]);
+    if (!window.fetch) return Promise.reject(new Error('no fetch'));
+    return fetch(ASSETS + 'geo/' + cc + '.json').then(function (r) { if (!r.ok) throw new Error(cc); return r.json(); }).then(function (g) { geoCache[cc] = g; return g; });
+  }
+  var REGION_TOTAL = L.regionTotal || { 'obw. kijowski': 1000, 'obw. rówieński': 130, 'obw. żytomierski': 140 };
+  var CATEGORIES = [
+    ['family', 'Rodzina', 312, 'i-family'], ['general', 'Sprawy ogólne', 240, 'i-file'], ['debtor', 'Ochrona dłużnika', 198, 'i-shield'],
+    ['social', 'Sprawy socjalne', 165, 'i-heart'], ['migration', 'Migracja', 184, 'i-globe'], ['auto', 'Motoryzacja', 150, 'i-car'],
+    ['business', 'Biznes', 220, 'i-briefcase'], ['military', 'Sprawy wojskowe', 275, 'i-shield-alert'], ['criminal', 'Sprawy karne', 130, 'i-scale'],
+    ['debt', 'Odzyskiwanie długów', 118, 'i-coins'], ['other', 'Inne', 0, 'i-dots']
+  ];
+  /* відповіді фахівців на S7/S8 — три рівні; для інших країн — з QUIZ_LOCALE.answers (build.py, data/cast-<loc>.json) */
+  var ANSWERS = L.answers || [
+    { tier: 'premium', score: '76,37', name: 'Ołeksandr Studencow', role: 'Prawnik', city: 'Kijów', photo: 'st', initials: 'SO', ts: 'po 14 min', text: 'Proponuje drogę pozasądową i wyjaśnia, dlaczego w Twoim przypadku jest szybsza.' },
+    { tier: 'pro', score: '68,26', name: 'Ołena Sobianina', role: 'Prawnik', city: 'Odessa', photo: 'so', initials: 'SO', ts: 'po 26 min', text: 'Radzi od razu przygotować pozew i pokazuje, które dowody wzmocnią Twoje stanowisko.' },
+    { tier: 'start', score: '34,15', name: 'Serhij Wysocki', role: 'Prawnik', city: 'Odessa', photo: 'vy', initials: 'WS', ts: 'po 41 min', hide: true, text: 'Radzi spisać ustalenia na piśmie i od razu złożyć wniosek o alimenty — to oszczędzi czas w sądzie.' }
+  ];
+  var CASE_COUNT = L.caseCounts || null;  // реальна кількість кейсів за категорією (data/quiz-cases.json), інакше — показник з CATEGORIES
+  function caseCount(id) { var c = CATEGORIES.filter(function (x) { return x[0] === id; })[0]; return CASE_COUNT ? (CASE_COUNT[id] || 0) : (c ? c[2] : 0); }
+  var CASES = L.cases || {  // кейси — заголовками, як у макеті власника 24.09 (фікстури до бази кейсів сайту)
+    family: [['Rozwód i miejsce zamieszkania dziecka', 'Ugoda i harmonogram kontaktów z dzieckiem'], ['Alimenty od ojca mieszkającego za granicą', 'Zasądzono alimenty w stałej kwocie'], ['Opieka babci nad wnukiem', 'Opiekę ustanowiono, świadczenia wypłacono']],
+    general: [['Sąsiad zalał mieszkanie, ubezpieczyciel odmówił', 'Szkodę naprawiono bez sądu'], ['Sporne naliczenia od zarządcy budynku', 'Naliczenia skorygowano, dług anulowano'], ['Odmowa udostępnienia informacji publicznej', 'Informację udostępniono po skardze']],
+    debtor: [['Nacisk windykatorów z powodu pożyczki', 'Odsetki karne uznano za bezprawne, kwotę obniżono'], ['Pozew banku o kredyt sprzed 10 lat', 'Uwzględniono przedawnienie, powództwo oddalono'], ['Komornik zablokował kartę, na którą wpływa pensja', 'Zajęcie zniesiono, ustalono harmonogram spłaty']],
+    social: [['Odmowa emerytury z powodu nieuwzględnionego stażu', 'Staż zaliczono, emeryturę przyznano'], ['Nie wypłacają świadczenia dla osób przesiedlonych', 'Wypłaty wznowiono wraz z zaległościami'], ['Odmowa przyznania grupy inwalidzkiej', 'Decyzję zmieniono, grupę przyznano']],
+    migration: [['Karta pobytu po zmianie pracodawcy', 'Kartę przedłużono bez wyjazdu'], ['Łączenie rodziny z zagranicy', 'Wiza D i zezwolenie na pobyt uzyskane'], ['Groźba wydalenia z powodu meldunku', 'Przymusowy powrót uchylono']],
+    auto: [['Wypadek, sprawca nie miał polisy OC', 'Odszkodowanie zasądzone przez sąd'], ['Ubezpieczyciel zaniżył wypłatę po wypadku', 'Dopłata po niezależnej wycenie'], ['Utrata prawa jazdy za odmowę badania', 'Postanowienie uchylono, prawo jazdy zachowane']],
+    business: [['Kontrahent nie płaci za towar', 'Dług odzyskany wraz z odsetkami i kosztami'], ['Urząd skarbowy naliczył dodatkowy podatek', 'Dodatkowy wymiar podatku zaskarżono, kwotę obniżono'], ['Spółka z zagranicznym wspólnikiem', 'Spółkę zarejestrowano, konto otwarto']],
+    military: [['Grzywna z TCK bez prawidłowego doręczenia', 'Postanowienie uchylono'], ['Odroczenie dla opiekuna osoby z niepełnosprawnością', 'Odroczenie przyznane, dane w rejestrze'], ['Brak wypłaty świadczeń po zranieniu', 'Świadczenie przyznano, zaległość spłacono']],
+    criminal: [['Przeszukanie bez postanowienia sądu', 'Dowody uznano za niedopuszczalne'], ['Podejrzenie oszustwa bez dowodów', 'Postępowanie umorzono'], ['Zatrzymanie bez obrońcy', 'Złagodzono środek zapobiegawczy']],
+    debt: [['Dłużnik nie odpowiadał na kontakt', 'Dług odzyskany, zajęto samochód'], ['Najemca nie płaci i nie opuszcza lokalu', 'Lokal odzyskany, dług zasądzony'], ['Brak zwrotu zaliczki za remont', 'Pieniądze zwrócone z odsetkami']]
+  };
+  var PEOPLE = L.people || [
+    ['Studencow', 'Ołeksandr', 'Prawnik', 'SO', 'online', 'st'], ['Mołczanow', 'Oleh', 'Adwokat', 'MO', 'online', 'mo'],
+    ['Podliniewa', 'Wioleta', 'Prawnik', 'PW', 'online', 'po'], ['Hrycaj', 'Mykoła', 'Prawnik', 'HM', 'offline', 'hr']
+  ];
+
+  /* ── порядок экранов, вопросы, панель действий ── */
+  var STEPS = ['s0','s1','s2','s3','s4','s5','s6','s7','s8','s9','s12','s15','s11','s13','s14','s16'];
+  var NAMES = { s0:'entry', s1:'proof_matching', s2:'q_location', s3:'proof_local', s4:'q_category',
+    s5:'proof_cases', s6:'q_description', s7:'processing', s8:'proof_opinions', s9:'q_intent',
+    s11:'membership', s12:'q_contacts', s13:'checkout', s14:'membership_success',
+    s15:'final_processing', s16:'app_cta' };
+  var QUESTION = { s2:[1,'Lokalizacja'], s4:[2,'Kategoria'], s6:[3,'Opis'], s9:[4,'Zamiary'], s12:[5,'Kontakt'] };
+  var NEXT = { s0:'s1', s1:'s2', s2:'s3', s3:'s4', s4:'s5', s5:'s6', s6:'s7', s7:'s8', s8:'s9', s9:'s12',
+    s15:'s11', s13:'s14', s14:'s16' };
+  var ANIMATED = { s1:true, s3:true, s7:true };
+  var BAR = {
+    s0:  { label:'Rozpocznij analizę', event:'quiz_start', back:false, note:'2–3 minuty' },
+    s1:  { label:'Dalej' },
+    s2:  { label:'Dalej', submit:true },
+    s3:  { label:'Dalej' },
+    s4:  { label:'Dalej', submit:true },
+    s5:  { label:'Dalej' },
+    s6:  { label:'Przeanalizuj sytuację', short:'Przeanalizuj', submit:true },
+    s7:  { label:'Dalej' },
+    s8:  { label:'Dalej' },
+    s9:  { label:'Dalej', submit:true },
+    s11: { label:'Kup pakiet', submit:true, alt:{ label:'Kontynuuj bez VIP', nav:'free' } },
+    s12: { label:'Otrzymaj analizę', submit:true, event:'quiz_contact_submit' },
+    s13: { label:'Zapłać', submit:true, alt:{ label:'Kontynuuj bez VIP', nav:'free-after-fail' } },
+    s14: { label:'Dalej', back:false },
+    s15: { label:'Poznaj szczegóły', back:false, alt:{ label:'Kontynuuj bez VIP', nav:'free' } },
+    s16: { link:true, back:false, note:'Otworzy się App Store lub Google Play, zależnie od urządzenia. Zaloguj się numerem podanym w quizie.' }
+  };
+
+  var PLANS_ENTER = null;
+  var state = { branch:'free', settlement:null, remote:false, categories:[], description:'', voice:null,
+    intent:null, plan:null, phone:'', name:'', email:'', channels:[], leadId:null, paid:false, title:'',
+    payFail:false, attribution:{}, trail:[] };
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  var timers = [];
+  /* модальность ввода: после мыши/касания фокус уходит на main без кольца, с клавиатуры — на заголовок с кольцом */
+  var modality = 'pointer';
+  addEventListener('pointerdown', function () { modality = 'pointer'; }, true);
+  addEventListener('keydown', function (e) { if (e.key === 'Tab' || e.key === 'Enter' || e.key === ' ' || e.key.indexOf('Arrow') === 0) modality = 'keyboard'; }, true);
+
+  /* ── служебное ── */
+  var $ = function (sel, ctx) { return (ctx || document).querySelector(sel); };
+  var $$ = function (sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); };
+  var live = $('#funnel-live');
+  var bar = { back: $('#funnel-back'), skip: $('#funnel-skip'), next: $('#funnel-next'), link: $('#funnel-link'),
+    altrow: $('#funnel-altrow'), alt: $('#funnel-alt'), note: $('#funnel-note'),
+    full: $('[data-lbl-full]'), short: $('[data-lbl-short]') };
+  function later(fn, ms) { var t = setTimeout(fn, reduce.matches ? Math.min(ms, 80) : ms); timers.push(t); return t; }
+  function clearTimers() { timers.forEach(clearTimeout); timers = []; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]; }); }
+  function nbsp(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
+  /* форма слова по правилу локали: L.plural(n) → 0 | 1 | 2 (uk: 1 фахівець · 2 фахівці · 5 фахівців; en: 1 specialist · 2 specialists) */
+  function pluralIndex(n) { if (L.plural) return L.plural(n); var m10 = n % 10, m100 = n % 100;
+    if (m10 === 1 && m100 !== 11) return 0; if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return 1; return 2; }
+  function plural(n, forms) { return forms[pluralIndex(n)]; }
+  function specialists(n, acc) { return n >= 1000 ? '1 000+ prawników' : nbsp(n) + ' ' + plural(n, acc ? ['prawnika', 'prawnicy', 'prawników'] : ['prawnik', 'prawnicy', 'prawników']); }
+  function stepText(n, m) { return L.step ? L.step(n, m) : 'Krok ' + n + ' z ' + m; }
+  function money(n) { return L.money ? L.money(n) : nbsp(n) + ' zł'; }
+  function track(ev, extra) {
+    var d = { event: ev, quiz_branch: state.branch, quiz_lead: state.leadId || null };
+    if (extra) for (var k in extra) d[k] = extra[k];
+    for (var a in state.attribution) d[a] = state.attribution[a];
+    (window.dataLayer = window.dataLayer || []).push(d);
+    document.dispatchEvent(new CustomEvent('ds:quiz', { detail: d }));
+  }
+  function say(text) { if (live) { live.textContent = ''; setTimeout(function () { live.textContent = text; }, 40); } }
+  function setBusy(btn, on) { if (!btn) return; btn.setAttribute('aria-busy', on ? 'true' : 'false'); btn.disabled = !!on; }
+  function catOf(id) { return CATEGORIES.filter(function (c) { return c[0] === id; })[0]; }
+
+  /* атрибуция — с первого экрана до лида (ТЗ §5) */
+  (function () {
+    var p = new URLSearchParams(location.search);
+    ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','source','campaign','creative','landing','ref'].forEach(function (k) {
+      if (p.get(k)) state.attribution[k] = p.get(k);
+    });
+    if (document.referrer) state.attribution.referrer = document.referrer;
+    state.attribution.entry_url = location.href.split('#')[0];
+    state.attribution.entered_at = new Date().toISOString();
+  })();
+
+  /* ── доступность экрана по состоянию (повторный вход — сначала, ТЗ §5) ── */
+  function allowed(id) {
+    switch (id) {
+      case 's0': case 's1': case 's2': return true;
+      case 's3': case 's4': return !!(state.settlement || state.remote);
+      case 's5': case 's6': return state.categories.length > 0;
+      case 's7': case 's8': case 's9': return !!(state.description || state.voice);
+      case 's12': return !!state.intent;
+      case 's11': return !!state.leadId;
+      case 's13': return !!state.leadId && !!state.plan && !state.paid;
+      case 's14': return !!state.paid;
+      case 's15': case 's16': return !!state.leadId;
+    }
+    return false;
+  }
+
+  /* ── прогресс в верхней панели ── */
+  var progress = $('#funnel-progress'), bars = $('#funnel-bars'), where = $('#funnel-where');
+  var STEP_AT = { s1: 1, s2: 1, s3: 2, s4: 2, s5: 3, s6: 3, s7: 4, s8: 4, s9: 4, s12: 5 };  // крок видно й на проміжних екранах: номер наступного питання
+  function updateProgress(id) {
+    var step = STEP_AT[id], q = QUESTION[id];
+    progress.hidden = !step; where.hidden = !step;
+    if (!step) return;
+    $$('.progress__seg', bars).forEach(function (b, i) {
+      var n = i + 1;
+      b.classList.toggle('is-done', n < step);
+      b.classList.toggle('is-current', n === step);
+      b.style.setProperty('--fill', n === step ? (q ? '1' : '0.5') : '0');
+    });
+    bars.setAttribute('aria-valuenow', String(step));
+    bars.setAttribute('aria-valuetext', stepText(step, 5));
+    where.textContent = stepText(step, 5);
+  }
+
+  /* ── кнопка кроку неактивна, поки не виконано обов’язкове (побажання власника 30.09) ── */
+  var titleOkFn = null, phoneStateFn = null;  /* перевірка заголовка S6 — задає сам екран, правило залежить від локалі */
+  var GATE = {
+    s2: function () { var r = $('#remote'); return !!(state.settlement || (r && r.checked)); },
+    s4: function () { return !!$('#s4-options input:checked'); },
+    s6: function () { var t = $('#story'); return !!(titleOkFn ? titleOkFn() : true) && !!((t && t.value.trim().length >= 50) || state.voice); },
+    s9: function () { return !!$('#s9 input:checked'); },
+    s12: function () { var st = phoneStateFn ? phoneStateFn() : null; return !!($('#consent').checked && st && st.valid); }
+  };
+  function refreshGate() { var g = GATE[current]; if (!g) return; var off = !g(); bar.next.disabled = off; bar.next.setAttribute('aria-disabled', off ? 'true' : 'false'); }
+  root.addEventListener('input', refreshGate); root.addEventListener('change', refreshGate);
+
+  /* ── нижняя панель действий ── */
+  function renderBar(id) {
+    var c = BAR[id];
+    bar.back.hidden = c.back === false;
+    bar.skip.hidden = !ANIMATED[id];
+    bar.note.hidden = !c.note; bar.note.textContent = c.note || '';
+    bar.altrow.hidden = !c.alt;
+    if (c.alt) { bar.alt.textContent = c.alt.label; bar.alt.dataset.nav = c.alt.nav; }
+    if (c.link) { bar.next.hidden = true; bar.link.hidden = false; return; }
+    bar.link.hidden = true; bar.next.hidden = false;
+    var label = c.label;
+    if (id === 's13') label = 'Zapłać ' + money(state.plan ? state.plan.price : (L.plans && L.plans[1] ? L.plans[1].price : 0));
+    bar.full.textContent = label;
+    var short = c.short || '';
+    bar.short.textContent = short;
+    bar.next.dataset.hasShort = short ? 'true' : 'false';
+    if (c.shortAt) bar.next.dataset.shortAt = c.shortAt; else delete bar.next.dataset.shortAt;
+    if (c.submit) { bar.next.type = 'submit'; bar.next.setAttribute('form', id); delete bar.next.dataset.nav; }
+    else { bar.next.type = 'button'; bar.next.removeAttribute('form'); bar.next.dataset.nav = 'next'; }
+    bar.next.setAttribute('data-ds-event', c.event || (c.submit ? 'quiz_step_complete' : 'quiz_step_view'));
+    setBusy(bar.next, false);
+  }
+  function doneAnimating() { bar.skip.hidden = true; }
+
+  /* ── показ экрана ── */
+  var current = null;
+  function render(id, dir, initial) {
+    clearTimers();
+    $$('.funnel__screen', root).forEach(function (s) { if (s.dataset.screen !== id) { s.hidden = true; s.removeAttribute('data-anim'); } });
+    var el = $('#' + id);
+    el.hidden = false;
+    el.setAttribute('data-anim', dir === 'back' ? 'back' : 'forward');
+    root.dataset.step = id; root.dataset.branch = state.branch; document.body.classList.toggle('is-dark', id === 's16'); document.body.classList.toggle('is-entry', id === 's0'); document.body.classList.toggle('is-final', id === 's16');
+    updateProgress(id);
+    renderBar(id);
+    if (ENTER[id]) ENTER[id](el, dir);
+    var v0 = $('#s0-video'); if (v0) { if (id === 's0' && !reduce.matches) { var pr = v0.play(); if (pr && pr.catch) pr.catch(function () {}); } else { v0.pause(); } }
+    var v16 = $('#s16-video'); if (v16) { if (id === 's16' && !reduce.matches) { try { v16.currentTime = 0; } catch (e) {} var pr16 = v16.play(); if (pr16 && pr16.catch) pr16.catch(function () {}); } else { v16.pause(); } }  /* відеотуторіал на фіналі — з початку при кожному показі */
+    window.scrollTo(0, 0);
+    var title = $('.funnel__title', el);
+    if (!initial) setTimeout(function () { (modality === 'keyboard' && title ? title : $('#main')).focus({ preventScroll: true }); }, 60);
+    var q = QUESTION[id];
+    say((q ? stepText(q[0], 5) + '. ' : '') + (title ? title.textContent.trim() : ''));
+    if (current !== id) {
+      track('quiz_step_view', { quiz_step: id, quiz_step_name: NAMES[id] });
+      if (state.trail[state.trail.length - 1] !== id) state.trail.push(id);
+    }
+    current = id; refreshGate();
+  }
+  function targetFromHash() {
+    var h = (location.hash || '#s0').replace('#', '');
+    if (h === 's13-error') { state.payFail = true; h = 's13'; }
+    return STEPS.indexOf(h) === -1 ? 's0' : h;
+  }
+  var pendingDir = 'forward';
+  function go(id, dir) {
+    var idx = STEPS.indexOf(current), nidx = STEPS.indexOf(id);
+    dir = dir || (nidx < idx ? 'back' : 'forward');
+    if (('#' + id) === location.hash) { render(id, dir); return; }
+    pendingDir = dir;
+    location.hash = id;
+  }
+  addEventListener('hashchange', function () {
+    var id = targetFromHash();
+    if (!allowed(id)) { history.replaceState(null, '', '#s0'); id = 's0'; }
+    var dir = pendingDir || (STEPS.indexOf(id) < STEPS.indexOf(current) ? 'back' : 'forward');
+    pendingDir = null;
+    render(id, dir);
+  });
+
+  /* ── навигационные кнопки панели ── */
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-nav]');
+    if (!btn || !root.contains(btn)) return;
+    var nav = btn.dataset.nav;
+    if (nav === 'back') {
+      e.preventDefault();
+      if (state.trail.length > 1) { state.trail.pop(); go(state.trail[state.trail.length - 1], 'back'); }
+      else go('s0', 'back');
+      return;
+    }
+    if (nav === 'skip') { e.preventDefault(); track('quiz_proof_skip', { quiz_step: current }); go(NEXT[current]); return; }
+    if (nav === 'next') {
+      e.preventDefault();
+      if (current === 's0') track('quiz_start');
+      go(NEXT[current]);
+      return;
+    }
+    if (nav === 'free') { e.preventDefault(); state.branch = 'free'; state.plan = null; track('membership_skip'); go('s16'); return; }
+    if (nav === 'free-after-fail') { e.preventDefault(); state.branch = 'free'; track('membership_skip_after_fail'); go('s16'); return; }
+  });
+
+  function showError(box, err, on, focusEl) {
+    if (box) box.setAttribute('data-invalid', on ? 'true' : 'false');
+    if (err) err.hidden = !on;
+    if (on && focusEl) focusEl.focus();
+  }
+
+  /* S2 · локация: combobox */
+  (function () {
+    var input = $('#settlement'), pop = $('#settlement-pop'), list = $('#settlement-list'), empty = $('#settlement-empty');
+    var clear = $('.q-search__clear', $('#settlement-box')), remote = $('#remote'), err = $('#settlement-err');
+    var items = [], active = -1;
+    function norm(s) { return s.toLowerCase().replace(/[’'ʼ]/g, ''); }
+    function close() { pop.hidden = true; pop.classList.remove('is-open'); input.setAttribute('aria-expanded', 'false'); input.removeAttribute('aria-activedescendant'); active = -1; }
+    function open() { pop.hidden = false; void pop.offsetWidth; pop.classList.add('is-open'); input.setAttribute('aria-expanded', 'true'); }
+    function pick(i) {
+      var s = items[i]; if (!s) return;
+      state.settlement = { name: s[0], region: s[1], count: s[2], lat: s[3], lon: s[4], country: s[5] || L.country }; refreshGate();
+      if (state.settlement.country !== L.country) loadGeo(state.settlement.country).catch(function () {});
+      input.value = s[0] + ', ' + s[1];
+      clear.hidden = false;
+      close();
+      showError(null, err, false);
+      say('Wybrano: ' + s[0] + ', ' + s[1]);
+    }
+    function renderList(q) {
+      var n = norm(q.trim());
+      items = n.length ? SETTLEMENTS.filter(function (s) { var t = norm(s[0]); return t.indexOf(n) === 0 || t.indexOf(' ' + n) !== -1 || t.indexOf('-' + n) !== -1; }).slice(0, 8) : [];
+      list.innerHTML = items.map(function (s, i) {
+        return '<div class="q-search__opt" role="option" id="settlement-o' + i + '" aria-selected="false" data-i="' + i + '">' +
+          '<span class="q-search__opt-text">' + esc(s[0]) + ', ' + esc(s[1]) + '</span></div>';
+      }).join('');
+      empty.hidden = !(n.length && !items.length);
+      if (n.length) open(); else close();
+    }
+    input.addEventListener('input', function () { state.settlement = null; refreshGate(); clear.hidden = !input.value; renderList(input.value); });
+    input.addEventListener('focus', function () { if (input.value && !state.settlement) renderList(input.value); });
+    input.addEventListener('keydown', function (e) {
+      if (pop.hidden) return;
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (!items.length) return;
+        active = e.key === 'ArrowDown' ? (active + 1) % items.length : (active - 1 + items.length) % items.length;
+        $$('.q-search__opt', list).forEach(function (o, i) { o.classList.toggle('is-active', i === active); o.setAttribute('aria-selected', i === active ? 'true' : 'false'); });
+        input.setAttribute('aria-activedescendant', 'settlement-o' + active);
+      } else if (e.key === 'Enter') { if (active > -1) { e.preventDefault(); pick(active); } }
+      else if (e.key === 'Escape') { e.preventDefault(); close(); }
+    });
+    list.addEventListener('mousedown', function (e) { e.preventDefault(); });
+    list.addEventListener('click', function (e) { var o = e.target.closest('[data-i]'); if (o) pick(+o.dataset.i); });
+    input.addEventListener('blur', function () { setTimeout(close, 120); });
+    clear.addEventListener('click', function () { input.value = ''; state.settlement = null; refreshGate(); clear.hidden = true; close(); input.focus(); });
+    remote.addEventListener('change', function () { state.remote = remote.checked; if (remote.checked) showError(null, err, false); });
+    $('#s2').addEventListener('submit', function (e) {
+      e.preventDefault();
+      state.remote = remote.checked;
+      if (!state.settlement && !state.remote) { showError(null, err, true, input); say(err.textContent.trim()); return; }
+      showError(null, err, false);
+      track('quiz_step_complete', { quiz_step: 's2', settlement: state.settlement ? state.settlement.name : null,
+        region: state.settlement ? state.settlement.region : null, remote_ok: state.remote });
+      go('s3');
+    });
+  })();
+
+  /* S4 · категории (multi) — плитки с иконками */
+  (function () {
+    var fs = $('#s4-options'), err = $('#s4-err');
+    fs.insertAdjacentHTML('beforeend', CATEGORIES.map(function (c) {
+      return '<label class="q-option q-option--tile"><input class="q-option__input" type="checkbox" name="practice_areas" value="' + c[0] + '">' +
+        '<span class="q-option__label"><svg class="funnel__tile-icon icon" aria-hidden="true"><use href="#' + c[3] + '"></use></svg><span class="funnel__tile-text"><span>' + esc(c[1]) + '</span></span></span></label>';
+    }).join(''));
+    var LIMIT = 3;
+    fs.addEventListener('change', function () {
+      var n = $$('input:checked', fs).length; if (n) showError(fs, err, false);
+      $$('input', fs).forEach(function (i) { if (!i.checked) { i.disabled = n >= LIMIT; i.closest('.q-option').classList.toggle('is-locked', n >= LIMIT); } });  /* не більше трьох категорій */
+    });
+    $('#s4').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var picked = $$('input:checked', fs).map(function (i) { return i.value; });
+      if (!picked.length) { showError(fs, err, true, $('input', fs)); say(err.textContent.trim()); return; }
+      state.categories = picked;
+      track('quiz_step_complete', { quiz_step: 's4', practice_areas: picked.join(',') });
+      go('s5');
+    });
+  })();
+
+  /* S6 · описание + голос */
+  (function () {
+    var ta = $('#story'), count = $('.q-textarea__count-num', $('#s6')), err = $('#story-err'), errText = $('[data-story-err-text]', err);
+    var title = $('#story-title'), terr = $('#story-title-err'), twords = $('[data-title-words]'), thint = $('#story-title-hint');
+    var TW = L.titleWords || null;  /* uk: 7–12 слів; en/gb: лише довжина до 100 символів (правки US 13.10) */
+    if (!TW) { title.maxLength = 100; thint.textContent = L.titleHint || ''; }
+    var MIN_DESC = 50, VOICE_MAX = 60000;
+    function wordsOf(v) { return v.trim().split(/\s+/).filter(Boolean).length; }
+    function titleOk() { var v = title.value.trim(), n = wordsOf(v); return TW ? (n >= TW[0] && n <= TW[1]) : (v.length >= 3 && v.length <= 100); }
+    titleOkFn = titleOk;
+    title.addEventListener('input', function () { if (TW) twords.textContent = wordsOf(title.value); if (titleOk()) { terr.hidden = true; title.removeAttribute('aria-invalid'); } });
+    var box = $('#voice'), toggle = $('[data-voice="toggle"]', box), label = $('[data-voice-label]', box);
+    var icon = $('use', $('[data-voice-icon]', box)), text = $('[data-voice-text]', box), reset = $('[data-voice="reset"]', box), verr = $('[data-voice-error]', box);
+    var rec = null, chunks = [], t0 = 0, tick = 0, stream = null;
+    ta.addEventListener('input', function () { count.textContent = nbsp(ta.value.length); if (ta.value.trim().length >= MIN_DESC) showError(null, err, false); });
+    function fmt(ms) { var s = Math.round(ms / 1000); return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2); }
+    function setState(s) { box.dataset.state = s; }
+    function stopStream() { if (stream) { stream.getTracks().forEach(function (t) { t.stop(); }); stream = null; } }
+    function start() {
+      verr.hidden = true;
+      if (!navigator.mediaDevices || !window.MediaRecorder) { verr.hidden = false; return; }
+      navigator.mediaDevices.getUserMedia({ audio: true }).then(function (s) {
+        stream = s; chunks = [];
+        rec = new MediaRecorder(s);
+        rec.ondataavailable = function (e) { if (e.data && e.data.size) chunks.push(e.data); };
+        rec.onstop = function () {
+          var blob = new Blob(chunks, { type: rec.mimeType || 'audio/webm' });
+          var dur = Math.min(VOICE_MAX, Date.now() - t0);
+          state.voice = { blob: blob, duration_ms: dur, size: blob.size, mime: blob.type }; refreshGate();
+          setState('saved');
+          text.textContent = 'Nagrano ' + fmt(dur) + ' · Zapisano';
+          label.textContent = 'Opowiedz głosem'; icon.setAttribute('href', '#i-mic');
+          toggle.hidden = true; reset.hidden = false;
+          showError(null, err, false);
+          stopStream();
+          track('quiz_voice_saved', { duration_ms: dur });
+        };
+        rec.start();
+        t0 = Date.now();
+        setState('recording');
+        label.textContent = 'Zatrzymaj nagrywanie'; icon.setAttribute('href', '#i-stop');
+        text.textContent = 'Nagrywanie… zostało ' + fmt(VOICE_MAX);
+        tick = setInterval(function () { var left = VOICE_MAX - (Date.now() - t0); if (left <= 0) { stop(); return; } text.textContent = 'Nagrywanie… zostało ' + fmt(left); }, 250);  /* не довше хвилини, зворотний відлік */
+        timers.push(tick);
+      }).catch(function () { verr.hidden = false; setState('idle'); });
+    }
+    function stop() { clearInterval(tick); if (rec && rec.state !== 'inactive') rec.stop(); }
+    toggle.addEventListener('click', function () { box.dataset.state === 'recording' ? stop() : start(); });
+    reset.addEventListener('click', function () {
+      state.voice = null; setState('idle'); toggle.hidden = false; reset.hidden = true;
+      text.textContent = ''; toggle.focus();
+    });
+    $('#s6').addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (box.dataset.state === 'recording') stop();
+      state.description = ta.value.trim(); state.title = title.value.trim().replace(/\s+/g, ' ');
+      if (!titleOk()) { terr.hidden = false; title.setAttribute('aria-invalid', 'true'); title.focus(); say(terr.textContent.trim()); return; }
+      if (!state.description && !state.voice) { errText.textContent = 'Opisz sytuację tekstem albo nagraj ją głosem'; showError(null, err, true, ta); say(err.textContent.trim()); return; }
+      if (state.description && state.description.length < MIN_DESC && !state.voice) { errText.textContent = 'Opisz sytuację dokładniej — co najmniej 50 znaków'; showError(null, err, true, ta); say(err.textContent.trim()); return; }
+      track('quiz_step_complete', { quiz_step: 's6', has_text: !!state.description, has_voice: !!state.voice, text_length: state.description.length, title_words: wordsOf(state.title) });
+      go('s7');
+    });
+  })();
+
+  /* S9 · intent */
+  (function () {
+    var fs = $('#s9-options'), err = $('#s9-err');
+    fs.addEventListener('change', function () { showError(fs, err, false); });
+    $('#s9').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var r = $('input:checked', fs);
+      if (!r) { showError(fs, err, true, $('input', fs)); say(err.textContent.trim()); return; }
+      state.intent = r.value;
+      track('quiz_step_complete', { quiz_step: 's9', client_intent: r.value });
+      go(NEXT.s9);
+    });
+  })();
+
+  /* S11 · membership: план и пример экономии */
+  (function () {
+    var PLANS = L.plans || [], rail = $('[data-plans-track]'), dots = $('[data-plans-dots]'), toggle = $('#s11-plans .plans__toggle');
+    if (!rail || !PLANS.length) return;
+    var period = 'month';
+    function amount(p) { return money(period === 'year' ? p.year : p.price); }
+    function perLabel() { return period === 'year' ? '/ 1 rok' : '/ 1 miesiąc'; }
+    function yearPct(p) { return Math.round((1 - p.year / (p.price * 12)) * 100); }  // знижка річної оплати проти 12 місячних
+    function yearInfo(p) { var full = p.price * 12, save = full - p.year; return period === 'year' ? 'Zamiast ' + money(full) + ' · oszczędzasz ' + money(save) : 'Za rok — ' + money(p.year) + ' (−' + yearPct(p) + ' %)'; }
+    rail.insertAdjacentHTML('beforeend', PLANS.map(function (p) {
+      var icons = ['i-message', 'i-file', 'i-coins'];
+      return '<label class="plan" data-tone="' + p.id + '">' +
+        '<input class="q-option__input" type="radio" name="membership_plan" value="' + p.id + '"' + (p.recommended ? ' checked' : '') + '>' +
+        '<span class="plan__head"><span class="plan__name">' + esc(p.name) + '</span><span class="plan__head-right">' + (p.recommended ? '<span class="chip chip--sm plan__rec">' + 'Polecany' + '</span>' : '') + '<span class="chip chip--sm plan__disc" data-plan-disc hidden></span></span></span>' +
+        '<span class="plan__price"><span class="plan__amount num" data-plan-amount>' + amount(p) + '</span><span class="plan__period" data-plan-period>' + perLabel() + '</span></span>' +
+        '<span class="plan__year num" data-plan-year>' + yearInfo(p) + '</span>' +
+        '<ul class="plan__features">' + p.features.map(function (f) { return '<li><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg><span>' + esc(f) + '</span></li>'; }).join('') + '</ul>' +
+        '<span class="plan__pill"><span>' + esc(p.pill) + '</span></span>' +
+        '<ul class="plan__savings"><li class="plan__savings-total"><svg class="icon" aria-hidden="true"><use href="#i-coins"></use></svg><span>' + esc(p.savings.total) + '</span></li>' +
+          p.savings.items.map(function (t, k) { return '<li class="funnel__hide-mid"><svg class="icon" aria-hidden="true"><use href="#' + icons[k] + '"></use></svg><span>' + esc(t) + '</span></li>'; }).join('') + '</ul>' +
+        '<span class="plan__note funnel__hide-mid">' + 'W porównaniu z płaceniem za te same konsultacje, wzory i usługi bez pakietu.' + '</span>' +
+        '<span class="btn btn--outline plan__btn" aria-hidden="true"><span class="plan__btn-off">' + 'Wybierz pakiet' + '</span><span class="plan__btn-on">' + 'Wybrano' + '</span></span>' +
+        '</label>';
+    }).join(''));
+    var cards = $$('.plan', rail);
+    var yt = $('.plans__tab[data-period="year"]', toggle); if (yt && PLANS[0]) yt.textContent = '1 rok' + ' −' + yearPct(PLANS[1] || PLANS[0]) + ' %';  // вигода річної оплати видна одразу
+    dots.innerHTML = PLANS.map(function (p, i) { return '<button class="plans__dot" type="button" role="tab" aria-label="' + esc(p.name) + '" data-i="' + i + '"></button>'; }).join('');
+    var dotEls = $$('.plans__dot', dots);
+    function rel(c) { return rail.scrollLeft + c.getBoundingClientRect().left - rail.getBoundingClientRect().left; }
+    function center(i, smooth) { var c = cards[i]; if (!c) return; var left = rel(c) - (rail.clientWidth - c.clientWidth) / 2; if (smooth && rail.scrollTo && !reduce.matches) rail.scrollTo({ left: left, behavior: 'smooth' }); else rail.scrollLeft = left; }
+    function current() { var mid = rail.scrollLeft + rail.clientWidth / 2, best = 0, d = Infinity; cards.forEach(function (c, i) { var dd = Math.abs(rel(c) + c.clientWidth / 2 - mid); if (dd < d) { d = dd; best = i; } }); return best; }
+    function mark() { var i = current(); dotEls.forEach(function (d, k) { d.classList.toggle('is-on', k === i); d.setAttribute('aria-selected', k === i ? 'true' : 'false'); }); }
+    var raf = 0; rail.addEventListener('scroll', function () { if (raf) return; raf = requestAnimationFrame(function () { raf = 0; mark(); }); }, { passive: true });
+    dotEls.forEach(function (d) { d.addEventListener('click', function () { center(+d.dataset.i, true); }); });
+    $('[data-plans-prev]').addEventListener('click', function () { center(Math.max(0, current() - 1), true); });
+    $('[data-plans-next]').addEventListener('click', function () { center(Math.min(cards.length - 1, current() + 1), true); });
+    rail.addEventListener('change', function (e) { var c = e.target.closest('.plan'), i = cards.indexOf(c); if (i >= 0) center(i, true); });
+    $$('.plans__tab', toggle).forEach(function (b) { b.addEventListener('click', function () {
+      period = b.dataset.period;
+      $$('.plans__tab', toggle).forEach(function (x) { x.classList.toggle('is-on', x === b); x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      cards.forEach(function (c, i) { $('[data-plan-amount]', c).textContent = amount(PLANS[i]); $('[data-plan-period]', c).textContent = perLabel(); $('[data-plan-year]', c).textContent = yearInfo(PLANS[i]); var d = $('[data-plan-disc]', c); d.hidden = period !== 'year'; d.textContent = '−' + yearPct(PLANS[i]) + ' %'; });
+      example();
+    }); });
+    function example() {
+      var r = $('input[name="membership_plan"]:checked', rail); if (!r) return;
+      var p = PLANS.filter(function (x) { return x.id === r.value; })[0]; if (!p || !p.example) return;
+      var price = p.example.price, save = Math.round(price * p.discount / 100), fee = period === 'year' ? p.year : p.price;
+      $('[data-ex-service]').textContent = p.example.service; $('[data-ex-price]').textContent = money(price); $('[data-ex-plan]').textContent = p.name;
+      $('[data-ex-discount]').textContent = p.discount; $('[data-ex-new]').textContent = money(price - save); $('[data-ex-fee]').textContent = money(fee); $('[data-ex-save]').textContent = money(save);
+    }
+    rail.addEventListener('change', example);
+    PLANS_ENTER = function () { var i = -1; cards.forEach(function (c, k) { if ($('input', c).checked) i = k; }); center(i < 0 ? 0 : i, false); mark(); example(); };
+    $('#s11').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var r = $('input[name="membership_plan"]:checked', rail); if (!r) return;
+      var p = PLANS.filter(function (x) { return x.id === r.value; })[0];
+      state.branch = 'member'; state.plan = { id: p.id, name: p.name, price: period === 'year' ? p.year : p.price, discount: p.discount, period: period };
+      track('membership_select', { membership_plan: p.id, period: period });
+      go('s13');
+    });
+  })();
+
+  /* S12 · контакты → лид + вопрос в застосунке (ТЗ S12) */
+  (function () {
+    var form = $('#s12'), phone = $('#phone'), phoneBox = $('#phone-box'), perr = $('#phone-err');
+    var email = $('#email'), eerr = $('#email-err'), consent = $('#consent'), cerr = $('#consent-err'), more = $('#s12-more');
+    /* поле телефону — оригінальний компонент компанії (assets/vendor/phone-country-dropdown, jQuery + jquery.mask) без змін; тут лише надбудова:
+       перевірка повноти номера за маскою країни, стан поля, країна за замовчуванням — з локалі (атрибут data-country підставляє build.py) */
+    var NEED = { UA: 12, PL: 11, UK: 12, USA: 11, AE: 12 };  // цифр разом із кодом країни за масками компонента
+    function phoneState() {
+      var c = (window.PhoneCountryDropdown && PhoneCountryDropdown.getSelectedCountry(phone)) || 'UA', d = phone.value.replace(/\D/g, '');
+      var valid = c === 'NEUTRAL' ? (d.length >= 8 && d.length <= 15) : d.length === NEED[c];
+      return { country: c, valid: valid, value: phone.value, e164: '+' + d };
+    }
+    phoneStateFn = phoneState;
+    function phoneSync() { if (phoneState().valid) { phoneBox.dataset.state = 'success'; perr.hidden = true; } else phoneBox.removeAttribute('data-state'); }
+    /* надбудова: ведучий нуль після коду країни («067…», «07700…») знімається — маска компонента його не очікує і зсунула б цифри.
+       Слухач стоїть раніше за обробник jquery.mask (той підключається при показі поля), тож маска форматує вже виправлене значення */
+    var TRUNK = { UA: '380', PL: '48', UK: '44', USA: '1', AE: '971' };
+    phone.addEventListener('input', function () { var c = (window.PhoneCountryDropdown && PhoneCountryDropdown.getSelectedCountry(phone)) || 'UA', pd = TRUNK[c]; if (!pd) return; var d = phone.value.replace(/\D/g, ''); if (d.indexOf(pd + '0') === 0) phone.value = '+' + pd + d.slice(pd.length + 1); });
+    phone.addEventListener('input', phoneSync);
+    phoneBox.addEventListener('click', function (e) { if (e.target.closest('.country-select__option')) setTimeout(function () { phoneSync(); refreshGate(); }, 0); /* без синтетичного input: його перехоплює jquery.mask і падає на зміні маски */ });
+    consent.addEventListener('change', function () { if (consent.checked) cerr.hidden = true; });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var ok = true, first = null;
+      if (!phoneState().valid) { phoneBox.dataset.state = 'invalid'; phone.setAttribute('aria-invalid', 'true'); perr.hidden = false; ok = false; first = first || phone; }
+      else { phoneBox.dataset.state = 'success'; phone.removeAttribute('aria-invalid'); perr.hidden = true; }
+      if (email.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) { more.open = true; email.setAttribute('aria-invalid', 'true'); eerr.hidden = false; ok = false; first = first || email; }
+      else { email.removeAttribute('aria-invalid'); eerr.hidden = true; }
+      if (!consent.checked) { consent.setAttribute('aria-invalid', 'true'); cerr.hidden = false; ok = false; first = first || consent; }
+      else { consent.removeAttribute('aria-invalid'); cerr.hidden = true; }
+      if (!ok) { first.focus(); say('Sprawdź pola formularza'); return; }
+      state.phone = phoneState().value; state.phoneE164 = phoneState().e164; state.phoneCountry = phoneState().country;
+      state.name = $('#name').value.trim();
+      state.email = email.value.trim();
+      state.channels = $$('input[name="preferred_channels"]:checked', form).map(function (i) { return i.value; });
+      setBusy(bar.next, true);
+      later(function () {
+        state.leadId = '2026-' + String(Math.floor(10000 + Math.random() * 89999));
+        var lead = { lead_id: state.leadId, phone: state.phoneE164, phone_country: state.phoneCountry, name: state.name || null, email: state.email || null,
+          settlement: state.settlement ? state.settlement.name : null,
+          region: state.settlement ? state.settlement.region : null, remote_ok: state.remote, practice_areas: state.categories,
+          case_title: state.title || null, case_description: state.description || null, voice_audio: state.voice ? { duration_ms: state.voice.duration_ms, size: state.voice.size, mime: state.voice.mime } : null,
+          client_intent: state.intent, membership_intent: state.plan ? state.plan.id : null, attribution: state.attribution,
+          last_step_reached: 's12', created_at: new Date().toISOString() };
+        try { console.info('[quiz] lead + question created', lead); } catch (err) {}
+        track('quiz_contact_submit', { quiz_step: 's12', client_intent: state.intent, has_email: !!state.email });
+        setBusy(bar.next, false);
+        $$('[data-s13-phone], [data-s15-phone]').forEach(function (n) { n.textContent = state.phone; });
+        go('s15');
+      }, 900);
+    });
+  })();
+
+  /* S13 · оплата (существующий checkout в продукте; здесь — имитация) */
+  (function () {
+    var form = $('#s13'), alert = $('#s13-error');
+    $('[data-pay="retry"]', form).addEventListener('click', function () { alert.hidden = true; state.payFail = false; history.replaceState(null, '', '#s13'); bar.next.focus(); });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!state.plan) { go('s11'); return; }
+      setBusy(bar.next, true);
+      track('checkout_submit', { membership_plan: state.plan.id });
+      later(function () {
+        setBusy(bar.next, false);
+        if (state.payFail) { track('payment_failed', { membership_plan: state.plan.id }); alert.hidden = false; alert.focus(); return; }
+        state.paid = true;
+        track('payment_success', { membership_plan: state.plan.id, amount: state.plan.price });
+        go('s14');
+      }, 1200);
+    });
+  })();
+
+  /* ── сцены proof-экранов: staged reveal как ответ на переход (принцип 8), «Пропустити» — пока идёт ── */
+  function runList(ol, stepMs, onDone) {
+    var items = $$('.q-steps__item', ol);
+    items.forEach(function (li) { li.dataset.state = 'upcoming'; li.removeAttribute('aria-current'); var st = $('[data-status]', li); if (st) st.hidden = true; });
+    items.forEach(function (li, i) {
+      later(function () {
+        items.forEach(function (o, j) { if (j < i) o.dataset.state = 'done'; });
+        li.dataset.state = 'current'; li.setAttribute('aria-current', 'step');
+        var st = $('[data-status]', li); if (st) st.hidden = false;
+      }, stepMs * i);
+    });
+    later(function () { if (onDone) onDone(items); }, stepMs * items.length);
+  }
+  function fmtNow() { var d = new Date(), p = function (n) { return (n < 10 ? '0' : '') + n; }; return (L.date ? L.date(d) : p(d.getDate()) + '.' + p(d.getMonth() + 1) + '.' + d.getFullYear()) + ', ' + p(d.getHours()) + ':' + p(d.getMinutes()); }
+  function stampNow(el) { $$('.appframe__date', el).forEach(function (q) { q.lastChild.textContent = fmtNow(); }); }
+  var TIER_MARK = '<svg class="q-tier__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="14" width="4" height="7" rx="1"/><rect x="10" y="9" width="4" height="12" rx="1"/><rect x="17" y="4" width="4" height="17" rx="1"/></svg>';
+  /* картка «юрист друкує відповідь»: шапка фахівця як у застосунку, замість тексту — нескінченний індикатор набору.
+     Тексти відповідей на екрані не показуються (ТЗ власника 15.10): людина бачить, що відповідь уже пишуть, а читає її в застосунку.
+     --d зсуває ритм крапок, щоб три картки не блимали синхронно */
+  function typingCard(a, i) {
+    return '<article class="appframe__ans appframe__ans--typing' + (a.hide ? ' funnel__hide-short' : '') + '" data-tier="' + a.tier + '" style="--d:' + ((i || 0) * 0.4) + 's"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="' + a.tier + '">' + TIER_MARK + a.tier.toUpperCase() + '</span>' +
+      '<span class="q-score"><span class="q-score__value num">' + esc(a.score) + '</span><span class="q-score__scale">/ 100</span></span></div>' +
+      '<div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="../assets/people/' + a.photo + '.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">' + esc(a.initials) + '</span>' +
+      '<span class="appframe__meta"><span class="appframe__name">' + esc(a.name) + '</span><span class="appframe__role">' + esc(a.role) + '</span><span class="appframe__geo"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg>' + esc(a.city) + '</span></span></div>' +
+      '<p class="appframe__typing-line" aria-label="' + 'Pisze odpowiedź' + '"><span class="appframe__typing-dots" aria-hidden="true"><i></i><i></i><i></i></span>' + 'Pisze odpowiedź…' + '</p></article>';
+  }
+  (function () { var list = $('[data-answers]'); if (list) list.innerHTML = ANSWERS.map(function (a, i) { return typingCard(a, i); }).join(''); })();
+  function reveal(el, on) { if (el) el.classList.toggle('is-visible', on !== false); }
+  /* горизонтальная лента карточек: точки-пагинация, активная — ближайшая к центру */
+  function railDots(rail, dots) {
+    var cards = [].slice.call(rail.children);
+    dots.innerHTML = cards.length > 1 ? cards.map(function (c, i) { return '<button class="plans__dot" type="button" role="tab" aria-label="' + (i + 1) + '" data-i="' + i + '"></button>'; }).join('') : '';
+    var ds = [].slice.call(dots.children);
+    function rel(c) { return rail.scrollLeft + c.getBoundingClientRect().left - rail.getBoundingClientRect().left; }
+    function current() { var mid = rail.scrollLeft + rail.clientWidth / 2, best = 0, d = Infinity; cards.forEach(function (c, i) { var dd = Math.abs(rel(c) + c.clientWidth / 2 - mid); if (dd < d) { d = dd; best = i; } }); return best; }
+    function mark() { var i = current(); ds.forEach(function (x, k) { x.classList.toggle('is-on', k === i); x.setAttribute('aria-selected', k === i ? 'true' : 'false'); }); }
+    ds.forEach(function (x) { x.addEventListener('click', function () { var c = cards[+x.dataset.i], left = rel(c) - (rail.clientWidth - c.clientWidth) / 2; if (rail.scrollTo && !reduce.matches) rail.scrollTo({ left: left, behavior: 'smooth' }); else rail.scrollLeft = left; }); });
+    if (!rail.dataset.railBound) { rail.dataset.railBound = '1'; var raf = 0; rail.addEventListener('scroll', function () { if (raf) return; raf = requestAnimationFrame(function () { raf = 0; if (rail._mark) rail._mark(); }); }, { passive: true }); }
+    rail._mark = mark; rail.scrollLeft = 0; mark();
+  }
+
+  (function initGeo() {
+    if (!GEO) return; var land = $('[data-geo-land]'), dots = $('[data-geo-dots]'); if (!land) return;
+    land.setAttribute('d', GEO.path);
+    dots.innerHTML = (GEO.cities || []).map(function (c) { var xy = geoXY(GEO, c[0], c[1]); return '<circle cx="' + xy[0].toFixed(1) + '" cy="' + xy[1].toFixed(1) + '" r="7"/>'; }).join('');
+  })();
+  // S1: два ряди фахівців з рейтингом під «3 500+» — 28 фото, кожен ряд подвоєний для безшовного циклу
+  (function buildMarquee() {
+    var host = $('[data-marquee]'); if (!host) return;
+    // 28 реальних фахівців платформи (усі — рівень PREMIUM у каталозі consultant.net.ua, вересень 2026); бейдж показує рівень, а не вигадану оцінку
+    // 28 реальних фахівців платформи з каталогу consultant.net.ua (знімок 30.09.2026): рівні PREMIUM / PRO / START упереміш, бейдж показує рівень
+    var REAL = L.marquee || [['real/787', 'PREMIUM'], ['real/2473', 'PRO'], ['real/523', 'PREMIUM'], ['real/1361', 'START'], ['real/280', 'PREMIUM'], ['real/2486', 'PRO'], ['real/301', 'PREMIUM'], ['real/2434', 'START'], ['real/2258', 'PREMIUM'], ['real/2528', 'PRO'], ['real/828', 'PREMIUM'], ['real/2488', 'START'], ['real/1380', 'PREMIUM'], ['real/2534', 'PRO'],
+      ['real/941', 'PREMIUM'], ['real/2705', 'START'], ['real/2189', 'PREMIUM'], ['real/2712', 'PRO'], ['real/1132', 'PREMIUM'], ['real/2792', 'START'], ['real/444', 'PREMIUM'], ['real/2714', 'PRO'], ['real/870', 'PREMIUM'], ['real/738', 'START'], ['real/2351', 'PREMIUM'], ['real/2634', 'PRO'], ['real/379', 'PREMIUM'], ['real/1606', 'PRO']];
+    var STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.6L12 17.5l-5.9 3.2 1.2-6.6L2.5 9.5l6.6-.9z"/></svg>';
+    function set(from, to) {
+      var h = '<div class="mq__set">';
+      for (var i = from; i <= to; i++) h += '<span class="mq__tile"><img src="../assets/people/' + REAL[i - 1][0] + '.jpg" alt="" width="176" height="176" decoding="async" fetchpriority="low"><span class="mq__badge" data-level="' + REAL[i - 1][1].toLowerCase() + '">' + STAR + REAL[i - 1][1] + '</span></span>';
+      return h + '</div>';
+    }
+    host.innerHTML = '<div class="mq__tilt"><div class="mq__row mq__row--a">' + set(1, 14) + set(1, 14) + '</div></div>' +
+      '<div class="mq__tilt"><div class="mq__row mq__row--b">' + set(15, 28) + set(15, 28) + '</div></div>';
+  })();
+
+  var ENTER = {
+    s1: function (el) {
+      var cards = $$('[data-s1-step]', el), chips = $$('#s1-chips .funnel__chip', el);
+      cards.forEach(function (c) { reveal(c, false); }); chips.forEach(function (c) { c.removeAttribute('data-state'); });
+      later(function () { reveal(cards[0]); }, 150);
+      later(function () { reveal(cards[1]); }, 650);
+      chips.forEach(function (c, i) { later(function () { c.dataset.state = 'done'; }, 1000 + i * 320); });
+      later(doneAnimating, 1000 + chips.length * 320 + 600);
+    },
+    s3: function (el) {
+      var s = state.settlement, title = $('[data-s3-title]', el), cap = $('[data-s3-caption]', el), sub = $('[data-s3-caption-sub]', el);
+      var people = $('#s3-people'), note = $('[data-s3-people-note]', el), media = $('[data-s3-media]', el);
+      var name = s ? s.name : 'Zdalnie', region = s ? s.region : 'online w całej Polsce';
+      var count = s ? s.count : 1000, fallback = false;
+      if (s && s.count != null && s.count < 3) { count = REGION_TOTAL[s.region] || 120; fallback = true; }
+      title.textContent = name + ': dobieramy prawników…';
+      cap.textContent = name; sub.textContent = region;
+      $('[data-s3-loadmap]', el).hidden = !s;
+      var pin = $('[data-geo-pin]', el), dots = $('[data-geo-dots]', el), land = $('[data-geo-land]', el);
+      pin.style.display = 'none'; dots.style.display = 'none'; var lbl0 = $('[data-geo-label]', el); if (lbl0) lbl0.style.display = 'none';
+      if (GEO && s && typeof s.lat === 'number') {
+        var want = s.country || L.country, token = (el.dataset.geoToken = String(Date.now()));
+        loadGeo(want).catch(function () { return loadGeo('world'); }).then(function (g) {
+          if (el.dataset.geoToken !== token) return;
+          land.setAttribute('d', g.path);
+          var xy = geoXY(g, s.lat, s.lon), inside = xy[0] > 0 && xy[0] < 800 && xy[1] > 0 && xy[1] < 450;
+          pin.setAttribute('transform', 'translate(' + xy[0].toFixed(1) + ' ' + xy[1].toFixed(1) + ')'); pin.style.display = inside ? '' : 'none';
+          var lbl = $('[data-geo-label]', el); if (lbl) { lbl.textContent = s.name; lbl.setAttribute('x', xy[0].toFixed(1)); lbl.setAttribute('y', (xy[1] + 44).toFixed(1)); /* підпис нижче вістря піна */ lbl.style.display = inside ? '' : 'none'; }
+        }).catch(function () { land.setAttribute('d', ''); });
+      } else if (GEO) { land.setAttribute('d', GEO.path); dots.style.display = ''; }
+      var iframe = $('iframe', media); if (iframe) { iframe.remove(); $('[data-s3-svg]', el).hidden = false; }
+      people.innerHTML = PEOPLE.map(function (p) {
+        return '<div class="funnel__person funnel__reveal" role="listitem">' +
+          '<span class="avatar' + (p[5] ? ' avatar--photo' : '') + '" data-status="' + p[4] + '" aria-hidden="true">' + (p[5] ? '<img src="../assets/people/' + p[5] + '.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">' : '') + esc(p[3]) +
+          '<span class="dot q-online' + (p[4] === 'offline' ? ' q-online--off' : '') + '"></span></span>' +
+          '<span class="funnel__person-name">' + esc(p[0]) + '<br>' + esc(p[1]) + '</span>' +
+          '<span class="funnel__person-role">' + esc(p[2]) + '</span></div>';
+      }).join('');
+      note.textContent = fallback ? 'Prawnicy z regionu — pracują zdalnie' : (s ? 'Pasują do Twojego zgłoszenia' : 'Pracują zdalnie');
+      [$('[data-s3-map]', el), $('[data-s3-people-wrap]', el), note, $('[data-s3-bottom]', el)].forEach(function (n) { reveal(n, false); });
+      $$('.funnel__person', people).forEach(function (n) { reveal(n, false); });
+      later(function () { reveal($('[data-s3-map]', el)); }, 400);
+      later(function () { reveal($('[data-s3-people-wrap]', el)); }, 1100);
+      $$('.funnel__person', people).forEach(function (n, i) { later(function () { reveal(n); }, 1300 + i * 220); });
+      later(function () {
+        title.textContent = s ? name + ': prawnicy są gotowi zająć się Twoją sprawą.' : 'Zdalnie: prawnicy z całego kraju są gotowi pomóc.';
+        reveal(note); reveal($('[data-s3-bottom]', el));
+        say(title.textContent);
+        doneAnimating();
+      }, 2500);
+    },
+    s5: function (el) {
+      var picked = state.categories.filter(function (c) { return c !== 'other'; });
+      if (!picked.length) picked = ['general'];
+      picked = picked.slice().sort(function (a, b) { return catOf(b)[2] - catOf(a)[2]; });
+      var total = picked.reduce(function (n, id) { return n + caseCount(id); }, 0);
+      $('[data-s5-total]', el).textContent = nbsp(total);
+      $('[data-s5-total-label]', el).textContent = plural(total, ['sprawa', 'sprawy', 'spraw']) + ' na platformie' + (picked.length === 1 ? ' · ' + catOf(picked[0])[1] : '');
+      var counts = $('#s5-counts'), cases = $('#s5-cases');
+      counts.hidden = picked.length < 2;
+      counts.innerHTML = picked.map(function (id, k) {
+        var c = catOf(id);
+        return '<li class="cases-stat' + (k === 0 ? ' cases-stat--accent' : '') + '"><strong class="num">' + nbsp(caseCount(id)) + '</strong><span>' + esc(c[1]) + '</span></li>';
+      }).join('');
+      var pool = [], i = 0;
+      while (pool.length < 3 && i < 3) { picked.forEach(function (id) { if (pool.length < 3 && CASES[id][i]) pool.push([id, CASES[id][i]]); }); i++; }
+      cases.innerHTML = pool.map(function (x) {
+        var c = catOf(x[0]);
+        return '<li class="case-row"><span class="case-row__icon" aria-hidden="true"><svg class="icon"><use href="#' + c[3] + '"></use></svg></span>' +
+          '<div class="case-row__body"><p class="case-row__cat">' + esc(c[1]) + '</p><p class="case-row__text">' + esc(x[1][0]) + '</p>' +
+          '<p class="case-row__result"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg><span>' + esc(x[1][1]) + '</span></p></div></li>';
+      }).join('');
+    },
+    s7: function (el) {
+      stampNow(el);
+      var cat = CATEGORIES.filter(function (c) { return c[0] === state.categories[0]; })[0], catName = cat ? cat[1] : '';
+      var voiceLbl = 'Wiadomość głosowa · ' + (state.voice ? Math.round(state.voice.duration_ms / 1000) + ' s' : '');
+      $('[data-s7-question]', el).textContent = state.title || (state.description ? state.description : voiceLbl);
+      $('[data-s7-desc]', el).textContent = state.description || (state.voice ? voiceLbl : '');
+      var answers = $('#s7-answers'), list = $('#s7-list'), items = $$('.q-steps__item', list), st = $('[data-status]', list), short = matchMedia('(max-height: 699px)').matches;
+      var AIP = L.ai || { name: 'Asystent AI', photo: 'ai-uk' };
+      function step(i, state_) { items.forEach(function (li, k) { if (k < i) li.dataset.state = 'done'; }); if (items[i]) { items[i].dataset.state = state_; if (state_ === 'current') items[i].setAttribute('aria-current', 'step'); else items[i].removeAttribute('aria-current'); } }
+      function add(html) { var w = document.createElement('div'); w.innerHTML = html; var n = w.firstElementChild; n.classList.add('q-in'); answers.appendChild(n); return n; }
+      items.forEach(function (li) { li.dataset.state = 'upcoming'; li.removeAttribute('aria-current'); }); if (st) st.hidden = true;
+      answers.innerHTML = ''; step(0, 'current');
+      /* 1. питання отримано → 2. AI визначає категорію → 3. фахівці переглядають → перший бере в роботу; ~8 с, «Пропустити» доступне одразу */
+      later(function () { step(1, 'current'); add('<div class="appframe__typing" aria-label="Asystent AI analizuje"><span class="appframe__typing-dots" aria-hidden="true"><i></i><i></i><i></i></span>' + 'Asystent AI analizuje pytanie…' + '</div>'); }, 900);
+      later(function () {
+        var t = $('.appframe__typing', answers); if (t) t.remove();
+        add('<article class="appframe__ans appframe__ans--ai"><div class="appframe__band"><span class="chip chip--sm q-tier" data-tier="ai">AI</span><span class="appframe__band-note">' + 'przed chwilą' + '</span></div>' +
+          '<div class="appframe__who"><span class="avatar avatar--photo" aria-hidden="true"><img src="../assets/people/' + AIP.photo + '.jpg" alt="" width="160" height="160" loading="lazy" decoding="async" onerror="this.remove()">AI</span><span class="appframe__meta"><span class="appframe__name">' + esc(AIP.name) + '</span><span class="appframe__role">' + 'Sztuczna inteligencja' + '</span></span></div>' +
+          '<p class="appframe__txt">' + (catName ? 'Kategoria: ' + esc(catName) + '. ' : '') + 'Szukam prawników z doświadczeniem w podobnych sprawach…' + '</p></article>');
+        step(2, 'current'); if (st) { st.hidden = false; st.textContent = 'Prawnicy przeglądają pytanie…'; }
+      }, 2600);
+      later(function () {
+        add('<div class="appframe__viewers"><span class="appframe__viewers-av" aria-hidden="true">' + ANSWERS.slice(0, 3).map(function (a) { return '<img src="../assets/people/' + a.photo + '.jpg" alt="" width="160" height="160" loading="lazy" decoding="async">'; }).join('') + '</span><span>' + ANSWERS.slice(0, 3).length + ' ' + 'prawników przegląda Twoje pytanie' + '</span></div>');
+      }, 4400);
+      later(function () {
+        var v = $('.appframe__viewers', answers); if (v) v.remove();
+        if (short) { var ai = $('.appframe__ans--ai', answers); if (ai) ai.remove(); }  /* на коротких екранах — лише остання картка */
+        add(typingCard(ANSWERS[0], 0));  /* перший фахівець уже друкує — текст відповіді не показуємо */
+        step(3, 'done'); if (st) st.textContent = 'Pierwszy prawnik przyjął zgłoszenie';
+      }, 6200);
+      later(function () { doneAnimating(); go('s8'); }, 8400);
+    },
+    s8: function (el) {
+      stampNow(el);
+      var q = $('[data-s8-question]', el), d = $('[data-s8-desc]', el);
+      q.textContent = state.title || (state.description ? state.description : 'Twoja sytuacja (wiadomość głosowa)');
+      d.textContent = state.description || (state.voice ? 'Wiadomość głosowa' : '');
+      var list = $('[data-answers]', el); list.innerHTML = typingCard(ANSWERS[0], 0);  /* та сама картка, що друкувала на S7 */
+      ANSWERS.slice(1).forEach(function (a, k) { later(function () { var w = document.createElement('div'); w.innerHTML = typingCard(a, k + 1); var n = w.firstElementChild; n.classList.add('q-in'); list.appendChild(n); }, 1100 + k * 1300); });  /* ще двоє приєднуються — видно живий процес */
+    },
+    s11: function () { if (PLANS_ENTER) PLANS_ENTER(); },
+    s12: function () { track('membership_offer_result', { membership_choice: state.branch }); },
+    s13: function (el) {
+      var p = state.plan || (L.plans && L.plans[1]) || { id: 'pro', name: 'PRO', price: 410, discount: 10 };
+      var full = (L.plans || []).filter(function (x) { return x.id === p.id; })[0] || {};
+      var yearly = p.period === 'year', fee = p.price, next = new Date();
+      if (yearly) next.setFullYear(next.getFullYear() + 1); else next.setMonth(next.getMonth() + 1);
+      $('[data-s13-plan]', el).textContent = p.name; $('[data-s13-chip]', el).setAttribute('data-tier', p.id || 'pro');
+      $('[data-s13-total]', el).textContent = money(fee); $('[data-s13-period]', el).textContent = yearly ? '/ 1 rok' : '/ 1 miesiąc';
+      $('[data-s13-disc]', el).textContent = '−' + p.discount + ' %';
+      var save = $('[data-s13-save]', el); save.parentNode.hidden = !(full.savings && full.savings.total); if (full.savings && full.savings.total) save.textContent = full.savings.total;
+      $('[data-s13-period2]', el).textContent = yearly ? '1 rok' : '1 miesiąc'; $('[data-s13-plan2]', el).textContent = p.name; $('[data-s13-price2]', el).textContent = money(fee);
+      $('[data-s13-cadence]', el).textContent = yearly ? 'co roku' : 'co miesiąc';
+      $('#s13-error').hidden = !state.payFail;
+      track('checkout_view', { membership_plan: p.id || 'standard' });
+    },
+    s14: function (el) { $('[data-s14-plan]', el).textContent = state.plan ? state.plan.name : 'PRO'; },
+    s15: function (el) { var from = $('[data-s15-from]', el); if (from && L.plans && L.plans[0]) from.textContent = money(L.plans[0].price); track('membership_offer_view'); },
+    s16: function () {
+      track('quiz_result_view', { membership_status: state.paid ? 'paid' : 'none' });
+    }
+  };
+
+  /* S3 · карта провайдера — только по клику (EXC-004, 08-visual §8.6.2) */
+  $('[data-s3-loadmap]').addEventListener('click', function () {
+    var s = state.settlement; if (!s) return;
+    var media = $('[data-s3-media]'), svg = $('[data-s3-svg]');
+    var f = document.createElement('iframe');
+    f.src = 'https://www.google.com/maps?q=' + encodeURIComponent(s.name + ', ' + s.region + (s.country === L.country ? ', ' + 'Polska' : '')) + '&z=12&output=embed';
+    f.title = 'Mapa: ' + s.name + ', ' + s.region;
+    f.loading = 'lazy'; f.referrerPolicy = 'no-referrer-when-downgrade';
+    svg.hidden = true;
+    media.insertBefore(f, media.firstChild);
+    this.hidden = true;
+    track('map_loaded', { settlement: s.name });
+  });
+
+  /* ── старт: всегда с первого экрана, если состояние не подтверждает шаг ── */
+  var start = targetFromHash();
+  if (!allowed(start)) { start = 's0'; if (location.hash && location.hash !== '#s0') history.replaceState(null, '', '#s0'); }
+  render(start, 'forward', true);
+})();
+</script>
+
+</body>
+</html>
