@@ -11,6 +11,7 @@
 <link rel="alternate" hreflang="uk" href="https://consultant.net.ua/bezkoshtovnyi-analiz">
 <link rel="alternate" hreflang="en" href="https://consultantlm.com/free-case-analysis">
 <link rel="alternate" hreflang="en-GB" href="https://consultantlm.com/gb/free-case-analysis">
+<link rel="alternate" hreflang="pl" href="https://consultant.net.pl/bezplatna-analiza">
 <link rel="alternate" hreflang="x-default" href="https://consultantlm.com/free-case-analysis">
 <meta name="theme-color" content="#FFFFFF">
 <link rel="icon" href="../design-system/assets/logo/consultant-lm_logo_sign_on-light_clean.svg" type="image/svg+xml">
@@ -286,22 +287,9 @@
         <div class="field__msg">
           <p class="q-error" id="story-err" role="alert" hidden>
             <svg class="q-error__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg>
-            <span data-story-err-text>Describe the situation in text or record a voice note</span>
+            <span data-story-err-text>Describe the situation — at least 50 characters</span>
           </p>
         </div>
-      </div>
-      <p class="funnel__or" aria-hidden="true"><span>or</span></p>
-      <div class="funnel__voice" id="voice" data-state="idle">
-        <button class="btn btn--outline" type="button" data-voice="toggle" aria-describedby="voice-status">
-          <svg class="icon" width="20" height="20" aria-hidden="true" data-voice-icon><use href="#i-mic"></use></svg>
-          <span data-voice-label>Record a Voice Message · up to 1 minute</span>
-        </button>
-        <p class="funnel__voice-status" id="voice-status" role="status" aria-live="polite"><span class="funnel__voice-dot" aria-hidden="true"></span><span data-voice-text></span></p>
-        <button class="link" type="button" data-voice="reset" hidden>Record again</button>
-        <p class="q-error" role="alert" data-voice-error hidden>
-          <svg class="q-error__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg>
-          Microphone unavailable — describe the situation in text
-        </p>
       </div>
     </form>
 
@@ -317,7 +305,7 @@
       </ol>
       <div class="appframe appframe--compact" role="img" aria-label="Question page in the app: your question, and below it the card of the lawyer who took your request">
         <div class="appframe__bar">Your question</div>
-        <article class="appframe__card"><p class="appframe__date"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>07/01/2026, 18:04</p><p class="appframe__qt" data-s7-question>Title of your question</p><p class="appframe__qtext" data-s7-desc>Description</p></article>
+        <article class="appframe__card"><p class="appframe__date"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>07/01/2026, 18:04</p><p class="appframe__qt" data-s7-question>Title of your question</p><p class="appframe__qtext" data-s7-desc>Describe Your Situation</p></article>
         <div class="appframe__list" id="s7-answers">
           <div class="appframe__skel appframe__skel--short"><span class="q-skel"></span><span class="q-skel"></span><span class="q-skel"></span></div>
           <div class="appframe__skel funnel__hide-short"><span class="q-skel"></span><span class="q-skel"></span><span class="q-skel"></span></div>
@@ -333,7 +321,7 @@
       </div>
       <div class="appframe appframe--compact" role="img" aria-label="Question page in the app: your question with attorneys typing their answers below">
         <div class="appframe__bar">Your question</div>
-        <article class="appframe__card"><p class="appframe__date"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>07/01/2026, 18:04</p><p class="appframe__qt" data-s8-question>Title of your question</p><p class="appframe__qtext" data-s8-desc>Description</p></article>
+        <article class="appframe__card"><p class="appframe__date"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>07/01/2026, 18:04</p><p class="appframe__qt" data-s8-question>Title of your question</p><p class="appframe__qtext" data-s8-desc>Describe Your Situation</p></article>
         <div class="appframe__list appframe__list--stack" data-answers></div>
         <p class="appframe__note">The answer texts will appear in the app</p>
       </div>
@@ -710,7 +698,7 @@
   };
 
   var PLANS_ENTER = null;
-  var state = { branch:'free', settlement:null, remote:false, categories:[], description:'', voice:null,
+  var state = { branch:'free', settlement:null, remote:false, categories:[], description:'',
     intent:null, plan:null, phone:'', name:'', email:'', channels:[], leadId:null, paid:false, title:'',
     payFail:false, attribution:{}, trail:[] };
   var reduce = matchMedia('(prefers-reduced-motion: reduce)');
@@ -766,7 +754,7 @@
       case 's0': case 's1': case 's2': return true;
       case 's3': case 's4': return !!(state.settlement || state.remote);
       case 's5': case 's6': return state.categories.length > 0;
-      case 's7': case 's8': case 's9': return !!(state.description || state.voice);
+      case 's7': case 's8': case 's9': return !!state.description;
       case 's12': return !!state.intent;
       case 's11': return !!state.leadId;
       case 's13': return !!state.leadId && !!state.plan && !state.paid;
@@ -799,7 +787,7 @@
   var GATE = {
     s2: function () { var r = $('#remote'); return !!(state.settlement || (r && r.checked)); },
     s4: function () { return !!$('#s4-options input:checked'); },
-    s6: function () { var t = $('#story'); return !!(titleOkFn ? titleOkFn() : true) && !!((t && t.value.trim().length >= 50) || state.voice); },
+    s6: function () { var t = $('#story'); return !!(titleOkFn ? titleOkFn() : true) && !!(t && t.value.trim().length >= 50); },
     s9: function () { return !!$('#s9 input:checked'); },
     s12: function () { var st = phoneStateFn ? phoneStateFn() : null; return !!($('#consent').checked && st && st.valid); }
   };
@@ -983,66 +971,25 @@
     });
   })();
 
-  /* S6 · описание + голос */
+  /* S6 · заголовок + описание (голосовое сообщение убрано 12.11.2026, как в продовом квизе consultant.net.ua) */
   (function () {
     var ta = $('#story'), count = $('.q-textarea__count-num', $('#s6')), err = $('#story-err'), errText = $('[data-story-err-text]', err);
     var title = $('#story-title'), terr = $('#story-title-err'), twords = $('[data-title-words]'), thint = $('#story-title-hint');
     var TW = L.titleWords || null;  /* uk: 7–12 слів; en/gb: лише довжина до 100 символів (правки US 13.10) */
     if (!TW) { title.maxLength = 100; thint.textContent = L.titleHint || ''; }
-    var MIN_DESC = 50, VOICE_MAX = 60000;
+    var MIN_DESC = 50;
     function wordsOf(v) { return v.trim().split(/\s+/).filter(Boolean).length; }
     function titleOk() { var v = title.value.trim(), n = wordsOf(v); return TW ? (n >= TW[0] && n <= TW[1]) : (v.length >= 3 && v.length <= 100); }
     titleOkFn = titleOk;
     title.addEventListener('input', function () { if (TW) twords.textContent = wordsOf(title.value); if (titleOk()) { terr.hidden = true; title.removeAttribute('aria-invalid'); } });
-    var box = $('#voice'), toggle = $('[data-voice="toggle"]', box), label = $('[data-voice-label]', box);
-    var icon = $('use', $('[data-voice-icon]', box)), text = $('[data-voice-text]', box), reset = $('[data-voice="reset"]', box), verr = $('[data-voice-error]', box);
-    var rec = null, chunks = [], t0 = 0, tick = 0, stream = null;
     ta.addEventListener('input', function () { count.textContent = nbsp(ta.value.length); if (ta.value.trim().length >= MIN_DESC) showError(null, err, false); });
-    function fmt(ms) { var s = Math.round(ms / 1000); return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2); }
-    function setState(s) { box.dataset.state = s; }
-    function stopStream() { if (stream) { stream.getTracks().forEach(function (t) { t.stop(); }); stream = null; } }
-    function start() {
-      verr.hidden = true;
-      if (!navigator.mediaDevices || !window.MediaRecorder) { verr.hidden = false; return; }
-      navigator.mediaDevices.getUserMedia({ audio: true }).then(function (s) {
-        stream = s; chunks = [];
-        rec = new MediaRecorder(s);
-        rec.ondataavailable = function (e) { if (e.data && e.data.size) chunks.push(e.data); };
-        rec.onstop = function () {
-          var blob = new Blob(chunks, { type: rec.mimeType || 'audio/webm' });
-          var dur = Math.min(VOICE_MAX, Date.now() - t0);
-          state.voice = { blob: blob, duration_ms: dur, size: blob.size, mime: blob.type }; refreshGate();
-          setState('saved');
-          text.textContent = 'Recorded ' + fmt(dur) + ' · Saved';
-          label.textContent = 'Tell it by voice'; icon.setAttribute('href', '#i-mic');
-          toggle.hidden = true; reset.hidden = false;
-          showError(null, err, false);
-          stopStream();
-          track('quiz_voice_saved', { duration_ms: dur });
-        };
-        rec.start();
-        t0 = Date.now();
-        setState('recording');
-        label.textContent = 'Stop recording'; icon.setAttribute('href', '#i-stop');
-        text.textContent = 'Recording… left ' + fmt(VOICE_MAX);
-        tick = setInterval(function () { var left = VOICE_MAX - (Date.now() - t0); if (left <= 0) { stop(); return; } text.textContent = 'Recording… left ' + fmt(left); }, 250);  /* не довше хвилини, зворотний відлік */
-        timers.push(tick);
-      }).catch(function () { verr.hidden = false; setState('idle'); });
-    }
-    function stop() { clearInterval(tick); if (rec && rec.state !== 'inactive') rec.stop(); }
-    toggle.addEventListener('click', function () { box.dataset.state === 'recording' ? stop() : start(); });
-    reset.addEventListener('click', function () {
-      state.voice = null; setState('idle'); toggle.hidden = false; reset.hidden = true;
-      text.textContent = ''; toggle.focus();
-    });
     $('#s6').addEventListener('submit', function (e) {
       e.preventDefault();
-      if (box.dataset.state === 'recording') stop();
       state.description = ta.value.trim(); state.title = title.value.trim().replace(/\s+/g, ' ');
       if (!titleOk()) { terr.hidden = false; title.setAttribute('aria-invalid', 'true'); title.focus(); say(terr.textContent.trim()); return; }
-      if (!state.description && !state.voice) { errText.textContent = 'Describe the situation in text or record a voice note'; showError(null, err, true, ta); say(err.textContent.trim()); return; }
-      if (state.description && state.description.length < MIN_DESC && !state.voice) { errText.textContent = 'Describe the situation in more detail — at least 50 characters'; showError(null, err, true, ta); say(err.textContent.trim()); return; }
-      track('quiz_step_complete', { quiz_step: 's6', has_text: !!state.description, has_voice: !!state.voice, text_length: state.description.length, title_words: wordsOf(state.title) });
+      if (!state.description) { errText.textContent = 'Describe the situation — at least 50 characters'; showError(null, err, true, ta); say(err.textContent.trim()); return; }
+      if (state.description.length < MIN_DESC) { errText.textContent = 'Describe the situation in more detail — at least 50 characters'; showError(null, err, true, ta); say(err.textContent.trim()); return; }
+      track('quiz_step_complete', { quiz_step: 's6', has_text: !!state.description, text_length: state.description.length, title_words: wordsOf(state.title) });
       go('s7');
     });
   })();
@@ -1164,7 +1111,7 @@
         var lead = { lead_id: state.leadId, phone: state.phoneE164, phone_country: state.phoneCountry, name: state.name || null, email: state.email || null,
           settlement: state.settlement ? state.settlement.name : null,
           region: state.settlement ? state.settlement.region : null, remote_ok: state.remote, practice_areas: state.categories,
-          case_title: state.title || null, case_description: state.description || null, voice_audio: state.voice ? { duration_ms: state.voice.duration_ms, size: state.voice.size, mime: state.voice.mime } : null,
+          case_title: state.title || null, case_description: state.description || null,
           client_intent: state.intent, membership_intent: state.plan ? state.plan.id : null, attribution: state.attribution,
           last_step_reached: 's12', created_at: new Date().toISOString() };
         try { console.info('[quiz] lead + question created', lead); } catch (err) {}
@@ -1334,9 +1281,8 @@
     s7: function (el) {
       stampNow(el);
       var cat = CATEGORIES.filter(function (c) { return c[0] === state.categories[0]; })[0], catName = cat ? cat[1] : '';
-      var voiceLbl = 'Voice message · ' + (state.voice ? Math.round(state.voice.duration_ms / 1000) + ' s' : '');
-      $('[data-s7-question]', el).textContent = state.title || (state.description ? state.description : voiceLbl);
-      $('[data-s7-desc]', el).textContent = state.description || (state.voice ? voiceLbl : '');
+      $('[data-s7-question]', el).textContent = state.title || state.description;
+      $('[data-s7-desc]', el).textContent = state.description;
       var answers = $('#s7-answers'), list = $('#s7-list'), items = $$('.q-steps__item', list), st = $('[data-status]', list), short = matchMedia('(max-height: 699px)').matches;
       var AIP = L.ai || { name: 'Assistant Andrey', photo: 'ai-uk' };
       function step(i, state_) { items.forEach(function (li, k) { if (k < i) li.dataset.state = 'done'; }); if (items[i]) { items[i].dataset.state = state_; if (state_ === 'current') items[i].setAttribute('aria-current', 'step'); else items[i].removeAttribute('aria-current'); } }
@@ -1366,8 +1312,8 @@
     s8: function (el) {
       stampNow(el);
       var q = $('[data-s8-question]', el), d = $('[data-s8-desc]', el);
-      q.textContent = state.title || (state.description ? state.description : 'Your situation (voice message)');
-      d.textContent = state.description || (state.voice ? 'Voice message' : '');
+      q.textContent = state.title || state.description;
+      d.textContent = state.description;
       var list = $('[data-answers]', el); list.innerHTML = typingCard(ANSWERS[0], 0);  /* та сама картка, що друкувала на S7 */
       ANSWERS.slice(1).forEach(function (a, k) { later(function () { var w = document.createElement('div'); w.innerHTML = typingCard(a, k + 1); var n = w.firstElementChild; n.classList.add('q-in'); list.appendChild(n); }, 1100 + k * 1300); });  /* ще двоє приєднуються — видно живий процес */
     },
