@@ -223,3 +223,84 @@
 ## S8 — відповіді друкуються, тексти лише в застосунку (15.10.2026)
 
 Экран 8 больше не показывает тексты ответов. Заголовок «На Ваше питання вже відповідають юристи», под ним подсказка, что полные тексты открываются в приложении после «Продовжити». В рамке приложения — вопрос клиента с датой и три карточки юристов (PREMIUM / PRO / START из `answers` каста: уровень, рейтинг «N / 100», фото, имя, город), а вместо текста ответа — бесконечный индикатор набора «Друкує відповідь…». Первая карточка та же, что начала печатать на S7, две другие присоединяются с паузами 1,1 и 2,4 с; ритм точек у карточек сдвинут (`--d`), чтобы они не мигали синхронно; при `prefers-reduced-motion` точки статичны. Под карточками — строка «Тексти відповідей з’являться у застосунку». Чипы «Різні підходи…» убраны. Рендер — `typingCard()` в `src/quiz.body.html`, стили — блок «юрист друкує відповідь» в `quiz.css`; поле `text` в `answers` каста больше не выводится, но оставлено в данных.
+
+## Польша (pl) — 11.11.2026
+
+Новая локаль `pl/` (`pl/quiz.html`, `pl/quiz-dynamic.html`), язык польский, страна PL, источник данных — польский сайт платформы
+https://consultant.net.pl (проверен 11.11.2026). Собрана тем же `build.py`, словарь `i18n/pl.json` — все 662 ключа, которые реально
+нужны сборке (в `en.json` 884 ключа, из них 222 устаревшие и в сборке не участвуют).
+
+- **Обращение и термины.** На «Ty» с заглавной в притяжательных и личных формах (Twój, Twoja, Ciebie, Tobą), как в
+  `~/lending/PL-INPL-QUIZ/src/i18n/pl.js`. Общий термин «фахівець / lawyer» — **«prawnik»** (так подписаны специалисты на
+  consultant.net.pl); «адвокат» — «adwokat» только там, где в оригинале именно адвокат; в числе специалистов на платформе
+  («3 500+», S1/S2) — «specjalistów», потому что в каталоге сайта есть и бухгалтеры, и консультанты (3 938 карточек на 11.11.2026).
+  Без восклицательных знаков, эмодзи и обещаний результата; кавычки „…”.
+- **Страна** (`LOCALES["pl"]`): телефон +48, 9 цифр, группы 3-3-3, плейсхолдер «512 345 678», страна компонента телефона по умолчанию PL
+  (маска `+48 (ZZZ) ZZZ-ZZZ` и PL уже есть в `assets/vendor/phone-country-dropdown`); деньги «1 299 zł» (неразрывные пробелы);
+  даты ДД.ММ.ГГГГ (формат по умолчанию страницы); польское множественное число (1 / 2–4 кроме 12–14 / остальное); правило заголовка
+  S6 — 7–12 слов, счётчик «Liczba słów: N · wymagane od 7 do 12», ошибка «Tytuł powinien mieć od 7 do 12 słów»; 65 городов Польши
+  с воеводствами и координатами + Kijów, Lwów, Berlin, Praga; контур Польши `assets/geo/PL.json` (`tools/make-geo.py`, добавлены
+  точки 12 крупных городов для режима «zdalnie»). AI-ассистент — «Asystent Andrij» с фото Андрея (`assets/people/ai-uk.jpg`), как ассистент Андрій в uk
+  (правка владельца 12.11.2026: на сайтах два ассистента — Андрей и Кира; логотип вместо фото убран).
+- **Юристы — с сайта.** `data/cast-pl.json`: 28 человек ленты S1 (20 PREMIUM, 2 START, 6 BASE), S3 (Sinewyr, Melnyk, Bondarenko,
+  Litwinowa — Warszawa), S7/S8 (PREMIUM Andrzej Sinewyr 61,76, START Pavlo Tykhomirov 32,91, BASE Oleksandra Tarnovska 33,59 —
+  уровня PRO на польском сайте нет, поэтому средняя карточка START, нижняя BASE), динамический квиз — Sinewyr, Wiśniewska, Kuzmina,
+  Melnyk, Bondarenko, Prokopenko. Имена, фото, уровни, рейтинги, города — с карточек https://consultant.net.pl/ocena-konsultantow
+  (поле `site` в JSON хранит исходные значения и ссылку). Фото — через `tools/photos/` (Apple Vision + facecrop), `assets/people/pl/`
+  (лента 176 px) и `assets/people/pl/av/` (160 px). Направления права у людей в динамическом квизе — фикстура (на сайте нет тегов).
+  Аватар «Asystent prawny» с сайта не взят: это логотип стороннего сервиса.
+- **Количество фахівців в городе/категории не показывается** (сайт таких цифр не публикует): в pl у населённых пунктов вместо числа `null`,
+  а `patches` в `LOCALES["pl"]` убирают подпись числа на плитках S4, число из объявления скринридеру на S2 и запасной вариант
+  «специалисты области» на S3. Заголовок S3 и раньше был без числа. Выдуманных польских чисел нигде нет.
+- **Кейсы S5 — с польского сайта.** `data/site-cases-pl.json` — 338 описаний из https://consultant.net.pl/konsultacje/case (заголовок,
+  дата, автор, результат); `tools/make-cases-pl.py` → `data/quiz-cases-pl.json`. Число на экране — количество описаний на сайте в
+  категории (классификация по ключевым словам, черновая), подпись «spraw na platformie», подзаголовок «Przykłady z platformy» вместо
+  «Реальні результати». Примеры отобраны вручную: только дела в Польше, результат — факт, без рекламных эпитетов; украинские судовые
+  дела, опубликованные на польском сайте, не показываются. Многие описания сайт сам называет модельными сценариями
+  («W przedstawionym scenariuszu…») — эта формулировка оставлена в тексте результата. Для «Sprawy wojskowe» и «Sprawy karne»
+  подходящих примеров нет — показывается только число.
+- **Оценки магазинов на S5** — с главной consultant.net.pl: App Store 5,0, Google Play 4,5; числа отзывов сайт не даёт — подпись «ocena w sklepie».
+- **Ссылки**: политика — https://consultant.net.pl/prawo/privacy-policy, условия — https://consultant.net.pl/prawo/client-agreement
+  («Oferta publiczna dla Klientów»), обе отвечают 200. Canonical квизов `/bezplatna-analiza`, `/dobor-prawnika` — заглушки (на сайте 404).
+  В uk/en/gb добавлена только строка `hreflang="pl"`.
+- **Пакеты и цены** (решение владельца 13.11.2026): цены = украинские клиентские из `QUIZclient/DOCS/Пакети послуг (підписки) 2026 р..pdf`
+  (125 / 410 / 2 100 ₴ в месяц), × 4 и перевод по курсу НБУ 13.11.2026 (1 zł = 11,4334 ₴): BASE 44 zł / 475 zł в год, PRO 143 / 1 544 zł,
+  PREMIUM 735 / 7 938 zł (год = месяц × 12 − 10 %). Строки экономии пересчитаны так же (консультация 90 zł, шаблоны 315 zł, заказы на 7 000 zł).
+  gb — по тому же правилу (£1 = 60,2241 ₴): £8 / £86, £27 / £292, £139 / £1 501; консультация £17, шаблоны £60, заказы на £1,300.
+  Примеры услуг — реальные услуги сайта: «Uzyskanie karty pobytu» 2 598 zł, «Zaskarżenie zwolnienia i przywrócenie do pracy» 5 006 zł (PREMIUM). Диапазоны цены в динамическом квизе «Do 600 zł / 600–3 000 zł / Od 3 000 zł» — заглушки.
+- **Ролики**: `flow-pl`, `install-pl` (блоки `pl` в `tools/render-app-video.mjs` и `tools/render-install-video.mjs`; в install добавлен
+  фильтр `LOCS=pl` и польский флаг в поле телефона). Запуск: `LOCS=pl node tools/render-app-video.mjs`, затем то же для install.
+  У flow рендерер оставляет в конце 2 кадра «нажатой карточки» и 18 чёрных кадров — flow-pl обрезан до 309 кадров (`ffmpeg -frames:v 309`),
+  последний кадр совпадает с первым. У install-pl в конце только задуманное затухание в чёрное (15 кадров), лишних кадров нет.
+- **Сборка строже для pl**: `strict=True` — если в pl остаётся непереведённая строка (кириллица, ₴, украинская дата), `build.py` падает;
+  точечные замены `patches` тоже падают, если исходник изменился. Заготовка `i18n/pl.json` больше не перезаписывается сборкой.
+- **Проверка**: `node tools/verify-walk.mjs pl/quiz.html 390 844 export/quiz-pl/screens funnel [alt|remote|year]` и
+  `… pl/quiz-dynamic.html … dynamic [exit|unsure]` — проход до конца, скриншоты, ошибки консоли, ответы ≥ 400, горизонтальное
+  переполнение, кириллица и английские слова в видимом тексте, кнопки в две строки. Прогнано 390×844 и 1280×900 — без замечаний.
+- **Экспорт**: `export/quiz-pl/` (обе страницы с путями без `../`, README.txt, скриншоты в `screens/`) и `export/ConsultantLM-quiz-pl.zip`
+  (без скриншотов). Публикация — `https://markichyt.github.io/-/lm/pl/quiz.html` и `/pl/quiz-dynamic.html`.
+
+## Англия (gb) — юристы с consultantlm.uk (11.11.2026)
+
+- **Состав.** `data/cast-gb.json` переписан: вместо американского состава с городом «Online» — реальные специалисты
+  https://consultantlm.uk/rating (108 карточек, 57 PREMIUM с фото; имена, фото, уровни, рейтинги, города — с сайта, поле `site` хранит
+  исходные значения). Фото — `tools/photos/`, `assets/people/gb/` (176 px) и `assets/people/gb/av/` (160 px). По замечанию владельца об
+  украинских фамилиях вперёд поставлены люди с неукраинскими именами: в ленте S1 — Isaac Usifoh, Dhruv Manchanda, Daiga Barzdinya, Filip Orlov,
+  Dmytro Morgan, Tatyana Maiorello, Miraziz Khidoyatov, Gulder Aitbayeva, Kamilla Baratova, Gozel Klycheva, Liliya Seitablayeva, Elizabeth Mazur,
+  Ina Fjodorova, Inga Verdesh, Alina Kolesnikova, Olga Borodina и др.; украинских имён с фото на сайте большинство, поэтому они тоже есть
+  (Moroz, Maiko, Sydorova, Belka, Datsyuk, Kashyrina, Petryk, Afanasiev…). 27 PREMIUM + 1 BASE (Iryna Sharhorodska): уровня PRO на британском
+  сайте нет, у пяти START нет фото. S3 — Manchanda, Barzdinya, Maiorello, Kolesnikova (London). S7/S8 — PREMIUM Eugene Moroz (34.15, Birmingham),
+  PREMIUM Isaac Usifoh (0.14, England), BASE Iryna Sharhorodska (0, England). Динамический квиз — Moroz, Verdesh, Usifoh, Manchanda, Barzdinya,
+  Maiorello (направления — фикстура). AI-ассистент остаётся «Assistant Emily».
+- **Ссылки.** Главная — https://consultantlm.uk/, пользовательское соглашение — https://consultantlm.uk/legal/client-agreement (200; раньше вело на
+  consultantlm.com/legal/terms-of-service, который отвечает 404). Политики конфиденциальности на consultantlm.uk нет (`/legal/privacy-policy`
+  перенаправляет на главную) — остаётся https://consultantlm.com/legal/privacy-policy. В `LINKS` теперь можно задать абсолютный URL.
+  Canonical `/gb/free-case-analysis`, `/gb/find-a-lawyer` не менялись — страниц квиза нет ни на consultantlm.uk, ни на consultantlm.com.
+- **Цены** не менялись: на consultantlm.uk цен подписки нет.
+- **Ролики** `flow-gb` (раньше копия en) и `install-gb` перерисованы с британским составом и датами ДД/ММ/ГГГГ (блок `gb` в обоих скриптах).
+  flow-gb обрезан до 317 кадров (2–3 кадра «нажатой карточки» и 10 чёрных кадров в конце), последний кадр совпадает с первым; у install-gb в конце
+  только задуманное затухание.
+- **S6, 390 px.** Кнопка «Record a Voice Message · up to 1 minute» вылезала за экран (scrollWidth 425 при 390) — для gb подпись сокращена в
+  `i18n/gb.json` до «Record a voice note · up to 1 min». В en та же проблема осталась (не трогалось).
+- Проверка: `LANGCHK=en CITY=Lon PHONE=7400123456 node tools/verify-walk.mjs gb/quiz.html 390 844 export/quiz-gb/screens funnel` и dynamic —
+  390×844, 1280×900, ветки alt и exit — без ошибок. Экспорт: `export/quiz-gb/` (обе страницы), `export/ConsultantLM-quiz-gb.zip`.
