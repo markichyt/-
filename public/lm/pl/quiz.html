@@ -22,7 +22,7 @@
 <link rel="stylesheet" href="../design-system/styles.css">
 <link rel="stylesheet" href="../assets/vendor/phone-country-dropdown/phone-country-dropdown.css">
 <link rel="stylesheet" href="../quiz.css">
-<script>window.QUIZ_LOCALE = { lang: 'pl', country: 'PL', titleWords: [7, 12], ai: { name: 'Asystent AI', photo: 'ai-pl' },
+<script>window.QUIZ_LOCALE = { lang: 'pl', country: 'PL', titleWords: [7, 12], ai: { name: 'Asystent Andrij', photo: 'ai-uk' },
   phone: { code: '+48', digits: 9, groups: [3, 3, 3] },
   plural: function (n) { var m10 = n % 10, m100 = n % 100; return n === 1 ? 0 : (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) ? 1 : 2; },
   step: function (n, m) { return 'Krok ' + n + ' z ' + m; },
@@ -1341,7 +1341,7 @@
       $('[data-s7-question]', el).textContent = state.title || (state.description ? state.description : voiceLbl);
       $('[data-s7-desc]', el).textContent = state.description || (state.voice ? voiceLbl : '');
       var answers = $('#s7-answers'), list = $('#s7-list'), items = $$('.q-steps__item', list), st = $('[data-status]', list), short = matchMedia('(max-height: 699px)').matches;
-      var AIP = L.ai || { name: 'Asystent AI', photo: 'ai-uk' };
+      var AIP = L.ai || { name: 'Asystent Andrij', photo: 'ai-uk' };
       function step(i, state_) { items.forEach(function (li, k) { if (k < i) li.dataset.state = 'done'; }); if (items[i]) { items[i].dataset.state = state_; if (state_ === 'current') items[i].setAttribute('aria-current', 'step'); else items[i].removeAttribute('aria-current'); } }
       function add(html) { var w = document.createElement('div'); w.innerHTML = html; var n = w.firstElementChild; n.classList.add('q-in'); answers.appendChild(n); return n; }
       items.forEach(function (li) { li.dataset.state = 'upcoming'; li.removeAttribute('aria-current'); }); if (st) st.hidden = true;
