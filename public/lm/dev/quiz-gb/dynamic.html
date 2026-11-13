@@ -1,0 +1,1068 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Find a lawyer in 1–2 minutes — dynamic quiz | ConsultantLM</title>
+    <meta
+      name="description"
+      content="Answer a few questions — the quiz adapts to your situation and matches a lawyer: area of law, urgency, a comfortable price range and a convenient way to get in touch."
+    />
+    <!-- Макет: данные, фахівці и кейсы — заглушки до подключения базы сайта; индексирование запрещено явно -->
+    <meta name="robots" content="noindex,nofollow" />
+    <link rel="canonical" href="https://consultantlm.com/gb/find-a-lawyer" />
+    <link rel="alternate" hreflang="uk" href="https://consultant.net.ua/pidbir-yurysta" />
+    <link rel="alternate" hreflang="en" href="https://consultantlm.com/find-a-lawyer" />
+    <link rel="alternate" hreflang="en-GB" href="https://consultantlm.com/gb/find-a-lawyer" />
+    <link rel="alternate" hreflang="pl" href="https://consultant.net.pl/dobor-prawnika" />
+    <link rel="alternate" hreflang="x-default" href="https://consultantlm.com/find-a-lawyer" />
+    <meta name="theme-color" content="#FFFFFF" />
+    <link rel="icon" href="assets/logo/consultant-lm_logo_sign_on-light_clean.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Onest:wght@400;500;600&display=swap"
+    />
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="assets/vendor/phone-country-dropdown/phone-country-dropdown.css" />
+    <link rel="stylesheet" href="css/quiz.css" />
+    <script src="js/config.js"></script>
+    <!-- CONSULTANT design system v1.0 · динамический квиз «Підбір юриста» (голосовое ТЗ 18.09) · локаль gb · build.py -->
+  </head>
+  <body class="funnel-page">
+    <a class="q-skip-link" href="#main">Skip to main content</a>
+
+    <!-- Спрайт иконок (§8.3.4): первый узел body, скрыт. Базовый набор — из quiz.html, ниже — добавленные для этого квиза -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none" aria-hidden="true">
+      <symbol
+        id="i-search"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <circle cx="11" cy="11" r="8" />
+        <path d="m21 21-4.3-4.3" />
+      </symbol>
+      <symbol
+        id="i-map-pin"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0" />
+        <circle cx="12" cy="10" r="3" />
+      </symbol>
+      <symbol
+        id="i-x"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </symbol>
+      <symbol
+        id="i-check"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="m5 12.5 4 4L19 7" />
+      </symbol>
+      <symbol
+        id="i-arrow-left"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M19 12H5" />
+        <path d="m12 19-7-7 7-7" />
+      </symbol>
+      <symbol
+        id="i-chevron-down"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="m6 9 6 6 6-6" />
+      </symbol>
+      <symbol
+        id="i-mic"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <rect x="9" y="3" width="6" height="11" rx="3" />
+        <path d="M5 11a7 7 0 0 0 14 0" />
+        <path d="M12 18v3" />
+        <path d="M8 21h8" />
+      </symbol>
+      <symbol
+        id="i-stop"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <rect x="6" y="6" width="12" height="12" rx="2" />
+      </symbol>
+      <symbol
+        id="i-users"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M18 21a8 8 0 0 0-16 0" />
+        <circle cx="10" cy="8" r="5" />
+        <path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3" />
+      </symbol>
+      <symbol
+        id="i-family"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <circle cx="9" cy="8" r="3" />
+        <circle cx="17" cy="9" r="2.5" />
+        <path d="M3 20a6 6 0 0 1 12 0" />
+        <path d="M14.5 20a4.5 4.5 0 0 1 6.5-4" />
+      </symbol>
+      <symbol
+        id="i-file"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M6 3h8l4 4v14H6z" />
+        <path d="M14 3v4h4" />
+        <path d="M9 12h6M9 16h6" />
+      </symbol>
+      <symbol
+        id="i-shield"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M12 3 4 6v6c0 5 3.5 8.5 8 9 4.5-.5 8-4 8-9V6z" />
+        <path d="m9 12 2 2 4-4" />
+      </symbol>
+      <symbol
+        id="i-heart"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z" />
+      </symbol>
+      <symbol
+        id="i-globe"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <circle cx="12" cy="12" r="9" />
+        <path d="M3 12h18" />
+        <path d="M12 3a14 14 0 0 1 0 18" />
+        <path d="M12 3a14 14 0 0 0 0 18" />
+      </symbol>
+      <symbol
+        id="i-car"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M5 11l1.6-4.5h10.8L19 11" />
+        <rect x="3" y="11" width="18" height="6" rx="1.5" />
+        <circle cx="7.5" cy="17.5" r="1.5" />
+        <circle cx="16.5" cy="17.5" r="1.5" />
+      </symbol>
+      <symbol
+        id="i-briefcase"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+        <rect width="20" height="14" x="2" y="6" rx="2" />
+      </symbol>
+      <symbol
+        id="i-shield-alert"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M12 3 4 6v6c0 5 3.5 8.5 8 9 4.5-.5 8-4 8-9V6z" />
+        <path d="M12 9v4" />
+        <path d="M12 16h.01" />
+      </symbol>
+      <symbol
+        id="i-scale"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M12 3v18" />
+        <path d="M5 7h14" />
+        <path d="m5 7-3 7a3 3 0 0 0 6 0z" />
+        <path d="m19 7-3 7a3 3 0 0 0 6 0z" />
+        <path d="M8 21h8" />
+      </symbol>
+      <symbol
+        id="i-coins"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <circle cx="9" cy="9" r="5" />
+        <path d="M14.5 10.5a5 5 0 1 1-6 6" />
+      </symbol>
+      <symbol
+        id="i-dots"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <circle cx="6" cy="12" r="1.5" />
+        <circle cx="12" cy="12" r="1.5" />
+        <circle cx="18" cy="12" r="1.5" />
+      </symbol>
+      <symbol
+        id="i-bolt"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M13 3 5 14h6l-1 7 8-11h-6z" />
+      </symbol>
+      <symbol
+        id="i-eye"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z" />
+        <circle cx="12" cy="12" r="3" />
+      </symbol>
+      <symbol
+        id="i-book"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z" />
+        <path d="M4 21V5" />
+        <path d="M8 7h7" />
+      </symbol>
+      <symbol
+        id="i-clock"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <circle cx="12" cy="12" r="10" />
+        <path d="M12 6v6l4 2" />
+      </symbol>
+      <symbol
+        id="i-message"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z" />
+      </symbol>
+      <!-- знаки магазинов — Simple Icons 16.31.0 (CC0), монохром: цвет задаёт страница, как у logo-wall (08-visual §8.6.3) -->
+      <symbol id="i-appstore" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"
+        />
+      </symbol>
+      <symbol id="i-googleplay" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M22.018 13.298l-3.919 2.218-3.515-3.493 3.543-3.521 3.891 2.202a1.49 1.49 0 0 1 0 2.594zM1.337.924a1.486 1.486 0 0 0-.112.568v21.017c0 .217.045.419.124.6l11.155-11.087L1.337.924zm12.207 10.065l3.258-3.238L3.45.195a1.466 1.466 0 0 0-.946-.179l11.04 10.973zm0 2.067l-11 10.933c.298.036.612-.016.906-.183l13.324-7.54-3.23-3.21z"
+        />
+      </symbol>
+      <symbol
+        id="i-phone"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <rect x="7" y="2" width="10" height="20" rx="2" />
+        <path d="M11 18h2" />
+      </symbol>
+      <!-- добавлено для динамического квиза (ADR-040): контур 1.75, как у базового набора -->
+      <symbol
+        id="i-mail"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <rect x="3" y="5" width="18" height="14" rx="2" />
+        <path d="m3 7 9 6 9-6" />
+      </symbol>
+      <symbol
+        id="i-phone-call"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path
+          d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"
+        />
+      </symbol>
+      <symbol
+        id="i-home"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="m3 11 9-8 9 8" />
+        <path d="M5 10v10h14V10" />
+        <path d="M10 20v-6h4v6" />
+      </symbol>
+      <symbol
+        id="i-question"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <circle cx="12" cy="12" r="9" />
+        <path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7" />
+        <path d="M12 17h.01" />
+      </symbol>
+      <symbol
+        id="i-calendar"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <rect x="3" y="5" width="18" height="16" rx="2" />
+        <path d="M8 3v4M16 3v4M3 10h18" />
+      </symbol>
+      <symbol
+        id="i-pen"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M12 20h9" />
+        <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z" />
+      </symbol>
+    </svg>
+
+    <!-- Живой регион: перед main, пустой, создаётся заранее -->
+    <p id="ds-status" role="status" class="sr-only"></p>
+
+    <main id="main" tabindex="-1">
+      <!-- ═══════════════════════════════════════════════════════════════════════
+     quiz@sunken — динамический квиз «Підбір юриста» (ADR-040) в оболочке экрана приложения (ADR-039):
+     верхняя панель (локап · «Крок N із M» · выход), прогресс — ProgressBar по доле маршрута,
+     тело с одним видимым экраном, нижняя панель действий, закреплённая у края экрана.
+     Экраны-вопросы генерируются скриптом из FLOW; статичные экраны размечены ниже.
+     Маршрут: start → (worry) → category → (topic | describe) → stage → urgency → price →
+     channel → (calltime) → match → contacts → thanks; «Ні» → exit → bye; «×» → exit.
+     ═══════════════════════════════════════════════════════════════════════ -->
+      <section class="funnel" aria-labelledby="quiz-title" id="funnel" data-step="start" data-branch="yes">
+        <header class="funnel__top">
+          <div class="funnel__topin">
+            <a class="funnel__brand" href="https://consultantlm.uk/" aria-label="ConsultantLM — home">
+              <img
+                class="funnel__brand-img--light"
+                src="assets/logo/consultant-lm_logo_en_on-light_R.svg"
+                width="580"
+                height="122"
+                alt=""
+                decoding="async"
+              />
+              <img
+                class="funnel__brand-img--dark"
+                src="assets/logo/consultant-lm_logo_en_on-dark_R.svg"
+                width="580"
+                height="122"
+                alt=""
+                decoding="async"
+              />
+            </a>
+            <span class="funnel__step" id="funnel-where" hidden>Step 1 of 8</span>
+          </div>
+          <div class="funnel__progress" id="funnel-progress" hidden>
+            <div
+              class="progress"
+              id="funnel-bars"
+              role="progressbar"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="0"
+              aria-valuetext="Step 1 of 8"
+            >
+              <div class="progress__track"><div class="progress__fill"></div></div>
+            </div>
+          </div>
+        </header>
+
+        <div class="funnel__body" id="funnel-body">
+          <!-- ── start · Крок 1: квалификатор — «Так / Не впевнений(-на) / Ні» (голосовое ТЗ: «Вам треба допомога?») ── -->
+          <form class="funnel__screen" id="start" data-screen="start" aria-labelledby="quiz-title" novalidate>
+            <div class="funnel__head">
+              <h1 class="funnel__title funnel__title--hero" id="quiz-title" tabindex="-1">Do you need legal help?</h1>
+              <p class="funnel__hint funnel__hint--sm" data-hint>
+                A few questions and we match you with a lawyer for your situation. Free and with no obligation.
+              </p>
+            </div>
+            <fieldset class="funnel__options" id="start-options" aria-describedby="start-err">
+              <legend class="sr-only">Select one option</legend>
+              <label class="q-option">
+                <input class="q-option__input" type="radio" name="need" value="yes" data-label="Yes, I do" />
+                <span class="q-option__icon" aria-hidden="true"
+                  ><svg class="icon"><use href="#i-check"></use></svg
+                ></span>
+                <span class="q-option__label"
+                  >Yes, I do<span class="q-option__note">We match a lawyer in 1–2 minutes</span></span
+                >
+              </label>
+              <label class="q-option">
+                <input class="q-option__input" type="radio" name="need" value="unsure" data-label="Not sure yet" />
+                <span class="q-option__icon" aria-hidden="true"
+                  ><svg class="icon"><use href="#i-question"></use></svg
+                ></span>
+                <span class="q-option__label"
+                  >Not sure yet<span class="q-option__note"
+                    >We help you figure out whether you need a lawyer</span
+                  ></span
+                >
+              </label>
+              <label class="q-option">
+                <input class="q-option__input" type="radio" name="need" value="no" data-label="No, just looking" />
+                <span class="q-option__icon" aria-hidden="true"
+                  ><svg class="icon"><use href="#i-eye"></use></svg
+                ></span>
+                <span class="q-option__label"
+                  >No, just looking<span class="q-option__note">You can leave or look around the platform</span></span
+                >
+              </label>
+            </fieldset>
+            <p class="funnel__error" id="start-err" role="alert" hidden>Pick one option to continue</p>
+          </form>
+
+          <!-- Остальные экраны-вопросы (worry, category, topic, stage, urgency, channel, calltime) вставляются сюда скриптом из FLOW -->
+
+          <!-- ── exit · «Ні» и «×»: заперечення → відповідь, два рівноправні дії ─── -->
+          <form class="funnel__screen" id="exit" data-screen="exit" aria-labelledby="exit-title" novalidate hidden>
+            <div class="funnel__head">
+              <h2 class="funnel__title" id="exit-title" tabindex="-1">Are you sure you want to leave?</h2>
+              <p class="funnel__hint funnel__hint--sm funnel__hide-short">
+                Tell us what is stopping you — maybe we can help.
+              </p>
+            </div>
+            <fieldset class="dq__objections" id="exit-options">
+              <legend class="sr-only">What is stopping you?</legend>
+              <label class="q-option q-option--row">
+                <input
+                  class="q-option__input"
+                  type="radio"
+                  name="objection"
+                  value="cost"
+                  data-reply="The first consultation is free. Service prices are visible in advance — by stage, before the work starts."
+                />
+                <span class="q-option__label">I’m afraid it’s expensive</span>
+              </label>
+              <label class="q-option q-option--row">
+                <input
+                  class="q-option__input"
+                  type="radio"
+                  name="objection"
+                  value="trust"
+                  data-reply="Every lawyer on the platform is verified. The profile shows a rating out of 100, client reviews and experience in similar cases."
+                />
+                <span class="q-option__label">I’m not sure I can trust it</span>
+              </label>
+              <label class="q-option q-option--row">
+                <input
+                  class="q-option__input"
+                  type="radio"
+                  name="objection"
+                  value="time"
+                  data-reply="It takes 1–2 minutes. You can ask now and read the lawyer’s answer whenever it suits you."
+                />
+                <span class="q-option__label">No time right now</span>
+              </label>
+              <label class="q-option q-option--row">
+                <input
+                  class="q-option__input"
+                  type="radio"
+                  name="objection"
+                  value="browse"
+                  data-reply="The directory of lawyers is open without registration. The quiz only narrows it down to those who fit you."
+                />
+                <span class="q-option__label">Just looking</span>
+              </label>
+            </fieldset>
+            <div class="dq__stay" id="exit-reply" role="status" aria-live="polite" hidden>
+              <p class="funnel__key" data-exit-reply></p>
+              <p class="dq__lead funnel__hide-short">
+                You can continue from the same place — your answers are kept until the end of the session.
+              </p>
+            </div>
+          </form>
+
+          <!-- ── bye · вихід підтверджено ─────────────────────────────────────────── -->
+          <section class="funnel__screen funnel__center" id="bye" data-screen="bye" aria-labelledby="bye-title" hidden>
+            <span class="funnel__icon" aria-hidden="true"
+              ><svg class="icon"><use href="#i-heart"></use></svg
+            ></span>
+            <h2 class="funnel__title" id="bye-title" tabindex="-1">Thanks for stopping by.</h2>
+            <p class="funnel__hint">
+              If a question comes up, the quiz is here and lawyers work every day. The first consultation is free.
+            </p>
+          </section>
+
+          <!-- ── describe · вільний опис (категорія «Інше» або за бажанням) ───────── -->
+          <form
+            class="funnel__screen"
+            id="describe"
+            data-screen="describe"
+            aria-labelledby="describe-title"
+            novalidate
+            hidden
+          >
+            <div class="funnel__head">
+              <h2 class="funnel__title" id="describe-title" tabindex="-1">Briefly describe what happened.</h2>
+              <p class="funnel__hint funnel__hint--sm">
+                A few sentences are enough to match a specialized lawyer. You can add details later.
+              </p>
+            </div>
+            <div class="field funnel__field funnel__textarea">
+              <label class="field__label" for="story">Situation <span class="q-req">(optional)</span></label>
+              <div class="q-textarea">
+                <textarea
+                  class="input input--soft q-textarea__field"
+                  id="story"
+                  name="case_description"
+                  rows="4"
+                  maxlength="600"
+                  placeholder="For example: a neighbor flooded my apartment and the insurer refused to pay…"
+                  aria-describedby="story-count"
+                ></textarea>
+                <p class="q-textarea__count caption" id="story-count" aria-live="polite">
+                  <span class="q-textarea__count-num num">0</span> / 600
+                </p>
+              </div>
+            </div>
+          </form>
+
+          <!-- ── price · комфортний діапазон вартості (голосове ТЗ 18.09; OQ-085) ─── -->
+          <form class="funnel__screen" id="price" data-screen="price" aria-labelledby="price-title" novalidate hidden>
+            <div class="funnel__head">
+              <h2 class="funnel__title" id="price-title" tabindex="-1">What price range is comfortable for you?</h2>
+              <p class="funnel__hint funnel__hint--sm funnel__hide-short">
+                Your answer helps us pick the service format — the consultation is free either way.
+              </p>
+            </div>
+            <fieldset
+              class="funnel__options"
+              id="price-options"
+              aria-describedby="price-err"
+              data-gate-allow="G10 3.1: діапазон вартості послуги, який обирає клієнт у квізі (голосове ТЗ 18.09, ADR-040) — не ціна консультанта; ціни етапів показує послуга"
+            >
+              <legend class="sr-only">Select one option</legend>
+              <label class="q-option">
+                <input
+                  class="q-option__input"
+                  type="radio"
+                  name="price_range"
+                  value="free"
+                  data-label="Only the free consultation"
+                />
+                <span class="q-option__label"
+                  >Only the free consultation<span class="q-option__note"
+                    >I want to understand the situation first</span
+                  ></span
+                >
+              </label>
+              <label class="q-option">
+                <input class="q-option__input" type="radio" name="price_range" value="low" data-label="Up to £150" />
+                <span class="q-option__label"
+                  ><span class="num">Up to £150</span
+                  ><span class="q-option__note">A consultation or one document</span></span
+                >
+              </label>
+              <label class="q-option">
+                <input class="q-option__input" type="radio" name="price_range" value="mid" data-label="£150 – £750" />
+                <span class="q-option__label"
+                  ><span class="num">£150 – £750</span><span class="q-option__note">Support for one stage</span></span
+                >
+              </label>
+              <label class="q-option">
+                <input class="q-option__input" type="radio" name="price_range" value="high" data-label="From £750" />
+                <span class="q-option__label"
+                  ><span class="num">From £750</span
+                  ><span class="q-option__note">Handling the case from start to decision</span></span
+                >
+              </label>
+              <label class="q-option">
+                <input
+                  class="q-option__input"
+                  type="radio"
+                  name="price_range"
+                  value="unknown"
+                  data-label="Not sure yet"
+                />
+                <span class="q-option__label"
+                  >Not sure yet<span class="q-option__note">We will show options with stage prices</span></span
+                >
+              </label>
+            </fieldset>
+            <p class="funnel__error" id="price-err" role="alert" hidden>Pick one option to continue</p>
+          </form>
+
+          <!-- ── match · підбір перед контактами (цінність до запиту даних, 07-pages A-06) ── -->
+          <section class="funnel__screen" id="match" data-screen="match" aria-labelledby="match-title" hidden>
+            <div class="funnel__head">
+              <h2 class="funnel__title" id="match-title" tabindex="-1" data-match-title>
+                We matched lawyers to your situation
+              </h2>
+              <p class="funnel__hint funnel__hint--sm">Your answers — tap any of them to change it.</p>
+            </div>
+            <div class="dq__chips" id="match-summary" role="list" aria-label="Your answers"></div>
+            <div class="dq__people" id="match-people" role="list" aria-label="Matched lawyers"></div>
+            <p class="funnel__trigger funnel__hide-short">
+              <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#i-check"></use></svg>The first
+              consultation is free. Then you choose whom to work with.
+            </p>
+          </section>
+
+          <!-- ── contacts · куди надіслати підбір ────────────────────────────────── -->
+          <form
+            class="funnel__screen funnel__screen--tight"
+            id="contacts"
+            data-screen="contacts"
+            aria-labelledby="contacts-title"
+            novalidate
+            hidden
+            data-ds-event="quiz_contact_submit"
+          >
+            <div class="funnel__head">
+              <h2 class="funnel__title" id="contacts-title" tabindex="-1" data-contacts-title>
+                Where should we send the matches?
+              </h2>
+              <p class="funnel__hint funnel__hint--sm funnel__hide-short" data-contacts-hint>
+                The lawyer will message you on Telegram at this number.
+              </p>
+            </div>
+            <div class="funnel__form">
+              <div class="field" id="phone-field">
+                <label class="field__label" id="phone-label" for="phone">
+                  Phone <span class="q-req-star" aria-hidden="true">*</span>
+                  <span class="q-req">(required)</span>
+                </label>
+                <div
+                  class="call-trigger-modal__input-group js-call-trigger-modal__input-group funnel__phone"
+                  id="phone-box"
+                  role="group"
+                  aria-labelledby="phone-label"
+                >
+                  <div class="country-select">
+                    <button
+                      class="country-select__button js-selected-country"
+                      type="button"
+                      data-country="UK"
+                      aria-label="Country code"
+                    >
+                      <img
+                        width="24"
+                        height="17"
+                        src="assets/vendor/phone-country-dropdown/img/flags/neutral.png"
+                        alt=""
+                        class="flag"
+                      /><span class="dropdown-arrow">&#9660;</span>
+                    </button>
+                    <ul class="country-select__dropdown">
+                      <li data-value="+380" data-country-value="UA" class="country-select__option">
+                        <img
+                          width="24"
+                          height="17"
+                          src="assets/vendor/phone-country-dropdown/img/flags/ukraine.png"
+                          alt="ukraine"
+                          class="flag"
+                        /><span class="country-name">Ukraine</span><span class="country-code">+380</span>
+                      </li>
+                      <li data-value="+48" data-country-value="PL" class="country-select__option">
+                        <img
+                          width="24"
+                          height="17"
+                          src="assets/vendor/phone-country-dropdown/img/flags/poland.png"
+                          alt="poland"
+                          class="flag"
+                        /><span class="country-name">Poland</span><span class="country-code">+48</span>
+                      </li>
+                      <li data-value="+44" data-country-value="UK" class="country-select__option">
+                        <img
+                          width="24"
+                          height="17"
+                          src="assets/vendor/phone-country-dropdown/img/flags/england.png"
+                          alt="england"
+                          class="flag"
+                        /><span class="country-name">United Kingdom</span><span class="country-code">+44</span>
+                      </li>
+                      <li data-value="+1" data-country-value="USA" class="country-select__option">
+                        <img
+                          width="24"
+                          height="17"
+                          src="assets/vendor/phone-country-dropdown/img/flags/usa.png"
+                          alt="usa"
+                          class="flag"
+                        /><span class="country-name">USA</span><span class="country-code">+1</span>
+                      </li>
+                      <li data-value="+971" data-country-value="AE" class="country-select__option">
+                        <img
+                          width="24"
+                          height="17"
+                          src="assets/vendor/phone-country-dropdown/img/flags/ae.png"
+                          alt="ae"
+                          class="flag"
+                        /><span class="country-name">UAE</span><span class="country-code">+971</span>
+                      </li>
+                      <li data-value="+" data-country-value="NEUTRAL" class="country-select__option">
+                        <img
+                          width="24"
+                          height="17"
+                          src="assets/vendor/phone-country-dropdown/img/flags/neutral.png"
+                          alt="neutral"
+                          class="flag"
+                        /><span class="country-name">Other country</span><span class="country-code">+</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <input
+                    class="input input--soft"
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    inputmode="tel"
+                    autocomplete="tel"
+                    placeholder="+"
+                    required
+                    aria-describedby="phone-hint phone-err"
+                  />
+                  <input type="hidden" name="country_code" value="UA" />
+                </div>
+                <div class="field__msg">
+                  <p class="caption sr-only" id="phone-hint">Format: +1 305 555 0134</p>
+                  <p class="q-error" id="phone-err" role="alert" hidden>
+                    <svg
+                      class="q-error__icon"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <circle cx="12" cy="12" r="9" />
+                      <path d="M12 7v6M12 16.5v.5" />
+                    </svg>
+                    Enter the number as +1 XXX XXX XXXX
+                  </p>
+                </div>
+              </div>
+              <div class="field" id="email-field" hidden>
+                <label class="field__label" for="email">
+                  E-mail <span class="q-req-star" aria-hidden="true">*</span>
+                  <span class="q-req">(required)</span>
+                </label>
+                <input
+                  class="input input--soft"
+                  id="email"
+                  name="email"
+                  type="email"
+                  inputmode="email"
+                  autocomplete="email"
+                  placeholder="imya@example.com"
+                  aria-describedby="email-err"
+                />
+                <div class="field__msg">
+                  <p class="q-error" id="email-err" role="alert" hidden>
+                    <svg
+                      class="q-error__icon"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <circle cx="12" cy="12" r="9" />
+                      <path d="M12 7v6M12 16.5v.5" />
+                    </svg>
+                    Enter a valid address, for example name@example.com
+                  </p>
+                </div>
+              </div>
+              <details class="funnel__more" id="contacts-more">
+                <summary>
+                  Add name <span class="q-req">(optional)</span
+                  ><svg class="icon" width="20" height="20" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+                </summary>
+                <div class="field">
+                  <label class="field__label" for="name">Name (Optional)</label>
+                  <input
+                    class="input input--soft"
+                    id="name"
+                    name="name"
+                    type="text"
+                    autocomplete="given-name"
+                    placeholder="Emily"
+                    aria-describedby="name-hint"
+                  />
+                  <div class="field__msg">
+                    <p class="caption" id="name-hint">This is how the lawyer will address you</p>
+                  </div>
+                </div>
+              </details>
+              <div class="field funnel__consent">
+                <label class="q-check">
+                  <input
+                    class="q-option__input"
+                    type="checkbox"
+                    id="consent"
+                    name="consent"
+                    required
+                    aria-describedby="consent-err"
+                  />
+                  <span class="q-option__label funnel__hint--sm"
+                    >I agree to the <a href="https://consultantlm.com/legal/privacy-policy">Privacy Policy</a
+                    ><span class="sr-only"> (required)</span></span
+                  >
+                </label>
+                <div class="field__msg">
+                  <p class="q-error" id="consent-err" role="alert" hidden>
+                    <svg
+                      class="q-error__icon"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <circle cx="12" cy="12" r="9" />
+                      <path d="M12 7v6M12 16.5v.5" />
+                    </svg>
+                    To continue, confirm that you agree to the privacy policy
+                  </p>
+                </div>
+              </div>
+            </div>
+            <p class="caption q-disclaimer funnel__hint--sm">
+              Only the consultant you choose sees your details. We do not share them with third parties.
+            </p>
+          </form>
+
+          <!-- ── thanks · запит надіслано ─────────────────────────────────────────── -->
+          <section
+            class="funnel__screen"
+            id="thanks"
+            data-screen="thanks"
+            aria-labelledby="thanks-title"
+            data-ds-event="quiz_result_view"
+            hidden
+          >
+            <div class="funnel__head">
+              <h2 class="funnel__title" id="thanks-title" tabindex="-1" data-thanks-title>
+                Thank you, your request has been sent.
+              </h2>
+              <p class="funnel__hint funnel__hint--sm" data-thanks-hint>The lawyer will message you on Telegram.</p>
+            </div>
+            <div class="dq__thanks-card">
+              <span class="funnel__icon" aria-hidden="true"
+                ><svg class="icon"><use href="#i-check"></use></svg
+              ></span>
+              <p class="funnel__key" data-thanks-who>Basil Chochla is reviewing your answers</p>
+              <p class="dq__lead" data-thanks-when>Will get in touch during working hours, 9 AM–8 PM</p>
+            </div>
+            <ol class="q-steps dq__next" aria-label="What’s next">
+              <li class="q-steps__item" data-state="done">
+                <span class="q-steps__dot" aria-hidden="true"></span>
+                <div class="q-steps__body"><p class="q-steps__title">Request created</p></div>
+              </li>
+              <li class="q-steps__item" data-state="current" aria-current="step">
+                <span class="q-steps__dot" aria-hidden="true"></span>
+                <div class="q-steps__body"><p class="q-steps__title">The lawyer is preparing an answer</p></div>
+              </li>
+              <li class="q-steps__item" data-state="upcoming">
+                <span class="q-steps__dot" aria-hidden="true"></span>
+                <div class="q-steps__body"><p class="q-steps__title">Free first consultation</p></div>
+              </li>
+            </ol>
+            <p class="funnel__key funnel__hide-short">
+              In the ConsultantLM® app, all lawyers’ answers are gathered in one place.
+            </p>
+          </section>
+
+          <p class="sr-only" id="funnel-live" role="status" aria-live="polite"></p>
+        </div>
+
+        <!-- ── Панель действий: одна на все экраны, всегда у нижнего края (ADR-039) ── -->
+        <footer class="funnel__bottom" id="funnel-bar" aria-label="Step actions">
+          <div class="funnel__botin">
+            <p class="funnel__note" id="funnel-note">Free · 1–2 minutes · No obligation</p>
+            <div class="funnel__row">
+              <button
+                class="btn btn--ghost funnel__back"
+                type="button"
+                id="funnel-back"
+                data-nav="back"
+                aria-label="Back"
+                hidden
+              >
+                <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+                <span class="funnel__back-text" aria-hidden="true">Back</span>
+              </button>
+              <button class="btn btn--ghost funnel__skip" type="button" id="funnel-skip" data-nav="skip" hidden>
+                Skip
+              </button>
+              <button
+                class="btn btn--primary funnel__next"
+                type="submit"
+                form="start"
+                id="funnel-next"
+                data-ds-event="quiz_start"
+              >
+                <span class="btn__label"
+                  ><span class="funnel__lbl--full" data-lbl-full>Next</span
+                  ><span class="funnel__lbl--short" data-lbl-short></span
+                ></span>
+                <span class="btn__spinner" aria-hidden="true"></span>
+              </button>
+              <a
+                class="btn btn--primary funnel__next"
+                id="funnel-link"
+                href="https://consultantlm.com/app?src=quiz-dynamic"
+                rel="noopener"
+                data-ds-event="quiz_result_view"
+                hidden
+                >Open the app</a
+              >
+            </div>
+            <div class="funnel__row" id="funnel-altrow" hidden>
+              <button class="btn btn--outline btn--block funnel__alt" type="button" id="funnel-alt" data-nav="leave">
+                Yes, leave
+              </button>
+            </div>
+          </div>
+        </footer>
+      </section>
+    </main>
+
+    <script src="assets/vendor/jquery.min.js"></script>
+    <script src="assets/vendor/jquery.mask.min.js"></script>
+    <script src="assets/vendor/phone-country-dropdown/phone-country-dropdown.js"></script>
+    <script src="js/dynamic.js"></script>
+  </body>
+</html>
